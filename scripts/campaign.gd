@@ -7,6 +7,7 @@ const ChapterHud = preload("res://scripts/campaign_hud.gd")
 const SAVE := "user://shadepi-campaign.cfg"
 const SPAWN := Vector2(134, 421)
 const COVER: Array[Rect2] = [Rect2(330, 365, 57, 37), Rect2(576, 266, 66, 62), Rect2(766, 421, 77, 35)]
+const SHOOTERS := [preload("res://assets/sprites/shooter-visor.png"), preload("res://assets/sprites/shooter-violet.png")]
 const GUARDS := [
 	preload("res://assets/sprites/punk-1.png"), preload("res://assets/sprites/punk-2.png"),
 	preload("res://assets/sprites/punk-3.png"), preload("res://assets/sprites/punk-4.png"),
@@ -151,7 +152,8 @@ func _spawn_wave() -> void:
 func _spawn_foe(point: Vector2, hp: int, variant: int) -> void:
 	var foe := EnemyScript.new()
 	foe.max_health = hp
-	foe.setup(GUARDS[variant] if variant >= 0 else preload("res://assets/sprites/jackal.png"), self)
+	var sprite: Texture2D = SHOOTERS[variant] if beat == Beat.AMBUSH else (GUARDS[variant] if variant >= 0 else preload("res://assets/sprites/jackal.png"))
+	foe.setup(sprite, self)
 	foe.position = point
 	foe.hit_damage = 16 if variant >= 0 else 24
 	foe.shot_range = 176.0 if variant == 1 or (beat == Beat.AMBUSH and variant == 0) else 0.0
@@ -247,7 +249,7 @@ func chapter_objective() -> String:
 	match beat:
 		Beat.AMBUSH:
 			return "Hinterhalt · %d Gegner" % _living() if _living() else "Zum Motorrad"
-		Beat.HANGAR, Beat.ROOF:
+		Beat.PACT, Beat.HANGAR, Beat.ROOF:
 			return Story.OBJECTIVES[beat] % point_index
 		Beat.BOSS:
 			return "Wachen ausschalten" if wave == 0 else "Kenzō · %d / 360 HP" % (foes.back().health if not foes.is_empty() else 360)
@@ -273,6 +275,8 @@ func interact(_actor: PixelActor = null) -> void:
 	if _timed_node():
 		effects.burst(_target(), Color("70f5f7"), 28)
 		sound("hack")
+	if beat == Beat.PACT:
+		toast(["Aufzug: Sicherheitskräfte eine Etage tiefer.", "Dachzugang: privater Landeplatz.", "Scanner: Kennung von Kenzōs Gleiter erforderlich."][point_index])
 	point_index += 1
 	if point_index == Story.POINTS[beat].size():
 		_advance()
@@ -381,6 +385,10 @@ func _draw() -> void:
 						draw_line(Vector2(x + 7 + rack * 12, 314), Vector2(x + 15 + rack * 12, 298), neon.darkened(0.42), 2)
 				draw_polyline(PackedVector2Array([Vector2(176, 310), Vector2(201, 330), Vector2(283, 330), Vector2(306, 340)]), trim, 3)
 			"alley":
+				draw_rect(Rect2(328, 359, 62, 12), Color("526c57"))
+				draw_rect(Rect2(333, 367, 51, 32), Color("334b44"))
+				for i in 4:
+					draw_line(Vector2(341 + i * 11, 374), Vector2(341 + i * 11, 394), Color("597165"))
 				for x in [104, 477, 875]:
 					draw_rect(Rect2(x, 288, 33, 22), trim)
 					draw_rect(Rect2(x + 1, 286, 31, 4), neon.darkened(0.6))

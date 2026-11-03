@@ -5,13 +5,13 @@ const TITLES := ["DER PAKT", "DIE HÖHLE DES DRACHEN", "EINE VERBINDUNG AUS FEUE
 const CHAPTERS := [3, 3, 3, 4, 4, 5, 6, 6, 6, 6, 7, 7]
 const THEMES := ["hideout", "alley", "road", "garage", "hangar", "hangar", "sky", "roof", "suite", "suite", "lake", "lake"]
 const OBJECTIVES := [
-	"Am Terminal mit Raven sprechen", "Hinterhalt überleben · %d / %d", "Verfolger ausschalten",
+	"Towerplan prüfen · %d / 3", "Hinterhalt überleben · %d / %d", "Verfolger ausschalten",
 	"Geheimes Werkbanksymbol finden", "Aerodyne vorbereiten · %d / 3", "Mit Raven sprechen",
 	"Den Tower erreichen", "Landekennung und Tür hacken · %d / 2", "Kenzōs Wachen und Kenzō ausschalten",
 	"Daten sichern und zum Aerodyne", "Raven zum Wasser folgen", "Geschichte abgeschlossen",
 ]
 const POINTS := [
-	[Vector2(610, 325)], [Vector2(920, 380)], [],
+	[Vector2(265, 312), Vector2(503, 318), Vector2(731, 305)], [Vector2(920, 380)], [],
 	[Vector2(738, 323)], [Vector2(306, 340), Vector2(542, 410), Vector2(795, 324)], [Vector2(615, 330)],
 	[], [Vector2(310, 340), Vector2(818, 365)], [], [Vector2(345, 325), Vector2(907, 395)],
 	[Vector2(735, 353)], [],
@@ -37,8 +37,8 @@ const DIALOGUE := {
 		["RAVEN", "Wenn du mir eine freie Verbindung verschaffst. Gib mir ein Signal.", "hinterhalt"],
 	],
 	Beat.CHASE: [
-		["SHADEPI", "Aufs Motorrad! Der Wagen hat uns überholt. Er will uns den Weg abschneiden.", "jagd"],
-		["RAVEN", "Du fährst. Ich schieße, störe seine Lenkung und werfe die Granaten. Bring mich auf seine Spur!", "jagd"],
+		["SHADEPI", "Aufs Motorrad! Der Wagen kommt hinter uns aus der Gasse. Festhalten!", "jagd"],
+		["RAVEN", "Du fährst. Ich decke uns nach hinten. Fahr mich auf seine Spur, damit ich seine Lenkung hacken kann.", "jagd"],
 	],
 	Beat.GARAGE: [
 		["RAVEN", "Eine rostige Garage. Das ist dein Versteck?", "garage"],
