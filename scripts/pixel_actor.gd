@@ -1,6 +1,9 @@
 class_name PixelActor
 extends CharacterBody2D
 
+const OCTANT_ROWS := [2, 7, 0, 6, 1, 4, 3, 5]
+const TURN_STEP_TIME := 0.06
+
 var visual: Sprite2D
 var facing := Vector2.DOWN
 var animation_time := 0.0
@@ -12,6 +15,9 @@ var cast_shadow: Sprite2D
 var shadow_material: ShaderMaterial
 var light_occluder: LightOccluder2D
 var cloaked := false
+var directions := 4
+var visual_octant := 2
+var turn_time := 0.0
 
 func setup(texture: Texture2D, game: Node2D) -> void:
 	world = game
@@ -23,10 +29,11 @@ func setup(texture: Texture2D, game: Node2D) -> void:
 	collider.shape = shape
 	add_child(collider)
 	var sheet := SpriteAssets.resolve(texture)
+	directions = int(sheet.get_height() / 256.0)
 	cast_shadow = Sprite2D.new()
 	cast_shadow.texture = sheet
 	cast_shadow.hframes = 8
-	cast_shadow.vframes = 16
+	cast_shadow.vframes = directions * 4
 	cast_shadow.position = Vector2(8, -5)
 	cast_shadow.scale = Vector2(1.05, 0.3)
 	cast_shadow.skew = -0.65
@@ -43,7 +50,7 @@ func setup(texture: Texture2D, game: Node2D) -> void:
 	visual = Sprite2D.new()
 	visual.texture = sheet
 	visual.hframes = 8
-	visual.vframes = 16
+	visual.vframes = directions * 4
 	visual.position = Vector2(0, -26)
 	visual.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	body_material = ShaderMaterial.new()
@@ -52,23 +59,38 @@ func setup(texture: Texture2D, game: Node2D) -> void:
 	add_child(visual)
 
 func animate(state: String, delta: float) -> void:
+	var continuing_walk := state == "walk" and animation_name == "walk"
 	if state != animation_name:
 		animation_time = 0.0
 		animation_name = state
 	animation_time += delta
 	flash_time = maxf(0.0, flash_time - delta)
 	body_material.set_shader_parameter("flash", clampf(flash_time * 6.0, 0.0, 1.0))
-	var direction := 0
-	if absf(facing.x) > absf(facing.y):
-		direction = 2 if facing.x > 0 else 1
-	elif facing.y < 0:
-		direction = 3
+	var direction := _direction_row(continuing_walk, delta)
 	var row: int = {"idle": 0, "walk": 1, "attack": 2, "hurt": 3}.get(state, 0)
 	var speed := 18.0 if state == "attack" else 9.0
 	var frame := mini(7, int(animation_time * speed)) if state == "attack" else int(animation_time * speed) % 8
-	visual.frame = (row * 4 + direction) * 8 + frame
+	visual.frame = (row * directions + direction) * 8 + frame
 	cast_shadow.frame = visual.frame
 	queue_redraw()
+
+func _direction_row(continuing_walk: bool, delta: float) -> int:
+	if directions == 4:
+		if absf(facing.x) > absf(facing.y):
+			return 2 if facing.x > 0.0 else 1
+		return 3 if facing.y < 0.0 else 0
+	var target := posmod(roundi(facing.angle() / (PI / 4.0)), 8)
+	if not continuing_walk:
+		visual_octant = target
+		turn_time = 0.0
+	else:
+		turn_time = maxf(0.0, turn_time - delta)
+		if turn_time == 0.0 and target != visual_octant:
+			var clockwise := posmod(target - visual_octant, 8)
+			visual_octant = posmod(visual_octant + (1 if clockwise <= 4 else -1), 8)
+			if visual_octant != target:
+				turn_time = TURN_STEP_TIME
+	return OCTANT_ROWS[visual_octant]
 
 func set_cloaked(value: bool) -> void:
 	if value == cloaked:

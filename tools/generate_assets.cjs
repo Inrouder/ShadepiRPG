@@ -76,15 +76,145 @@ function other(kind,state,f,back=false){
  }
  return cv;
 }
-const modes=['idle','walk','attack','hurt'];
-for(const kind of ['shadepi','raven','jackal']){
- const sheet=createCanvas(384,1024),c=sheet.getContext('2d');c.imageSmoothingEnabled=false;
- modes.forEach((state,si)=>{for(let dir=0;dir<4;dir++)for(let f=0;f<8;f++){
-  const base=kind==='shadepi'?sprite(state==='hurt'?'idle':state,f):other(kind,state,f,dir===3);
-  if(kind==='shadepi'&&dir===3){const cc=base.getContext('2d');poly(cc,[[14,18],[29,18],[27,24],[18,24]],'#131d2c');line(cc,19,19,24,20,'#34475e')}
-  c.save();if(dir===1){c.translate(f*48+48,(si*4+dir)*64);c.scale(-1,1)}else c.translate(f*48,(si*4+dir)*64);c.drawImage(base,0,0);c.restore();
- }});save(sheet,'sprites/'+kind+'.png');
+// Draw a profile or a three-quarter view with a walk cycle along the heading.
+function directionalHero(kind, state, frame, view) {
+ const canvas = createCanvas(48, 64);
+ const c = canvas.getContext('2d');
+ const shadepi = kind === 'shadepi';
+ const rear = view === 'back' || view === 'back-right';
+ const profile = view === 'right';
+ const back = view === 'back';
+ const walk = state === 'walk';
+ const stride = walk ? Math.sin(frame * Math.PI / 4) : 0;
+ const bob = walk ? [0, -1, -1, 0, 0, -1, -1, 0][frame] : 0;
+ const outline = '#080c17';
+ const dark = shadepi ? '#192337' : '#182941';
+ const mid = shadepi ? '#304259' : '#27435b';
+ const edge = shadepi ? '#56728a' : '#48a6c7';
+ const accent = shadepi ? '#ff5276' : '#44d7e8';
+ const shoulder = profile ? 6 : back ? 11 : 9;
+ const head = back ? 23 : profile ? 26 : 25;
+ c.translate(0, bob);
+
+ // The trailing foot passes the planted foot. Diagonal steps also change depth.
+ function boot(hipX, swing, far) {
+  const toe = Math.round(hipX + (back ? 0 : swing * 6));
+  const rise = Math.round(Math.max(0, swing) * (back ? 6 : 4));
+  const floor = 59 - rise - (far ? 2 : 0);
+  const knee = Math.round((hipX + toe) / 2);
+  poly(c, [[hipX - 4, 35], [hipX + 4, 35], [knee + 4, 47],
+   [toe + 4, floor - 2], [toe - 3, floor - 2], [knee - 4, 47]], outline);
+  line(c, hipX, 38, knee, 47, far ? dark : mid, 4);
+  line(c, knee, 47, toe, floor - 2, far ? dark : mid, 4);
+  rect(c, knee - 2, 46, 5, 3, far ? mid : edge);
+  rect(c, toe - 3, floor - 3, back ? 7 : 9, 5, outline);
+  rect(c, toe - 2, floor - 3, back ? 5 : 7, 2, far ? dark : mid);
+ }
+ boot(profile ? 25 : 28, -stride, true);
+ boot(profile ? 21 : 19, stride, false);
+ if (shadepi) {
+  const tail = Math.round(stride * 2);
+  poly(c, [[16, 32], [28, 33], [29, 48], [24, 45], [19 + tail, 51], [12 + tail, 47]], outline);
+  poly(c, [[17, 34], [26, 34], [25, 44], [19 + tail, 48], [14 + tail, 46]], '#2b2b40');
+  line(c, 19, 36, 17 + tail, 46, dark);
+ }
+ // Asymmetric shoulders and armour distinguish the side and rear silhouettes.
+ poly(c, [[23 - shoulder, 23], [22, 20], [24 + shoulder, 24],
+  [29, 35], [28, 40], [17, 40], [15, 32]], outline);
+ poly(c, [[25 - shoulder, 24], [22, 22], [22 + shoulder, 25],
+  [27, 36], [18, 37], [17, 30]], dark);
+ poly(c, [[19, 24], [profile ? 27 : 30, 25], [26, 34], [18, 34]], mid);
+ line(c, 17, 36, 28, 36, '#0c1322', 2);
+ if (rear) {
+  line(c, 17, 26, 26, 23, edge);
+  rect(c, 22, 27, 3, 8, '#132437');
+  rect(c, 22, 29, 2, 2, accent);
+ } else {
+  line(c, 26, 24, 29, 28, edge);
+  rect(c, 26, 28, 3, 2, accent);
+ }
+ // The nearer arm swings with the opposite leg.
+ const handX = 23 + Math.round(-stride * 4) + (state === 'attack' ? 7 : 0);
+ const handY = state === 'attack' ? 30 : 39;
+ line(c, 20, 26, handX, handY, outline, 6);
+ line(c, 20, 27, handX, handY - 2, mid, 4);
+ rect(c, 19, 26, 5, 3, edge);
+ rect(c, handX, handY, 4, 3, dark);
+
+ if (shadepi) {
+  // Hat brim stays in world orientation while the mask turns under it.
+  poly(c, [[head - 7, 13], [head + 6, 13], [head + 9, 19],
+   [head + 5, 24], [head - 6, 23]], outline);
+  poly(c, [[head - 5, 16], [head + 5, 16], [head + 6, 21], [head - 3, 23]], dark);
+  const left = back ? 5 : profile ? 8 : 7;
+  const right = back ? 41 : profile ? 41 : 43;
+  poly(c, [[head - 3, 3], [right, 15], [head + 5, 18], [left, 16]], outline);
+  poly(c, [[head - 3, 5], [right - 3, 14], [head + 4, 16], [left + 3, 15]], mid);
+  line(c, head - 3, 5, left + 3, 15, edge);
+  line(c, head - 3, 6, head + 1, 15, dark);
+  line(c, left + 3, 16, right - 2, 15, rear ? '#435368' : edge);
+  if (!rear) rect(c, head + 4, 19, profile ? 3 : 4, 1, accent);
+  const bladeX = state === 'attack' ? 44 : rear ? 37 : 43;
+  const bladeY = state === 'attack' ? (rear ? 12 : 24) : rear ? 25 : 46;
+  line(c, handX + 2, handY + 1, bladeX, bladeY, '#a32f53', 3);
+  line(c, handX + 4, handY, bladeX, bladeY, accent, 2);
+  line(c, handX + 5, handY, bladeX, bladeY, '#ffd0df');
+ } else {
+  const hair = Math.round(stride * 2);
+  poly(c, [[head - 9, 10], [head - 3, 6], [head + 5, 7], [head + 9, 13],
+   [head + 5, 22], [head + 2 + hair, 40], [head - 5 + hair, 45],
+   [head - 12 + hair, 41], [head - 9, 26]], outline);
+  poly(c, [[head - 7, 12], [head - 2, 8], [head + 5, 10], [head + 6, 17],
+   [head + hair, 38], [head - 7 + hair, 42], [head - 9, 36]], '#1b2d4a');
+  line(c, head - 5, 13, head - 8 + hair, 39, '#325776');
+  line(c, head, 12, head - 3 + hair, 35, '#264465');
+  if (!rear) {
+   poly(c, [[head + 1, 12], [head + 6, 13], [head + 8, 18],
+    [head + 5, 22], [head + 1, 21]], '#d2a49a');
+   rect(c, head + 5, 16, 2, 1, '#9c405f');
+   line(c, head - 1, 10, head + 5, 13, '#152238', 2);
+  }
+  // Cyan sleeve and device remain visible in the back view.
+  line(c, 24, 26, handX + 4, handY, mid, 4);
+  rect(c, handX + 4, handY - 2, 3, 3, accent);
+  if (state === 'attack') {
+   rect(c, handX + 5, handY - 3, 9, 5, '#1e7790');
+   rect(c, handX + 7, handY - 2, 6, 2, '#62e7fa');
+  }
+ }
+ return canvas;
 }
+
+const modes = ['idle', 'walk', 'attack', 'hurt'];
+const heroViews = ['front', 'right', 'right', 'back', 'back-right', 'back-right', 'front-right', 'front-right'];
+for (const kind of ['shadepi', 'raven', 'jackal']) {
+ const views = kind === 'jackal' ? heroViews.slice(0, 4) : heroViews;
+ const sheet = createCanvas(384, modes.length * views.length * 64);
+ const c = sheet.getContext('2d');
+ c.imageSmoothingEnabled = false;
+ modes.forEach((state, group) => {
+  views.forEach((view, direction) => {
+   for (let frame = 0; frame < 8; frame++) {
+    let spriteFrame;
+    if (kind === 'jackal') {
+     spriteFrame = other(kind, state, frame, direction === 3);
+    } else if (view === 'front') {
+     spriteFrame = kind === 'shadepi' ? sprite(state === 'hurt' ? 'idle' : state, frame) : other(kind, state, frame);
+    } else {
+     spriteFrame = directionalHero(kind, state, frame, view);
+    }
+    const mirror = direction === 1 || direction === 4 || direction === 6;
+    c.save();
+    c.translate(frame * 48 + (mirror ? 48 : 0), (group * views.length + direction) * 64);
+    if (mirror) c.scale(-1, 1);
+    c.drawImage(spriteFrame, 0, 0);
+    c.restore();
+   }
+  });
+ });
+ save(sheet, 'sprites/' + kind + '.png');
+}
+if (process.argv.includes('--sprites-only')) process.exit(0);
 const ground=createCanvas(1024,640),g=ground.getContext('2d');rect(g,0,0,1024,640,'#182332');
 for(let y=0;y<640;y+=16){line(g,0,y,1024,y,'#263345');for(let x=-(y%32);x<1024;x+=48)line(g,x,y,x+8,y+15,'#0c1829')}
 let seed=81;function rnd(){seed=seed*16807%2147483647;return seed/2147483647}

@@ -29,7 +29,7 @@ func run() -> void:
 	var scene = load("res://scenes/main.tscn").instantiate()
 	root.add_child(scene)
 	await process_frame
-	check(SpriteAssets.valid_sheet(scene.player.visual.texture), "selected player sprite fits the eight-by-sixteen grid")
+	check(SpriteAssets.valid_sheet(scene.player.visual.texture), "selected player sprite fits a supported grid")
 	var invalid_sprite := ImageTexture.create_from_image(Image.create_empty(48, 64, false, Image.FORMAT_RGBA8))
 	check(not SpriteAssets.valid_sheet(invalid_sprite), "single-frame replacement is rejected")
 	if "--expect-custom-sprite" in OS.get_cmdline_user_args():
@@ -126,6 +126,7 @@ func run() -> void:
 	check(scene.stage == 0 and scene.enemy.health == 180 and not scene.gate_open, "restart resets combat, quest and gate")
 	await check_coop(scene)
 	await check_gamepads(scene)
+	check_directional_animation(scene)
 	scene.queue_free()
 	await process_frame
 	print("SHADEPI TESTS: %d checks, %d failures" % [checks, failures])
@@ -302,6 +303,29 @@ func pad_button(device: int, button: JoyButton) -> void:
 	release.pressed = false
 	Input.parse_input_event(release)
 	Input.flush_buffered_events()
+
+func check_directional_animation(scene: Node2D) -> void:
+	for actor in [scene.player, scene.raven]:
+		if actor.directions == 4:
+			# Existing custom four-direction sheets still use their own layout.
+			continue
+		actor.facing = Vector2.UP
+		actor.animate("idle", 0.0)
+		actor.animate("walk", 0.02)
+		check(actor.visual.frame_coords.y == 11, "north uses the rear walk cycle")
+		actor.facing = Vector2.RIGHT
+		actor.animate("walk", 0.02)
+		check(actor.visual.frame_coords.y == 13, "north to east turns through the northeast pose")
+		actor.animate("walk", 0.07)
+		check(actor.visual.frame_coords.y == 10, "east uses the side walk cycle")
+		actor.facing = Vector2.UP
+		actor.animate("idle", 0.0)
+		actor.animate("walk", 0.02)
+		actor.facing = Vector2.LEFT
+		actor.animate("walk", 0.02)
+		check(actor.visual.frame_coords.y == 12, "north to west turns through the northwest pose")
+		actor.animate("walk", 0.07)
+		check(actor.visual.frame_coords.y == 9 and actor.cast_shadow.frame == actor.visual.frame, "west uses its own walk cycle and matching shadow")
 
 func key(code: Key, pressed: bool) -> void:
 	var event := InputEventKey.new()

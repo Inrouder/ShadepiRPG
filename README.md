@@ -8,7 +8,7 @@
 
 Shadepi und Raven treffen in einer regennassen Gasse auf Chrome Jackal. Sprich mit Raven, öffne die Sicherheitssperre, kombiniere Katana und Netrunning und sichere die Daten am Ausgang.
 
-Diese Version **0.3.1** ist eine frei arrangierte Gameplayprobe aus einem **späteren Abschnitt**. Shadepi und Raven kennen sich hier bereits. Die eigentliche Geschichte beginnt mit Shadepi allein; Raven begegnet er erst später. Die Dialoge dieser Szene sind eigens für den Test geschrieben.
+Diese Version **0.3.2** ist eine frei arrangierte Gameplayprobe aus einem **späteren Abschnitt**. Shadepi und Raven kennen sich hier bereits. Die eigentliche Geschichte beginnt mit Shadepi allein; Raven begegnet er erst später. Die Dialoge dieser Szene sind eigens für den Test geschrieben.
 
 ## Spielen
 
@@ -67,7 +67,7 @@ Im Einzelspieler steuert der erste Controller Shadepi. Im Koop steuern zwei verb
 
 ## Was enthalten ist
 
-- Eigene PNG-Spritesheets mit acht Bildern je Zyklus: Stand, Laufbewegung, Katanahieb und Trefferpose; Blickrichtungsvarianten für Shadepi, Raven und Jackal.
+- Eigene PNG-Spritesheets mit acht Bildern je Zyklus: Stand, Laufbewegung, Katanahieb und Trefferpose; acht Blickrichtungen für Shadepi und Raven, vier für Jackal. Beim Laufen wechseln Shadepi und Raven über diagonale Zwischenposen zur neuen Richtung.
 - Begehbare Gasse mit Gebäudekollisionen, Hindernissen, Sicherheitssperre und einer überprüften Route zum Ausgang.
 - Gegner mit angekündigtem Angriff, Vorstoß, Erholungsphase und hackbarer Panzerung.
 - Katana-Kombination, Energie, Ausweichen, zehn Sekunden maximales Tarnfenster und Fähigkeitencooldowns.
@@ -93,7 +93,7 @@ godot --headless --export-release Linux build/linux/Shadepi-Echos-in-Neon.x86_64
 
 Zum Export müssen die offiziellen Exportvorlagen derselben Godot-Version installiert sein. Die GitHub Action richtet dies automatisch ein. Die Windows-EXE wird unter Linux exportiert; ihre Ausführung auf einem tatsächlichen Windows-PC ist ein gesonderter manueller Prüfschritt.
 
-Die **79 automatisierten Prüfungen** behandeln unter anderem Bewegung und Gebäudekollision, Missionsfortschritt, Kampf, Tarnung, Spriteformate, Grafikprofile, gleichzeitige Eingaben für beide Figuren, Koop-Kampf, simulierte Controller-Eingaben, Laden beider Figuren sowie ungültige und beschädigte Spielstände einschließlich Backup-Wiederherstellung.
+Die **89 automatisierten Prüfungen** behandeln unter anderem Bewegung und Gebäudekollision, Missionsfortschritt, Kampf, Tarnung, Spriteformate, Grafikprofile, gleichzeitige Eingaben für beide Figuren, Koop-Kampf, simulierte Controller-Eingaben, Laden beider Figuren sowie ungültige und beschädigte Spielstände einschließlich Backup-Wiederherstellung.
 
 Speicherort: Godots `user://shadepi-test-save.json` für Solo und `user://shadepi-coop-save.json` für Koop (unter Windows normalerweise `%APPDATA%/Godot/app_userdata/Shadepi - Echos in Neon/`). Bei beschädigter Hauptdatei wird ein validiertes Backup versucht. Beim Laden werden laufende Fähigkeiten zurückgesetzt und Jackal an seine Startposition gesetzt; sein gespeicherter Lebensstand bleibt erhalten.
 
