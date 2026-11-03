@@ -2,6 +2,7 @@ extends "res://scripts/main.gd"
 
 const Story = preload("res://scripts/campaign_story.gd")
 const Beat = Story.Beat
+const Timing = preload("res://scripts/sanctuary_timing.gd")
 const Drive = preload("res://scripts/campaign_drive.gd")
 const ChapterHud = preload("res://scripts/campaign_hud.gd")
 const SAVE := "user://shadepi-campaign.cfg"
@@ -22,6 +23,8 @@ var clock := 0.0
 var countdown := 60.0
 var foes: Array[PixelActor] = []
 var drive: Node2D
+var timing: Node2D
+var echo_ready := false
 var drive_layer: CanvasLayer
 var cover_bodies: Array[StaticBody2D] = []
 
@@ -52,10 +55,10 @@ func _build_world() -> void:
 	add_child(drive_layer)
 
 func raven_leads() -> bool:
-	return beat in [Beat.HANGAR, Beat.ROOF]
+	return beat in [Beat.HANGAR, Beat.ROOF] or (beat == Beat.ECHO and echo_ready)
 
 func actor_is_playable(actor: PixelActor) -> bool:
-	return drive == null and beat != Beat.END and actor == (raven if raven_leads() else player)
+	return drive == null and timing == null and beat != Beat.END and actor == (raven if raven_leads() else player)
 
 func actor_input_prefix(_actor: PixelActor) -> String:
 	return ""
@@ -91,6 +94,12 @@ func new_game(_save_checkpoint: bool = true) -> void:
 	_enter(Beat.PACT)
 
 func _enter(next: int) -> void:
+	if is_instance_valid(timing):
+		timing.hide()
+		timing.queue_free()
+		timing = null
+		gamepads.assign(Input.get_connected_joypads(), false)
+	echo_ready = false
 	if is_instance_valid(drive):
 		drive.hide()
 		drive.queue_free()
@@ -255,6 +264,8 @@ func chapter_objective() -> String:
 	match beat:
 		Beat.AMBUSH:
 			return "Hinterhalt · %d Gegner" % _living() if _living() else "Zum Motorrad"
+		Beat.ECHO:
+			return "Erinnerungen ordnen · %d / 3" % point_index if echo_ready else "An Shadepis Sessel treten"
 		Beat.GARAGE:
 			return "Gemeinsam auf die Plattform" if point_index == 1 else Story.OBJECTIVES[beat]
 		Beat.HANGAR:
@@ -270,6 +281,10 @@ func chapter_objective() -> String:
 	return Story.OBJECTIVES[beat]
 
 func interaction_prompt() -> String:
+	if timing != null:
+		return ""
+	if beat == Beat.ECHO and echo_ready and raven.position.distance_to(Vector2(551, 426)) < 28.0:
+		return "E / A · Flimmerndes Echo prüfen"
 	var target := _target()
 	var actor: PixelActor = raven if raven_leads() else player
 	if beat == Beat.HANGAR:
@@ -299,6 +314,21 @@ func _near_port() -> int:
 func interact(_actor: PixelActor = null) -> void:
 	if is_busy() or interaction_prompt().is_empty():
 		return
+	if beat == Beat.ECHO:
+		if not echo_ready:
+			_start_echo()
+			return
+		if raven.position.distance_to(Vector2(551, 426)) < 28.0:
+			raven.position = SPAWN if point_index == 0 else Story.POINTS[beat][point_index - 1]
+			toast("Das Bild zerfällt. Zur letzten stabilen Erinnerung.")
+			return
+		toast(["Das Kloster.", "Die früheren Träger.", "Die Nacht des Angriffs."][point_index])
+		if point_index == 2:
+			ui.dialogue([
+				["RAVEN", "Ich habe gesehen, was du verloren hast.", "echo"],
+				["SHADEPI", "Das Heiligtum lebt in mir. Jetzt hast du seine Erinnerungen gesehen.", "echo"],
+			], _advance)
+			return
 	if beat == Beat.GARAGE and point_index == 1 and raven.position.distance_to(_target()) > 35.0:
 		toast("Warte auf Raven.")
 		return
@@ -330,6 +360,21 @@ func interact(_actor: PixelActor = null) -> void:
 	if beat != Beat.HANGAR and point_index == Story.POINTS[beat].size():
 		_advance()
 
+func _start_echo() -> void:
+	timing = Timing.new()
+	timing.world = self
+	drive_layer.add_child(timing)
+	timing.completed.connect(_enter_echo)
+
+func _enter_echo() -> void:
+	timing.hide()
+	timing.queue_free()
+	timing = null
+	gamepads.assign(Input.get_connected_joypads(), false)
+	echo_ready = true
+	player.hide()
+	ui.dialogue([["HEILIGTUM", "Eindämmung bricht. Ein Teil des Schwarms geht auf Raven über. Finde die stabilen Erinnerungsanker.", "echo"]])
+
 func saved_checkpoint() -> int:
 	var config := ConfigFile.new()
 	if config.load(SAVE) != OK:
@@ -360,7 +405,7 @@ func _draw() -> void:
 		"hideout": ["17272e", "38545e", "68c6be"], "alley": ["1d2230", "373c50", "df547a"],
 		"garage": ["23262b", "484447", "f0a464"], "hangar": ["15212d", "304458", "70e1ef"],
 		"roof": ["222338", "424562", "87d2f4"], "suite": ["302435", "59415b", "f4b992"],
-		"lake": ["142a30", "24454b", "73e4df"],
+		"echo": ["261e2e", "534050", "f58790"], "lake": ["142a30", "24454b", "73e4df"],
 	}
 	var colours: Array = palette.get(theme, palette.hangar)
 	var floor := Color(colours[0])
@@ -421,6 +466,15 @@ func _draw() -> void:
 					draw_rect(Rect2(x + 60, 295, 4, 9), trim)
 					draw_line(Vector2(x + 11, 285), Vector2(x + 41, 285), neon.darkened(0.18), 2)
 				draw_line(Vector2(687, 302), Vector2(749, 319), trim, 2)
+			"echo":
+				draw_rect(Rect2(452, 283, 36, 32), Color("745464"))
+				draw_rect(Rect2(594, 267, 98, 44), Color("6e5361"))
+				draw_rect(Rect2(600, 272, 27, 35), Color("9e8792"))
+				if echo_ready:
+					for i in 12:
+						var p := Vector2(340 + (i * 83) % 550, 280 + fposmod(i * 34 - clock * 8, 170))
+						draw_circle(p, 2.0, Color(0.96, 0.32, 0.45, 0.38))
+					draw_arc(Vector2(551, 426), 13, 0, TAU, 24, Color("a35b7a"), 2.0)
 			"suite":
 				for x in [176, 467]:
 					draw_rect(Rect2(x, 305, 89, 29), Color("3d2b45"))

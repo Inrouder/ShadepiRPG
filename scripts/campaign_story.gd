@@ -3,7 +3,7 @@ extends RefCounted
 enum Beat { PACT, AMBUSH, CHASE, GARAGE, HANGAR, ECHO, FLIGHT, ROOF, BOSS, ESCAPE, LAKE, END }
 const TITLES := ["DER PAKT", "DIE HÖHLE DES DRACHEN", "EINE VERBINDUNG AUS FEUER UND FLEISCH", "DIE RACHE", "DER NEUE ORDEN"]
 const CHAPTERS := [3, 3, 3, 4, 4, 5, 6, 6, 6, 6, 7, 7]
-const THEMES := ["hideout", "alley", "road", "garage", "hangar", "hangar", "sky", "roof", "suite", "suite", "lake", "lake"]
+const THEMES := ["hideout", "alley", "road", "garage", "hangar", "echo", "sky", "roof", "suite", "suite", "lake", "lake"]
 const OBJECTIVES := [
 	"Towerplan prüfen · %d / 3", "Hinterhalt überleben · %d / %d", "Verfolger ausschalten",
 	"Geheimes Werkbanksymbol finden", "Aerodyne vorbereiten · %d / 3", "Mit Raven sprechen",
@@ -12,7 +12,7 @@ const OBJECTIVES := [
 ]
 const POINTS := [
 	[Vector2(265, 312), Vector2(503, 318), Vector2(731, 305)], [Vector2(920, 380)], [],
-	[Vector2(738, 323), Vector2(865, 382)], [Vector2(306, 340), Vector2(542, 410), Vector2(795, 324)], [Vector2(615, 330)],
+	[Vector2(738, 323), Vector2(865, 382)], [Vector2(306, 340), Vector2(542, 410), Vector2(795, 324)], [Vector2(465, 325), Vector2(684, 345), Vector2(870, 360)],
 	[], [Vector2(310, 340), Vector2(818, 365)], [], [Vector2(345, 325), Vector2(907, 395)],
 	[Vector2(735, 353)], [],
 ]
@@ -52,8 +52,7 @@ const DIALOGUE := {
 		["SHADEPI", "Als die Minotauren das Kloster angriffen, habe ich das Heiligtum in mich aufgenommen. Seitdem lebt der Schwarm in mir.", "hangar"],
 		["RAVEN", "Und nach dem Angriff?", "hangar"],
 		["SHADEPI", "Das Kloster war verschwunden. Ich suche seitdem nach Antworten.", "hangar"],
-		["NACHT / SANKTUARIUM", "Raven und Shadepi kommen sich näher. Als die Eindämmung versagt, gehen Naniten auf Raven über. Sie sieht Erinnerungen der früheren Träger.", "echo"],
-		["RAVEN", "Ich habe gesehen, was du verloren hast. Morgen finden wir heraus, wer dahintersteckt.", ""],
+		["NACHT / SANKTUARIUM", "Die Halle wird still. Raven tritt an Shadepis Sessel. Sein HUD schlägt an.", "echo"],
 	],
 	Beat.FLIGHT: [
 		["ARTOS", "Systemstart. Parameter instabil.", "tower"],

@@ -33,5 +33,7 @@ func _process(delta: float) -> void:
 			controls.text = "A/D / Stick · Lenken    J / X · Feuer    Q / RB · Hack    Leertaste / B · Granate"
 			abilities.visible = not dialogue_open and not world.menu_open
 			abilities.text = "Hack %.0f s    Granate %.0f s" % [world.drive.hack_cooldown, world.drive.grenade_cooldown]
+	elif world.timing != null:
+		controls.text = "J / X · Tippen    U / zweiter Controller · Raven    Esc / Start · Pause"
 	elif world.is_combat():
 		controls.text = "WASD / Stick · Bewegen    J / X · Katana    Q / RB · Ravens Hack    Leertaste / B · Dash"
