@@ -8,6 +8,7 @@ const LANES := [230.0, 320.0, 410.0]
 
 var world: Node2D
 var flight := false
+var transponder_sent := false
 var elapsed := 0.0
 var lane := 1
 var x := 320.0
@@ -40,6 +41,9 @@ func _process(delta: float) -> void:
 	hurt = maxf(0, hurt - delta)
 	lane = clampi(lane + int(Input.is_action_just_pressed("move_right")) - int(Input.is_action_just_pressed("move_left")), 0, 2)
 	x = move_toward(x, LANES[lane], 510.0 * delta)
+	if flight and elapsed >= 9.0 and Input.is_action_just_pressed("hack") and not transponder_sent:
+		transponder_sent = true
+		world.sound("hack")
 	if not flight:
 		if Input.is_action_just_pressed("hack") and hack_cooldown == 0:
 			hack = 3.3
@@ -104,7 +108,13 @@ func _process(delta: float) -> void:
 	if health <= 0:
 		active = false
 		crashed.emit()
-	elif (flight and elapsed >= 15.0) or (not flight and armour <= 0):
+	elif flight and elapsed >= 15.0:
+		active = false
+		if transponder_sent:
+			completed.emit()
+		else:
+			crashed.emit()
+	elif not flight and armour <= 0:
 		active = false
 		completed.emit()
 

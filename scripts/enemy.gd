@@ -12,6 +12,10 @@ var windup_duration := 0.72
 var lunge_speed := 220.0
 var awareness := INF
 var shot_range := 0.0
+var sweep_enabled := false
+var sweeping := false
+var attack_index := 0
+var front_shield := false
 var exposed := 0.0
 var stun := 0.0
 var cooldown := 1.0
@@ -41,6 +45,11 @@ func _physics_process(delta: float) -> void:
 				if target != null and absf(offset.cross(attack_direction)) <= 16.0 and offset.dot(attack_direction) > 0.0 and offset.length() <= shot_range and world._line_clear(global_position, target.global_position):
 					target.take_damage(hit_damage, global_position)
 				cooldown = attack_recovery
+			elif sweeping:
+				if target != null and offset.length() <= 70.0 and offset.normalized().dot(attack_direction) >= 0.35:
+					target.take_damage(hit_damage + 6, global_position)
+				world.spawn_slash(global_position, attack_direction)
+				cooldown = attack_recovery
 			else:
 				lunge = 0.22
 				hit_done = false
@@ -60,6 +69,8 @@ func _physics_process(delta: float) -> void:
 		if offset.length() < maxf(60.0, shot_range) and cooldown <= 0.0 and (shot_range == 0.0 or world._line_clear(global_position, target.global_position)):
 			windup = windup_duration
 			attack_direction = facing
+			attack_index += 1
+			sweeping = sweep_enabled and attack_index % 2 == 0
 		elif offset.length() > 35.0:
 			velocity = facing * move_speed
 			state = "walk"
@@ -69,7 +80,7 @@ func _physics_process(delta: float) -> void:
 func take_damage(base: int) -> void:
 	if health <= 0:
 		return
-	if armoured:
+	if armoured or (front_shield and exposed <= 0.0 and global_position.direction_to(world.player.position).dot(facing) > 0.55):
 		world.effects.burst(global_position, Color("efc788"), 7)
 		world.damage_number(global_position + Vector2(0, -48), "BLOCK")
 		return
@@ -120,8 +131,12 @@ func _draw() -> void:
 		draw_rect(Rect2(-22, -64, 44.0 * health / max_health, 3), Color("57d5e4") if exposed > 0 else Color("ec597e"))
 	if windup > 0.0:
 		var radius := 16.0 + 26.0 * (1.0 - windup / windup_duration)
-		draw_arc(Vector2.ZERO, radius, attack_direction.angle() - 0.65, attack_direction.angle() + 0.65, 16, Color("ff5974"), 2.0)
-		var target := attack_direction * maxf(56.0, shot_range)
-		draw_line(Vector2.ZERO, target, Color(1.0, 0.3, 0.42, 0.4), 1.0)
+		var half_arc := 1.21 if sweeping else 0.65
+		draw_arc(Vector2.ZERO, radius + (18.0 if sweeping else 0.0), attack_direction.angle() - half_arc, attack_direction.angle() + half_arc, 16, Color("ff5974"), 2.0)
+		if not sweeping:
+			var target := attack_direction * maxf(56.0, shot_range)
+			draw_line(Vector2.ZERO, target, Color(1.0, 0.3, 0.42, 0.4), 1.0)
+	if front_shield and exposed <= 0.0:
+		draw_arc(Vector2(0, -23), 19.0, facing.angle() - 0.9, facing.angle() + 0.9, 12, Color("8ca8c3"), 4.0)
 	if exposed > 0.0:
 		draw_arc(Vector2(0, -28), 23, 0.0, TAU, 20, Color(0.2, 0.85, 1.0, 0.6), 1.0)

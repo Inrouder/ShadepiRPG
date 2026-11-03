@@ -15,7 +15,6 @@ const GUARDS := [
 ]
 var beat := Beat.PACT
 var point_index := 0
-var wave := 0
 var port_index := 0
 const PORTS := [Vector2(725, 359), Vector2(785, 350), Vector2(842, 367)]
 const PORT_ORDER := [1, 0, 2]
@@ -55,7 +54,7 @@ func _build_world() -> void:
 	add_child(drive_layer)
 
 func raven_leads() -> bool:
-	return beat in [Beat.HANGAR, Beat.ROOF] or (beat == Beat.ECHO and echo_ready)
+	return (beat == Beat.HANGAR or (beat == Beat.ROOF and point_index < 2)) or (beat == Beat.ECHO and echo_ready)
 
 func actor_is_playable(actor: PixelActor) -> bool:
 	return drive == null and timing == null and beat != Beat.END and actor == (raven if raven_leads() else player)
@@ -64,7 +63,7 @@ func actor_input_prefix(_actor: PixelActor) -> String:
 	return ""
 
 func is_combat() -> bool:
-	return beat in [Beat.AMBUSH, Beat.BOSS]
+	return beat in [Beat.AMBUSH, Beat.BOSS] or (beat == Beat.ROOF and point_index == 2)
 
 func _process(delta: float) -> void:
 	super._process(delta)
@@ -112,7 +111,6 @@ func _enter(next: int) -> void:
 	beat = next
 	stage = 0
 	point_index = 0
-	wave = 0
 	port_index = 0
 	clock = 0.0
 	countdown = 60.0
@@ -138,7 +136,7 @@ func _enter(next: int) -> void:
 		drive.flight = beat == Beat.FLIGHT
 		drive_layer.add_child(drive)
 		drive.completed.connect(_advance)
-		drive.crashed.connect(func(): _retry("Fahrzeug ausgefallen · Kontrollpunkt"))
+		drive.crashed.connect(func(): _retry("Landung abgebrochen · Kontrollpunkt" if beat == Beat.FLIGHT else "Fahrzeug ausgefallen · Kontrollpunkt"))
 	if is_combat():
 		_spawn_wave()
 	ui.dialogue(Story.DIALOGUE[beat])
@@ -153,19 +151,20 @@ func _retry(title: String) -> void:
 	ui.show_menu(title)
 
 func _spawn_wave() -> void:
-	if beat == Beat.BOSS and wave == 1:
+	if beat == Beat.BOSS:
 		_spawn_foe(Vector2(858, 340), 360, -1)
-		toast("Kenzō greift an. Q / RB stört seine Implantate.")
+		return
+	if beat == Beat.ROOF:
+		_spawn_foe(Vector2(735, 335), 80, 2)
+		_spawn_foe(Vector2(870, 320), 72, 1)
 		return
 	_spawn_foe(Vector2(481, 355), 64, 0)
 	_spawn_foe(Vector2(717, 364), 72, 1)
-	if beat == Beat.BOSS:
-		_spawn_foe(Vector2(876, 300), 64, 2)
 
 func _spawn_foe(point: Vector2, hp: int, variant: int) -> void:
 	var foe := EnemyScript.new()
 	foe.max_health = hp
-	var sprite: Texture2D = SHOOTERS[variant] if beat == Beat.AMBUSH else (GUARDS[variant] if variant >= 0 else preload("res://assets/sprites/jackal.png"))
+	var sprite: Texture2D = SHOOTERS[variant] if beat == Beat.AMBUSH else (GUARDS[variant] if variant >= 0 else preload("res://assets/sprites/kenzo.png"))
 	foe.setup(sprite, self)
 	foe.position = point
 	foe.hit_damage = 16 if variant >= 0 else 24
@@ -175,7 +174,10 @@ func _spawn_foe(point: Vector2, hp: int, variant: int) -> void:
 	foe.reset_fight(hp)
 	foe.active = true
 	if variant < 0:
-		foe.visual.self_modulate = Color("d7b7e6")
+		foe.sweep_enabled = true
+		foe.flash_time = 0.45
+	if beat == Beat.ROOF and variant == 2:
+		foe.front_shield = true
 	foes.append(foe)
 
 func combat_target(origin: Vector2, include_cloaked: bool = false) -> PixelActor:
@@ -204,6 +206,9 @@ func raven_hack() -> bool:
 	if target == null:
 		toast("Raven braucht eine freie Verbindung.")
 		return false
+	if beat == Beat.BOSS and target.health <= 180 and fposmod(clock, 3.0) > 1.45:
+		toast("Kenzō sperrt die Leitung. Auf das Flackern am Schulterservo warten.")
+		return false
 	target.hack()
 	hack_cooldown = 6.0
 	effects.hack_arc(raven.position, target.position)
@@ -214,21 +219,13 @@ func raven_hack() -> bool:
 func enemy_defeated(_foe: PixelActor = null) -> void:
 	if _living() != 0:
 		return
-	if beat == Beat.BOSS:
-		if wave == 0:
-			wave = 1
-			_finish_boss_wave.call_deferred()
-		else:
-			_finish_boss_fight.call_deferred()
+	if beat in [Beat.ROOF, Beat.BOSS]:
+		_finish_encounter.call_deferred(beat)
 	else:
 		toast("Die Gasse ist frei. Zum Motorrad!")
 
-func _finish_boss_wave() -> void:
-	if beat == Beat.BOSS and wave == 1 and _living() == 0:
-		_spawn_wave()
-
-func _finish_boss_fight() -> void:
-	if beat == Beat.BOSS and wave == 1 and _living() == 0:
+func _finish_encounter(expected: int) -> void:
+	if beat == expected and not foes.is_empty() and _living() == 0:
 		_advance()
 
 func _living() -> int:
@@ -255,7 +252,7 @@ func _target() -> Vector2:
 	return Story.POINTS[beat][point_index]
 
 func _timed_node() -> bool:
-	return beat in [Beat.HANGAR, Beat.ROOF] or (beat == Beat.ESCAPE and point_index == 0)
+	return beat in [Beat.HANGAR, Beat.ROOF] or (beat == Beat.ESCAPE and point_index in [0, 2])
 
 func _signal_open() -> bool:
 	return fposmod(clock, 2.1) < 1.0
@@ -272,12 +269,15 @@ func chapter_objective() -> String:
 			if point_index == 3:
 				return "Prüf-ICE · Portfolge 2, 1, 3 · %d / 3" % port_index
 			return Story.OBJECTIVES[beat] % point_index
-		Beat.PACT, Beat.ROOF:
+		Beat.ROOF:
+			return "Aufzugwachen ausschalten" if point_index == 2 else ["Kennung am Dachterminal prüfen", "Penthouse-Zugang öffnen"][point_index]
+		Beat.PACT:
 			return Story.OBJECTIVES[beat] % point_index
 		Beat.BOSS:
-			return "Wachen ausschalten" if wave == 0 else "Kenzō · %d / 360 HP" % (foes.back().health if not foes.is_empty() else 360)
+			var hp: int = foes.back().health if not foes.is_empty() else 360
+			return "Kenzō · %d / 360 HP%s" % [hp, " · Hackfenster" if hp <= 180 and fposmod(clock, 3.0) <= 1.45 else ""]
 		Beat.ESCAPE:
-			return "%s · %02d s" % ["Daten sichern" if point_index == 0 else "Zum Aerodyne", ceili(countdown)]
+			return "%s · %02d s" % [["Daten sichern", "Aufzug blockieren", "Pumpeneinheit neu starten", "Aerodyne starten"][point_index], ceili(countdown)]
 	return Story.OBJECTIVES[beat]
 
 func interaction_prompt() -> String:
@@ -356,7 +356,15 @@ func interact(_actor: PixelActor = null) -> void:
 	if beat == Beat.HANGAR:
 		effects.hack_arc(_target(), Vector2(884, 328))
 		toast(["Stromversorgung aktiv.", "Kennung kopiert.", "Transponder bereit. Prüf-ICE verlangt Portfolge 2, 1, 3."][point_index])
+	if beat == Beat.ESCAPE:
+		toast(["Daten gesichert. Spuren gelöscht.", "Aufzug blockiert.", "Pumpe läuft. Zur Luke!", "Aerodyne hebt ab."][point_index])
 	point_index += 1
+	if beat == Beat.ROOF and point_index == 2:
+		player.position = raven.position + Vector2(-50, 15)
+		player.show()
+		ui.dialogue([["RAVEN", "Sicherung am Aufzug unter dem Penthouse. Ich nehme den Funker, du den Schild.", "tower"]])
+		_spawn_wave()
+		return
 	if beat != Beat.HANGAR and point_index == Story.POINTS[beat].size():
 		_advance()
 
@@ -506,6 +514,10 @@ func _draw() -> void:
 			draw_colored_polygon(PackedVector2Array([p + Vector2(-39, 14), p + Vector2(-23, -18), p + Vector2(21, -18), p + Vector2(41, 14), p + Vector2(22, 24), p + Vector2(-21, 24)]), trim.lightened(0.12))
 			draw_rect(Rect2(p - Vector2(14, 13), Vector2(28, 12)), floor.darkened(0.35))
 			draw_line(p + Vector2(-31, 13), p + Vector2(32, 13), neon, 2)
+	if beat == Beat.BOSS and not foes.is_empty():
+		var boss: PixelActor = foes.back()
+		if boss.health > 0 and boss.health <= 180 and fposmod(clock, 3.0) <= 1.45:
+			draw_circle(boss.position + Vector2(8, -34), 4.0, Color("72eff4"))
 	var point := _target()
 	if point != Vector2.ZERO:
 		var signal_color := Color("f45d79") if _timed_node() and not _signal_open() else Color("72eff4")

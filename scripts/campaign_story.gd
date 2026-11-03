@@ -13,7 +13,7 @@ const OBJECTIVES := [
 const POINTS := [
 	[Vector2(265, 312), Vector2(503, 318), Vector2(731, 305)], [Vector2(920, 380)], [],
 	[Vector2(738, 323), Vector2(865, 382)], [Vector2(306, 340), Vector2(542, 410), Vector2(795, 324)], [Vector2(465, 325), Vector2(684, 345), Vector2(870, 360)],
-	[], [Vector2(310, 340), Vector2(818, 365)], [], [Vector2(345, 325), Vector2(907, 395)],
+	[], [Vector2(310, 340), Vector2(818, 365)], [], [Vector2(345, 325), Vector2(592, 350), Vector2(858, 366), Vector2(914, 397)],
 	[Vector2(735, 353)], [],
 ]
 const PANELS := {
@@ -56,7 +56,7 @@ const DIALOGUE := {
 	],
 	Beat.FLIGHT: [
 		["ARTOS", "Systemstart. Parameter instabil.", "tower"],
-		["SHADEPI", "Festhalten. Ich halte uns zwischen den Hindernissen, bis wir den Tower erreichen.", "tower"],
+		["SHADEPI", "Ich halte uns zwischen den Baken. Raven, sende die kopierte Kennung, sobald der Scanner in Reichweite ist.", "tower"],
 	],
 	Beat.ROOF: [
 		["RAVEN", "Die falsche Kennung hat uns bis hierher gebracht. Ich öffne die Penthouse-Tür und lenke Kenzō ab.", "tower"],
@@ -64,10 +64,11 @@ const DIALOGUE := {
 	],
 	Beat.BOSS: [
 		["KENZŌ MORIYAMA", "Raven. Ich habe lange nach dir gesucht.", "kenzo"],
-		["SHADEPI", "Raven, runter! Seine Aufzugwachen kommen. Sind sie erledigt, kümmern wir uns um seinen Schulterservo.", "kenzo"],
+		["SHADEPI", "Raven, runter! Sein rechter Schulterservo ist offen. Stör seine Implantate, ich halte ihn auf.", "kenzo"],
 	],
 	Beat.ESCAPE: [
 		["RAVEN", "Jahrelang bin ich vor dir geflohen, Kenzō. Damit ist Schluss.", "kenzo"],
+		["PENTHOUSE", "Shadepi tritt zurück. Ravens kybernetische Fäden spannen sich ein letztes Mal.", "kenzo"],
 		["SHADEPI", "Sichere die Daten. Die Sprengsätze laufen. Wir haben sechzig Sekunden bis zum Start.", "flucht"],
 	],
 	Beat.LAKE: [

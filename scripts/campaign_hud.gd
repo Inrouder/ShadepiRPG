@@ -27,7 +27,9 @@ func _process(delta: float) -> void:
 		energy_bar.size.x = 0.0
 		if world.drive.flight:
 			objective.text = "Tower-Anflug · %.0f s" % maxf(0.0, 15.0 - world.drive.elapsed)
-			controls.text = "A/D / Stick · Flugspur wechseln und Hindernissen ausweichen"
+			controls.text = "A/D / Stick · Flugspur wechseln    Q / RB · Gleiterkennung"
+			abilities.visible = not dialogue_open and not world.menu_open
+			abilities.text = "Kennung bestätigt" if world.drive.transponder_sent else ("Scanner in Reichweite · Q / RB" if world.drive.elapsed >= 9.0 else "Scanner noch außer Reichweite")
 		else:
 			objective.text = "Verfolger · %d %% Panzerung" % maxi(0, world.drive.armour)
 			controls.text = "A/D / Stick · Lenken    J / X · Feuer    Q / RB · Hack    Leertaste / B · Granate"
