@@ -156,6 +156,9 @@ func combat_target(origin: Vector2, include_cloaked: bool = false) -> PixelActor
 func world_walls() -> Array[Rect2]:
 	return WorldData.WALLS
 
+func world_props() -> Array[Dictionary]:
+	return WorldData.PROPS
+
 func _build_world() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	var ground := Sprite2D.new()
@@ -170,7 +173,7 @@ func _build_world() -> void:
 	actors = Node2D.new()
 	actors.y_sort_enabled = true
 	add_child(actors)
-	for prop in WorldData.PROPS:
+	for prop in world_props():
 		_collider(prop.collision)
 		var sprite := Sprite2D.new()
 		var atlas := AtlasTexture.new()

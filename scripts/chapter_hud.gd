@@ -10,6 +10,7 @@ const COMIC := {
 	"begegnung": preload("res://assets/comic/begegnung.jpg"),
 }
 
+var next_chapter_button: Button
 var comic_panel: Panel
 var comic_art: TextureRect
 var comic_fade: Tween
@@ -18,7 +19,8 @@ func _ready() -> void:
 	super._ready()
 	mission_title.text = "KAPITEL 1 / ECHOS IN NEON"
 	menu_description.text = "Kapitel 1 · Ravens Jagd\nLokal-Koop beginnt mit Ravens Rückkehr."
-	menu_help.position.y = 279
+	next_chapter_button = button_at("Kapitel 2 öffnen", 274, func(): get_tree().change_scene_to_file("res://scenes/chapter_two.tscn"))
+	menu_help.position.y = 302
 	menu_help.text = "Controller · Stick / Steuerkreuz und A"
 	restart_button.text = "Kapitel 1 neu starten"
 	comic_panel = panel(Rect2(0, 0, 640, 360))
@@ -47,6 +49,7 @@ func _update_mode_buttons() -> void:
 	resume_button.text = "Fortsetzen" if world.started and world.chapter_coop == requested_coop else "Kapitel 1 starten"
 	load_button.text = "Kontrollpunkt laden"
 	load_button.disabled = world.saved_checkpoint(requested_coop) < 0
+	next_chapter_button.visible = world.saved_checkpoint(false) == world.Phase.COMPLETE or world.saved_checkpoint(true) == world.Phase.COMPLETE or FileAccess.file_exists("user://shadepi-chapter-two.cfg")
 
 func _start_new() -> void:
 	world.chapter_coop = requested_coop

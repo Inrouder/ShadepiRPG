@@ -32,6 +32,10 @@ Raven zielt mit der Maus und schießt im Solo mit Linksklick, im lokalen Koop mi
 
 [Kapitelbilder, Level und Figuren bearbeiten](docs/figuren-bearbeiten.md)
 
+## Kapitel 2 · Offenbarungen im Verborgenen
+
+Nach Kapitel 1 führt **E / A** direkt ins Industriegebiet. Nach dem ersten Abschluss ist Kapitel 2 auch aus dem Menü erreichbar. Scanne das Gelände, zeige Raven das Fragment und steuere sie im Deep Dive. Greife an den Netzwerkknoten bei cyanfarbenem Signal zu. Kapitel 2 wechselt erzählerisch zwischen Shadepi und Raven und hat einen eigenen Kontrollpunkt.
+
 ## Controller
 
 Vor dem gemeinsamen Kampf steuert der erste Controller die jeweils aktive Figur. Im Einzelspieler bleibt diese Zuordnung auch im Finale erhalten. Im Koop steuern zwei verbundene Controller Shadepi und Raven in der Reihenfolge ihrer Gerätezuordnung. Bei einem Controller übernimmt er Raven und Shadepi wird mit WASD gespielt.

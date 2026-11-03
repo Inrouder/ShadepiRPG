@@ -30,3 +30,5 @@ Die Dateien unter `assets/custom/` werden vom Generator nicht überschrieben. En
 | Wege, Hindernisse und Gegner | `scripts/chapter_one.gd` mit `BARRIERS`, `TRAIL`, `HUNT_GUARDS` und `RESCUE_GUARDS`. Gemeinsame Wände und Requisiten stehen in `scripts/world_data.gd`. |
 
 Die Kapitelkarte wird beim Start aus diesen Daten aufgebaut. Wenn du eine Mauer versetzt, passe sowohl das Bild als auch das Kollisionsrechteck an. Starte das Kapitel in Godot und prüfe den Weg bis zur Schleuse. Für eine eigene Windows-Fassung exportierst du anschließend neu.
+
+Kapitel 2 nutzt die Szene `scenes/chapter_two.tscn`. Dialoge, Scanpunkte, Netzwerkknoten und Hindernisse stehen in `scripts/chapter_two.gd`; die Comiczuordnung steht in `scripts/chapter_two_hud.gd`.

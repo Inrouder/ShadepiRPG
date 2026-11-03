@@ -353,11 +353,16 @@ func player_strike(amount: int) -> void:
 		super.player_strike(amount)
 
 func interaction_prompt() -> String:
+	if phase == Phase.COMPLETE:
+		return "E / A · Weiter zu Kapitel 2"
 	if phase == Phase.RESCUE and gate_open and player.position.distance_to(raven.position) < 47.0:
 		return "E / A · Nach Raven sehen"
 	return ""
 
 func interact(_actor: PixelActor = null) -> void:
+	if phase == Phase.COMPLETE and not is_busy():
+		get_tree().change_scene_to_file("res://scenes/chapter_two.tscn")
+		return
 	if is_busy() or interaction_prompt().is_empty():
 		return
 	phase = Phase.REVIVE

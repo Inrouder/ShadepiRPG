@@ -130,6 +130,7 @@ func run() -> void:
 	scene.queue_free()
 	await process_frame
 	await check_chapter()
+	await check_chapter_two()
 	print("SHADEPI TESTS: %d checks, %d failures" % [checks, failures])
 	quit(1 if failures else 0)
 
@@ -475,3 +476,37 @@ func walk_to(actor: PixelActor, point: Vector2) -> void:
 		await physics_frame
 	for action in actions:
 		Input.action_release(action)
+
+func check_chapter_two() -> void:
+	var chapter = load("res://scenes/chapter_two.tscn").instantiate()
+	root.add_child(chapter)
+	chapter.new_game()
+	finish_dialogue(chapter)
+	for scan in chapter.SCANS:
+		chapter.player.position = scan
+		chapter.interact()
+	check(chapter.scan_index == 3, "chapter two scans all approaches before entry")
+	chapter.player.position = chapter.DOOR
+	chapter.interact()
+	finish_dialogue(chapter)
+	check(chapter.section == chapter.Section.HIDEOUT, "steel door leads to Raven")
+	chapter.player.position = chapter.WORKBENCH
+	chapter.interact()
+	finish_dialogue(chapter)
+	check(chapter.raven_leads() and chapter.actor_is_playable(chapter.raven), "deep dive switches control to Raven")
+	chapter.raven.position = chapter.RELAYS[0]
+	chapter.ice_cycle = 1.5
+	chapter.interact()
+	check(chapter.relay_index == 0, "red ICE window blocks access")
+	for relay in chapter.RELAYS:
+		chapter.ice_cycle = 0.0
+		chapter.raven.position = relay
+		chapter.interact()
+	finish_dialogue(chapter)
+	check(chapter.section == chapter.Section.RECOVERY and chapter.actor_is_playable(chapter.player), "countertrace returns control to Shadepi")
+	chapter.player.position = chapter.BATH
+	chapter.interact()
+	finish_dialogue(chapter)
+	check(chapter.section == chapter.Section.END and chapter.saved_checkpoint() == chapter.Section.END, "the vow closes and saves chapter two")
+	chapter.queue_free()
+	await process_frame
