@@ -20,6 +20,7 @@ const PORTS := [Vector2(725, 359), Vector2(785, 350), Vector2(842, 367)]
 const PORT_ORDER := [1, 0, 2]
 var clock := 0.0
 var countdown := 60.0
+var ritual_flash := 0.0
 var foes: Array[PixelActor] = []
 var drive: Node2D
 var timing: Node2D
@@ -69,6 +70,7 @@ func _process(delta: float) -> void:
 	super._process(delta)
 	if raven_leads():
 		camera.position = raven.position + Vector2(0, -52)
+	ritual_flash = maxf(0.0, ritual_flash - delta)
 	if is_busy():
 		return
 	clock += delta
@@ -114,6 +116,8 @@ func _enter(next: int) -> void:
 	port_index = 0
 	clock = 0.0
 	countdown = 60.0
+	ritual_flash = 0.0
+	music.stream_paused = next in [Beat.LAKE, Beat.END] or not audio_on
 	hack_cooldown = 0.0
 	player.health = 100
 	player.energy = 100.0
@@ -276,6 +280,8 @@ func chapter_objective() -> String:
 		Beat.BOSS:
 			var hp: int = foes.back().health if not foes.is_empty() else 360
 			return "Kenzō · %d / 360 HP%s" % [hp, " · Hackfenster" if hp <= 180 and fposmod(clock, 3.0) <= 1.45 else ""]
+		Beat.LAKE:
+			return ["Mit Raven am Ufer sprechen", "Bitte am Wasser sprechen", "Antwort des Heiligtums hören", "Aufnahme vollziehen"][point_index]
 		Beat.ESCAPE:
 			return "%s · %02d s" % [["Daten sichern", "Aufzug blockieren", "Pumpeneinheit neu starten", "Aerodyne starten"][point_index], ceili(countdown)]
 	return Story.OBJECTIVES[beat]
@@ -313,6 +319,9 @@ func _near_port() -> int:
 
 func interact(_actor: PixelActor = null) -> void:
 	if is_busy() or interaction_prompt().is_empty():
+		return
+	if beat == Beat.LAKE:
+		_ritual_step()
 		return
 	if beat == Beat.ECHO:
 		if not echo_ready:
@@ -367,6 +376,25 @@ func interact(_actor: PixelActor = null) -> void:
 		return
 	if beat != Beat.HANGAR and point_index == Story.POINTS[beat].size():
 		_advance()
+
+func _ritual_step() -> void:
+	var lines: Array = [
+		[["SHADEPI", "Das Heiligtum hat dich erkannt. Wenn du es freiwillig willst, kannst du dem Orden beitreten.", "see"],
+		 ["RAVEN", "Ich will nach vorne blicken. Ja.", "see"]],
+		[["SHADEPI", "Heiligtum, höre unsere Bitte. Raven tritt aus freiem Willen vor dich.", ""]],
+		[["HEILIGTUM", "Dein Wille ist stark. Ich nehme dich in meine Obhut.", ""]],
+		[["SHADEPI", "Raven, ich nehme dich als Zweite Kriegerin und Behüterin des Heiligtums in den Orden des Weißen Drachen auf.", ""]],
+	]
+	raven.position = _target() + Vector2(18, 5)
+	if point_index > 0:
+		ritual_flash = 1.4
+		effects.burst(_target(), Color("72eff4"), 30)
+		effects.water_step(_target())
+	ui.dialogue(lines[point_index], func():
+		point_index += 1
+		if point_index == Story.POINTS[Beat.LAKE].size():
+			_advance()
+	)
 
 func _start_echo() -> void:
 	timing = Timing.new()
@@ -451,6 +479,8 @@ func _draw() -> void:
 		draw_circle(Vector2.ZERO, 116, trim)
 		for i in 8:
 			draw_arc(Vector2.ZERO, 32.0 + i * 11.0, 0, TAU, 48, neon.darkened(0.30 + i * 0.06), 1)
+		if ritual_flash > 0.0:
+			draw_arc(Vector2.ZERO, 36.0 + (1.4 - ritual_flash) * 45.0, 0, TAU, 48, Color(neon, ritual_flash / 1.4), 3.0)
 		draw_set_transform(Vector2.ZERO)
 	else:
 		for box in COVER:

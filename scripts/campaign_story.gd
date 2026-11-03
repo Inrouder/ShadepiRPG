@@ -14,7 +14,7 @@ const POINTS := [
 	[Vector2(265, 312), Vector2(503, 318), Vector2(731, 305)], [Vector2(920, 380)], [],
 	[Vector2(738, 323), Vector2(865, 382)], [Vector2(306, 340), Vector2(542, 410), Vector2(795, 324)], [Vector2(465, 325), Vector2(684, 345), Vector2(870, 360)],
 	[], [Vector2(310, 340), Vector2(818, 365)], [], [Vector2(345, 325), Vector2(592, 350), Vector2(858, 366), Vector2(914, 397)],
-	[Vector2(735, 353)], [],
+	[Vector2(615, 390), Vector2(667, 374), Vector2(721, 359), Vector2(754, 348)], [],
 ]
 const PANELS := {
 	"pakt": preload("res://assets/comic/pakt.jpg"), "hinterhalt": preload("res://assets/comic/hinterhalt.jpg"),
@@ -77,10 +77,6 @@ const DIALOGUE := {
 		["NACHT / AUSSERHALB DER STADT", "Die Druckwelle trifft den Aerodyne. Shadepi fängt den Sturz ab und bringt sie zu einem See fern der Stadt.", "see"],
 	],
 	Beat.END: [
-		["SHADEPI", "Das Heiligtum hat dich erkannt. Wenn du es freiwillig willst, kannst du dem Orden beitreten.", "see"],
-		["RAVEN", "Ich will nach vorne blicken. Ja.", "see"],
-		["HEILIGTUM", "Dein Wille ist stark. Ich nehme dich in meine Obhut.", "see"],
-		["SHADEPI", "Raven, ich nehme dich als Zweite Kriegerin und Behüterin des Heiligtums in den Orden des Weißen Drachen auf.", "see"],
 		["EPILOG", "Shadepi nimmt seine Maske ab. Raven küsst ihn. Am See wird der Orden des Weißen Drachen wiedergeboren.", "see"],
 	],
 }
