@@ -103,11 +103,20 @@ func _draw() -> void:
 	for y in range(-32, 360, 42):
 		for divider in [275, 365]:
 			draw_rect(Rect2(divider, y + fposmod(elapsed * 220, 42), 2, 21), Color("65728b"))
+	for i in 44:
+		var rain := Vector2(i * 157 % 640, fposmod(i * 37 + elapsed * 335, 360))
+		draw_line(rain, rain + Vector2(-2, 8), Color(0.57, 0.77, 0.95, 0.14))
 	if not flight:
 		var p := Vector2(LANES[boss_lane], 115)
+		for offset in [-18, 13]:
+			var lamp := p + Vector2(offset, -27)
+			draw_colored_polygon(PackedVector2Array([lamp, lamp + Vector2(5, 0), lamp + Vector2(13, -49), lamp + Vector2(-9, -49)]), Color(0.60, 0.84, 1.0, 0.10))
 		draw_rect(Rect2(p - Vector2(27, 28), Vector2(54, 57)), Color("080b14"))
 		draw_rect(Rect2(p - Vector2(22, 28), Vector2(44, 56)), Color("653041"))
 		draw_rect(Rect2(p - Vector2(17, 13), Vector2(34, 24)), Color("192c41"))
+		draw_rect(Rect2(p - Vector2(16, 19), Vector2(32, 3)), Color("855467"))
+		draw_line(p + Vector2(-14, -12), p + Vector2(12, -12), Color("5c7493"), 2)
+		draw_line(p + Vector2(-19, 17), p + Vector2(19, 17), Color("bd6474"), 2)
 		for offset in [-18, 12]:
 			draw_rect(Rect2(p + Vector2(offset, 23), Vector2(7, 4)), pink)
 		if hack > 0:

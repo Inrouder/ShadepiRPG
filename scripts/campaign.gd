@@ -328,7 +328,19 @@ func _draw() -> void:
 		draw_line(Vector2(0, y), Vector2(1024, y), trim.darkened(0.28))
 		for x in range(y % 40, 1024, 52):
 			draw_line(Vector2(x, y), Vector2(x + 5, y + 16), trim.darkened(0.39))
+	for i in 150:
+		var speck := Vector2((i * 137) % 1024, 255 + (i * 83) % 238)
+		draw_rect(Rect2(speck, Vector2(2 + i % 5, 1)), trim.darkened(0.46) if i % 3 else trim.darkened(0.14))
 	if lake:
+		for i in 42:
+			var reed := Vector2(90 + i * 97 % 900, 286 + i * 67 % 189)
+			if reed.distance_to(Vector2(741, 347)) > 125:
+				draw_line(reed, reed + Vector2(-4, -7 - i % 6), trim.lightened(0.10))
+				draw_line(reed, reed + Vector2(5, -5), trim)
+				draw_rect(Rect2(reed + Vector2(-3, 0), Vector2(8, 2)), floor.darkened(0.33))
+		for i in 16:
+			var mote := Vector2(345 + i * 61 % 620, 256 + fposmod(i * 32 - clock * 5, 182))
+			draw_circle(mote, 1 + i % 2 * 0.35, Color(0.38, 0.92, 0.73, 0.25 + sin(clock + i) * 0.16))
 		draw_set_transform(Vector2(741, 347), 0.0, Vector2(1.0, 0.53))
 		draw_circle(Vector2.ZERO, 116, trim)
 		for i in 8:
@@ -362,6 +374,12 @@ func _draw() -> void:
 					draw_rect(Rect2(x + 6, 308, 76, 18), Color("6a4561"))
 					draw_line(Vector2(x + 43, 309), Vector2(x + 43, 328), floor, 2)
 				draw_rect(Rect2(682, 308, 75, 5), neon.darkened(0.42))
+			"hangar":
+				for x in [180, 450, 692]:
+					draw_rect(Rect2(x, 294, 68, 25), trim.darkened(0.4))
+					for rack in 5:
+						draw_line(Vector2(x + 7 + rack * 12, 314), Vector2(x + 15 + rack * 12, 298), neon.darkened(0.42), 2)
+				draw_polyline(PackedVector2Array([Vector2(176, 310), Vector2(201, 330), Vector2(283, 330), Vector2(306, 340)]), trim, 3)
 			"alley":
 				for x in [104, 477, 875]:
 					draw_rect(Rect2(x, 288, 33, 22), trim)
