@@ -12,7 +12,7 @@ const OBJECTIVES := [
 ]
 const POINTS := [
 	[Vector2(265, 312), Vector2(503, 318), Vector2(731, 305)], [Vector2(920, 380)], [],
-	[Vector2(738, 323)], [Vector2(306, 340), Vector2(542, 410), Vector2(795, 324)], [Vector2(615, 330)],
+	[Vector2(738, 323), Vector2(865, 382)], [Vector2(306, 340), Vector2(542, 410), Vector2(795, 324)], [Vector2(615, 330)],
 	[], [Vector2(310, 340), Vector2(818, 365)], [], [Vector2(345, 325), Vector2(907, 395)],
 	[Vector2(735, 353)], [],
 ]
@@ -45,7 +45,7 @@ const DIALOGUE := {
 		["SHADEPI", "Sieh dir die Werkbank an. Darunter liegt der Zugang zum Sanktuarium.", "garage"],
 	],
 	Beat.HANGAR: [
-		["SHADEPI", "Fahrzeuge, Waffen und die letzten Bestände des Ordens. Der Aerodyne unter der Plane braucht neue Zugangsdaten.", "hangar"],
+		["SHADEPI", "Schau dich um. Ich wechsle den Servo. Der Aerodyne braucht die Kennung von Kenzōs Gleiter.", "hangar"],
 		["RAVEN", "Ich prüfe den Stromkreis, kopiere die Kennung und teste das ARToS-System.", "hangar"],
 	],
 	Beat.ECHO: [

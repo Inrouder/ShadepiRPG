@@ -15,6 +15,9 @@ const GUARDS := [
 var beat := Beat.PACT
 var point_index := 0
 var wave := 0
+var port_index := 0
+const PORTS := [Vector2(725, 359), Vector2(785, 350), Vector2(842, 367)]
+const PORT_ORDER := [1, 0, 2]
 var clock := 0.0
 var countdown := 60.0
 var foes: Array[PixelActor] = []
@@ -73,10 +76,10 @@ func _process(delta: float) -> void:
 			_retry("Zeit abgelaufen · Kontrollpunkt")
 
 func _update_raven_follower(delta: float) -> void:
-	if not is_combat():
+	if not is_combat() and (beat != Beat.GARAGE or point_index != 1):
 		return
-	var target: Vector2 = player.position + Vector2(-35, 22)
-	if raven.position.distance_to(target) > 35:
+	var target: Vector2 = Story.POINTS[beat][1] + Vector2(-20, 0) if beat == Beat.GARAGE else player.position + Vector2(-35, 22)
+	if raven.position.distance_to(target) > (8.0 if beat == Beat.GARAGE else 35.0):
 		raven.facing = (target - raven.position).normalized()
 		raven.velocity = raven.facing * 88
 		raven.move_and_slide()
@@ -101,6 +104,7 @@ func _enter(next: int) -> void:
 	stage = 0
 	point_index = 0
 	wave = 0
+	port_index = 0
 	clock = 0.0
 	countdown = 60.0
 	hack_cooldown = 0.0
@@ -235,6 +239,8 @@ func chapter_label() -> String:
 	return "KAPITEL %d / %s" % [chapter, Story.TITLES[chapter - 3]]
 
 func _target() -> Vector2:
+	if beat == Beat.HANGAR and point_index == 3:
+		return PORTS[PORT_ORDER[port_index]]
 	if (is_combat() and _living() > 0) or point_index >= Story.POINTS[beat].size():
 		return Vector2.ZERO
 	return Story.POINTS[beat][point_index]
@@ -249,7 +255,13 @@ func chapter_objective() -> String:
 	match beat:
 		Beat.AMBUSH:
 			return "Hinterhalt · %d Gegner" % _living() if _living() else "Zum Motorrad"
-		Beat.PACT, Beat.HANGAR, Beat.ROOF:
+		Beat.GARAGE:
+			return "Gemeinsam auf die Plattform" if point_index == 1 else Story.OBJECTIVES[beat]
+		Beat.HANGAR:
+			if point_index == 3:
+				return "Prüf-ICE · Portfolge 2, 1, 3 · %d / 3" % port_index
+			return Story.OBJECTIVES[beat] % point_index
+		Beat.PACT, Beat.ROOF:
 			return Story.OBJECTIVES[beat] % point_index
 		Beat.BOSS:
 			return "Wachen ausschalten" if wave == 0 else "Kenzō · %d / 360 HP" % (foes.back().health if not foes.is_empty() else 360)
@@ -260,14 +272,48 @@ func chapter_objective() -> String:
 func interaction_prompt() -> String:
 	var target := _target()
 	var actor: PixelActor = raven if raven_leads() else player
+	if beat == Beat.HANGAR:
+		var prop := _hangar_prop()
+		if not prop.is_empty():
+			return "E / A · " + prop
+		if point_index == 3 and _near_port() >= 0:
+			return "E / A · Port %d prüfen" % (_near_port() + 1)
 	if target == Vector2.ZERO or actor.position.distance_to(target) > 43.0:
 		return ""
 	if _timed_node():
 		return "E / A · Daten abgreifen" if _signal_open() else "ICE scannt · auf Cyan warten"
 	return "E / A · " + chapter_objective()
 
+func _hangar_prop() -> String:
+	for item in [[Vector2(193, 289), "Klingen ansehen"], [Vector2(476, 293), "Ersatzteile ansehen"], [Vector2(899, 330), "Aerodyne ansehen"]]:
+		if raven.position.distance_to(item[0]) <= 24.0:
+			return item[1]
+	return ""
+
+func _near_port() -> int:
+	for i in PORTS.size():
+		if raven.position.distance_to(PORTS[i]) <= 22.0:
+			return i
+	return -1
+
 func interact(_actor: PixelActor = null) -> void:
 	if is_busy() or interaction_prompt().is_empty():
+		return
+	if beat == Beat.GARAGE and point_index == 1 and raven.position.distance_to(_target()) > 35.0:
+		toast("Warte auf Raven.")
+		return
+	if beat == Beat.HANGAR and not _hangar_prop().is_empty():
+		toast(_hangar_prop() + " · Bestände des Ordens.")
+		return
+	if beat == Beat.HANGAR and point_index == 3:
+		if _near_port() != PORT_ORDER[port_index] or not _signal_open():
+			port_index = 0
+			toast("Prüf-ICE hat ausgelöst. Prüfe 2, 1, 3 bei Cyan.")
+			return
+		effects.hack_arc(PORTS[PORT_ORDER[port_index]], Vector2(884, 328))
+		port_index += 1
+		if port_index == PORTS.size():
+			_advance()
 		return
 	if _timed_node() and not _signal_open():
 		toast("Zugriff blockiert. Warte auf das Cyan-Signal.")
@@ -277,8 +323,11 @@ func interact(_actor: PixelActor = null) -> void:
 		sound("hack")
 	if beat == Beat.PACT:
 		toast(["Aufzug: Sicherheitskräfte eine Etage tiefer.", "Dachzugang: privater Landeplatz.", "Scanner: Kennung von Kenzōs Gleiter erforderlich."][point_index])
+	if beat == Beat.HANGAR:
+		effects.hack_arc(_target(), Vector2(884, 328))
+		toast(["Stromversorgung aktiv.", "Kennung kopiert.", "Transponder bereit. Prüf-ICE verlangt Portfolge 2, 1, 3."][point_index])
 	point_index += 1
-	if point_index == Story.POINTS[beat].size():
+	if beat != Beat.HANGAR and point_index == Story.POINTS[beat].size():
 		_advance()
 
 func saved_checkpoint() -> int:
@@ -379,6 +428,10 @@ func _draw() -> void:
 					draw_line(Vector2(x + 43, 309), Vector2(x + 43, 328), floor, 2)
 				draw_rect(Rect2(682, 308, 75, 5), neon.darkened(0.42))
 			"hangar":
+				if beat == Beat.HANGAR and point_index == 3:
+					for port in PORTS:
+						draw_rect(Rect2(port - Vector2(12, 9), Vector2(24, 18)), trim)
+						draw_rect(Rect2(port - Vector2(9, 6), Vector2(18, 12)), neon.darkened(0.4) if _signal_open() else Color("6c344a"), false)
 				for x in [180, 450, 692]:
 					draw_rect(Rect2(x, 294, 68, 25), trim.darkened(0.4))
 					for rack in 5:
