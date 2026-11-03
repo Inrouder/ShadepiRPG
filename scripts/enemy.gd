@@ -1,0 +1,101 @@
+extends PixelActor
+
+var health := 180
+var active := false
+var exposed := 0.0
+var stun := 0.0
+var cooldown := 1.0
+var windup := 0.0
+var lunge := 0.0
+var hit_done := false
+var attack_direction := Vector2.DOWN
+
+func _physics_process(delta: float) -> void:
+	if health <= 0 or world.is_busy():
+		return
+	exposed = maxf(0.0, exposed - delta)
+	stun = maxf(0.0, stun - delta)
+	cooldown = maxf(0.0, cooldown - delta)
+	velocity = Vector2.ZERO
+	var state := "idle"
+	var offset: Vector2 = world.player.global_position - global_position
+	if stun > 0.0:
+		state = "hurt"
+	elif windup > 0.0:
+		windup -= delta
+		if windup <= 0.0:
+			lunge = 0.22
+			hit_done = false
+	elif lunge > 0.0:
+		lunge -= delta
+		velocity = attack_direction * 220.0
+		state = "attack"
+		if not hit_done and offset.length() < 35.0:
+			hit_done = true
+			world.player.take_damage(24, global_position)
+		if lunge <= 0.0:
+			cooldown = 1.1
+	elif active and world.player.cloak_time <= 0.0:
+		facing = offset.normalized()
+		if offset.length() < 60.0 and cooldown <= 0.0:
+			windup = 0.72
+			attack_direction = facing
+		elif offset.length() > 35.0:
+			velocity = facing * 46.0
+			state = "walk"
+	move_and_slide()
+	animate(state, delta)
+
+func take_damage(base: int) -> void:
+	if health <= 0:
+		return
+	var amount := CombatRules.damage(base, exposed > 0.0)
+	health = maxi(0, health - amount)
+	flash_time = 0.17
+	world.impact(global_position, true)
+	world.damage_number(global_position + Vector2(0, -48), str(amount))
+	if health <= 0:
+		active = false
+		windup = 0.0
+		lunge = 0.0
+		visual.modulate = Color(0.45, 0.5, 0.6, 0.7)
+		visual.rotation = PI * 0.5
+		visual.position.y = -10
+		world.enemy_defeated()
+
+func hack() -> void:
+	if health <= 0:
+		return
+	exposed = 6.0
+	stun = 1.8
+	windup = 0.0
+	lunge = 0.0
+	cooldown = 1.2
+	flash_time = 0.1
+
+func reset_fight(hp: int = 180) -> void:
+	health = hp
+	exposed = 0.0
+	stun = 0.0
+	windup = 0.0
+	lunge = 0.0
+	cooldown = 1.0
+	flash_time = 0.0
+	visual.modulate = Color.WHITE
+	visual.rotation = 0.0
+	visual.position.y = -26
+
+func _draw() -> void:
+	super._draw()
+	if health <= 0:
+		return
+	if active:
+		draw_rect(Rect2(-22, -64, 44, 3), Color("162435"))
+		draw_rect(Rect2(-22, -64, 44 * health / 180.0, 3), Color("57d5e4") if exposed > 0 else Color("ec597e"))
+	if windup > 0.0:
+		var radius := 16.0 + 26.0 * (1.0 - windup / 0.72)
+		draw_arc(Vector2.ZERO, radius, attack_direction.angle() - 0.65, attack_direction.angle() + 0.65, 16, Color("ff5974"), 2.0)
+		var target := attack_direction * 56.0
+		draw_line(Vector2.ZERO, target, Color(1.0, 0.3, 0.42, 0.4), 1.0)
+	if exposed > 0.0:
+		draw_arc(Vector2(0, -28), 23, 0.0, TAU, 20, Color(0.2, 0.85, 1.0, 0.6), 1.0)

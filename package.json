@@ -1,0 +1,7 @@
+{
+  "name": "shadepi-rpg-assets",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {"assets": "node tools/generate_assets.cjs"},
+  "devDependencies": {"@napi-rs/canvas": "0.1.100"}
+}
