@@ -494,17 +494,38 @@ func check_chapter_two() -> void:
 	chapter.player.position = chapter.WORKBENCH
 	chapter.interact()
 	finish_dialogue(chapter)
+	check(chapter.section == chapter.Section.COOLING, "Raven must be connected to the cooling system before diving")
+	chapter.player.position = chapter.BATH
+	chapter.interact()
 	check(chapter.raven_leads() and chapter.actor_is_playable(chapter.raven), "deep dive switches control to Raven")
 	chapter.raven.position = chapter.RELAYS[0]
 	chapter.ice_cycle = 1.5
 	chapter.interact()
 	check(chapter.relay_index == 0, "red ICE window blocks access")
-	for relay in chapter.RELAYS:
-		chapter.ice_cycle = 0.0
-		chapter.raven.position = relay
-		chapter.interact()
+	chapter.ice_cycle = 1.2
+	chapter.interact()
+	check(chapter.relay_index == 1 and chapter.threats.size() == 1, "first hack opens the virus encounter")
+	check(chapter.load_game() and chapter.relay_index == 1 and chapter.threats.size() == 1, "the saved data node reloads its encounter")
+	for expected in [1, 2, 1, 2, 1]:
+		check(chapter.threats.size() == expected, "ICE encounter spawns the expected group")
+		var target: Node2D = chapter.threats[0]
+		target.elapsed = 1.6
+		chapter.raven.position = target.position - Vector2(0, 25)
+		chapter.raven.facing = Vector2.DOWN
+		chapter.raven_shot()
+		if chapter.relay_index == 1 and chapter.threats.is_empty():
+			chapter.raven.position = chapter.RELAYS[1]
+			chapter.ice_cycle = 0.0
+			chapter.interact()
+	chapter.raven.position = chapter.RELAYS[2]
+	chapter.ice_cycle = 0.0
+	chapter.interact()
+	check(chapter.dive_hold > 0.0 and chapter.raven_leads(), "countertrace waits for the final download")
+	chapter._process(0.6)
 	finish_dialogue(chapter)
 	check(chapter.section == chapter.Section.RECOVERY and chapter.actor_is_playable(chapter.player), "countertrace returns control to Shadepi")
+	chapter.player.position = chapter.SPRAY
+	chapter.interact()
 	chapter.player.position = chapter.BATH
 	chapter.interact()
 	finish_dialogue(chapter)
@@ -517,8 +538,9 @@ func check_campaign() -> void:
 	root.add_child(scene)
 	scene.new_game()
 	finish_dialogue(scene)
-	scene.player.position = scene._target()
-	scene.interact()
+	for i in 3:
+		scene.player.position = scene._target()
+		scene.interact()
 	finish_dialogue(scene)
 	check(scene.beat == scene.Beat.AMBUSH and scene._living() == 2, "pact leads to the two-shooter ambush")
 	for foe in scene.foes:
@@ -546,15 +568,55 @@ func check_campaign() -> void:
 	scene.drive.armour = 0
 	scene.drive._process(0.01)
 	check(scene.beat == scene.Beat.GARAGE, "defeating the car opens chapter four")
-	for expected in [scene.Beat.GARAGE, scene.Beat.HANGAR, scene.Beat.ECHO]:
-		finish_dialogue(scene)
-		while scene.beat == expected:
-			scene.clock = 0
-			var actor = scene.raven if scene.raven_leads() else scene.player
-			actor.position = scene._target()
-			scene.interact()
-	check(scene.beat == scene.Beat.FLIGHT and scene.drive.flight, "hangar and chapter five lead to the Aerodyne flight")
 	finish_dialogue(scene)
+	scene.player.position = scene._target()
+	scene.interact()
+	scene.player.position = scene._target()
+	scene.interact()
+	check(scene.beat == scene.Beat.GARAGE, "lift waits for Raven")
+	scene.raven.position = scene._target()
+	scene.interact()
+	finish_dialogue(scene)
+	for i in 3:
+		scene.clock = 0
+		scene.raven.position = scene._target()
+		scene.interact()
+	check(scene.beat == scene.Beat.HANGAR and scene.point_index == 3, "transponder preparation opens the port puzzle")
+	scene.raven.position = scene.PORTS[0]
+	scene.interact()
+	check(scene.port_index == 0, "wrong port resets the diagnostic")
+	for i in 3:
+		scene.clock = 0
+		scene.raven.position = scene._target()
+		scene.interact()
+	finish_dialogue(scene)
+	scene.player.position = scene._target()
+	scene.interact()
+	check(scene.timing != null, "the sanctuary timing game opens before the memories")
+	var timing = scene.timing
+	await process_frame
+	await process_frame
+	timing.mode = 2
+	timing._process(0.1)
+	check(timing.scores[0] > 0 and timing.scores[1] > 0, "both players receive independent time scores")
+	timing.elapsed = 15.0
+	timing._process(0.01)
+	finish_dialogue(scene)
+	for i in 3:
+		scene.raven.position = scene._target()
+		scene.interact()
+	finish_dialogue(scene)
+	check(scene.beat == scene.Beat.FLIGHT and scene.drive.flight, "chapter five leads to the Aerodyne flight")
+	scene.drive.elapsed = 15.0
+	scene.drive._process(0.01)
+	check(scene.beat == scene.Beat.FLIGHT and scene.menu_open, "landing requires a transmitted transponder code")
+	scene.close_menu()
+	finish_dialogue(scene)
+	scene.drive.elapsed = 9.1
+	Input.action_press("hack")
+	scene.drive._process(0.01)
+	Input.action_release("hack")
+	check(scene.drive.transponder_sent, "Raven transmits the code in scanner range")
 	scene.drive.elapsed = 15.0
 	scene.drive._process(0.01)
 	finish_dialogue(scene)
@@ -563,25 +625,28 @@ func check_campaign() -> void:
 		scene.raven.position = scene._target()
 		scene.interact()
 	finish_dialogue(scene)
-	check(scene.beat == scene.Beat.BOSS and scene._living() == 3, "rooftop hack opens the penthouse fight")
+	check(scene.beat == scene.Beat.ROOF and scene._living() == 2, "lift guards fight outside the penthouse")
 	for foe in scene.foes:
+		foe.hack()
 		foe.take_damage(1000)
 	await process_frame
 	await process_frame
-	check(scene.wave == 1 and scene._living() == 1, "Kenzō arrives after the guard wave")
+	finish_dialogue(scene)
+	check(scene.beat == scene.Beat.BOSS and scene._living() == 1, "Kenzō is alone in the penthouse")
 	scene.foes.back().take_damage(1000)
 	await process_frame
 	await process_frame
 	finish_dialogue(scene)
 	check(scene.beat == scene.Beat.ESCAPE, "boss defeat starts the sixty-second escape")
-	for i in 2:
+	for i in 4:
 		scene.clock = 0
 		scene.player.position = scene._target()
 		scene.interact()
 	finish_dialogue(scene)
-	scene.player.position = scene._target()
-	scene.interact()
-	finish_dialogue(scene)
-	check(scene.beat == scene.Beat.END and scene.saved_checkpoint() == scene.Beat.END, "lake ritual reaches and saves the story ending")
+	for i in 4:
+		scene.player.position = scene._target()
+		scene.interact()
+		finish_dialogue(scene)
+	check(scene.beat == scene.Beat.END and scene.saved_checkpoint() == scene.Beat.END, "consent and three ritual steps reach and save the ending")
 	scene.queue_free()
 	await process_frame

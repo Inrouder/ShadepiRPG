@@ -34,17 +34,19 @@ Raven zielt mit der Maus und schießt im Solo mit Linksklick, im lokalen Koop mi
 
 ## Kapitel 2 · Offenbarungen im Verborgenen
 
-Nach Kapitel 1 führt **E / A** direkt ins Industriegebiet. Nach dem ersten Abschluss ist Kapitel 2 auch aus dem Menü erreichbar. Scanne das Gelände, zeige Raven das Fragment und steuere sie im Deep Dive. Greife an den Netzwerkknoten bei cyanfarbenem Signal zu. Kapitel 2 wechselt erzählerisch zwischen Shadepi und Raven und hat einen eigenen Kontrollpunkt.
+Nach Kapitel 1 führt **E / A** direkt ins Industriegebiet. Nach dem ersten Abschluss ist Kapitel 2 auch aus dem Menü erreichbar. Scanne das Gelände, zeige Raven das Fragment und schließe das Kühlsystem an. Im Deep Dive bestätigt Raven die Seriennummer per Timing-Hack, bekämpft zwei Viruswellen und hält die Verbindung beim letzten Knoten. J / X feuert Impulse, Q / RB stört die Pfosten am ICE-Wächter. Nach dem Abbruch holt Shadepi das Kryospray. Kapitel 2 wechselt erzählerisch zwischen Shadepi und Raven und hat einen eigenen Kontrollpunkt.
 
 ## Kapitel 3–7 · Der Pakt bis Der neue Orden
 
 Mit **E / A** nach Kapitel 2 startet die restliche Kampagne. Der Kontrollpunkt liegt in einem eigenen Spielstand. Die Geschichte führt vom Hinterhalt über Shadepis Sanktuarium bis zum Penthouse im Arasaka-Tower und zum Ordensritual am See.
 
-- **Motorrad:** A/D, Pfeiltasten oder Stick wechseln die Spur. J/X feuert, Q/RB hackt den Wagen, Leertaste/B wirft eine Granate. Richte deine Spur auf den Wagen aus und weiche Geschossen und Hindernissen aus.
-- **Aerodyne:** Wechsle beim Tower-Anflug die Flugspur. Im Hangar und auf dem Dach zeigen cyanfarbene Knoten an, wann Raven auf die Daten zugreifen kann.
-- **Kampf und Flucht:** Q/RB stört gegnerische Implantate. Im Penthouse folgt Kenzō auf die Wachen. Sichere anschließend die Daten und erreiche den Aerodyne vor Ablauf von 60 Sekunden.
+- **Motorrad:** A/D, Pfeiltasten oder Stick wechseln die Spur. J/X feuert, Q/RB hackt den Wagen, Leertaste/B wirft eine Granate. Der Wagen bleibt hinter dem Motorrad. Feuer und Granaten gehen nach hinten. Weiche dem Verkehr vor dir und den Schüssen sowie Rammversuchen des Wagens aus. Für den Hack musst du auf seiner Spur sein.
+- **Sanktuarium:** Fahre gemeinsam mit Raven auf der Plattform hinab. Schalte Strom, Gleiterkennung und Transponder frei und prüfe die Ports 2, 1 und 3 bei Cyan.
+- **Heiligtum:** Starte die Timing-Runde mit J/X im Solo oder Leertaste/B zu zweit. Shadepi tippt mit J, Raven mit U. Mit zwei Controllern nutzen beide X. Anschließend ordnet Raven die drei Erinnerungsanker.
+- **Aerodyne:** Wechsle beim Tower-Anflug die Flugspur und sende die Kennung mit Q/RB, sobald der Scanner in Reichweite ist.
+- **Kampf und Flucht:** Q/RB stört gegnerische Implantate. Die Aufzugwachen stehen vor dem Penthouse. Kenzō kämpft dort allein. Sichere anschließend die Daten, blockiere den Aufzug, starte die Pumpe neu und erreiche den Aerodyne vor Ablauf von 60 Sekunden.
 
-Die Geschichte bleibt im Spiel vollständig bis zum Ende am See. Kapitel 3–7 werden nacheinander mit der Hauptsteuerung gespielt. Der Kapiteltext, die Comiczuordnungen und die Missionsziele stehen in `scripts/campaign_story.gd`.
+Die Geschichte bleibt im Spiel vollständig bis zum Ende am See. Die Geschichte wechselt zwischen den Figuren an der Hauptsteuerung. Kapitel 5 bietet zusätzlich ein lokales Timing-Duell. Der Kapiteltext, die Comiczuordnungen und die Missionsziele stehen in `scripts/campaign_story.gd`.
 
 ## Controller
 

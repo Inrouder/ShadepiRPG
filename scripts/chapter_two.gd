@@ -23,6 +23,7 @@ var spray_ready := false
 var threats: Array[Node2D] = []
 var next_wave := false
 var previous_ice_open := false
+var room_walls: Array[StaticBody2D] = []
 
 func create_hud() -> CanvasLayer:
 	return ChapterHud.new()
@@ -46,6 +47,8 @@ func world_walls() -> Array[Rect2]:
 func _build_world() -> void:
 	super._build_world()
 	set_gate(true)
+	for wall in [Rect2(391, 273, 8, 187), Rect2(736, 273, 8, 187), Rect2(391, 272, 353, 8), Rect2(391, 453, 353, 8)]:
+		room_walls.append(_collider(wall, false))
 	enemy.hide()
 	ground_atmosphere.hide()
 	raven.hide()
@@ -71,8 +74,8 @@ func _process(delta: float) -> void:
 		camera.position = raven.position + Vector2(0, -45)
 		if not is_busy():
 			ice_cycle = fposmod(ice_cycle + delta, 2.4)
-			if _ice_open() and not previous_ice_open and raven.position.distance_to(_target()) < 75.0:
-				sound("hack")
+			if _ice_open() != previous_ice_open and raven.position.distance_to(_target()) < 75.0:
+				sound("hack" if _ice_open() else "hit")
 			previous_ice_open = _ice_open()
 			if dive_hold > 0.0:
 				if raven.position.distance_to(_target()) >= 48.0:
@@ -93,6 +96,8 @@ func new_game(save_checkpoint: bool = true) -> void:
 
 func _enter(next: Section, saved_relay: int = 0) -> void:
 	section = next
+	for wall in room_walls:
+		wall.get_child(0).set_deferred("disabled", next in [Section.YARD, Section.DIVE])
 	stage = 0
 	scan_index = 0
 	relay_index = clampi(saved_relay, 0, RELAYS.size() - 1) if next == Section.DIVE else 0
@@ -159,7 +164,7 @@ func interaction_prompt() -> String:
 		return ""
 	if raven_leads():
 		if not threats.is_empty():
-			return "ICE-Abwehr ausschalten · J / X"
+			return "ICE-Abwehr · J / X  |  Pfosten hacken · Q / RB" if relay_index == 2 else "ICE-Abwehr ausschalten · J / X"
 		if dive_hold > 0.0:
 			return "Verbindung halten"
 		return "E / A · ICE treffen" if _ice_open() else "ICE scannt · auf Cyan warten"
@@ -245,6 +250,18 @@ func raven_shot() -> void:
 			toast("Hülle geladen. Die Entladung abwarten.")
 	effects.pulse_trace(origin, endpoint)
 	sound("hack")
+
+func raven_hack() -> bool:
+	if not raven_leads() or is_busy() or hack_cooldown > 0.0:
+		return false
+	for threat in threats:
+		if threat.guardian and minf(raven.position.distance_to(threat.position + Vector2(-115, 0)), raven.position.distance_to(threat.position + Vector2(115, 0))) < 110.0:
+			threat.elapsed = 1.4
+			hack_cooldown = 4.0
+			effects.hack_arc(raven.position, threat.position)
+			sound("hack")
+			return true
+	return false
 
 func player_defeated() -> void:
 	if raven_leads():

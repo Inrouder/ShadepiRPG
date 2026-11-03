@@ -41,14 +41,17 @@ func _process(delta: float) -> void:
 	hurt = maxf(0, hurt - delta)
 	lane = clampi(lane + int(Input.is_action_just_pressed("move_right")) - int(Input.is_action_just_pressed("move_left")), 0, 2)
 	x = move_toward(x, LANES[lane], 510.0 * delta)
-	if flight and elapsed >= 9.0 and Input.is_action_just_pressed("hack") and not transponder_sent:
+	if flight and elapsed >= 9.0 and elapsed < 15.0 and Input.is_action_just_pressed("hack") and not transponder_sent:
 		transponder_sent = true
 		world.sound("hack")
 	if not flight:
 		if Input.is_action_just_pressed("hack") and hack_cooldown == 0:
-			hack = 3.3
-			hack_cooldown = 7.0
-			world.sound("hack")
+			if absf(x - LANES[boss_lane]) < 35.0:
+				hack = 3.3
+				hack_cooldown = 7.0
+				world.sound("hack")
+			else:
+				world.toast("Für den Hack auf die Spur des Wagens wechseln.")
 		if Input.is_action_pressed("attack") and shot_cooldown == 0:
 			bullets.append(Vector2(x, BIKE_Y + 14.0))
 			shot_cooldown = 0.23

@@ -57,4 +57,7 @@ func _process(delta: float) -> void:
 	abilities.visible = false
 	controls.text = "WASD / Stick · Bewegen     E / A · Interagieren     Esc / Start · Menü"
 	if world.raven_leads():
-		vitals.text = "RAVEN / DEEP DIVE"
+		vitals.text = "RAVEN / DEEP DIVE · %d %%" % world.raven.health
+		health_bar.size.x = 164.0 * world.raven.health / 100.0
+		energy_bar.size.x = 164.0 * world.raven.energy / 100.0
+		controls.text = "WASD / Stick · Bewegen    J / X · Impuls    Q / RB · Hack    E / A · Zugriff"

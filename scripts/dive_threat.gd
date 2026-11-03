@@ -5,6 +5,8 @@ var guardian := false
 var elapsed := 0.0
 var direction := Vector2.ZERO
 var hit := false
+var age := 0.0
+var patrol_y := 0.0
 
 func _process(delta: float) -> void:
 	if world.is_busy():
@@ -13,6 +15,11 @@ func _process(delta: float) -> void:
 	elapsed += delta
 	var target: Vector2 = world.raven.position
 	if guardian:
+		if age == 0.0:
+			patrol_y = position.y
+		age += delta
+		if elapsed < 0.65:
+			position.y = patrol_y + sin(age * 1.3) * 23.0
 		if previous < 1.2 and elapsed >= 1.2 and absf(target.y - position.y) < 16.0 and absf(target.x - position.x) < 115.0:
 			world.raven.take_damage(26, position)
 		if elapsed >= 2.8:
