@@ -16,6 +16,7 @@ var combo := 0
 var combo_window := 0.0
 var knockback := Vector2.ZERO
 var second_player := false
+var aim_stick := Vector2.ZERO
 
 func _physics_process(delta: float) -> void:
 	if not world.actor_is_playable(self):
@@ -41,7 +42,19 @@ func _physics_process(delta: float) -> void:
 	var direction := Input.get_vector(prefix + "move_left", prefix + "move_right", prefix + "move_up", prefix + "move_down")
 	if direction.length() > 0.1 and attack_time <= 0.0 and dash_time <= 0.0:
 		facing = direction.normalized()
-	if Input.is_action_just_pressed(prefix + "attack"):
+	var mouse_shot := second_player and Input.is_action_just_pressed("mouse_attack" if prefix.is_empty() else "raven_mouse_attack")
+	aim_stick = Vector2.ZERO
+	if second_player:
+		var device: int = world.gamepads.shadepi_device if prefix.is_empty() else world.gamepads.raven_device
+		if device >= 0:
+			aim_stick = Vector2(Input.get_joy_axis(device, JOY_AXIS_RIGHT_X), Input.get_joy_axis(device, JOY_AXIS_RIGHT_Y))
+		if aim_stick.length() > 0.25 and dash_time <= 0.0:
+			facing = aim_stick.normalized()
+	if mouse_shot or Input.is_action_just_pressed(prefix + "attack"):
+		if mouse_shot:
+			var aim := get_global_mouse_position() - global_position + Vector2(0, 24)
+			if aim.length_squared() > 1.0:
+				facing = aim.normalized()
 		try_attack()
 	if Input.is_action_just_pressed(prefix + "dash"):
 		try_dash(direction)
@@ -141,3 +154,10 @@ func reset_transients() -> void:
 	hit_pending = false
 	combo_window = 0.0
 	set_cloaked(false)
+
+func _draw() -> void:
+	super._draw()
+	if second_player and health > 0 and world.actor_is_playable(self) and not world.is_busy() and aim_stick.length() > 0.25:
+		var tip := Vector2(0, -24) + facing * 64.0
+		draw_line(Vector2(0, -24) + facing * 12.0, tip, Color(0.38, 0.9, 1.0, 0.55))
+		draw_arc(tip, 3.0, 0.0, TAU, 8, Color("9de6f2"))

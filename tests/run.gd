@@ -379,6 +379,11 @@ func check_chapter() -> void:
 	chapter.raven.facing = (first_guard.position - chapter.raven.position).normalized()
 	await physics_frame
 	var hp: int = first_guard.health
+	var direct_aim: Vector2 = chapter.raven.facing
+	chapter.raven.facing = direct_aim.rotated(0.3)
+	chapter.raven_shot()
+	check(first_guard.health == hp, "off-axis shots miss even inside the old aim cone")
+	chapter.raven.facing = direct_aim
 	chapter.raven_shot()
 	check(first_guard.health < hp, "Raven can shoot a street punk with her pistol")
 	for guard in chapter.patrol:

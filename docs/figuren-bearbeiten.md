@@ -19,3 +19,14 @@ Die Richtungsfolge pro Gruppe ist unten, links, rechts, oben, oben-links, oben-r
 **Ein guter Einstieg:** Ändere zuerst die Augen- oder Rüstungsfarbe in einer Standzeile. Teste sie im Spiel, bevor du die Änderung auf Lauf- und Angriffsbilder überträgst. Mit **V** kannst du zwischen den drei Bildstilen vergleichen, wie deine Farben unter verschieden starken Effekten wirken.
 
 Die Dateien unter `assets/custom/` werden vom Generator nicht überschrieben. Entfernst du deine Kopie aus dem Ordner, wird beim nächsten Start das Original verwendet. Für eine eigene Windows-EXE exportierst du das Projekt nach der Änderung erneut.
+
+## Kapitelbilder und Level nachträglich ändern
+
+| Was du ändern möchtest | Wo du es findest |
+| --- | --- |
+| Comicbilder und Zwischensequenzen | `assets/comic/`. Ersetze ein JPG unter demselben Namen und lass Godot neu importieren. Die Bildzuordnung steht in `scripts/chapter_hud.gd` unter `COMIC`. |
+| Dialoge und Abläufe | `scripts/chapter_one.gd`. Ein Dialogeintrag enthält Sprecher, Text und Bildschlüssel. |
+| Boden, Fassaden und Schilder in Bingo Street | `assets/world/bingo-street.png`. Bei rein optischen Änderungen die Bildmaße beibehalten. |
+| Wege, Hindernisse und Gegner | `scripts/chapter_one.gd` mit `BARRIERS`, `TRAIL`, `HUNT_GUARDS` und `RESCUE_GUARDS`. Gemeinsame Wände und Requisiten stehen in `scripts/world_data.gd`. |
+
+Die Kapitelkarte wird beim Start aus diesen Daten aufgebaut. Wenn du eine Mauer versetzt, passe sowohl das Bild als auch das Kollisionsrechteck an. Starte das Kapitel in Godot und prüfe den Weg bis zur Schleuse. Für eine eigene Windows-Fassung exportierst du anschließend neu.

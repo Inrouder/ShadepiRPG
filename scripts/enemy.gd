@@ -72,6 +72,7 @@ func take_damage(base: int) -> void:
 	world.impact(global_position, true)
 	world.damage_number(global_position + Vector2(0, -48), str(amount))
 	if health <= 0:
+		queue_redraw()
 		active = false
 		windup = 0.0
 		lunge = 0.0

@@ -74,6 +74,11 @@ func actor_input_prefix(actor: PixelActor) -> String:
 	return "raven_" if actor == raven else ""
 
 func _bind_inputs() -> void:
+	if not InputMap.has_action("raven_mouse_attack"):
+		InputMap.add_action("raven_mouse_attack")
+		var mouse := InputEventMouseButton.new()
+		mouse.button_index = MOUSE_BUTTON_RIGHT
+		InputMap.action_add_event("raven_mouse_attack", mouse)
 	var bindings := {
 		"move_left": [KEY_A, KEY_LEFT], "move_right": [KEY_D, KEY_RIGHT],
 		"move_up": [KEY_W, KEY_UP], "move_down": [KEY_S, KEY_DOWN],
@@ -487,7 +492,7 @@ func raven_shot() -> void:
 		endpoint = wall.position
 	var target := raven_shot_target(origin)
 	if target != null:
-		endpoint = target.position
+		endpoint = origin + raven.facing * (target.position - origin).dot(raven.facing)
 		target.take_damage(17)
 	effects.pulse_trace(origin, endpoint)
 	sound("hack")
@@ -497,7 +502,8 @@ func raven_shot_target(origin: Vector2) -> PixelActor:
 
 func raven_can_hit(target: PixelActor, origin: Vector2) -> bool:
 	var offset := target.position - origin
-	return offset.length() <= 152.0 and raven.facing.dot(offset.normalized()) >= 0.86 and _line_clear(origin, target.position)
+	var depth: float = offset.dot(raven.facing)
+	return depth >= 0.0 and depth <= 152.0 and absf(offset.cross(raven.facing)) <= 8.0 and _line_clear(origin, origin + raven.facing * depth)
 
 func _line_clear(from: Vector2, to: Vector2) -> bool:
 	var query := PhysicsRayQueryParameters2D.create(from, to, 1)

@@ -85,7 +85,11 @@ func _process(delta: float) -> void:
 		health_bar.size.x = 164.0 * world.raven.health / 100.0
 		energy_bar.size.x = 164.0 * world.raven.energy / 100.0
 		if world.gamepads.shadepi_device < 0:
-			controls.text = "WASD / Pfeile  Bewegen     J  Impulspistole     Leertaste  Ausweichen     Esc  Menü"
+			controls.text = "WASD / Pfeile  Bewegen     Maus / J  Schuss     Leertaste  Ausweichen     Esc  Menü"
+	if world.raven_leads() and world.gamepads.shadepi_device >= 0:
+		controls.text = "Linker Stick  Bewegen     Rechter Stick  Zielen     X  Schuss     B  Ausweichen"
+	elif world.coop and world.raven_joined:
+		controls.text = "Raven · Rechter Stick / X oder rechte Maustaste / U     Shadepi · J / linke Maustaste"
 	match world.phase:
 		world.Phase.APARTMENT:
 			objective.text = "Kopfgeld / Chrome Jackal"

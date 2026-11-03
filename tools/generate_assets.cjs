@@ -66,7 +66,14 @@ function other(kind,state,f,back=false){
   for(const x of [12,29]){rect(c,x,25,4,8,'#203249');rect(c,x,33,3,7,'#111a29');rect(c,x,38,4,3,'#26394c');rect(c,x,25,2,1,'#d3425c')}
   if(!back){poly(c,[[18,12],[27,12],[28,18],[24,23],[20,22],[16,17]],'#d2a49a');rect(c,19,17,2,1,'#ba3959');rect(c,25,17,2,1,'#ba3959');line(c,18,10,16,17,'#0c1323',3);line(c,27,10,29,19,'#121b2d',3);poly(c,[[18,9],[28,10],[26,15],[23,13],[20,16],[17,14]],'#101b30')}
   else{poly(c,[[17,10],[29,10],[31,28],[27,45],[22,39],[15,44],[13,24]],'#142239');line(c,29,17,27,37,'#1b4c72');line(c,17,20,16,37,'#2a3e58')}
-  if(state==='attack'){rect(c,30,29,10,7,'#1d8ba6');rect(c,32,30,6,5,'#58dfed');line(c,29,33,34,32,'#273e53',2)}
+  line(c,15,11,12,26,'#405b81');line(c,29,12,32,33,'#304867');
+  line(c,18,23,25,23,'#83e7f0',2);
+  rect(c,20,37,5,2,'#6c8ca8');rect(c,21,37,2,1,'#9be8ef');
+  if(state==='attack'){
+   line(c,29,30,25,40,'#354d6a',4);
+   rect(c,22,38,7,9,'#101827');rect(c,23,39,4,6,'#57718b');
+   rect(c,24,44,3,2,'#6ce6f0');if(f<2)rect(c,23,47,5,2,'#adf8ff');
+  }
  }else{
   for(const [x,s]of [[15,step],[29,-step]]){poly(c,[[x-5,35],[x+5,35],[x+5,47],[x+s+5,58],[x+s-6,58],[x-5,47]],'#101522');rect(c,x-4,42,8,6,'#4a5366');rect(c,x-3,43,6,2,'#718696');rect(c,x+s-6,56,12,5,'#182235');rect(c,x+s-5,56,9,1,'#657184')}
   poly(c,[[12,19],[33,19],[39,28],[35,40],[10,40],[6,28]],'#111824');poly(c,[[13,21],[30,21],[34,28],[30,36],[14,35],[10,27]],'#414658');rect(c,17,25,12,7,'#283244');rect(c,19,25,7,2,'#7b6875');line(c,15,33,29,33,'#72798c');rect(c,12,37,22,4,'#192333');rect(c,21,38,5,2,'#ac5a77');
@@ -166,7 +173,10 @@ function directionalHero(kind, state, frame, view) {
    [head - 12 + hair, 41], [head - 9, 26]], outline);
   poly(c, [[head - 7, 12], [head - 2, 8], [head + 5, 10], [head + 6, 17],
    [head + hair, 38], [head - 7 + hair, 42], [head - 9, 36]], '#1b2d4a');
-  line(c, head - 5, 13, head - 8 + hair, 39, '#325776');
+  line(c, head - 5, 13, head - 8 + hair, 39, '#405b81');
+  line(c, head - 7, 19, head - 10 + hair, 34, '#293f62');
+  line(c, head + 1, 23, head + 5, 24, '#83e7f0', 2);
+  rect(c, 25, 37, 5, 2, '#607791');
   line(c, head, 12, head - 3 + hair, 35, '#264465');
   if (!rear) {
    poly(c, [[head + 1, 12], [head + 6, 13], [head + 8, 18],
@@ -254,7 +264,7 @@ function punkFrame(variant, state, frame, view) {
  return canvas;
 }
 
-for (let variant = 0; variant < 4; variant++) {
+for (let variant = 0; variant < 4 && !process.argv.includes("--raven-only"); variant++) {
  const sheet = createCanvas(384, 1024);
  const c = sheet.getContext('2d');
  modes.forEach((state, group) => {
@@ -308,10 +318,10 @@ function bingoStreet() {
  for (let x = 24; x < 622; x += 26) rect(c, x, 482, 12, 2, '#515262');
  save(canvas, 'world/bingo-street.png');
 }
-if (!process.argv.includes('--sprites-only')) bingoStreet();
+if (!process.argv.includes('--sprites-only') && !process.argv.includes('--raven-only')) bingoStreet();
 if (process.argv.includes('--chapter-only')) process.exit(0);
 
-for (const kind of ['shadepi', 'raven', 'jackal']) {
+for (const kind of process.argv.includes('--raven-only') ? ['raven'] : ['shadepi', 'raven', 'jackal']) {
  const views = kind === 'jackal' ? heroViews.slice(0, 4) : heroViews;
  const sheet = createCanvas(384, modes.length * views.length * 64);
  const c = sheet.getContext('2d');
@@ -338,7 +348,7 @@ for (const kind of ['shadepi', 'raven', 'jackal']) {
  });
  save(sheet, 'sprites/' + kind + '.png');
 }
-if (process.argv.includes('--sprites-only')) process.exit(0);
+if (process.argv.includes('--sprites-only') || process.argv.includes('--raven-only')) process.exit(0);
 const ground=createCanvas(1024,640),g=ground.getContext('2d');rect(g,0,0,1024,640,'#182332');
 for(let y=0;y<640;y+=16){line(g,0,y,1024,y,'#263345');for(let x=-(y%32);x<1024;x+=48)line(g,x,y,x+8,y+15,'#0c1829')}
 let seed=81;function rnd(){seed=seed*16807%2147483647;return seed/2147483647}

@@ -28,6 +28,10 @@ Im Start- oder Pausenmenü über **Modus** den **Lokal-Koop** auswählen. Ravens
 
 Jede Figur hat eigene Lebenspunkte und Energie. Wenn eine Figur besiegt wird, setzt ihr den Kampf gemeinsam am Kontrollpunkt fort. **F5** und **F9** speichern und laden den aktiven Modus. Solo und Koop haben getrennte Spielstände.
 
+Raven zielt mit der Maus und schießt im Solo mit Linksklick, im lokalen Koop mit Rechtsklick. Auf dem Controller zielt sie mit dem rechten Stick und feuert mit X. J beziehungsweise U feuert in Blickrichtung.
+
+[Kapitelbilder, Level und Figuren bearbeiten](docs/figuren-bearbeiten.md)
+
 ## Controller
 
 Vor dem gemeinsamen Kampf steuert der erste Controller die jeweils aktive Figur. Im Einzelspieler bleibt diese Zuordnung auch im Finale erhalten. Im Koop steuern zwei verbundene Controller Shadepi und Raven in der Reihenfolge ihrer Gerätezuordnung. Bei einem Controller übernimmt er Raven und Shadepi wird mit WASD gespielt.
