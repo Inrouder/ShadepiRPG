@@ -377,7 +377,7 @@ func check_chapter() -> void:
 	chapter.ui.advance_dialogue()
 	chapter.enemy.take_damage(1000)
 	check(chapter.enemy.health == 50, "Jackal survives the first duel")
-	chapter.duel_time = 9.99
+	chapter.duel_time = 10.0
 	await process_frame
 	await process_frame
 	check(chapter.phase == chapter.Phase.ROOFTOP and chapter.raven.health == 0, "Jackal's counter knocks Raven down and starts Shadepi's cutscene")
