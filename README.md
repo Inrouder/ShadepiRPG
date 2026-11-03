@@ -8,7 +8,7 @@
 
 Shadepi und Raven treffen in einer regennassen Gasse auf Chrome Jackal. Sprich mit Raven, öffne die Sicherheitssperre, kombiniere Katana und Netrunning und sichere die Daten am Ausgang.
 
-Diese Version **0.3.0** ist eine frei arrangierte Gameplayprobe aus einem **späteren Abschnitt**. Shadepi und Raven kennen sich hier bereits. Die eigentliche Geschichte beginnt mit Shadepi allein; Raven begegnet er erst später. Die Dialoge dieser Szene sind eigens für den Test geschrieben.
+Diese Version **0.3.1** ist eine frei arrangierte Gameplayprobe aus einem **späteren Abschnitt**. Shadepi und Raven kennen sich hier bereits. Die eigentliche Geschichte beginnt mit Shadepi allein; Raven begegnet er erst später. Die Dialoge dieser Szene sind eigens für den Test geschrieben.
 
 ## Spielen
 
@@ -20,7 +20,7 @@ Ein Linux-Build und das vollständige Godot-Projekt werden ebenfalls als Artefak
 
 ## Lokal-Koop
 
-Im Start- oder Pausenmenü über **Modus** den **Lokal-Koop** auswählen. Danach könnt ihr ein neues Spiel starten oder euren Koop-Spielstand laden. Ihr spielt auf derselben Tastatur und seht beide Figuren auf einem Bildschirm. Die Kamera folgt eurem Mittelpunkt. Wenn ihr euch zu weit voneinander entfernt, geht ihr wieder aufeinander zu.
+Im Start- oder Pausenmenü über **Modus** den **Lokal-Koop** auswählen. Danach könnt ihr ein neues Spiel starten oder euren Koop-Spielstand laden. Ihr könnt eine Tastatur, zwei Controller oder eine Tastatur zusammen mit einem Controller nutzen. Beide Figuren sind auf einem Bildschirm zu sehen. Die Kamera folgt eurem Mittelpunkt. Wenn ihr euch zu weit voneinander entfernt, geht ihr wieder aufeinander zu.
 
 | Aktion | Shadepi | Raven |
 | --- | --- | --- |
@@ -31,6 +31,21 @@ Im Start- oder Pausenmenü über **Modus** den **Lokal-Koop** auswählen. Danach
 | Interagieren | E | Enter |
 
 Beide können das Terminal bedienen und die Daten sichern. Jede Figur hat eigene Lebenspunkte und Energie. Wenn eine Figur besiegt wird, setzt ihr den Kampf gemeinsam am Kontrollpunkt fort. **F5** und **F9** speichern und laden den aktiven Modus. Solo und Koop haben getrennte Spielstände.
+
+## Controller
+
+Im Einzelspieler steuert der erste Controller Shadepi. Im Koop steuern zwei verbundene Controller Shadepi und Raven in der Reihenfolge ihrer Gerätezuordnung. Bei einem Controller übernimmt er Raven und Shadepi wird mit WASD gespielt.
+
+| Aktion | Controller (Xbox-Tasten) |
+| --- | --- |
+| Bewegen / Menüauswahl | Linker Stick oder Steuerkreuz |
+| Angriff | X für Katana oder Impulsschuss |
+| Ausweichen | B |
+| Spezialfähigkeit | Y für Shadepis Tarnung oder Ravens Hack |
+| Ravens Hilfe im Einzelspieler | RB für Hack |
+| Interagieren / Dialog weiter / Menü bestätigen | A |
+| Pause / Fortsetzen | Start |
+| Speichern | LB |
 
 ## Steuerung im Einzelspieler
 
@@ -78,7 +93,7 @@ godot --headless --export-release Linux build/linux/Shadepi-Echos-in-Neon.x86_64
 
 Zum Export müssen die offiziellen Exportvorlagen derselben Godot-Version installiert sein. Die GitHub Action richtet dies automatisch ein. Die Windows-EXE wird unter Linux exportiert; ihre Ausführung auf einem tatsächlichen Windows-PC ist ein gesonderter manueller Prüfschritt.
 
-Die **63 automatisierten Prüfungen** behandeln unter anderem Bewegung und Gebäudekollision, Missionsfortschritt, Kampf, Tarnung, Spriteformate, Grafikprofile, gleichzeitige Eingaben für beide Figuren, Koop-Kampf, Laden beider Figuren sowie ungültige und beschädigte Spielstände einschließlich Backup-Wiederherstellung.
+Die **79 automatisierten Prüfungen** behandeln unter anderem Bewegung und Gebäudekollision, Missionsfortschritt, Kampf, Tarnung, Spriteformate, Grafikprofile, gleichzeitige Eingaben für beide Figuren, Koop-Kampf, simulierte Controller-Eingaben, Laden beider Figuren sowie ungültige und beschädigte Spielstände einschließlich Backup-Wiederherstellung.
 
 Speicherort: Godots `user://shadepi-test-save.json` für Solo und `user://shadepi-coop-save.json` für Koop (unter Windows normalerweise `%APPDATA%/Godot/app_userdata/Shadepi - Echos in Neon/`). Bei beschädigter Hauptdatei wird ein validiertes Backup versucht. Beim Laden werden laufende Fähigkeiten zurückgesetzt und Jackal an seine Startposition gesetzt; sein gespeicherter Lebensstand bleibt erhalten.
 

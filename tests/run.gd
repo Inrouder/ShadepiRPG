@@ -125,6 +125,7 @@ func run() -> void:
 	scene.new_game()
 	check(scene.stage == 0 and scene.enemy.health == 180 and not scene.gate_open, "restart resets combat, quest and gate")
 	await check_coop(scene)
+	await check_gamepads(scene)
 	scene.queue_free()
 	await process_frame
 	print("SHADEPI TESTS: %d checks, %d failures" % [checks, failures])
@@ -196,6 +197,111 @@ func check_coop(scene: Node2D) -> void:
 	check(scene.stage == 4, "Raven can complete the shared mission")
 	scene.set_coop(false)
 	check(InputMap.action_has_event("move_left", arrow_left()), "solo arrow shortcuts are restored")
+
+func check_gamepads(scene: Node2D) -> void:
+	var both: Array[int] = [0, 1]
+	var one: Array[int] = [0]
+	var none: Array[int] = []
+	scene.set_coop(true)
+	scene.new_game(false)
+	scene.gamepads.assign(both, true)
+	var shadepi_start: Vector2 = scene.player.position
+	var raven_start: Vector2 = scene.raven.position
+	stick(0, 1.0)
+	stick(1, -1.0)
+	for i in 15:
+		await physics_frame
+	stick(0, 0.0)
+	stick(1, 0.0)
+	await physics_frame
+	check(scene.player.position.x > shadepi_start.x + 15.0 and scene.raven.position.x < raven_start.x - 15.0, "two analog sticks control distinct actors")
+	pad_button(1, JOY_BUTTON_START)
+	await process_frame
+	check(scene.menu_open, "Raven controller opens pause menu")
+	var mode_before: bool = scene.ui.requested_coop
+	scene.ui.mode_button.grab_focus()
+	stick(0, 1.0, JOY_AXIS_LEFT_Y)
+	await process_frame
+	check(root.gui_get_focus_owner() == scene.ui.resume_button, "left stick moves menu focus")
+	stick(0, 0.0, JOY_AXIS_LEFT_Y)
+	scene.ui.mode_button.grab_focus()
+	pad_button(0, JOY_BUTTON_A)
+	await process_frame
+	check(scene.ui.requested_coop != mode_before, "controller A activates the focused menu button")
+	scene.close_menu()
+	scene.player.position = WorldData.RAVEN + Vector2(0, 28)
+	scene.raven.position = WorldData.RAVEN
+	pad_button(1, JOY_BUTTON_A)
+	await process_frame
+	check(scene.ui.dialogue_open, "Raven controller starts dialogue")
+	for i in 3:
+		pad_button(1, JOY_BUTTON_A)
+		await process_frame
+	check(scene.stage == 1, "Raven controller advances and closes dialogue")
+	scene.raven.position = WorldData.TERMINAL + Vector2(-26, 25)
+	pad_button(1, JOY_BUTTON_A)
+	await physics_frame
+	check(scene.stage == 2, "Raven controller operates the terminal")
+	scene.raven.position = Vector2(710, 323)
+	scene.raven.facing = Vector2.RIGHT
+	pad_button(1, JOY_BUTTON_Y)
+	await process_frame
+	check(scene.enemy.exposed > 0.0 and scene.player.cloak_time == 0.0, "Raven Y hacks without triggering Shadepi's cloak")
+	var hp: int = scene.enemy.health
+	pad_button(1, JOY_BUTTON_X)
+	for i in 3:
+		await physics_frame
+	check(scene.enemy.health < hp and scene.player.attack_time == 0.0, "Raven X fires without swinging Shadepi's katana")
+	pad_button(0, JOY_BUTTON_Y)
+	await physics_frame
+	await physics_frame
+	check(scene.player.cloak_time > 0.0, "Shadepi Y activates cloak")
+	scene.gamepads.assign(one, true)
+	check(scene.gamepads.shadepi_device == -1 and scene.gamepads.raven_device == 0, "one co-op controller is assigned to Raven")
+	var shadepi_position: Vector2 = scene.player.position
+	stick(0, -1.0)
+	for i in 8:
+		await physics_frame
+	stick(0, 0.0)
+	check(scene.player.position.distance_to(shadepi_position) < 0.1, "reassignment removes old Shadepi bindings")
+	scene.set_coop(false)
+	scene.new_game(false)
+	scene.gamepads.assign(one, false)
+	pad_button(0, JOY_BUTTON_Y)
+	await physics_frame
+	await physics_frame
+	check(scene.player.cloak_time > 0.0, "the first controller controls Shadepi in solo")
+	scene.stage = 2
+	scene.set_gate(true)
+	scene.player.position = Vector2(710, 323)
+	await physics_frame
+	pad_button(0, JOY_BUTTON_RIGHT_SHOULDER)
+	await process_frame
+	check(scene.enemy.exposed > 0.0, "solo controller can call Raven's hack")
+	stick(0, -1.0)
+	await physics_frame
+	check(Input.is_action_pressed("move_left"), "analog input is held before disconnect")
+	scene.gamepads.assign(none, false)
+	check(not Input.is_action_pressed("move_left"), "disconnect clears held controller input")
+
+func stick(device: int, value: float, axis: JoyAxis = JOY_AXIS_LEFT_X) -> void:
+	var event := InputEventJoypadMotion.new()
+	event.device = device
+	event.axis = axis
+	event.axis_value = value
+	Input.parse_input_event(event)
+	Input.flush_buffered_events()
+
+func pad_button(device: int, button: JoyButton) -> void:
+	var event := InputEventJoypadButton.new()
+	event.device = device
+	event.button_index = button
+	event.pressed = true
+	Input.parse_input_event(event)
+	var release := event.duplicate() as InputEventJoypadButton
+	release.pressed = false
+	Input.parse_input_event(release)
+	Input.flush_buffered_events()
 
 func key(code: Key, pressed: bool) -> void:
 	var event := InputEventKey.new()

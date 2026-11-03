@@ -112,7 +112,7 @@ func _ready() -> void:
 	speaker = label_at("", Vector2(12, 7), Vector2(470, 18), dialogue_panel, 12, Color("66d7e3"))
 	dialogue_text = label_at("", Vector2(12, 29), Vector2(484, 48), dialogue_panel, 12)
 	dialogue_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	label_at("E / Enter · Weiter", Vector2(372, 80), Vector2(130, 16), dialogue_panel, 9, Color("93a7ba"))
+	label_at("E / Enter / A · Weiter", Vector2(372, 80), Vector2(130, 16), dialogue_panel, 9, Color("93a7ba"))
 	dialogue_panel.hide()
 	menu = panel(Rect2(145, 19, 350, 321))
 	menu_title = label_at("ECHOS IN NEON", Vector2(20, 12), Vector2(310, 26), menu, 19)
@@ -124,7 +124,7 @@ func _ready() -> void:
 	button_at("Testszene neu starten", 184, _start_new)
 	button_at("Musik / Ton umschalten", 214, func(): world.toggle_audio())
 	visual_button = button_at("Bildstil: " + world.VISUAL_PRESETS[world.visual_quality], 244, func(): world.cycle_visual_quality())
-	label_at("Koop · Raven mit Pfeiltasten, U / O / P und Enter\nF5 Speichern   F9 Laden   V Bildstil", Vector2(20, 279), Vector2(310, 35), menu, 10, Color("9db0c4"))
+	label_at("Controller · Stick / Steuerkreuz wählen, A bestätigen\nF5 / LB Speichern   F9 Laden   V Bildstil", Vector2(20, 279), Vector2(310, 35), menu, 10, Color("9db0c4"))
 
 func button_at(text: String, y: float, callback: Callable) -> Button:
 	var button := Button.new()
@@ -213,7 +213,12 @@ func _process(delta: float) -> void:
 		objective.text = "Trefft euch zur Einsatzbesprechung"
 	var cloak: String = ("%.0fs" % world.player.cloak_time) if world.player.cloak_time > 0 else (("%.0fs" % world.player.cloak_cooldown) if world.player.cloak_cooldown > 0 else "bereit")
 	var hack: String = ("%.0fs" % world.hack_cooldown) if world.hack_cooldown > 0 else "bereit"
-	abilities.text = "C  Tarnfeld: %s     %s  Raven-Hack: %s     F5  Speichern / F9  Laden     V  Bildstil" % [cloak, "O" if coop else "Q", hack]
+	var cloak_key := "C / Y" if world.gamepads.shadepi_device >= 0 else "C"
+	abilities.text = "%s  Tarnfeld: %s     %s  Raven-Hack: %s     F5  Speichern / F9  Laden     V  Bildstil" % [cloak_key, cloak, world.hack_input_hint(), hack]
+	if coop and world.gamepads.raven_device >= 0 and world.gamepads.shadepi_device < 0:
+		controls.text = "Shadepi · WASD / J / C / E     Raven · Stick / X Angriff / Y Hack / B Ausweichen / A"
+	elif world.gamepads.shadepi_device >= 0:
+		controls.text = "Stick / Steuerkreuz  Bewegen    X Angriff    B Ausweichen    A Interagieren    Start Menü"
 	prompt.text = world.interaction_prompt()
 	prompt.visible = not prompt.text.is_empty() and not world.is_busy()
 	abilities.visible = not dialogue_open and not world.menu_open

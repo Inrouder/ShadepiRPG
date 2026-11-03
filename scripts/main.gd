@@ -1,5 +1,6 @@
 extends Node2D
 
+const GamepadBindings = preload("res://scripts/gamepad_bindings.gd")
 const PlayerScript = preload("res://scripts/player.gd")
 const EnemyScript = preload("res://scripts/enemy.gd")
 const HudScript = preload("res://scripts/hud.gd")
@@ -11,6 +12,7 @@ var player
 var enemy
 var raven
 var coop := false
+var gamepads := GamepadBindings.new()
 const COOP_REACH := Vector2(448, 166)
 var ui
 var effects
@@ -39,6 +41,8 @@ var next_step_ripple := 0.0
 
 func _ready() -> void:
 	_bind_inputs()
+	Input.joy_connection_changed.connect(_on_joy_connection_changed)
+	gamepads.assign(Input.get_connected_joypads(), coop)
 	_build_world()
 	_build_atmosphere_filter()
 	_load_visual_quality()
@@ -89,6 +93,7 @@ func _bind_inputs() -> void:
 
 func set_coop(enabled: bool) -> void:
 	coop = enabled
+	gamepads.assign(Input.get_connected_joypads(), coop)
 	camera.limit_left = -18 if coop else 0
 	camera.limit_right = 1042 if coop else 1024
 	# Solo keeps the arrow-key shortcuts. In co-op each direction has one owner.
@@ -103,6 +108,14 @@ func set_coop(enabled: bool) -> void:
 			InputMap.action_erase_event(actions[i], event)
 		elif not InputMap.action_has_event(actions[i], event):
 			InputMap.action_add_event(actions[i], event)
+
+func _on_joy_connection_changed(_device: int, _connected: bool) -> void:
+	gamepads.assign(Input.get_connected_joypads(), coop)
+
+func hack_input_hint() -> String:
+	if coop:
+		return "O / Y" if gamepads.raven_device >= 0 else "O"
+	return "Q / RB" if gamepads.shadepi_device >= 0 else "Q"
 
 func save_path() -> String:
 	return SaveService.COOP_PATH if coop else SaveService.PATH
@@ -353,7 +366,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if menu_open:
 		return
 	if ui.dialogue_open:
-		if event.is_action_pressed("interact"):
+		if event.is_action_pressed("interact") or (coop and event.is_action_pressed("raven_interact")):
 			ui.advance_dialogue()
 			get_viewport().set_input_as_handled()
 		return
@@ -380,7 +393,7 @@ func close_menu() -> void:
 
 func interaction_prompt() -> String:
 	if stage == 0 and player.position.distance_to(raven.position) < 62:
-		return "E / Enter · Einsatz besprechen" if coop else "E · Mit Raven sprechen"
+		return "E / Enter / A · Einsatz besprechen" if coop else "E / A · Mit Raven sprechen"
 	var point: Vector2
 	var action: String
 	if stage == 1:
@@ -392,9 +405,9 @@ func interaction_prompt() -> String:
 	else:
 		return ""
 	if player.position.distance_to(point) < 54:
-		return "E · " + action
+		return ("E / A · " if gamepads.shadepi_device >= 0 else "E · ") + action
 	if coop and raven.position.distance_to(point) < 54:
-		return "Enter · " + action
+		return ("Enter / A · " if gamepads.raven_device >= 0 else "Enter · ") + action
 	return ""
 
 func interact(actor: PixelActor = null) -> void:
@@ -404,7 +417,7 @@ func interact(actor: PixelActor = null) -> void:
 		ui.dialogue([
 			["Raven", "Chrome Jackal bewacht den Ausgang. Ich kann seine Implantate stören. Du kümmerst dich um den Rest."],
 			["Shadepi", "Einverstanden. Zuerst brauchen wir einen Weg durch die Sperre."],
-			["Raven", "Das Terminal rechts. Danach %s für meinen Hack. Wenn er rot ausholt: ausweichen!" % ("O" if coop else "Q")]
+			["Raven", "Das Terminal rechts. Danach %s für meinen Hack. Wenn er rot ausholt: ausweichen!" % hack_input_hint()]
 		], func():
 			stage = 1
 			autosave()
@@ -414,7 +427,7 @@ func interact(actor: PixelActor = null) -> void:
 		stage = 2
 		sound("hack")
 		effects.burst(WorldData.TERMINAL, Color("61e0ec"), 22)
-		toast("Raven: Sperre offen. Seine Panzerung schwäche ich mit %s." % ("O" if coop else "Q"))
+		toast("Raven: Sperre offen. Seine Panzerung schwäche ich mit %s." % hack_input_hint())
 		autosave()
 	elif stage == 3 and actor.position.distance_to(WorldData.EXIT) < 54:
 		ui.dialogue([
@@ -612,6 +625,7 @@ func toggle_audio() -> void:
 	toast("Ton an" if audio_on else "Ton aus")
 
 func _exit_tree() -> void:
+	gamepads.clear()
 	if is_instance_valid(music):
 		music.stop()
 		music.stream = null
