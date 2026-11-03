@@ -131,6 +131,7 @@ func run() -> void:
 	await process_frame
 	await check_chapter()
 	await check_chapter_two()
+	await check_campaign()
 	print("SHADEPI TESTS: %d checks, %d failures" % [checks, failures])
 	quit(1 if failures else 0)
 
@@ -509,4 +510,78 @@ func check_chapter_two() -> void:
 	finish_dialogue(chapter)
 	check(chapter.section == chapter.Section.END and chapter.saved_checkpoint() == chapter.Section.END, "the vow closes and saves chapter two")
 	chapter.queue_free()
+	await process_frame
+
+func check_campaign() -> void:
+	var scene = load("res://scenes/campaign.tscn").instantiate()
+	root.add_child(scene)
+	scene.new_game()
+	finish_dialogue(scene)
+	scene.player.position = scene._target()
+	scene.interact()
+	finish_dialogue(scene)
+	check(scene.beat == scene.Beat.AMBUSH and scene._living() == 2, "pact leads to the two-shooter ambush")
+	for foe in scene.foes:
+		foe.take_damage(1000)
+	scene.player.position = scene._target()
+	scene.interact()
+	finish_dialogue(scene)
+	check(scene.beat == scene.Beat.CHASE and scene.drive != null, "ambush opens the motorcycle chase")
+	var drive = scene.drive
+	Input.action_press("hack")
+	Input.action_press("attack")
+	Input.action_press("dash")
+	drive._process(0.01)
+	Input.action_release("hack")
+	Input.action_release("attack")
+	Input.action_release("dash")
+	check(drive.hack > 0 and drive.grenade != Vector2.ZERO and not drive.bullets.is_empty(), "bike supports shooting, hacking and grenades")
+	drive._process(0.6)
+	check(drive.armour < 100, "aligned shots and grenade damage the pursuing car")
+	drive.health = 0
+	drive._process(0.01)
+	check(scene.beat == scene.Beat.CHASE and scene.menu_open and scene.drive.health == 100, "crashing restarts the chase checkpoint")
+	scene.close_menu()
+	finish_dialogue(scene)
+	scene.drive.armour = 0
+	scene.drive._process(0.01)
+	check(scene.beat == scene.Beat.GARAGE, "defeating the car opens chapter four")
+	for expected in [scene.Beat.GARAGE, scene.Beat.HANGAR, scene.Beat.ECHO]:
+		finish_dialogue(scene)
+		while scene.beat == expected:
+			scene.clock = 0
+			var actor = scene.raven if scene.raven_leads() else scene.player
+			actor.position = scene._target()
+			scene.interact()
+	check(scene.beat == scene.Beat.FLIGHT and scene.drive.flight, "hangar and chapter five lead to the Aerodyne flight")
+	finish_dialogue(scene)
+	scene.drive.elapsed = 15.0
+	scene.drive._process(0.01)
+	finish_dialogue(scene)
+	for i in 2:
+		scene.clock = 0
+		scene.raven.position = scene._target()
+		scene.interact()
+	finish_dialogue(scene)
+	check(scene.beat == scene.Beat.BOSS and scene._living() == 3, "rooftop hack opens the penthouse fight")
+	for foe in scene.foes:
+		foe.take_damage(1000)
+	await process_frame
+	await process_frame
+	check(scene.wave == 1 and scene._living() == 1, "Kenzō arrives after the guard wave")
+	scene.foes.back().take_damage(1000)
+	await process_frame
+	await process_frame
+	finish_dialogue(scene)
+	check(scene.beat == scene.Beat.ESCAPE, "boss defeat starts the sixty-second escape")
+	for i in 2:
+		scene.clock = 0
+		scene.player.position = scene._target()
+		scene.interact()
+	finish_dialogue(scene)
+	scene.player.position = scene._target()
+	scene.interact()
+	finish_dialogue(scene)
+	check(scene.beat == scene.Beat.END and scene.saved_checkpoint() == scene.Beat.END, "lake ritual reaches and saves the story ending")
+	scene.queue_free()
 	await process_frame

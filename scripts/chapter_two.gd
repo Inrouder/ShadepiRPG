@@ -118,6 +118,8 @@ func _ice_open() -> bool:
 	return ice_cycle < 0.95
 
 func interaction_prompt() -> String:
+	if section == Section.END:
+		return "E / A · Weiter zu Kapitel 3"
 	var target := _target()
 	var actor: PixelActor = raven if raven_leads() else player
 	if target == Vector2.ZERO or actor.position.distance_to(target) >= 48.0:
@@ -127,6 +129,9 @@ func interaction_prompt() -> String:
 	return "E / A · " + chapter_objective()
 
 func interact(_actor: PixelActor = null) -> void:
+	if section == Section.END and not is_busy():
+		get_tree().change_scene_to_file("res://scenes/campaign.tscn")
+		return
 	if is_busy() or interaction_prompt().is_empty():
 		return
 	match section:

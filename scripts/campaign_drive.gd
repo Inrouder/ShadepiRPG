@@ -1,0 +1,132 @@
+extends Node2D
+
+signal completed
+signal crashed
+const LANES := [230.0, 320.0, 410.0]
+
+var world: Node2D
+var flight := false
+var elapsed := 0.0
+var lane := 1
+var x := 320.0
+var boss_lane := 1
+var armour := 100
+var health := 100
+var hack := 0.0
+var hack_cooldown := 0.0
+var grenade_cooldown := 0.0
+var shot_cooldown := 0.0
+var hurt := 0.0
+var next_hazard := 1.0
+var pattern := 0
+var grenade := Vector2.ZERO
+var bullets: Array[Vector2] = []
+var hazards: Array[Vector2] = []
+var active := true
+
+func _process(delta: float) -> void:
+	if not active or world.is_busy():
+		return
+	elapsed += delta
+	hack = maxf(0, hack - delta)
+	hack_cooldown = maxf(0, hack_cooldown - delta)
+	grenade_cooldown = maxf(0, grenade_cooldown - delta)
+	shot_cooldown = maxf(0, shot_cooldown - delta)
+	hurt = maxf(0, hurt - delta)
+	lane = clampi(lane + int(Input.is_action_just_pressed("move_right")) - int(Input.is_action_just_pressed("move_left")), 0, 2)
+	x = move_toward(x, LANES[lane], 510.0 * delta)
+	if not flight:
+		if Input.is_action_just_pressed("hack") and hack_cooldown == 0:
+			hack = 3.3
+			hack_cooldown = 7.0
+			world.sound("hack")
+		if Input.is_action_pressed("attack") and shot_cooldown == 0:
+			bullets.append(Vector2(x, 278))
+			shot_cooldown = 0.23
+			world.sound("slash")
+		if Input.is_action_just_pressed("dash") and grenade_cooldown == 0:
+			grenade = Vector2(x, 271)
+			grenade_cooldown = 3.4
+	if elapsed >= next_hazard:
+		next_hazard += 1.14 if flight else 1.40
+		if flight or hack == 0:
+			if not flight:
+				boss_lane = [1, 0, 2, 1, 2, 0][pattern % 6]
+			hazards.append(Vector2(LANES[(lane + 1 + pattern % 2) % 3], 82))
+			if not flight:
+				hazards.append(Vector2(LANES[boss_lane], 133))
+		pattern += 1
+	for i in range(bullets.size() - 1, -1, -1):
+		bullets[i].y -= 490 * delta
+		if bullets[i].y <= 117:
+			if absf(bullets[i].x - LANES[boss_lane]) < 30:
+				armour -= 10 if hack > 0 else 5
+			bullets.remove_at(i)
+	if grenade != Vector2.ZERO:
+		grenade.y -= 288 * delta
+		if grenade.y <= 121:
+			if absf(grenade.x - LANES[boss_lane]) < 44:
+				armour -= 33
+				world.sound("hit")
+			grenade = Vector2.ZERO
+	for i in range(hazards.size() - 1, -1, -1):
+		var before := hazards[i].y
+		hazards[i].y += (210.0 if flight else 226.0) * delta
+		if before < 291 and hazards[i].y >= 291 and absf(hazards[i].x - x) < 30 and hurt == 0:
+			health -= 24
+			hurt = 0.6
+			world.sound("hit")
+		if hazards[i].y > 370:
+			hazards.remove_at(i)
+	queue_redraw()
+	if health <= 0:
+		active = false
+		crashed.emit()
+	elif (flight and elapsed >= 15.0) or (not flight and armour <= 0):
+		active = false
+		completed.emit()
+
+func _draw() -> void:
+	var cyan := Color("67f0fc")
+	var pink := Color("ff657e")
+	draw_rect(Rect2(0, 0, 640, 360), Color("0a1324"))
+	for i in 28:
+		var side := i % 2
+		var y := fposmod(i * 37 + elapsed * (125.0 + i % 5 * 9), 420.0) - 40.0
+		var width := 29 + i * 13 % 63
+		var left := (110 - width) if side == 0 else 530
+		draw_rect(Rect2(left, y, width, 42), Color("172438"))
+		draw_rect(Rect2(left + 4, y + 4, width - 8, 2), cyan.darkened(0.45 + 0.08 * (i % 4)))
+	draw_rect(Rect2(179, 0, 282, 360), Color("212a3b") if not flight else Color("101d33"))
+	for edge in [180, 457]:
+		draw_rect(Rect2(edge, 0, 3, 360), pink.darkened(0.39))
+	for y in range(-32, 360, 42):
+		for divider in [275, 365]:
+			draw_rect(Rect2(divider, y + fposmod(elapsed * 220, 42), 2, 21), Color("65728b"))
+	if not flight:
+		var p := Vector2(LANES[boss_lane], 115)
+		draw_rect(Rect2(p - Vector2(27, 28), Vector2(54, 57)), Color("080b14"))
+		draw_rect(Rect2(p - Vector2(22, 28), Vector2(44, 56)), Color("653041"))
+		draw_rect(Rect2(p - Vector2(17, 13), Vector2(34, 24)), Color("192c41"))
+		for offset in [-18, 12]:
+			draw_rect(Rect2(p + Vector2(offset, 23), Vector2(7, 4)), pink)
+		if hack > 0:
+			draw_arc(p, 36, 0, TAU, 32, cyan, 2)
+	for point in hazards:
+		draw_rect(Rect2(point - Vector2(12, 6), Vector2(24, 12)), pink.darkened(0.35))
+		draw_line(point - Vector2(10, 2), point + Vector2(10, 2), pink, 3)
+	for bullet in bullets:
+		draw_line(bullet, bullet + Vector2(0, 11), cyan, 2)
+	if grenade != Vector2.ZERO:
+		draw_circle(grenade, 5, Color("ffd46b"))
+	var bike := Vector2(x, 292)
+	var paint := pink if hurt > 0 else cyan
+	if flight:
+		draw_colored_polygon(PackedVector2Array([bike + Vector2(0, -20), bike + Vector2(26, 13), bike + Vector2(10, 8), bike + Vector2(0, 17), bike + Vector2(-26, 13)]), Color("4c657f"))
+	else:
+		draw_rect(Rect2(bike - Vector2(6, 22), Vector2(12, 45)), Color("070912"))
+		draw_colored_polygon(PackedVector2Array([bike + Vector2(0, -18), bike + Vector2(11, 5), bike + Vector2(6, 18), bike + Vector2(-6, 18), bike + Vector2(-11, 5)]), Color("822e45"))
+		draw_circle(bike - Vector2(0, 5), 6, Color("a7b8d0"))
+		draw_circle(bike + Vector2(0, 8), 5, Color("384365"))
+	draw_line(bike + Vector2(-4, 16), bike + Vector2(-6, 27), paint, 3)
+	draw_line(bike + Vector2(4, 16), bike + Vector2(6, 27), paint, 3)

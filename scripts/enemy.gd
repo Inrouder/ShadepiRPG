@@ -11,6 +11,7 @@ var attack_recovery := 1.1
 var windup_duration := 0.72
 var lunge_speed := 220.0
 var awareness := INF
+var shot_range := 0.0
 var exposed := 0.0
 var stun := 0.0
 var cooldown := 1.0
@@ -34,8 +35,15 @@ func _physics_process(delta: float) -> void:
 	elif windup > 0.0:
 		windup -= delta
 		if windup <= 0.0:
-			lunge = 0.22
-			hit_done = false
+			if shot_range > 0.0:
+				var endpoint := global_position + attack_direction * shot_range
+				world.effects.pulse_trace(global_position, endpoint)
+				if target != null and absf(offset.cross(attack_direction)) <= 16.0 and offset.dot(attack_direction) > 0.0 and offset.length() <= shot_range and world._line_clear(global_position, target.global_position):
+					target.take_damage(hit_damage, global_position)
+				cooldown = attack_recovery
+			else:
+				lunge = 0.22
+				hit_done = false
 	elif lunge > 0.0:
 		lunge -= delta
 		velocity = attack_direction * lunge_speed
@@ -49,7 +57,7 @@ func _physics_process(delta: float) -> void:
 			cooldown = attack_recovery
 	elif active and target != null and offset.length() <= awareness:
 		facing = offset.normalized()
-		if offset.length() < 60.0 and cooldown <= 0.0:
+		if offset.length() < maxf(60.0, shot_range) and cooldown <= 0.0 and (shot_range == 0.0 or world._line_clear(global_position, target.global_position)):
 			windup = windup_duration
 			attack_direction = facing
 		elif offset.length() > 35.0:
@@ -113,7 +121,7 @@ func _draw() -> void:
 	if windup > 0.0:
 		var radius := 16.0 + 26.0 * (1.0 - windup / windup_duration)
 		draw_arc(Vector2.ZERO, radius, attack_direction.angle() - 0.65, attack_direction.angle() + 0.65, 16, Color("ff5974"), 2.0)
-		var target := attack_direction * 56.0
+		var target := attack_direction * maxf(56.0, shot_range)
 		draw_line(Vector2.ZERO, target, Color(1.0, 0.3, 0.42, 0.4), 1.0)
 	if exposed > 0.0:
 		draw_arc(Vector2(0, -28), 23, 0.0, TAU, 20, Color(0.2, 0.85, 1.0, 0.6), 1.0)

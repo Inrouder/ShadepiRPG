@@ -7,6 +7,7 @@ const PANELS := {
 	"rueckkehr": preload("res://assets/comic/rueckkehr.jpg"),
 }
 
+var campaign_button: Button
 var backdrop: Panel
 var artwork: TextureRect
 
@@ -17,6 +18,8 @@ func _ready() -> void:
 	mode_button.hide()
 	restart_button.text = "Kapitel 2 neu starten"
 	button_at("Zurück zu Kapitel 1", 274, func(): get_tree().change_scene_to_file("res://scenes/chapter_one.tscn"))
+	campaign_button = button_at("Kapitel 3–7 fortsetzen", 93, func(): get_tree().change_scene_to_file("res://scenes/campaign.tscn"))
+	campaign_button.hide()
 	menu_help.position.y = 302
 	menu_help.text = "E / A · Interagieren    Esc / Start · Menü"
 	backdrop = panel(Rect2(0, 0, 640, 360))
@@ -37,9 +40,13 @@ func _update_mode_buttons() -> void:
 	resume_button.text = "Fortsetzen" if world.started else "Kapitel 2 starten"
 	load_button.text = "Kontrollpunkt laden"
 	load_button.disabled = world.saved_checkpoint() < 0
+	campaign_button.visible = world.section == world.Section.END or world.saved_checkpoint() == world.Section.END or FileAccess.file_exists("user://shadepi-campaign.cfg")
+
+func comic_texture(key: String) -> Texture2D:
+	return PANELS.get(key, null)
 
 func advance_dialogue() -> void:
-	artwork.texture = PANELS.get(dialogue_lines[0][2], null) if not dialogue_lines.is_empty() else null
+	artwork.texture = comic_texture(dialogue_lines[0][2]) if not dialogue_lines.is_empty() else null
 	super.advance_dialogue()
 
 func _process(delta: float) -> void:
