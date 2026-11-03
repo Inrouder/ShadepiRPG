@@ -22,6 +22,13 @@ var menu_title: Label
 var resume_button: Button
 var load_button: Button
 var visual_button: Button
+var mode_button: Button
+var requested_coop := false
+var controls: Label
+var raven_vitals: Label
+var raven_health: ColorRect
+var raven_energy: ColorRect
+var vital_tracks: Array[ColorRect] = []
 var message_time := 0.0
 
 func panel(rect: Rect2, parent: Node = null) -> Panel:
@@ -64,6 +71,7 @@ func _ready() -> void:
 		bar.size = Vector2(164, 5)
 		bar.color = Color("1d2c3e")
 		top.add_child(bar)
+		vital_tracks.append(bar)
 	health_bar = ColorRect.new()
 	health_bar.position = Vector2(10, 25)
 	health_bar.size = Vector2(164, 5)
@@ -74,6 +82,15 @@ func _ready() -> void:
 	energy_bar.size = Vector2(164, 5)
 	energy_bar.color = Color("58d4e5")
 	top.add_child(energy_bar)
+	raven_vitals = label_at("", Vector2(10, 25), Vector2(160, 14), top, 10, Color("91e7f4"))
+	raven_health = ColorRect.new()
+	raven_health.position = Vector2(10, 44)
+	raven_health.color = health_bar.color
+	top.add_child(raven_health)
+	raven_energy = ColorRect.new()
+	raven_energy.position = Vector2(94, 44)
+	raven_energy.color = energy_bar.color
+	top.add_child(raven_energy)
 	var mission := panel(Rect2(394, 10, 234, 54))
 	label_at("ECHOS IN NEON / SPÄTERE SZENE", Vector2(10, 4), Vector2(218, 14), mission, 10, Color("65d4df"))
 	objective = label_at("Sprich mit Raven", Vector2(10, 22), Vector2(214, 28), mission, 11)
@@ -82,7 +99,7 @@ func _ready() -> void:
 	boss = label_at("", Vector2(5, 7), Vector2(172, 35), boss_panel, 10, Color("f18aaa"))
 	boss.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	var bar := panel(Rect2(0, 334, 640, 26))
-	label_at("WASD  Bewegen     J / Maus  Katana     Leertaste  Ausweichen     Esc  Menü", Vector2(12, 5), Vector2(616, 18), bar, 10)
+	controls = label_at("WASD  Bewegen     J / Maus  Katana     Leertaste  Ausweichen     Esc  Menü", Vector2(12, 5), Vector2(616, 18), bar, 10)
 	abilities = label_at("", Vector2(12, 307), Vector2(615, 22), root, 10, Color("91c5d9"))
 	prompt = label_at("", Vector2(120, 278), Vector2(400, 23), root, 12, Color("e1f5ff"))
 	prompt.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -97,16 +114,17 @@ func _ready() -> void:
 	dialogue_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	label_at("E / Enter · Weiter", Vector2(372, 80), Vector2(130, 16), dialogue_panel, 9, Color("93a7ba"))
 	dialogue_panel.hide()
-	menu = panel(Rect2(145, 27, 350, 304))
+	menu = panel(Rect2(145, 19, 350, 321))
 	menu_title = label_at("ECHOS IN NEON", Vector2(20, 12), Vector2(310, 26), menu, 19)
 	label_at("Shadepi · Im Schatten des Raben", Vector2(20, 40), Vector2(310, 22), menu, 11, Color("7cc4d4"))
 	label_at("Späterer Testabschnitt\nRaven und Shadepi kennen sich bereits.", Vector2(20, 62), Vector2(310, 28), menu, 10, Color("9db0c4"))
-	resume_button = button_at("Testszene starten", 96, func(): world.close_menu())
-	load_button = button_at("Spielstand laden", 128, func(): world.load_game())
-	button_at("Testszene neu starten", 160, func(): world.new_game())
-	button_at("Musik / Ton umschalten", 192, func(): world.toggle_audio())
-	visual_button = button_at("Bildstil: " + world.VISUAL_PRESETS[world.visual_quality], 224, func(): world.cycle_visual_quality())
-	label_at("E  Interagieren   Q  Raven-Hack   C  Tarnung\nF5  Speichern   F9  Laden   V  Bildstil", Vector2(20, 263), Vector2(310, 35), menu, 10, Color("9db0c4"))
+	mode_button = button_at("Modus · Einzelspieler", 94, _switch_mode)
+	resume_button = button_at("Testszene starten", 124, start_selected)
+	load_button = button_at("Spielstand laden", 154, func(): world.load_game(requested_coop))
+	button_at("Testszene neu starten", 184, _start_new)
+	button_at("Musik / Ton umschalten", 214, func(): world.toggle_audio())
+	visual_button = button_at("Bildstil: " + world.VISUAL_PRESETS[world.visual_quality], 244, func(): world.cycle_visual_quality())
+	label_at("Koop · Raven mit Pfeiltasten, U / O / P und Enter\nF5 Speichern   F9 Laden   V Bildstil", Vector2(20, 279), Vector2(310, 35), menu, 10, Color("9db0c4"))
 
 func button_at(text: String, y: float, callback: Callable) -> Button:
 	var button := Button.new()
@@ -120,10 +138,31 @@ func button_at(text: String, y: float, callback: Callable) -> Button:
 
 func show_menu(title: String = "ECHOS IN NEON") -> void:
 	menu_title.text = title
-	resume_button.text = "Fortsetzen" if world.started else "Testszene starten"
-	load_button.disabled = SaveService.read().is_empty()
+	requested_coop = world.coop
+	_update_mode_buttons()
 	menu.show()
 	resume_button.grab_focus()
+
+func _switch_mode() -> void:
+	requested_coop = not requested_coop
+	_update_mode_buttons()
+
+func _update_mode_buttons() -> void:
+	var mode := "Lokal-Koop" if requested_coop else "Einzelspieler"
+	mode_button.text = "Modus · " + mode
+	resume_button.text = "Fortsetzen" if world.started and world.coop == requested_coop else mode + " starten"
+	load_button.disabled = SaveService.read(SaveService.COOP_PATH if requested_coop else SaveService.PATH).is_empty()
+
+func _start_new() -> void:
+	world.set_coop(requested_coop)
+	world.new_game()
+
+func start_selected() -> void:
+	if world.started and world.coop == requested_coop:
+		world.close_menu()
+	else:
+		world.set_coop(requested_coop)
+		world.new_game(false)
 
 func toast(text: String) -> void:
 	notice.text = text
@@ -153,12 +192,28 @@ func _process(delta: float) -> void:
 	message_time = maxf(0.0, message_time - delta)
 	notice.visible = message_time > 0.0
 	vitals.text = "SHADEPI / %03d   EN %03d" % [world.player.health, roundi(world.player.energy)]
-	health_bar.size.x = 164 * world.player.health / 100.0
-	energy_bar.size.x = 164 * world.player.energy / 100.0
+	var coop: bool = world.coop
+	var width := 78.0 if coop else 164.0
+	health_bar.position = Vector2(10, 20 if coop else 25)
+	energy_bar.position = Vector2(94, 20) if coop else Vector2(10, 37)
+	health_bar.size.x = width * world.player.health / 100.0
+	energy_bar.size.x = width * world.player.energy / 100.0
+	for track in vital_tracks:
+		track.visible = not coop
+	raven_vitals.visible = coop
+	raven_health.visible = coop
+	raven_energy.visible = coop
+	if coop:
+		raven_vitals.text = "RAVEN / %03d   EN %03d" % [world.raven.health, roundi(world.raven.energy)]
+		raven_health.size = Vector2(width * world.raven.health / 100.0, 5)
+		raven_energy.size = Vector2(width * world.raven.energy / 100.0, 5)
+	controls.text = "1 Shadepi · WASD / J / Leertaste / E     2 Raven · Pfeile / U / O / P / Enter" if coop else "WASD  Bewegen     J / Maus  Katana     Leertaste  Ausweichen     Esc  Menü"
 	objective.text = ["Sprich mit Raven", "Öffne die Sperre am Terminal", "Besiege Chrome Jackal", "Sichere die Daten am Ausgang", "Test abgeschlossen · frei erkunden"][world.stage]
+	if coop and world.stage == 0:
+		objective.text = "Trefft euch zur Einsatzbesprechung"
 	var cloak: String = ("%.0fs" % world.player.cloak_time) if world.player.cloak_time > 0 else (("%.0fs" % world.player.cloak_cooldown) if world.player.cloak_cooldown > 0 else "bereit")
 	var hack: String = ("%.0fs" % world.hack_cooldown) if world.hack_cooldown > 0 else "bereit"
-	abilities.text = "C  Tarnfeld: %s     Q  Raven-Hack: %s     F5  Speichern / F9  Laden     V  Bildstil" % [cloak, hack]
+	abilities.text = "C  Tarnfeld: %s     %s  Raven-Hack: %s     F5  Speichern / F9  Laden     V  Bildstil" % [cloak, "O" if coop else "Q", hack]
 	prompt.text = world.interaction_prompt()
 	prompt.visible = not prompt.text.is_empty() and not world.is_busy()
 	abilities.visible = not dialogue_open and not world.menu_open

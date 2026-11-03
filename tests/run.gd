@@ -124,10 +124,89 @@ func run() -> void:
 			DirAccess.remove_absolute(file + suffix)
 	scene.new_game()
 	check(scene.stage == 0 and scene.enemy.health == 180 and not scene.gate_open, "restart resets combat, quest and gate")
+	await check_coop(scene)
 	scene.queue_free()
 	await process_frame
 	print("SHADEPI TESTS: %d checks, %d failures" % [checks, failures])
 	quit(1 if failures else 0)
+
+func check_coop(scene: Node2D) -> void:
+	# Use the menu entry point, then send real keyboard events.
+	scene.menu_open = true
+	scene.ui.show_menu()
+	scene.ui.mode_button.pressed.emit()
+	scene.ui.resume_button.pressed.emit()
+	check(scene.coop and not scene.menu_open, "menu starts local co-op")
+	check(scene.save_path() == SaveService.COOP_PATH, "co-op selects its own save slot")
+	var shadepi_start: Vector2 = scene.player.position
+	var raven_start: Vector2 = scene.raven.position
+	key(KEY_D, true)
+	key(KEY_LEFT, true)
+	for i in 15:
+		await physics_frame
+	key(KEY_D, false)
+	key(KEY_LEFT, false)
+	await physics_frame
+	check(scene.player.position.x > shadepi_start.x + 15, "WASD controls Shadepi during simultaneous input")
+	check(scene.raven.position.x < raven_start.x - 15, "arrows independently control Raven")
+	check(absf(scene.player.position.y - shadepi_start.y) < 0.1, "Raven input does not steer Shadepi")
+	var offset: Vector2 = scene.camera.position - scene.player.position.lerp(scene.raven.position, 0.5)
+	check(offset.distance_to(Vector2(0, -27)) < 3.0, "shared camera tracks both players")
+	scene.player.position = scene.raven.position + Vector2(-448, 0)
+	check(scene.limit_coop_motion(scene.player, Vector2(-100, 0), 0.016).x == 0.0, "camera boundary prevents walking farther away")
+	check(scene.limit_coop_motion(scene.player, Vector2(100, 0), 0.016).x > 0.0, "camera boundary allows regrouping")
+	scene.player.position = WorldData.RAVEN + Vector2(0, 28)
+	scene.raven.position = WorldData.RAVEN
+	scene.interact(scene.raven)
+	for i in 3:
+		scene.ui.advance_dialogue()
+	check(scene.stage == 1, "Raven can start the team dialogue")
+	scene.raven.position = WorldData.TERMINAL + Vector2(-26, 25)
+	scene.interact(scene.raven)
+	await physics_frame
+	check(scene.stage == 2 and scene.gate_open, "Raven can operate the mission terminal")
+	scene.player.position = Vector2(350, 380)
+	scene.raven.position = Vector2(710, 323)
+	scene.raven.facing = Vector2.RIGHT
+	check(scene.combat_target(scene.enemy.position) == scene.raven, "Jackal can target Raven")
+	key(KEY_O, true)
+	await physics_frame
+	key(KEY_O, false)
+	check(scene.enemy.exposed > 0.0, "Raven's hack uses her own range and key")
+	var enemy_health: int = scene.enemy.health
+	key(KEY_U, true)
+	for i in 4:
+		await physics_frame
+	key(KEY_U, false)
+	check(scene.enemy.health < enemy_health, "Raven's pulse shot damages Jackal")
+	scene.raven.health = 63
+	var saved_raven: Vector2 = scene.raven.position
+	check(scene.save_game(), "co-op checkpoint saves both players")
+	scene.raven.position = WorldData.RAVEN
+	scene.raven.health = 100
+	check(scene.load_game() and scene.raven.position == saved_raven and scene.raven.health == 63, "co-op load restores Raven's position and health")
+	scene.raven.take_damage(100, scene.enemy.position)
+	check(scene.menu_open and scene.raven.health == 100 and scene.player.health == 100, "Raven defeat resets the team checkpoint")
+	scene.close_menu()
+	scene.enemy.take_damage(1000)
+	scene.raven.position = WorldData.EXIT
+	scene.interact(scene.raven)
+	for i in 3:
+		scene.ui.advance_dialogue()
+	check(scene.stage == 4, "Raven can complete the shared mission")
+	scene.set_coop(false)
+	check(InputMap.action_has_event("move_left", arrow_left()), "solo arrow shortcuts are restored")
+
+func key(code: Key, pressed: bool) -> void:
+	var event := InputEventKey.new()
+	event.physical_keycode = code
+	event.pressed = pressed
+	Input.parse_input_event(event)
+
+func arrow_left() -> InputEventKey:
+	var event := InputEventKey.new()
+	event.physical_keycode = KEY_LEFT
+	return event
 
 func reachable(from: Vector2, to: Vector2, gate: bool) -> bool:
 	var start := Vector2i(from / 8)

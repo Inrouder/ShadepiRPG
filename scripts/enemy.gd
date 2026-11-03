@@ -18,7 +18,8 @@ func _physics_process(delta: float) -> void:
 	cooldown = maxf(0.0, cooldown - delta)
 	velocity = Vector2.ZERO
 	var state := "idle"
-	var offset: Vector2 = world.player.global_position - global_position
+	var target = world.combat_target(global_position)
+	var offset: Vector2 = target.global_position - global_position if target != null else Vector2.ZERO
 	if stun > 0.0:
 		state = "hurt"
 	elif windup > 0.0:
@@ -30,12 +31,14 @@ func _physics_process(delta: float) -> void:
 		lunge -= delta
 		velocity = attack_direction * 220.0
 		state = "attack"
-		if not hit_done and offset.length() < 35.0:
-			hit_done = true
-			world.player.take_damage(24, global_position)
+		if not hit_done:
+			var victim = world.combat_target(global_position, true)
+			if victim != null and global_position.distance_to(victim.global_position) < 35.0:
+				hit_done = true
+				victim.take_damage(24, global_position)
 		if lunge <= 0.0:
 			cooldown = 1.1
-	elif active and world.player.cloak_time <= 0.0:
+	elif active and target != null:
 		facing = offset.normalized()
 		if offset.length() < 60.0 and cooldown <= 0.0:
 			windup = 0.72

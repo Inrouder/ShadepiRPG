@@ -8,17 +8,31 @@
 
 Shadepi und Raven treffen in einer regennassen Gasse auf Chrome Jackal. Sprich mit Raven, öffne die Sicherheitssperre, kombiniere Katana und Netrunning und sichere die Daten am Ausgang.
 
-Diese Version **0.2.0** ist eine frei arrangierte Gameplayprobe aus einem **späteren Abschnitt**. Shadepi und Raven kennen sich hier bereits. Die eigentliche Geschichte beginnt mit Shadepi allein; Raven begegnet er erst später. Die Dialoge dieser Szene sind eigens für den Test geschrieben.
+Diese Version **0.3.0** ist eine frei arrangierte Gameplayprobe aus einem **späteren Abschnitt**. Shadepi und Raven kennen sich hier bereits. Die eigentliche Geschichte beginnt mit Shadepi allein; Raven begegnet er erst später. Die Dialoge dieser Szene sind eigens für den Test geschrieben.
 
 ## Spielen
 
 1. Unter [Actions](https://github.com/Inrouder/ShadepiRPG/actions/workflows/build.yml) den letzten erfolgreichen Lauf öffnen.
 2. **ShadepiRPG-Windows** herunterladen, ZIP vollständig entpacken und `Shadepi-Echos-in-Neon.exe` starten. Eine Godot-Installation wird zum Spielen nicht benötigt.
-3. Im Startmenü **Testszene starten** wählen. Das Missionsziel steht oben rechts.
+3. Im Startmenü **Einzelspieler** oder **Lokal-Koop** wählen und starten. Das Missionsziel steht oben rechts.
 
 Ein Linux-Build und das vollständige Godot-Projekt werden ebenfalls als Artefakte erzeugt. Bei späteren Versions-Tags veröffentlicht der Workflow zusätzlich Windows-ZIP und Projekt-ZIP im Bereich [Releases](https://github.com/Inrouder/ShadepiRPG/releases).
 
-## Steuerung
+## Lokal-Koop
+
+Im Start- oder Pausenmenü über **Modus** den **Lokal-Koop** auswählen. Danach könnt ihr ein neues Spiel starten oder euren Koop-Spielstand laden. Ihr spielt auf derselben Tastatur und seht beide Figuren auf einem Bildschirm. Die Kamera folgt eurem Mittelpunkt. Wenn ihr euch zu weit voneinander entfernt, geht ihr wieder aufeinander zu.
+
+| Aktion | Shadepi | Raven |
+| --- | --- | --- |
+| Bewegen | WASD | Pfeiltasten |
+| Angriff | J oder linke Maustaste für das Katana | U für einen Impulsschuss in Blickrichtung |
+| Ausweichen | Leertaste oder Umschalt | P |
+| Spezialfähigkeit | C für Tarnung | O für einen Hack aus Ravens Reichweite |
+| Interagieren | E | Enter |
+
+Beide können das Terminal bedienen und die Daten sichern. Jede Figur hat eigene Lebenspunkte und Energie. Wenn eine Figur besiegt wird, setzt ihr den Kampf gemeinsam am Kontrollpunkt fort. **F5** und **F9** speichern und laden den aktiven Modus. Solo und Koop haben getrennte Spielstände.
+
+## Steuerung im Einzelspieler
 
 | Taste | Aktion |
 | --- | --- |
@@ -64,9 +78,9 @@ godot --headless --export-release Linux build/linux/Shadepi-Echos-in-Neon.x86_64
 
 Zum Export müssen die offiziellen Exportvorlagen derselben Godot-Version installiert sein. Die GitHub Action richtet dies automatisch ein. Die Windows-EXE wird unter Linux exportiert; ihre Ausführung auf einem tatsächlichen Windows-PC ist ein gesonderter manueller Prüfschritt.
 
-Die **45 automatisierten Prüfungen** behandeln unter anderem Bewegung und Gebäudekollision, Missionsfortschritt, Kampf, Tarnung, Spriteformate, Grafikprofile sowie ungültige und beschädigte Spielstände einschließlich Backup-Wiederherstellung.
+Die **63 automatisierten Prüfungen** behandeln unter anderem Bewegung und Gebäudekollision, Missionsfortschritt, Kampf, Tarnung, Spriteformate, Grafikprofile, gleichzeitige Eingaben für beide Figuren, Koop-Kampf, Laden beider Figuren sowie ungültige und beschädigte Spielstände einschließlich Backup-Wiederherstellung.
 
-Speicherort: Godots `user://shadepi-test-save.json` (unter Windows normalerweise `%APPDATA%/Godot/app_userdata/Shadepi - Echos in Neon/`). Bei beschädigter Hauptdatei wird ein validiertes Backup versucht. Beim Laden werden laufende Fähigkeiten zurückgesetzt und Jackal an seine Startposition gesetzt; sein gespeicherter Lebensstand bleibt erhalten.
+Speicherort: Godots `user://shadepi-test-save.json` für Solo und `user://shadepi-coop-save.json` für Koop (unter Windows normalerweise `%APPDATA%/Godot/app_userdata/Shadepi - Echos in Neon/`). Bei beschädigter Hauptdatei wird ein validiertes Backup versucht. Beim Laden werden laufende Fähigkeiten zurückgesetzt und Jackal an seine Startposition gesetzt; sein gespeicherter Lebensstand bleibt erhalten.
 
 ## Grafiken und Audio weiterbearbeiten
 

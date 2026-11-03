@@ -14,9 +14,11 @@ var hit_pending := false
 var combo := 0
 var combo_window := 0.0
 var knockback := Vector2.ZERO
-var last_aim_mouse := Vector2.ZERO
+var second_player := false
 
 func _physics_process(delta: float) -> void:
+	if second_player and not world.coop:
+		return
 	if world.is_busy():
 		animate("idle", delta)
 		return
@@ -34,14 +36,15 @@ func _physics_process(delta: float) -> void:
 			cloak_time = 0.0
 	else:
 		energy = minf(100.0, energy + delta * 15.0)
-	var direction := Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	var prefix := "raven_" if second_player else ""
+	var direction := Input.get_vector(prefix + "move_left", prefix + "move_right", prefix + "move_up", prefix + "move_down")
 	if direction.length() > 0.1 and attack_time <= 0.0 and dash_time <= 0.0:
 		facing = direction.normalized()
-	if Input.is_action_just_pressed("attack"):
+	if Input.is_action_just_pressed(prefix + "attack"):
 		try_attack()
-	if Input.is_action_just_pressed("dash"):
+	if Input.is_action_just_pressed(prefix + "dash"):
 		try_dash(direction)
-	if Input.is_action_just_pressed("cloak"):
+	if not second_player and Input.is_action_just_pressed("cloak"):
 		try_cloak()
 	set_cloaked(cloak_time > 0.0)
 	var state := "idle"
@@ -62,12 +65,19 @@ func _physics_process(delta: float) -> void:
 		state = "walk" if direction.length() > 0.1 else "idle"
 	velocity += knockback
 	knockback = knockback.move_toward(Vector2.ZERO, 700.0 * delta)
+	velocity = world.limit_coop_motion(self, velocity, delta)
 	move_and_slide()
 	animate(state, delta)
 
 func try_attack() -> bool:
 	if attack_cooldown > 0.0 or dash_time > 0.0 or energy < 5.0:
 		return false
+	if second_player:
+		energy -= 5.0
+		attack_time = 0.22
+		attack_cooldown = 0.42
+		world.raven_shot()
+		return true
 	if Input.is_action_just_pressed("mouse_attack"):
 		var aim := get_global_mouse_position() - global_position
 		if aim.length() > 4.0:
@@ -118,6 +128,7 @@ func take_damage(amount: int, source: Vector2) -> void:
 		world.player_defeated()
 
 func reset_transients() -> void:
+	velocity = Vector2.ZERO
 	attack_time = 0.0
 	attack_cooldown = 0.0
 	dash_time = 0.0

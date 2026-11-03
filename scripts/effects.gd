@@ -9,6 +9,7 @@ var rain := true
 var quality := 2
 var ripples: Array[Dictionary] = []
 var links: Array[Dictionary] = []
+var pulses: Array[Dictionary] = []
 var rng := RandomNumberGenerator.new()
 
 func _ready() -> void:
@@ -34,6 +35,10 @@ func hack_arc(from: Vector2, to: Vector2) -> void:
 	if links.size() < 4:
 		links.append({"from": from + Vector2(0, -25), "to": to + Vector2(0, -27), "t": 0.55})
 
+func pulse_trace(from: Vector2, to: Vector2) -> void:
+	if pulses.size() < 8:
+		pulses.append({"from": from + Vector2(0, -24), "to": to + Vector2(0, -24), "t": 0.16})
+
 func _process(delta: float) -> void:
 	elapsed += delta
 	for i in range(particles.size() - 1, -1, -1):
@@ -42,7 +47,7 @@ func _process(delta: float) -> void:
 		particles[i].t -= delta
 		if particles[i].t <= 0:
 			particles.remove_at(i)
-	for collection in [slashes, flashes, ripples, links]:
+	for collection in [slashes, flashes, ripples, links, pulses]:
 		for i in range(collection.size() - 1, -1, -1):
 			collection[i].t -= delta
 			if collection[i].t <= 0:
@@ -65,6 +70,10 @@ func _draw() -> void:
 			var angle := TAU * i / 12.0
 			points.append(ripple.p + Vector2(cos(angle) * size, sin(angle) * size * 0.42))
 		draw_polyline(points, Color(0.43, 0.78, 0.92, ripple.t * 0.7))
+	for pulse in pulses:
+		var alpha: float = pulse.t / 0.16
+		draw_line(pulse.from, pulse.to, Color(0.2, 0.78, 1.0, alpha * 0.5), 3.0)
+		draw_line(pulse.from, pulse.to, Color(0.8, 0.97, 1.0, alpha))
 	for link in links:
 		var points := PackedVector2Array([link.from])
 		for i in range(1, 11):

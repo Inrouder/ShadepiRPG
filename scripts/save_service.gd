@@ -2,6 +2,7 @@ class_name SaveService
 extends RefCounted
 
 const PATH := "user://shadepi-test-save.json"
+const COOP_PATH := "user://shadepi-coop-save.json"
 
 static func validate(value: Variant) -> Dictionary:
 	if not value is Dictionary:
@@ -20,10 +21,21 @@ static func validate(value: Variant) -> Dictionary:
 		return {}
 	if not WorldData.walkable(Vector2(data.x, data.y), data.stage >= 2):
 		return {}
+	if data.has("raven"):
+		if not data.raven is Dictionary:
+			return {}
+		var partner: Dictionary = data.raven
+		for key in ["health", "energy", "x", "y"]:
+			if not partner.has(key) or not (partner[key] is float or partner[key] is int) or not is_finite(float(partner[key])):
+				return {}
+		if partner.health < 1 or partner.health > 100 or partner.energy < 0 or partner.energy > 100:
+			return {}
+		if not WorldData.walkable(Vector2(partner.x, partner.y), data.stage >= 2):
+			return {}
 	return data
 
 static func write(data: Dictionary, path: String = PATH) -> bool:
-	if validate(data).is_empty():
+	if validate(data).is_empty() or (path == COOP_PATH and not data.has("raven")):
 		return false
 	var file := FileAccess.open(path + ".tmp", FileAccess.WRITE)
 	if file == null:
@@ -54,6 +66,6 @@ static func read(path: String = PATH) -> Dictionary:
 		if parser.parse(file.get_as_text()) != OK:
 			continue
 		var result := validate(parser.data)
-		if not result.is_empty():
+		if not result.is_empty() and (path != COOP_PATH or result.has("raven")):
 			return result
 	return {}

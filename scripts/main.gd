@@ -9,7 +9,9 @@ const VISUAL_PRESETS := ["Reduziert", "Ausgewogen", "Atmosphärisch"]
 const VISUAL_SETTINGS := "user://shadepi-graphics.cfg"
 var player
 var enemy
-var raven: PixelActor
+var raven
+var coop := false
+const COOP_REACH := Vector2(448, 166)
 var ui
 var effects
 var camera: Camera2D
@@ -65,7 +67,11 @@ func _bind_inputs() -> void:
 		"attack": [KEY_J], "dash": [KEY_SPACE, KEY_SHIFT], "cloak": [KEY_C],
 		"hack": [KEY_Q], "interact": [KEY_E, KEY_ENTER], "pause_game": [KEY_ESCAPE],
 		"save_game": [KEY_F5], "load_game": [KEY_F9], "help_game": [KEY_H], "mute_game": [KEY_M],
-		"graphics_game": [KEY_V]
+		"graphics_game": [KEY_V],
+		"raven_move_left": [KEY_LEFT], "raven_move_right": [KEY_RIGHT],
+		"raven_move_up": [KEY_UP], "raven_move_down": [KEY_DOWN],
+		"raven_attack": [KEY_U], "raven_hack": [KEY_O],
+		"raven_dash": [KEY_P], "raven_interact": [KEY_ENTER]
 	}
 	for action in bindings:
 		if not InputMap.has_action(action):
@@ -80,6 +86,45 @@ func _bind_inputs() -> void:
 		var mouse := InputEventMouseButton.new()
 		mouse.button_index = MOUSE_BUTTON_LEFT
 		InputMap.action_add_event(action, mouse)
+
+func set_coop(enabled: bool) -> void:
+	coop = enabled
+	camera.limit_left = -18 if coop else 0
+	camera.limit_right = 1042 if coop else 1024
+	# Solo keeps the arrow-key shortcuts. In co-op each direction has one owner.
+	var arrows := [KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN]
+	var actions := ["move_left", "move_right", "move_up", "move_down"]
+	for i in arrows.size():
+		var event := InputEventKey.new()
+		event.physical_keycode = arrows[i]
+		Input.action_release(actions[i])
+		Input.action_release("raven_" + actions[i])
+		if coop:
+			InputMap.action_erase_event(actions[i], event)
+		elif not InputMap.action_has_event(actions[i], event):
+			InputMap.action_add_event(actions[i], event)
+
+func save_path() -> String:
+	return SaveService.COOP_PATH if coop else SaveService.PATH
+
+func limit_coop_motion(actor: PixelActor, motion: Vector2, delta: float) -> Vector2:
+	if not coop:
+		return motion
+	var partner: PixelActor = raven if actor == player else player
+	var offset := actor.position - partner.position
+	var step := motion * delta
+	# If a collision displaced either actor, allow motion back toward the group.
+	step.x = clampf(step.x, minf(0.0, -COOP_REACH.x - offset.x), maxf(0.0, COOP_REACH.x - offset.x))
+	step.y = clampf(step.y, minf(0.0, -COOP_REACH.y - offset.y), maxf(0.0, COOP_REACH.y - offset.y))
+	return step / delta
+
+func combat_target(origin: Vector2, include_cloaked: bool = false) -> PixelActor:
+	var target: PixelActor
+	if include_cloaked or player.cloak_time <= 0.0:
+		target = player
+	if coop and (target == null or origin.distance_squared_to(raven.position) < origin.distance_squared_to(target.position)):
+		target = raven
+	return target
 
 func _build_world() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
@@ -111,7 +156,8 @@ func _build_world() -> void:
 	player.setup(preload("res://assets/sprites/shadepi.png"), self)
 	player.position = WorldData.START
 	actors.add_child(player)
-	raven = PixelActor.new()
+	raven = PlayerScript.new()
+	raven.second_player = true
 	raven.name = "Raven"
 	raven.setup(preload("res://assets/sprites/raven.png"), self)
 	raven.position = WorldData.RAVEN
@@ -260,25 +306,31 @@ func _process(delta: float) -> void:
 		if player.velocity.length() > 45.0 and next_step_ripple <= 0.0:
 			effects.water_step(player.position)
 			next_step_ripple = 0.13
-		raven.animate("attack" if enemy.exposed > 0.0 else "idle", delta)
-		if stage >= 2:
-			var target: Vector2 = player.position + Vector2(-52, 26)
-			if raven.position.distance_to(target) > 35 and WorldData.walkable(target, gate_open):
-				raven.facing = (target - raven.position).normalized()
-				raven.velocity = raven.facing * 75
-				raven.move_and_slide()
-				raven.animate("walk", delta)
-			if stage == 2 and player.position.x > 548:
-				enemy.active = true
-	else:
-		raven.animate("idle", delta)
+		if not coop:
+			_update_raven_follower(delta)
+		var lead_x: float = maxf(player.position.x, raven.position.x) if coop else player.position.x
+		if stage == 2 and lead_x > 548:
+			enemy.active = true
 	blade_light.enabled = player.cloak_time <= 0.0
 	blade_light.position = Vector2(5, -18) + player.facing * 9.0
 	blade_light.energy = 1.6 if player.attack_time > 0.12 else 0.8
-	camera.position = player.position + Vector2(0, -60) + player.facing * 8
+	if coop:
+		camera.position = player.position.lerp(raven.position, 0.5) + Vector2(0, -27)
+	else:
+		camera.position = player.position + Vector2(0, -60) + player.facing * 8
 	shake = maxf(0, shake - delta * 20)
 	camera.offset = Vector2(sin(Time.get_ticks_msec() * 0.1), cos(Time.get_ticks_msec() * 0.15)) * shake
 	queue_redraw()
+
+func _update_raven_follower(delta: float) -> void:
+	raven.animate("attack" if enemy.exposed > 0.0 else "idle", delta)
+	if stage >= 2:
+		var target: Vector2 = player.position + Vector2(-52, 26)
+		if raven.position.distance_to(target) > 35 and WorldData.walkable(target, gate_open):
+			raven.facing = (target - raven.position).normalized()
+			raven.velocity = raven.facing * 75
+			raven.move_and_slide()
+			raven.animate("walk", delta)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.echo:
@@ -289,7 +341,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if event.is_action_pressed("pause_game") or event.is_action_pressed("help_game"):
 		if menu_open:
-			close_menu()
+			if started:
+				close_menu()
+			else:
+				ui.start_selected()
 		else:
 			menu_open = true
 			ui.show_menu()
@@ -302,9 +357,11 @@ func _unhandled_input(event: InputEvent) -> void:
 			ui.advance_dialogue()
 			get_viewport().set_input_as_handled()
 		return
-	if event.is_action_pressed("interact"):
+	if coop and event.is_action_pressed("raven_interact"):
+		interact(raven)
+	elif event.is_action_pressed("interact"):
 		interact()
-	elif event.is_action_pressed("hack"):
+	elif (coop and event.is_action_pressed("raven_hack")) or (not coop and event.is_action_pressed("hack")):
 		raven_hack()
 	elif event.is_action_pressed("save_game"):
 		save_game()
@@ -323,31 +380,43 @@ func close_menu() -> void:
 
 func interaction_prompt() -> String:
 	if stage == 0 and player.position.distance_to(raven.position) < 62:
-		return "E · Mit Raven sprechen"
-	if stage == 1 and player.position.distance_to(WorldData.TERMINAL) < 54:
-		return "E · Sicherheitssperre hacken"
-	if stage == 3 and player.position.distance_to(WorldData.EXIT) < 54:
-		return "E · Daten sichern"
+		return "E / Enter · Einsatz besprechen" if coop else "E · Mit Raven sprechen"
+	var point: Vector2
+	var action: String
+	if stage == 1:
+		point = WorldData.TERMINAL
+		action = "Sicherheitssperre hacken"
+	elif stage == 3:
+		point = WorldData.EXIT
+		action = "Daten sichern"
+	else:
+		return ""
+	if player.position.distance_to(point) < 54:
+		return "E · " + action
+	if coop and raven.position.distance_to(point) < 54:
+		return "Enter · " + action
 	return ""
 
-func interact() -> void:
+func interact(actor: PixelActor = null) -> void:
+	if actor == null:
+		actor = player
 	if stage == 0 and player.position.distance_to(raven.position) < 62:
 		ui.dialogue([
 			["Raven", "Chrome Jackal bewacht den Ausgang. Ich kann seine Implantate stören. Du kümmerst dich um den Rest."],
 			["Shadepi", "Einverstanden. Zuerst brauchen wir einen Weg durch die Sperre."],
-			["Raven", "Das Terminal rechts. Danach Q für meinen Hack. Wenn er rot ausholt: ausweichen!"]
+			["Raven", "Das Terminal rechts. Danach %s für meinen Hack. Wenn er rot ausholt: ausweichen!" % ("O" if coop else "Q")]
 		], func():
 			stage = 1
 			autosave()
 		)
-	elif stage == 1 and player.position.distance_to(WorldData.TERMINAL) < 54:
+	elif stage == 1 and actor.position.distance_to(WorldData.TERMINAL) < 54:
 		set_gate(true)
 		stage = 2
 		sound("hack")
 		effects.burst(WorldData.TERMINAL, Color("61e0ec"), 22)
-		toast("Raven: Sperre offen. Seine Panzerung schwäche ich mit Q.")
+		toast("Raven: Sperre offen. Seine Panzerung schwäche ich mit %s." % ("O" if coop else "Q"))
 		autosave()
-	elif stage == 3 and player.position.distance_to(WorldData.EXIT) < 54:
+	elif stage == 3 and actor.position.distance_to(WorldData.EXIT) < 54:
 		ui.dialogue([
 			["Shadepi", "Die Daten sind gesichert. Vielleicht führen sie uns zu den Minotauren."],
 			["Raven", "Dann verschwinden wir. Und vergiss nicht: Wir sind noch lange keine Freunde."],
@@ -369,7 +438,8 @@ func raven_hack() -> bool:
 	if hack_cooldown > 0:
 		toast("Raven: Mein Deck lädt noch.")
 		return false
-	if player.position.distance_to(enemy.position) > 240 or not _line_clear(player.position, enemy.position):
+	var origin: Vector2 = raven.position if coop else player.position
+	if origin.distance_to(enemy.position) > 240 or not _line_clear(origin, enemy.position):
 		toast("Raven: Näher ran. Ich brauche eine freie Verbindung.")
 		return false
 	hack_cooldown = 11.0
@@ -379,6 +449,21 @@ func raven_hack() -> bool:
 	sound("hack")
 	toast("Raven: Implantate gestört. Jetzt!")
 	return true
+
+func raven_shot() -> void:
+	var origin: Vector2 = raven.position
+	var endpoint: Vector2 = origin + raven.facing * 152.0
+	var query := PhysicsRayQueryParameters2D.create(origin, endpoint, 1)
+	var wall := get_world_2d().direct_space_state.intersect_ray(query)
+	if not wall.is_empty():
+		endpoint = wall.position
+	if stage == 2 and CombatRules.can_strike(origin, raven.facing, enemy.position, 152.0):
+		var aim: Vector2 = (enemy.position - origin).normalized()
+		if raven.facing.dot(aim) >= 0.86 and _line_clear(origin, enemy.position):
+			endpoint = enemy.position
+			enemy.take_damage(17)
+	effects.pulse_trace(origin, endpoint)
+	sound("hack")
 
 func _line_clear(from: Vector2, to: Vector2) -> bool:
 	var query := PhysicsRayQueryParameters2D.create(from, to, 1)
@@ -426,27 +511,34 @@ func player_defeated() -> void:
 	player.energy = 100
 	player.position = Vector2(562, 386) if stage == 2 else WorldData.START
 	player.reset_transients()
+	reset_raven(Vector2(586, 405) if stage == 2 else WorldData.RAVEN)
 	enemy.position = WorldData.JACKAL
 	enemy.reset_fight()
 	enemy.active = stage == 2
 
 func snapshot() -> Dictionary:
-	return {"version": 1, "stage": stage, "health": player.health, "energy": player.energy, "x": player.position.x, "y": player.position.y, "enemy_health": enemy.health}
+	var state := {"version": 1, "stage": stage, "health": player.health, "energy": player.energy, "x": player.position.x, "y": player.position.y, "enemy_health": enemy.health}
+	if coop:
+		state.raven = {"x": raven.position.x, "y": raven.position.y, "health": raven.health, "energy": raven.energy}
+	return state
 
 func autosave() -> void:
-	if not SaveService.write(snapshot()):
+	if not SaveService.write(snapshot(), save_path()):
 		toast("Der Kontrollpunkt konnte nicht gespeichert werden. F5 erneut versuchen.")
 
 func save_game() -> bool:
-	var success := SaveService.write(snapshot())
+	var success := SaveService.write(snapshot(), save_path())
 	toast("Spielstand gespeichert" if success else "Speichern fehlgeschlagen")
 	return success
 
-func load_game() -> bool:
-	var data := SaveService.read()
+func load_game(requested_mode: Variant = null) -> bool:
+	var requested_coop: bool = coop if requested_mode == null else bool(requested_mode)
+	var path := SaveService.COOP_PATH if requested_coop else SaveService.PATH
+	var data := SaveService.read(path)
 	if data.is_empty():
 		toast("Kein gültiger Spielstand vorhanden")
 		return false
+	set_coop(requested_coop)
 	stage = int(data.stage)
 	set_gate(stage >= 2)
 	player.position = Vector2(data.x, data.y)
@@ -460,9 +552,13 @@ func load_game() -> bool:
 		enemy.visual.rotation = PI * 0.5
 		enemy.visual.position.y = -10
 		enemy.visual.modulate = Color(0.45, 0.5, 0.6, 0.7)
-	raven.position = WorldData.RAVEN if stage < 2 else player.position + Vector2(-44, 24)
-	if not WorldData.walkable(raven.position, gate_open):
-		raven.position = WorldData.RAVEN
+	if coop:
+		reset_raven(Vector2(data.raven.x, data.raven.y))
+		raven.health = int(data.raven.health)
+		raven.energy = float(data.raven.energy)
+	else:
+		var follow_position: Vector2 = player.position + Vector2(-44, 24)
+		reset_raven(follow_position if stage >= 2 and WorldData.walkable(follow_position, gate_open) else WorldData.RAVEN)
 	hack_cooldown = 0.0
 	ui.dialogue_open = false
 	ui.dialogue_panel.hide()
@@ -470,7 +566,13 @@ func load_game() -> bool:
 	toast("Spielstand geladen")
 	return true
 
-func new_game() -> void:
+func reset_raven(point: Vector2) -> void:
+	raven.position = point
+	raven.health = 100
+	raven.energy = 100.0
+	raven.reset_transients()
+
+func new_game(save_checkpoint: bool = true) -> void:
 	stage = 0
 	set_gate(false)
 	player.position = WorldData.START
@@ -480,12 +582,13 @@ func new_game() -> void:
 	enemy.position = WorldData.JACKAL
 	enemy.reset_fight()
 	enemy.active = false
-	raven.position = WorldData.RAVEN
+	reset_raven(WorldData.RAVEN)
 	hack_cooldown = 0.0
 	ui.dialogue_open = false
 	ui.dialogue_panel.hide()
 	close_menu()
-	autosave()
+	if save_checkpoint:
+		autosave()
 
 func toast(text: String) -> void:
 	if ui != null:
