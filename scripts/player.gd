@@ -2,6 +2,7 @@ extends PixelActor
 
 const SPEED := 94.0
 var health := 100
+var health_floor := 0
 var energy := 100.0
 var attack_time := 0.0
 var attack_cooldown := 0.0
@@ -118,7 +119,7 @@ func try_cloak() -> bool:
 func take_damage(amount: int, source: Vector2) -> void:
 	if invulnerable > 0.0 or health <= 0:
 		return
-	health = maxi(0, health - amount)
+	health = maxi(health_floor, health - amount)
 	invulnerable = 0.8
 	cloak_time = 0.0
 	flash_time = 0.18

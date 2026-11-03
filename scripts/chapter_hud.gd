@@ -17,9 +17,8 @@ var comic_fade: Tween
 func _ready() -> void:
 	super._ready()
 	mission_title.text = "KAPITEL 1 / ECHOS IN NEON"
-	menu_description.text = "Kapitel 1 · Ravens Jagd\nLokal-Koop beginnt beim gemeinsamen Kampf."
-	button_at("Spätere Testszene öffnen", 274, func(): get_tree().change_scene_to_file("res://scenes/main.tscn"))
-	menu_help.position.y = 303
+	menu_description.text = "Kapitel 1 · Ravens Jagd\nLokal-Koop beginnt mit Ravens Rückkehr."
+	menu_help.position.y = 279
 	menu_help.text = "Controller · Stick / Steuerkreuz und A"
 	restart_button.text = "Kapitel 1 neu starten"
 	comic_panel = panel(Rect2(0, 0, 640, 360))
@@ -67,7 +66,7 @@ func clear_dialogue() -> void:
 	comic_panel.hide()
 
 func advance_dialogue() -> void:
-	comic_art.texture = COMIC.get(dialogue_lines[0][2]) if not dialogue_lines.is_empty() else null
+	comic_art.texture = COMIC.get(dialogue_lines[0][2], null) if not dialogue_lines.is_empty() else null
 	comic_panel.visible = comic_art.texture != null
 	if comic_fade != null:
 		comic_fade.kill()
@@ -91,25 +90,33 @@ func _process(delta: float) -> void:
 		world.Phase.APARTMENT:
 			objective.text = "Kopfgeld / Chrome Jackal"
 		world.Phase.HUNT:
-			objective.text = "Folge der Spur durch die Gassen" if not world.gate_open else "Betritt den Wartungshof"
+			if world.gate_open:
+				objective.text = "Betritt den Wartungshof"
+			elif world._guards_left() > 0:
+				objective.text = "Folge der Spur · %d Punks übrig" % world._guards_left()
+			else:
+				objective.text = "Folge der Spur zur Schleuse"
 		world.Phase.DUEL:
-			objective.text = "Stell dich Chrome Jackal"
+			objective.text = "Halte durch. Dein Hack läuft."
 		world.Phase.ROOFTOP:
 			objective.text = "Signal verloren"
 		world.Phase.RESCUE:
 			objective.text = "Finde Raven" if world.gate_open else "Besiege die Wachen in der Wartungsgasse"
 		world.Phase.REVIVE:
-			objective.text = "Hilf Raven auf"
+			objective.text = "Hör Raven zu"
 		world.Phase.TEAM:
-			objective.text = "Schaltet Jackals Implantate aus und greift an"
+			objective.text = "Schaltet Jackals Implantate aus" if world.raven_joined else "Bring Jackal auf halbe Stärke"
+		world.Phase.EPILOGUE:
+			objective.text = "Der Auftrag danach"
 		world.Phase.COMPLETE:
 			objective.text = "Kapitel 1 abgeschlossen"
 	abilities.visible = abilities.visible and world.phase in [world.Phase.DUEL, world.Phase.RESCUE, world.Phase.TEAM]
 	if world.phase == world.Phase.DUEL:
-		var hack := "%.0fs" % world.hack_cooldown if world.hack_cooldown > 0.0 else "bereit"
-		abilities.text = "%s  Implantate hacken: %s" % [world.hack_input_hint(), hack]
-		if world.duel_time >= 8.0:
-			boss.text = "CHROME JACKAL\nKONTER WIRD GELADEN"
-	elif world.phase == world.Phase.RESCUE:
+		var remaining := ceili(world.DUEL_DURATION - world.duel_time)
+		boss.text = "CHROME JACKAL / %d HP\n%s" % [world.enemy.health, "GEGENHACK" if world.counter_warning else "Panzerung undurchdringlich"]
+		abilities.text = "NETRUNNING / Handshake in %02d s     Leertaste / B  Ausweichen" % remaining
+	elif world.phase == world.Phase.TEAM:
+		boss.text = "CHROME JACKAL / %d von %d HP\n%s" % [world.enemy.health, world.enemy.max_health, "IMPLANTATE GESTÖRT" if world.enemy.exposed > 0 else "Panzerung aktiv"]
+	if world.phase == world.Phase.RESCUE or (world.phase == world.Phase.TEAM and not world.raven_joined):
 		var cloak := "%.0fs" % world.player.cloak_cooldown if world.player.cloak_cooldown > 0.0 else "bereit"
 		abilities.text = "C / Y  Tarnfeld: %s" % cloak

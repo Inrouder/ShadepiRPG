@@ -148,6 +148,9 @@ func combat_target(origin: Vector2, include_cloaked: bool = false) -> PixelActor
 		target = raven
 	return target
 
+func world_walls() -> Array[Rect2]:
+	return WorldData.WALLS
+
 func _build_world() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	var ground := Sprite2D.new()
@@ -157,7 +160,7 @@ func _build_world() -> void:
 	add_child(ground)
 	ground_atmosphere = GroundAtmosphereScript.new()
 	add_child(ground_atmosphere)
-	for wall in WorldData.WALLS:
+	for wall in world_walls():
 		_collider(wall)
 	actors = Node2D.new()
 	actors.y_sort_enabled = true
@@ -482,13 +485,19 @@ func raven_shot() -> void:
 	var wall := get_world_2d().direct_space_state.intersect_ray(query)
 	if not wall.is_empty():
 		endpoint = wall.position
-	if stage == 2 and CombatRules.can_strike(origin, raven.facing, enemy.position, 152.0):
-		var aim: Vector2 = (enemy.position - origin).normalized()
-		if raven.facing.dot(aim) >= 0.86 and _line_clear(origin, enemy.position):
-			endpoint = enemy.position
-			enemy.take_damage(17)
+	var target := raven_shot_target(origin)
+	if target != null:
+		endpoint = target.position
+		target.take_damage(17)
 	effects.pulse_trace(origin, endpoint)
 	sound("hack")
+
+func raven_shot_target(origin: Vector2) -> PixelActor:
+	return enemy if stage == 2 and raven_can_hit(enemy, origin) else null
+
+func raven_can_hit(target: PixelActor, origin: Vector2) -> bool:
+	var offset := target.position - origin
+	return offset.length() <= 152.0 and raven.facing.dot(offset.normalized()) >= 0.86 and _line_clear(origin, target.position)
 
 func _line_clear(from: Vector2, to: Vector2) -> bool:
 	var query := PhysicsRayQueryParameters2D.create(from, to, 1)

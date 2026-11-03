@@ -6,6 +6,7 @@ var particles: Array[Dictionary] = []
 var slashes: Array[Dictionary] = []
 var flashes: Array[Dictionary] = []
 var rain := true
+var rain_start := 0.0
 var quality := 2
 var ripples: Array[Dictionary] = []
 var links: Array[Dictionary] = []
@@ -58,7 +59,7 @@ func _draw() -> void:
 	if rain:
 		var rain_count := [65, 140, 210][quality] as int
 		for i in rain_count:
-			var p := Vector2(fposmod(i * 53.0 + elapsed * 28, 1024), fposmod(i * 31.0 + elapsed * 130, 640))
+			var p := Vector2(rain_start + fposmod(i * 53.0 + elapsed * 28, 1024 - rain_start), fposmod(i * 31.0 + elapsed * 130, 640))
 			draw_line(p, p + Vector2(-2, 5), Color(0.45, 0.65, 0.8, 0.2))
 		for i in (18 if quality > 0 else 6):
 			var p := Vector2(30 + i * 57, 302 + (i * 37) % 175)

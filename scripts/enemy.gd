@@ -6,6 +6,11 @@ var min_health := 0
 var hit_damage := 24
 var move_speed := 46.0
 var active := false
+var armoured := false
+var attack_recovery := 1.1
+var windup_duration := 0.72
+var lunge_speed := 220.0
+var awareness := INF
 var exposed := 0.0
 var stun := 0.0
 var cooldown := 1.0
@@ -33,7 +38,7 @@ func _physics_process(delta: float) -> void:
 			hit_done = false
 	elif lunge > 0.0:
 		lunge -= delta
-		velocity = attack_direction * 220.0
+		velocity = attack_direction * lunge_speed
 		state = "attack"
 		if not hit_done:
 			var victim = world.combat_target(global_position, true)
@@ -41,11 +46,11 @@ func _physics_process(delta: float) -> void:
 				hit_done = true
 				victim.take_damage(hit_damage, global_position)
 		if lunge <= 0.0:
-			cooldown = 1.1
-	elif active and target != null:
+			cooldown = attack_recovery
+	elif active and target != null and offset.length() <= awareness:
 		facing = offset.normalized()
 		if offset.length() < 60.0 and cooldown <= 0.0:
-			windup = 0.72
+			windup = windup_duration
 			attack_direction = facing
 		elif offset.length() > 35.0:
 			velocity = facing * move_speed
@@ -55,6 +60,10 @@ func _physics_process(delta: float) -> void:
 
 func take_damage(base: int) -> void:
 	if health <= 0:
+		return
+	if armoured:
+		world.effects.burst(global_position, Color("efc788"), 7)
+		world.damage_number(global_position + Vector2(0, -48), "BLOCK")
 		return
 	var amount := CombatRules.damage(base, exposed > 0.0)
 	amount = mini(amount, health - min_health)
@@ -101,7 +110,7 @@ func _draw() -> void:
 		draw_rect(Rect2(-22, -64, 44, 3), Color("162435"))
 		draw_rect(Rect2(-22, -64, 44.0 * health / max_health, 3), Color("57d5e4") if exposed > 0 else Color("ec597e"))
 	if windup > 0.0:
-		var radius := 16.0 + 26.0 * (1.0 - windup / 0.72)
+		var radius := 16.0 + 26.0 * (1.0 - windup / windup_duration)
 		draw_arc(Vector2.ZERO, radius, attack_direction.angle() - 0.65, attack_direction.angle() + 0.65, 16, Color("ff5974"), 2.0)
 		var target := attack_direction * 56.0
 		draw_line(Vector2.ZERO, target, Color(1.0, 0.3, 0.42, 0.4), 1.0)

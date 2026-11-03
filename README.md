@@ -2,9 +2,9 @@
 
 **Kapitel 1 · Echos in Neon und Schatten** ist der spielbare Auftakt zu „Shadepi – Im Schatten des Raben“.
 
-Raven bekommt in ihrem Apartment einen Hinweis auf Chrome Jackal und verfolgt ihn durch Night Citys Gassen. Nach der ersten Begegnung übernimmt Shadepi und kämpft sich zu ihr durch. Im Finale verbinden beide Katana, Impulspistole und Netrunning.
+Raven bekommt in ihrem Apartment einen Hinweis auf Chrome Jackal, räumt die Punks in Bingo Street aus dem Weg und verfolgt ihn bis zum Wartungshof. Dort hält seine Panzerung jedem Treffer stand. Nach 30 Kampfsekunden dreht er Ravens Hack gegen sie. Shadepi kämpft sich durch die Wartungsgasse und stellt Jackal mit 360 HP. Sobald die Hälfte seiner Lebenspunkte weg ist, steht Raven auf und steigt in den Kampf ein.
 
-Die Zwischenszenen nutzen Ausschnitte aus dem Comic „Shadepi – Im Schatten des Raben“ (deutsche Fassung, PDF-Seiten 2, 4, 5, 6 und 9) mit eigens für das Spiel geschriebenen Dialogen. Die spätere Testszene bleibt über das Hauptmenü spielbar. [Spielbild aus der Testszene](docs/screenshot.png)
+Die Zwischenszenen nutzen Ausschnitte aus dem Comic „Shadepi – Im Schatten des Raben“ (deutsche Fassung, PDF-Seiten 2, 4, 5, 6 und 9) mit eigens für das Spiel geschriebenen Dialogen.
 
 ## Spielen
 
@@ -16,7 +16,7 @@ Ein Linux-Build und das vollständige Godot-Projekt werden ebenfalls als Artefak
 
 ## Lokal-Koop
 
-Im Start- oder Pausenmenü über **Modus** den **Lokal-Koop** auswählen. Ravens Jagd und Shadepis Rettung spielt ihr nacheinander mit der Hauptsteuerung. Sobald Shadepi Raven aufgeholfen hat, übernimmt im Lokal-Koop die zweite Person Raven. Im Einzelspieler folgt Raven und feuert auf Jackal, sobald sie freie Sicht hat. Ihr könnt eine Tastatur, zwei Controller oder eine Tastatur zusammen mit einem Controller nutzen. Beide Figuren sind auf einem Bildschirm zu sehen. Die Kamera folgt eurem Mittelpunkt. Wenn ihr euch zu weit voneinander entfernt, geht ihr wieder aufeinander zu.
+Im Start- oder Pausenmenü über **Modus** den **Lokal-Koop** auswählen. Ravens Jagd und Shadepis Rettung spielt ihr nacheinander mit der Hauptsteuerung. Sobald Shadepi Jackal auf 180 HP gebracht hat, übernimmt im Lokal-Koop die zweite Person Raven. Im Einzelspieler folgt Raven und feuert auf Jackal, sobald sie freie Sicht hat. Ihr könnt eine Tastatur, zwei Controller oder eine Tastatur zusammen mit einem Controller nutzen. Beide Figuren sind auf einem Bildschirm zu sehen. Die Kamera folgt eurem Mittelpunkt. Wenn ihr euch zu weit voneinander entfernt, geht ihr wieder aufeinander zu.
 
 | Aktion | Shadepi | Raven |
 | --- | --- | --- |
@@ -67,7 +67,7 @@ Vor dem gemeinsamen Kampf steuert der erste Controller die jeweils aktive Figur.
 - Begehbare Gasse mit Gebäudekollisionen, Hindernissen, Sicherheitsschleuse und markierter Jagdroute.
 - Gegner mit angekündigtem Angriff, Vorstoß, Erholungsphase und hackbarer Panzerung.
 - Katana-Kombination, Energie, Ausweichen, zehn Sekunden maximales Tarnfenster und Fähigkeitencooldowns.
-- Comic-Zwischenszenen, zwei Kämpfe gegen Jackal, eine Rettung mit zwei Wachen und separate Kapitel-Kontrollpunkte für Solo und Koop.
+- Comic-Zwischenszenen, zwei Kämpfe gegen Jackal, vier animierte Punk-Varianten, eine Rettung mit drei Wachen und separate Kapitel-Kontrollpunkte für Solo und Koop.
 - Geworfene Schatten, Neonhalos, nasse Spiegelungen, Schritte im Regen, Dampf, Hackentladungen und ein dezenter Farb- und Lichtfilter. Die drei Bildstile sind im Menü und mit **V** umschaltbar; die Einstellung bleibt beim Neustart erhalten.
 - Eigens synthetisierte elektronische Hintergrundmusik und Kampf-/Hackeffekte.
 

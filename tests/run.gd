@@ -367,52 +367,93 @@ func check_chapter() -> void:
 	check(chapter.ui.dialogue_open and chapter.ui.comic_art.texture != null, "chapter opens with comic artwork")
 	chapter.ui.advance_dialogue()
 	check(chapter.ui.comic_art.texture.resource_path.ends_with("apartment.jpg"), "Raven gets the lead in her apartment")
-	chapter.ui.advance_dialogue()
+	finish_dialogue(chapter)
 	check(chapter.phase == chapter.Phase.HUNT and chapter.actor_is_playable(chapter.raven) and not chapter.actor_is_playable(chapter.player), "the hunt gives primary controls to Raven")
 	check(chapter.saved_checkpoint(true) == chapter.Phase.HUNT, "the hunt is saved in the co-op slot")
-	for point in [Vector2(128, 452), Vector2(308, 452), Vector2(319, 343), Vector2(392, 343), Vector2(480, 365), Vector2(580, 361)]:
+	check(chapter.patrol.size() == 4 and not chapter.gate_open, "four street punks guard Raven's route")
+	var sprites := {}
+	for guard in chapter.patrol:
+		sprites[guard.visual.texture.resource_path] = true
+	check(sprites.size() == 4, "hunt punks use four distinct sprites")
+	var first_guard = chapter.patrol[0]
+	chapter.raven.facing = (first_guard.position - chapter.raven.position).normalized()
+	await physics_frame
+	var hp: int = first_guard.health
+	chapter.raven_shot()
+	check(first_guard.health < hp, "Raven can shoot a street punk with her pistol")
+	for guard in chapter.patrol:
+		guard.take_damage(100)
+	check(not chapter.gate_open, "clearing the gang still requires following the trail")
+	var route := [
+		Vector2(-543, 448), Vector2(-297, 448), Vector2(-297, 346), Vector2(-158, 346),
+		Vector2(-158, 451), Vector2(-60, 451), Vector2(308, 452), Vector2(319, 343),
+		Vector2(392, 343), Vector2(480, 365), Vector2(580, 361),
+	]
+	for point in route:
+		if point == Vector2(308, 452):
+			await walk_to(chapter.raven, Vector2(125, 451))
 		await walk_to(chapter.raven, point)
 		check(chapter.raven.position.distance_to(point) < 20.0, "Raven can walk to %s through chapter geometry" % point)
 	check(chapter.phase == chapter.Phase.DUEL and chapter.enemy.active, "the trail opens the gate and starts the first Jackal fight")
-	chapter.ui.advance_dialogue()
+	finish_dialogue(chapter)
 	chapter.enemy.take_damage(1000)
-	check(chapter.enemy.health == 50, "Jackal survives the first duel")
-	chapter.duel_time = 10.0
-	await process_frame
-	await process_frame
-	check(chapter.phase == chapter.Phase.ROOFTOP and chapter.raven.health == 0, "Jackal's counter knocks Raven down and starts Shadepi's cutscene")
-	chapter.ui.advance_dialogue()
-	chapter.ui.advance_dialogue()
+	check(chapter.enemy.health == 360 and not chapter.raven_hack(), "Jackal blocks all damage and early hacks during the first duel")
+	chapter.raven.take_damage(500, chapter.enemy.position)
+	check(chapter.raven.health == 1 and chapter.phase == chapter.Phase.DUEL, "early damage cannot end Raven's duel")
+	chapter.duel_time = 0.0
+	chapter._process(29.9)
+	check(chapter.phase == chapter.Phase.DUEL and chapter.counter_warning, "the duel is still active just before 30 seconds")
+	chapter._process(0.11)
+	check(chapter.phase == chapter.Phase.ROOFTOP and chapter.raven.health == 0 and not chapter.effects.links.is_empty(), "the scripted counterhack knocks Raven down after 30 seconds")
+	chapter._process(1.0)
+	finish_dialogue(chapter)
 	check(chapter.phase == chapter.Phase.RESCUE and chapter.actor_is_playable(chapter.player), "Shadepi takes over in the rescue")
-	check(chapter.patrol.size() == 2 and not chapter.gate_open, "the patrol guards the way to Raven")
+	check(chapter.patrol.size() == 3 and not chapter.gate_open, "the patrol guards the way to Raven")
 	for guard in chapter.patrol:
 		guard.take_damage(100)
 	check(chapter.gate_open, "the patrol's defeat opens the rescue gate")
 	chapter.player.position = chapter.raven.position + Vector2(-20, 0)
 	chapter.interact()
-	check(chapter.phase == chapter.Phase.REVIVE, "interacting with Raven starts the revive cutscene")
-	chapter.ui.advance_dialogue()
-	chapter.ui.advance_dialogue()
-	check(chapter.phase == chapter.Phase.TEAM and chapter.coop and chapter.raven.health == 100, "Raven rejoins the fight under the second player's controls")
+	check(chapter.phase == chapter.Phase.REVIVE, "interacting with Raven starts the rescue dialogue")
+	finish_dialogue(chapter)
+	check(chapter.phase == chapter.Phase.TEAM and not chapter.coop and chapter.raven.health == 0, "Shadepi starts the 360 HP fight alone")
+	chapter.enemy.take_damage(1000)
+	check(chapter.enemy.health == 180 and not chapter.raven_joined, "damage stops at exactly half health for the handoff")
+	chapter._process(0.01)
+	check(chapter.coop and chapter.raven_joined and chapter.raven.health == 100, "Raven stands up and the second player takes control")
 	check(chapter.actor_input_prefix(chapter.raven) == "raven_", "co-op Raven has her own input bindings")
 	chapter.player.position = Vector2(690, 330)
 	chapter.raven.position = Vector2(678, 323)
 	await physics_frame
 	check(chapter.raven_hack() and chapter.enemy.exposed > 0.0, "Raven hacks Jackal during the team fight")
 	chapter.enemy.take_damage(200)
-	check(chapter.phase == chapter.Phase.COMPLETE and chapter.ui.dialogue_open, "winning the second fight starts the closing comic scene")
+	check(chapter.phase == chapter.Phase.EPILOGUE and chapter.ui.dialogue_open, "winning starts the closing conversation")
+	finish_dialogue(chapter)
+	chapter.ending.custom_step(3.0)
+	check(not chapter.raven.visible and chapter.ui.dialogue_open, "Raven leaves through the door before Shadepi speaks")
+	finish_dialogue(chapter)
+	chapter.ending.custom_step(2.0)
+	check(chapter.phase == chapter.Phase.COMPLETE and chapter.ui.dialogue_open, "the rooftop jump completes the chapter")
 	check(chapter.load_game(true) and chapter.phase == chapter.Phase.COMPLETE and not chapter.enemy.visible, "the completed co-op checkpoint can be reloaded")
 	chapter.chapter_coop = false
 	chapter._enter_checkpoint(chapter.Phase.TEAM)
 	chapter.player.position = Vector2(710, 323)
-	chapter.raven.position = Vector2(681, 323)
 	chapter.enemy.position = WorldData.JACKAL
+	chapter.enemy.take_damage(1000)
+	chapter._process(0.01)
+	chapter.raven.position = Vector2(681, 323)
 	await physics_frame
 	await process_frame
 	await process_frame
-	check(not chapter.coop and chapter.enemy.health < 180, "solo Raven assists with aimed shots")
+	check(not chapter.coop and chapter.raven_joined and chapter.enemy.health < 180, "solo Raven assists with aimed shots after the handoff")
 	chapter.queue_free()
 	await process_frame
+
+func finish_dialogue(chapter: Node2D) -> void:
+	for _line in 16:
+		if not chapter.ui.dialogue_open:
+			break
+		chapter.ui.advance_dialogue()
 
 func walk_to(actor: PixelActor, point: Vector2) -> void:
 	var actions := ["move_left", "move_right", "move_up", "move_down"]

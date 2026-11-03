@@ -1,15 +1,31 @@
 extends "res://scripts/main.gd"
 
-enum Phase { APARTMENT, HUNT, DUEL, ROOFTOP, RESCUE, REVIVE, TEAM, COMPLETE }
+enum Phase { APARTMENT, HUNT, DUEL, ROOFTOP, RESCUE, REVIVE, TEAM, COMPLETE, EPILOGUE }
 
 const ChapterHud = preload("res://scripts/chapter_hud.gd")
 const CHAPTER_SAVE := "user://shadepi-chapter-one.cfg"
-const APARTMENT_EXIT := Vector2(128, 370)
+const WEST_EDGE := -640
+const DUEL_DURATION := 30.0
+const JACKAL_HEALTH := 360
+const APARTMENT_EXIT := Vector2(-554, 356)
+const EXIT_DOOR := Vector2(961, 255)
+const PUNKS := [
+	preload("res://assets/sprites/punk-1.png"), preload("res://assets/sprites/punk-2.png"),
+	preload("res://assets/sprites/punk-3.png"), preload("res://assets/sprites/punk-4.png"),
+]
+const HUNT_GUARDS := [Vector2(-491, 401), Vector2(-329, 432), Vector2(-156, 356), Vector2(81, 404)]
+const RESCUE_GUARDS := [Vector2(347, 351), Vector2(466, 382), Vector2(483, 442)]
 const ARENA_ENTRY := Vector2(568, 356)
 const DOWNED_SPOT := Vector2(636, 365)
 const RESCUE_START := Vector2(295, 451)
-const BARRIERS: Array[Rect2] = [Rect2(181, 272, 29, 128), Rect2(381, 375, 28, 121)]
-const TRAIL: Array[Vector2] = [Vector2(219, 451), Vector2(391, 343), Vector2(475, 365)]
+const BARRIERS: Array[Rect2] = [
+	Rect2(-430, 272, 28, 128), Rect2(-257, 376, 29, 120), Rect2(-108, 272, 27, 127),
+	Rect2(181, 272, 29, 128), Rect2(381, 375, 28, 121),
+]
+const TRAIL: Array[Vector2] = [
+	Vector2(-443, 448), Vector2(-246, 346), Vector2(-77, 448),
+	Vector2(219, 451), Vector2(391, 343), Vector2(475, 365),
+]
 
 var phase := Phase.APARTMENT
 var checkpoint := Phase.APARTMENT
@@ -17,13 +33,39 @@ var chapter_coop := false
 var trail_index := 0
 var duel_time := 0.0
 var assist_time := 0.0
+var feedback_time := 0.0
+var raven_joined := false
+var counter_warning := false
+var ending: Tween
 var patrol: Array[PixelActor] = []
 
 func create_hud() -> CanvasLayer:
 	return ChapterHud.new()
 
+func world_walls() -> Array[Rect2]:
+	var walls: Array[Rect2] = WorldData.WALLS.duplicate()
+	walls.erase(Rect2(-20, 0, 20, 640))
+	walls.append_array([Rect2(WEST_EDGE - 20, 0, 20, 640), Rect2(WEST_EDGE, 0, 640, 272), Rect2(WEST_EDGE, 496, 640, 144)])
+	return walls
+
+func set_coop(enabled: bool) -> void:
+	super.set_coop(enabled)
+	camera.limit_left = WEST_EDGE
+
 func _build_world() -> void:
 	super._build_world()
+	camera.limit_left = WEST_EDGE
+	effects.rain_start = WEST_EDGE
+	enemy.max_health = JACKAL_HEALTH
+	var west := Sprite2D.new()
+	west.texture = preload("res://assets/world/bingo-street.png")
+	west.centered = false
+	west.position.x = WEST_EDGE
+	west.z_index = -10
+	add_child(west)
+	for point in [Vector2(-537, 283), Vector2(-315, 390), Vector2(-170, 318), Vector2(-61, 438)]:
+		_halo(point, Color(0.9, 0.24, 0.43, 0.44), 0.8)
+		_light(point, Color("f66892"), 1.55, 1.0)
 	for barrier in BARRIERS:
 		_collider(barrier)
 	_halo(Vector2(197, 383), Color(0.94, 0.2, 0.55, 0.42), 0.67)
@@ -38,7 +80,9 @@ func raven_leads() -> bool:
 	return phase in [Phase.APARTMENT, Phase.HUNT, Phase.DUEL]
 
 func actor_is_playable(actor: PixelActor) -> bool:
-	return actor == raven if raven_leads() else super.actor_is_playable(actor)
+	if raven_leads():
+		return actor == raven
+	return phase in [Phase.RESCUE, Phase.TEAM] and super.actor_is_playable(actor)
 
 func actor_input_prefix(actor: PixelActor) -> String:
 	return "" if raven_leads() else super.actor_input_prefix(actor)
@@ -52,10 +96,10 @@ func hack_input_hint() -> String:
 	return super.hack_input_hint()
 
 func combat_target(origin: Vector2, include_cloaked: bool = false) -> PixelActor:
-	if phase == Phase.DUEL:
+	if phase in [Phase.HUNT, Phase.DUEL]:
 		return raven
 	if phase == Phase.TEAM:
-		if not coop and (player.cloak_time > 0.0 or origin.distance_squared_to(raven.position) < origin.distance_squared_to(player.position)):
+		if raven_joined and not coop and (player.cloak_time > 0.0 or origin.distance_squared_to(raven.position) < origin.distance_squared_to(player.position)):
 			return raven
 		return super.combat_target(origin, include_cloaked)
 	if phase == Phase.RESCUE:
@@ -71,27 +115,42 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _process(delta: float) -> void:
 	super._process(delta)
-	if raven_leads():
+	if raven_leads() or phase == Phase.ROOFTOP:
 		camera.position = raven.position + Vector2(0, -57) + raven.facing * 8
+	if ending != null and ending.is_valid():
+		if phase == Phase.EPILOGUE and not ui.dialogue_open and not menu_open:
+			if raven.visible:
+				raven.animate("walk", delta)
+			else:
+				player.animate("walk", delta)
+		if menu_open:
+			ending.pause()
+		elif not ending.is_running():
+			ending.play()
 	if is_busy():
 		return
 	match phase:
 		Phase.HUNT:
-			if trail_index < TRAIL.size() and raven.position.distance_to(TRAIL[trail_index]) < 37.0:
+			if trail_index < TRAIL.size() and raven.position.distance_to(TRAIL[trail_index]) < 39.0:
 				trail_index += 1
-				if trail_index == TRAIL.size():
-					set_gate(true)
-					toast("Raven: Jackal ist hinter der Schleuse.")
-			elif trail_index == TRAIL.size() and raven.position.x > ARENA_ENTRY.x:
+				_check_hunt_gate()
+			elif gate_open and raven.position.x > ARENA_ENTRY.x:
 				_begin_duel()
 		Phase.DUEL:
-			duel_time += delta
-			if duel_time >= 10.0:
+			duel_time = minf(DUEL_DURATION, duel_time + delta)
+			if duel_time >= DUEL_DURATION:
 				_lose_duel()
-			elif duel_time >= 8.0:
-				enemy.windup = maxf(enemy.windup, 0.43)
+			elif duel_time >= 26.0 and not counter_warning:
+				counter_warning = true
+				toast("Raven: Er hängt sich an mein Deck. Raus aus der Verbindung!")
+		Phase.ROOFTOP:
+			feedback_time -= delta
+			if feedback_time <= 0.0:
+				_rooftop_dialogue()
 		Phase.TEAM:
-			if not coop:
+			if not raven_joined and enemy.health <= (JACKAL_HEALTH >> 1):
+				_raven_rejoins()
+			elif raven_joined and not coop:
 				assist_time = maxf(0.0, assist_time - delta)
 				if assist_time == 0.0 and raven.position.distance_to(enemy.position) <= 140.0 and _line_clear(raven.position, enemy.position):
 					assist_time = 1.7
@@ -103,7 +162,7 @@ func _process(delta: float) -> void:
 		next_step_ripple = 0.13
 
 func _update_raven_follower(delta: float) -> void:
-	if phase == Phase.TEAM:
+	if phase == Phase.TEAM and raven_joined:
 		super._update_raven_follower(delta)
 
 func new_game(save_checkpoint: bool = true) -> void:
@@ -113,6 +172,9 @@ func new_game(save_checkpoint: bool = true) -> void:
 
 func _enter_checkpoint(next_phase: Phase) -> void:
 	ui.clear_dialogue()
+	if ending != null:
+		ending.kill()
+		ending = null
 	for foe in patrol:
 		foe.hide()
 		foe.set_physics_process(false)
@@ -121,23 +183,37 @@ func _enter_checkpoint(next_phase: Phase) -> void:
 	checkpoint = next_phase
 	phase = next_phase
 	stage = 4 if phase == Phase.COMPLETE else (2 if phase == Phase.TEAM else 1)
-	set_coop(chapter_coop and phase in [Phase.TEAM, Phase.COMPLETE])
+	raven_joined = false
+	set_coop(false)
 	set_gate(phase in [Phase.TEAM, Phase.COMPLETE])
 	hack_cooldown = 0.0
 	assist_time = 0.0
 	trail_index = 0
-	player.position = RESCUE_START if phase == Phase.RESCUE else DOWNED_SPOT + Vector2(-35, 8)
+	player.position = DOWNED_SPOT + Vector2(-35, 8)
+	if phase == Phase.RESCUE:
+		player.position = RESCUE_START
+	elif phase == Phase.COMPLETE:
+		player.position = Vector2(919, 223)
 	player.health = 100
 	player.energy = 100.0
 	player.reset_transients()
+	player.visual.position.y = -26.0
 	player.facing = Vector2.RIGHT
 	player.visible = not raven_leads()
 	reset_raven(APARTMENT_EXIT if raven_leads() else DOWNED_SPOT)
+	raven.visible = phase != Phase.COMPLETE
+	raven.health_floor = 0
 	raven.facing = Vector2.RIGHT
 	raven.visual.rotation = 0.0
 	raven.visual.position.y = -26.0
 	enemy.position = WorldData.JACKAL
-	enemy.min_health = 0
+	enemy.armoured = false
+	enemy.min_health = (JACKAL_HEALTH >> 1) if phase == Phase.TEAM else 0
+	enemy.move_speed = 54.0
+	enemy.hit_damage = 22
+	enemy.windup_duration = 0.65
+	enemy.attack_recovery = 0.95
+	enemy.lunge_speed = 235.0
 	enemy.reset_fight(0 if phase == Phase.COMPLETE else enemy.max_health)
 	enemy.active = phase == Phase.TEAM
 	enemy.visible = enemy.active
@@ -145,68 +221,128 @@ func _enter_checkpoint(next_phase: Phase) -> void:
 	match phase:
 		Phase.APARTMENT:
 			ui.dialogue([
-				["NIGHT CITY / MORGENGRAUEN", "In Night City brennt das Neon bis in den Morgen. Raven bekommt einen neuen Auftrag.", "stadt"],
-				["RAVEN / APARTMENT", "Chrome Jackal. Bingo Street. Die Spur führt zum Wartungshof hinter der Schleuse. Ich bin unterwegs.", "apartment"],
+				["NIGHT CITY / MORGENGRAUEN", "Der Regen drückt den Rauch der Nacht zurück auf die Straße. In Ravens Apartment klingelt das Kopfgeldterminal.", "stadt"],
+				["RAVEN / APARTMENT", "Chrome Jackal. Die Prämie ist gerade wieder gestiegen. Entweder will ihn jemand dringend tot sehen oder die anderen Jäger haben aufgegeben.", "apartment"],
+				["KOPFGELDTERMINAL", "Letzter Ping an Bingo Street. Ein Wartungshof hinter der Schleuse. Die Kameras dort senden seit zwölf Minuten dasselbe Bild.", "apartment"],
+				["RAVEN", "Dann nehme ich die Gassen unter den Kameras. Mal sehen, wer da für ihn die Augen offen hält.", "apartment"],
 			], _leave_apartment)
-		Phase.RESCUE:
-			raven.health = 0
-			raven.visual.rotation = PI * 0.5
-			raven.visual.position.y = -9
-			_spawn_patrol(Vector2(347, 357), Color("9bd5ff"))
-			_spawn_patrol(Vector2(466, 384), Color("edbad5"))
+		Phase.HUNT:
+			_spawn_hunt()
+		Phase.RESCUE, Phase.TEAM:
+			_down_raven()
+			if phase == Phase.RESCUE:
+				for index in RESCUE_GUARDS.size():
+					_spawn_patrol(RESCUE_GUARDS[index], (index + 2) % PUNKS.size())
 
 func _leave_apartment() -> void:
 	phase = Phase.HUNT
 	checkpoint = Phase.HUNT
+	_spawn_hunt()
 	autosave()
+
+func _spawn_hunt() -> void:
+	for index in HUNT_GUARDS.size():
+		_spawn_patrol(HUNT_GUARDS[index], index)
+
+func _down_raven() -> void:
+	raven.health = 0
+	raven.reset_transients()
+	raven.visual.rotation = PI * 0.5
+	raven.visual.position.y = -9
+
+func _guards_left() -> int:
+	var living := 0
+	for guard in patrol:
+		if guard.health > 0:
+			living += 1
+	return living
+
+func _check_hunt_gate() -> void:
+	if not gate_open and trail_index == TRAIL.size() and _guards_left() == 0:
+		set_gate(true)
+		toast("Raven: Die Schleuse ist offen. Jackal ist gleich dahinter.")
 
 func _begin_duel() -> void:
 	phase = Phase.DUEL
 	stage = 2
 	duel_time = 0.0
+	counter_warning = false
+	set_gate(false)
+	raven.health = 100
+	raven.health_floor = 1
 	enemy.show()
-	enemy.min_health = 50
+	enemy.armoured = true
+	enemy.move_speed = 77.0
+	enemy.hit_damage = 32
+	enemy.windup_duration = 0.47
+	enemy.attack_recovery = 0.53
+	enemy.lunge_speed = 295.0
 	enemy.active = true
 	ui.dialogue([
-		["CHROME JACKAL / WARTUNGSHOF", "Du hast die ganze Stadt nach mir abgesucht. Ich musste nur hier warten.", "jackal"],
+		["CHROME JACKAL / WARTUNGSHOF", "Vier meiner Leute senden nicht mehr. Dein Signal dagegen ist laut genug, um den ganzen Hof zu wecken.", "jackal"],
+		["RAVEN", "Ich bin wegen deines Kopfgelds hier. Mal sehen, wie lange deine Panzerung durchhält, wenn ich die Steuerung finde.", "jackal"],
+		["CHROME JACKAL", "Dann steck dich ruhig ein. Die letzte Netrunnerin hat denselben Fehler gemacht.", "jackal"],
 	])
 
+func raven_hack() -> bool:
+	if phase == Phase.DUEL:
+		toast("Raven: Seine Firewall hält. Ich brauche noch Zeit.")
+		return false
+	if phase != Phase.TEAM or not raven_joined or is_busy():
+		return false
+	return super.raven_hack()
+
 func _lose_duel() -> void:
-	raven.health = 0
-	raven.reset_transients()
-	raven.position = DOWNED_SPOT
-	raven.visual.rotation = PI * 0.5
-	raven.visual.position.y = -9
+	raven.health_floor = 0
+	effects.hack_arc(raven.position, enemy.position)
+	effects.hack_arc(enemy.position, raven.position)
+	effects.burst(raven.position, Color("86e8ff"), 36)
+	effects.burst(enemy.position, Color("ff596e"), 24)
+	_down_raven()
 	phase = Phase.ROOFTOP
 	stage = 1
 	enemy.active = false
 	enemy.windup = 0.0
 	enemy.lunge = 0.0
-	enemy.hide()
-	shake = 7.0
-	effects.burst(DOWNED_SPOT, Color("ff596e"), 32)
-	sound("hit")
+	enemy.velocity = Vector2.ZERO
+	camera.position = raven.position + Vector2(0, -65)
+	feedback_time = 0.85
+	shake = 8.0
+	sound("hack")
+
+func _rooftop_dialogue() -> void:
 	ui.dialogue([
-		["RAVEN / SIGNALVERLUST", "Er ist durch meinen Hack gekommen. Meine Beine reagieren nicht.", "niederlage"],
-		["SHADEPI / ÜBER DEN DÄCHERN", "Zwei Wärmesignaturen. Eine wird schwächer. Ich nehme die Wartungsgasse.", "dach"],
+		["RAVEN / SYSTEMFEHLER", "Ich hatte seine Schnittstelle. Dann hat er die Verbindung umgedreht … ich spüre meine Beine nicht mehr.", "niederlage"],
+		["CHROME JACKAL", "Dein Deck hat mir die Tür aufgemacht. Jetzt brauche ich nur noch das Kopfgeld auf dich einzusammeln.", "niederlage"],
+		["SHADEPI / ÜBER DEN DÄCHERN", "Zwei Wärmesignaturen im Hof. Eine am Boden. Die anderen auf der Straße schneiden ihr den Rückweg ab.", "dach"],
+		["SHADEPI", "Wenn ich über die Hauptgasse gehe, sehen sie mich kommen. Die Wartungsgasse liegt im Schatten.", "dach"],
 	], func():
 		_enter_checkpoint(Phase.RESCUE)
 		autosave()
 	)
 
-func _spawn_patrol(point: Vector2, tint: Color) -> void:
+func _spawn_patrol(point: Vector2, variant: int) -> void:
 	var foe := EnemyScript.new()
-	foe.max_health = 36
-	foe.hit_damage = 13
-	foe.move_speed = 53.0
-	foe.setup(preload("res://assets/sprites/jackal.png"), self)
+	foe.max_health = 32 if phase == Phase.HUNT else 39
+	foe.hit_damage = 11 + variant
+	foe.move_speed = 45.0 + variant * 4.0
+	foe.awareness = 148.0
+	foe.setup(PUNKS[variant], self)
 	foe.position = point
-	foe.scale = Vector2(0.72, 0.72)
-	foe.visual.self_modulate = tint
 	actors.add_child(foe)
 	foe.reset_fight(foe.max_health)
 	foe.active = true
 	patrol.append(foe)
+
+func raven_shot_target(origin: Vector2) -> PixelActor:
+	if phase != Phase.HUNT:
+		return super.raven_shot_target(origin)
+	var nearest: PixelActor
+	for guard in patrol:
+		if guard.health > 0 and raven_can_hit(guard, origin):
+			if nearest == null or origin.distance_squared_to(guard.position) < origin.distance_squared_to(nearest.position):
+				nearest = guard
+	return nearest
 
 func player_strike(amount: int) -> void:
 	if phase == Phase.RESCUE:
@@ -218,7 +354,7 @@ func player_strike(amount: int) -> void:
 
 func interaction_prompt() -> String:
 	if phase == Phase.RESCUE and gate_open and player.position.distance_to(raven.position) < 47.0:
-		return "E / A · Raven aufhelfen"
+		return "E / A · Nach Raven sehen"
 	return ""
 
 func interact(_actor: PixelActor = null) -> void:
@@ -226,38 +362,80 @@ func interact(_actor: PixelActor = null) -> void:
 		return
 	phase = Phase.REVIVE
 	ui.dialogue([
-		["SHADEPI", "Hier. Nimm meine Hand. Kannst du stehen?", "rettung"],
-		["RAVEN", "Wenn du ihn beschäftigst, lege ich seine Implantate lahm.", "rettung"],
+		["SHADEPI", "Kannst du mich hören? Bleib liegen. Der Rückstoß hat deine Beinimplantate verriegelt.", "rettung"],
+		["RAVEN", "Er ist noch auf meiner Leitung. Solange seine Panzerung volle Leistung hat, komme ich nicht aus der Schleife.", "rettung"],
+		["SHADEPI", "Dann kümmere ich mich um die Panzerung. Wenn dein Deck wieder hochfährt, brauche ich deine Hilfe.", "rettung"],
 	], func():
 		_enter_checkpoint(Phase.TEAM)
 		autosave()
 	)
 
+func _raven_rejoins() -> void:
+	raven_joined = true
+	reset_raven(DOWNED_SPOT)
+	raven.visual.rotation = 0.0
+	raven.visual.position.y = -26.0
+	enemy.min_health = 0
+	enemy.hack()
+	effects.hack_arc(raven.position, enemy.position)
+	effects.burst(enemy.position, Color("59e7f6"), 24)
+	sound("hack")
+	set_coop(chapter_coop)
+	toast("Raven: Ich bin wieder drin! Seine Panzerung ist offen.")
+
 func enemy_defeated(foe: PixelActor = null) -> void:
-	if phase == Phase.RESCUE:
-		for guard in patrol:
-			if guard.health > 0:
-				return
+	if phase == Phase.HUNT:
+		_check_hunt_gate()
+	elif phase == Phase.RESCUE and _guards_left() == 0:
 		set_gate(true)
 		toast("Wartungsgasse frei. Raven liegt hinter der Schleuse.")
 	elif phase == Phase.TEAM and foe == enemy:
+		_begin_epilogue()
+
+func _begin_epilogue() -> void:
+	phase = Phase.EPILOGUE
+	stage = 3
+	set_coop(false)
+	ui.dialogue([
+		["RAVEN", "Das Kopfgeld gehört mir. Und bevor du fragst: Ja, ich kann wieder stehen. Was bist du überhaupt? Ein Cyber-Ninja?", "begegnung"],
+		["SHADEPI", "Shadepi. Du bist also die Netrunnerin, die ich suche. Ich brauche deine Dienste, um an Informationen zu kommen.", "begegnung"],
+		["RAVEN", "Raven. Und meine Dienste kosten. Nur weil wir denselben Mann zu Boden geschickt haben, gebe ich dir noch keinen Zugriff auf mein Netz.", "begegnung"],
+		["SHADEPI", "Hier. Jackals Telefon. Der Code war 1-2-3-4. Reicht das als Anzahlung?", "begegnung"],
+		["RAVEN", "Das ist Blutgeld. Behalt es. Aber du hast mir da draußen den Rücken freigehalten. Nimm die Karte. Die Adresse steht drauf. Dort reden wir weiter.", "begegnung"],
+	], _raven_exits)
+
+func _raven_exits() -> void:
+	raven.facing = (Vector2(EXIT_DOOR.x, 327) - raven.position).normalized()
+	ending = create_tween()
+	ending.tween_property(raven, "position", Vector2(EXIT_DOOR.x, 327), 1.45)
+	ending.tween_callback(func(): raven.facing = Vector2.UP)
+	ending.tween_property(raven, "position", EXIT_DOOR + Vector2(0, 4), 0.8)
+	ending.tween_callback(func():
+		raven.hide()
+		ui.dialogue([["SHADEPI / LEISE", "Geld ist doch Geld. … Danke, Raven.", ""]], _jump_to_roof)
+	)
+
+func _jump_to_roof() -> void:
+	player.facing = Vector2.UP
+	ending = create_tween()
+	var roof := Vector2(clampf(player.position.x + 40.0, 550.0, 1000.0), 223.0)
+	ending.tween_property(player, "position", roof, 0.7).set_trans(Tween.TRANS_SINE)
+	ending.parallel().tween_property(player.visual, "position:y", -78.0, 0.33)
+	ending.tween_property(player.visual, "position:y", -26.0, 0.24)
+	ending.tween_callback(func():
 		phase = Phase.COMPLETE
 		checkpoint = Phase.COMPLETE
 		stage = 4
+		player.animate("idle", 0.0)
 		autosave()
-		ui.dialogue([
-			["RAVEN", "Das Kopfgeld gehört mir. Und … danke. Wer bist du?", "begegnung"],
-			["SHADEPI", "Shadepi. Das Geld kannst du behalten. Ich brauche Informationen.", "begegnung"],
-		])
+		ui.dialogue([["KAPITEL 1 / ENDE", "Die Stadt verschluckt seine Silhouette. Auf der Datenkarte blinkt eine Adresse.", "dach"]])
+	)
 
 func player_defeated() -> void:
-	if phase == Phase.DUEL:
-		_lose_duel()
-	else:
-		_enter_checkpoint(checkpoint)
-		menu_open = true
-		ui.show_menu("SYSTEM GESTÖRT")
-		ui.resume_button.text = "Am Kontrollpunkt fortsetzen"
+	_enter_checkpoint(checkpoint)
+	menu_open = true
+	ui.show_menu("SYSTEM GESTÖRT")
+	ui.resume_button.text = "Am Kontrollpunkt fortsetzen"
 
 func saved_checkpoint(local_coop: bool) -> int:
 	var config := ConfigFile.new()
@@ -295,6 +473,18 @@ func load_game(requested_mode: Variant = null) -> bool:
 	return true
 
 func _draw() -> void:
+	draw_rect(Rect2(WEST_EDGE, 246, 640, 26), Color("223148"))
+	draw_rect(Rect2(WEST_EDGE, 269, 640, 3), Color("536275"))
+	for x in range(WEST_EDGE + 19, 0, 24):
+		draw_rect(Rect2(x, 256, 19, 3), Color("30455b"))
+	var sign_color := Color("e36f9d")
+	draw_rect(Rect2(-575, 228, 118, 19), Color("161b2b"))
+	draw_string(ThemeDB.fallback_font, Vector2(-569, 242), "BINGO ST / 04", HORIZONTAL_ALIGNMENT_LEFT, -1, 11, sign_color)
+	draw_rect(Rect2(EXIT_DOOR + Vector2(-18, -47), Vector2(36, 49)), Color("132032"))
+	var door_open: bool = phase == Phase.EPILOGUE and raven.visible and raven.position.distance_to(EXIT_DOOR) < 53.0
+	draw_rect(Rect2(EXIT_DOOR + Vector2(-14, -43), Vector2(28, 44)), Color("090e19") if door_open else Color("40536a"))
+	if not door_open:
+		draw_rect(Rect2(EXIT_DOOR + Vector2(8, -22), Vector2(3, 5)), Color("6be4dc"))
 	for barrier in BARRIERS:
 		draw_rect(barrier.grow(2), Color("111827"))
 		draw_rect(barrier, Color("283044"))
@@ -307,7 +497,7 @@ func _draw() -> void:
 			draw_rect(Rect2(507, y, 4, 5), Color(0.28, 0.8, 0.95, 0.75))
 	var point := Vector2.ZERO
 	if phase == Phase.HUNT:
-		point = TRAIL[trail_index] if trail_index < TRAIL.size() else ARENA_ENTRY
+		point = TRAIL[trail_index] if trail_index < TRAIL.size() else (ARENA_ENTRY if gate_open else Vector2.ZERO)
 	elif phase == Phase.RESCUE and gate_open:
 		point = DOWNED_SPOT
 	if point != Vector2.ZERO:

@@ -187,6 +187,130 @@ function directionalHero(kind, state, frame, view) {
 
 const modes = ['idle', 'walk', 'attack', 'hurt'];
 const heroViews = ['front', 'right', 'right', 'back', 'back-right', 'back-right', 'front-right', 'front-right'];
+// Each gang member has a separate silhouette, cyberware palette and metal weapon.
+function punkFrame(variant, state, frame, view) {
+ const canvas = createCanvas(48, 64);
+ const c = canvas.getContext('2d');
+ const side = view === 2, back = view === 3;
+ const walking = state === 'walk', attacking = state === 'attack';
+ const step = walking ? Math.round(Math.sin(frame * Math.PI / 4) * 5) : 0;
+ const swing = attacking ? Math.sin(frame / 7 * Math.PI) : 0;
+ const dark = '#0a0e17', metal = '#768b99', shine = '#c1d4d9';
+ const [coat, lapel, hair, trousers] = [
+  ['#782d41','#bf4b56','#fa6035','#292b43'],
+  ['#3e6354','#70957c','#94eea8','#302b38'],
+  ['#53356e','#9564ae','#bc61f3','#32374b'],
+  ['#8d602a','#c38e45','#e7d689','#383139'],
+ ][variant];
+ const head = side ? 26 : 23;
+ c.translate(state === 'hurt' ? -3 : 0, Math.abs(step) > 3 ? 1 : 0);
+ for (const direction of [-1, 1]) {
+  const x = 23 + direction * (side ? 3 : 5);
+  line(c, x, 39, x + direction * step, 53, dark, 7);
+  line(c, x + 1, 39, x + direction * step + 1, 49, trousers, 5);
+  rect(c, x + direction * step - 1, 52, 9, 5, dark);
+  rect(c, x + direction * step, 53, 6, 2, '#4b5264');
+ }
+ const handX = Math.round((side ? 31 : 34) + swing * 5);
+ const handY = Math.round(39 - swing * 14 + step * 0.25);
+ line(c, 13, 28, 10, 38 - step * 0.5, dark, 7);
+ line(c, 14, 28, 12, 37 - step * 0.5, coat, 4);
+ poly(c, [[12,24],[31,23],[34,33],[30,44],[16,44],[11,33]], dark);
+ poly(c, [[14,26],[30,25],[31,32],[28,42],[17,42],[14,33]], coat);
+ line(c, 16, 28, 20, 40, lapel, 2);
+ line(c, 25, 27, 28, 38, lapel, 2);
+ rect(c, 18, 39, 12, 2, '#202435');
+ rect(c, 23, 39, 3, 2, metal);
+ rect(c, 20, 31, 6, 2, back ? '#e85455' : '#303143');
+ line(c, 28, 28, handX, handY, dark, 7);
+ line(c, 29, 29, handX + 1, handY, coat, 4);
+ rect(c, handX, handY, 4, 5, metal);
+ const tipX = Math.round(handX + swing * 8 - 3), tipY = Math.round(handY - 17 + swing * 13);
+ line(c, handX + 1, handY + 2, tipX, tipY, dark, 4);
+ line(c, handX + 2, handY + 1, tipX + 1, tipY, metal, 2);
+ line(c, tipX + 2, tipY, tipX + 3, tipY + 6, shine, variant % 2 === 0 ? 3 : 1);
+ rect(c, head - 8, 9, 17, 16, dark);
+ rect(c, head - 6, 11, 13, 12, back ? '#403549' : '#a37770');
+ if (variant === 0) {
+  rect(c, head - 3, 3, 6, 10, hair);
+  rect(c, head, 2, 4, 5, hair);
+ } else if (variant === 1) {
+  poly(c, [[head-8,11],[head-7,6],[head+1,4],[head+7,8],[head+5,14],[head-3,12]], hair);
+ } else if (variant === 2) {
+  for (const offset of [-6, -1, 4]) line(c, head + offset, 10, head + offset + 2, 4, hair, 3);
+ } else {
+  rect(c, head - 7, 7, 13, 5, hair);
+  line(c, head - 5, 9, head - 8, 22, hair, 3);
+ }
+ if (!back) {
+  rect(c, head - 6, 15, side ? 13 : 14, 7, '#2c2334');
+  for (const offset of (side ? [2, 5] : [-4, 0, 4])) rect(c, head + offset, 16, 2, 2, '#ff4f5e');
+  rect(c, head - 3, 21, 8, 3, metal);
+  rect(c, head - 1, 22, 4, 1, dark);
+ } else {
+  line(c, head, 15, head, 24, metal, 2);
+  rect(c, head - 1, 20, 2, 2, '#ff4f5e');
+ }
+ return canvas;
+}
+
+for (let variant = 0; variant < 4; variant++) {
+ const sheet = createCanvas(384, 1024);
+ const c = sheet.getContext('2d');
+ modes.forEach((state, group) => {
+  for (let direction = 0; direction < 4; direction++) {
+   for (let frame = 0; frame < 8; frame++) {
+    c.save();
+    c.translate(frame * 48 + (direction === 1 ? 48 : 0), (group * 4 + direction) * 64);
+    if (direction === 1) c.scale(-1, 1);
+    c.drawImage(punkFrame(variant, state, frame, direction === 1 ? 2 : direction), 0, 0);
+    c.restore();
+   }
+  }
+ });
+ save(sheet, 'sprites/punk-' + (variant + 1) + '.png');
+}
+// Bingo Street's west block, aligned with the chapter's pavement and collision lines.
+function bingoStreet() {
+ const canvas = createCanvas(640, 640);
+ const c = canvas.getContext('2d');
+ rect(c, 0, 0, 640, 640, '#182332');
+ for (let y = 272; y < 496; y += 16) {
+  line(c, 0, y, 639, y, '#293549');
+  for (let x = -(y % 32); x < 640; x += 46) line(c, x, y, x + 5, y + 15, '#111d2e');
+ }
+ let seed = 61;
+ const random = () => (seed = seed * 16807 % 2147483647) / 2147483647;
+ for (let i = 0; i < 2600; i++) {
+  rect(c, random() * 640, 274 + random() * 219, 1 + Math.floor(random() * 5), 1, random() > 0.56 ? '#293e4e' : '#202c3c');
+ }
+ for (const [x, y, tint] of [[95,309,'#57354e'],[272,413,'#48384d'],[436,351,'#374957'],[551,452,'#4c3047']]) {
+  for (let i = 0; i < 35; i++) rect(c, x + random() * 56, y + random() * 23, 3 + Math.floor(random() * 14), 1, tint);
+ }
+ for (const [y, height] of [[0,272],[496,144]]) {
+  rect(c, 0, y, 640, height, '#121b2c');
+  for (let yy = y + 7; yy < y + height; yy += 10) {
+   for (let x = -(yy % 20); x < 640; x += 32) rect(c, x, yy, 30, 8, yy < y + height - 48 ? '#222d3e' : '#28364b');
+  }
+  rect(c, 0, y + height - 2, 640, 2, '#475467');
+ }
+ for (const x of [73, 301, 485, 574]) {
+  rect(c, x - 2, 223, 37, 49, '#101827');
+  rect(c, x, 226, 33, 44, '#38455c');
+  for (let y = 229; y < 269; y += 5) rect(c, x + 2, y, 29, 1, '#1e2d40');
+  rect(c, x + 24, 250, 3, 5, '#73bfbc');
+ }
+ for (const x of [160, 372, 522]) {
+  rect(c, x, 159, 47, 48, '#101d30');
+  for (let i = 0; i < 4; i++) rect(c, x + 5 + i * 10, 164, 6, 36, '#344c60');
+  line(c, x + 44, 199, x + 44, 269, '#536373', 3);
+ }
+ for (let x = 24; x < 622; x += 26) rect(c, x, 482, 12, 2, '#515262');
+ save(canvas, 'world/bingo-street.png');
+}
+if (!process.argv.includes('--sprites-only')) bingoStreet();
+if (process.argv.includes('--chapter-only')) process.exit(0);
+
 for (const kind of ['shadepi', 'raven', 'jackal']) {
  const views = kind === 'jackal' ? heroViews.slice(0, 4) : heroViews;
  const sheet = createCanvas(384, modes.length * views.length * 64);
