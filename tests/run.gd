@@ -29,6 +29,15 @@ func run() -> void:
 	var scene = load("res://scenes/main.tscn").instantiate()
 	root.add_child(scene)
 	await process_frame
+	check(SpriteAssets.valid_sheet(scene.player.visual.texture), "selected player sprite fits the eight-by-sixteen grid")
+	var invalid_sprite := ImageTexture.create_from_image(Image.create_empty(48, 64, false, Image.FORMAT_RGBA8))
+	check(not SpriteAssets.valid_sheet(invalid_sprite), "single-frame replacement is rejected")
+	if "--expect-custom-sprite" in OS.get_cmdline_user_args():
+		check(scene.player.visual.texture.resource_path == "res://assets/custom/shadepi.png", "imported custom sheet takes precedence")
+	scene.set_visual_quality(0)
+	check(not scene.atmosphere_filter.visible and not scene.shadow_lights[0].shadow_enabled, "reduced mode removes screen processing and dynamic shadows")
+	scene.set_visual_quality(2)
+	check(scene.atmosphere_filter.visible and scene.shadow_lights[0].shadow_enabled, "atmospheric mode restores lighting and post filter")
 	scene.close_menu()
 	var start: Vector2 = scene.player.position
 	Input.action_press("move_right")
@@ -65,6 +74,9 @@ func run() -> void:
 	scene.player.energy = 100
 	check(scene.player.try_cloak(), "cloak activates with energy")
 	check(scene.player.cloak_time == 10, "cloak has the promised ten second window")
+	await physics_frame
+	await physics_frame
+	check(not scene.player.light_occluder.visible and not scene.blade_light.enabled, "cloaked player does not give away position with light and cast shadow")
 	check(scene.player.try_attack(), "player can attack")
 	check(scene.player.cloak_time == 0, "attack cancels stealth")
 	check(not scene.player.try_attack(), "attack cooldown prevents repeated hits")

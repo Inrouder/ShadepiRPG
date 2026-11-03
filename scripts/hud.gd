@@ -21,6 +21,7 @@ var menu: Panel
 var menu_title: Label
 var resume_button: Button
 var load_button: Button
+var visual_button: Button
 var message_time := 0.0
 
 func panel(rect: Rect2, parent: Node = null) -> Panel:
@@ -74,7 +75,7 @@ func _ready() -> void:
 	energy_bar.color = Color("58d4e5")
 	top.add_child(energy_bar)
 	var mission := panel(Rect2(394, 10, 234, 54))
-	label_at("ECHOS IN NEON / TESTSZENE", Vector2(10, 4), Vector2(218, 14), mission, 10, Color("65d4df"))
+	label_at("ECHOS IN NEON / SPÄTERE SZENE", Vector2(10, 4), Vector2(218, 14), mission, 10, Color("65d4df"))
 	objective = label_at("Sprich mit Raven", Vector2(10, 22), Vector2(214, 28), mission, 11)
 	objective.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	boss_panel = panel(Rect2(204, 10, 182, 54))
@@ -96,14 +97,16 @@ func _ready() -> void:
 	dialogue_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	label_at("E / Enter · Weiter", Vector2(372, 80), Vector2(130, 16), dialogue_panel, 9, Color("93a7ba"))
 	dialogue_panel.hide()
-	menu = panel(Rect2(145, 63, 350, 249))
+	menu = panel(Rect2(145, 27, 350, 304))
 	menu_title = label_at("ECHOS IN NEON", Vector2(20, 12), Vector2(310, 26), menu, 19)
 	label_at("Shadepi · Im Schatten des Raben", Vector2(20, 40), Vector2(310, 22), menu, 11, Color("7cc4d4"))
-	resume_button = button_at("Testszene starten", 73, func(): world.close_menu())
-	load_button = button_at("Spielstand laden", 105, func(): world.load_game())
-	button_at("Testszene neu starten", 137, func(): world.new_game())
-	button_at("Musik / Ton umschalten", 169, func(): world.toggle_audio())
-	label_at("E  Interagieren   Q  Raven-Hack   C  Tarnung\nF5  Speichern   F9  Laden   H  Hilfe", Vector2(20, 207), Vector2(310, 38), menu, 10, Color("9db0c4"))
+	label_at("Späterer Testabschnitt\nRaven und Shadepi kennen sich bereits.", Vector2(20, 62), Vector2(310, 28), menu, 10, Color("9db0c4"))
+	resume_button = button_at("Testszene starten", 96, func(): world.close_menu())
+	load_button = button_at("Spielstand laden", 128, func(): world.load_game())
+	button_at("Testszene neu starten", 160, func(): world.new_game())
+	button_at("Musik / Ton umschalten", 192, func(): world.toggle_audio())
+	visual_button = button_at("Bildstil: " + world.VISUAL_PRESETS[world.visual_quality], 224, func(): world.cycle_visual_quality())
+	label_at("E  Interagieren   Q  Raven-Hack   C  Tarnung\nF5  Speichern   F9  Laden   V  Bildstil", Vector2(20, 263), Vector2(310, 35), menu, 10, Color("9db0c4"))
 
 func button_at(text: String, y: float, callback: Callable) -> Button:
 	var button := Button.new()
@@ -155,7 +158,7 @@ func _process(delta: float) -> void:
 	objective.text = ["Sprich mit Raven", "Öffne die Sperre am Terminal", "Besiege Chrome Jackal", "Sichere die Daten am Ausgang", "Test abgeschlossen · frei erkunden"][world.stage]
 	var cloak: String = ("%.0fs" % world.player.cloak_time) if world.player.cloak_time > 0 else (("%.0fs" % world.player.cloak_cooldown) if world.player.cloak_cooldown > 0 else "bereit")
 	var hack: String = ("%.0fs" % world.hack_cooldown) if world.hack_cooldown > 0 else "bereit"
-	abilities.text = "C  Tarnfeld: %s     Q  Raven-Hack: %s     F5  Speichern / F9  Laden" % [cloak, hack]
+	abilities.text = "C  Tarnfeld: %s     Q  Raven-Hack: %s     F5  Speichern / F9  Laden     V  Bildstil" % [cloak, hack]
 	prompt.text = world.interaction_prompt()
 	prompt.visible = not prompt.text.is_empty() and not world.is_busy()
 	abilities.visible = not dialogue_open and not world.menu_open

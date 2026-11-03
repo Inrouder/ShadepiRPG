@@ -8,6 +8,10 @@ var animation_name := "idle"
 var flash_time := 0.0
 var body_material: ShaderMaterial
 var world: Node2D
+var cast_shadow: Sprite2D
+var shadow_material: ShaderMaterial
+var light_occluder: LightOccluder2D
+var cloaked := false
 
 func setup(texture: Texture2D, game: Node2D) -> void:
 	world = game
@@ -18,8 +22,26 @@ func setup(texture: Texture2D, game: Node2D) -> void:
 	shape.radius = 7.0
 	collider.shape = shape
 	add_child(collider)
+	var sheet := SpriteAssets.resolve(texture)
+	cast_shadow = Sprite2D.new()
+	cast_shadow.texture = sheet
+	cast_shadow.hframes = 8
+	cast_shadow.vframes = 16
+	cast_shadow.position = Vector2(8, -5)
+	cast_shadow.scale = Vector2(1.05, 0.3)
+	cast_shadow.skew = -0.65
+	shadow_material = ShaderMaterial.new()
+	shadow_material.shader = preload("res://shaders/shadow.gdshader")
+	cast_shadow.material = shadow_material
+	add_child(cast_shadow)
+	light_occluder = LightOccluder2D.new()
+	light_occluder.sdf_collision = false
+	var polygon := OccluderPolygon2D.new()
+	polygon.polygon = PackedVector2Array([Vector2(-7, -3), Vector2(-8, -20), Vector2(-4, -35), Vector2(6, -35), Vector2(9, -18), Vector2(7, -3)])
+	light_occluder.occluder = polygon
+	add_child(light_occluder)
 	visual = Sprite2D.new()
-	visual.texture = texture
+	visual.texture = sheet
 	visual.hframes = 8
 	visual.vframes = 16
 	visual.position = Vector2(0, -26)
@@ -45,16 +67,21 @@ func animate(state: String, delta: float) -> void:
 	var speed := 18.0 if state == "attack" else 9.0
 	var frame := mini(7, int(animation_time * speed)) if state == "attack" else int(animation_time * speed) % 8
 	visual.frame = (row * 4 + direction) * 8 + frame
+	cast_shadow.frame = visual.frame
 	queue_redraw()
+
+func set_cloaked(value: bool) -> void:
+	if value == cloaked:
+		return
+	cloaked = value
+	body_material.set_shader_parameter("cloak", 1.0 if cloaked else 0.0)
+	shadow_material.set_shader_parameter("opacity", 0.08 if cloaked else 0.45)
+	light_occluder.visible = not cloaked
 
 func _draw() -> void:
 	draw_ellipse_shadow()
 
 func draw_ellipse_shadow() -> void:
-	draw_style_box(_shadow_style(), Rect2(-10, -2, 20, 5))
-
-func _shadow_style() -> StyleBoxFlat:
-	var style := StyleBoxFlat.new()
-	style.bg_color = Color(0.02, 0.03, 0.06, 0.55)
-	style.set_corner_radius_all(4)
-	return style
+	var opacity := 0.2 if cloaked else 1.0
+	draw_circle(Vector2(0, 1), 9, Color(0.01, 0.02, 0.04, 0.12 * opacity))
+	draw_rect(Rect2(-8, -1, 16, 4), Color(0.01, 0.02, 0.04, 0.4 * opacity))

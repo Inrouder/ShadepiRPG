@@ -34,7 +34,6 @@ func _physics_process(delta: float) -> void:
 			cloak_time = 0.0
 	else:
 		energy = minf(100.0, energy + delta * 15.0)
-	body_material.set_shader_parameter("cloak", 1.0 if cloak_time > 0 else 0.0)
 	var direction := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	if direction.length() > 0.1 and attack_time <= 0.0 and dash_time <= 0.0:
 		facing = direction.normalized()
@@ -44,6 +43,7 @@ func _physics_process(delta: float) -> void:
 		try_dash(direction)
 	if Input.is_action_just_pressed("cloak"):
 		try_cloak()
+	set_cloaked(cloak_time > 0.0)
 	var state := "idle"
 	if attack_time > 0.0:
 		attack_time = maxf(0.0, attack_time - delta)
@@ -128,4 +128,4 @@ func reset_transients() -> void:
 	knockback = Vector2.ZERO
 	hit_pending = false
 	combo_window = 0.0
-	body_material.set_shader_parameter("cloak", 0.0)
+	set_cloaked(false)

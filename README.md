@@ -4,9 +4,11 @@
 
 ![Echtes Spielbild aus Godot](docs/screenshot.png)
 
+[Dieselbe Szene mit reduziertem Bildstil](docs/screenshot-reduced.png)
+
 Shadepi und Raven treffen in einer regennassen Gasse auf Chrome Jackal. Sprich mit Raven, öffne die Sicherheitssperre, kombiniere Katana und Netrunning und sichere die Daten am Ausgang.
 
-Diese Version **0.1.0** ist eine kleine, frei arrangierte Stil- und Gameplayprobe. Sie prüft Steuerung, Pixelanimationen, Atmosphäre und Zusammenarbeit. Die vollständige Adaption der Buchkapitel folgt in weiteren Versionen; die Dialoge dieser Szene sind eigens für den Test geschrieben.
+Diese Version **0.2.0** ist eine frei arrangierte Gameplayprobe aus einem **späteren Abschnitt**. Shadepi und Raven kennen sich hier bereits. Die eigentliche Geschichte beginnt mit Shadepi allein; Raven begegnet er erst später. Die Dialoge dieser Szene sind eigens für den Test geschrieben.
 
 ## Spielen
 
@@ -30,6 +32,7 @@ Ein Linux-Build und das vollständige Godot-Projekt werden ebenfalls als Artefak
 | F5 / F9 | Speichern / Laden |
 | Esc / H | Pause und Hilfe |
 | M | Musik und Effekte umschalten |
+| V | Bildstil wechseln: Atmosphärisch, Reduziert, Ausgewogen |
 
 **Kampftipp:** Der rote Bogen kündigt Jackals Vorstoß an. Seitlich ausweichen, dann zuschlagen. Ravens Hack unterbricht den Angriff und schwächt die Panzerung für sechs Sekunden. Angreifen beendet die Tarnung. Energie regeneriert sich automatisch, während das Tarnfeld ausgeschaltet ist.
 
@@ -40,7 +43,7 @@ Ein Linux-Build und das vollständige Godot-Projekt werden ebenfalls als Artefak
 - Gegner mit angekündigtem Angriff, Vorstoß, Erholungsphase und hackbarer Panzerung.
 - Katana-Kombination, Energie, Ausweichen, zehn Sekunden maximales Tarnfenster und Fähigkeitencooldowns.
 - Dialoge, fünf Missionszustände, Kontrollpunkte und manuelles Speichern/Laden.
-- Regen, Dampfwolken, Neonbeleuchtung, Trefferpartikel, Klingenschweif und kleine Kamerastöße.
+- Geworfene Schatten, Neonhalos, nasse Spiegelungen, Schritte im Regen, Dampf, Hackentladungen und ein dezenter Farb- und Lichtfilter. Die drei Bildstile sind im Menü und mit **V** umschaltbar; die Einstellung bleibt beim Neustart erhalten.
 - Eigens synthetisierte elektronische Hintergrundmusik und Kampf-/Hackeffekte.
 
 ## Godot-Projekt öffnen
@@ -61,13 +64,15 @@ godot --headless --export-release Linux build/linux/Shadepi-Echos-in-Neon.x86_64
 
 Zum Export müssen die offiziellen Exportvorlagen derselben Godot-Version installiert sein. Die GitHub Action richtet dies automatisch ein. Die Windows-EXE wird unter Linux exportiert; ihre Ausführung auf einem tatsächlichen Windows-PC ist ein gesonderter manueller Prüfschritt.
 
-Die **40 automatisierten Prüfungen** behandeln unter anderem Bewegung und Gebäudekollision, Erreichbarkeit und gesperrte Umgehungen, Missionsfortschritt, Trefferkegel, Hack-/Angriffscooldowns, Tarnung, Szenen-Neustart sowie ungültige und beschädigte Spielstände einschließlich Backup-Wiederherstellung.
+Die **45 automatisierten Prüfungen** behandeln unter anderem Bewegung und Gebäudekollision, Missionsfortschritt, Kampf, Tarnung, Spriteformate, Grafikprofile sowie ungültige und beschädigte Spielstände einschließlich Backup-Wiederherstellung.
 
 Speicherort: Godots `user://shadepi-test-save.json` (unter Windows normalerweise `%APPDATA%/Godot/app_userdata/Shadepi - Echos in Neon/`). Bei beschädigter Hauptdatei wird ein validiertes Backup versucht. Beim Laden werden laufende Fähigkeiten zurückgesetzt und Jackal an seine Startposition gesetzt; sein gespeicherter Lebensstand bleibt erhalten.
 
 ## Grafiken und Audio weiterbearbeiten
 
-Alle benötigten PNG- und WAV-Dateien sind enthalten. Node.js wird nur für eine erneute Asset-Erzeugung benötigt:
+Die Figuren sind als transparente PNGs enthalten. Kopiere die gewünschte Figur aus `assets/sprites/` nach `assets/custom/` und bearbeite die Kopie. Das Spiel lädt deine Variante automatisch. In der [Bearbeitungsanleitung](docs/figuren-bearbeiten.md) stehen Raster, Zeilenreihenfolge und Exportvorgaben.
+
+Node.js wird nur für eine erneute Asset-Erzeugung benötigt:
 
 ```bash
 npm ci
@@ -78,4 +83,4 @@ npm run assets
 
 ## Nächster Ausbau
 
-Die nächste Ausbaustufe ist eine genaue Umsetzung des ersten Kapitels: Dachwege, Beobachtung der Gasse, Shadepis Eingreifen und die anschließende Begegnung mit Raven. Die aktuelle Probe entscheidet zuerst über Bildsprache und Spielgefühl.
+Der eigentliche Einstieg zeigt Shadepi zunächst allein, etwa bei der Erkundung der Dächer und Gassen. Ravens erste Begegnung erhält ihren eigenen späteren Storymoment. Die aktuelle Gassenszene bleibt eine separat gekennzeichnete Gameplayprobe mit bereits vertrauten Figuren.
