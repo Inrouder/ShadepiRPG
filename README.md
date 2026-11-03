@@ -1,26 +1,22 @@
 # Shadepi · Echos in Neon
 
-**Spielbare Pixel-Testszene zu „Shadepi – Im Schatten des Raben“.**
+**Kapitel 1 · Echos in Neon und Schatten** ist der spielbare Auftakt zu „Shadepi – Im Schatten des Raben“.
 
-![Echtes Spielbild aus Godot](docs/screenshot.png)
+Raven bekommt in ihrem Apartment einen Hinweis auf Chrome Jackal und verfolgt ihn durch Night Citys Gassen. Nach der ersten Begegnung übernimmt Shadepi und kämpft sich zu ihr durch. Im Finale verbinden beide Katana, Impulspistole und Netrunning.
 
-[Dieselbe Szene mit reduziertem Bildstil](docs/screenshot-reduced.png)
-
-Shadepi und Raven treffen in einer regennassen Gasse auf Chrome Jackal. Sprich mit Raven, öffne die Sicherheitssperre, kombiniere Katana und Netrunning und sichere die Daten am Ausgang.
-
-Diese Version **0.3.2** ist eine frei arrangierte Gameplayprobe aus einem **späteren Abschnitt**. Shadepi und Raven kennen sich hier bereits. Die eigentliche Geschichte beginnt mit Shadepi allein; Raven begegnet er erst später. Die Dialoge dieser Szene sind eigens für den Test geschrieben.
+Die Zwischenszenen nutzen Ausschnitte aus dem Comic „Shadepi – Im Schatten des Raben“ (deutsche Fassung, PDF-Seiten 2, 4, 5, 6 und 9) mit eigens für das Spiel geschriebenen Dialogen. Die spätere Testszene bleibt über das Hauptmenü spielbar. [Spielbild aus der Testszene](docs/screenshot.png)
 
 ## Spielen
 
 1. Unter [Actions](https://github.com/Inrouder/ShadepiRPG/actions/workflows/build.yml) den letzten erfolgreichen Lauf öffnen.
 2. **ShadepiRPG-Windows** herunterladen, ZIP vollständig entpacken und `Shadepi-Echos-in-Neon.exe` starten. Eine Godot-Installation wird zum Spielen nicht benötigt.
-3. Im Startmenü **Einzelspieler** oder **Lokal-Koop** wählen und starten. Das Missionsziel steht oben rechts.
+3. Im Startmenü **Einzelspieler** oder **Lokal-Koop** wählen und starten. Das Missionsziel steht oben rechts. Mit **E**, **Enter** oder **A** geht es in den Zwischenszenen weiter.
 
 Ein Linux-Build und das vollständige Godot-Projekt werden ebenfalls als Artefakte erzeugt. Bei späteren Versions-Tags veröffentlicht der Workflow zusätzlich Windows-ZIP und Projekt-ZIP im Bereich [Releases](https://github.com/Inrouder/ShadepiRPG/releases).
 
 ## Lokal-Koop
 
-Im Start- oder Pausenmenü über **Modus** den **Lokal-Koop** auswählen. Danach könnt ihr ein neues Spiel starten oder euren Koop-Spielstand laden. Ihr könnt eine Tastatur, zwei Controller oder eine Tastatur zusammen mit einem Controller nutzen. Beide Figuren sind auf einem Bildschirm zu sehen. Die Kamera folgt eurem Mittelpunkt. Wenn ihr euch zu weit voneinander entfernt, geht ihr wieder aufeinander zu.
+Im Start- oder Pausenmenü über **Modus** den **Lokal-Koop** auswählen. Ravens Jagd und Shadepis Rettung spielt ihr nacheinander mit der Hauptsteuerung. Sobald Shadepi Raven aufgeholfen hat, übernimmt im Lokal-Koop die zweite Person Raven. Im Einzelspieler folgt Raven und feuert auf Jackal, sobald sie freie Sicht hat. Ihr könnt eine Tastatur, zwei Controller oder eine Tastatur zusammen mit einem Controller nutzen. Beide Figuren sind auf einem Bildschirm zu sehen. Die Kamera folgt eurem Mittelpunkt. Wenn ihr euch zu weit voneinander entfernt, geht ihr wieder aufeinander zu.
 
 | Aktion | Shadepi | Raven |
 | --- | --- | --- |
@@ -30,11 +26,11 @@ Im Start- oder Pausenmenü über **Modus** den **Lokal-Koop** auswählen. Danach
 | Spezialfähigkeit | C für Tarnung | O für einen Hack aus Ravens Reichweite |
 | Interagieren | E | Enter |
 
-Beide können das Terminal bedienen und die Daten sichern. Jede Figur hat eigene Lebenspunkte und Energie. Wenn eine Figur besiegt wird, setzt ihr den Kampf gemeinsam am Kontrollpunkt fort. **F5** und **F9** speichern und laden den aktiven Modus. Solo und Koop haben getrennte Spielstände.
+Jede Figur hat eigene Lebenspunkte und Energie. Wenn eine Figur besiegt wird, setzt ihr den Kampf gemeinsam am Kontrollpunkt fort. **F5** und **F9** speichern und laden den aktiven Modus. Solo und Koop haben getrennte Spielstände.
 
 ## Controller
 
-Im Einzelspieler steuert der erste Controller Shadepi. Im Koop steuern zwei verbundene Controller Shadepi und Raven in der Reihenfolge ihrer Gerätezuordnung. Bei einem Controller übernimmt er Raven und Shadepi wird mit WASD gespielt.
+Vor dem gemeinsamen Kampf steuert der erste Controller die jeweils aktive Figur. Im Einzelspieler bleibt diese Zuordnung auch im Finale erhalten. Im Koop steuern zwei verbundene Controller Shadepi und Raven in der Reihenfolge ihrer Gerätezuordnung. Bei einem Controller übernimmt er Raven und Shadepi wird mit WASD gespielt.
 
 | Aktion | Controller (Xbox-Tasten) |
 | --- | --- |
@@ -52,7 +48,7 @@ Im Einzelspieler steuert der erste Controller Shadepi. Im Koop steuern zwei verb
 | Taste | Aktion |
 | --- | --- |
 | WASD / Pfeiltasten | Bewegen; Bewegungsrichtung bestimmt die Blickrichtung |
-| J | Katana in Blickrichtung |
+| J | Impulsschuss als Raven, Katana als Shadepi |
 | Linke Maustaste | Katana in Richtung des Mauszeigers |
 | Leertaste / Umschalt | Ausweichen mit kurzem Schutzfenster |
 | E / Enter | Sprechen, Terminal bedienen, Dialog weiterführen |
@@ -68,10 +64,10 @@ Im Einzelspieler steuert der erste Controller Shadepi. Im Koop steuern zwei verb
 ## Was enthalten ist
 
 - Eigene PNG-Spritesheets mit acht Bildern je Zyklus: Stand, Laufbewegung, Katanahieb und Trefferpose; acht Blickrichtungen für Shadepi und Raven, vier für Jackal. Beim Laufen wechseln Shadepi und Raven über diagonale Zwischenposen zur neuen Richtung.
-- Begehbare Gasse mit Gebäudekollisionen, Hindernissen, Sicherheitssperre und einer überprüften Route zum Ausgang.
+- Begehbare Gasse mit Gebäudekollisionen, Hindernissen, Sicherheitsschleuse und markierter Jagdroute.
 - Gegner mit angekündigtem Angriff, Vorstoß, Erholungsphase und hackbarer Panzerung.
 - Katana-Kombination, Energie, Ausweichen, zehn Sekunden maximales Tarnfenster und Fähigkeitencooldowns.
-- Dialoge, fünf Missionszustände, Kontrollpunkte und manuelles Speichern/Laden.
+- Comic-Zwischenszenen, zwei Kämpfe gegen Jackal, eine Rettung mit zwei Wachen und separate Kapitel-Kontrollpunkte für Solo und Koop.
 - Geworfene Schatten, Neonhalos, nasse Spiegelungen, Schritte im Regen, Dampf, Hackentladungen und ein dezenter Farb- und Lichtfilter. Die drei Bildstile sind im Menü und mit **V** umschaltbar; die Einstellung bleibt beim Neustart erhalten.
 - Eigens synthetisierte elektronische Hintergrundmusik und Kampf-/Hackeffekte.
 
@@ -93,9 +89,9 @@ godot --headless --export-release Linux build/linux/Shadepi-Echos-in-Neon.x86_64
 
 Zum Export müssen die offiziellen Exportvorlagen derselben Godot-Version installiert sein. Die GitHub Action richtet dies automatisch ein. Die Windows-EXE wird unter Linux exportiert; ihre Ausführung auf einem tatsächlichen Windows-PC ist ein gesonderter manueller Prüfschritt.
 
-Die **89 automatisierten Prüfungen** behandeln unter anderem Bewegung und Gebäudekollision, Missionsfortschritt, Kampf, Tarnung, Spriteformate, Grafikprofile, gleichzeitige Eingaben für beide Figuren, Koop-Kampf, simulierte Controller-Eingaben, Laden beider Figuren sowie ungültige und beschädigte Spielstände einschließlich Backup-Wiederherstellung.
+Die automatisierten Prüfungen behandeln den Kapitelfortschritt vom Apartment bis zum Finale sowie Bewegung und Gebäudekollision, Missionsfortschritt, Kampf, Tarnung, Spriteformate, Grafikprofile, gleichzeitige Eingaben für beide Figuren, Koop-Kampf, simulierte Controller-Eingaben, Laden beider Figuren sowie ungültige und beschädigte Spielstände einschließlich Backup-Wiederherstellung.
 
-Speicherort: Godots `user://shadepi-test-save.json` für Solo und `user://shadepi-coop-save.json` für Koop (unter Windows normalerweise `%APPDATA%/Godot/app_userdata/Shadepi - Echos in Neon/`). Bei beschädigter Hauptdatei wird ein validiertes Backup versucht. Beim Laden werden laufende Fähigkeiten zurückgesetzt und Jackal an seine Startposition gesetzt; sein gespeicherter Lebensstand bleibt erhalten.
+Kapitel-Kontrollpunkte liegen in `user://shadepi-chapter-one.cfg`. Beim Laden beginnt der gespeicherte Abschnitt von vorn. Die spätere Testszene nutzt Godots `user://shadepi-test-save.json` für Solo und `user://shadepi-coop-save.json` für Koop (unter Windows normalerweise `%APPDATA%/Godot/app_userdata/Shadepi - Echos in Neon/`). Bei beschädigter Hauptdatei wird ein validiertes Backup versucht. Beim Laden werden laufende Fähigkeiten zurückgesetzt und Jackal an seine Startposition gesetzt; sein gespeicherter Lebensstand bleibt erhalten.
 
 ## Grafiken und Audio weiterbearbeiten
 

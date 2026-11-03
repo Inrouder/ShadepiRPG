@@ -2,8 +2,8 @@ config_version=5
 
 [application]
 config/name="Shadepi - Echos in Neon"
-config/version="0.3.2"
-run/main_scene="res://scenes/main.tscn"
+config/version="0.4.0"
+run/main_scene="res://scenes/chapter_one.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://assets/icon.png"
 

@@ -19,8 +19,12 @@ var dialogue_lines: Array = []
 var dialogue_done: Callable
 var menu: Panel
 var menu_title: Label
+var menu_description: Label
+var mission_title: Label
 var resume_button: Button
 var load_button: Button
+var restart_button: Button
+var menu_help: Label
 var visual_button: Button
 var mode_button: Button
 var requested_coop := false
@@ -92,7 +96,7 @@ func _ready() -> void:
 	raven_energy.color = energy_bar.color
 	top.add_child(raven_energy)
 	var mission := panel(Rect2(394, 10, 234, 54))
-	label_at("ECHOS IN NEON / SPÄTERE SZENE", Vector2(10, 4), Vector2(218, 14), mission, 10, Color("65d4df"))
+	mission_title = label_at("ECHOS IN NEON / SPÄTERE SZENE", Vector2(10, 4), Vector2(218, 14), mission, 10, Color("65d4df"))
 	objective = label_at("Sprich mit Raven", Vector2(10, 22), Vector2(214, 28), mission, 11)
 	objective.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	boss_panel = panel(Rect2(204, 10, 182, 54))
@@ -117,14 +121,14 @@ func _ready() -> void:
 	menu = panel(Rect2(145, 19, 350, 321))
 	menu_title = label_at("ECHOS IN NEON", Vector2(20, 12), Vector2(310, 26), menu, 19)
 	label_at("Shadepi · Im Schatten des Raben", Vector2(20, 40), Vector2(310, 22), menu, 11, Color("7cc4d4"))
-	label_at("Späterer Testabschnitt\nRaven und Shadepi kennen sich bereits.", Vector2(20, 62), Vector2(310, 28), menu, 10, Color("9db0c4"))
+	menu_description = label_at("Späterer Testabschnitt\nRaven und Shadepi kennen sich bereits.", Vector2(20, 62), Vector2(310, 28), menu, 10, Color("9db0c4"))
 	mode_button = button_at("Modus · Einzelspieler", 94, _switch_mode)
 	resume_button = button_at("Testszene starten", 124, start_selected)
 	load_button = button_at("Spielstand laden", 154, func(): world.load_game(requested_coop))
-	button_at("Testszene neu starten", 184, _start_new)
+	restart_button = button_at("Testszene neu starten", 184, _start_new)
 	button_at("Musik / Ton umschalten", 214, func(): world.toggle_audio())
 	visual_button = button_at("Bildstil: " + world.VISUAL_PRESETS[world.visual_quality], 244, func(): world.cycle_visual_quality())
-	label_at("Controller · Stick / Steuerkreuz wählen, A bestätigen\nF5 / LB Speichern   F9 Laden   V Bildstil", Vector2(20, 279), Vector2(310, 35), menu, 10, Color("9db0c4"))
+	menu_help = label_at("Controller · Stick / Steuerkreuz wählen, A bestätigen\nF5 / LB Speichern   F9 Laden   V Bildstil", Vector2(20, 279), Vector2(310, 35), menu, 10, Color("9db0c4"))
 
 func button_at(text: String, y: float, callback: Callable) -> Button:
 	var button := Button.new()

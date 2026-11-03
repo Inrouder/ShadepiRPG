@@ -1,6 +1,10 @@
 extends PixelActor
 
 var health := 180
+var max_health := 180
+var min_health := 0
+var hit_damage := 24
+var move_speed := 46.0
 var active := false
 var exposed := 0.0
 var stun := 0.0
@@ -35,7 +39,7 @@ func _physics_process(delta: float) -> void:
 			var victim = world.combat_target(global_position, true)
 			if victim != null and global_position.distance_to(victim.global_position) < 35.0:
 				hit_done = true
-				victim.take_damage(24, global_position)
+				victim.take_damage(hit_damage, global_position)
 		if lunge <= 0.0:
 			cooldown = 1.1
 	elif active and target != null:
@@ -44,7 +48,7 @@ func _physics_process(delta: float) -> void:
 			windup = 0.72
 			attack_direction = facing
 		elif offset.length() > 35.0:
-			velocity = facing * 46.0
+			velocity = facing * move_speed
 			state = "walk"
 	move_and_slide()
 	animate(state, delta)
@@ -53,7 +57,8 @@ func take_damage(base: int) -> void:
 	if health <= 0:
 		return
 	var amount := CombatRules.damage(base, exposed > 0.0)
-	health = maxi(0, health - amount)
+	amount = mini(amount, health - min_health)
+	health -= amount
 	flash_time = 0.17
 	world.impact(global_position, true)
 	world.damage_number(global_position + Vector2(0, -48), str(amount))
@@ -64,7 +69,7 @@ func take_damage(base: int) -> void:
 		visual.modulate = Color(0.45, 0.5, 0.6, 0.7)
 		visual.rotation = PI * 0.5
 		visual.position.y = -10
-		world.enemy_defeated()
+		world.enemy_defeated(self)
 
 func hack() -> void:
 	if health <= 0:
@@ -94,7 +99,7 @@ func _draw() -> void:
 		return
 	if active:
 		draw_rect(Rect2(-22, -64, 44, 3), Color("162435"))
-		draw_rect(Rect2(-22, -64, 44 * health / 180.0, 3), Color("57d5e4") if exposed > 0 else Color("ec597e"))
+		draw_rect(Rect2(-22, -64, 44.0 * health / max_health, 3), Color("57d5e4") if exposed > 0 else Color("ec597e"))
 	if windup > 0.0:
 		var radius := 16.0 + 26.0 * (1.0 - windup / 0.72)
 		draw_arc(Vector2.ZERO, radius, attack_direction.angle() - 0.65, attack_direction.angle() + 0.65, 16, Color("ff5974"), 2.0)

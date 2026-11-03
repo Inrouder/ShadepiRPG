@@ -47,7 +47,7 @@ func _ready() -> void:
 	_build_atmosphere_filter()
 	_load_visual_quality()
 	_build_audio()
-	ui = HudScript.new()
+	ui = create_hud()
 	ui.world = self
 	add_child(ui)
 	ui.show_menu()
@@ -63,6 +63,15 @@ func _ready() -> void:
 		enemy.active = true
 		enemy.position = Vector2(770, 323)
 		_capture.call_deferred("res://docs/screenshot.png" if visual_quality == 2 else "res://docs/screenshot-reduced.png")
+
+func create_hud() -> CanvasLayer:
+	return HudScript.new()
+
+func actor_is_playable(actor: PixelActor) -> bool:
+	return actor == player or (coop and actor == raven)
+
+func actor_input_prefix(actor: PixelActor) -> String:
+	return "raven_" if actor == raven else ""
 
 func _bind_inputs() -> void:
 	var bindings := {
@@ -444,6 +453,9 @@ func set_gate(open: bool) -> void:
 	gate_body.get_child(0).set_deferred("disabled", open)
 	queue_redraw()
 
+func hack_origin() -> Vector2:
+	return raven.position if coop else player.position
+
 func raven_hack() -> bool:
 	if stage != 2 or enemy.health <= 0:
 		toast("Raven: Hier ist gerade kein aktives Ziel.")
@@ -451,7 +463,7 @@ func raven_hack() -> bool:
 	if hack_cooldown > 0:
 		toast("Raven: Mein Deck lädt noch.")
 		return false
-	var origin: Vector2 = raven.position if coop else player.position
+	var origin := hack_origin()
 	if origin.distance_to(enemy.position) > 240 or not _line_clear(origin, enemy.position):
 		toast("Raven: Näher ran. Ich brauche eine freie Verbindung.")
 		return false
@@ -510,7 +522,7 @@ func damage_number(point: Vector2, text: String) -> void:
 	tween.tween_property(label, "modulate:a", 0, 0.55)
 	tween.chain().tween_callback(label.queue_free)
 
-func enemy_defeated() -> void:
+func enemy_defeated(_foe: PixelActor = null) -> void:
 	stage = 3
 	toast("Raven: Der Weg ist frei. Sichere die Daten am Ausgang im Nordosten.")
 	autosave()

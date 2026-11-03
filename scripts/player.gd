@@ -17,7 +17,7 @@ var knockback := Vector2.ZERO
 var second_player := false
 
 func _physics_process(delta: float) -> void:
-	if second_player and not world.coop:
+	if not world.actor_is_playable(self):
 		return
 	if world.is_busy():
 		animate("idle", delta)
@@ -36,7 +36,7 @@ func _physics_process(delta: float) -> void:
 			cloak_time = 0.0
 	else:
 		energy = minf(100.0, energy + delta * 15.0)
-	var prefix := "raven_" if second_player else ""
+	var prefix: String = world.actor_input_prefix(self)
 	var direction := Input.get_vector(prefix + "move_left", prefix + "move_right", prefix + "move_up", prefix + "move_down")
 	if direction.length() > 0.1 and attack_time <= 0.0 and dash_time <= 0.0:
 		facing = direction.normalized()
