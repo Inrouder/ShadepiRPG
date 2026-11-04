@@ -13,7 +13,7 @@ Die PNGs haben einen echten transparenten Hintergrund. Die Originalbilder enthal
 | `tools/hero_sources/*-keyframes.png` | Ursprüngliche Bildtafeln, je 1536 × 1024 Pixel |
 | `tools/hero_sources/prompts.json` | Bildbeschreibungen und Rasterdaten |
 | `tools/compile_heroes.py` | Erneute Zusammenstellung mit Python und Pillow |
-| `scripts/` und die Projektdateien | Anpassungen für das Godot-Projekt v0.11.0 |
+| `scripts/` und die Projektdateien | Integration im Godot-Projekt v0.12.0 |
 
 ## Raster und Fußpunkt
 
@@ -34,10 +34,12 @@ Die acht Richtungen pro Gruppe sind: unten, links, rechts, oben, oben-links, obe
 
 Die Windows-Fassung v0.12.0 enthält die neuen Figuren bereits. ZIP vollständig entpacken und `Shadepi-Echos-in-Neon.exe` starten.
 
-Für ein bestehendes Godot-Projekt v0.11.0 die enthaltenen Ordner und Projektdateien in den Projektordner kopieren. Godot 4.7.2 importiert die PNGs beim nächsten Öffnen. Die vollständige Spieleranleitung liegt als `Spiel-README.md` bei. Eigene Figuren unter `assets/custom/` haben weiterhin Vorrang; die bisherigen Pixelraster werden unterstützt.
+Im vollständigen Repository v0.12.0 sind die Figuren bereits integriert; `project.godot` öffnen. Godot 4.7.2 importiert die PNGs beim nächsten Öffnen. Die vollständige Spieleranleitung liegt als `Spiel-README.md` bei. Eigene Figuren unter `assets/custom/` haben weiterhin Vorrang; die bisherigen Pixelraster werden unterstützt.
 
 Zur erneuten Zusammenstellung: `python tools/compile_heroes.py` aus dem Projektordner ausführen. Das Skript benötigt Pillow und verwendet die vorhandenen Originalbilder.
 
 ## Prüfung
 
-301 automatische Prüfungen für Gameplay, Figurenintegration, Gegenstände und Bildkulissen liefen fehlerfrei. Ein zusätzlicher Durchlauf mit einem eigenen Sprite im bisherigen Format bestand 171 Prüfungen. Stand, Angriff und Tarnung wurden unter Linux mit dem Godot-Renderer angesehen. Die exportierte Windows-Datei wurde als Spielpaket mit der Linux-Engine geprüft; ein nativer Windows-Start wurde hier nicht durchgeführt.
+Die wiederhergestellte v0.12 bestand lokal unter Windows mit Godot 4.7.2 **177 Prüfungen ohne Fehler** und einen Starttest. Auch der [GitHub-Build des manuellen Uploads](https://github.com/Inrouder/ShadepiRPG/actions/runs/41922510900) ist erfolgreich.
+
+Die früheren Angaben von 301 Prüfungen und 171 Prüfungen mit einem eigenen Sprite stammen aus dem ursprünglichen Entwicklungsbericht. Diese damaligen Durchläufe wurden für die Rekonstruktion nicht in diesem Umfang reproduziert. Ein vollständiger manueller Spieldurchlauf steht weiterhin aus.

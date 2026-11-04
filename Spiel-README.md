@@ -1,5 +1,7 @@
 # Shadepi · Echos in Neon
 
+**Spieleranleitung für den wiederhergestellten Stand v0.12.0.** Aktuelle Downloads und Prüfstatus: [Repository-Startseite](README.md). Änderungen: [Versionshinweise](CHANGELOG.md).
+
 **Kapitel 1 · Echos in Neon und Schatten** ist der spielbare Auftakt zu „Shadepi – Im Schatten des Raben“.
 
 Raven bekommt in ihrem Apartment einen Hinweis auf Chrome Jackal, räumt die Punks in Bingo Street aus dem Weg und verfolgt ihn bis zum Wartungshof. Dort hält seine Panzerung jedem Treffer stand. Nach 30 Kampfsekunden dreht er Ravens Hack gegen sie. Shadepi kämpft sich durch die Wartungsgasse und stellt Jackal mit 360 HP. Sobald die Hälfte seiner Lebenspunkte weg ist, steht Raven auf und steigt in den Kampf ein.
@@ -170,6 +172,6 @@ npm run assets
 
 `tools/generate_assets.cjs` enthält die Rasterzeichner und den Synthesizer. Es werden keine SVG-Figuren und keine extern geladenen Bilder verwendet. Die Szene läuft vollständig lokal, ohne Konten, KI-Dienste oder Onlinepflicht.
 
-## Nächster Ausbau
+## Weiterentwicklung
 
-Der eigentliche Einstieg zeigt Shadepi zunächst allein, etwa bei der Erkundung der Dächer und Gassen. Ravens erste Begegnung erhält ihren eigenen späteren Storymoment. Die aktuelle Gassenszene bleibt eine separat gekennzeichnete Gameplayprobe mit bereits vertrauten Figuren.
+Neue Änderungen auf dem vollständigen v0.12-Projekt aufbauen. Vor größeren Eingriffen einen Projektstand sichern und anschließend Import, Tests sowie einen Starttest durchführen. Aktuelle Hinweise stehen in der [README](README.md).

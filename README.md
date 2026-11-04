@@ -1,6 +1,31 @@
 # Shadepi · Echos in Neon
 
-**Versionsstand: v0.12.0 wiederhergestellt.** Bearbeitbare Quellen, 16 gemalte Kulissen, zerstörbare Requisiten und HQ-Helden wurden zurückgewonnen. Unter Windows mit Godot 4.7.2 geprüft: **177 Tests, 0 Fehler**, zusätzlich erfolgreicher Starttest. [Wiederherstellungsbericht](docs/v0.12.0-wiederherstellung.md).
+**v0.12.0 · Godot 4.7.2 · Windows und Linux · Einzelspieler und Lokal-Koop**
+
+Ein 2D-Action-RPG im Shadepi-Universum mit Raven und Shadepi, sieben Kapiteln, gemalten Kulissen und illustrierten Helden.
+
+Der wiederhergestellte v0.12.0-Quellstand ist auf `main` angekommen. Der Upload wurde mit dem bereitgestellten Projekt abgeglichen; alle 243 Dateien sind vorhanden. Der [GitHub-Test- und Buildlauf für den Upload](https://github.com/Inrouder/ShadepiRPG/actions/runs/41922510900) ist erfolgreich.
+
+[Godot-Projekt als ZIP](https://github.com/Inrouder/ShadepiRPG/archive/refs/heads/main.zip) · [Spiel-Builds](https://github.com/Inrouder/ShadepiRPG/actions/workflows/build.yml) · [Versionshinweise](CHANGELOG.md) · [Projektaufbau](docs/architecture.md)
+
+## Neu in v0.12.0 und den vorherigen Ausbaustufen
+
+- **Raven und Shadepi:** illustrierte HQ-Atlanten, acht Blickrichtungen, Lauf- und Angriffsanimationen.
+- **16 gemalte Kulissen:** unter anderem Apartment, Industriegebiet, Versteck, Tower, See und Fahrzeugsequenzen.
+- **Interaktive Umgebung:** zerstörbare Requisiten mit Treffern, Effekten und Geräuschen.
+- **Bearbeitbares Projekt:** Spielskripte, Szenen, Medien sowie originale Helden-Schlüsselposen und das Packwerkzeug.
+
+Der Stand wurde aus dem ursprünglichen Windows-Spiel rekonstruiert und durch Originaldateien aus dem HQ-Archiv ergänzt. Einige Medien wurden verlustbehaftet zurückgewonnen. Details und Prüfgrenzen stehen im [Wiederherstellungsbericht](docs/v0.12.0-wiederherstellung.md).
+
+## Schnellstart
+
+**Entwickeln:** Projekt-ZIP entpacken, `project.godot` mit **Godot 4.7.2 Standard** importieren, Ressourcenimport abwarten und F5 drücken. Kein C# erforderlich.
+
+**Spielen:** Im erfolgreichen [v0.12-Workflowlauf](https://github.com/Inrouder/ShadepiRPG/actions/runs/41922510900) das Windows- oder Linux-Artefakt herunterladen und entpacken. Für Actions-Downloads ist eine GitHub-Anmeldung erforderlich. Das Quellcode-ZIP enthält das Godot-Projekt, keine fertig exportierte EXE.
+
+**Dokumentation:** [Figuren und Level bearbeiten](docs/figuren-bearbeiten.md) · [HQ-Sprites und Raster](docs/helden-sprites.md) · [Spieleranleitung](Spiel-README.md)
+
+## Geschichte
 
 **Kapitel 1 · Echos in Neon und Schatten** ist der spielbare Auftakt zu „Shadepi – Im Schatten des Raben“.
 
@@ -85,7 +110,7 @@ Vor dem gemeinsamen Kampf steuert der erste Controller die jeweils aktive Figur.
 
 ## Was enthalten ist
 
-- Eigene PNG-Spritesheets mit acht Bildern je Zyklus: Stand, Laufbewegung, Katanahieb und Trefferpose; acht Blickrichtungen für Shadepi und Raven, vier für Jackal. Beim Laufen wechseln Shadepi und Raven über diagonale Zwischenposen zur neuen Richtung.
+- Illustrierte HQ-Spritesheets für Shadepi und Raven mit acht Blickrichtungen; Stand, Laufbewegung, Angriff und Trefferpose. Die bisherigen Spriteformate für eigene Figuren bleiben unterstützt.
 - Begehbare Gasse mit Gebäudekollisionen, Hindernissen, Sicherheitsschleuse und markierter Jagdroute.
 - Gegner mit angekündigtem Angriff, Vorstoß, Erholungsphase und hackbarer Panzerung.
 - Katana-Kombination, Energie, Ausweichen, zehn Sekunden maximales Tarnfenster und Fähigkeitencooldowns.
@@ -117,9 +142,12 @@ Kapitel-Kontrollpunkte liegen in `user://shadepi-chapter-one.cfg`. Beim Laden be
 
 ## Grafiken und Audio weiterbearbeiten
 
-Die Figuren sind als transparente PNGs enthalten. Kopiere die gewünschte Figur aus `assets/sprites/` nach `assets/custom/` und bearbeite die Kopie. Das Spiel lädt deine Variante automatisch. In der [Bearbeitungsanleitung](docs/figuren-bearbeiten.md) stehen Raster, Zeilenreihenfolge und Exportvorgaben.
+Die HQ-Helden liegen als transparente PNGs in `assets/sprites/heroes/`. Kopiere die gewünschte Figur als `shadepi.png` oder `raven.png` nach `assets/custom/` und bearbeite die Kopie. Das Spiel lädt deine Variante automatisch. In der [Bearbeitungsanleitung](docs/figuren-bearbeiten.md) stehen Raster, Zeilenreihenfolge und Exportvorgaben.
 
-Node.js wird nur für eine erneute Asset-Erzeugung benötigt:
+Die HQ-Atlanten werden mit `python tools/compile_heroes.py` aus `tools/hero_sources/` zusammengestellt; dafür wird Pillow benötigt. Die [HQ-Anleitung](docs/helden-sprites.md) beschreibt Raster und Fußpunkte.
+
+Der ältere Generator für Rastergrafiken und synthetische Audiodateien benötigt Node.js. Er rekonstruiert nicht die gemalten Kulissen oder die HQ-Originalbilder. Vor einer erneuten Generierung den aktuellen Stand sichern und die Änderungen prüfen:
+
 
 ```bash
 npm ci
@@ -128,6 +156,10 @@ npm run assets
 
 `tools/generate_assets.cjs` enthält die Rasterzeichner und den Synthesizer. Es werden keine SVG-Figuren und keine extern geladenen Bilder verwendet. Die Szene läuft vollständig lokal, ohne Konten, KI-Dienste oder Onlinepflicht.
 
-## Nächster Ausbau
+## Prüfung und Sicherung
 
-Der eigentliche Einstieg zeigt Shadepi zunächst allein, etwa bei der Erkundung der Dächer und Gassen. Ravens erste Begegnung erhält ihren eigenen späteren Storymoment. Die aktuelle Gassenszene bleibt eine separat gekennzeichnete Gameplayprobe mit bereits vertrauten Figuren.
+Die lokale Wiederherstellung bestand unter Windows **177 Prüfungen ohne Fehler** und einen Starttest über 120 Frames. Der GitHub-Workflow für den manuell hochgeladenen Stand hat anschließend Import, Tests sowie Windows-/Linux-Export erfolgreich abgeschlossen. Ein vollständiger manueller Spieldurchlauf ist damit nicht ersetzt.
+
+Nach jedem Meilenstein Quellen und benötigte Medien gemeinsam committen, übertragen und den neuen Commit auf GitHub prüfen. Zusätzlich eine vollständige Projekt-ZIP sichern. Fertige Spiele können über [Releases](https://github.com/Inrouder/ShadepiRPG/releases) veröffentlicht werden; ein Upload auf `main` allein erstellt noch keinen Release.
+
+Die frühere Angabe von 301 Tests bezieht sich auf den ursprünglichen Entwicklungsbericht und ist nicht die Testzahl dieser Rekonstruktion.
