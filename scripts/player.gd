@@ -1,24 +1,24 @@
 extends PixelActor
 
-const SPEED := 94.0
-var health := 100
-var health_floor := 0
-var energy := 100.0
-var attack_time := 0.0
-var attack_cooldown := 0.0
-var dash_time := 0.0
-var dash_cooldown := 0.0
-var cloak_time := 0.0
-var cloak_cooldown := 0.0
-var invulnerable := 0.0
-var hit_pending := false
-var combo := 0
-var combo_window := 0.0
-var knockback := Vector2.ZERO
-var second_player := false
-var aim_stick := Vector2.ZERO
+const SPEED: = 94.0
+var health: = 100
+var health_floor: = 0
+var energy: = 100.0
+var attack_time: = 0.0
+var attack_cooldown: = 0.0
+var dash_time: = 0.0
+var dash_cooldown: = 0.0
+var cloak_time: = 0.0
+var cloak_cooldown: = 0.0
+var invulnerable: = 0.0
+var hit_pending: = false
+var combo: = 0
+var combo_window: = 0.0
+var knockback: = Vector2.ZERO
+var second_player: = false
+var aim_stick: = Vector2.ZERO
 
-func _physics_process(delta: float) -> void:
+func _physics_process(delta: float) -> void :
 	if not world.actor_is_playable(self):
 		return
 	if world.is_busy():
@@ -39,10 +39,10 @@ func _physics_process(delta: float) -> void:
 	else:
 		energy = minf(100.0, energy + delta * 15.0)
 	var prefix: String = world.actor_input_prefix(self)
-	var direction := Input.get_vector(prefix + "move_left", prefix + "move_right", prefix + "move_up", prefix + "move_down")
+	var direction: = Input.get_vector(prefix + "move_left", prefix + "move_right", prefix + "move_up", prefix + "move_down")
 	if direction.length() > 0.1 and attack_time <= 0.0 and dash_time <= 0.0:
 		facing = direction.normalized()
-	var mouse_shot := second_player and Input.is_action_just_pressed("mouse_attack" if prefix.is_empty() else "raven_mouse_attack")
+	var mouse_shot: = second_player and Input.is_action_just_pressed("mouse_attack" if prefix.is_empty() else "raven_mouse_attack")
 	aim_stick = Vector2.ZERO
 	if second_player:
 		var device: int = world.gamepads.shadepi_device if prefix.is_empty() else world.gamepads.raven_device
@@ -52,7 +52,7 @@ func _physics_process(delta: float) -> void:
 			facing = aim_stick.normalized()
 	if mouse_shot or Input.is_action_just_pressed(prefix + "attack"):
 		if mouse_shot:
-			var aim := get_global_mouse_position() - global_position + Vector2(0, 24)
+			var aim: = get_global_mouse_position() - global_position + Vector2(0, 24)
 			if aim.length_squared() > 1.0:
 				facing = aim.normalized()
 		try_attack()
@@ -61,7 +61,7 @@ func _physics_process(delta: float) -> void:
 	if not second_player and Input.is_action_just_pressed("cloak"):
 		try_cloak()
 	set_cloaked(cloak_time > 0.0)
-	var state := "idle"
+	var state: = "idle"
 	if attack_time > 0.0:
 		attack_time = maxf(0.0, attack_time - delta)
 		velocity = direction * SPEED * 0.25
@@ -93,7 +93,7 @@ func try_attack() -> bool:
 		world.raven_shot()
 		return true
 	if Input.is_action_just_pressed("mouse_attack"):
-		var aim := get_global_mouse_position() - global_position
+		var aim: = get_global_mouse_position() - global_position
 		if aim.length() > 4.0:
 			facing = aim.normalized()
 	combo = (combo + 1) % 3 if combo_window > 0.0 else 0
@@ -129,7 +129,7 @@ func try_cloak() -> bool:
 	world.toast("Tarnfeld aktiv · Angreifen beendet die Tarnung")
 	return true
 
-func take_damage(amount: int, source: Vector2) -> void:
+func take_damage(amount: int, source: Vector2) -> void :
 	if invulnerable > 0.0 or health <= 0:
 		return
 	health = maxi(health_floor, health - amount)
@@ -141,7 +141,7 @@ func take_damage(amount: int, source: Vector2) -> void:
 	if health == 0:
 		world.player_defeated()
 
-func reset_transients() -> void:
+func reset_transients() -> void :
 	velocity = Vector2.ZERO
 	attack_time = 0.0
 	attack_cooldown = 0.0
@@ -155,9 +155,9 @@ func reset_transients() -> void:
 	combo_window = 0.0
 	set_cloaked(false)
 
-func _draw() -> void:
+func _draw() -> void :
 	super._draw()
 	if second_player and health > 0 and world.actor_is_playable(self) and not world.is_busy() and aim_stick.length() > 0.25:
-		var tip := Vector2(0, -24) + facing * 64.0
+		var tip: = Vector2(0, -24) + facing * 64.0
 		draw_line(Vector2(0, -24) + facing * 12.0, tip, Color(0.38, 0.9, 1.0, 0.55))
 		draw_arc(tip, 3.0, 0.0, TAU, 8, Color("9de6f2"))

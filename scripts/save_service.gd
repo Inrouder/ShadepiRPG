@@ -1,8 +1,8 @@
 class_name SaveService
 extends RefCounted
 
-const PATH := "user://shadepi-test-save.json"
-const COOP_PATH := "user://shadepi-coop-save.json"
+const PATH: = "user://shadepi-test-save.json"
+const COOP_PATH: = "user://shadepi-coop-save.json"
 
 static func validate(value: Variant) -> Dictionary:
 	if not value is Dictionary:
@@ -37,13 +37,13 @@ static func validate(value: Variant) -> Dictionary:
 static func write(data: Dictionary, path: String = PATH) -> bool:
 	if validate(data).is_empty() or (path == COOP_PATH and not data.has("raven")):
 		return false
-	var file := FileAccess.open(path + ".tmp", FileAccess.WRITE)
+	var file: = FileAccess.open(path + ".tmp", FileAccess.WRITE)
 	if file == null:
 		return false
 	file.store_string(JSON.stringify(data))
 	file.flush()
 	file.close()
-	# POSIX rename replaces atomically; Windows needs the previous slot moved first.
+
 	if FileAccess.file_exists(path):
 		if FileAccess.file_exists(path + ".bak"):
 			DirAccess.remove_absolute(path + ".bak")
@@ -59,13 +59,13 @@ static func read(path: String = PATH) -> Dictionary:
 	for candidate in [path, path + ".bak"]:
 		if not FileAccess.file_exists(candidate):
 			continue
-		var file := FileAccess.open(candidate, FileAccess.READ)
+		var file: = FileAccess.open(candidate, FileAccess.READ)
 		if file == null or file.get_length() > 65536:
 			continue
-		var parser := JSON.new()
+		var parser: = JSON.new()
 		if parser.parse(file.get_as_text()) != OK:
 			continue
-		var result := validate(parser.data)
+		var result: = validate(parser.data)
 		if not result.is_empty() and (path != COOP_PATH or result.has("raven")):
 			return result
 	return {}

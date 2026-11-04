@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**Hinweis zum Versionsstand:** Der bearbeitbare GitHub-Quellcode ist bei **v0.7.0**. Der exportierte Windows-Build **v0.12.0** wurde wiedergefunden, seine vollständigen Godot-Quellen sind noch nicht in diesem Repository. [Details zur Wiederherstellung](docs/v0.12.0-wiederherstellung.md).
+**Versionsstand: v0.12.0 wiederhergestellt.** Bearbeitbare Quellen, 16 gemalte Kulissen, zerstörbare Requisiten und HQ-Helden wurden zurückgewonnen. Unter Windows mit Godot 4.7.2 geprüft: **177 Tests, 0 Fehler**, zusätzlich erfolgreicher Starttest. [Wiederherstellungsbericht](docs/v0.12.0-wiederherstellung.md).
 
 **Kapitel 1 · Echos in Neon und Schatten** ist der spielbare Auftakt zu „Shadepi – Im Schatten des Raben“.
 

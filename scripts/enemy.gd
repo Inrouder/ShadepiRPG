@@ -22,6 +22,7 @@ var cooldown := 1.0
 var windup := 0.0
 var lunge := 0.0
 var hit_done := false
+var scenery_hit_done := false
 var attack_direction := Vector2.DOWN
 
 func _physics_process(delta: float) -> void:
@@ -41,32 +42,46 @@ func _physics_process(delta: float) -> void:
 		if windup <= 0.0:
 			if shot_range > 0.0:
 				var endpoint := global_position + attack_direction * shot_range
+				var obstruction: Dictionary = world.trace_scenery(global_position, endpoint)
+				if not obstruction.is_empty():
+					endpoint = obstruction.position
+				var target_exposed: bool = target != null and world._line_clear(global_position, target.global_position)
+				if not obstruction.is_empty() and obstruction.collider is WorldProp:
+					obstruction.collider.take_damage(hit_damage)
 				world.effects.pulse_trace(global_position, endpoint)
-				if target != null and absf(offset.cross(attack_direction)) <= 16.0 and offset.dot(attack_direction) > 0.0 and offset.length() <= shot_range and world._line_clear(global_position, target.global_position):
+				if target_exposed and absf(offset.cross(attack_direction)) <= 16.0 and offset.dot(attack_direction) > 0.0 and offset.length() <= shot_range:
 					target.take_damage(hit_damage, global_position)
 				cooldown = attack_recovery
 			elif sweeping:
-				if target != null and offset.length() <= 70.0 and offset.normalized().dot(attack_direction) >= 0.35:
+				var clear: bool = target != null and world._line_clear(global_position, target.global_position)
+				world.strike_scenery(global_position, attack_direction, hit_damage + 6)
+				if clear and offset.length() <= 70.0 and offset.normalized().dot(attack_direction) >= 0.35:
 					target.take_damage(hit_damage + 6, global_position)
 				world.spawn_slash(global_position, attack_direction)
 				cooldown = attack_recovery
 			else:
 				lunge = 0.22
 				hit_done = false
+				scenery_hit_done = false
 	elif lunge > 0.0:
 		lunge -= delta
 		velocity = attack_direction * lunge_speed
 		state = "attack"
+		if not scenery_hit_done and world.strike_scenery(global_position, attack_direction, hit_damage) > 0:
+			scenery_hit_done = true
 		if not hit_done:
 			var victim = world.combat_target(global_position, true)
-			if victim != null and global_position.distance_to(victim.global_position) < 35.0:
+			if victim != null and global_position.distance_to(victim.global_position) < 35.0 and world._line_clear(global_position, victim.global_position):
 				hit_done = true
 				victim.take_damage(hit_damage, global_position)
 		if lunge <= 0.0:
 			cooldown = attack_recovery
 	elif active and target != null and offset.length() <= awareness:
 		facing = offset.normalized()
-		if offset.length() < maxf(60.0, shot_range) and cooldown <= 0.0 and (shot_range == 0.0 or world._line_clear(global_position, target.global_position)):
+		var obstruction: Dictionary = world.trace_scenery(global_position, global_position + facing * 42.0)
+		var scenery_in_reach: bool = not obstruction.is_empty() and obstruction.collider is WorldProp
+		var target_in_reach: bool = offset.length() < maxf(60.0, shot_range) and (shot_range == 0.0 or world._line_clear(global_position, target.global_position))
+		if cooldown <= 0.0 and (target_in_reach or scenery_in_reach):
 			windup = windup_duration
 			attack_direction = facing
 			attack_index += 1
@@ -119,8 +134,7 @@ func reset_fight(hp: int = 180) -> void:
 	cooldown = 1.0
 	flash_time = 0.0
 	visual.modulate = Color.WHITE
-	visual.rotation = 0.0
-	visual.position.y = -26
+	reset_visual_pose()
 
 func _draw() -> void:
 	super._draw()

@@ -5,45 +5,61 @@ const PlayerScript = preload("res://scripts/player.gd")
 const EnemyScript = preload("res://scripts/enemy.gd")
 const HudScript = preload("res://scripts/hud.gd")
 const EffectsScript = preload("res://scripts/effects.gd")
+const PropScript = preload("res://scripts/world_prop.gd")
+const Painted = preload("res://scripts/painted_world.gd")
+const Dressing = preload("res://scripts/world_dressing.gd")
 const GroundAtmosphereScript = preload("res://scripts/ground_atmosphere.gd")
-const VISUAL_PRESETS := ["Reduziert", "Ausgewogen", "Atmosphärisch"]
-const VISUAL_SETTINGS := "user://shadepi-graphics.cfg"
+const VISUAL_PRESETS: = ["Reduziert", "Ausgewogen", "Atmosphärisch"]
+const VISUAL_SETTINGS: = "user://shadepi-graphics.cfg"
 var player
 var enemy
 var raven
-var coop := false
-var gamepads := GamepadBindings.new()
-const COOP_REACH := Vector2(448, 166)
+var coop: = false
+var gamepads: = GamepadBindings.new()
+const COOP_REACH: = Vector2(448, 166)
 var ui
 var effects
 var camera: Camera2D
 var actors: Node2D
 var gate_body: StaticBody2D
-var stage := 0
-var menu_open := true
-var started := false
-var hack_cooldown := 0.0
-var shake := 0.0
-var gate_open := false
-var audio_on := true
+var stage: = 0
+var menu_open: = true
+var started: = false
+var hack_cooldown: = 0.0
+var shake: = 0.0
+var gate_open: = false
+var audio_on: = true
 var sfx: Array[AudioStreamPlayer] = []
 var music: AudioStreamPlayer
-var light_texture := preload("res://assets/world/light.png")
-var screenshot_mode := false
-var visual_quality := 2
+var light_texture: = preload("res://assets/world/light.png")
+var screenshot_mode: = false
+var visual_quality: = 2
 var ground_atmosphere: Node2D
 var atmosphere_filter: ColorRect
 var filter_material: ShaderMaterial
 var shadow_lights: Array[PointLight2D] = []
+var world_lights: Array[PointLight2D] = []
+var ambient: CanvasModulate
 var neon_halos: Array[Sprite2D] = []
 var blade_light: PointLight2D
-var next_step_ripple := 0.0
+var next_step_ripple: = 0.0
+var destructibles: Array[WorldProp] = []
+var prop_states: Dictionary = {}
+var dressing_layout: = ""
+var dressing_generation: = 0
+var painted_solids: Array[StaticBody2D] = []
+var painted_masks: Array[Polygon2D] = []
+var painted_layout: = ""
 
-func _ready() -> void:
+func _ready() -> void :
 	_bind_inputs()
 	Input.joy_connection_changed.connect(_on_joy_connection_changed)
 	gamepads.assign(Input.get_connected_joypads(), coop)
 	_build_world()
+	ground_atmosphere.hide()
+	for halo in neon_halos:
+		halo.hide()
+	set_dressing("demo")
 	_build_atmosphere_filter()
 	_load_visual_quality()
 	_build_audio()
@@ -51,7 +67,7 @@ func _ready() -> void:
 	ui.world = self
 	add_child(ui)
 	ui.show_menu()
-	var args := OS.get_cmdline_user_args()
+	var args: = OS.get_cmdline_user_args()
 	if "--capture" in args or "--capture-reduced" in args:
 		screenshot_mode = true
 		set_visual_quality(0 if "--capture-reduced" in args else 2)
@@ -73,48 +89,48 @@ func actor_is_playable(actor: PixelActor) -> bool:
 func actor_input_prefix(actor: PixelActor) -> String:
 	return "raven_" if actor == raven else ""
 
-func _bind_inputs() -> void:
+func _bind_inputs() -> void :
 	if not InputMap.has_action("raven_mouse_attack"):
 		InputMap.add_action("raven_mouse_attack")
-		var mouse := InputEventMouseButton.new()
+		var mouse: = InputEventMouseButton.new()
 		mouse.button_index = MOUSE_BUTTON_RIGHT
 		InputMap.action_add_event("raven_mouse_attack", mouse)
-	var bindings := {
-		"move_left": [KEY_A, KEY_LEFT], "move_right": [KEY_D, KEY_RIGHT],
-		"move_up": [KEY_W, KEY_UP], "move_down": [KEY_S, KEY_DOWN],
-		"attack": [KEY_J], "dash": [KEY_SPACE, KEY_SHIFT], "cloak": [KEY_C],
-		"hack": [KEY_Q], "interact": [KEY_E, KEY_ENTER], "pause_game": [KEY_ESCAPE],
-		"save_game": [KEY_F5], "load_game": [KEY_F9], "help_game": [KEY_H], "mute_game": [KEY_M],
-		"graphics_game": [KEY_V],
-		"raven_move_left": [KEY_LEFT], "raven_move_right": [KEY_RIGHT],
-		"raven_move_up": [KEY_UP], "raven_move_down": [KEY_DOWN],
-		"raven_attack": [KEY_U], "raven_hack": [KEY_O],
+	var bindings: = {
+		"move_left": [KEY_A, KEY_LEFT], "move_right": [KEY_D, KEY_RIGHT], 
+		"move_up": [KEY_W, KEY_UP], "move_down": [KEY_S, KEY_DOWN], 
+		"attack": [KEY_J], "dash": [KEY_SPACE, KEY_SHIFT], "cloak": [KEY_C], 
+		"hack": [KEY_Q], "interact": [KEY_E, KEY_ENTER], "pause_game": [KEY_ESCAPE], 
+		"save_game": [KEY_F5], "load_game": [KEY_F9], "help_game": [KEY_H], "mute_game": [KEY_M], 
+		"graphics_game": [KEY_V], 
+		"raven_move_left": [KEY_LEFT], "raven_move_right": [KEY_RIGHT], 
+		"raven_move_up": [KEY_UP], "raven_move_down": [KEY_DOWN], 
+		"raven_attack": [KEY_U], "raven_hack": [KEY_O], 
 		"raven_dash": [KEY_P], "raven_interact": [KEY_ENTER]
 	}
 	for action in bindings:
 		if not InputMap.has_action(action):
 			InputMap.add_action(action)
 		for key in bindings[action]:
-			var event := InputEventKey.new()
+			var event: = InputEventKey.new()
 			event.physical_keycode = key
 			InputMap.action_add_event(action, event)
 	for action in ["attack", "mouse_attack"]:
 		if not InputMap.has_action(action):
 			InputMap.add_action(action)
-		var mouse := InputEventMouseButton.new()
+		var mouse: = InputEventMouseButton.new()
 		mouse.button_index = MOUSE_BUTTON_LEFT
 		InputMap.action_add_event(action, mouse)
 
-func set_coop(enabled: bool) -> void:
+func set_coop(enabled: bool) -> void :
 	coop = enabled
 	gamepads.assign(Input.get_connected_joypads(), coop)
 	camera.limit_left = -18 if coop else 0
 	camera.limit_right = 1042 if coop else 1024
-	# Solo keeps the arrow-key shortcuts. In co-op each direction has one owner.
-	var arrows := [KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN]
-	var actions := ["move_left", "move_right", "move_up", "move_down"]
+
+	var arrows: = [KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN]
+	var actions: = ["move_left", "move_right", "move_up", "move_down"]
 	for i in arrows.size():
-		var event := InputEventKey.new()
+		var event: = InputEventKey.new()
 		event.physical_keycode = arrows[i]
 		Input.action_release(actions[i])
 		Input.action_release("raven_" + actions[i])
@@ -123,7 +139,7 @@ func set_coop(enabled: bool) -> void:
 		elif not InputMap.action_has_event(actions[i], event):
 			InputMap.action_add_event(actions[i], event)
 
-func _on_joy_connection_changed(_device: int, _connected: bool) -> void:
+func _on_joy_connection_changed(_device: int, _connected: bool) -> void :
 	gamepads.assign(Input.get_connected_joypads(), coop)
 
 func hack_input_hint() -> String:
@@ -138,11 +154,11 @@ func limit_coop_motion(actor: PixelActor, motion: Vector2, delta: float) -> Vect
 	if not coop:
 		return motion
 	var partner: PixelActor = raven if actor == player else player
-	var offset := actor.position - partner.position
-	var step := motion * delta
-	# If a collision displaced either actor, allow motion back toward the group.
-	step.x = clampf(step.x, minf(0.0, -COOP_REACH.x - offset.x), maxf(0.0, COOP_REACH.x - offset.x))
-	step.y = clampf(step.y, minf(0.0, -COOP_REACH.y - offset.y), maxf(0.0, COOP_REACH.y - offset.y))
+	var offset: = actor.position - partner.position
+	var step: = motion * delta
+
+	step.x = clampf(step.x, minf(0.0, - COOP_REACH.x - offset.x), maxf(0.0, COOP_REACH.x - offset.x))
+	step.y = clampf(step.y, minf(0.0, - COOP_REACH.y - offset.y), maxf(0.0, COOP_REACH.y - offset.y))
 	return step / delta
 
 func combat_target(origin: Vector2, include_cloaked: bool = false) -> PixelActor:
@@ -159,10 +175,16 @@ func world_walls() -> Array[Rect2]:
 func world_props() -> Array[Dictionary]:
 	return WorldData.PROPS
 
-func _build_world() -> void:
-	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	var ground := Sprite2D.new()
-	ground.texture = preload("res://assets/world/alley.png")
+func _build_world() -> void :
+	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	var backdrop_material: = CanvasItemMaterial.new()
+	backdrop_material.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+	material = backdrop_material
+	var ground: = Sprite2D.new()
+	ground.name = "PaintedAlley"
+	ground.texture = Painted.ART.alley
+	ground.material = material
+	ground.scale = Vector2(1024, 640) / ground.texture.get_size()
 	ground.centered = false
 	ground.z_index = -10
 	add_child(ground)
@@ -175,13 +197,14 @@ func _build_world() -> void:
 	add_child(actors)
 	for prop in world_props():
 		_collider(prop.collision)
-		var sprite := Sprite2D.new()
-		var atlas := AtlasTexture.new()
+		var sprite: = Sprite2D.new()
+		sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		var atlas: = AtlasTexture.new()
 		atlas.atlas = preload("res://assets/world/props.png")
 		atlas.region = [Rect2(0, 0, 64, 48), Rect2(64, 0, 32, 32), Rect2(96, 0, 32, 48)][prop.kind]
 		sprite.texture = atlas
 		sprite.position = prop.position
-		sprite.offset = Vector2(0, -atlas.region.size.y * 0.5 + 4)
+		sprite.offset = Vector2(0, - atlas.region.size.y * 0.5 + 4)
 		actors.add_child(sprite)
 	gate_body = _collider(WorldData.GATE, false)
 	player = PlayerScript.new()
@@ -200,13 +223,17 @@ func _build_world() -> void:
 	enemy.setup(preload("res://assets/sprites/jackal.png"), self)
 	enemy.position = WorldData.JACKAL
 	actors.add_child(enemy)
-	var ambient := CanvasModulate.new()
+	ambient = CanvasModulate.new()
 	ambient.color = Color(0.72, 0.77, 0.92)
 	add_child(ambient)
-	_light(Vector2(77, 282), Color("fb71b5"), 2.5, 1.25)
-	shadow_lights.append(_light(Vector2(640, 270), Color("65e8fa"), 3.5, 1.65))
-	shadow_lights.append(_light(Vector2(900, 272), Color("f37ac1"), 3.0, 1.45))
-	_light(Vector2(454, 337), Color("5be1e5"), 1.2, 1.1)
+	world_lights = [
+		_light(Vector2(77, 282), Color("fb71b5"), 2.5, 1.25), 
+		_light(Vector2(640, 270), Color("65e8fa"), 3.5, 1.65), 
+		_light(Vector2(900, 272), Color("f37ac1"), 3.0, 1.45), 
+		_light(Vector2(454, 337), Color("5be1e5"), 1.2, 1.1), 
+	]
+	shadow_lights.append(world_lights[1])
+	shadow_lights.append(world_lights[2])
 	blade_light = _light(Vector2(11, -18), Color("f55078"), 0.9, 0.75, player)
 	_light(Vector2(0, -24), Color("50cbe8"), 0.6, 0.45, raven)
 	_halo(Vector2(78, 226), Color(1.0, 0.23, 0.55, 0.38), 1.2)
@@ -224,22 +251,205 @@ func _build_world() -> void:
 	add_child(camera)
 	camera.make_current()
 
+func set_painted_solids(key: String) -> void :
+	for body in painted_solids:
+		body.collision_layer = 0
+		body.queue_free()
+	painted_solids.clear()
+	for mask in painted_masks:
+		mask.hide()
+		mask.queue_free()
+	painted_masks.clear()
+	painted_layout = key
+	for box in Painted.walls(key):
+		painted_solids.append(_collider(box, false))
+	if key == "lakeside":
+		var body: = StaticBody2D.new()
+		body.collision_layer = 1
+		body.collision_mask = 0
+		var collision: = CollisionPolygon2D.new()
+		collision.polygon = PackedVector2Array(Painted.WATER_EDGE)
+		body.add_child(collision)
+		add_child(body)
+		painted_solids.append(body)
+	add_painted_masks(key)
+
+func add_painted_masks(key: String, offset: Vector2 = Vector2.ZERO, size: Vector2 = Vector2(1024, 640)) -> void :
+	for entry: Array in Painted.OCCLUDERS.get(key, []):
+		var mask: = Polygon2D.new()
+		mask.position = offset + Vector2(0, entry[0])
+		var polygon: = PackedVector2Array()
+		var uv: = PackedVector2Array()
+		var texture: Texture2D = Painted.ART[key]
+		for point: Vector2 in entry[1]:
+			polygon.append(point - Vector2(0, entry[0]))
+			uv.append(point / size * texture.get_size())
+		mask.polygon = polygon
+		mask.uv = uv
+		mask.texture = texture
+		mask.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+		var unshaded: = CanvasItemMaterial.new()
+		unshaded.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+		mask.material = unshaded
+		actors.add_child(mask)
+		painted_masks.append(mask)
+
+func set_dressing(layout: String) -> void :
+	dressing_generation += 1
+	if is_instance_valid(effects):
+		effects.fragments.clear()
+		effects.smoke.clear()
+		effects.blasts.clear()
+	for prop in destructibles:
+		prop.collision_layer = 0
+		prop.hide()
+		prop.set_process(false)
+		prop.queue_free()
+	destructibles.clear()
+	dressing_layout = layout
+	for item: Array in Dressing.items(layout):
+		var prop: = PropScript.new()
+		prop.setup(self, item[0], item[1], item[2])
+		actors.add_child(prop)
+		prop.restore_health(int(prop_states.get(layout, {}).get(prop.prop_id, prop.max_health)))
+		destructibles.append(prop)
+
+func dressing_state() -> Dictionary:
+	return prop_states.duplicate(true)
+
+func restore_dressing_state(value: Variant) -> void :
+	prop_states.clear()
+	if value is Dictionary:
+		for layout: String in Dressing.LAYOUTS:
+			var saved: Variant = value.get(layout)
+			if not saved is Dictionary:
+				continue
+			var states: = {}
+			for item: Array in Dressing.items(layout):
+				var hp: Variant = saved.get(item[0])
+				var limit: int = PropScript.TYPES[item[1]].hp
+				if (hp is int or hp is float) and is_finite(float(hp)) and hp == floor(float(hp)) and hp >= 0 and hp < limit:
+					states[item[0]] = int(hp)
+			if not states.is_empty():
+				prop_states[layout] = states
+	for prop in destructibles:
+		prop.restore_health(int(prop_states.get(dressing_layout, {}).get(prop.prop_id, prop.max_health)))
+
+func free_saved_position(point: Vector2) -> Vector2:
+	for ring in range(0, 97, 12):
+		for direction in (1 if ring == 0 else 16):
+			var candidate: = point + Vector2.from_angle(float(direction) * TAU / 16.0) * ring
+			if not WorldData.walkable(candidate, gate_open):
+				continue
+			var blocked: = false
+			for prop in destructibles:
+				if prop.health > 0 and prop.footprint().grow(8).has_point(candidate):
+					blocked = true
+					break
+			if not blocked:
+				return candidate
+	return WorldData.START
+
+func prop_prompt() -> String:
+	var actor: PixelActor = raven if raven_leads() else player
+	if not actor_is_playable(actor):
+		return ""
+	for prop in destructibles:
+		if prop.health > 0 and CombatRules.can_strike(actor.position, actor.facing, prop.nearest_point(actor.position), 40.0):
+			return "J / X · " + str(PropScript.TYPES[prop.kind].label)
+	return ""
+
+func raven_leads() -> bool:
+	return false
+
+func trace_scenery(from: Vector2, to: Vector2) -> Dictionary:
+	var query: = PhysicsRayQueryParameters2D.create(from, to, 1)
+
+
+	var excluded: Array[RID] = []
+	for prop in destructibles:
+		if prop.health == 0:
+			excluded.append(prop.get_rid())
+	query.exclude = excluded
+	return get_world_2d().direct_space_state.intersect_ray(query)
+
+func strike_scenery(origin: Vector2, direction: Vector2, amount: int) -> int:
+	var hits: = 0
+	for prop in destructibles:
+		if prop.health <= 0:
+			continue
+		var point: = prop.nearest_point(origin)
+		if not CombatRules.can_strike(origin, direction, point):
+			continue
+		var obstruction: = trace_scenery(origin, point)
+		if obstruction.is_empty() or obstruction.collider == prop:
+			prop.take_damage(amount)
+			hits += 1
+	return hits
+
+func prop_damaged(prop: WorldProp, amount: int) -> void :
+	if not prop_states.has(dressing_layout):
+		prop_states[dressing_layout] = {}
+	prop_states[dressing_layout][prop.prop_id] = prop.health
+	var tint: = Color(PropScript.TYPES[prop.kind].color)
+	effects.prop_impact(prop.position, tint, prop.health == 0, prop.kind)
+	if prop.health > 0:
+		sound("prop_hit")
+	else:
+		shake = maxf(shake, 2.0 if prop.kind != "car" else 4.0)
+		sound("prop_wood" if prop.kind == "crate" else "prop_metal")
+		if prop.kind == "barrel":
+			_explode_prop.call_deferred(prop.position, dressing_generation)
+	damage_number(prop.position + Vector2(0, -50), str(mini(amount, prop.max_health)))
+
+func _explode_prop(point: Vector2, generation: int) -> void :
+	if generation != dressing_generation:
+		return
+	effects.prop_explosion(point)
+	sound("prop_blast")
+	shake = maxf(shake, 5.0)
+	for prop in destructibles.duplicate():
+		if generation != dressing_generation:
+			return
+		if prop.health <= 0 or prop.nearest_point(point).distance_to(point) > 78.0:
+			continue
+		var obstruction: = trace_scenery(point, prop.nearest_point(point))
+		if obstruction.is_empty() or obstruction.collider == prop:
+			prop.take_damage(46)
+
+	var targets: Array = []
+	for node in actors.get_children():
+		if node is PixelActor and node.health > 0 and node.visible:
+			if node in [player, raven]:
+				if actor_is_playable(node):
+					targets.append(node)
+			elif node.active:
+				targets.append(node)
+	for target in targets:
+		if generation != dressing_generation:
+			return
+		if target.position.distance_to(point) <= 78.0 and _line_clear(point, target.position):
+			if target in [player, raven]:
+				target.take_damage(24, point)
+			else:
+				target.take_damage(36)
+
 func _collider(rect: Rect2, casts_shadow: bool = true) -> StaticBody2D:
-	var body := StaticBody2D.new()
+	var body: = StaticBody2D.new()
 	body.position = rect.get_center()
 	body.collision_layer = 1
 	body.collision_mask = 0
-	var collider := CollisionShape2D.new()
-	var shape := RectangleShape2D.new()
+	var collider: = CollisionShape2D.new()
+	var shape: = RectangleShape2D.new()
 	shape.size = rect.size
 	collider.shape = shape
 	body.add_child(collider)
 	if casts_shadow:
-		var shadow := LightOccluder2D.new()
+		var shadow: = LightOccluder2D.new()
 		shadow.sdf_collision = false
-		var silhouette := OccluderPolygon2D.new()
-		var corner := rect.size * 0.5
-		silhouette.polygon = PackedVector2Array([-corner, Vector2(corner.x, -corner.y), corner, Vector2(-corner.x, corner.y)])
+		var silhouette: = OccluderPolygon2D.new()
+		var corner: = rect.size * 0.5
+		silhouette.polygon = PackedVector2Array([ - corner, Vector2(corner.x, - corner.y), corner, Vector2( - corner.x, corner.y)])
 		shadow.occluder = silhouette
 		body.add_child(shadow)
 	add_child(body)
@@ -248,7 +458,7 @@ func _collider(rect: Rect2, casts_shadow: bool = true) -> StaticBody2D:
 func _light(point: Vector2, color: Color, radius: float, strength: float, parent: Node = null) -> PointLight2D:
 	if parent == null:
 		parent = self
-	var light := PointLight2D.new()
+	var light: = PointLight2D.new()
 	light.position = point
 	light.texture = light_texture
 	light.texture_scale = radius
@@ -257,22 +467,34 @@ func _light(point: Vector2, color: Color, radius: float, strength: float, parent
 	parent.add_child(light)
 	return light
 
-func _halo(point: Vector2, color: Color, radius: float) -> void:
-	var halo := Sprite2D.new()
+func set_scene_lighting(tint: Color, lamps: Array) -> void :
+	ambient.color = tint
+	for i in world_lights.size():
+		var light: = world_lights[i]
+		light.enabled = i < lamps.size()
+		if light.enabled:
+			var lamp: Array = lamps[i]
+			light.position = lamp[0]
+			light.color = Color(lamp[1])
+			light.texture_scale = lamp[2]
+			light.energy = lamp[3]
+
+func _halo(point: Vector2, color: Color, radius: float) -> void :
+	var halo: = Sprite2D.new()
 	halo.texture = light_texture
 	halo.position = point
 	halo.scale = Vector2.ONE * radius
 	halo.modulate = color
 	halo.z_index = -2
-	var material := CanvasItemMaterial.new()
+	var material: = CanvasItemMaterial.new()
 	material.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
 	material.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
 	halo.material = material
 	add_child(halo)
 	neon_halos.append(halo)
 
-func _build_atmosphere_filter() -> void:
-	var layer := CanvasLayer.new()
+func _build_atmosphere_filter() -> void :
+	var layer: = CanvasLayer.new()
 	layer.layer = 5
 	add_child(layer)
 	atmosphere_filter = ColorRect.new()
@@ -283,14 +505,14 @@ func _build_atmosphere_filter() -> void:
 	atmosphere_filter.material = filter_material
 	layer.add_child(atmosphere_filter)
 
-func _load_visual_quality() -> void:
-	var config := ConfigFile.new()
+func _load_visual_quality() -> void :
+	var config: = ConfigFile.new()
 	var saved: Variant = 2
 	if config.load(VISUAL_SETTINGS) == OK:
 		saved = config.get_value("video", "preset", 2)
 	set_visual_quality(int(saved) if saved is int else 2)
 
-func set_visual_quality(level: int) -> void:
+func set_visual_quality(level: int) -> void :
 	visual_quality = clampi(level, 0, 2)
 	ground_atmosphere.quality = visual_quality
 	effects.quality = visual_quality
@@ -307,16 +529,16 @@ func set_visual_quality(level: int) -> void:
 	if ui != null:
 		ui.visual_button.text = "Bildstil: " + VISUAL_PRESETS[visual_quality]
 
-func cycle_visual_quality() -> void:
+func cycle_visual_quality() -> void :
 	set_visual_quality((visual_quality + 1) % VISUAL_PRESETS.size())
-	var config := ConfigFile.new()
+	var config: = ConfigFile.new()
 	config.set_value("video", "preset", visual_quality)
 	if config.save(VISUAL_SETTINGS) != OK:
 		toast("Bildstil geändert · Einstellung konnte nicht gespeichert werden")
 	else:
 		toast("Bildstil: " + VISUAL_PRESETS[visual_quality])
 
-func _build_audio() -> void:
+func _build_audio() -> void :
 	music = AudioStreamPlayer.new()
 	var stream: AudioStreamWAV = preload("res://assets/audio/neon-loop.wav").duplicate()
 	stream.loop_mode = AudioStreamWAV.LOOP_FORWARD
@@ -327,16 +549,16 @@ func _build_audio() -> void:
 	if DisplayServer.get_name() != "headless" and AudioServer.get_driver_name() != "Dummy":
 		music.play()
 	for i in 4:
-		var channel := AudioStreamPlayer.new()
+		var channel: = AudioStreamPlayer.new()
 		channel.volume_db = -8
 		add_child(channel)
 		sfx.append(channel)
 
-func _process(delta: float) -> void:
+func _process(delta: float) -> void :
 	if not is_busy():
 		hack_cooldown = maxf(0, hack_cooldown - delta)
 		next_step_ripple = maxf(0.0, next_step_ripple - delta)
-		if player.velocity.length() > 45.0 and next_step_ripple <= 0.0:
+		if effects.rain and player.velocity.length() > 45.0 and next_step_ripple <= 0.0:
 			effects.water_step(player.position)
 			next_step_ripple = 0.13
 		if not coop:
@@ -355,7 +577,7 @@ func _process(delta: float) -> void:
 	camera.offset = Vector2(sin(Time.get_ticks_msec() * 0.1), cos(Time.get_ticks_msec() * 0.15)) * shake
 	queue_redraw()
 
-func _update_raven_follower(delta: float) -> void:
+func _update_raven_follower(delta: float) -> void :
 	raven.animate("attack" if enemy.exposed > 0.0 else "idle", delta)
 	if stage >= 2:
 		var target: Vector2 = player.position + Vector2(-52, 26)
@@ -365,7 +587,7 @@ func _update_raven_follower(delta: float) -> void:
 			raven.move_and_slide()
 			raven.animate("walk", delta)
 
-func _unhandled_input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void :
 	if event is InputEventKey and event.echo:
 		return
 	if event.is_action_pressed("graphics_game"):
@@ -394,7 +616,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		interact(raven)
 	elif event.is_action_pressed("interact"):
 		interact()
-	elif (coop and event.is_action_pressed("raven_hack")) or (not coop and event.is_action_pressed("hack")):
+	elif (coop and event.is_action_pressed("raven_hack")) or ( not coop and event.is_action_pressed("hack")):
 		raven_hack()
 	elif event.is_action_pressed("save_game"):
 		save_game()
@@ -406,7 +628,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func is_busy() -> bool:
 	return menu_open or (ui != null and ui.dialogue_open) or player.health <= 0
 
-func close_menu() -> void:
+func close_menu() -> void :
 	menu_open = false
 	started = true
 	ui.menu.hide()
@@ -430,13 +652,13 @@ func interaction_prompt() -> String:
 		return ("Enter / A · " if gamepads.raven_device >= 0 else "Enter · ") + action
 	return ""
 
-func interact(actor: PixelActor = null) -> void:
+func interact(actor: PixelActor = null) -> void :
 	if actor == null:
 		actor = player
 	if stage == 0 and player.position.distance_to(raven.position) < 62:
 		ui.dialogue([
-			["Raven", "Chrome Jackal bewacht den Ausgang. Ich kann seine Implantate stören. Du kümmerst dich um den Rest."],
-			["Shadepi", "Einverstanden. Zuerst brauchen wir einen Weg durch die Sperre."],
+			["Raven", "Chrome Jackal bewacht den Ausgang. Ich kann seine Implantate stören. Du kümmerst dich um den Rest."], 
+			["Shadepi", "Einverstanden. Zuerst brauchen wir einen Weg durch die Sperre."], 
 			["Raven", "Das Terminal rechts. Danach %s für meinen Hack. Wenn er rot ausholt: ausweichen!" % hack_input_hint()]
 		], func():
 			stage = 1
@@ -451,15 +673,15 @@ func interact(actor: PixelActor = null) -> void:
 		autosave()
 	elif stage == 3 and actor.position.distance_to(WorldData.EXIT) < 54:
 		ui.dialogue([
-			["Shadepi", "Die Daten sind gesichert. Vielleicht führen sie uns zu den Minotauren."],
-			["Raven", "Dann verschwinden wir. Und vergiss nicht: Wir sind noch lange keine Freunde."],
+			["Shadepi", "Die Daten sind gesichert. Vielleicht führen sie uns zu den Minotauren."], 
+			["Raven", "Dann verschwinden wir. Und vergiss nicht: Wir sind noch lange keine Freunde."], 
 			["Testszene abgeschlossen", "Du kannst die Gasse weiter erkunden. Über Esc lässt sich die Szene neu starten."]
 		], func():
 			stage = 4
 			autosave()
 		)
 
-func set_gate(open: bool) -> void:
+func set_gate(open: bool) -> void :
 	gate_open = open
 	gate_body.get_child(0).set_deferred("disabled", open)
 	queue_redraw()
@@ -474,7 +696,7 @@ func raven_hack() -> bool:
 	if hack_cooldown > 0:
 		toast("Raven: Mein Deck lädt noch.")
 		return false
-	var origin := hack_origin()
+	var origin: = hack_origin()
 	if origin.distance_to(enemy.position) > 240 or not _line_clear(origin, enemy.position):
 		toast("Raven: Näher ran. Ich brauche eine freie Verbindung.")
 		return false
@@ -486,17 +708,18 @@ func raven_hack() -> bool:
 	toast("Raven: Implantate gestört. Jetzt!")
 	return true
 
-func raven_shot() -> void:
+func raven_shot() -> void :
 	var origin: Vector2 = raven.position
 	var endpoint: Vector2 = origin + raven.facing * 152.0
-	var query := PhysicsRayQueryParameters2D.create(origin, endpoint, 1)
-	var wall := get_world_2d().direct_space_state.intersect_ray(query)
+	var wall: = trace_scenery(origin, endpoint)
 	if not wall.is_empty():
 		endpoint = wall.position
-	var target := raven_shot_target(origin)
+	var target: = raven_shot_target(origin)
 	if target != null:
 		endpoint = origin + raven.facing * (target.position - origin).dot(raven.facing)
 		target.take_damage(17)
+	elif not wall.is_empty() and wall.collider is WorldProp:
+		wall.collider.take_damage(17)
 	effects.pulse_trace(origin, endpoint)
 	sound("hack")
 
@@ -504,52 +727,52 @@ func raven_shot_target(origin: Vector2) -> PixelActor:
 	return enemy if stage == 2 and raven_can_hit(enemy, origin) else null
 
 func raven_can_hit(target: PixelActor, origin: Vector2) -> bool:
-	var offset := target.position - origin
+	var offset: = target.position - origin
 	var depth: float = offset.dot(raven.facing)
 	return depth >= 0.0 and depth <= 152.0 and absf(offset.cross(raven.facing)) <= 8.0 and _line_clear(origin, origin + raven.facing * depth)
 
 func _line_clear(from: Vector2, to: Vector2) -> bool:
-	var query := PhysicsRayQueryParameters2D.create(from, to, 1)
-	return get_world_2d().direct_space_state.intersect_ray(query).is_empty()
+	return trace_scenery(from, to).is_empty()
 
-func player_strike(amount: int) -> void:
+func player_strike(amount: int) -> void :
+	strike_scenery(player.position, player.facing, amount)
 	if stage == 2 and CombatRules.can_strike(player.position, player.facing, enemy.position) and _line_clear(player.position, enemy.position):
 		enemy.take_damage(amount)
 
-func spawn_slash(point: Vector2, direction: Vector2) -> void:
+func spawn_slash(point: Vector2, direction: Vector2) -> void :
 	effects.slash(point, direction)
 
-func spawn_trail(point: Vector2, color: Color) -> void:
+func spawn_trail(point: Vector2, color: Color) -> void :
 	effects.trail(point, color)
 
-func impact(point: Vector2, foe: bool) -> void:
+func impact(point: Vector2, foe: bool) -> void :
 	effects.burst(point, Color("ff648a") if foe else Color("a6d6ea"))
 	shake = 2.2 if foe else 3.5
 	sound("hit")
 
-func damage_number(point: Vector2, text: String) -> void:
-	var label := Label.new()
+func damage_number(point: Vector2, text: String) -> void :
+	var label: = Label.new()
 	label.text = text
 	label.position = point
 	label.z_index = 80
 	label.add_theme_font_size_override("font_size", 12)
 	label.modulate = Color("ffd4de")
 	add_child(label)
-	var tween := create_tween().set_parallel(true)
+	var tween: = create_tween().set_parallel(true)
 	tween.tween_property(label, "position:y", point.y - 22, 0.55)
 	tween.tween_property(label, "modulate:a", 0, 0.55)
 	tween.chain().tween_callback(label.queue_free)
 
-func enemy_defeated(_foe: PixelActor = null) -> void:
+func enemy_defeated(_foe: PixelActor = null) -> void :
 	stage = 3
 	toast("Raven: Der Weg ist frei. Sichere die Daten am Ausgang im Nordosten.")
 	autosave()
 
-func player_defeated() -> void:
+func player_defeated() -> void :
 	menu_open = true
 	ui.show_menu("SYSTEM GESTÖRT")
 	ui.resume_button.text = "Am Kontrollpunkt fortsetzen"
-	# Recover a playable checkpoint immediately; opening the menu keeps it frozen.
+
 	player.health = 100
 	player.energy = 100
 	player.position = Vector2(562, 386) if stage == 2 else WorldData.START
@@ -560,31 +783,33 @@ func player_defeated() -> void:
 	enemy.active = stage == 2
 
 func snapshot() -> Dictionary:
-	var state := {"version": 1, "stage": stage, "health": player.health, "energy": player.energy, "x": player.position.x, "y": player.position.y, "enemy_health": enemy.health}
+	var state: = {"version": 1, "stage": stage, "health": player.health, "energy": player.energy, "x": player.position.x, "y": player.position.y, "enemy_health": enemy.health}
+	state.props = dressing_state()
 	if coop:
 		state.raven = {"x": raven.position.x, "y": raven.position.y, "health": raven.health, "energy": raven.energy}
 	return state
 
-func autosave() -> void:
+func autosave() -> void :
 	if not SaveService.write(snapshot(), save_path()):
 		toast("Der Kontrollpunkt konnte nicht gespeichert werden. F5 erneut versuchen.")
 
 func save_game() -> bool:
-	var success := SaveService.write(snapshot(), save_path())
+	var success: = SaveService.write(snapshot(), save_path())
 	toast("Spielstand gespeichert" if success else "Speichern fehlgeschlagen")
 	return success
 
 func load_game(requested_mode: Variant = null) -> bool:
 	var requested_coop: bool = coop if requested_mode == null else bool(requested_mode)
-	var path := SaveService.COOP_PATH if requested_coop else SaveService.PATH
-	var data := SaveService.read(path)
+	var path: = SaveService.COOP_PATH if requested_coop else SaveService.PATH
+	var data: = SaveService.read(path)
 	if data.is_empty():
 		toast("Kein gültiger Spielstand vorhanden")
 		return false
 	set_coop(requested_coop)
+	restore_dressing_state(data.get("props", {}))
 	stage = int(data.stage)
 	set_gate(stage >= 2)
-	player.position = Vector2(data.x, data.y)
+	player.position = free_saved_position(Vector2(data.x, data.y))
 	player.health = int(data.health)
 	player.energy = float(data.energy)
 	player.reset_transients()
@@ -596,12 +821,12 @@ func load_game(requested_mode: Variant = null) -> bool:
 		enemy.visual.position.y = -10
 		enemy.visual.modulate = Color(0.45, 0.5, 0.6, 0.7)
 	if coop:
-		reset_raven(Vector2(data.raven.x, data.raven.y))
+		reset_raven(free_saved_position(Vector2(data.raven.x, data.raven.y)))
 		raven.health = int(data.raven.health)
 		raven.energy = float(data.raven.energy)
 	else:
 		var follow_position: Vector2 = player.position + Vector2(-44, 24)
-		reset_raven(follow_position if stage >= 2 and WorldData.walkable(follow_position, gate_open) else WorldData.RAVEN)
+		reset_raven(free_saved_position(follow_position if stage >= 2 and WorldData.walkable(follow_position, gate_open) else WorldData.RAVEN))
 	hack_cooldown = 0.0
 	ui.dialogue_open = false
 	ui.dialogue_panel.hide()
@@ -609,13 +834,14 @@ func load_game(requested_mode: Variant = null) -> bool:
 	toast("Spielstand geladen")
 	return true
 
-func reset_raven(point: Vector2) -> void:
+func reset_raven(point: Vector2) -> void :
 	raven.position = point
 	raven.health = 100
 	raven.energy = 100.0
 	raven.reset_transients()
 
-func new_game(save_checkpoint: bool = true) -> void:
+func new_game(save_checkpoint: bool = true) -> void :
+	restore_dressing_state({})
 	stage = 0
 	set_gate(false)
 	player.position = WorldData.START
@@ -633,11 +859,11 @@ func new_game(save_checkpoint: bool = true) -> void:
 	if save_checkpoint:
 		autosave()
 
-func toast(text: String) -> void:
+func toast(text: String) -> void :
 	if ui != null:
 		ui.toast(text)
 
-func sound(kind: String) -> void:
+func sound(kind: String) -> void :
 	if not audio_on or DisplayServer.get_name() == "headless" or AudioServer.get_driver_name() == "Dummy":
 		return
 	for channel in sfx:
@@ -646,7 +872,7 @@ func sound(kind: String) -> void:
 			channel.play()
 			return
 
-func toggle_audio() -> void:
+func toggle_audio() -> void :
 	audio_on = not audio_on
 	music.stream_paused = not audio_on
 	for channel in sfx:
@@ -654,7 +880,7 @@ func toggle_audio() -> void:
 			channel.stop()
 	toast("Ton an" if audio_on else "Ton aus")
 
-func _exit_tree() -> void:
+func _exit_tree() -> void :
 	gamepads.clear()
 	if is_instance_valid(music):
 		music.stop()
@@ -663,7 +889,7 @@ func _exit_tree() -> void:
 		channel.stop()
 		channel.stream = null
 
-func _draw() -> void:
+func _draw() -> void :
 	if not gate_open:
 		for y in range(164, 496, 8):
 			draw_line(Vector2(509, y), Vector2(509, y + 5), Color(0.28, 0.8, 0.95, 0.75), 3)
@@ -673,12 +899,12 @@ func _draw() -> void:
 			draw_rect(Rect2(504, y + 3, 11, 3), Color("76dfec"))
 	var marker: Vector2 = WorldData.RAVEN if stage == 0 else WorldData.TERMINAL if stage == 1 else enemy.position if stage == 2 else WorldData.EXIT
 	if stage < 4:
-		var bounce := sin(Time.get_ticks_msec() * 0.004) * 2
+		var bounce: = sin(Time.get_ticks_msec() * 0.004) * 2
 		draw_polyline(PackedVector2Array([marker + Vector2(-5, -72 + bounce), marker + Vector2(0, -67 + bounce), marker + Vector2(5, -72 + bounce)]), Color("8aebf0"), 2)
 	if stage >= 3:
 		draw_arc(WorldData.EXIT, 18, 0.0, TAU, 24, Color(0.4, 0.9, 0.85, 0.6), 1)
 
-func _capture(path: String) -> void:
+func _capture(path: String) -> void :
 	await get_tree().process_frame
 	await get_tree().process_frame
 	await RenderingServer.frame_post_draw

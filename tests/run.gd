@@ -34,6 +34,7 @@ func run() -> void:
 	check(not SpriteAssets.valid_sheet(invalid_sprite), "single-frame replacement is rejected")
 	if "--expect-custom-sprite" in OS.get_cmdline_user_args():
 		check(scene.player.visual.texture.resource_path == "res://assets/custom/shadepi.png", "imported custom sheet takes precedence")
+	check_hero_sprites(scene)
 	scene.set_visual_quality(0)
 	check(not scene.atmosphere_filter.visible and not scene.shadow_lights[0].shadow_enabled, "reduced mode removes screen processing and dynamic shadows")
 	scene.set_visual_quality(2)
@@ -306,6 +307,28 @@ func pad_button(device: int, button: JoyButton) -> void:
 	release.pressed = false
 	Input.parse_input_event(release)
 	Input.flush_buffered_events()
+
+func check_hero_sprites(scene: Node2D) -> void:
+	for actor in [scene.player, scene.raven]:
+		var texture: Texture2D = actor.visual.texture
+		if texture.resource_path.begins_with("res://assets/custom/"):
+			continue
+		check(texture.resource_path.begins_with("res://assets/sprites/heroes/"), "hero uses the generated illustrated artwork")
+		check(actor.directions == 8 and actor.visual.hframes == 8 and actor.visual.vframes == 32, "HQ atlas retains all eight directions and animation states")
+		check(actor.visual.scale == Vector2(0.5, 0.5) and actor.visual.texture_filter == CanvasItem.TEXTURE_FILTER_LINEAR, "HQ pixels render smoothly at the intended world size")
+		var feet: float = actor.visual.position.y + (152.0 - 80.0) * actor.visual.scale.y
+		check(is_zero_approx(feet), "HQ feet meet the collision origin")
+		actor.visual.rotation = PI * 0.5
+		actor.visual.position.y = -9
+		actor.reset_visual_pose()
+		check(actor.visual.rotation == 0.0 and actor.visual.position.y == -36.0, "revival restores the HQ foot alignment")
+		actor.facing = Vector2.DOWN
+		actor.animate("attack", 0.18)
+		check(actor.visual.frame_coords.y == 16 and actor.cast_shadow.frame == actor.visual.frame, "attack uses its own pose and matching shadow")
+		actor.set_cloaked(true)
+		check(not actor.light_occluder.visible, "HQ hero preserves stealth visibility")
+		actor.set_cloaked(false)
+	check(scene.enemy.visual.scale == Vector2.ONE and scene.enemy.directions == 4, "legacy enemy artwork keeps its size and directional layout")
 
 func check_directional_animation(scene: Node2D) -> void:
 	for actor in [scene.player, scene.raven]:

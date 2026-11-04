@@ -1,0 +1,45 @@
+{
+  "raven": "Use case: identity-preserve and illustration-story. Create a premium production-ready TRANSPARENT character keyframe sprite atlas for our 2.5D overhead cyberpunk RPG. Use the comic reference for identity, costume and materials, and the old sprite atlas only for the eight facing directions. This must be beautifully painted high resolution game character art with clean silhouettes, nuanced armor plates, cloth, leather and soft material shading. NOT pixel art, not a poster, not a concept montage. ABSOLUTELY EXACT GRID: 8 columns and 4 rows, 32 separate complete full-body character poses, equally sized cells, aligned baseline and identical character scale in every cell, no overlap, no characters crossing a cell boundary, empty transparent gutters. Canvas landscape 3:2, ideally 1536 by 1024, cells 192 by 256. Every character fits inside the inner 80% of its own cell, feet near 92% height, no floor or ground shadow. NO text, labels, numbers, border, scene, scenery, background, checkerboard artwork or UI. Actual transparent alpha outside characters.\nThe same fixed camera in ALL cells: slight three-quarter overhead RPG view looking down about 20 degrees; full figure from head to toe. DO NOT rotate the camera.\nCOLUMN ORDER in EVERY row is exactly: 1 facing down toward viewer (south), 2 left profile (west), 3 right profile (east), 4 back facing away (north), 5 rear-left diagonal (northwest), 6 rear-right diagonal (northeast), 7 front-left diagonal (southwest), 8 front-right diagonal (southeast).\nROW 1 is a balanced neutral idle stance, both feet grounded.\nROW 2 is a clear walking stride with LEFT leg forward and RIGHT arm forward.\nROW 3 is the opposite walking stride with RIGHT leg forward and LEFT arm forward.\nROW 4 is a decisive combat attack extension appropriate to the character, distinct from the idle pose.\nKeep all directional costume details anatomically consistent. These are 32 images of ONE character, no second character.\nCHARACTER: RAVEN, adult female netrunner, light complexion, athletic slender natural proportions, straight long jet-black hair with deep cobalt blue highlights and side-swept bangs, red eyes. Her face and hair must remain recognizable and uncovered. High-end fitted matte-black armored combat bodysuit with fine glowing CYAN circuitry seams at collar, chest, waist, forearms and thighs; reinforced shoulder plates, black gloves, functional knee guards and black boots. Small restrained crimson indicator on one shoulder. A small cyan illuminated high collar. No hat, no wings, no long coat, no face mask. The suit fully covers the torso and abdomen. Elegant, capable, determined facial expression. Premium semi-realistic painted comic RPG style. In attack row she raises a compact black-and-cyan impulse pistol and aims it along her column's facing direction, with a tiny bright cyan discharge at the barrel. The pistol must remain inside her cell. The walking rows keep the gun lowered and leave her leg movement plainly visible.",
+  "shadepi": "Use case: identity-preserve and illustration-story. Create a premium production-ready TRANSPARENT character keyframe sprite atlas for our 2.5D overhead cyberpunk RPG. Use the comic reference for identity, costume and materials, and the old sprite atlas only for the eight facing directions. This must be beautifully painted high resolution game character art with clean silhouettes, nuanced armor plates, cloth, leather and soft material shading. NOT pixel art, not a poster, not a concept montage. ABSOLUTELY EXACT GRID: 8 columns and 4 rows, 32 separate complete full-body character poses, equally sized cells, aligned baseline and identical character scale in every cell, no overlap, no characters crossing a cell boundary, empty transparent gutters. Canvas landscape 3:2, ideally 1536 by 1024, cells 192 by 256. Every character fits inside the inner 80% of its own cell, feet near 92% height, no floor or ground shadow. NO text, labels, numbers, border, scene, scenery, background, checkerboard artwork or UI. Actual transparent alpha outside characters.\nThe same fixed camera in ALL cells: slight three-quarter overhead RPG view looking down about 20 degrees; full figure from head to toe. DO NOT rotate the camera.\nCOLUMN ORDER in EVERY row is exactly: 1 facing down toward viewer (south), 2 left profile (west), 3 right profile (east), 4 back facing away (north), 5 rear-left diagonal (northwest), 6 rear-right diagonal (northeast), 7 front-left diagonal (southwest), 8 front-right diagonal (southeast).\nROW 1 is a balanced neutral idle stance, both feet grounded.\nROW 2 is a clear walking stride with LEFT leg forward and RIGHT arm forward.\nROW 3 is the opposite walking stride with RIGHT leg forward and LEFT arm forward.\nROW 4 is a decisive combat attack extension appropriate to the character, distinct from the idle pose.\nKeep all directional costume details anatomically consistent. These are 32 images of ONE character, no second character.\nCHARACTER: SHADEPI, adult male cyber-ninja, same masked character as the comic. Broad angular black conical kasa hat, face completely covered by fitted black tech mask with two narrow glowing RED eyes. Dark layered tactical armor, matte graphite segmented shoulder and arm plates, compact black chest pouches, black gloves, reinforced trousers, armored shin guards and black boots. Short dark charcoal scarf/cape and loose asymmetrical coat tails with a restrained deep crimson lining, recognizable from the back. A small white dragon order emblem on his upper back, visible only on rear views. Refined steel scratches, cloth folds, sharp silhouette, very subtle red implant seams. Red laser katana in his right hand, dark hilt and luminous narrow red blade, no huge aura. In idle and walking rows, the katana is held safely low beside his right leg. In attack row he delivers a strong katana cut through the space directly in front of his facing direction, clear dynamic body twist and scarf movement, with a fine restrained red slash trail. All hat edges, blade, hands and boots stay inside each cell. Premium semi-realistic painted comic RPG style.",
+  "source_grid": {
+    "columns": 8,
+    "rows": 4,
+    "cell": [
+      192,
+      256
+    ],
+    "directions": [
+      "south",
+      "west",
+      "east",
+      "north",
+      "northwest",
+      "northeast",
+      "southwest",
+      "southeast"
+    ],
+    "poses": [
+      "idle",
+      "left stride",
+      "right stride",
+      "attack"
+    ]
+  },
+  "game_grid": {
+    "columns": 8,
+    "rows": 32,
+    "cell": [
+      128,
+      160
+    ],
+    "foot_baseline": 152,
+    "display_scale": 0.5,
+    "states": [
+      "idle",
+      "walk",
+      "attack",
+      "hurt"
+    ],
+    "note": "32 generated key poses per character, assembled into held and repeated animation frames. Idle and hurt use the resting pose."
+  }
+}

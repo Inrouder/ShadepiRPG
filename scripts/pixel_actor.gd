@@ -18,6 +18,7 @@ var cloaked := false
 var directions := 4
 var visual_octant := 2
 var turn_time := 0.0
+var standing_visual_position := Vector2(0, -26)
 
 func setup(texture: Texture2D, game: Node2D) -> void:
 	world = game
@@ -29,13 +30,15 @@ func setup(texture: Texture2D, game: Node2D) -> void:
 	collider.shape = shape
 	add_child(collider)
 	var sheet := SpriteAssets.resolve(texture)
-	directions = int(sheet.get_height() / 256.0)
+	var frame_size := SpriteAssets.frame_size(sheet)
+	var display_scale := SpriteAssets.display_scale(sheet)
+	directions = int(sheet.get_height() / float(frame_size.y * 4))
 	cast_shadow = Sprite2D.new()
 	cast_shadow.texture = sheet
 	cast_shadow.hframes = 8
 	cast_shadow.vframes = directions * 4
 	cast_shadow.position = Vector2(8, -5)
-	cast_shadow.scale = Vector2(1.05, 0.3)
+	cast_shadow.scale = Vector2(1.05, 0.3) * display_scale
 	cast_shadow.skew = -0.65
 	shadow_material = ShaderMaterial.new()
 	shadow_material.shader = preload("res://shaders/shadow.gdshader")
@@ -51,12 +54,19 @@ func setup(texture: Texture2D, game: Node2D) -> void:
 	visual.texture = sheet
 	visual.hframes = 8
 	visual.vframes = directions * 4
-	visual.position = Vector2(0, -26)
-	visual.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	standing_visual_position = Vector2(0, (frame_size.y * 0.5 - SpriteAssets.foot_baseline(sheet)) * display_scale)
+	visual.position = standing_visual_position
+	visual.scale = Vector2.ONE * display_scale
+	visual.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR if display_scale < 1.0 else CanvasItem.TEXTURE_FILTER_NEAREST
+	cast_shadow.texture_filter = visual.texture_filter
 	body_material = ShaderMaterial.new()
 	body_material.shader = preload("res://shaders/cloak.gdshader")
 	visual.material = body_material
 	add_child(visual)
+
+func reset_visual_pose() -> void:
+	visual.rotation = 0.0
+	visual.position = standing_visual_position
 
 func animate(state: String, delta: float) -> void:
 	var continuing_walk := state == "walk" and animation_name == "walk"

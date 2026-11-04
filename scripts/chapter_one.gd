@@ -19,7 +19,7 @@ const ARENA_ENTRY := Vector2(568, 356)
 const DOWNED_SPOT := Vector2(636, 365)
 const RESCUE_START := Vector2(295, 451)
 const BARRIERS: Array[Rect2] = [
-	Rect2(-430, 272, 28, 128), Rect2(-257, 376, 29, 120), Rect2(-108, 272, 27, 127),
+	Rect2(-441, 272, 36, 107), Rect2(-270, 376, 41, 104), Rect2(-113, 272, 38, 107),
 	Rect2(181, 272, 29, 128), Rect2(381, 375, 28, 121),
 ]
 const TRAIL: Array[Vector2] = [
@@ -38,6 +38,8 @@ var raven_joined := false
 var counter_warning := false
 var ending: Tween
 var patrol: Array[PixelActor] = []
+var street_lights: Array[PointLight2D] = []
+var apartment_lights: Array[PointLight2D] = []
 
 func create_hud() -> CanvasLayer:
 	return ChapterHud.new()
@@ -58,16 +60,26 @@ func _build_world() -> void:
 	effects.rain_start = WEST_EDGE
 	enemy.max_health = JACKAL_HEALTH
 	var west := Sprite2D.new()
-	west.texture = preload("res://assets/world/bingo-street.png")
+	west.texture = Painted.ART.market
+	west.material = material
+	west.scale = Vector2(640, 640) / west.texture.get_size()
 	west.centered = false
 	west.position.x = WEST_EDGE
 	west.z_index = -10
 	add_child(west)
 	for point in [Vector2(-537, 283), Vector2(-315, 390), Vector2(-170, 318), Vector2(-61, 438)]:
 		_halo(point, Color(0.9, 0.24, 0.43, 0.44), 0.8)
-		_light(point, Color("f66892"), 1.55, 1.0)
+		street_lights.append(_light(point, Color("f66892"), 1.55, 1.0))
+	apartment_lights = [
+		_light(Vector2(-530, 265), Color("6abac9"), 1.95, 0.63),
+		_light(Vector2(-401, 271), Color("91cbdc"), 1.5, 0.42),
+	]
+	for light in apartment_lights:
+		light.enabled = false
 	for barrier in BARRIERS:
 		_collider(barrier)
+	add_painted_masks("market", Vector2(WEST_EDGE, 0), Vector2(640, 640))
+	add_painted_masks("alley")
 	_halo(Vector2(197, 383), Color(0.94, 0.2, 0.55, 0.42), 0.67)
 	_halo(Vector2(395, 386), Color(0.17, 0.87, 0.95, 0.42), 0.72)
 	_light(Vector2(219, 404), Color("ed539f"), 1.0, 0.8)
@@ -157,7 +169,7 @@ func _process(delta: float) -> void:
 					raven.facing = (enemy.position - raven.position).normalized()
 					raven.animate("attack", delta)
 					raven_shot()
-	if raven_leads() and raven.velocity.length() > 45.0 and next_step_ripple <= 0.0:
+	if effects.rain and raven_leads() and raven.velocity.length() > 45.0 and next_step_ripple <= 0.0:
 		effects.water_step(raven.position)
 		next_step_ripple = 0.13
 
@@ -166,6 +178,7 @@ func _update_raven_follower(delta: float) -> void:
 		super._update_raven_follower(delta)
 
 func new_game(save_checkpoint: bool = true) -> void:
+	restore_dressing_state({})
 	_enter_checkpoint(Phase.APARTMENT)
 	if save_checkpoint:
 		autosave()
@@ -197,15 +210,14 @@ func _enter_checkpoint(next_phase: Phase) -> void:
 	player.health = 100
 	player.energy = 100.0
 	player.reset_transients()
-	player.visual.position.y = -26.0
+	player.reset_visual_pose()
 	player.facing = Vector2.RIGHT
 	player.visible = not raven_leads()
 	reset_raven(APARTMENT_EXIT if raven_leads() else DOWNED_SPOT)
 	raven.visible = phase != Phase.COMPLETE
 	raven.health_floor = 0
 	raven.facing = Vector2.RIGHT
-	raven.visual.rotation = 0.0
-	raven.visual.position.y = -26.0
+	raven.reset_visual_pose()
 	enemy.position = WorldData.JACKAL
 	enemy.armoured = false
 	enemy.min_health = (JACKAL_HEALTH >> 1) if phase == Phase.TEAM else 0
@@ -218,6 +230,8 @@ func _enter_checkpoint(next_phase: Phase) -> void:
 	enemy.active = phase == Phase.TEAM
 	enemy.visible = enemy.active
 	close_menu()
+	_update_apartment_lighting()
+	set_dressing("" if phase == Phase.APARTMENT else "street")
 	match phase:
 		Phase.APARTMENT:
 			ui.dialogue([
@@ -234,8 +248,22 @@ func _enter_checkpoint(next_phase: Phase) -> void:
 				for index in RESCUE_GUARDS.size():
 					_spawn_patrol(RESCUE_GUARDS[index], (index + 2) % PUNKS.size())
 
+func _update_apartment_lighting() -> void:
+	effects.rain = phase != Phase.APARTMENT
+	for mask in painted_masks:
+		mask.visible = effects.rain
+	ambient.color = Color("b8c4eb") if effects.rain else Color("c0d4dc")
+	for light in world_lights:
+		light.enabled = effects.rain
+	for light in apartment_lights:
+		light.enabled = not effects.rain
+	for light in street_lights:
+		light.enabled = effects.rain
+
 func _leave_apartment() -> void:
 	phase = Phase.HUNT
+	set_dressing("street")
+	_update_apartment_lighting()
 	checkpoint = Phase.HUNT
 	_spawn_hunt()
 	autosave()
@@ -345,6 +373,8 @@ func raven_shot_target(origin: Vector2) -> PixelActor:
 	return nearest
 
 func player_strike(amount: int) -> void:
+	if phase != Phase.TEAM:
+		strike_scenery(player.position, player.facing, amount)
 	if phase == Phase.RESCUE:
 		for foe in patrol:
 			if CombatRules.can_strike(player.position, player.facing, foe.position) and _line_clear(player.position, foe.position):
@@ -378,8 +408,7 @@ func interact(_actor: PixelActor = null) -> void:
 func _raven_rejoins() -> void:
 	raven_joined = true
 	reset_raven(DOWNED_SPOT)
-	raven.visual.rotation = 0.0
-	raven.visual.position.y = -26.0
+	raven.reset_visual_pose()
 	enemy.min_health = 0
 	enemy.hack()
 	effects.hack_arc(raven.position, enemy.position)
@@ -464,6 +493,7 @@ func _write_checkpoint() -> bool:
 	var config := ConfigFile.new()
 	config.load(CHAPTER_SAVE)
 	config.set_value("chapter_one", "coop" if chapter_coop else "solo", checkpoint)
+	config.set_value("props", "coop" if chapter_coop else "solo", dressing_state())
 	return config.save(CHAPTER_SAVE) == OK
 
 func load_game(requested_mode: Variant = null) -> bool:
@@ -473,30 +503,19 @@ func load_game(requested_mode: Variant = null) -> bool:
 		toast("Kein Kontrollpunkt für diesen Modus")
 		return false
 	chapter_coop = mode
+	var config := ConfigFile.new()
+	config.load(CHAPTER_SAVE)
+	restore_dressing_state(config.get_value("props", "coop" if mode else "solo", {}))
 	_enter_checkpoint(saved as Phase)
 	toast("Kontrollpunkt geladen")
 	return true
 
 func _draw() -> void:
-	draw_rect(Rect2(WEST_EDGE, 246, 640, 26), Color("223148"))
-	draw_rect(Rect2(WEST_EDGE, 269, 640, 3), Color("536275"))
-	for x in range(WEST_EDGE + 19, 0, 24):
-		draw_rect(Rect2(x, 256, 19, 3), Color("30455b"))
-	var sign_color := Color("e36f9d")
-	draw_rect(Rect2(-575, 228, 118, 19), Color("161b2b"))
-	draw_string(ThemeDB.fallback_font, Vector2(-569, 242), "BINGO ST / 04", HORIZONTAL_ALIGNMENT_LEFT, -1, 11, sign_color)
-	draw_rect(Rect2(EXIT_DOOR + Vector2(-18, -47), Vector2(36, 49)), Color("132032"))
-	var door_open: bool = phase == Phase.EPILOGUE and raven.visible and raven.position.distance_to(EXIT_DOOR) < 53.0
-	draw_rect(Rect2(EXIT_DOOR + Vector2(-14, -43), Vector2(28, 44)), Color("090e19") if door_open else Color("40536a"))
-	if not door_open:
-		draw_rect(Rect2(EXIT_DOOR + Vector2(8, -22), Vector2(3, 5)), Color("6be4dc"))
-	for barrier in BARRIERS:
-		draw_rect(barrier.grow(2), Color("111827"))
-		draw_rect(barrier, Color("283044"))
-		draw_rect(Rect2(barrier.position, Vector2(barrier.size.x, 8)), Color("3b4258"))
-		for y in range(int(barrier.position.y) + 14, int(barrier.end.y), 8):
-			draw_line(Vector2(barrier.position.x + 3, y), Vector2(barrier.end.x - 3, y), Color("1a2436"))
-		draw_rect(Rect2(barrier.end.x - 5, barrier.position.y + 8, 3, 34), Color("de4b8d") if barrier.position.x < 200 else Color("5bcad7"))
+	if phase == Phase.APARTMENT:
+		draw_texture_rect(Painted.ART.apartment, Rect2(WEST_EDGE, 0, 640, 640), false)
+		return
+	if phase == Phase.EPILOGUE and raven.visible and raven.position.distance_to(EXIT_DOOR) < 53.0:
+		draw_rect(Rect2(947, 186, 39, 79), Color("090e19"))
 	if not gate_open:
 		for y in range(259, 496, 8):
 			draw_rect(Rect2(507, y, 4, 5), Color(0.28, 0.8, 0.95, 0.75))

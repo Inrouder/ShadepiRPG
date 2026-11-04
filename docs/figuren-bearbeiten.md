@@ -1,11 +1,11 @@
 # Figuren selbst bearbeiten
 
-Die sichtbaren Figuren sind transparente PNG-Spritesheets. Waffen, Haare, Masken und Kleidung sind jeweils als Pixel in den Einzelbildern gezeichnet. Du kannst Farben und Formen frei verändern, ohne den GDScript-Code anzufassen.
+Die sichtbaren Figuren sind transparente PNG-Spritesheets. Raven und Shadepi nutzen seit v0.12.0 ausgearbeitete illustrierte Figuren. Du kannst Farben und Formen frei verändern, ohne den GDScript-Code anzufassen.
 
-1. Öffne das Godot-Projekt. Kopiere `assets/sprites/shadepi.png`, `raven.png` oder `jackal.png` nach `assets/custom/`. Der Dateiname bleibt gleich.
-2. Öffne die Kopie in deinem Pixelprogramm. In Aseprite kannst du sie als normales PNG mit einem Raster von **48 × 64 Pixeln** bearbeiten oder über **File → Import Sprite Sheet** als Einzelbilder importieren. Beim Import: 48 × 64, Versatz 0, ohne Zwischenraum, zeilenweise von links nach rechts. Siehe [Aseprite-Dokumentation](https://www.aseprite.org/docs/sprite-sheet/).
+1. Öffne das Godot-Projekt. Kopiere `assets/sprites/heroes/shadepi.png` oder `raven.png` nach `assets/custom/`. Jackal und die früheren Pixelvarianten stehen direkt in `assets/sprites/`. Der Dateiname bleibt gleich.
+2. Öffne die Kopie in deinem Bildprogramm. Die neuen Helden nutzen ein Raster von **128 × 160 Pixeln**, die früheren Pixelvarianten **48 × 64 Pixel**. Beim Import: Versatz 0, ohne Zwischenraum, zeilenweise von links nach rechts. Siehe [Aseprite-Dokumentation](https://www.aseprite.org/docs/sprite-sheet/).
 3. Bearbeite die betreffenden Bilder. Lass den Hintergrund transparent und halte die Füße ungefähr am bisherigen Standpunkt. Jede Zeile enthält acht Animationsbilder.
-4. Speichere als **384 × 2048 Pixel großes PNG** mit acht Spalten und 32 Zeilen für die neuen Shadepi- und Raven-Sprites. Jackal und bisherige benutzerdefinierte Figuren nutzen das Format **384 × 1024 Pixel** mit 16 Zeilen. Kein Zuschneiden, keine Zwischenräume und kein automatisches Verkleinern transparenter Ränder. Warte den Godot-Import ab und starte das Spiel neu.
+4. Speichere die illustrierten Helden als **1024 × 5120 Pixel großes PNG**, mit acht Spalten und 32 Zeilen. Ihre Füße stehen bei ungefähr Y = 152 im Einzelbild; das Spiel stellt sie mit halber Bildauflösung dar. Frühere acht Richtungen nutzen **384 × 2048 Pixel**, vier Richtungen **384 × 1024 Pixel**, jeweils mit Füßen bei Y = 58. Kein Zuschneiden, keine Zwischenräume und kein automatisches Verkleinern transparenter Ränder. Warte den Godot-Import ab und starte das Spiel neu.
 
 | Animation | Zeilen bei acht Richtungen | Zeilen bei vier Richtungen |
 | --- | --- | --- |

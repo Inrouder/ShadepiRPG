@@ -1,14 +1,14 @@
 extends "res://scripts/chapter_two_hud.gd"
 
-func _ready() -> void:
+func _ready() -> void :
 	super._ready()
 	menu_description.text = "Kapitel 3–7 · Der Pakt bis Der neue Orden"
 	restart_button.text = "Ab Kapitel 3 neu starten"
 
-func show_menu(title: String = "SHADEPI / KAMPAGNE") -> void:
+func show_menu(title: String = "SHADEPI / KAMPAGNE") -> void :
 	super.show_menu(title)
 
-func _update_mode_buttons() -> void:
+func _update_mode_buttons() -> void :
 	resume_button.text = "Fortsetzen" if world.started else "Kampagne starten"
 	load_button.text = "Kontrollpunkt laden"
 	load_button.disabled = world.saved_checkpoint() < 0
@@ -16,7 +16,10 @@ func _update_mode_buttons() -> void:
 func comic_texture(key: String) -> Texture2D:
 	return world.Story.PANELS.get(key, null)
 
-func _process(delta: float) -> void:
+func comic_heading() -> String:
+	return world.chapter_label()
+
+func _process(delta: float) -> void :
 	super._process(delta)
 	mission_title.text = world.chapter_label()
 	if world.raven_leads():

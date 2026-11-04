@@ -1,17 +1,17 @@
 extends Node2D
 
 var world: Node2D
-var guardian := false
-var elapsed := 0.0
-var direction := Vector2.ZERO
-var hit := false
-var age := 0.0
-var patrol_y := 0.0
+var guardian: = false
+var elapsed: = 0.0
+var direction: = Vector2.ZERO
+var hit: = false
+var age: = 0.0
+var patrol_y: = 0.0
 
-func _process(delta: float) -> void:
+func _process(delta: float) -> void :
 	if world.is_busy():
 		return
-	var previous := elapsed
+	var previous: = elapsed
 	elapsed += delta
 	var target: Vector2 = world.raven.position
 	if guardian:
@@ -41,14 +41,14 @@ func _process(delta: float) -> void:
 func vulnerable() -> bool:
 	return elapsed >= (1.35 if guardian else 1.18)
 
-func _draw() -> void:
-	var radius := 17.0 if guardian else 10.0
-	var glow := Color("58eaff") if vulnerable() else Color("b992ff")
+func _draw() -> void :
+	var radius: = 17.0 if guardian else 10.0
+	var glow: = Color("58eaff") if vulnerable() else Color("b992ff")
 	draw_circle(Vector2.ZERO, radius + 5.0, Color(glow, 0.25))
 	draw_circle(Vector2.ZERO, radius, Color("140b2d"))
 	draw_arc(Vector2.ZERO, radius, 0.0, TAU, 22, glow, 2.0)
 	for i in 6:
-		var angle := float(i) * TAU / 6.0 + elapsed * 7.0
+		var angle: = float(i) * TAU / 6.0 + elapsed * 7.0
 		draw_line(Vector2.from_angle(angle) * radius, Vector2.from_angle(angle + 0.12) * (radius + 6.0), glow)
 	if guardian:
 		for x in [-115, 115]:

@@ -1,6 +1,6 @@
 # Eigene Figuren
 
-Kopiere die gewünschte PNG-Datei aus `../sprites/` in diesen Ordner und bearbeite die Kopie. Erlaubte Dateinamen: `shadepi.png`, `raven.png`, `jackal.png`. Das Spiel bevorzugt hier liegende Varianten mit **384 × 2048 Pixeln** für acht Richtungen oder **384 × 1024 Pixeln** für vier Richtungen. Ohne passende Datei lädt es das Original.
+Kopiere die gewünschte PNG-Datei aus `../sprites/heroes/` in diesen Ordner und bearbeite die Kopie. Die früheren Pixelvarianten und Jackal stehen in `../sprites/`. Erlaubte Dateinamen: `shadepi.png`, `raven.png`, `jackal.png`. Unterstützt werden **1024 × 5120 Pixel** mit 128 × 160 Pixeln pro Bild für die illustrierten Helden, **384 × 2048 Pixel** für acht Pixelrichtungen oder **384 × 1024 Pixel** für vier Pixelrichtungen. Ohne passende Datei lädt das Spiel das Original. Eigene Varianten haben Vorrang.
 
 Beim Aufruf von `npm run assets` werden nur die Originaldateien unter `assets/sprites/` neu erzeugt. Deine Kopien hier bleiben erhalten.
 
