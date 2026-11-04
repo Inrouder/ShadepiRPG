@@ -1,5 +1,7 @@
 # Shadepi · Echos in Neon
 
+**Hinweis zum Versionsstand:** Der bearbeitbare GitHub-Quellcode ist bei **v0.7.0**. Der exportierte Windows-Build **v0.12.0** wurde wiedergefunden, seine vollständigen Godot-Quellen sind noch nicht in diesem Repository. [Details zur Wiederherstellung](docs/v0.12.0-wiederherstellung.md).
+
 **Kapitel 1 · Echos in Neon und Schatten** ist der spielbare Auftakt zu „Shadepi – Im Schatten des Raben“.
 
 Raven bekommt in ihrem Apartment einen Hinweis auf Chrome Jackal, räumt die Punks in Bingo Street aus dem Weg und verfolgt ihn bis zum Wartungshof. Dort hält seine Panzerung jedem Treffer stand. Nach 30 Kampfsekunden dreht er Ravens Hack gegen sie. Shadepi kämpft sich durch die Wartungsgasse und stellt Jackal mit 360 HP. Sobald die Hälfte seiner Lebenspunkte weg ist, steht Raven auf und steigt in den Kampf ein.
