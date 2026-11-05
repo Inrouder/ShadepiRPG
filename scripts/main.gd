@@ -210,18 +210,18 @@ func _build_world() -> void :
 	gate_body = _collider(WorldData.GATE, false)
 	player = PlayerScript.new()
 	player.name = "Shadepi"
-	player.setup(preload("res://assets/sprites/shadepi.png"), self)
+	player.setup(preload("res://assets/sprites/heroes/shadepi.png"), self)
 	player.position = WorldData.START
 	actors.add_child(player)
 	raven = PlayerScript.new()
 	raven.second_player = true
 	raven.name = "Raven"
-	raven.setup(preload("res://assets/sprites/raven.png"), self)
+	raven.setup(preload("res://assets/sprites/heroes/raven.png"), self)
 	raven.position = WorldData.RAVEN
 	actors.add_child(raven)
 	enemy = EnemyScript.new()
 	enemy.name = "ChromeJackal"
-	enemy.setup(preload("res://assets/sprites/jackal.png"), self)
+	enemy.setup(preload("res://assets/sprites/npcs/jackal.png"), self)
 	enemy.position = WorldData.JACKAL
 	actors.add_child(enemy)
 	ambient = CanvasModulate.new()

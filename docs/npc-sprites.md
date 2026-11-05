@@ -60,7 +60,7 @@ Der Compiler isoliert zusammenhängende Figurenbereiche und berücksichtigt tran
 
 ## Einbindung im Spiel
 
-`scripts/sprite_assets.gd` ordnet die bisherigen NPC-Dateinamen den neuen Atlanten zu. Dadurch verwenden Kapitel und Testszene die neuen Bilder über dieselben Spawnstellen. Die bisherigen Dateien unter `assets/sprites/` bleiben als Ausgangsreferenzen erhalten.
+Seit **v0.13.2** laden alle Szenen die HQ-Grafiken unmittelbar aus `assets/sprites/npcs/`. Die alten Pixel-Zwischengrafiken unter `assets/sprites/` wurden entfernt. `scripts/sprite_assets.gd` stellt nur noch die optionale Ersetzung durch eigene Grafiken und die Größenprüfung bereit.
 
 Eigene humanoide Figuren unter `assets/custom/` behalten Vorrang. Der Dateiname muss zur Figur passen, beispielsweise `assets/custom/jackal.png`; ein unterstütztes Raster ist erforderlich. Die neuen HQ-Atlanten verwenden acht Blickrichtungen, die von `PixelActor` anhand der Atlasgröße erkannt werden.
 

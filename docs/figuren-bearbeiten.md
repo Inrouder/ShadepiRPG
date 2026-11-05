@@ -2,7 +2,7 @@
 
 Die sichtbaren Figuren sind transparente PNG-Spritesheets. Raven und Shadepi nutzen seit v0.12.0 ausgearbeitete illustrierte Figuren. Du kannst Farben und Formen frei verändern, ohne den GDScript-Code anzufassen.
 
-1. Öffne das Godot-Projekt. Kopiere `assets/sprites/heroes/shadepi.png` oder `raven.png` nach `assets/custom/`. Jackal und die früheren Pixelvarianten stehen direkt in `assets/sprites/`. Der Dateiname bleibt gleich.
+1. Öffne das Godot-Projekt. Kopiere `assets/sprites/heroes/shadepi.png` oder `raven.png` nach `assets/custom/`. Die HQ-Grafiken für Jackal, Kenzō, Punks und Schützen stehen unter `assets/sprites/npcs/`. Der Dateiname bleibt gleich. Alte Pixel-Zwischendateien wurden entfernt; eigene Pixel-Sprites bleiben als Ersatzgrafiken möglich.
 2. Öffne die Kopie in deinem Bildprogramm. Die neuen Helden nutzen ein Raster von **128 × 160 Pixeln**, die früheren Pixelvarianten **48 × 64 Pixel**. Beim Import: Versatz 0, ohne Zwischenraum, zeilenweise von links nach rechts. Siehe [Aseprite-Dokumentation](https://www.aseprite.org/docs/sprite-sheet/).
 3. Bearbeite die betreffenden Bilder. Lass den Hintergrund transparent und halte die Füße ungefähr am bisherigen Standpunkt. Jede Zeile enthält acht Animationsbilder.
 4. Speichere die illustrierten Helden als **1024 × 5120 Pixel großes PNG**, mit acht Spalten und 32 Zeilen. Ihre Füße stehen bei ungefähr Y = 152 im Einzelbild; das Spiel stellt sie mit halber Bildauflösung dar. Frühere acht Richtungen nutzen **384 × 2048 Pixel**, vier Richtungen **384 × 1024 Pixel**, jeweils mit Füßen bei Y = 58. Kein Zuschneiden, keine Zwischenräume und kein automatisches Verkleinern transparenter Ränder. Warte den Godot-Import ab und starte das Spiel neu.

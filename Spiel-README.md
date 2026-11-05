@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**Spieleranleitung für v0.13.1.** Aktuelle Downloads und Prüfstatus: [Repository-Startseite](README.md). Änderungen: [Versionshinweise](CHANGELOG.md).
+**Spieleranleitung für v0.13.2.** Aktuelle Downloads und Prüfstatus: [Repository-Startseite](README.md). Änderungen: [Versionshinweise](CHANGELOG.md).
 
 **Kapitel und Kontrollpunkte:** Mit „Weiter zu Kapitel …“ beginnt das folgende Kapitel am Anfang. Die Menüoption „Fortsetzen“ lädt dessen vorhandenen Kontrollpunkt. Kapitel 2 verläuft über Industriegebiet → Versteck → Kühlsystem → Deep Dive → Kryospray → Abschluss. Danach folgen Pakt, Hinterhalt und Verfolgung (3), Garage und Hangar (4), Heiligtum und Erinnerungen (5), Anflug, Dach, Kenzō und Flucht (6), See und Aufnahme in den Orden (7).
 
@@ -36,7 +36,7 @@ Die Gassen, das Industriegebiet, das Versteck, die Garage, der Hangar und der To
 
 **F5 / LB** speichert die Schäden zusammen mit dem Kapitelkontrollpunkt. Solo und Koop behalten ihre getrennten Zustände. Im Penthouse bleiben die Schäden während der anschließenden Flucht sichtbar.
 
-Die originalen Pixel-Requisiten und einige Geräusche können mit `npm ci` und `npm run assets` neu erzeugt werden. Achtung: Der Generator überschreibt auch weitere alte Pixel-Originale und das Symbol; vorher Änderungen sichern. Die Platzierungen stehen in `scripts/world_dressing.gd`.
+Requisiten, Lichttextur und Basissounds lassen sich mit `npm ci` und `npm run assets` neu erzeugen. Der Generator verändert **keine** Charakter-Sprites, gemalten Level oder das App-Symbol. Vor Änderungen an Requisiten/Geräuschen die vorhandenen Dateien sichern. Die Platzierungen stehen in `scripts/world_dressing.gd`.
 
 ## Comicgestaltung in v0.9.0
 
@@ -174,7 +174,7 @@ npm ci
 npm run assets
 ```
 
-`tools/generate_assets.cjs` enthält die Rasterzeichner und den Synthesizer. Es werden keine SVG-Figuren und keine extern geladenen Bilder verwendet. Die Szene läuft vollständig lokal, ohne Konten, KI-Dienste oder Onlinepflicht.
+`tools/generate_assets.cjs` erzeugt nur noch kleine Hilfsgrafiken und Basissounds. Die Figuren nutzen die fertigen HQ-Atlanten unter `assets/sprites/heroes/` und `assets/sprites/npcs/`. Das Spiel läuft lokal, ohne Konten, KI-Dienste oder Onlinepflicht.
 
 ## Weiterentwicklung
 

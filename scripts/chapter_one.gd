@@ -10,8 +10,8 @@ const JACKAL_HEALTH := 360
 const APARTMENT_EXIT := Vector2(-554, 356)
 const EXIT_DOOR := Vector2(961, 255)
 const PUNKS := [
-	preload("res://assets/sprites/punk-1.png"), preload("res://assets/sprites/punk-2.png"),
-	preload("res://assets/sprites/punk-3.png"), preload("res://assets/sprites/punk-4.png"),
+	preload("res://assets/sprites/npcs/punk-1.png"), preload("res://assets/sprites/npcs/punk-2.png"),
+	preload("res://assets/sprites/npcs/punk-3.png"), preload("res://assets/sprites/npcs/punk-4.png"),
 ]
 const HUNT_GUARDS := [Vector2(-491, 401), Vector2(-329, 432), Vector2(-156, 356), Vector2(81, 404)]
 const RESCUE_GUARDS := [Vector2(347, 351), Vector2(466, 382), Vector2(483, 442)]
