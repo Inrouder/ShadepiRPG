@@ -1,7 +1,17 @@
-# Eigene Figuren
+# Eigene Charaktergrafiken
 
-Kopiere die gewünschte PNG-Datei aus `../sprites/heroes/` in diesen Ordner und bearbeite die Kopie. Die früheren Pixelvarianten und Jackal stehen in `../sprites/`. Erlaubte Dateinamen: `shadepi.png`, `raven.png`, `jackal.png`. Unterstützt werden **1024 × 5120 Pixel** mit 128 × 160 Pixeln pro Bild für die illustrierten Helden, **384 × 2048 Pixel** für acht Pixelrichtungen oder **384 × 1024 Pixel** für vier Pixelrichtungen. Ohne passende Datei lädt das Spiel das Original. Eigene Varianten haben Vorrang.
+Seit **v0.13.2** werden Spielgrafiken unmittelbar aus `assets/sprites/heroes/` und `assets/sprites/npcs/` geladen.
 
-Beim Aufruf von `npm run assets` werden nur die Originaldateien unter `assets/sprites/` neu erzeugt. Deine Kopien hier bleiben erhalten.
+Kopiere die gewünschte Figur mit **unverändertem Dateinamen** nach `assets/custom/` und bearbeite die Kopie. Unterstützte Namen: `shadepi.png`, `raven.png`, `jackal.png`, `kenzo.png`, `punk-1.png` bis `punk-4.png`, `shooter-visor.png`, `shooter-violet.png`. Ohne eigene Datei bleibt die jeweilige HQ-Originalgrafik aktiv.
 
-Die vollständige Anleitung mit Raster und Zeilenreihenfolge steht unter [Figuren bearbeiten](../../docs/figuren-bearbeiten.md).
+Unterstützte Atlasgrößen:
+
+- **1024 × 5120 Pixel:** illustrierte HQ-Figuren, 128 × 160 Pixel pro Feld, acht Blickrichtungen.
+- **384 × 2048 Pixel:** selbst erstellte ältere Pixel-Sprites mit acht Blickrichtungen.
+- **384 × 1024 Pixel:** selbst erstellte ältere Pixel-Sprites mit vier Blickrichtungen.
+
+Das Spiel erkennt gültige eigene Figuren beim Import und richtet Animation, Schatten und Fußpunkt am Raster aus. Ein ungültiges Raster wird unter Ausgabe einer Warnung ignoriert.
+
+`npm run assets` erzeugt ausschließlich einfache Requisiten, Licht und Basissounds; es überschreibt keine Charaktergrafiken.
+
+[Figuren bearbeiten](../../docs/figuren-bearbeiten.md) · [HQ-Helden](../../docs/helden-sprites.md) · [NPCs](../../docs/npc-sprites.md)

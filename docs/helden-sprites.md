@@ -13,7 +13,7 @@ Die PNGs haben einen echten transparenten Hintergrund. Die Originalbilder enthal
 | `tools/hero_sources/*-keyframes.png` | Ursprüngliche Bildtafeln, je 1536 × 1024 Pixel |
 | `tools/hero_sources/prompts.json` | Bildbeschreibungen und Rasterdaten |
 | `tools/compile_heroes.py` | Erneute Zusammenstellung mit Python und Pillow |
-| `scripts/` und die Projektdateien | Integration im Godot-Projekt v0.12.0 |
+| `scripts/` und die Projektdateien | Direkte HQ-Einbindung im Godot-Projekt ab v0.13.2 |
 
 ## Raster und Fußpunkt
 
@@ -34,7 +34,7 @@ Die acht Richtungen pro Gruppe sind: unten, links, rechts, oben, oben-links, obe
 
 Die Windows-Fassung v0.12.0 enthält die neuen Figuren bereits. ZIP vollständig entpacken und `Shadepi-Echos-in-Neon.exe` starten.
 
-Im vollständigen Repository v0.12.0 sind die Figuren bereits integriert; `project.godot` öffnen. Godot 4.7.2 importiert die PNGs beim nächsten Öffnen. Die vollständige Spieleranleitung liegt als `Spiel-README.md` bei. Eigene Figuren unter `assets/custom/` haben weiterhin Vorrang; die bisherigen Pixelraster werden unterstützt.
+Im vollständigen Repository ab v0.13.2 werden die HQ-Figuren ohne Pixel-Zwischendateien direkt geladen; `project.godot` öffnen. Godot 4.7.2 importiert die PNGs beim nächsten Öffnen. Die vollständige Spieleranleitung liegt als `Spiel-README.md` bei. Eigene Figuren unter `assets/custom/` haben weiterhin Vorrang; die bisherigen Pixelraster werden unterstützt.
 
 Zur erneuten Zusammenstellung: `python tools/compile_heroes.py` aus dem Projektordner ausführen. Das Skript benötigt Pillow und verwendet die vorhandenen Originalbilder.
 

@@ -1,4 +1,4 @@
-# Projektaufbau · v0.13.1
+# Projektaufbau · v0.13.2
 
 ## Einstieg und Kapitel
 
@@ -23,10 +23,12 @@
 ## Figuren und Medien
 
 - `scripts/pixel_actor.gd`: Blickrichtung, Animation, Schatten und Material.
-- `scripts/sprite_assets.gd`: Auswahl und Prüfung der Spritesheets, einschließlich eigener Figuren.
-- `assets/sprites/heroes/`: HQ-Atlanten von Raven und Shadepi.
-- `assets/custom/`: optionale eigene Figuren mit Vorrang vor den Standardgrafiken.
-- `tools/hero_sources/` und `tools/compile_heroes.py`: originale Schlüsselposen und Zusammenstellung der Heldenatlanten.
+- `scripts/sprite_assets.gd`: Validierung der Atlasraster und optionaler Custom-Sprite-Override; keine Pixel-Proxy-Umleitung mehr.
+- `assets/sprites/heroes/`: direkt geladene HQ-Atlanten von Raven und Shadepi.
+- `assets/sprites/npcs/`: direkt geladene HQ-Atlanten und digitale Gegner.
+- `assets/custom/`: eigene Grafiken mit Vorrang vor Standardgrafiken; ältere selbst erstellte Pixelraster bleiben kompatibel.
+- `tools/hero_sources/` und `tools/npc_sources/`: originale Schlüsselposen; `tools/compile_heroes.py` und `tools/compile_npcs.py` stellen die HQ-Atlanten zusammen.
+- `tools/generate_assets.cjs`: Generator nur für Pixel-Requisiten, Lichttextur und Basissounds.
 
 Raster und Bearbeitungsregeln: [HQ-Sprites](helden-sprites.md) und [Figuren bearbeiten](figuren-bearbeiten.md).
 
