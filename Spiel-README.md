@@ -26,7 +26,7 @@ Alle Schauplätze verwenden ausgearbeitete, eigens generierte Hintergrundbilder.
 
 Die Hintergrundbilder stehen in `assets/world/painted/`. Die Wandkollisionen, festen Einbauten und Vordergrundausschnitte sind in `scripts/painted_world.gd` auf diese Bilder abgestimmt. Die Ausschnitte verwenden dieselben Bildpixel und lassen Figuren hinter Mauern verschwinden. Zerstörbare Gegenstände werden als eigene Objekte darüber dargestellt.
 
-Die Szenenbeschreibungen der Bilder stehen in `tools/painted-assets.json`. Die bisherigen Zeichenroutinen erzeugen ihre alten Layoutvorlagen in einem separaten Verzeichnis.
+Die 16 gemalten Kulissen liegen direkt in `assets/world/painted/`; ihre Zuordnung und die darauf abgestimmten Hindernisse stehen in `scripts/painted_world.gd`. Ein Generator für diese gemalten Bilder liegt nicht im Repository.
 
 ## Zerstörbare Gegenstände in v0.10.0
 
@@ -36,7 +36,7 @@ Die Gassen, das Industriegebiet, das Versteck, die Garage, der Hangar und der To
 
 **F5 / LB** speichert die Schäden zusammen mit dem Kapitelkontrollpunkt. Solo und Koop behalten ihre getrennten Zustände. Im Penthouse bleiben die Schäden während der anschließenden Flucht sichtbar.
 
-Die Pixelgrafiken und Materialgeräusche lassen sich mit `python tools/generate_props.py` erneut erzeugen. Die Platzierungen stehen in `scripts/world_dressing.gd`.
+Die originalen Pixel-Requisiten und einige Geräusche können mit `npm ci` und `npm run assets` neu erzeugt werden. Achtung: Der Generator überschreibt auch weitere alte Pixel-Originale und das Symbol; vorher Änderungen sichern. Die Platzierungen stehen in `scripts/world_dressing.gd`.
 
 ## Comicgestaltung in v0.9.0
 
@@ -52,7 +52,7 @@ Die Bildregie orientiert sich an der deutschen Comicfassung. Zwischenszenen nutz
 | 6 | 43–53 | Aerodyne mit orangefarbenen Triebwerken, grünes Zeichen am Dach und Kenzōs cyanfarbene Implantate |
 | 7 | 54–55 | Waldlichter am See und rote sowie cyanfarbene Lichtspuren beim Abschluss |
 
-Die Level-PNGs liegen in `assets/world/levels/`. Für eine erneute Erzeugung mit Python und Pillow dient `python tools/generate_levels.py`. Eine Kapitelnummer als Argument rendert nur dessen Kulissen.
+Die tatsächlich verwendeten Levelbilder liegen in `assets/world/painted/`. Nicht mehr benutzte prozedurale Vorlagen aus `assets/world/levels/` gehören nicht länger zum Quellstand. Zum Anpassen der Spielwelt die jeweilige gemalte Kulisse und ihre Kollisionen in `scripts/painted_world.gd` gemeinsam bearbeiten.
 
 ## Spielen
 

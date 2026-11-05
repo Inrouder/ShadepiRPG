@@ -4,3 +4,16 @@ node_modules/
 *.tmp
 *.log
 export_credentials.cfg
+
+# Lokale Editor-, Python- und Betriebssystemdateien
+.vscode/
+.idea/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.DS_Store
+Thumbs.db
+*.bak
+*.orig
+*.swp
