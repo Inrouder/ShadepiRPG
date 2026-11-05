@@ -1,6 +1,7 @@
 extends Node2D
 
 const GamepadBindings = preload("res://scripts/gamepad_bindings.gd")
+const ChapterFlow = preload("res://scripts/chapter_flow.gd")
 const PlayerScript = preload("res://scripts/player.gd")
 const EnemyScript = preload("res://scripts/enemy.gd")
 const HudScript = preload("res://scripts/hud.gd")

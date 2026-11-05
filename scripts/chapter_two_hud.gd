@@ -27,7 +27,9 @@ func _update_mode_buttons() -> void :
 	resume_button.text = "Fortsetzen" if world.started else "Kapitel 2 starten"
 	load_button.text = "Kontrollpunkt laden"
 	load_button.disabled = world.saved_checkpoint() < 0
-	campaign_button.visible = world.section == world.Section.END or world.saved_checkpoint() == world.Section.END or FileAccess.file_exists("user://shadepi-campaign.cfg")
+	var later: int = world.ChapterFlow.checkpoint("user://shadepi-campaign.cfg", "campaign", "beat", range(12))
+	campaign_button.visible = world.section == world.Section.END or world.saved_checkpoint() == world.Section.END or later >= 0
+	campaign_button.text = "Kapitel 3–7 fortsetzen" if later >= 0 else "Kapitel 3 starten"
 
 func comic_texture(key: String) -> Texture2D:
 	return PANELS.get(key, null)

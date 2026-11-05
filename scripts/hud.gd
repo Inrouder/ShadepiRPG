@@ -38,6 +38,7 @@ var raven_health: ColorRect
 var raven_energy: ColorRect
 var vital_tracks: Array[ColorRect] = []
 var message_time: = 0.0
+var dialogue_next: Label
 
 func panel(rect: Rect2, parent: Node = null) -> Panel:
 	if parent == null:
@@ -109,12 +110,14 @@ func _ready() -> void :
 	var bar: = panel(Rect2(0, 334, 640, 26))
 	controls = label_at("WASD  Bewegen     J / Maus  Katana     Leertaste  Ausweichen     Esc  Menü", Vector2(12, 5), Vector2(616, 18), bar, 10)
 	abilities = label_at("", Vector2(12, 307), Vector2(615, 22), root, 10, Color("91c5d9"))
-	prompt = label_at("", Vector2(120, 278), Vector2(400, 23), root, 12, Color("e1f5ff"))
+	prompt = label_at("", Vector2(30, 270), Vector2(580, 34), root, 12, Color("e1f5ff"))
+	prompt.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	prompt.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	var shadow: = StyleBoxFlat.new()
 	shadow.bg_color = Color(0.03, 0.05, 0.09, 0.9)
 	prompt.add_theme_stylebox_override("normal", shadow)
-	notice = label_at("", Vector2(100, 73), Vector2(440, 25), root, 11, Color("b5e9f0"))
+	notice = label_at("", Vector2(100, 73), Vector2(440, 44), root, 11, Color("b5e9f0"))
+	notice.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	notice.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	comic_panel = panel(Rect2(0, 0, 640, 360))
 	var page_style: = StyleBoxFlat.new()
@@ -149,7 +152,8 @@ func _ready() -> void :
 	speaker = label_at("", Vector2(15, 6), Vector2(560, 18), dialogue_panel, 12, Color("8be0e4"))
 	dialogue_text = label_at("", Vector2(15, 26), Vector2(562, 44), dialogue_panel, 12)
 	dialogue_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	label_at("E / Enter / A · Weiter", Vector2(444, 72), Vector2(134, 14), dialogue_panel, 9, Color("9eb2c7"))
+	dialogue_next = label_at("E / Enter / A · Weiter", Vector2(360, 74), Vector2(218, 14), dialogue_panel, 9, Color("9eb2c7"))
+	dialogue_next.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	dialogue_panel.hide()
 	menu = panel(Rect2(145, 19, 350, 321))
 	menu_title = label_at("ECHOS IN NEON", Vector2(20, 12), Vector2(310, 26), menu, 19)
@@ -203,14 +207,46 @@ func start_selected() -> void :
 
 func toast(text: String) -> void :
 	notice.text = text
-	message_time = 3.2
+	message_time = maxf(3.2, text.length() * 0.055)
 
 func dialogue(lines: Array, done: Callable = Callable()) -> void :
-	dialogue_lines = lines.duplicate()
+	dialogue_lines.clear()
+	for line: Array in lines:
+		var pages := dialogue_pages(str(line[1]))
+		for page in pages:
+			var entry := line.duplicate()
+			entry[1] = page
+			dialogue_lines.append(entry)
 	dialogue_done = done
 	dialogue_open = true
 	dialogue_panel.show()
 	advance_dialogue()
+
+func dialogue_pages(text: String) -> Array[String]:
+	var pages: Array[String] = []
+	var current := ""
+	var font := dialogue_text.get_theme_font("font")
+	for word in text.split(" "):
+		var candidate := word if current.is_empty() else current + " " + word
+		if not current.is_empty() and font.get_multiline_string_size(candidate, HORIZONTAL_ALIGNMENT_LEFT, 562, 12).y > 44:
+			pages.append(current)
+			current = word
+		else:
+			current = candidate
+	pages.append(current)
+	return pages
+
+func fit_hud_text() -> void:
+	# Fixed widths prevent Label's minimum size from expanding beyond its panel.
+	for entry in [[mission_title, 218, 10], [comic_caption, 219, 9], [controls, 616, 10], [abilities, 615, 10]]:
+		var label: Label = entry[0]
+		label.clip_text = true
+		var font := label.get_theme_font("font")
+		var font_size: int = entry[2]
+		while font_size > 9 and font.get_string_size(label.text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x > entry[1]:
+			font_size -= 1
+		label.add_theme_font_size_override("font_size", font_size)
+		label.size.x = entry[1]
 
 func comic_texture(_key: String) -> Texture2D:
 	return null
@@ -248,6 +284,7 @@ func advance_dialogue() -> void :
 	var line: Array = dialogue_lines.pop_front()
 	speaker.text = line[0]
 	dialogue_text.text = line[1]
+	dialogue_next.text = "E / Enter / A · " + ("Zurück zum Spiel" if dialogue_lines.is_empty() else "Weiter")
 	_set_comic(comic_texture(str(line[2])) if line.size() > 2 else null)
 
 func _process(delta: float) -> void :
@@ -255,6 +292,8 @@ func _process(delta: float) -> void :
 		return
 	dialogue_panel.visible = dialogue_open and not world.menu_open
 	comic_panel.visible = dialogue_panel.visible and comic_art.texture != null
+	controls.visible = not dialogue_open and not world.menu_open
+	fit_hud_text.call_deferred()
 	message_time = maxf(0.0, message_time - delta)
 	notice.visible = message_time > 0.0
 	vitals.text = "SHADEPI / %03d   EN %03d" % [world.player.health, roundi(world.player.energy)]

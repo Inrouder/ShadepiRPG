@@ -1,5 +1,8 @@
 extends Node2D
 
+const VIRUS_ART: Texture2D = preload("res://assets/sprites/npcs/dive-virus.png")
+const GUARDIAN_ART: Texture2D = preload("res://assets/sprites/npcs/ice-guardian.png")
+
 var world: Node2D
 var guardian: = false
 var elapsed: = 0.0
@@ -7,10 +10,33 @@ var direction: = Vector2.ZERO
 var hit: = false
 var age: = 0.0
 var patrol_y: = 0.0
+var visual: Sprite2D
+var visual_elapsed := 0.0
+var visual_scale := 1.0
+
+func _ready() -> void:
+	visual = Sprite2D.new()
+	visual.texture = GUARDIAN_ART if guardian else VIRUS_ART
+	visual.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	# Keep danger rings, direction cues and the guardian beam above the artwork.
+	visual.show_behind_parent = true
+	var diameter := 72.0 if guardian else 48.0
+	visual_scale = diameter / float(maxi(visual.texture.get_width(), visual.texture.get_height()))
+	visual.scale = Vector2.ONE * visual_scale
+	add_child(visual)
+	_update_visual()
+
+func _update_visual() -> void:
+	if visual == null:
+		return
+	visual.scale = Vector2.ONE * visual_scale * (1.0 + sin(visual_elapsed * 3.0) * 0.035)
+	visual.rotation = sin(visual_elapsed * 1.7) * (0.035 if guardian else 0.09)
+	visual.modulate = Color(0.74, 1.0, 1.0) if vulnerable() else Color.WHITE
 
 func _process(delta: float) -> void :
 	if world.is_busy():
 		return
+	visual_elapsed += delta
 	var previous: = elapsed
 	elapsed += delta
 	var target: Vector2 = world.raven.position
@@ -36,6 +62,7 @@ func _process(delta: float) -> void :
 		elif elapsed >= 2.15:
 			elapsed = 0.0
 			hit = false
+	_update_visual()
 	queue_redraw()
 
 func vulnerable() -> bool:
@@ -45,11 +72,7 @@ func _draw() -> void :
 	var radius: = 17.0 if guardian else 10.0
 	var glow: = Color("58eaff") if vulnerable() else Color("b992ff")
 	draw_circle(Vector2.ZERO, radius + 5.0, Color(glow, 0.25))
-	draw_circle(Vector2.ZERO, radius, Color("140b2d"))
 	draw_arc(Vector2.ZERO, radius, 0.0, TAU, 22, glow, 2.0)
-	for i in 6:
-		var angle: = float(i) * TAU / 6.0 + elapsed * 7.0
-		draw_line(Vector2.from_angle(angle) * radius, Vector2.from_angle(angle + 0.12) * (radius + 6.0), glow)
 	if guardian:
 		for x in [-115, 115]:
 			draw_rect(Rect2(x - 3, -12, 6, 24), glow)

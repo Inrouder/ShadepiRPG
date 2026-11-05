@@ -36,6 +36,12 @@ Raster und Bearbeitungsregeln: [HQ-Sprites](helden-sprites.md) und [Figuren bear
 
 `tests/run.gd` prüft unter anderem Kapitelabläufe, Kampagne, Koop, Controller und Heldenanimationen. Der Workflow in `.github/workflows/build.yml` importiert das Projekt, führt die Tests aus und exportiert Windows und Linux. Bei einem Versions-Tag ist zusätzlich ein Release-Schritt vorgesehen.
 
+`chapter_flow.gd` unterscheidet den einmaligen Einstieg nach einem Story-Abschluss von einem Menüaufruf mit vorhandenem Kontrollpunkt. Die numerischen Kapitel-/Abschnittswerte bleiben für bestehende Spielstände unverändert; ihre Reihenfolge im Enum ist keine chronologische Sortierung.
+
+`tests/story_audit.gd` prüft echte Szenenwechsel mit alten Spielständen, die chronologische Kampagnenfolge, Wiederherstellung, Hackreichweite, Erinnerungspunkte und Textlayout. Ein Rasterlauf prüft Wege mit Godots Physikabfragen und dem tatsächlichen Spielerradius (7 Pixel), einschließlich intakter Requisiten. Kontrollabfragen stellen sicher, dass die Physikkörper aktiv sind. `tools/story_gallery.gd` erzeugt eine Renderübersicht und einzelne Szenenbilder im Godot-Benutzerverzeichnis.
+
+Die Tests erzeugen Kontrollpunkte. Lokal dafür ein separates Godot-Benutzerverzeichnis verwenden; nicht mit persönlichen Spielständen ausführen. Der CI-Runner ist unabhängig von lokalen Spielständen.
+
 ## Herkunft
 
 Dieser Quellstand wurde aus dem originalen Windows-Spiel wiederhergestellt und durch Dateien aus dem HQ-Archiv ergänzt. Die [Wiederherstellungsdokumentation](v0.12.0-wiederherstellung.md) nennt die Medienverluste und Prüfgrenzen. `.godot/` ist ein generierter Importcache und gehört nicht zu den versionierten Quellen.

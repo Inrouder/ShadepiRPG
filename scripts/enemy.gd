@@ -24,6 +24,7 @@ var lunge := 0.0
 var hit_done := false
 var scenery_hit_done := false
 var attack_direction := Vector2.DOWN
+var attack_visual_time := 0.0
 
 func _physics_process(delta: float) -> void:
 	if health <= 0 or world.is_busy():
@@ -31,6 +32,7 @@ func _physics_process(delta: float) -> void:
 	exposed = maxf(0.0, exposed - delta)
 	stun = maxf(0.0, stun - delta)
 	cooldown = maxf(0.0, cooldown - delta)
+	attack_visual_time = maxf(0.0, attack_visual_time - delta)
 	velocity = Vector2.ZERO
 	var state := "idle"
 	var target = world.combat_target(global_position)
@@ -41,6 +43,7 @@ func _physics_process(delta: float) -> void:
 		windup -= delta
 		if windup <= 0.0:
 			if shot_range > 0.0:
+				attack_visual_time = 8.0 / 18.0
 				var endpoint := global_position + attack_direction * shot_range
 				var obstruction: Dictionary = world.trace_scenery(global_position, endpoint)
 				if not obstruction.is_empty():
@@ -53,6 +56,7 @@ func _physics_process(delta: float) -> void:
 					target.take_damage(hit_damage, global_position)
 				cooldown = attack_recovery
 			elif sweeping:
+				attack_visual_time = 8.0 / 18.0
 				var clear: bool = target != null and world._line_clear(global_position, target.global_position)
 				world.strike_scenery(global_position, attack_direction, hit_damage + 6)
 				if clear and offset.length() <= 70.0 and offset.normalized().dot(attack_direction) >= 0.35:
@@ -90,6 +94,10 @@ func _physics_process(delta: float) -> void:
 			velocity = facing * move_speed
 			state = "walk"
 	move_and_slide()
+	# Ranged shots and sweeps resolve immediately, but their pose needs a full cycle.
+	# This timer affects artwork only; damage and attack recovery keep their timing.
+	if attack_visual_time > 0.0 and state != "hurt":
+		state = "attack"
 	animate(state, delta)
 
 func take_damage(base: int) -> void:
@@ -110,6 +118,7 @@ func take_damage(base: int) -> void:
 		active = false
 		windup = 0.0
 		lunge = 0.0
+		attack_visual_time = 0.0
 		visual.modulate = Color(0.45, 0.5, 0.6, 0.7)
 		visual.rotation = PI * 0.5
 		visual.position.y = -10
@@ -122,6 +131,7 @@ func hack() -> void:
 	stun = 1.8
 	windup = 0.0
 	lunge = 0.0
+	attack_visual_time = 0.0
 	cooldown = 1.2
 	flash_time = 0.1
 
@@ -131,6 +141,7 @@ func reset_fight(hp: int = 180) -> void:
 	stun = 0.0
 	windup = 0.0
 	lunge = 0.0
+	attack_visual_time = 0.0
 	cooldown = 1.0
 	flash_time = 0.0
 	visual.modulate = Color.WHITE

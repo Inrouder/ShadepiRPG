@@ -49,8 +49,7 @@ const LAYOUTS: = {
 		["parts_case", "crate", Vector2(582, 305)], ["diagnostics", "server", Vector2(948, 434)], 
 	], 
 	"chamber": [
-		["drinks", "vending", Vector2(78, 300)], ["stored_case", "crate", Vector2(331, 476)], 
-		["wall_box", "electrical", Vector2(925, 300)], 
+		["wall_box", "electrical", Vector2(925, 330)],
 	], 
 	"roof": [
 		["entry_lamp", "lamp", Vector2(117, 285)], ["cargo_1", "crate", Vector2(479, 475)], 
@@ -58,12 +57,10 @@ const LAYOUTS: = {
 		["east_lamp", "lamp", Vector2(969, 285)], ["lift_freight", "crate", Vector2(969, 460)], 
 	], 
 	"suite": [
-		["bar_fridge", "vending", Vector2(161, 301)], ["lift_server", "server", Vector2(477, 294)], 
-		["power_box", "electrical", Vector2(947, 470)], ["secure_case", "crate", Vector2(279, 477)], 
+		["lift_server", "server", Vector2(477, 314)],
+		["power_box", "electrical", Vector2(947, 470)],
 	], 
-	"lake": [
-		["travel_case", "crate", Vector2(188, 475)], ["tool_case", "crate", Vector2(232, 477)], 
-	], 
+	"lake": [],
 }
 
 static func items(layout: String) -> Array:

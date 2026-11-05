@@ -7,6 +7,16 @@ const HEROES := {
 	"raven.png": preload("res://assets/sprites/heroes/raven.png"),
 	"shadepi.png": preload("res://assets/sprites/heroes/shadepi.png"),
 }
+const NPCS := {
+	"jackal.png": preload("res://assets/sprites/npcs/jackal.png"),
+	"kenzo.png": preload("res://assets/sprites/npcs/kenzo.png"),
+	"punk-1.png": preload("res://assets/sprites/npcs/punk-1.png"),
+	"punk-2.png": preload("res://assets/sprites/npcs/punk-2.png"),
+	"punk-3.png": preload("res://assets/sprites/npcs/punk-3.png"),
+	"punk-4.png": preload("res://assets/sprites/npcs/punk-4.png"),
+	"shooter-visor.png": preload("res://assets/sprites/npcs/shooter-visor.png"),
+	"shooter-violet.png": preload("res://assets/sprites/npcs/shooter-violet.png"),
+}
 
 static func valid_sheet(texture: Texture2D) -> bool:
 	return texture != null and Vector2i(texture.get_size()) in SHEET_SIZES
@@ -27,4 +37,5 @@ static func resolve(original: Texture2D) -> Texture2D:
 		if valid_sheet(replacement):
 			return replacement
 		push_warning("Eigene Figur hat falsche Maße (384 × 1024, 384 × 2048 oder 1024 × 5120 erwartet): " + candidate)
-	return HEROES.get(original.resource_path.get_file(), original)
+	var filename := original.resource_path.get_file()
+	return NPCS.get(filename, HEROES.get(filename, original))

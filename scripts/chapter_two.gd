@@ -4,7 +4,7 @@ enum Section{YARD, HIDEOUT, DIVE, RECOVERY, END, COOLING}
 
 const ChapterHud = preload("res://scripts/chapter_two_hud.gd")
 const SLOT: = "user://shadepi-chapter-two.cfg"
-const YARD_START: = Vector2(145, 450)
+const YARD_START: = Vector2(145, 420)
 const DOOR: = Vector2(876, 295)
 const WORKBENCH: = Vector2(498, 311)
 const SPRAY: = Vector2(530, 405)
@@ -28,7 +28,7 @@ func create_hud() -> CanvasLayer:
 
 func _ready() -> void :
 	super._ready()
-	if not load_game():
+	if ChapterFlow.consume_entry(get_tree(), "res://scenes/chapter_two.tscn") or not load_game():
 		new_game()
 
 func world_props() -> Array[Dictionary]:
@@ -105,6 +105,9 @@ func _enter(next: Section, saved_relay: int = 0) -> void :
 	ice_cycle = 0.0
 	ui.clear_dialogue()
 	player.position = YARD_START if section == Section.YARD else Vector2(440, 430)
+	player.health = 100
+	player.energy = 100.0
+	hack_cooldown = 0.0
 	player.reset_transients()
 	reset_raven((Vector2(145, 436) if relay_index == 0 else RELAYS[relay_index - 1]) if raven_leads() else BATH)
 	raven.modulate = Color(0.57, 0.92, 1.0, 0.56) if raven_leads() else Color.WHITE
@@ -171,7 +174,7 @@ func interaction_prompt() -> String:
 
 func interact(_actor: PixelActor = null) -> void :
 	if section == Section.END and not is_busy():
-		get_tree().change_scene_to_file("res://scenes/campaign.tscn")
+		ChapterFlow.advance(get_tree(), "res://scenes/campaign.tscn")
 		return
 	if is_busy() or interaction_prompt().is_empty():
 		return
@@ -268,8 +271,7 @@ func raven_hack() -> bool:
 	return false
 
 func player_defeated() -> void :
-	if raven_leads():
-		_enter.call_deferred(Section.DIVE, relay_index)
+	_enter.call_deferred(section, relay_index)
 
 func _trace_relay() -> void :
 	if not threats.is_empty() or dive_hold > 0.0:
@@ -294,8 +296,8 @@ func _finish_download() -> void :
 	shake = 8.0
 	effects.burst(BATH, Color("f35075"), 32)
 	ui.dialogue([
-		["SHADEPIS HUD", "HEILIGTUM / Eindämmung bei 85 %. Nanitenschwarm reagiert auf das Feld.", "netz"], 
-		["SYSTEM", "Verbindung abgebrochen. Ravens Temperatur steigt.", "netz"], 
+		["SHADEPIS HUD", "HEILIGTUM / Eindämmung bei 85 %. Nanitenschwarm reagiert auf das Feld.", "rueckkehr"],
+		["SYSTEM", "Verbindung abgebrochen. Zurück im Versteck: Ravens Temperatur steigt. Hole das Kryospray.", "rueckkehr"],
 	])
 
 func _finish_chapter() -> void :
@@ -318,7 +320,8 @@ func saved_checkpoint() -> int:
 	return value if value is int and value >= Section.YARD and value <= Section.COOLING else -1
 
 func autosave() -> void :
-	save_game()
+	if not save_game():
+		toast("Kontrollpunkt konnte nicht gespeichert werden.")
 
 func save_game() -> bool:
 	var config: = ConfigFile.new()

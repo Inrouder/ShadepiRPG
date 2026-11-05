@@ -35,11 +35,13 @@ func run() -> void:
 	if "--expect-custom-sprite" in OS.get_cmdline_user_args():
 		check(scene.player.visual.texture.resource_path == "res://assets/custom/shadepi.png", "imported custom sheet takes precedence")
 	check_hero_sprites(scene)
+	check_npc_sprites(scene)
 	scene.set_visual_quality(0)
 	check(not scene.atmosphere_filter.visible and not scene.shadow_lights[0].shadow_enabled, "reduced mode removes screen processing and dynamic shadows")
 	scene.set_visual_quality(2)
 	check(scene.atmosphere_filter.visible and scene.shadow_lights[0].shadow_enabled, "atmospheric mode restores lighting and post filter")
 	scene.close_menu()
+	check_npc_attack_animation(scene)
 	var start: Vector2 = scene.player.position
 	Input.action_press("move_right")
 	for i in 15:
@@ -328,7 +330,79 @@ func check_hero_sprites(scene: Node2D) -> void:
 		actor.set_cloaked(true)
 		check(not actor.light_occluder.visible, "HQ hero preserves stealth visibility")
 		actor.set_cloaked(false)
-	check(scene.enemy.visual.scale == Vector2.ONE and scene.enemy.directions == 4, "legacy enemy artwork keeps its size and directional layout")
+	if not scene.enemy.visual.texture.resource_path.begins_with("res://assets/custom/"):
+		check(scene.enemy.visual.texture.resource_path == "res://assets/sprites/npcs/jackal.png", "live Jackal uses his HQ replacement")
+
+func check_npc_sprites(scene: Node2D) -> void:
+	# Exercise the same legacy texture entry points used by all chapter spawners.
+	var filenames := ["jackal.png", "kenzo.png", "punk-1.png", "punk-2.png", "punk-3.png", "punk-4.png", "shooter-visor.png", "shooter-violet.png"]
+	var facing_rows := [Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2(-1, -1), Vector2(1, -1), Vector2(-1, 1), Vector2(1, 1)]
+	var states := ["idle", "walk", "attack", "hurt"]
+	for filename in filenames:
+		var legacy := load("res://assets/sprites/" + filename) as Texture2D
+		var atlas := SpriteAssets.NPCS.get(filename) as Texture2D
+		check(atlas != null and Vector2i(atlas.get_size()) == Vector2i(1024, 5120), filename + " has the full HQ atlas")
+		if atlas == null:
+			continue
+		var pixels := atlas.get_image()
+		if pixels.is_compressed():
+			pixels.decompress()
+		check(pixels.detect_alpha() != Image.ALPHA_NONE, filename + " retains transparent artwork")
+		var all_cells_populated := true
+		for row in 32:
+			for column in 8:
+				if not pixels.get_region(Rect2i(column * 128, row * 160, 128, 160)).get_used_rect().has_area():
+					all_cells_populated = false
+		check(all_cells_populated, filename + " has artwork in every animation cell")
+		var actor := PixelActor.new()
+		scene.add_child(actor)
+		actor.setup(legacy, scene)
+		if actor.visual.texture.resource_path.begins_with("res://assets/custom/"):
+			check(SpriteAssets.valid_sheet(actor.visual.texture), filename + " keeps a valid custom override")
+			actor.free()
+			continue
+		check(actor.visual.texture == atlas and actor.cast_shadow.texture == atlas, filename + " resolves its artwork and shadow through actor setup")
+		check(actor.directions == 8 and actor.visual.hframes == 8 and actor.visual.vframes == 32, filename + " supports eight directions and four states")
+		check(is_zero_approx(actor.visual.position.y + (152.0 - 80.0) * actor.visual.scale.y), filename + " feet align with the collision origin")
+		var animation_rows_ok := true
+		for state_index in 4:
+			for direction_index in 8:
+				actor.facing = facing_rows[direction_index]
+				# A new state avoids the deliberate gradual turning of a continuing walk.
+				actor.animate("hurt" if states[state_index] == "walk" else "idle", 0.0)
+				actor.animate(states[state_index], 0.0)
+				if actor.visual.frame_coords.y != state_index * 8 + direction_index or actor.cast_shadow.frame != actor.visual.frame:
+					animation_rows_ok = false
+		check(animation_rows_ok, filename + " selects each state/direction with a matching shadow")
+		actor.free()
+
+func check_npc_attack_animation(scene: Node2D) -> void:
+	var foe = load("res://scripts/enemy.gd").new()
+	foe.set_physics_process(false)
+	scene.add_child(foe)
+	foe.position = Vector2(1100, 700)
+	foe.setup(preload("res://assets/sprites/shooter-visor.png"), scene)
+	foe.attack_direction = Vector2.RIGHT
+	foe.facing = Vector2.RIGHT
+	foe.shot_range = 80.0
+	foe.windup = 0.001
+	foe._physics_process(0.016)
+	check(foe.animation_name == "attack" and foe.attack_visual_time > 0.0, "ranged shot displays its attack pose after windup")
+	check(is_equal_approx(foe.cooldown, foe.attack_recovery) and foe.lunge == 0.0, "shot pose preserves ranged recovery and does not add a lunge")
+	foe._physics_process(0.5)
+	check(foe.animation_name == "idle" and foe.attack_visual_time == 0.0, "ranged attack pose finishes without restarting the shot")
+	foe.shot_range = 0.0
+	foe.sweeping = true
+	foe.windup = 0.001
+	foe._physics_process(0.016)
+	check(foe.animation_name == "attack" and is_equal_approx(foe.cooldown, foe.attack_recovery), "sweep displays its pose while retaining recovery timing")
+	foe.hack()
+	foe._physics_process(0.016)
+	check(foe.animation_name == "hurt" and foe.attack_visual_time == 0.0, "hack interrupts the visual attack cycle")
+	foe.attack_visual_time = 0.2
+	foe.reset_fight()
+	check(foe.attack_visual_time == 0.0, "checkpoint reset clears pending attack artwork")
+	foe.free()
 
 func check_directional_animation(scene: Node2D) -> void:
 	for actor in [scene.player, scene.raven]:
@@ -396,6 +470,7 @@ func check_chapter() -> void:
 	check(chapter.phase == chapter.Phase.HUNT and chapter.actor_is_playable(chapter.raven) and not chapter.actor_is_playable(chapter.player), "the hunt gives primary controls to Raven")
 	check(chapter.saved_checkpoint(true) == chapter.Phase.HUNT, "the hunt is saved in the co-op slot")
 	check(chapter.patrol.size() == 4 and not chapter.gate_open, "four street punks guard Raven's route")
+	check(chapter.patrol[1].shot_range > 0.0, "carbine-equipped gang member uses ranged attacks")
 	var sprites := {}
 	for guard in chapter.patrol:
 		sprites[guard.visual.texture.resource_path] = true
@@ -464,6 +539,7 @@ func check_chapter() -> void:
 	finish_dialogue(chapter)
 	chapter.ending.custom_step(2.0)
 	check(chapter.phase == chapter.Phase.COMPLETE and chapter.ui.dialogue_open, "the rooftop jump completes the chapter")
+	check(is_equal_approx(chapter.player.visual.position.y, chapter.player.standing_visual_position.y), "rooftop landing restores the HQ sprite foot position")
 	check(chapter.load_game(true) and chapter.phase == chapter.Phase.COMPLETE and not chapter.enemy.visible, "the completed co-op checkpoint can be reloaded")
 	chapter.chapter_coop = false
 	chapter._enter_checkpoint(chapter.Phase.TEAM)

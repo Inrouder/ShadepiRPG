@@ -1,6 +1,28 @@
 # Shadepi · Echos in Neon
 
-**v0.12.0 · Godot 4.7.2 · Windows und Linux · Einzelspieler und Lokal-Koop**
+**v0.13.1 · Godot 4.7.2 · Windows und Linux · Einzelspieler und Lokal-Koop**
+
+## Story- und Fehlerkorrekturen v0.13.1
+
+Kapitelübergänge überspringen keine Handlung mehr durch ältere Spielstände. Kapitel 2 startet neben dem geparkten Wagen, Niederlagen stellen den Kontrollpunkt wieder her. Dialoge, Kampfhinweise und Missionsziele wurden mit den spielbaren Szenen abgeglichen; lange Dialoge werden vollständig auf mehrere Seiten verteilt. Die Uferkollision und das Abschlussritual passen jetzt zur gemalten See-Kulisse. Unpassende Requisiten wurden entfernt.
+
+**501 automatisierte Prüfungen, 0 Fehler** unter Windows mit Godot 4.7.2: 241 bestehende/erweiterte Spielprüfungen, 240 Story-, Layout- und Kollisionsprüfungen sowie 20 digitale Gegnerprüfungen. 16 Szenenansichten, Erinnerungsraum und Dialogdarstellung im Renderer kontrolliert. Kein vollständiger manueller Durchlauf; kein neuer Linux- oder Exporttest für diesen Patch.
+
+[Korrekturen, Kapitelreihenfolge und Prüfgrenzen](docs/v0.13.1-fehlerpruefung.md) · [Versionshinweise](CHANGELOG.md)
+
+Das bereitgestellte Projekt-ZIP enthält diesen lokalen Stand. Ein Upload von v0.13.1 auf GitHub ist damit noch nicht bestätigt; der `main`-Download kann einen älteren Stand enthalten.
+
+## NPC-Update v0.13.0
+
+Alle acht humanoiden NPC-Typen haben neue illustrierte HQ-Sprites: Chrome Jackal, Kenzō, vier Gangmitglieder und zwei Schützen. Virus und ICE-Wächter im Deep Dive besitzen ebenfalls neue transparente Grafiken. Raven und Shadepi behalten ihre vorhandenen HQ-Sprites.
+
+Je humanoider Figur: acht Blickrichtungen, 32 gezeichnete Ausgangsposen und daraus zusammengestellte Stand-, Lauf-, Angriffs- und Treffersequenzen. Die 256 Atlasfelder enthalten wiederholte Posen. Schützen und Kenzō zeigen ihre Angriffspose nun auch beim Schuss beziehungsweise Rundumschlag.
+
+Lokal mit Godot 4.7.2 unter Windows geprüft: **239 Spielprüfungen und 20 Deep-Dive-Prüfungen ohne Fehler**. Galerie im Godot-Renderer visuell geprüft. Kein vollständiger manueller Spieldurchlauf.
+
+[Neue NPCs und Bearbeitung](docs/npc-sprites.md) · [Versionshinweise](CHANGELOG.md)
+
+
 
 Ein 2D-Action-RPG im Shadepi-Universum mit Raven und Shadepi, sieben Kapiteln, gemalten Kulissen und illustrierten Helden.
 

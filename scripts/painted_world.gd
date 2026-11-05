@@ -46,10 +46,13 @@ const SOLIDS: = {
 	"lakeside": [], 
 }
 const WATER_EDGE: = [
-	Vector2(0, 0), Vector2(1024, 0), Vector2(1024, 422), Vector2(900, 403), 
-	Vector2(830, 385), Vector2(803, 335), Vector2(770, 312), Vector2(680, 310), 
-	Vector2(630, 310), Vector2(600, 293), Vector2(550, 260), Vector2(450, 230), 
-	Vector2(200, 210), Vector2(0, 205), 
+	Vector2(0, 0), Vector2(1024, 0), Vector2(1024, 460),
+	Vector2(925, 434), Vector2(800, 420), Vector2(740, 400),
+	Vector2(690, 376), Vector2(657, 356), Vector2(633, 336),
+	Vector2(616, 322), Vector2(592, 309), Vector2(562, 298),
+	Vector2(522, 283), Vector2(473, 272), Vector2(429, 262),
+	Vector2(400, 250), Vector2(342, 243), Vector2(265, 239),
+	Vector2(195, 230), Vector2(160, 210), Vector2(0, 205),
 ]
 const ECHO_POINTS: = [Vector2(465, 305), Vector2(688, 330), Vector2(874, 340)]
 

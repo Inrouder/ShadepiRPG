@@ -355,6 +355,7 @@ func _spawn_patrol(point: Vector2, variant: int) -> void:
 	foe.hit_damage = 11 + variant
 	foe.move_speed = 45.0 + variant * 4.0
 	foe.awareness = 148.0
+	foe.shot_range = 148.0 if variant == 1 else 0.0
 	foe.setup(PUNKS[variant], self)
 	foe.position = point
 	actors.add_child(foe)
@@ -391,7 +392,7 @@ func interaction_prompt() -> String:
 
 func interact(_actor: PixelActor = null) -> void:
 	if phase == Phase.COMPLETE and not is_busy():
-		get_tree().change_scene_to_file("res://scenes/chapter_two.tscn")
+		ChapterFlow.advance(get_tree(), "res://scenes/chapter_two.tscn")
 		return
 	if is_busy() or interaction_prompt().is_empty():
 		return
@@ -455,7 +456,7 @@ func _jump_to_roof() -> void:
 	var roof := Vector2(clampf(player.position.x + 40.0, 550.0, 1000.0), 223.0)
 	ending.tween_property(player, "position", roof, 0.7).set_trans(Tween.TRANS_SINE)
 	ending.parallel().tween_property(player.visual, "position:y", -78.0, 0.33)
-	ending.tween_property(player.visual, "position:y", -26.0, 0.24)
+	ending.tween_property(player.visual, "position:y", player.standing_visual_position.y, 0.24)
 	ending.tween_callback(func():
 		phase = Phase.COMPLETE
 		checkpoint = Phase.COMPLETE

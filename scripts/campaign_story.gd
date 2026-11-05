@@ -26,10 +26,10 @@ const OBJECTIVES: = [
 	"Daten sichern und zum Aerodyne", "Raven zum Wasser folgen", "Geschichte abgeschlossen", 
 ]
 const POINTS: = [
-	[Vector2(449, 309), Vector2(565, 306), Vector2(711, 307)], [Vector2(920, 380)], [], 
+	[Vector2(498, 333), Vector2(498, 333), Vector2(498, 333)], [Vector2(920, 380)], [],
 	[Vector2(738, 323), Vector2(865, 382)], [Vector2(306, 340), Vector2(542, 410), Vector2(795, 324)], [Vector2(465, 325), Vector2(684, 345), Vector2(870, 360)], 
 	[], [Vector2(310, 340), Vector2(818, 365)], [], [Vector2(345, 325), Vector2(592, 350), Vector2(858, 366), Vector2(914, 397)], 
-	[Vector2(615, 390), Vector2(667, 374), Vector2(721, 359), Vector2(754, 348)], [], 
+	[Vector2(615, 390), Vector2(655, 400), Vector2(695, 420), Vector2(735, 440)], [],
 ]
 const PANELS: = {
 	"pakt": preload("res://assets/comic/pakt.jpg"), "hinterhalt": preload("res://assets/comic/hinterhalt.jpg"), 
@@ -42,6 +42,7 @@ const PANELS: = {
 
 const DIALOGUE: = {
 	Beat.PACT: [
+		["RAVENS VERSTECK", "Raven öffnet den Towerplan am Arbeitsterminal. Aufzug, Dachzugang und Scanner müssen geprüft werden.", "pakt"],
 		["RAVEN", "Mein Vater programmierte für Arasaka. Moriyama ließ meine Eltern töten und hielt mich jahrelang fest. Ich floh und löschte meine Identität.", "pakt"], 
 		["RAVEN", "Jackal war sein Bluthund. Ich wollte ihn finden, bevor er mich findet.", "pakt"], 
 		["SHADEPI", "Ich suche den Auftraggeber der Minotauren. Du entscheidest, ob du mir hilfst.", "pakt"], 
@@ -49,7 +50,8 @@ const DIALOGUE: = {
 		["SHADEPI", "Ich weiß, wo wir einen Aerodyne herbekommen. Sein Personal ist morgen Abend eine Etage tiefer. Wir gehen übers Dach.", "pakt"], 
 	], 
 	Beat.AMBUSH: [
-		["SHADEPI", "Deckung hinter dem Generator! Rechts in der Gasse ist ein Schütze. Raven, kannst du seine Optik stören?", "hinterhalt"], 
+		["GASSE VOR DEM VERSTECK", "Auf dem Weg zu Shadepis Garage schneiden zwei Bewaffnete ihnen den Weg zum Motorrad ab.", "hinterhalt"],
+		["SHADEPI", "Zwei Schützen in der Gasse! Nutze die Deckung zwischen uns. Raven, kannst du ihre Optik stören?", "hinterhalt"],
 		["RAVEN", "Wenn du mir eine freie Verbindung verschaffst. Gib mir ein Signal.", "hinterhalt"], 
 	], 
 	Beat.CHASE: [
@@ -65,12 +67,14 @@ const DIALOGUE: = {
 		["RAVEN", "Ich prüfe den Stromkreis, kopiere die Kennung und teste das ARToS-System.", "hangar"], 
 	], 
 	Beat.ECHO: [
-		["SHADEPI", "Als die Minotauren das Kloster angriffen, habe ich das Heiligtum in mich aufgenommen. Seitdem lebt der Schwarm in mir.", "hangar"], 
-		["RAVEN", "Und nach dem Angriff?", "hangar"], 
-		["SHADEPI", "Das Kloster war verschwunden. Ich suche seitdem nach Antworten.", "hangar"], 
-		["NACHT / SANKTUARIUM", "Die Halle wird still. Raven tritt an Shadepis Sessel. Sein HUD schlägt an.", "echo"], 
+		["NACHT / SANKTUARIUM", "Der Aerodyne ist vorbereitet. In der inneren Kammer erzählt Shadepi vom Heiligtum.", "echo"],
+		["SHADEPI", "Als die Minotauren das Kloster angriffen, habe ich das Heiligtum in mich aufgenommen. Seitdem lebt der Schwarm in mir.", "echo"],
+		["RAVEN", "Und nach dem Angriff?", "echo"],
+		["SHADEPI", "Das Kloster war verschwunden. Ich suche seitdem nach Antworten.", "echo"],
+		["NACHT / SANKTUARIUM", "Die Halle wird still. Shadepis HUD schlägt an. Er muss das Heiligtum am Sessel prüfen.", "echo"],
 	], 
 	Beat.FLIGHT: [
+		["AM NÄCHSTEN ABEND", "Nach einer Ruhepause starten Raven und Shadepi zum Tower. Kenzōs Personal ist jetzt eine Etage unter dem Penthouse.", "tower"],
 		["ARTOS", "Systemstart. Parameter instabil.", "tower"], 
 		["SHADEPI", "Ich halte uns zwischen den Baken. Raven, sende die kopierte Kennung, sobald der Scanner in Reichweite ist.", "tower"], 
 	], 
@@ -80,12 +84,13 @@ const DIALOGUE: = {
 	], 
 	Beat.BOSS: [
 		["KENZŌ MORIYAMA", "Raven. Ich habe lange nach dir gesucht.", "kenzo"], 
-		["SHADEPI", "Raven, runter! Sein rechter Schulterservo ist offen. Stör seine Implantate, ich halte ihn auf.", "kenzo"], 
+		["SHADEPI", "Raven, runter! Stör seine Implantate, ich halte ihn auf. Wenn er die Leitung sperrt, warte auf das Flackern am Schulterservo.", "kenzo"],
 	], 
 	Beat.ESCAPE: [
 		["RAVEN", "Jahrelang bin ich vor dir geflohen, Kenzō. Damit ist Schluss.", "kenzo"], 
 		["PENTHOUSE", "Shadepi tritt zurück. Ravens kybernetische Fäden spannen sich ein letztes Mal.", "kenzo"], 
-		["SHADEPI", "Sichere die Daten. Die Sprengsätze laufen. Wir haben sechzig Sekunden bis zum Start.", "flucht"], 
+		["SYSTEM / NOTFALLPROTOKOLL", "Kenzōs Sicherheitssystem überlastet die Energieversorgung. Kritischer Zustand in sechzig Sekunden.", "flucht"],
+		["RAVEN", "Sichere die Daten und blockiere den Aufzug. Starte dann die Treibstoffpumpe per Fernzugriff. Ich bereite unseren Abflug vor.", "flucht"],
 	], 
 	Beat.LAKE: [
 		["ARTOS", "Triebwerke instabil. Neustart.", "flucht"], 

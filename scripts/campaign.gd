@@ -33,7 +33,7 @@ func create_hud() -> CanvasLayer:
 
 func _ready() -> void :
 	super._ready()
-	if not load_game():
+	if ChapterFlow.consume_entry(get_tree(), "res://scenes/campaign.tscn") or not load_game():
 		new_game()
 
 func world_walls() -> Array[Rect2]:
@@ -133,8 +133,8 @@ func _enter(next: int) -> void :
 	if beat == Beat.AMBUSH:
 		effects.steam_vents.append(Vector2(160, 240))
 	if beat == Beat.END:
-		player.position = Vector2(746, 353)
-		raven.position = Vector2(767, 353)
+		player.position = Story.POINTS[Beat.LAKE].back() + Vector2(-12, 0)
+		raven.position = Story.POINTS[Beat.LAKE].back() + Vector2(12, 0)
 		player.facing = Vector2.RIGHT
 		raven.facing = Vector2.LEFT
 	_update_lighting()
@@ -235,7 +235,7 @@ func raven_hack() -> bool:
 	var target: PixelActor
 	var nearest: = 250.0
 	for foe in foes:
-		var distance: float = player.position.distance_to(foe.position)
+		var distance: float = raven.position.distance_to(foe.position)
 		if foe.health > 0 and distance < nearest and _line_clear(raven.position, foe.position):
 			target = foe
 			nearest = distance
@@ -278,6 +278,8 @@ func chapter_label() -> String:
 	var chapter: int = Story.CHAPTERS[beat]
 	if chapter == 5:
 		return "KAPITEL 5 / HEILIGTUM"
+	if chapter == 4:
+		return "KAPITEL 4 / DRACHENHÖHLE"
 	return "KAPITEL %d / %s" % [chapter, Story.TITLES[chapter - 3]]
 
 func _target() -> Vector2:
@@ -300,7 +302,7 @@ func chapter_objective() -> String:
 		Beat.AMBUSH:
 			return "Hinterhalt · %d Gegner" % _living() if _living() else "Zum Motorrad"
 		Beat.ECHO:
-			return "Erinnerungen ordnen · %d / 3" % point_index if echo_ready else "An Shadepis Sessel treten"
+			return "Erinnerungen ordnen · %d / 3" % point_index if echo_ready else "Heiligtum am Sessel prüfen"
 		Beat.GARAGE:
 			return "Gemeinsam auf die Plattform" if point_index == 1 else Story.OBJECTIVES[beat]
 		Beat.HANGAR:
@@ -317,7 +319,7 @@ func chapter_objective() -> String:
 		Beat.LAKE:
 			return ["Mit Raven am Ufer sprechen", "Bitte am Wasser sprechen", "Antwort des Heiligtums hören", "Aufnahme vollziehen"][point_index]
 		Beat.ESCAPE:
-			return "%s · %02d s" % [["Daten sichern", "Aufzug blockieren", "Pumpeneinheit neu starten", "Aerodyne starten"][point_index], ceili(countdown)]
+			return "%s · %02d s" % [["Daten sichern", "Aufzug blockieren", "Treibstoffpumpe fernstarten", "Zum Dachausgang"][point_index], ceili(countdown)]
 	return Story.OBJECTIVES[beat]
 
 func interaction_prompt() -> String:
@@ -362,7 +364,7 @@ func interact(_actor: PixelActor = null) -> void :
 			_start_echo()
 			return
 		if raven.position.distance_to(Vector2(551, 426)) < 28.0:
-			raven.position = SPAWN if point_index == 0 else Story.POINTS[beat][point_index - 1]
+			raven.position = SPAWN if point_index == 0 else Painted.ECHO_POINTS[point_index - 1]
 			toast("Das Bild zerfällt. Zur letzten stabilen Erinnerung.")
 			return
 		toast(["Das Kloster.", "Die früheren Träger.", "Die Nacht des Angriffs."][point_index])
@@ -400,12 +402,12 @@ func interact(_actor: PixelActor = null) -> void :
 		effects.hack_arc(_target(), Vector2(884, 328))
 		toast(["Stromversorgung aktiv.", "Kennung kopiert.", "Transponder bereit. Prüf-ICE verlangt Portfolge 2, 1, 3."][point_index])
 	if beat == Beat.ESCAPE:
-		toast(["Daten gesichert. Spuren gelöscht.", "Aufzug blockiert.", "Pumpe läuft. Zur Luke!", "Aerodyne hebt ab."][point_index])
+		toast(["Daten gesichert. Spuren gelöscht.", "Aufzug blockiert.", "Fernstart bestätigt. Zum Dachausgang!", "Dach erreicht. Der Aerodyne hebt ab."][point_index])
 	point_index += 1
 	if beat == Beat.ROOF and point_index == 2:
 		player.position = raven.position + Vector2(-50, 15)
 		player.show()
-		ui.dialogue([["RAVEN", "Sicherung am Aufzug unter dem Penthouse. Ich nehme den Funker, du den Schild.", "tower"]])
+		ui.dialogue([["RAVEN", "Zwei Wachen am Aufzug. Ich störe auf dein Signal ihre Implantate. Du musst den Schild umgehen oder im Hackfenster zuschlagen.", "tower"]])
 		_spawn_wave()
 		return
 	if beat != Beat.HANGAR and point_index == Story.POINTS[beat].size():
@@ -443,6 +445,7 @@ func _enter_echo() -> void :
 	timing = null
 	gamepads.assign(Input.get_connected_joypads(), false)
 	echo_ready = true
+	reset_raven(SPAWN)
 	set_painted_solids("memory")
 	set_dressing("")
 	_update_lighting()
@@ -508,7 +511,7 @@ func _draw() -> void :
 			var alpha: = 0.3 + sin(clock * 1.6 + i * 2.0) * 0.22
 			draw_circle(p, 1.0 if i % 4 else 1.65, Color(0.62, 0.92, 0.65, alpha))
 		if beat == Beat.END or (ritual_flash > 0.0 and point_index == 3):
-			var center: = Vector2(756, 330) if beat == Beat.END else ritual_origin - Vector2(0, 21)
+			var center: Vector2 = player.position.lerp(raven.position, 0.5) - Vector2(0, 23) if beat == Beat.END else ritual_origin - Vector2(0, 21)
 			draw_arc(center, 26, 0.06, PI - 0.2, 30, Color("6adddf"), 1.7)
 			draw_arc(center + Vector2(0, 5), 28, PI + 0.15, TAU - 0.1, 30, Color("df5b76"), 1.7)
 	if beat == Beat.BOSS and not foes.is_empty():

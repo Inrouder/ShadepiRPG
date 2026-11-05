@@ -1,6 +1,10 @@
 # Shadepi · Echos in Neon
 
-**Spieleranleitung für den wiederhergestellten Stand v0.12.0.** Aktuelle Downloads und Prüfstatus: [Repository-Startseite](README.md). Änderungen: [Versionshinweise](CHANGELOG.md).
+**Spieleranleitung für v0.13.1.** Aktuelle Downloads und Prüfstatus: [Repository-Startseite](README.md). Änderungen: [Versionshinweise](CHANGELOG.md).
+
+**Kapitel und Kontrollpunkte:** Mit „Weiter zu Kapitel …“ beginnt das folgende Kapitel am Anfang. Die Menüoption „Fortsetzen“ lädt dessen vorhandenen Kontrollpunkt. Kapitel 2 verläuft über Industriegebiet → Versteck → Kühlsystem → Deep Dive → Kryospray → Abschluss. Danach folgen Pakt, Hinterhalt und Verfolgung (3), Garage und Hangar (4), Heiligtum und Erinnerungen (5), Anflug, Dach, Kenzō und Flucht (6), See und Aufnahme in den Orden (7).
+
+**Flucht:** Daten sichern, Aufzug blockieren, Treibstoffpumpe fernstarten, Dachausgang erreichen. Die sechzig Sekunden laufen während des Spielens; Dialoge und Pause halten den Timer an. Lange Dialoge besitzen mehrere Seiten, die vollständig mit E / Enter / A weitergeschaltet werden.
 
 **Kapitel 1 · Echos in Neon und Schatten** ist der spielbare Auftakt zu „Shadepi – Im Schatten des Raben“.
 

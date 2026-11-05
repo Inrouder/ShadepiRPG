@@ -1,0 +1,7786 @@
+{
+  "jackal": {
+    "source": "tools/npc_sources/jackal-keyframes.png",
+    "output": "assets/sprites/npcs/jackal.png",
+    "scale": 0.5,
+    "source_poses": 32,
+    "nonempty_frames": 256,
+    "atlas_size": [
+      1024,
+      5120
+    ],
+    "poses": [
+      {
+        "anchor": [
+          89.5,
+          252
+        ],
+        "source_row": 0,
+        "direction": "south",
+        "source_bounds": [
+          17,
+          0,
+          192,
+          256
+        ],
+        "core_bounds": [
+          28,
+          4,
+          184,
+          252
+        ],
+        "packed_bounds": [
+          19,
+          26,
+          107,
+          154
+        ],
+        "offset": [
+          19,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          43.0,
+          252
+        ],
+        "source_row": 0,
+        "direction": "west",
+        "source_bounds": [
+          241,
+          0,
+          336,
+          256
+        ],
+        "core_bounds": [
+          252,
+          6,
+          326,
+          252
+        ],
+        "packed_bounds": [
+          42,
+          26,
+          90,
+          154
+        ],
+        "offset": [
+          42,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          51.0,
+          252
+        ],
+        "source_row": 0,
+        "direction": "east",
+        "source_bounds": [
+          435,
+          0,
+          529,
+          256
+        ],
+        "core_bounds": [
+          447,
+          6,
+          518,
+          252
+        ],
+        "packed_bounds": [
+          38,
+          26,
+          85,
+          154
+        ],
+        "offset": [
+          38,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          82.5,
+          250
+        ],
+        "source_row": 0,
+        "direction": "north",
+        "source_bounds": [
+          591,
+          0,
+          755,
+          256
+        ],
+        "core_bounds": [
+          595,
+          5,
+          752,
+          250
+        ],
+        "packed_bounds": [
+          23,
+          27,
+          105,
+          155
+        ],
+        "offset": [
+          23,
+          27
+        ]
+      },
+      {
+        "anchor": [
+          64.5,
+          252
+        ],
+        "source_row": 0,
+        "direction": "northwest",
+        "source_bounds": [
+          799,
+          0,
+          940,
+          256
+        ],
+        "core_bounds": [
+          803,
+          7,
+          936,
+          252
+        ],
+        "packed_bounds": [
+          32,
+          26,
+          102,
+          154
+        ],
+        "offset": [
+          32,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          67.0,
+          253
+        ],
+        "source_row": 0,
+        "direction": "northeast",
+        "source_bounds": [
+          990,
+          0,
+          1121,
+          256
+        ],
+        "core_bounds": [
+          993,
+          8,
+          1119,
+          253
+        ],
+        "packed_bounds": [
+          30,
+          26,
+          96,
+          154
+        ],
+        "offset": [
+          30,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          74.5,
+          253
+        ],
+        "source_row": 0,
+        "direction": "southwest",
+        "source_bounds": [
+          1165,
+          0,
+          1318,
+          256
+        ],
+        "core_bounds": [
+          1174,
+          5,
+          1315,
+          253
+        ],
+        "packed_bounds": [
+          27,
+          26,
+          103,
+          154
+        ],
+        "offset": [
+          27,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          83.5,
+          253
+        ],
+        "source_row": 0,
+        "direction": "southeast",
+        "source_bounds": [
+          1363,
+          0,
+          1519,
+          256
+        ],
+        "core_bounds": [
+          1371,
+          5,
+          1511,
+          253
+        ],
+        "packed_bounds": [
+          22,
+          26,
+          100,
+          154
+        ],
+        "offset": [
+          22,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          91.5,
+          251
+        ],
+        "source_row": 1,
+        "direction": "south",
+        "source_bounds": [
+          14,
+          256,
+          183,
+          512
+        ],
+        "core_bounds": [
+          25,
+          260,
+          179,
+          507
+        ],
+        "packed_bounds": [
+          18,
+          26,
+          102,
+          154
+        ],
+        "offset": [
+          18,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          81.0,
+          250
+        ],
+        "source_row": 1,
+        "direction": "west",
+        "source_bounds": [
+          209,
+          256,
+          371,
+          512
+        ],
+        "core_bounds": [
+          212,
+          263,
+          368,
+          506
+        ],
+        "packed_bounds": [
+          24,
+          27,
+          105,
+          155
+        ],
+        "offset": [
+          24,
+          27
+        ]
+      },
+      {
+        "anchor": [
+          77.5,
+          250
+        ],
+        "source_row": 1,
+        "direction": "east",
+        "source_bounds": [
+          403,
+          256,
+          555,
+          512
+        ],
+        "core_bounds": [
+          409,
+          262,
+          552,
+          506
+        ],
+        "packed_bounds": [
+          25,
+          27,
+          101,
+          155
+        ],
+        "offset": [
+          25,
+          27
+        ]
+      },
+      {
+        "anchor": [
+          83.0,
+          251
+        ],
+        "source_row": 1,
+        "direction": "north",
+        "source_bounds": [
+          591,
+          256,
+          752,
+          512
+        ],
+        "core_bounds": [
+          601,
+          261,
+          745,
+          507
+        ],
+        "packed_bounds": [
+          22,
+          26,
+          102,
+          154
+        ],
+        "offset": [
+          22,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          75.0,
+          250
+        ],
+        "source_row": 1,
+        "direction": "northwest",
+        "source_bounds": [
+          787,
+          256,
+          930,
+          512
+        ],
+        "core_bounds": [
+          799,
+          264,
+          929,
+          506
+        ],
+        "packed_bounds": [
+          26,
+          27,
+          98,
+          155
+        ],
+        "offset": [
+          26,
+          27
+        ]
+      },
+      {
+        "anchor": [
+          63.0,
+          251
+        ],
+        "source_row": 1,
+        "direction": "northeast",
+        "source_bounds": [
+          989,
+          256,
+          1124,
+          512
+        ],
+        "core_bounds": [
+          998,
+          264,
+          1121,
+          507
+        ],
+        "packed_bounds": [
+          32,
+          26,
+          100,
+          154
+        ],
+        "offset": [
+          32,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          74.0,
+          251
+        ],
+        "source_row": 1,
+        "direction": "southwest",
+        "source_bounds": [
+          1167,
+          256,
+          1331,
+          512
+        ],
+        "core_bounds": [
+          1176,
+          262,
+          1321,
+          507
+        ],
+        "packed_bounds": [
+          27,
+          26,
+          109,
+          154
+        ],
+        "offset": [
+          27,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          88.0,
+          250
+        ],
+        "source_row": 1,
+        "direction": "southeast",
+        "source_bounds": [
+          1359,
+          256,
+          1520,
+          512
+        ],
+        "core_bounds": [
+          1368,
+          263,
+          1515,
+          506
+        ],
+        "packed_bounds": [
+          20,
+          27,
+          100,
+          155
+        ],
+        "offset": [
+          20,
+          27
+        ]
+      },
+      {
+        "anchor": [
+          80.5,
+          251
+        ],
+        "source_row": 2,
+        "direction": "south",
+        "source_bounds": [
+          25,
+          512,
+          178,
+          768
+        ],
+        "core_bounds": [
+          29,
+          516,
+          176,
+          763
+        ],
+        "packed_bounds": [
+          24,
+          26,
+          100,
+          154
+        ],
+        "offset": [
+          24,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          82.0,
+          244
+        ],
+        "source_row": 2,
+        "direction": "west",
+        "source_bounds": [
+          211,
+          513,
+          370,
+          763
+        ],
+        "core_bounds": [
+          219,
+          517,
+          367,
+          757
+        ],
+        "packed_bounds": [
+          23,
+          30,
+          103,
+          155
+        ],
+        "offset": [
+          23,
+          30
+        ]
+      },
+      {
+        "anchor": [
+          79.0,
+          246
+        ],
+        "source_row": 2,
+        "direction": "east",
+        "source_bounds": [
+          406,
+          513,
+          561,
+          766
+        ],
+        "core_bounds": [
+          411,
+          517,
+          559,
+          759
+        ],
+        "packed_bounds": [
+          24,
+          29,
+          102,
+          155
+        ],
+        "offset": [
+          24,
+          29
+        ]
+      },
+      {
+        "anchor": [
+          84.0,
+          249
+        ],
+        "source_row": 2,
+        "direction": "north",
+        "source_bounds": [
+          591,
+          512,
+          745,
+          768
+        ],
+        "core_bounds": [
+          603,
+          516,
+          741,
+          761
+        ],
+        "packed_bounds": [
+          22,
+          28,
+          99,
+          156
+        ],
+        "offset": [
+          22,
+          28
+        ]
+      },
+      {
+        "anchor": [
+          69.0,
+          249
+        ],
+        "source_row": 2,
+        "direction": "northwest",
+        "source_bounds": [
+          799,
+          512,
+          931,
+          768
+        ],
+        "core_bounds": [
+          804,
+          518,
+          922,
+          761
+        ],
+        "packed_bounds": [
+          30,
+          28,
+          96,
+          156
+        ],
+        "offset": [
+          30,
+          28
+        ]
+      },
+      {
+        "anchor": [
+          58.0,
+          249
+        ],
+        "source_row": 2,
+        "direction": "northeast",
+        "source_bounds": [
+          992,
+          512,
+          1122,
+          768
+        ],
+        "core_bounds": [
+          998,
+          519,
+          1117,
+          761
+        ],
+        "packed_bounds": [
+          35,
+          28,
+          100,
+          156
+        ],
+        "offset": [
+          35,
+          28
+        ]
+      },
+      {
+        "anchor": [
+          61.0,
+          250
+        ],
+        "source_row": 2,
+        "direction": "southwest",
+        "source_bounds": [
+          1182,
+          512,
+          1329,
+          768
+        ],
+        "core_bounds": [
+          1184,
+          516,
+          1320,
+          762
+        ],
+        "packed_bounds": [
+          34,
+          27,
+          108,
+          155
+        ],
+        "offset": [
+          34,
+          27
+        ]
+      },
+      {
+        "anchor": [
+          70.0,
+          248
+        ],
+        "source_row": 2,
+        "direction": "southeast",
+        "source_bounds": [
+          1374,
+          512,
+          1517,
+          768
+        ],
+        "core_bounds": [
+          1377,
+          516,
+          1509,
+          760
+        ],
+        "packed_bounds": [
+          29,
+          28,
+          101,
+          156
+        ],
+        "offset": [
+          29,
+          28
+        ]
+      },
+      {
+        "anchor": [
+          79.5,
+          251
+        ],
+        "source_row": 3,
+        "direction": "south",
+        "source_bounds": [
+          15,
+          768,
+          176,
+          1024
+        ],
+        "core_bounds": [
+          18,
+          778,
+          171,
+          1019
+        ],
+        "packed_bounds": [
+          24,
+          26,
+          104,
+          154
+        ],
+        "offset": [
+          24,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          121.5,
+          244
+        ],
+        "source_row": 3,
+        "direction": "west",
+        "source_bounds": [
+          175,
+          774,
+          384,
+          1024
+        ],
+        "core_bounds": [
+          186,
+          779,
+          375,
+          1018
+        ],
+        "packed_bounds": [
+          3,
+          30,
+          107,
+          155
+        ],
+        "offset": [
+          3,
+          30
+        ]
+      },
+      {
+        "anchor": [
+          81.0,
+          243
+        ],
+        "source_row": 3,
+        "direction": "east",
+        "source_bounds": [
+          383,
+          776,
+          587,
+          1024
+        ],
+        "core_bounds": [
+          392,
+          778,
+          576,
+          1019
+        ],
+        "packed_bounds": [
+          24,
+          30,
+          126,
+          154
+        ],
+        "offset": [
+          24,
+          30
+        ]
+      },
+      {
+        "anchor": [
+          96.0,
+          248
+        ],
+        "source_row": 3,
+        "direction": "north",
+        "source_bounds": [
+          574,
+          769,
+          756,
+          1024
+        ],
+        "core_bounds": [
+          586,
+          780,
+          753,
+          1017
+        ],
+        "packed_bounds": [
+          16,
+          28,
+          107,
+          156
+        ],
+        "offset": [
+          16,
+          28
+        ]
+      },
+      {
+        "anchor": [
+          96.0,
+          243
+        ],
+        "source_row": 3,
+        "direction": "northwest",
+        "source_bounds": [
+          767,
+          777,
+          961,
+          1024
+        ],
+        "core_bounds": [
+          779,
+          781,
+          953,
+          1020
+        ],
+        "packed_bounds": [
+          16,
+          30,
+          113,
+          154
+        ],
+        "offset": [
+          16,
+          30
+        ]
+      },
+      {
+        "anchor": [
+          73.5,
+          239
+        ],
+        "source_row": 3,
+        "direction": "northeast",
+        "source_bounds": [
+          974,
+          779,
+          1140,
+          1024
+        ],
+        "core_bounds": [
+          977,
+          782,
+          1137,
+          1018
+        ],
+        "packed_bounds": [
+          27,
+          32,
+          110,
+          154
+        ],
+        "offset": [
+          27,
+          32
+        ]
+      },
+      {
+        "anchor": [
+          97.5,
+          250
+        ],
+        "source_row": 3,
+        "direction": "southwest",
+        "source_bounds": [
+          1150,
+          769,
+          1328,
+          1024
+        ],
+        "core_bounds": [
+          1154,
+          780,
+          1321,
+          1019
+        ],
+        "packed_bounds": [
+          15,
+          27,
+          104,
+          155
+        ],
+        "offset": [
+          15,
+          27
+        ]
+      },
+      {
+        "anchor": [
+          80.5,
+          251
+        ],
+        "source_row": 3,
+        "direction": "southeast",
+        "source_bounds": [
+          1359,
+          768,
+          1528,
+          1024
+        ],
+        "core_bounds": [
+          1361,
+          779,
+          1526,
+          1019
+        ],
+        "packed_bounds": [
+          24,
+          26,
+          108,
+          154
+        ],
+        "offset": [
+          24,
+          26
+        ]
+      }
+    ]
+  },
+  "kenzo": {
+    "source": "tools/npc_sources/kenzo-keyframes.png",
+    "output": "assets/sprites/npcs/kenzo.png",
+    "scale": 0.5,
+    "source_poses": 32,
+    "nonempty_frames": 256,
+    "atlas_size": [
+      1024,
+      5120
+    ],
+    "poses": [
+      {
+        "anchor": [
+          64.0,
+          255
+        ],
+        "source_row": 0,
+        "direction": "south",
+        "source_bounds": [
+          61,
+          0,
+          189,
+          256
+        ],
+        "core_bounds": [
+          68,
+          4,
+          177,
+          255
+        ],
+        "packed_bounds": [
+          32,
+          24,
+          96,
+          152
+        ],
+        "offset": [
+          32,
+          24
+        ]
+      },
+      {
+        "anchor": [
+          42.5,
+          255
+        ],
+        "source_row": 0,
+        "direction": "west",
+        "source_bounds": [
+          253,
+          0,
+          339,
+          256
+        ],
+        "core_bounds": [
+          261,
+          6,
+          330,
+          255
+        ],
+        "packed_bounds": [
+          43,
+          24,
+          86,
+          152
+        ],
+        "offset": [
+          43,
+          24
+        ]
+      },
+      {
+        "anchor": [
+          35.5,
+          254
+        ],
+        "source_row": 0,
+        "direction": "east",
+        "source_bounds": [
+          432,
+          0,
+          512,
+          256
+        ],
+        "core_bounds": [
+          436,
+          6,
+          502,
+          254
+        ],
+        "packed_bounds": [
+          46,
+          25,
+          86,
+          153
+        ],
+        "offset": [
+          46,
+          25
+        ]
+      },
+      {
+        "anchor": [
+          61.0,
+          254
+        ],
+        "source_row": 0,
+        "direction": "north",
+        "source_bounds": [
+          603,
+          0,
+          735,
+          256
+        ],
+        "core_bounds": [
+          609,
+          4,
+          723,
+          254
+        ],
+        "packed_bounds": [
+          34,
+          25,
+          100,
+          153
+        ],
+        "offset": [
+          34,
+          25
+        ]
+      },
+      {
+        "anchor": [
+          56.0,
+          254
+        ],
+        "source_row": 0,
+        "direction": "northwest",
+        "source_bounds": [
+          795,
+          0,
+          913,
+          256
+        ],
+        "core_bounds": [
+          800,
+          6,
+          901,
+          254
+        ],
+        "packed_bounds": [
+          36,
+          25,
+          95,
+          153
+        ],
+        "offset": [
+          36,
+          25
+        ]
+      },
+      {
+        "anchor": [
+          52.0,
+          254
+        ],
+        "source_row": 0,
+        "direction": "northeast",
+        "source_bounds": [
+          989,
+          0,
+          1097,
+          256
+        ],
+        "core_bounds": [
+          994,
+          4,
+          1089,
+          254
+        ],
+        "packed_bounds": [
+          38,
+          25,
+          92,
+          153
+        ],
+        "offset": [
+          38,
+          25
+        ]
+      },
+      {
+        "anchor": [
+          62.0,
+          254
+        ],
+        "source_row": 0,
+        "direction": "southwest",
+        "source_bounds": [
+          1166,
+          0,
+          1291,
+          256
+        ],
+        "core_bounds": [
+          1177,
+          3,
+          1281,
+          254
+        ],
+        "packed_bounds": [
+          33,
+          25,
+          95,
+          153
+        ],
+        "offset": [
+          33,
+          25
+        ]
+      },
+      {
+        "anchor": [
+          63.0,
+          255
+        ],
+        "source_row": 0,
+        "direction": "southeast",
+        "source_bounds": [
+          1362,
+          0,
+          1478,
+          256
+        ],
+        "core_bounds": [
+          1374,
+          3,
+          1476,
+          255
+        ],
+        "packed_bounds": [
+          32,
+          24,
+          90,
+          152
+        ],
+        "offset": [
+          32,
+          24
+        ]
+      },
+      {
+        "anchor": [
+          57.5,
+          252
+        ],
+        "source_row": 1,
+        "direction": "south",
+        "source_bounds": [
+          57,
+          256,
+          192,
+          512
+        ],
+        "core_bounds": [
+          63,
+          260,
+          180,
+          508
+        ],
+        "packed_bounds": [
+          35,
+          26,
+          103,
+          154
+        ],
+        "offset": [
+          35,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          79.5,
+          250
+        ],
+        "source_row": 1,
+        "direction": "west",
+        "source_bounds": [
+          211,
+          256,
+          369,
+          512
+        ],
+        "core_bounds": [
+          221,
+          262,
+          360,
+          506
+        ],
+        "packed_bounds": [
+          24,
+          27,
+          103,
+          155
+        ],
+        "offset": [
+          24,
+          27
+        ]
+      },
+      {
+        "anchor": [
+          78.5,
+          246
+        ],
+        "source_row": 1,
+        "direction": "east",
+        "source_bounds": [
+          397,
+          256,
+          550,
+          512
+        ],
+        "core_bounds": [
+          405,
+          262,
+          546,
+          502
+        ],
+        "packed_bounds": [
+          25,
+          29,
+          101,
+          157
+        ],
+        "offset": [
+          25,
+          29
+        ]
+      },
+      {
+        "anchor": [
+          62.0,
+          252
+        ],
+        "source_row": 1,
+        "direction": "north",
+        "source_bounds": [
+          605,
+          256,
+          725,
+          512
+        ],
+        "core_bounds": [
+          609,
+          259,
+          717,
+          508
+        ],
+        "packed_bounds": [
+          33,
+          26,
+          93,
+          154
+        ],
+        "offset": [
+          33,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          58.0,
+          251
+        ],
+        "source_row": 1,
+        "direction": "northwest",
+        "source_bounds": [
+          784,
+          256,
+          913,
+          512
+        ],
+        "core_bounds": [
+          793,
+          263,
+          905,
+          507
+        ],
+        "packed_bounds": [
+          35,
+          26,
+          99,
+          154
+        ],
+        "offset": [
+          35,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          57.0,
+          250
+        ],
+        "source_row": 1,
+        "direction": "northeast",
+        "source_bounds": [
+          975,
+          256,
+          1108,
+          512
+        ],
+        "core_bounds": [
+          985,
+          262,
+          1096,
+          506
+        ],
+        "packed_bounds": [
+          36,
+          27,
+          102,
+          155
+        ],
+        "offset": [
+          36,
+          27
+        ]
+      },
+      {
+        "anchor": [
+          81.0,
+          252
+        ],
+        "source_row": 1,
+        "direction": "southwest",
+        "source_bounds": [
+          1154,
+          256,
+          1302,
+          512
+        ],
+        "core_bounds": [
+          1166,
+          261,
+          1292,
+          508
+        ],
+        "packed_bounds": [
+          24,
+          26,
+          98,
+          154
+        ],
+        "offset": [
+          24,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          64.0,
+          252
+        ],
+        "source_row": 1,
+        "direction": "southeast",
+        "source_bounds": [
+          1357,
+          256,
+          1489,
+          512
+        ],
+        "core_bounds": [
+          1363,
+          260,
+          1485,
+          508
+        ],
+        "packed_bounds": [
+          32,
+          26,
+          98,
+          154
+        ],
+        "offset": [
+          32,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          62.5,
+          252
+        ],
+        "source_row": 2,
+        "direction": "south",
+        "source_bounds": [
+          59,
+          512,
+          188,
+          768
+        ],
+        "core_bounds": [
+          69,
+          515,
+          178,
+          764
+        ],
+        "packed_bounds": [
+          33,
+          26,
+          97,
+          154
+        ],
+        "offset": [
+          33,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          79.0,
+          247
+        ],
+        "source_row": 2,
+        "direction": "west",
+        "source_bounds": [
+          212,
+          512,
+          370,
+          768
+        ],
+        "core_bounds": [
+          220,
+          517,
+          362,
+          759
+        ],
+        "packed_bounds": [
+          24,
+          28,
+          103,
+          156
+        ],
+        "offset": [
+          24,
+          28
+        ]
+      },
+      {
+        "anchor": [
+          77.0,
+          247
+        ],
+        "source_row": 2,
+        "direction": "east",
+        "source_bounds": [
+          400,
+          513,
+          549,
+          768
+        ],
+        "core_bounds": [
+          408,
+          518,
+          546,
+          760
+        ],
+        "packed_bounds": [
+          26,
+          28,
+          100,
+          156
+        ],
+        "offset": [
+          26,
+          28
+        ]
+      },
+      {
+        "anchor": [
+          66.5,
+          252
+        ],
+        "source_row": 2,
+        "direction": "north",
+        "source_bounds": [
+          599,
+          512,
+          724,
+          768
+        ],
+        "core_bounds": [
+          609,
+          515,
+          717,
+          764
+        ],
+        "packed_bounds": [
+          32,
+          26,
+          93,
+          154
+        ],
+        "offset": [
+          31,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          53.0,
+          250
+        ],
+        "source_row": 2,
+        "direction": "northwest",
+        "source_bounds": [
+          785,
+          512,
+          917,
+          768
+        ],
+        "core_bounds": [
+          797,
+          516,
+          911,
+          762
+        ],
+        "packed_bounds": [
+          38,
+          27,
+          104,
+          155
+        ],
+        "offset": [
+          38,
+          27
+        ]
+      },
+      {
+        "anchor": [
+          55.5,
+          250
+        ],
+        "source_row": 2,
+        "direction": "northeast",
+        "source_bounds": [
+          973,
+          512,
+          1110,
+          768
+        ],
+        "core_bounds": [
+          982,
+          516,
+          1099,
+          762
+        ],
+        "packed_bounds": [
+          36,
+          27,
+          104,
+          155
+        ],
+        "offset": [
+          36,
+          27
+        ]
+      },
+      {
+        "anchor": [
+          71.0,
+          251
+        ],
+        "source_row": 2,
+        "direction": "southwest",
+        "source_bounds": [
+          1165,
+          512,
+          1300,
+          768
+        ],
+        "core_bounds": [
+          1170,
+          517,
+          1288,
+          763
+        ],
+        "packed_bounds": [
+          28,
+          26,
+          96,
+          154
+        ],
+        "offset": [
+          28,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          68.5,
+          251
+        ],
+        "source_row": 2,
+        "direction": "southeast",
+        "source_bounds": [
+          1355,
+          512,
+          1490,
+          766
+        ],
+        "core_bounds": [
+          1362,
+          516,
+          1479,
+          763
+        ],
+        "packed_bounds": [
+          30,
+          26,
+          98,
+          153
+        ],
+        "offset": [
+          30,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          91.0,
+          232
+        ],
+        "source_row": 3,
+        "direction": "south",
+        "source_bounds": [
+          15,
+          783,
+          195,
+          1024
+        ],
+        "core_bounds": [
+          17,
+          786,
+          186,
+          1015
+        ],
+        "packed_bounds": [
+          18,
+          36,
+          108,
+          156
+        ],
+        "offset": [
+          18,
+          36
+        ]
+      },
+      {
+        "anchor": [
+          110.0,
+          233
+        ],
+        "source_row": 3,
+        "direction": "west",
+        "source_bounds": [
+          191,
+          781,
+          374,
+          1024
+        ],
+        "core_bounds": [
+          202,
+          786,
+          370,
+          1014
+        ],
+        "packed_bounds": [
+          10,
+          36,
+          101,
+          158
+        ],
+        "offset": [
+          9,
+          36
+        ]
+      },
+      {
+        "anchor": [
+          72.5,
+          220
+        ],
+        "source_row": 3,
+        "direction": "east",
+        "source_bounds": [
+          372,
+          782,
+          563,
+          1008
+        ],
+        "core_bounds": [
+          376,
+          787,
+          552,
+          1002
+        ],
+        "packed_bounds": [
+          28,
+          42,
+          124,
+          155
+        ],
+        "offset": [
+          28,
+          42
+        ]
+      },
+      {
+        "anchor": [
+          102.0,
+          231
+        ],
+        "source_row": 3,
+        "direction": "north",
+        "source_bounds": [
+          545,
+          783,
+          755,
+          1024
+        ],
+        "core_bounds": [
+          557,
+          786,
+          743,
+          1014
+        ],
+        "packed_bounds": [
+          13,
+          36,
+          118,
+          156
+        ],
+        "offset": [
+          13,
+          36
+        ]
+      },
+      {
+        "anchor": [
+          92.0,
+          233
+        ],
+        "source_row": 3,
+        "direction": "northwest",
+        "source_bounds": [
+          747,
+          781,
+          926,
+          1024
+        ],
+        "core_bounds": [
+          759,
+          785,
+          917,
+          1014
+        ],
+        "packed_bounds": [
+          18,
+          36,
+          108,
+          158
+        ],
+        "offset": [
+          18,
+          36
+        ]
+      },
+      {
+        "anchor": [
+          96.0,
+          230
+        ],
+        "source_row": 3,
+        "direction": "northeast",
+        "source_bounds": [
+          925,
+          784,
+          1125,
+          1024
+        ],
+        "core_bounds": [
+          934,
+          786,
+          1115,
+          1014
+        ],
+        "packed_bounds": [
+          16,
+          37,
+          116,
+          157
+        ],
+        "offset": [
+          16,
+          37
+        ]
+      },
+      {
+        "anchor": [
+          100.0,
+          230
+        ],
+        "source_row": 3,
+        "direction": "southwest",
+        "source_bounds": [
+          1114,
+          783,
+          1301,
+          1016
+        ],
+        "core_bounds": [
+          1126,
+          790,
+          1295,
+          1013
+        ],
+        "packed_bounds": [
+          14,
+          38,
+          108,
+          153
+        ],
+        "offset": [
+          14,
+          37
+        ]
+      },
+      {
+        "anchor": [
+          94.0,
+          232
+        ],
+        "source_row": 3,
+        "direction": "southeast",
+        "source_bounds": [
+          1309,
+          781,
+          1488,
+          1024
+        ],
+        "core_bounds": [
+          1321,
+          788,
+          1485,
+          1013
+        ],
+        "packed_bounds": [
+          17,
+          36,
+          107,
+          158
+        ],
+        "offset": [
+          17,
+          36
+        ]
+      }
+    ]
+  },
+  "punk-1": {
+    "source": "tools/npc_sources/punk-1-keyframes.png",
+    "output": "assets/sprites/npcs/punk-1.png",
+    "scale": 0.5,
+    "source_poses": 32,
+    "nonempty_frames": 256,
+    "atlas_size": [
+      1024,
+      5120
+    ],
+    "poses": [
+      {
+        "anchor": [
+          66.5,
+          253
+        ],
+        "source_row": 0,
+        "direction": "south",
+        "source_bounds": [
+          46,
+          0,
+          193,
+          256
+        ],
+        "core_bounds": [
+          49,
+          2,
+          181,
+          253
+        ],
+        "packed_bounds": [
+          31,
+          26,
+          105,
+          154
+        ],
+        "offset": [
+          31,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          59.5,
+          252
+        ],
+        "source_row": 0,
+        "direction": "west",
+        "source_bounds": [
+          254,
+          0,
+          374,
+          256
+        ],
+        "core_bounds": [
+          261,
+          7,
+          370,
+          252
+        ],
+        "packed_bounds": [
+          34,
+          26,
+          94,
+          154
+        ],
+        "offset": [
+          34,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          49.0,
+          250
+        ],
+        "source_row": 0,
+        "direction": "east",
+        "source_bounds": [
+          463,
+          0,
+          578,
+          256
+        ],
+        "core_bounds": [
+          474,
+          8,
+          567,
+          250
+        ],
+        "packed_bounds": [
+          40,
+          27,
+          98,
+          155
+        ],
+        "offset": [
+          40,
+          27
+        ]
+      },
+      {
+        "anchor": [
+          76.5,
+          253
+        ],
+        "source_row": 0,
+        "direction": "north",
+        "source_bounds": [
+          626,
+          0,
+          772,
+          256
+        ],
+        "core_bounds": [
+          638,
+          2,
+          760,
+          253
+        ],
+        "packed_bounds": [
+          26,
+          26,
+          99,
+          154
+        ],
+        "offset": [
+          26,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          53.5,
+          253
+        ],
+        "source_row": 0,
+        "direction": "northwest",
+        "source_bounds": [
+          829,
+          0,
+          937,
+          256
+        ],
+        "core_bounds": [
+          839,
+          7,
+          929,
+          253
+        ],
+        "packed_bounds": [
+          37,
+          26,
+          91,
+          154
+        ],
+        "offset": [
+          37,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          63.5,
+          253
+        ],
+        "source_row": 0,
+        "direction": "northeast",
+        "source_bounds": [
+          1023,
+          0,
+          1141,
+          256
+        ],
+        "core_bounds": [
+          1033,
+          6,
+          1136,
+          253
+        ],
+        "packed_bounds": [
+          32,
+          26,
+          91,
+          154
+        ],
+        "offset": [
+          32,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          65.0,
+          254
+        ],
+        "source_row": 0,
+        "direction": "southwest",
+        "source_bounds": [
+          1183,
+          0,
+          1315,
+          256
+        ],
+        "core_bounds": [
+          1192,
+          7,
+          1309,
+          254
+        ],
+        "packed_bounds": [
+          32,
+          25,
+          98,
+          153
+        ],
+        "offset": [
+          32,
+          25
+        ]
+      },
+      {
+        "anchor": [
+          57.0,
+          254
+        ],
+        "source_row": 0,
+        "direction": "southeast",
+        "source_bounds": [
+          1390,
+          0,
+          1499,
+          256
+        ],
+        "core_bounds": [
+          1401,
+          7,
+          1491,
+          254
+        ],
+        "packed_bounds": [
+          36,
+          25,
+          90,
+          153
+        ],
+        "offset": [
+          36,
+          25
+        ]
+      },
+      {
+        "anchor": [
+          60.5,
+          250
+        ],
+        "source_row": 1,
+        "direction": "south",
+        "source_bounds": [
+          47,
+          256,
+          195,
+          512
+        ],
+        "core_bounds": [
+          49,
+          257,
+          184,
+          506
+        ],
+        "packed_bounds": [
+          34,
+          27,
+          108,
+          155
+        ],
+        "offset": [
+          34,
+          27
+        ]
+      },
+      {
+        "anchor": [
+          77.0,
+          246
+        ],
+        "source_row": 1,
+        "direction": "west",
+        "source_bounds": [
+          246,
+          256,
+          394,
+          512
+        ],
+        "core_bounds": [
+          258,
+          261,
+          388,
+          502
+        ],
+        "packed_bounds": [
+          26,
+          29,
+          100,
+          157
+        ],
+        "offset": [
+          26,
+          29
+        ]
+      },
+      {
+        "anchor": [
+          71.0,
+          246
+        ],
+        "source_row": 1,
+        "direction": "east",
+        "source_bounds": [
+          445,
+          256,
+          589,
+          512
+        ],
+        "core_bounds": [
+          454,
+          264,
+          578,
+          502
+        ],
+        "packed_bounds": [
+          28,
+          29,
+          100,
+          157
+        ],
+        "offset": [
+          28,
+          29
+        ]
+      },
+      {
+        "anchor": [
+          89.5,
+          251
+        ],
+        "source_row": 1,
+        "direction": "north",
+        "source_bounds": [
+          624,
+          256,
+          767,
+          512
+        ],
+        "core_bounds": [
+          636,
+          259,
+          758,
+          507
+        ],
+        "packed_bounds": [
+          19,
+          26,
+          91,
+          154
+        ],
+        "offset": [
+          19,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          63.0,
+          250
+        ],
+        "source_row": 1,
+        "direction": "northwest",
+        "source_bounds": [
+          825,
+          256,
+          937,
+          512
+        ],
+        "core_bounds": [
+          837,
+          263,
+          927,
+          506
+        ],
+        "packed_bounds": [
+          32,
+          27,
+          88,
+          155
+        ],
+        "offset": [
+          32,
+          27
+        ]
+      },
+      {
+        "anchor": [
+          73.5,
+          250
+        ],
+        "source_row": 1,
+        "direction": "northeast",
+        "source_bounds": [
+          1007,
+          256,
+          1145,
+          512
+        ],
+        "core_bounds": [
+          1019,
+          263,
+          1133,
+          506
+        ],
+        "packed_bounds": [
+          27,
+          27,
+          96,
+          155
+        ],
+        "offset": [
+          27,
+          27
+        ]
+      },
+      {
+        "anchor": [
+          59.0,
+          250
+        ],
+        "source_row": 1,
+        "direction": "southwest",
+        "source_bounds": [
+          1181,
+          256,
+          1317,
+          512
+        ],
+        "core_bounds": [
+          1190,
+          262,
+          1312,
+          506
+        ],
+        "packed_bounds": [
+          34,
+          27,
+          102,
+          155
+        ],
+        "offset": [
+          34,
+          27
+        ]
+      },
+      {
+        "anchor": [
+          60.0,
+          250
+        ],
+        "source_row": 1,
+        "direction": "southeast",
+        "source_bounds": [
+          1380,
+          256,
+          1498,
+          512
+        ],
+        "core_bounds": [
+          1392,
+          260,
+          1490,
+          506
+        ],
+        "packed_bounds": [
+          34,
+          27,
+          93,
+          155
+        ],
+        "offset": [
+          34,
+          27
+        ]
+      },
+      {
+        "anchor": [
+          59.0,
+          250
+        ],
+        "source_row": 2,
+        "direction": "south",
+        "source_bounds": [
+          45,
+          512,
+          189,
+          768
+        ],
+        "core_bounds": [
+          51,
+          515,
+          177,
+          762
+        ],
+        "packed_bounds": [
+          34,
+          27,
+          106,
+          155
+        ],
+        "offset": [
+          34,
+          27
+        ]
+      },
+      {
+        "anchor": [
+          76.0,
+          245
+        ],
+        "source_row": 2,
+        "direction": "west",
+        "source_bounds": [
+          249,
+          512,
+          401,
+          768
+        ],
+        "core_bounds": [
+          261,
+          518,
+          389,
+          757
+        ],
+        "packed_bounds": [
+          26,
+          30,
+          102,
+          158
+        ],
+        "offset": [
+          26,
+          30
+        ]
+      },
+      {
+        "anchor": [
+          77.0,
+          244
+        ],
+        "source_row": 2,
+        "direction": "east",
+        "source_bounds": [
+          434,
+          512,
+          588,
+          768
+        ],
+        "core_bounds": [
+          446,
+          522,
+          576,
+          756
+        ],
+        "packed_bounds": [
+          26,
+          30,
+          103,
+          158
+        ],
+        "offset": [
+          26,
+          30
+        ]
+      },
+      {
+        "anchor": [
+          84.0,
+          249
+        ],
+        "source_row": 2,
+        "direction": "north",
+        "source_bounds": [
+          627,
+          512,
+          767,
+          768
+        ],
+        "core_bounds": [
+          639,
+          516,
+          755,
+          761
+        ],
+        "packed_bounds": [
+          22,
+          28,
+          92,
+          156
+        ],
+        "offset": [
+          22,
+          28
+        ]
+      },
+      {
+        "anchor": [
+          50.5,
+          249
+        ],
+        "source_row": 2,
+        "direction": "northwest",
+        "source_bounds": [
+          830,
+          512,
+          941,
+          768
+        ],
+        "core_bounds": [
+          838,
+          518,
+          931,
+          761
+        ],
+        "packed_bounds": [
+          39,
+          28,
+          95,
+          156
+        ],
+        "offset": [
+          39,
+          28
+        ]
+      },
+      {
+        "anchor": [
+          82.0,
+          249
+        ],
+        "source_row": 2,
+        "direction": "northeast",
+        "source_bounds": [
+          1001,
+          512,
+          1141,
+          768
+        ],
+        "core_bounds": [
+          1013,
+          517,
+          1130,
+          761
+        ],
+        "packed_bounds": [
+          23,
+          28,
+          93,
+          156
+        ],
+        "offset": [
+          23,
+          28
+        ]
+      },
+      {
+        "anchor": [
+          60.5,
+          249
+        ],
+        "source_row": 2,
+        "direction": "southwest",
+        "source_bounds": [
+          1180,
+          512,
+          1316,
+          768
+        ],
+        "core_bounds": [
+          1187,
+          521,
+          1312,
+          761
+        ],
+        "packed_bounds": [
+          34,
+          28,
+          102,
+          156
+        ],
+        "offset": [
+          34,
+          28
+        ]
+      },
+      {
+        "anchor": [
+          53.5,
+          250
+        ],
+        "source_row": 2,
+        "direction": "southeast",
+        "source_bounds": [
+          1373,
+          512,
+          1492,
+          768
+        ],
+        "core_bounds": [
+          1385,
+          518,
+          1489,
+          762
+        ],
+        "packed_bounds": [
+          37,
+          27,
+          97,
+          155
+        ],
+        "offset": [
+          37,
+          27
+        ]
+      },
+      {
+        "anchor": [
+          79.5,
+          253
+        ],
+        "source_row": 3,
+        "direction": "south",
+        "source_bounds": [
+          27,
+          768,
+          212,
+          1024
+        ],
+        "core_bounds": [
+          33,
+          771,
+          203,
+          1021
+        ],
+        "packed_bounds": [
+          24,
+          26,
+          116,
+          154
+        ],
+        "offset": [
+          24,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          87.5,
+          251
+        ],
+        "source_row": 3,
+        "direction": "west",
+        "source_bounds": [
+          219,
+          768,
+          386,
+          1024
+        ],
+        "core_bounds": [
+          229,
+          779,
+          377,
+          1019
+        ],
+        "packed_bounds": [
+          20,
+          26,
+          104,
+          154
+        ],
+        "offset": [
+          20,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          87.0,
+          251
+        ],
+        "source_row": 3,
+        "direction": "east",
+        "source_bounds": [
+          399,
+          768,
+          591,
+          1024
+        ],
+        "core_bounds": [
+          411,
+          780,
+          579,
+          1019
+        ],
+        "packed_bounds": [
+          20,
+          26,
+          116,
+          154
+        ],
+        "offset": [
+          20,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          84.5,
+          253
+        ],
+        "source_row": 3,
+        "direction": "north",
+        "source_bounds": [
+          584,
+          768,
+          773,
+          1024
+        ],
+        "core_bounds": [
+          596,
+          772,
+          761,
+          1021
+        ],
+        "packed_bounds": [
+          22,
+          26,
+          116,
+          154
+        ],
+        "offset": [
+          22,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          79.5,
+          253
+        ],
+        "source_row": 3,
+        "direction": "northwest",
+        "source_bounds": [
+          780,
+          768,
+          948,
+          1024
+        ],
+        "core_bounds": [
+          792,
+          779,
+          940,
+          1021
+        ],
+        "packed_bounds": [
+          24,
+          26,
+          108,
+          154
+        ],
+        "offset": [
+          24,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          83.0,
+          252
+        ],
+        "source_row": 3,
+        "direction": "northeast",
+        "source_bounds": [
+          973,
+          768,
+          1135,
+          1024
+        ],
+        "core_bounds": [
+          983,
+          779,
+          1123,
+          1020
+        ],
+        "packed_bounds": [
+          22,
+          26,
+          103,
+          154
+        ],
+        "offset": [
+          22,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          77.5,
+          253
+        ],
+        "source_row": 3,
+        "direction": "southwest",
+        "source_bounds": [
+          1162,
+          768,
+          1316,
+          1024
+        ],
+        "core_bounds": [
+          1173,
+          771,
+          1312,
+          1021
+        ],
+        "packed_bounds": [
+          25,
+          26,
+          102,
+          154
+        ],
+        "offset": [
+          25,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          85.0,
+          253
+        ],
+        "source_row": 3,
+        "direction": "southeast",
+        "source_bounds": [
+          1344,
+          768,
+          1523,
+          1024
+        ],
+        "core_bounds": [
+          1356,
+          775,
+          1514,
+          1021
+        ],
+        "packed_bounds": [
+          22,
+          26,
+          112,
+          154
+        ],
+        "offset": [
+          22,
+          26
+        ]
+      }
+    ]
+  },
+  "punk-2": {
+    "source": "tools/npc_sources/punk-2-keyframes.png",
+    "output": "assets/sprites/npcs/punk-2.png",
+    "scale": 0.5,
+    "source_poses": 32,
+    "nonempty_frames": 256,
+    "atlas_size": [
+      1024,
+      5120
+    ],
+    "poses": [
+      {
+        "anchor": [
+          57.0,
+          253
+        ],
+        "source_row": 0,
+        "direction": "south",
+        "source_bounds": [
+          47,
+          0,
+          162,
+          256
+        ],
+        "core_bounds": [
+          51,
+          4,
+          157,
+          253
+        ],
+        "packed_bounds": [
+          36,
+          26,
+          94,
+          154
+        ],
+        "offset": [
+          36,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          56.5,
+          254
+        ],
+        "source_row": 0,
+        "direction": "west",
+        "source_bounds": [
+          251,
+          0,
+          354,
+          256
+        ],
+        "core_bounds": [
+          255,
+          7,
+          346,
+          254
+        ],
+        "packed_bounds": [
+          36,
+          25,
+          88,
+          153
+        ],
+        "offset": [
+          36,
+          25
+        ]
+      },
+      {
+        "anchor": [
+          45.5,
+          252
+        ],
+        "source_row": 0,
+        "direction": "east",
+        "source_bounds": [
+          430,
+          0,
+          531,
+          256
+        ],
+        "core_bounds": [
+          436,
+          4,
+          529,
+          252
+        ],
+        "packed_bounds": [
+          41,
+          26,
+          91,
+          154
+        ],
+        "offset": [
+          41,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          55.0,
+          253
+        ],
+        "source_row": 0,
+        "direction": "north",
+        "source_bounds": [
+          621,
+          0,
+          738,
+          256
+        ],
+        "core_bounds": [
+          624,
+          5,
+          730,
+          253
+        ],
+        "packed_bounds": [
+          36,
+          26,
+          94,
+          154
+        ],
+        "offset": [
+          36,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          61.5,
+          253
+        ],
+        "source_row": 0,
+        "direction": "northwest",
+        "source_bounds": [
+          811,
+          0,
+          929,
+          256
+        ],
+        "core_bounds": [
+          818,
+          5,
+          919,
+          253
+        ],
+        "packed_bounds": [
+          33,
+          26,
+          92,
+          154
+        ],
+        "offset": [
+          33,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          53.5,
+          253
+        ],
+        "source_row": 0,
+        "direction": "northeast",
+        "source_bounds": [
+          1003,
+          0,
+          1122,
+          256
+        ],
+        "core_bounds": [
+          1006,
+          6,
+          1114,
+          253
+        ],
+        "packed_bounds": [
+          37,
+          26,
+          97,
+          154
+        ],
+        "offset": [
+          37,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          61.0,
+          254
+        ],
+        "source_row": 0,
+        "direction": "southwest",
+        "source_bounds": [
+          1187,
+          0,
+          1303,
+          256
+        ],
+        "core_bounds": [
+          1197,
+          4,
+          1299,
+          254
+        ],
+        "packed_bounds": [
+          34,
+          25,
+          92,
+          153
+        ],
+        "offset": [
+          34,
+          25
+        ]
+      },
+      {
+        "anchor": [
+          61.0,
+          254
+        ],
+        "source_row": 0,
+        "direction": "southeast",
+        "source_bounds": [
+          1377,
+          0,
+          1492,
+          256
+        ],
+        "core_bounds": [
+          1386,
+          4,
+          1490,
+          254
+        ],
+        "packed_bounds": [
+          34,
+          25,
+          92,
+          153
+        ],
+        "offset": [
+          34,
+          25
+        ]
+      },
+      {
+        "anchor": [
+          54.5,
+          252
+        ],
+        "source_row": 1,
+        "direction": "south",
+        "source_bounds": [
+          45,
+          256,
+          162,
+          512
+        ],
+        "core_bounds": [
+          52,
+          259,
+          153,
+          508
+        ],
+        "packed_bounds": [
+          37,
+          26,
+          95,
+          154
+        ],
+        "offset": [
+          37,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          69.5,
+          247
+        ],
+        "source_row": 1,
+        "direction": "west",
+        "source_bounds": [
+          225,
+          256,
+          363,
+          512
+        ],
+        "core_bounds": [
+          229,
+          261,
+          360,
+          503
+        ],
+        "packed_bounds": [
+          29,
+          28,
+          98,
+          156
+        ],
+        "offset": [
+          29,
+          28
+        ]
+      },
+      {
+        "anchor": [
+          71.5,
+          247
+        ],
+        "source_row": 1,
+        "direction": "east",
+        "source_bounds": [
+          416,
+          256,
+          557,
+          512
+        ],
+        "core_bounds": [
+          422,
+          259,
+          553,
+          503
+        ],
+        "packed_bounds": [
+          28,
+          28,
+          98,
+          156
+        ],
+        "offset": [
+          28,
+          28
+        ]
+      },
+      {
+        "anchor": [
+          53.5,
+          251
+        ],
+        "source_row": 1,
+        "direction": "north",
+        "source_bounds": [
+          622,
+          256,
+          738,
+          512
+        ],
+        "core_bounds": [
+          627,
+          260,
+          730,
+          507
+        ],
+        "packed_bounds": [
+          37,
+          26,
+          95,
+          154
+        ],
+        "offset": [
+          37,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          66.0,
+          251
+        ],
+        "source_row": 1,
+        "direction": "northwest",
+        "source_bounds": [
+          814,
+          256,
+          930,
+          512
+        ],
+        "core_bounds": [
+          818,
+          260,
+          927,
+          507
+        ],
+        "packed_bounds": [
+          31,
+          26,
+          89,
+          154
+        ],
+        "offset": [
+          31,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          56.0,
+          251
+        ],
+        "source_row": 1,
+        "direction": "northeast",
+        "source_bounds": [
+          991,
+          256,
+          1121,
+          512
+        ],
+        "core_bounds": [
+          1002,
+          261,
+          1113,
+          507
+        ],
+        "packed_bounds": [
+          36,
+          26,
+          101,
+          154
+        ],
+        "offset": [
+          36,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          61.5,
+          252
+        ],
+        "source_row": 1,
+        "direction": "southwest",
+        "source_bounds": [
+          1193,
+          256,
+          1305,
+          512
+        ],
+        "core_bounds": [
+          1200,
+          260,
+          1300,
+          508
+        ],
+        "packed_bounds": [
+          33,
+          26,
+          89,
+          154
+        ],
+        "offset": [
+          33,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          47.0,
+          252
+        ],
+        "source_row": 1,
+        "direction": "southeast",
+        "source_bounds": [
+          1384,
+          256,
+          1502,
+          512
+        ],
+        "core_bounds": [
+          1388,
+          259,
+          1492,
+          508
+        ],
+        "packed_bounds": [
+          40,
+          26,
+          99,
+          154
+        ],
+        "offset": [
+          40,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          57.0,
+          252
+        ],
+        "source_row": 2,
+        "direction": "south",
+        "source_bounds": [
+          47,
+          512,
+          163,
+          768
+        ],
+        "core_bounds": [
+          53,
+          515,
+          154,
+          764
+        ],
+        "packed_bounds": [
+          36,
+          26,
+          94,
+          154
+        ],
+        "offset": [
+          36,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          72.0,
+          248
+        ],
+        "source_row": 2,
+        "direction": "west",
+        "source_bounds": [
+          224,
+          512,
+          371,
+          768
+        ],
+        "core_bounds": [
+          228,
+          516,
+          364,
+          760
+        ],
+        "packed_bounds": [
+          28,
+          28,
+          102,
+          156
+        ],
+        "offset": [
+          28,
+          28
+        ]
+      },
+      {
+        "anchor": [
+          80.0,
+          248
+        ],
+        "source_row": 2,
+        "direction": "east",
+        "source_bounds": [
+          404,
+          512,
+          562,
+          768
+        ],
+        "core_bounds": [
+          414,
+          515,
+          554,
+          760
+        ],
+        "packed_bounds": [
+          24,
+          28,
+          103,
+          156
+        ],
+        "offset": [
+          24,
+          28
+        ]
+      },
+      {
+        "anchor": [
+          59.5,
+          250
+        ],
+        "source_row": 2,
+        "direction": "north",
+        "source_bounds": [
+          617,
+          512,
+          739,
+          768
+        ],
+        "core_bounds": [
+          627,
+          517,
+          730,
+          762
+        ],
+        "packed_bounds": [
+          34,
+          27,
+          95,
+          155
+        ],
+        "offset": [
+          34,
+          27
+        ]
+      },
+      {
+        "anchor": [
+          65.0,
+          250
+        ],
+        "source_row": 2,
+        "direction": "northwest",
+        "source_bounds": [
+          814,
+          512,
+          919,
+          768
+        ],
+        "core_bounds": [
+          818,
+          516,
+          916,
+          762
+        ],
+        "packed_bounds": [
+          32,
+          27,
+          84,
+          155
+        ],
+        "offset": [
+          32,
+          27
+        ]
+      },
+      {
+        "anchor": [
+          42.0,
+          249
+        ],
+        "source_row": 2,
+        "direction": "northeast",
+        "source_bounds": [
+          1005,
+          512,
+          1123,
+          768
+        ],
+        "core_bounds": [
+          1008,
+          517,
+          1114,
+          761
+        ],
+        "packed_bounds": [
+          43,
+          28,
+          102,
+          156
+        ],
+        "offset": [
+          43,
+          28
+        ]
+      },
+      {
+        "anchor": [
+          61.5,
+          251
+        ],
+        "source_row": 2,
+        "direction": "southwest",
+        "source_bounds": [
+          1186,
+          512,
+          1307,
+          768
+        ],
+        "core_bounds": [
+          1196,
+          516,
+          1299,
+          763
+        ],
+        "packed_bounds": [
+          33,
+          26,
+          93,
+          154
+        ],
+        "offset": [
+          33,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          50.0,
+          251
+        ],
+        "source_row": 2,
+        "direction": "southeast",
+        "source_bounds": [
+          1375,
+          512,
+          1502,
+          768
+        ],
+        "core_bounds": [
+          1381,
+          515,
+          1492,
+          763
+        ],
+        "packed_bounds": [
+          39,
+          26,
+          103,
+          154
+        ],
+        "offset": [
+          39,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          77.5,
+          241
+        ],
+        "source_row": 3,
+        "direction": "south",
+        "source_bounds": [
+          21,
+          779,
+          177,
+          1024
+        ],
+        "core_bounds": [
+          27,
+          783,
+          170,
+          1020
+        ],
+        "packed_bounds": [
+          25,
+          32,
+          103,
+          154
+        ],
+        "offset": [
+          25,
+          32
+        ]
+      },
+      {
+        "anchor": [
+          90.0,
+          234
+        ],
+        "source_row": 3,
+        "direction": "west",
+        "source_bounds": [
+          207,
+          778,
+          377,
+          1015
+        ],
+        "core_bounds": [
+          214,
+          786,
+          369,
+          1012
+        ],
+        "packed_bounds": [
+          19,
+          35,
+          104,
+          153
+        ],
+        "offset": [
+          19,
+          35
+        ]
+      },
+      {
+        "anchor": [
+          78.0,
+          233
+        ],
+        "source_row": 3,
+        "direction": "east",
+        "source_bounds": [
+          392,
+          781,
+          563,
+          1024
+        ],
+        "core_bounds": [
+          403,
+          785,
+          560,
+          1014
+        ],
+        "packed_bounds": [
+          25,
+          36,
+          110,
+          158
+        ],
+        "offset": [
+          25,
+          36
+        ]
+      },
+      {
+        "anchor": [
+          81.5,
+          246
+        ],
+        "source_row": 3,
+        "direction": "north",
+        "source_bounds": [
+          589,
+          773,
+          750,
+          1024
+        ],
+        "core_bounds": [
+          597,
+          783,
+          744,
+          1019
+        ],
+        "packed_bounds": [
+          23,
+          29,
+          103,
+          155
+        ],
+        "offset": [
+          23,
+          29
+        ]
+      },
+      {
+        "anchor": [
+          78.0,
+          248
+        ],
+        "source_row": 3,
+        "direction": "northwest",
+        "source_bounds": [
+          791,
+          771,
+          948,
+          1024
+        ],
+        "core_bounds": [
+          796,
+          783,
+          940,
+          1019
+        ],
+        "packed_bounds": [
+          25,
+          28,
+          103,
+          154
+        ],
+        "offset": [
+          25,
+          28
+        ]
+      },
+      {
+        "anchor": [
+          80.0,
+          238
+        ],
+        "source_row": 3,
+        "direction": "northeast",
+        "source_bounds": [
+          976,
+          781,
+          1133,
+          1024
+        ],
+        "core_bounds": [
+          983,
+          784,
+          1129,
+          1019
+        ],
+        "packed_bounds": [
+          24,
+          33,
+          102,
+          155
+        ],
+        "offset": [
+          24,
+          33
+        ]
+      },
+      {
+        "anchor": [
+          73.5,
+          242
+        ],
+        "source_row": 3,
+        "direction": "southwest",
+        "source_bounds": [
+          1180,
+          779,
+          1318,
+          1024
+        ],
+        "core_bounds": [
+          1182,
+          786,
+          1316,
+          1021
+        ],
+        "packed_bounds": [
+          28,
+          31,
+          96,
+          153
+        ],
+        "offset": [
+          27,
+          31
+        ]
+      },
+      {
+        "anchor": [
+          81.5,
+          249
+        ],
+        "source_row": 3,
+        "direction": "southeast",
+        "source_bounds": [
+          1357,
+          772,
+          1520,
+          1024
+        ],
+        "core_bounds": [
+          1361,
+          784,
+          1509,
+          1021
+        ],
+        "packed_bounds": [
+          23,
+          28,
+          105,
+          154
+        ],
+        "offset": [
+          23,
+          28
+        ]
+      }
+    ]
+  },
+  "punk-3": {
+    "source": "tools/npc_sources/punk-3-keyframes.png",
+    "output": "assets/sprites/npcs/punk-3.png",
+    "scale": 0.5,
+    "source_poses": 32,
+    "nonempty_frames": 256,
+    "atlas_size": [
+      1024,
+      5120
+    ],
+    "poses": [
+      {
+        "anchor": [
+          77.5,
+          251
+        ],
+        "source_row": 0,
+        "direction": "south",
+        "source_bounds": [
+          33,
+          0,
+          197,
+          256
+        ],
+        "core_bounds": [
+          43,
+          3,
+          190,
+          251
+        ],
+        "packed_bounds": [
+          25,
+          26,
+          107,
+          154
+        ],
+        "offset": [
+          25,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          65.0,
+          252
+        ],
+        "source_row": 0,
+        "direction": "west",
+        "source_bounds": [
+          237,
+          0,
+          366,
+          256
+        ],
+        "core_bounds": [
+          246,
+          5,
+          355,
+          252
+        ],
+        "packed_bounds": [
+          32,
+          26,
+          96,
+          154
+        ],
+        "offset": [
+          32,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          53.5,
+          251
+        ],
+        "source_row": 0,
+        "direction": "east",
+        "source_bounds": [
+          443,
+          0,
+          547,
+          256
+        ],
+        "core_bounds": [
+          454,
+          3,
+          539,
+          251
+        ],
+        "packed_bounds": [
+          37,
+          26,
+          89,
+          154
+        ],
+        "offset": [
+          37,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          85.5,
+          250
+        ],
+        "source_row": 0,
+        "direction": "north",
+        "source_bounds": [
+          606,
+          0,
+          762,
+          256
+        ],
+        "core_bounds": [
+          618,
+          3,
+          753,
+          250
+        ],
+        "packed_bounds": [
+          21,
+          27,
+          99,
+          155
+        ],
+        "offset": [
+          21,
+          27
+        ]
+      },
+      {
+        "anchor": [
+          65.5,
+          251
+        ],
+        "source_row": 0,
+        "direction": "northwest",
+        "source_bounds": [
+          811,
+          0,
+          934,
+          256
+        ],
+        "core_bounds": [
+          818,
+          3,
+          930,
+          251
+        ],
+        "packed_bounds": [
+          31,
+          26,
+          93,
+          154
+        ],
+        "offset": [
+          31,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          78.0,
+          250
+        ],
+        "source_row": 0,
+        "direction": "northeast",
+        "source_bounds": [
+          994,
+          0,
+          1143,
+          256
+        ],
+        "core_bounds": [
+          1006,
+          5,
+          1131,
+          250
+        ],
+        "packed_bounds": [
+          25,
+          27,
+          99,
+          155
+        ],
+        "offset": [
+          25,
+          27
+        ]
+      },
+      {
+        "anchor": [
+          76.5,
+          252
+        ],
+        "source_row": 0,
+        "direction": "southwest",
+        "source_bounds": [
+          1160,
+          0,
+          1319,
+          256
+        ],
+        "core_bounds": [
+          1172,
+          5,
+          1310,
+          252
+        ],
+        "packed_bounds": [
+          26,
+          26,
+          106,
+          154
+        ],
+        "offset": [
+          26,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          68.5,
+          250
+        ],
+        "source_row": 0,
+        "direction": "southeast",
+        "source_bounds": [
+          1374,
+          0,
+          1506,
+          256
+        ],
+        "core_bounds": [
+          1385,
+          5,
+          1496,
+          250
+        ],
+        "packed_bounds": [
+          30,
+          27,
+          96,
+          155
+        ],
+        "offset": [
+          30,
+          27
+        ]
+      },
+      {
+        "anchor": [
+          69.5,
+          251
+        ],
+        "source_row": 1,
+        "direction": "south",
+        "source_bounds": [
+          41,
+          256,
+          195,
+          512
+        ],
+        "core_bounds": [
+          49,
+          259,
+          189,
+          507
+        ],
+        "packed_bounds": [
+          29,
+          26,
+          106,
+          154
+        ],
+        "offset": [
+          29,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          78.0,
+          250
+        ],
+        "source_row": 1,
+        "direction": "west",
+        "source_bounds": [
+          228,
+          256,
+          383,
+          512
+        ],
+        "core_bounds": [
+          240,
+          261,
+          372,
+          506
+        ],
+        "packed_bounds": [
+          25,
+          27,
+          103,
+          155
+        ],
+        "offset": [
+          25,
+          27
+        ]
+      },
+      {
+        "anchor": [
+          79.5,
+          246
+        ],
+        "source_row": 1,
+        "direction": "east",
+        "source_bounds": [
+          414,
+          256,
+          566,
+          512
+        ],
+        "core_bounds": [
+          426,
+          260,
+          561,
+          502
+        ],
+        "packed_bounds": [
+          24,
+          29,
+          100,
+          157
+        ],
+        "offset": [
+          24,
+          29
+        ]
+      },
+      {
+        "anchor": [
+          84.5,
+          251
+        ],
+        "source_row": 1,
+        "direction": "north",
+        "source_bounds": [
+          607,
+          256,
+          758,
+          512
+        ],
+        "core_bounds": [
+          619,
+          261,
+          749,
+          507
+        ],
+        "packed_bounds": [
+          22,
+          26,
+          98,
+          154
+        ],
+        "offset": [
+          22,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          69.5,
+          251
+        ],
+        "source_row": 1,
+        "direction": "northwest",
+        "source_bounds": [
+          804,
+          256,
+          945,
+          512
+        ],
+        "core_bounds": [
+          812,
+          262,
+          933,
+          507
+        ],
+        "packed_bounds": [
+          29,
+          26,
+          99,
+          154
+        ],
+        "offset": [
+          29,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          73.0,
+          250
+        ],
+        "source_row": 1,
+        "direction": "northeast",
+        "source_bounds": [
+          994,
+          256,
+          1140,
+          512
+        ],
+        "core_bounds": [
+          1006,
+          261,
+          1128,
+          506
+        ],
+        "packed_bounds": [
+          28,
+          27,
+          101,
+          155
+        ],
+        "offset": [
+          28,
+          27
+        ]
+      },
+      {
+        "anchor": [
+          72.0,
+          251
+        ],
+        "source_row": 1,
+        "direction": "southwest",
+        "source_bounds": [
+          1165,
+          256,
+          1318,
+          512
+        ],
+        "core_bounds": [
+          1172,
+          265,
+          1311,
+          507
+        ],
+        "packed_bounds": [
+          28,
+          26,
+          104,
+          154
+        ],
+        "offset": [
+          28,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          64.5,
+          252
+        ],
+        "source_row": 1,
+        "direction": "southeast",
+        "source_bounds": [
+          1371,
+          256,
+          1506,
+          512
+        ],
+        "core_bounds": [
+          1379,
+          264,
+          1495,
+          508
+        ],
+        "packed_bounds": [
+          32,
+          26,
+          100,
+          154
+        ],
+        "offset": [
+          32,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          73.0,
+          249
+        ],
+        "source_row": 2,
+        "direction": "south",
+        "source_bounds": [
+          35,
+          512,
+          198,
+          768
+        ],
+        "core_bounds": [
+          47,
+          517,
+          190,
+          761
+        ],
+        "packed_bounds": [
+          28,
+          28,
+          110,
+          156
+        ],
+        "offset": [
+          28,
+          28
+        ]
+      },
+      {
+        "anchor": [
+          85.5,
+          249
+        ],
+        "source_row": 2,
+        "direction": "west",
+        "source_bounds": [
+          223,
+          512,
+          394,
+          768
+        ],
+        "core_bounds": [
+          235,
+          519,
+          382,
+          761
+        ],
+        "packed_bounds": [
+          21,
+          28,
+          107,
+          156
+        ],
+        "offset": [
+          21,
+          28
+        ]
+      },
+      {
+        "anchor": [
+          74.5,
+          246
+        ],
+        "source_row": 2,
+        "direction": "east",
+        "source_bounds": [
+          425,
+          512,
+          580,
+          768
+        ],
+        "core_bounds": [
+          429,
+          518,
+          570,
+          758
+        ],
+        "packed_bounds": [
+          27,
+          29,
+          105,
+          157
+        ],
+        "offset": [
+          27,
+          29
+        ]
+      },
+      {
+        "anchor": [
+          84.0,
+          249
+        ],
+        "source_row": 2,
+        "direction": "north",
+        "source_bounds": [
+          606,
+          512,
+          761,
+          768
+        ],
+        "core_bounds": [
+          618,
+          518,
+          750,
+          761
+        ],
+        "packed_bounds": [
+          22,
+          28,
+          100,
+          156
+        ],
+        "offset": [
+          22,
+          28
+        ]
+      },
+      {
+        "anchor": [
+          69.0,
+          250
+        ],
+        "source_row": 2,
+        "direction": "northwest",
+        "source_bounds": [
+          810,
+          512,
+          953,
+          768
+        ],
+        "core_bounds": [
+          817,
+          519,
+          941,
+          762
+        ],
+        "packed_bounds": [
+          30,
+          27,
+          102,
+          155
+        ],
+        "offset": [
+          30,
+          27
+        ]
+      },
+      {
+        "anchor": [
+          75.0,
+          248
+        ],
+        "source_row": 2,
+        "direction": "northeast",
+        "source_bounds": [
+          991,
+          512,
+          1141,
+          768
+        ],
+        "core_bounds": [
+          1003,
+          520,
+          1129,
+          760
+        ],
+        "packed_bounds": [
+          26,
+          28,
+          101,
+          156
+        ],
+        "offset": [
+          26,
+          28
+        ]
+      },
+      {
+        "anchor": [
+          76.5,
+          249
+        ],
+        "source_row": 2,
+        "direction": "southwest",
+        "source_bounds": [
+          1163,
+          512,
+          1316,
+          768
+        ],
+        "core_bounds": [
+          1172,
+          522,
+          1313,
+          761
+        ],
+        "packed_bounds": [
+          26,
+          28,
+          102,
+          156
+        ],
+        "offset": [
+          26,
+          28
+        ]
+      },
+      {
+        "anchor": [
+          60.5,
+          249
+        ],
+        "source_row": 2,
+        "direction": "southeast",
+        "source_bounds": [
+          1373,
+          512,
+          1503,
+          768
+        ],
+        "core_bounds": [
+          1382,
+          523,
+          1493,
+          761
+        ],
+        "packed_bounds": [
+          34,
+          28,
+          99,
+          156
+        ],
+        "offset": [
+          34,
+          28
+        ]
+      },
+      {
+        "anchor": [
+          97.5,
+          244
+        ],
+        "source_row": 3,
+        "direction": "south",
+        "source_bounds": [
+          10,
+          773,
+          192,
+          1024
+        ],
+        "core_bounds": [
+          20,
+          785,
+          180,
+          1017
+        ],
+        "packed_bounds": [
+          15,
+          30,
+          106,
+          156
+        ],
+        "offset": [
+          15,
+          30
+        ]
+      },
+      {
+        "anchor": [
+          91.0,
+          240
+        ],
+        "source_row": 3,
+        "direction": "west",
+        "source_bounds": [
+          208,
+          773,
+          390,
+          1024
+        ],
+        "core_bounds": [
+          220,
+          785,
+          378,
+          1013
+        ],
+        "packed_bounds": [
+          18,
+          32,
+          109,
+          158
+        ],
+        "offset": [
+          18,
+          32
+        ]
+      },
+      {
+        "anchor": [
+          90.5,
+          236
+        ],
+        "source_row": 3,
+        "direction": "east",
+        "source_bounds": [
+          398,
+          779,
+          591,
+          1024
+        ],
+        "core_bounds": [
+          410,
+          791,
+          579,
+          1015
+        ],
+        "packed_bounds": [
+          19,
+          34,
+          115,
+          156
+        ],
+        "offset": [
+          19,
+          34
+        ]
+      },
+      {
+        "anchor": [
+          90.5,
+          237
+        ],
+        "source_row": 3,
+        "direction": "north",
+        "source_bounds": [
+          586,
+          779,
+          768,
+          1024
+        ],
+        "core_bounds": [
+          597,
+          791,
+          756,
+          1016
+        ],
+        "packed_bounds": [
+          19,
+          34,
+          110,
+          156
+        ],
+        "offset": [
+          19,
+          34
+        ]
+      },
+      {
+        "anchor": [
+          91.0,
+          245
+        ],
+        "source_row": 3,
+        "direction": "northwest",
+        "source_bounds": [
+          771,
+          773,
+          950,
+          1024
+        ],
+        "core_bounds": [
+          783,
+          785,
+          941,
+          1018
+        ],
+        "packed_bounds": [
+          18,
+          30,
+          108,
+          156
+        ],
+        "offset": [
+          18,
+          30
+        ]
+      },
+      {
+        "anchor": [
+          88.0,
+          234
+        ],
+        "source_row": 3,
+        "direction": "northeast",
+        "source_bounds": [
+          961,
+          779,
+          1156,
+          1024
+        ],
+        "core_bounds": [
+          973,
+          791,
+          1144,
+          1013
+        ],
+        "packed_bounds": [
+          20,
+          35,
+          118,
+          157
+        ],
+        "offset": [
+          20,
+          35
+        ]
+      },
+      {
+        "anchor": [
+          89.5,
+          235
+        ],
+        "source_row": 3,
+        "direction": "southwest",
+        "source_bounds": [
+          1136,
+          786,
+          1335,
+          1024
+        ],
+        "core_bounds": [
+          1148,
+          798,
+          1326,
+          1021
+        ],
+        "packed_bounds": [
+          19,
+          34,
+          119,
+          153
+        ],
+        "offset": [
+          19,
+          34
+        ]
+      },
+      {
+        "anchor": [
+          95.0,
+          227
+        ],
+        "source_row": 3,
+        "direction": "southeast",
+        "source_bounds": [
+          1340,
+          793,
+          1536,
+          1024
+        ],
+        "core_bounds": [
+          1352,
+          802,
+          1529,
+          1020
+        ],
+        "packed_bounds": [
+          16,
+          38,
+          114,
+          154
+        ],
+        "offset": [
+          16,
+          38
+        ]
+      }
+    ]
+  },
+  "punk-4": {
+    "source": "tools/npc_sources/punk-4-keyframes.png",
+    "output": "assets/sprites/npcs/punk-4.png",
+    "scale": 0.5,
+    "source_poses": 32,
+    "nonempty_frames": 256,
+    "atlas_size": [
+      1024,
+      5120
+    ],
+    "poses": [
+      {
+        "anchor": [
+          76.0,
+          251
+        ],
+        "source_row": 0,
+        "direction": "south",
+        "source_bounds": [
+          21,
+          0,
+          177,
+          256
+        ],
+        "core_bounds": [
+          26,
+          2,
+          175,
+          251
+        ],
+        "packed_bounds": [
+          26,
+          26,
+          104,
+          154
+        ],
+        "offset": [
+          26,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          58.5,
+          252
+        ],
+        "source_row": 0,
+        "direction": "west",
+        "source_bounds": [
+          227,
+          0,
+          343,
+          256
+        ],
+        "core_bounds": [
+          232,
+          3,
+          339,
+          252
+        ],
+        "packed_bounds": [
+          35,
+          26,
+          93,
+          154
+        ],
+        "offset": [
+          35,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          48.0,
+          252
+        ],
+        "source_row": 0,
+        "direction": "east",
+        "source_bounds": [
+          432,
+          0,
+          529,
+          256
+        ],
+        "core_bounds": [
+          435,
+          3,
+          526,
+          252
+        ],
+        "packed_bounds": [
+          40,
+          26,
+          88,
+          154
+        ],
+        "offset": [
+          40,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          71.5,
+          252
+        ],
+        "source_row": 0,
+        "direction": "north",
+        "source_bounds": [
+          608,
+          0,
+          742,
+          256
+        ],
+        "core_bounds": [
+          616,
+          4,
+          738,
+          252
+        ],
+        "packed_bounds": [
+          28,
+          26,
+          95,
+          154
+        ],
+        "offset": [
+          28,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          60.0,
+          252
+        ],
+        "source_row": 0,
+        "direction": "northwest",
+        "source_bounds": [
+          809,
+          0,
+          929,
+          256
+        ],
+        "core_bounds": [
+          812,
+          2,
+          927,
+          252
+        ],
+        "packed_bounds": [
+          34,
+          26,
+          94,
+          154
+        ],
+        "offset": [
+          34,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          63.0,
+          252
+        ],
+        "source_row": 0,
+        "direction": "northeast",
+        "source_bounds": [
+          1004,
+          0,
+          1134,
+          256
+        ],
+        "core_bounds": [
+          1008,
+          3,
+          1126,
+          252
+        ],
+        "packed_bounds": [
+          32,
+          26,
+          97,
+          154
+        ],
+        "offset": [
+          32,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          71.0,
+          253
+        ],
+        "source_row": 0,
+        "direction": "southwest",
+        "source_bounds": [
+          1167,
+          0,
+          1307,
+          256
+        ],
+        "core_bounds": [
+          1176,
+          2,
+          1302,
+          253
+        ],
+        "packed_bounds": [
+          28,
+          26,
+          98,
+          154
+        ],
+        "offset": [
+          28,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          61.5,
+          253
+        ],
+        "source_row": 0,
+        "direction": "southeast",
+        "source_bounds": [
+          1379,
+          0,
+          1504,
+          256
+        ],
+        "core_bounds": [
+          1384,
+          3,
+          1497,
+          253
+        ],
+        "packed_bounds": [
+          33,
+          26,
+          95,
+          154
+        ],
+        "offset": [
+          33,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          76.5,
+          251
+        ],
+        "source_row": 1,
+        "direction": "south",
+        "source_bounds": [
+          15,
+          256,
+          176,
+          512
+        ],
+        "core_bounds": [
+          24,
+          258,
+          168,
+          507
+        ],
+        "packed_bounds": [
+          26,
+          26,
+          106,
+          154
+        ],
+        "offset": [
+          26,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          75.5,
+          248
+        ],
+        "source_row": 1,
+        "direction": "west",
+        "source_bounds": [
+          220,
+          256,
+          367,
+          507
+        ],
+        "core_bounds": [
+          224,
+          259,
+          364,
+          504
+        ],
+        "packed_bounds": [
+          26,
+          28,
+          100,
+          154
+        ],
+        "offset": [
+          26,
+          28
+        ]
+      },
+      {
+        "anchor": [
+          73.0,
+          245
+        ],
+        "source_row": 1,
+        "direction": "east",
+        "source_bounds": [
+          412,
+          256,
+          559,
+          504
+        ],
+        "core_bounds": [
+          414,
+          260,
+          556,
+          501
+        ],
+        "packed_bounds": [
+          28,
+          30,
+          102,
+          154
+        ],
+        "offset": [
+          28,
+          30
+        ]
+      },
+      {
+        "anchor": [
+          73.0,
+          251
+        ],
+        "source_row": 1,
+        "direction": "north",
+        "source_bounds": [
+          607,
+          256,
+          742,
+          512
+        ],
+        "core_bounds": [
+          615,
+          261,
+          738,
+          507
+        ],
+        "packed_bounds": [
+          28,
+          26,
+          96,
+          154
+        ],
+        "offset": [
+          28,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          54.5,
+          251
+        ],
+        "source_row": 1,
+        "direction": "northwest",
+        "source_bounds": [
+          815,
+          256,
+          942,
+          510
+        ],
+        "core_bounds": [
+          821,
+          260,
+          935,
+          507
+        ],
+        "packed_bounds": [
+          37,
+          26,
+          101,
+          153
+        ],
+        "offset": [
+          37,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          76.0,
+          250
+        ],
+        "source_row": 1,
+        "direction": "northeast",
+        "source_bounds": [
+          993,
+          256,
+          1134,
+          512
+        ],
+        "core_bounds": [
+          997,
+          260,
+          1127,
+          506
+        ],
+        "packed_bounds": [
+          26,
+          27,
+          96,
+          155
+        ],
+        "offset": [
+          26,
+          27
+        ]
+      },
+      {
+        "anchor": [
+          73.5,
+          250
+        ],
+        "source_row": 1,
+        "direction": "southwest",
+        "source_bounds": [
+          1166,
+          256,
+          1312,
+          512
+        ],
+        "core_bounds": [
+          1170,
+          260,
+          1308,
+          506
+        ],
+        "packed_bounds": [
+          27,
+          27,
+          100,
+          155
+        ],
+        "offset": [
+          27,
+          27
+        ]
+      },
+      {
+        "anchor": [
+          64.5,
+          251
+        ],
+        "source_row": 1,
+        "direction": "southeast",
+        "source_bounds": [
+          1369,
+          256,
+          1506,
+          512
+        ],
+        "core_bounds": [
+          1372,
+          261,
+          1501,
+          507
+        ],
+        "packed_bounds": [
+          32,
+          26,
+          100,
+          154
+        ],
+        "offset": [
+          32,
+          26
+        ]
+      },
+      {
+        "anchor": [
+          70.0,
+          250
+        ],
+        "source_row": 2,
+        "direction": "south",
+        "source_bounds": [
+          19,
+          512,
+          176,
+          768
+        ],
+        "core_bounds": [
+          26,
+          515,
+          168,
+          762
+        ],
+        "packed_bounds": [
+          29,
+          27,
+          107,
+          155
+        ],
+        "offset": [
+          29,
+          27
+        ]
+      },
+      {
+        "anchor": [
+          80.0,
+          244
+        ],
+        "source_row": 2,
+        "direction": "west",
+        "source_bounds": [
+          220,
+          512,
+          375,
+          765
+        ],
+        "core_bounds": [
+          222,
+          516,
+          372,
+          756
+        ],
+        "packed_bounds": [
+          24,
+          30,
+          102,
+          156
+        ],
+        "offset": [
+          24,
+          30
+        ]
+      },
+      {
+        "anchor": [
+          81.0,
+          241
+        ],
+        "source_row": 2,
+        "direction": "east",
+        "source_bounds": [
+          402,
+          512,
+          560,
+          755
+        ],
+        "core_bounds": [
+          408,
+          516,
+          557,
+          753
+        ],
+        "packed_bounds": [
+          24,
+          32,
+          103,
+          154
+        ],
+        "offset": [
+          24,
+          32
+        ]
+      },
+      {
+        "anchor": [
+          77.5,
+          249
+        ],
+        "source_row": 2,
+        "direction": "north",
+        "source_bounds": [
+          607,
+          512,
+          752,
+          762
+        ],
+        "core_bounds": [
+          616,
+          517,
+          742,
+          761
+        ],
+        "packed_bounds": [
+          25,
+          28,
+          97,
+          153
+        ],
+        "offset": [
+          25,
+          28
+        ]
+      },
+      {
+        "anchor": [
+          56.5,
+          249
+        ],
+        "source_row": 2,
+        "direction": "northwest",
+        "source_bounds": [
+          815,
+          512,
+          942,
+          766
+        ],
+        "core_bounds": [
+          816,
+          517,
+          939,
+          761
+        ],
+        "packed_bounds": [
+          36,
+          28,
+          100,
+          155
+        ],
+        "offset": [
+          36,
+          28
+        ]
+      },
+      {
+        "anchor": [
+          73.5,
+          248
+        ],
+        "source_row": 2,
+        "direction": "northeast",
+        "source_bounds": [
+          987,
+          512,
+          1139,
+          768
+        ],
+        "core_bounds": [
+          990,
+          519,
+          1136,
+          760
+        ],
+        "packed_bounds": [
+          27,
+          28,
+          103,
+          156
+        ],
+        "offset": [
+          27,
+          28
+        ]
+      },
+      {
+        "anchor": [
+          82.5,
+          249
+        ],
+        "source_row": 2,
+        "direction": "southwest",
+        "source_bounds": [
+          1168,
+          512,
+          1310,
+          768
+        ],
+        "core_bounds": [
+          1170,
+          517,
+          1306,
+          761
+        ],
+        "packed_bounds": [
+          23,
+          28,
+          94,
+          156
+        ],
+        "offset": [
+          23,
+          28
+        ]
+      },
+      {
+        "anchor": [
+          65.5,
+          250
+        ],
+        "source_row": 2,
+        "direction": "southeast",
+        "source_bounds": [
+          1368,
+          512,
+          1503,
+          768
+        ],
+        "core_bounds": [
+          1370,
+          516,
+          1498,
+          762
+        ],
+        "packed_bounds": [
+          31,
+          27,
+          99,
+          154
+        ],
+        "offset": [
+          31,
+          27
+        ]
+      },
+      {
+        "anchor": [
+          80.0,
+          225
+        ],
+        "source_row": 3,
+        "direction": "south",
+        "source_bounds": [
+          22,
+          782,
+          181,
+          1009
+        ],
+        "core_bounds": [
+          26,
+          783,
+          178,
+          1007
+        ],
+        "packed_bounds": [
+          24,
+          40,
+          104,
+          154
+        ],
+        "offset": [
+          24,
+          40
+        ]
+      },
+      {
+        "anchor": [
+          104.0,
+          232
+        ],
+        "source_row": 3,
+        "direction": "west",
+        "source_bounds": [
+          190,
+          777,
+          390,
+          1012
+        ],
+        "core_bounds": [
+          194,
+          781,
+          386,
+          1009
+        ],
+        "packed_bounds": [
+          12,
+          36,
+          112,
+          154
+        ],
+        "offset": [
+          12,
+          36
+        ]
+      },
+      {
+        "anchor": [
+          85.0,
+          235
+        ],
+        "source_row": 3,
+        "direction": "east",
+        "source_bounds": [
+          398,
+          774,
+          582,
+          1010
+        ],
+        "core_bounds": [
+          402,
+          781,
+          579,
+          1009
+        ],
+        "packed_bounds": [
+          22,
+          34,
+          114,
+          152
+        ],
+        "offset": [
+          22,
+          34
+        ]
+      },
+      {
+        "anchor": [
+          94.5,
+          231
+        ],
+        "source_row": 3,
+        "direction": "north",
+        "source_bounds": [
+          592,
+          781,
+          768,
+          1014
+        ],
+        "core_bounds": [
+          595,
+          785,
+          764,
+          1012
+        ],
+        "packed_bounds": [
+          17,
+          36,
+          105,
+          152
+        ],
+        "offset": [
+          17,
+          36
+        ]
+      },
+      {
+        "anchor": [
+          99.5,
+          228
+        ],
+        "source_row": 3,
+        "direction": "northwest",
+        "source_bounds": [
+          766,
+          781,
+          954,
+          1012
+        ],
+        "core_bounds": [
+          772,
+          783,
+          951,
+          1009
+        ],
+        "packed_bounds": [
+          14,
+          38,
+          108,
+          154
+        ],
+        "offset": [
+          14,
+          38
+        ]
+      },
+      {
+        "anchor": [
+          80.5,
+          230
+        ],
+        "source_row": 3,
+        "direction": "northeast",
+        "source_bounds": [
+          970,
+          782,
+          1152,
+          1016
+        ],
+        "core_bounds": [
+          974,
+          787,
+          1141,
+          1012
+        ],
+        "packed_bounds": [
+          24,
+          37,
+          115,
+          154
+        ],
+        "offset": [
+          24,
+          37
+        ]
+      },
+      {
+        "anchor": [
+          76.0,
+          227
+        ],
+        "source_row": 3,
+        "direction": "southwest",
+        "source_bounds": [
+          1155,
+          785,
+          1328,
+          1015
+        ],
+        "core_bounds": [
+          1160,
+          788,
+          1326,
+          1012
+        ],
+        "packed_bounds": [
+          26,
+          38,
+          112,
+          153
+        ],
+        "offset": [
+          26,
+          38
+        ]
+      },
+      {
+        "anchor": [
+          85.5,
+          230
+        ],
+        "source_row": 3,
+        "direction": "southeast",
+        "source_bounds": [
+          1348,
+          786,
+          1536,
+          1024
+        ],
+        "core_bounds": [
+          1355,
+          789,
+          1529,
+          1016
+        ],
+        "packed_bounds": [
+          21,
+          37,
+          115,
+          156
+        ],
+        "offset": [
+          21,
+          37
+        ]
+      }
+    ]
+  },
+  "shooter-visor": {
+    "source": "tools/npc_sources/shooter-visor-keyframes.png",
+    "output": "assets/sprites/npcs/shooter-visor.png",
+    "scale": 0.5,
+    "source_poses": 32,
+    "nonempty_frames": 256,
+    "atlas_size": [
+      1024,
+      5120
+    ],
+    "poses": [
+      {
+        "anchor": [
+          54.0,
+          212
+        ],
+        "source_row": 0,
+        "direction": "south",
+        "source_bounds": [
+          58,
+          31,
+          162,
+          246
+        ],
+        "core_bounds": [
+          64,
+          37,
+          157,
+          243
+        ],
+        "packed_bounds": [
+          37,
+          46,
+          89,
+          154
+        ],
+        "offset": [
+          37,
+          46
+        ]
+      },
+      {
+        "anchor": [
+          65.5,
+          214
+        ],
+        "source_row": 0,
+        "direction": "west",
+        "source_bounds": [
+          239,
+          31,
+          342,
+          255
+        ],
+        "core_bounds": [
+          251,
+          37,
+          339,
+          245
+        ],
+        "packed_bounds": [
+          31,
+          45,
+          83,
+          157
+        ],
+        "offset": [
+          31,
+          45
+        ]
+      },
+      {
+        "anchor": [
+          43.0,
+          213
+        ],
+        "source_row": 0,
+        "direction": "east",
+        "source_bounds": [
+          449,
+          31,
+          544,
+          255
+        ],
+        "core_bounds": [
+          457,
+          37,
+          541,
+          244
+        ],
+        "packed_bounds": [
+          42,
+          46,
+          90,
+          158
+        ],
+        "offset": [
+          42,
+          46
+        ]
+      },
+      {
+        "anchor": [
+          53.5,
+          212
+        ],
+        "source_row": 0,
+        "direction": "north",
+        "source_bounds": [
+          625,
+          31,
+          726,
+          254
+        ],
+        "core_bounds": [
+          634,
+          37,
+          722,
+          243
+        ],
+        "packed_bounds": [
+          37,
+          46,
+          87,
+          158
+        ],
+        "offset": [
+          37,
+          46
+        ]
+      },
+      {
+        "anchor": [
+          60.5,
+          215
+        ],
+        "source_row": 0,
+        "direction": "northwest",
+        "source_bounds": [
+          801,
+          29,
+          904,
+          251
+        ],
+        "core_bounds": [
+          812,
+          36,
+          901,
+          244
+        ],
+        "packed_bounds": [
+          34,
+          44,
+          86,
+          155
+        ],
+        "offset": [
+          34,
+          44
+        ]
+      },
+      {
+        "anchor": [
+          44.5,
+          213
+        ],
+        "source_row": 0,
+        "direction": "northeast",
+        "source_bounds": [
+          1007,
+          31,
+          1106,
+          252
+        ],
+        "core_bounds": [
+          1011,
+          36,
+          1094,
+          244
+        ],
+        "packed_bounds": [
+          42,
+          46,
+          92,
+          156
+        ],
+        "offset": [
+          42,
+          46
+        ]
+      },
+      {
+        "anchor": [
+          43.0,
+          212
+        ],
+        "source_row": 0,
+        "direction": "southwest",
+        "source_bounds": [
+          1196,
+          32,
+          1283,
+          248
+        ],
+        "core_bounds": [
+          1198,
+          37,
+          1280,
+          244
+        ],
+        "packed_bounds": [
+          42,
+          46,
+          86,
+          154
+        ],
+        "offset": [
+          42,
+          46
+        ]
+      },
+      {
+        "anchor": [
+          50.5,
+          212
+        ],
+        "source_row": 0,
+        "direction": "southeast",
+        "source_bounds": [
+          1383,
+          32,
+          1486,
+          249
+        ],
+        "core_bounds": [
+          1390,
+          36,
+          1483,
+          244
+        ],
+        "packed_bounds": [
+          39,
+          46,
+          91,
+          154
+        ],
+        "offset": [
+          39,
+          46
+        ]
+      },
+      {
+        "anchor": [
+          53.0,
+          213
+        ],
+        "source_row": 1,
+        "direction": "south",
+        "source_bounds": [
+          57,
+          279,
+          161,
+          496
+        ],
+        "core_bounds": [
+          63,
+          287,
+          153,
+          492
+        ],
+        "packed_bounds": [
+          38,
+          46,
+          90,
+          154
+        ],
+        "offset": [
+          38,
+          46
+        ]
+      },
+      {
+        "anchor": [
+          65.0,
+          207
+        ],
+        "source_row": 1,
+        "direction": "west",
+        "source_bounds": [
+          239,
+          281,
+          367,
+          494
+        ],
+        "core_bounds": [
+          247,
+          288,
+          361,
+          488
+        ],
+        "packed_bounds": [
+          32,
+          49,
+          96,
+          154
+        ],
+        "offset": [
+          32,
+          48
+        ]
+      },
+      {
+        "anchor": [
+          59.5,
+          200
+        ],
+        "source_row": 1,
+        "direction": "east",
+        "source_bounds": [
+          433,
+          286,
+          552,
+          498
+        ],
+        "core_bounds": [
+          436,
+          289,
+          549,
+          486
+        ],
+        "packed_bounds": [
+          34,
+          52,
+          94,
+          158
+        ],
+        "offset": [
+          34,
+          52
+        ]
+      },
+      {
+        "anchor": [
+          51.0,
+          205
+        ],
+        "source_row": 1,
+        "direction": "north",
+        "source_bounds": [
+          626,
+          286,
+          722,
+          497
+        ],
+        "core_bounds": [
+          635,
+          289,
+          720,
+          491
+        ],
+        "packed_bounds": [
+          38,
+          50,
+          86,
+          156
+        ],
+        "offset": [
+          38,
+          50
+        ]
+      },
+      {
+        "anchor": [
+          65.0,
+          204
+        ],
+        "source_row": 1,
+        "direction": "northwest",
+        "source_bounds": [
+          810,
+          286,
+          906,
+          496
+        ],
+        "core_bounds": [
+          813,
+          289,
+          903,
+          490
+        ],
+        "packed_bounds": [
+          32,
+          50,
+          80,
+          155
+        ],
+        "offset": [
+          32,
+          50
+        ]
+      },
+      {
+        "anchor": [
+          37.0,
+          213
+        ],
+        "source_row": 1,
+        "direction": "northeast",
+        "source_bounds": [
+          1005,
+          278,
+          1107,
+          496
+        ],
+        "core_bounds": [
+          1011,
+          289,
+          1100,
+          491
+        ],
+        "packed_bounds": [
+          46,
+          46,
+          96,
+          155
+        ],
+        "offset": [
+          46,
+          46
+        ]
+      },
+      {
+        "anchor": [
+          54.5,
+          206
+        ],
+        "source_row": 1,
+        "direction": "southwest",
+        "source_bounds": [
+          1191,
+          286,
+          1285,
+          497
+        ],
+        "core_bounds": [
+          1199,
+          289,
+          1280,
+          492
+        ],
+        "packed_bounds": [
+          37,
+          49,
+          84,
+          155
+        ],
+        "offset": [
+          37,
+          49
+        ]
+      },
+      {
+        "anchor": [
+          49.0,
+          206
+        ],
+        "source_row": 1,
+        "direction": "southeast",
+        "source_bounds": [
+          1383,
+          285,
+          1488,
+          498
+        ],
+        "core_bounds": [
+          1391,
+          289,
+          1483,
+          491
+        ],
+        "packed_bounds": [
+          40,
+          49,
+          92,
+          155
+        ],
+        "offset": [
+          40,
+          49
+        ]
+      },
+      {
+        "anchor": [
+          49.5,
+          216
+        ],
+        "source_row": 2,
+        "direction": "south",
+        "source_bounds": [
+          59,
+          527,
+          160,
+          752
+        ],
+        "core_bounds": [
+          64,
+          539,
+          151,
+          743
+        ],
+        "packed_bounds": [
+          39,
+          44,
+          89,
+          156
+        ],
+        "offset": [
+          39,
+          44
+        ]
+      },
+      {
+        "anchor": [
+          61.5,
+          208
+        ],
+        "source_row": 2,
+        "direction": "west",
+        "source_bounds": [
+          241,
+          528,
+          366,
+          742
+        ],
+        "core_bounds": [
+          246,
+          540,
+          359,
+          736
+        ],
+        "packed_bounds": [
+          33,
+          48,
+          95,
+          155
+        ],
+        "offset": [
+          33,
+          48
+        ]
+      },
+      {
+        "anchor": [
+          65.0,
+          203
+        ],
+        "source_row": 2,
+        "direction": "east",
+        "source_bounds": [
+          427,
+          533,
+          559,
+          746
+        ],
+        "core_bounds": [
+          433,
+          540,
+          551,
+          736
+        ],
+        "packed_bounds": [
+          32,
+          50,
+          98,
+          156
+        ],
+        "offset": [
+          32,
+          50
+        ]
+      },
+      {
+        "anchor": [
+          52.5,
+          210
+        ],
+        "source_row": 2,
+        "direction": "north",
+        "source_bounds": [
+          627,
+          531,
+          726,
+          750
+        ],
+        "core_bounds": [
+          635,
+          539,
+          722,
+          741
+        ],
+        "packed_bounds": [
+          38,
+          47,
+          88,
+          157
+        ],
+        "offset": [
+          38,
+          47
+        ]
+      },
+      {
+        "anchor": [
+          68.5,
+          212
+        ],
+        "source_row": 2,
+        "direction": "northwest",
+        "source_bounds": [
+          800,
+          529,
+          915,
+          746
+        ],
+        "core_bounds": [
+          812,
+          540,
+          913,
+          741
+        ],
+        "packed_bounds": [
+          30,
+          46,
+          88,
+          154
+        ],
+        "offset": [
+          30,
+          46
+        ]
+      },
+      {
+        "anchor": [
+          46.0,
+          214
+        ],
+        "source_row": 2,
+        "direction": "northeast",
+        "source_bounds": [
+          1001,
+          528,
+          1104,
+          750
+        ],
+        "core_bounds": [
+          1005,
+          540,
+          1099,
+          742
+        ],
+        "packed_bounds": [
+          41,
+          45,
+          93,
+          156
+        ],
+        "offset": [
+          41,
+          45
+        ]
+      },
+      {
+        "anchor": [
+          44.5,
+          213
+        ],
+        "source_row": 2,
+        "direction": "southwest",
+        "source_bounds": [
+          1198,
+          529,
+          1293,
+          753
+        ],
+        "core_bounds": [
+          1201,
+          540,
+          1283,
+          742
+        ],
+        "packed_bounds": [
+          42,
+          46,
+          90,
+          158
+        ],
+        "offset": [
+          42,
+          46
+        ]
+      },
+      {
+        "anchor": [
+          43.5,
+          204
+        ],
+        "source_row": 2,
+        "direction": "southeast",
+        "source_bounds": [
+          1389,
+          538,
+          1488,
+          750
+        ],
+        "core_bounds": [
+          1392,
+          541,
+          1483,
+          742
+        ],
+        "packed_bounds": [
+          42,
+          50,
+          92,
+          156
+        ],
+        "offset": [
+          42,
+          50
+        ]
+      },
+      {
+        "anchor": [
+          57.5,
+          191
+        ],
+        "source_row": 3,
+        "direction": "south",
+        "source_bounds": [
+          49,
+          797,
+          168,
+          993
+        ],
+        "core_bounds": [
+          51,
+          800,
+          162,
+          988
+        ],
+        "packed_bounds": [
+          35,
+          56,
+          95,
+          154
+        ],
+        "offset": [
+          35,
+          56
+        ]
+      },
+      {
+        "anchor": [
+          103.0,
+          198
+        ],
+        "source_row": 3,
+        "direction": "west",
+        "source_bounds": [
+          199,
+          789,
+          356,
+          992
+        ],
+        "core_bounds": [
+          211,
+          800,
+          353,
+          987
+        ],
+        "packed_bounds": [
+          12,
+          53,
+          90,
+          155
+        ],
+        "offset": [
+          12,
+          53
+        ]
+      },
+      {
+        "anchor": [
+          61.5,
+          195
+        ],
+        "source_row": 3,
+        "direction": "east",
+        "source_bounds": [
+          414,
+          792,
+          588,
+          993
+        ],
+        "core_bounds": [
+          423,
+          801,
+          576,
+          987
+        ],
+        "packed_bounds": [
+          33,
+          54,
+          120,
+          154
+        ],
+        "offset": [
+          33,
+          54
+        ]
+      },
+      {
+        "anchor": [
+          62.5,
+          190
+        ],
+        "source_row": 3,
+        "direction": "north",
+        "source_bounds": [
+          609,
+          797,
+          746,
+          994
+        ],
+        "core_bounds": [
+          616,
+          801,
+          734,
+          987
+        ],
+        "packed_bounds": [
+          33,
+          57,
+          101,
+          155
+        ],
+        "offset": [
+          33,
+          57
+        ]
+      },
+      {
+        "anchor": [
+          99.5,
+          191
+        ],
+        "source_row": 3,
+        "direction": "northwest",
+        "source_bounds": [
+          767,
+          796,
+          926,
+          993
+        ],
+        "core_bounds": [
+          779,
+          802,
+          919,
+          987
+        ],
+        "packed_bounds": [
+          14,
+          56,
+          94,
+          154
+        ],
+        "offset": [
+          14,
+          56
+        ]
+      },
+      {
+        "anchor": [
+          56.0,
+          190
+        ],
+        "source_row": 3,
+        "direction": "northeast",
+        "source_bounds": [
+          993,
+          797,
+          1135,
+          992
+        ],
+        "core_bounds": [
+          999,
+          802,
+          1123,
+          987
+        ],
+        "packed_bounds": [
+          36,
+          57,
+          107,
+          155
+        ],
+        "offset": [
+          36,
+          57
+        ]
+      },
+      {
+        "anchor": [
+          95.5,
+          191
+        ],
+        "source_row": 3,
+        "direction": "southwest",
+        "source_bounds": [
+          1150,
+          797,
+          1297,
+          992
+        ],
+        "core_bounds": [
+          1162,
+          803,
+          1292,
+          988
+        ],
+        "packed_bounds": [
+          16,
+          57,
+          90,
+          154
+        ],
+        "offset": [
+          16,
+          56
+        ]
+      },
+      {
+        "anchor": [
+          69.5,
+          190
+        ],
+        "source_row": 3,
+        "direction": "southeast",
+        "source_bounds": [
+          1357,
+          799,
+          1523,
+          992
+        ],
+        "core_bounds": [
+          1368,
+          803,
+          1511,
+          989
+        ],
+        "packed_bounds": [
+          30,
+          57,
+          112,
+          153
+        ],
+        "offset": [
+          29,
+          57
+        ]
+      }
+    ]
+  },
+  "shooter-violet": {
+    "source": "tools/npc_sources/shooter-violet-keyframes.png",
+    "output": "assets/sprites/npcs/shooter-violet.png",
+    "scale": 0.5,
+    "source_poses": 32,
+    "nonempty_frames": 256,
+    "atlas_size": [
+      1024,
+      5120
+    ],
+    "poses": [
+      {
+        "anchor": [
+          57.5,
+          212
+        ],
+        "source_row": 0,
+        "direction": "south",
+        "source_bounds": [
+          70,
+          33,
+          182,
+          256
+        ],
+        "core_bounds": [
+          82,
+          45,
+          176,
+          245
+        ],
+        "packed_bounds": [
+          35,
+          46,
+          91,
+          158
+        ],
+        "offset": [
+          35,
+          46
+        ]
+      },
+      {
+        "anchor": [
+          62.0,
+          213
+        ],
+        "source_row": 0,
+        "direction": "west",
+        "source_bounds": [
+          254,
+          32,
+          357,
+          256
+        ],
+        "core_bounds": [
+          265,
+          44,
+          345,
+          245
+        ],
+        "packed_bounds": [
+          33,
+          46,
+          85,
+          158
+        ],
+        "offset": [
+          33,
+          46
+        ]
+      },
+      {
+        "anchor": [
+          41.5,
+          212
+        ],
+        "source_row": 0,
+        "direction": "east",
+        "source_bounds": [
+          449,
+          33,
+          551,
+          256
+        ],
+        "core_bounds": [
+          461,
+          45,
+          539,
+          245
+        ],
+        "packed_bounds": [
+          43,
+          46,
+          94,
+          158
+        ],
+        "offset": [
+          43,
+          46
+        ]
+      },
+      {
+        "anchor": [
+          55.5,
+          212
+        ],
+        "source_row": 0,
+        "direction": "north",
+        "source_bounds": [
+          623,
+          33,
+          734,
+          256
+        ],
+        "core_bounds": [
+          635,
+          45,
+          722,
+          245
+        ],
+        "packed_bounds": [
+          36,
+          46,
+          92,
+          158
+        ],
+        "offset": [
+          36,
+          46
+        ]
+      },
+      {
+        "anchor": [
+          60.0,
+          213
+        ],
+        "source_row": 0,
+        "direction": "northwest",
+        "source_bounds": [
+          793,
+          32,
+          907,
+          256
+        ],
+        "core_bounds": [
+          805,
+          44,
+          895,
+          245
+        ],
+        "packed_bounds": [
+          34,
+          46,
+          91,
+          158
+        ],
+        "offset": [
+          34,
+          46
+        ]
+      },
+      {
+        "anchor": [
+          49.5,
+          212
+        ],
+        "source_row": 0,
+        "direction": "northeast",
+        "source_bounds": [
+          988,
+          33,
+          1092,
+          256
+        ],
+        "core_bounds": [
+          998,
+          45,
+          1087,
+          245
+        ],
+        "packed_bounds": [
+          39,
+          46,
+          91,
+          158
+        ],
+        "offset": [
+          39,
+          46
+        ]
+      },
+      {
+        "anchor": [
+          55.0,
+          214
+        ],
+        "source_row": 0,
+        "direction": "southwest",
+        "source_bounds": [
+          1168,
+          32,
+          1278,
+          256
+        ],
+        "core_bounds": [
+          1180,
+          44,
+          1266,
+          246
+        ],
+        "packed_bounds": [
+          36,
+          45,
+          91,
+          157
+        ],
+        "offset": [
+          36,
+          45
+        ]
+      },
+      {
+        "anchor": [
+          60.0,
+          214
+        ],
+        "source_row": 0,
+        "direction": "southeast",
+        "source_bounds": [
+          1355,
+          32,
+          1472,
+          256
+        ],
+        "core_bounds": [
+          1367,
+          44,
+          1463,
+          246
+        ],
+        "packed_bounds": [
+          34,
+          45,
+          92,
+          157
+        ],
+        "offset": [
+          34,
+          45
+        ]
+      },
+      {
+        "anchor": [
+          56.0,
+          212
+        ],
+        "source_row": 1,
+        "direction": "south",
+        "source_bounds": [
+          71,
+          279,
+          184,
+          503
+        ],
+        "core_bounds": [
+          82,
+          291,
+          176,
+          491
+        ],
+        "packed_bounds": [
+          36,
+          46,
+          92,
+          158
+        ],
+        "offset": [
+          36,
+          46
+        ]
+      },
+      {
+        "anchor": [
+          70.0,
+          209
+        ],
+        "source_row": 1,
+        "direction": "west",
+        "source_bounds": [
+          241,
+          279,
+          382,
+          500
+        ],
+        "core_bounds": [
+          252,
+          291,
+          370,
+          488
+        ],
+        "packed_bounds": [
+          29,
+          48,
+          99,
+          158
+        ],
+        "offset": [
+          29,
+          48
+        ]
+      },
+      {
+        "anchor": [
+          71.0,
+          209
+        ],
+        "source_row": 1,
+        "direction": "east",
+        "source_bounds": [
+          416,
+          279,
+          558,
+          500
+        ],
+        "core_bounds": [
+          428,
+          291,
+          546,
+          488
+        ],
+        "packed_bounds": [
+          28,
+          48,
+          99,
+          158
+        ],
+        "offset": [
+          28,
+          48
+        ]
+      },
+      {
+        "anchor": [
+          54.0,
+          210
+        ],
+        "source_row": 1,
+        "direction": "north",
+        "source_bounds": [
+          623,
+          280,
+          733,
+          502
+        ],
+        "core_bounds": [
+          635,
+          292,
+          721,
+          490
+        ],
+        "packed_bounds": [
+          37,
+          47,
+          92,
+          158
+        ],
+        "offset": [
+          37,
+          47
+        ]
+      },
+      {
+        "anchor": [
+          59.5,
+          210
+        ],
+        "source_row": 1,
+        "direction": "northwest",
+        "source_bounds": [
+          797,
+          279,
+          906,
+          501
+        ],
+        "core_bounds": [
+          806,
+          291,
+          895,
+          489
+        ],
+        "packed_bounds": [
+          34,
+          47,
+          88,
+          158
+        ],
+        "offset": [
+          34,
+          47
+        ]
+      },
+      {
+        "anchor": [
+          49.0,
+          210
+        ],
+        "source_row": 1,
+        "direction": "northeast",
+        "source_bounds": [
+          985,
+          280,
+          1093,
+          501
+        ],
+        "core_bounds": [
+          997,
+          292,
+          1083,
+          490
+        ],
+        "packed_bounds": [
+          40,
+          47,
+          94,
+          157
+        ],
+        "offset": [
+          40,
+          47
+        ]
+      },
+      {
+        "anchor": [
+          58.5,
+          211
+        ],
+        "source_row": 1,
+        "direction": "southwest",
+        "source_bounds": [
+          1170,
+          279,
+          1284,
+          502
+        ],
+        "core_bounds": [
+          1182,
+          291,
+          1272,
+          490
+        ],
+        "packed_bounds": [
+          35,
+          46,
+          92,
+          158
+        ],
+        "offset": [
+          35,
+          46
+        ]
+      },
+      {
+        "anchor": [
+          56.0,
+          210
+        ],
+        "source_row": 1,
+        "direction": "southeast",
+        "source_bounds": [
+          1357,
+          280,
+          1469,
+          502
+        ],
+        "core_bounds": [
+          1369,
+          292,
+          1463,
+          490
+        ],
+        "packed_bounds": [
+          36,
+          47,
+          92,
+          158
+        ],
+        "offset": [
+          36,
+          47
+        ]
+      },
+      {
+        "anchor": [
+          56.5,
+          213
+        ],
+        "source_row": 2,
+        "direction": "south",
+        "source_bounds": [
+          71,
+          523,
+          187,
+          748
+        ],
+        "core_bounds": [
+          82,
+          535,
+          175,
+          736
+        ],
+        "packed_bounds": [
+          36,
+          46,
+          94,
+          158
+        ],
+        "offset": [
+          36,
+          46
+        ]
+      },
+      {
+        "anchor": [
+          69.5,
+          214
+        ],
+        "source_row": 2,
+        "direction": "west",
+        "source_bounds": [
+          241,
+          522,
+          380,
+          748
+        ],
+        "core_bounds": [
+          253,
+          534,
+          368,
+          736
+        ],
+        "packed_bounds": [
+          29,
+          45,
+          99,
+          158
+        ],
+        "offset": [
+          29,
+          45
+        ]
+      },
+      {
+        "anchor": [
+          69.0,
+          213
+        ],
+        "source_row": 2,
+        "direction": "east",
+        "source_bounds": [
+          422,
+          522,
+          560,
+          747
+        ],
+        "core_bounds": [
+          434,
+          534,
+          548,
+          735
+        ],
+        "packed_bounds": [
+          30,
+          46,
+          99,
+          158
+        ],
+        "offset": [
+          30,
+          46
+        ]
+      },
+      {
+        "anchor": [
+          54.5,
+          213
+        ],
+        "source_row": 2,
+        "direction": "north",
+        "source_bounds": [
+          623,
+          523,
+          733,
+          748
+        ],
+        "core_bounds": [
+          634,
+          535,
+          721,
+          736
+        ],
+        "packed_bounds": [
+          37,
+          46,
+          92,
+          158
+        ],
+        "offset": [
+          37,
+          46
+        ]
+      },
+      {
+        "anchor": [
+          65.5,
+          215
+        ],
+        "source_row": 2,
+        "direction": "northwest",
+        "source_bounds": [
+          794,
+          521,
+          915,
+          741
+        ],
+        "core_bounds": [
+          806,
+          533,
+          908,
+          736
+        ],
+        "packed_bounds": [
+          31,
+          44,
+          91,
+          154
+        ],
+        "offset": [
+          31,
+          44
+        ]
+      },
+      {
+        "anchor": [
+          51.0,
+          213
+        ],
+        "source_row": 2,
+        "direction": "northeast",
+        "source_bounds": [
+          985,
+          523,
+          1097,
+          747
+        ],
+        "core_bounds": [
+          989,
+          535,
+          1086,
+          736
+        ],
+        "packed_bounds": [
+          38,
+          46,
+          94,
+          158
+        ],
+        "offset": [
+          38,
+          46
+        ]
+      },
+      {
+        "anchor": [
+          50.5,
+          213
+        ],
+        "source_row": 2,
+        "direction": "southwest",
+        "source_bounds": [
+          1172,
+          523,
+          1278,
+          748
+        ],
+        "core_bounds": [
+          1183,
+          535,
+          1266,
+          736
+        ],
+        "packed_bounds": [
+          39,
+          46,
+          92,
+          158
+        ],
+        "offset": [
+          39,
+          46
+        ]
+      },
+      {
+        "anchor": [
+          55.0,
+          213
+        ],
+        "source_row": 2,
+        "direction": "southeast",
+        "source_bounds": [
+          1356,
+          523,
+          1473,
+          748
+        ],
+        "core_bounds": [
+          1368,
+          535,
+          1463,
+          736
+        ],
+        "packed_bounds": [
+          36,
+          46,
+          94,
+          158
+        ],
+        "offset": [
+          36,
+          46
+        ]
+      },
+      {
+        "anchor": [
+          69.5,
+          191
+        ],
+        "source_row": 3,
+        "direction": "south",
+        "source_bounds": [
+          49,
+          784,
+          192,
+          987
+        ],
+        "core_bounds": [
+          57,
+          796,
+          180,
+          975
+        ],
+        "packed_bounds": [
+          29,
+          56,
+          101,
+          158
+        ],
+        "offset": [
+          29,
+          56
+        ]
+      },
+      {
+        "anchor": [
+          98.5,
+          189
+        ],
+        "source_row": 3,
+        "direction": "west",
+        "source_bounds": [
+          215,
+          787,
+          375,
+          988
+        ],
+        "core_bounds": [
+          227,
+          799,
+          365,
+          976
+        ],
+        "packed_bounds": [
+          15,
+          58,
+          95,
+          158
+        ],
+        "offset": [
+          15,
+          58
+        ]
+      },
+      {
+        "anchor": [
+          61.5,
+          189
+        ],
+        "source_row": 3,
+        "direction": "east",
+        "source_bounds": [
+          415,
+          787,
+          570,
+          988
+        ],
+        "core_bounds": [
+          426,
+          799,
+          558,
+          976
+        ],
+        "packed_bounds": [
+          33,
+          58,
+          111,
+          158
+        ],
+        "offset": [
+          33,
+          58
+        ]
+      },
+      {
+        "anchor": [
+          73.0,
+          189
+        ],
+        "source_row": 3,
+        "direction": "north",
+        "source_bounds": [
+          591,
+          787,
+          737,
+          982
+        ],
+        "core_bounds": [
+          603,
+          799,
+          725,
+          976
+        ],
+        "packed_bounds": [
+          28,
+          58,
+          101,
+          156
+        ],
+        "offset": [
+          28,
+          58
+        ]
+      },
+      {
+        "anchor": [
+          96.5,
+          190
+        ],
+        "source_row": 3,
+        "direction": "northwest",
+        "source_bounds": [
+          763,
+          787,
+          930,
+          989
+        ],
+        "core_bounds": [
+          775,
+          799,
+          919,
+          977
+        ],
+        "packed_bounds": [
+          16,
+          57,
+          100,
+          158
+        ],
+        "offset": [
+          16,
+          57
+        ]
+      },
+      {
+        "anchor": [
+          67.5,
+          190
+        ],
+        "source_row": 3,
+        "direction": "northeast",
+        "source_bounds": [
+          962,
+          788,
+          1108,
+          982
+        ],
+        "core_bounds": [
+          974,
+          800,
+          1096,
+          978
+        ],
+        "packed_bounds": [
+          30,
+          57,
+          103,
+          154
+        ],
+        "offset": [
+          30,
+          57
+        ]
+      },
+      {
+        "anchor": [
+          92.0,
+          192
+        ],
+        "source_row": 3,
+        "direction": "southwest",
+        "source_bounds": [
+          1141,
+          787,
+          1298,
+          991
+        ],
+        "core_bounds": [
+          1153,
+          799,
+          1291,
+          979
+        ],
+        "packed_bounds": [
+          18,
+          56,
+          96,
+          158
+        ],
+        "offset": [
+          18,
+          56
+        ]
+      },
+      {
+        "anchor": [
+          68.0,
+          191
+        ],
+        "source_row": 3,
+        "direction": "southeast",
+        "source_bounds": [
+          1343,
+          788,
+          1501,
+          990
+        ],
+        "core_bounds": [
+          1354,
+          800,
+          1489,
+          979
+        ],
+        "packed_bounds": [
+          30,
+          56,
+          109,
+          157
+        ],
+        "offset": [
+          30,
+          56
+        ]
+      }
+    ]
+  }
+}

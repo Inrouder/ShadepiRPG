@@ -1,0 +1,21 @@
+{
+  "tool": "Built-in Imagegen",
+  "format": "1536x1024 transparent RGBA, 8 columns x4 rows. Directions front,left,right,back,back-left,back-right,front-left,front-right. Rows ready,left stride,right stride,attack. Polished illustrated cyberpunk comic style, detailed metal/leather, adult proportions, consistent identity, no text/grid/backdrop.",
+  "characters": {
+    "jackal": "Broad armored cybernetic brawler, short brown hair, slate armor, massive forearms, magenta cyber-eye; punch.",
+    "kenzo": "Black-haired martial cybernetic boss, sleeveless dark coat, chrome/copper arms, exposed right shoulder servo; arm sweep.",
+    "punk-1": "Orange mohawk, red leather coat, dark armor, red cyber optics, steel baton.",
+    "punk-2": "Mint swept hair, forest green tactical coat, dark armor, red optics, compact carbine.",
+    "punk-3": "Violet spiky hair, purple armored coat, forearm shield, steel shock baton.",
+    "punk-4": "Blond side swept undercut, ochre brown coat, dark armor, red cyber-eye, steel club.",
+    "shooter-visor": "Enclosed black tactical helmet, cyan visor, black segmented armor, compact rifle.",
+    "shooter-violet": "Enclosed graphite helmet, violet visor and trim, dark armor, compact rifle.",
+    "dive-virus": "Single transparent floating crystalline purple cyber-orb with six tendrils and cyan circuitry.",
+    "ice-guardian": "Single transparent heavy gunmetal ICE sentinel orb with violet core, six armored fins and cyan circuits."
+  },
+  "corrections": [
+    "Jackal and Kenzo: change only column two in all four rows to LEFT profile, preserve other28 poses and alpha.",
+    "Punk4: remove white background and shadows, preserve figures and alpha.",
+    "Shooters: reduce all figures to leave12px transparent margins within each192x256cell; preserve directions/poses."
+  ]
+}

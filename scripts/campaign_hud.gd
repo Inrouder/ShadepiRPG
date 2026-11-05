@@ -42,3 +42,7 @@ func _process(delta: float) -> void :
 		controls.text = "J / X · Tippen    U / zweiter Controller · Raven    Esc / Start · Pause"
 	elif world.is_combat():
 		controls.text = "WASD / Stick · Bewegen    J / X · Katana    Q / RB · Ravens Hack    Leertaste / B · Dash"
+	elif world.beat == world.Beat.END:
+		controls.text = "Geschichte abgeschlossen · Esc / Start öffnet das Menü"
+	else:
+		controls.text = "WASD / Stick · Bewegen    E / A · Interagieren    Leertaste / B · Ausweichen    Esc · Menü"
