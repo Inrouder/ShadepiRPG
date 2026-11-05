@@ -33,7 +33,7 @@ func _update_mode_buttons() -> void :
 	load_button.text = "Kontrollpunkt laden"
 	load_button.disabled = world.saved_checkpoint(requested_coop) < 0
 	var later: int = world.ChapterFlow.checkpoint("user://shadepi-chapter-two.cfg", "chapter", "section", range(6))
-	next_chapter_button.visible = world.saved_checkpoint(requested_coop) == world.Phase.COMPLETE or later >= 0
+	next_chapter_button.visible = world.admin_enabled("unlock_all") or world.saved_checkpoint(requested_coop) == world.Phase.COMPLETE or later >= 0
 	next_chapter_button.text = "Kapitel 2 fortsetzen" if later >= 0 else "Kapitel 2 starten"
 
 func _start_new() -> void :

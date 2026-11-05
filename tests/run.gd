@@ -13,6 +13,7 @@ func check(condition: bool, message: String) -> void:
 		push_error("FAIL: " + message)
 
 func run() -> void:
+	check_admin_core()
 	check(CombatRules.can_strike(Vector2.ZERO, Vector2.RIGHT, Vector2(40, 0)), "frontal target can be hit")
 	check(not CombatRules.can_strike(Vector2.ZERO, Vector2.RIGHT, Vector2(-40, 0)), "target behind player is safe")
 	check(not CombatRules.can_strike(Vector2.ZERO, Vector2.RIGHT, Vector2(70, 0)), "target outside blade reach is safe")
@@ -41,6 +42,7 @@ func run() -> void:
 		check(scene.player.visual.texture.resource_path == "res://assets/custom/shadepi.png", "imported custom sheet takes precedence")
 	check_hero_sprites(scene)
 	check_npc_sprites(scene)
+	check_admin_runtime(scene)
 	scene.set_visual_quality(0)
 	check(not scene.atmosphere_filter.visible and not scene.shadow_lights[0].shadow_enabled, "reduced mode removes screen processing and dynamic shadows")
 	scene.set_visual_quality(2)
@@ -314,6 +316,60 @@ func pad_button(device: int, button: JoyButton) -> void:
 	release.pressed = false
 	Input.parse_input_event(release)
 	Input.flush_buffered_events()
+
+func check_admin_core() -> void:
+	check(AdminTools.scene_for_chapter(1) == "res://scenes/chapter_one.tscn", "admin chapter 1 scene")
+	check(AdminTools.scene_for_chapter(2) == "res://scenes/chapter_two.tscn", "admin chapter 2 scene")
+	for chapter in range(3, 8):
+		check(AdminTools.scene_for_chapter(chapter) == "res://scenes/campaign.tscn", "admin chapter campaign scene")
+	check(AdminTools.scene_for_chapter(0).is_empty() and AdminTools.scene_for_chapter(8).is_empty(), "admin rejects invalid chapter ids")
+	for pair in [[3, 0], [4, 3], [5, 5], [6, 6], [7, 10]]:
+		check(AdminTools.first_beat(pair[0]) == pair[1], "admin chapter maps to the right story beat")
+	check(not AdminTools.is_test_session(self), "test runner starts without active admin mode")
+	var standard := "user://shadepi-campaign.cfg"
+	check(AdminTools.checkpoint_path(standard, self) == standard, "normal saves keep original file")
+	set_meta(AdminTools.SESSION_KEY, true)
+	check(AdminTools.checkpoint_path(standard, self) == "user://shadepi-admin-campaign.cfg", "admin saves use another file")
+	remove_meta(AdminTools.SESSION_KEY)
+	check(AdminTools.read_flags().size() == AdminTools.OPTIONS.size(), "admin settings define all switches")
+
+func check_admin_runtime(scene: Node2D) -> void:
+	check(scene.ui.admin_panel != null and not scene.ui.admin_panel.visible, "dev panel stays hidden initially")
+	check(scene.ui.admin_chapter_picker.get_item_count() == 7, "chapter selector offers seven chapters")
+	check(scene.ui.admin_chapter_picker.disabled == not scene.admin_enabled("unlock_all"), "chapter selection gated by unlock toggle")
+	var standard_path: String = scene.save_path()
+	scene.ui._toggle_admin_panel()
+	check(scene.ui.admin_panel.visible, "secret developer overlay opens when requested")
+	check(AdminTools.is_test_session(self) and scene.save_path() != standard_path, "opening developer tools isolates checkpoint storage")
+	scene.ui._close_admin_panel()
+	check(not scene.ui.admin_panel.visible and scene.menu_open, "closing admin overlay leaves game menu intact")
+	remove_meta(AdminTools.SESSION_KEY)
+	var previous_flags: Dictionary = scene.admin_flags.duplicate()
+	scene.admin_flags["unlock_all"] = true
+	scene.ui._refresh_admin_controls()
+	check(not scene.ui.admin_chapter_picker.disabled, "unlock setting enables full chapter selection")
+	scene.admin_flags = previous_flags.duplicate()
+	scene.ui._refresh_admin_controls()
+	var health_before: int = scene.player.health
+	scene.admin_flags["god_mode"] = true
+	scene.player.take_damage(33, scene.player.global_position + Vector2.RIGHT)
+	check(scene.player.health == health_before, "god mode prevents player damage")
+	scene.admin_flags["god_mode"] = false
+	var foe = scene.enemy
+	var previous_health: int = foe.health
+	var previous_minimum: int = foe.min_health
+	var previous_armour: bool = foe.armoured
+	foe.armoured = false
+	foe.min_health = 1
+	foe.health = 60
+	scene.admin_flags["one_hit"] = true
+	foe.take_damage(1)
+	check(foe.health == 1, "one hit honors the minimum HP on scripted enemies")
+	foe.health = previous_health
+	foe.min_health = previous_minimum
+	foe.armoured = previous_armour
+	foe.reset_visual_pose()
+	scene.admin_flags = previous_flags
 
 func check_hero_sprites(scene: Node2D) -> void:
 	for actor in [scene.player, scene.raven]:

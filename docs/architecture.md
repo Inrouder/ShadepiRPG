@@ -1,4 +1,4 @@
-# Projektaufbau · v0.13.2
+# Projektaufbau · v0.14.0
 
 ## Einstieg und Kapitel
 
@@ -31,6 +31,10 @@
 - `tools/generate_assets.cjs`: Generator nur für Pixel-Requisiten, Lichttextur und Basissounds.
 
 Raster und Bearbeitungsregeln: [HQ-Sprites](helden-sprites.md) und [Figuren bearbeiten](figuren-bearbeiten.md).
+
+## Entwickler-Testmenü
+
+`scripts/admin_tools.gd` speichert die Testschalter, verwaltet die Kapitelzuordnung per Szenen-Metadaten und trennt die Kontrollpunktdateien vom normalen Profil. `scripts/hud.gd` enthält die versteckte Bedienoberfläche. Spieler, Gegner, Fahrzeugsequenzen und Flucht berücksichtigen die Testschalter, während Story-Sperren bei regulären Treffern bestehen bleiben. Weitere Hinweise: [Admin-Testmodus](admin-testmodus.md).
 
 ## Gameplay und Prüfung
 

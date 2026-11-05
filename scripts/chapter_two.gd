@@ -28,7 +28,9 @@ func create_hud() -> CanvasLayer:
 
 func _ready() -> void :
 	super._ready()
-	if ChapterFlow.consume_entry(get_tree(), "res://scenes/chapter_two.tscn") or not load_game():
+	if Admin.consume_chapter(get_tree(), "res://scenes/chapter_two.tscn") == 2:
+		new_game(false)
+	elif ChapterFlow.consume_entry(get_tree(), "res://scenes/chapter_two.tscn") or not load_game():
 		new_game()
 
 func world_props() -> Array[Dictionary]:
@@ -270,6 +272,17 @@ func raven_hack() -> bool:
 			return true
 	return false
 
+func admin_defeat_enemies() -> int:
+	var amount := super.admin_defeat_enemies()
+	if section == Section.DIVE:
+		amount += threats.size()
+		for threat in threats:
+			threat.set_process(false)
+			threat.queue_free()
+		threats.clear()
+		next_wave = true
+	return amount
+
 func player_defeated() -> void :
 	_enter.call_deferred(section, relay_index)
 
@@ -314,7 +327,7 @@ func _finish_chapter() -> void :
 
 func saved_checkpoint() -> int:
 	var config: = ConfigFile.new()
-	if config.load(SLOT) != OK:
+	if config.load(Admin.checkpoint_path(SLOT, get_tree())) != OK:
 		return -1
 	var value: Variant = config.get_value("chapter", "section", -1)
 	return value if value is int and value >= Section.YARD and value <= Section.COOLING else -1
@@ -328,14 +341,14 @@ func save_game() -> bool:
 	config.set_value("chapter", "section", section)
 	config.set_value("chapter", "relay", relay_index)
 	config.set_value("props", "state", dressing_state())
-	return config.save(SLOT) == OK
+	return config.save(Admin.checkpoint_path(SLOT, get_tree())) == OK
 
 func load_game(_requested_mode: Variant = null) -> bool:
 	var saved: = saved_checkpoint()
 	if saved < 0:
 		return false
 	var config: = ConfigFile.new()
-	config.load(SLOT)
+	config.load(Admin.checkpoint_path(SLOT, get_tree()))
 	restore_dressing_state(config.get_value("props", "state", {}))
 	_enter(saved as Section, int(config.get_value("chapter", "relay", 0)))
 	return true

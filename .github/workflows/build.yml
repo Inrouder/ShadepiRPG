@@ -37,11 +37,19 @@ jobs:
         run: node --check tools/generate_assets.cjs
       - name: Import resources
         run: godot --headless --editor --import --quit
+      - name: Parse test scripts before running gameplay
+        run: godot --headless --check-only --script res://tests/run.gd
+      - name: Smoke launch main menu and detect runtime errors
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 25s godot --headless --quit-after 5 2>&1 | tee /tmp/startup.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|Parse Error' /tmp/startup.log; then exit 1; fi
       - name: Run gameplay and save validation
         shell: bash
         run: |
           set -euo pipefail
-          godot --headless --script res://tests/run.gd 2>&1 | tee /tmp/tests.log
+          timeout 90s godot --headless --script res://tests/run.gd 2>&1 | tee /tmp/tests.log
           if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/tests.log; then exit 1; fi
       - name: Validate digital NPC visuals
         run: godot --headless --script res://tests/npc_dive_visuals.gd

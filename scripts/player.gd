@@ -24,6 +24,12 @@ func _physics_process(delta: float) -> void :
 	if world.is_busy():
 		animate("idle", delta)
 		return
+	if world.admin_enabled("infinite_energy"):
+		energy = 100.0
+	if world.admin_enabled("no_cooldowns"):
+		attack_cooldown = 0.0
+		dash_cooldown = 0.0
+		cloak_cooldown = 0.0
 	attack_cooldown = maxf(0.0, attack_cooldown - delta)
 	dash_cooldown = maxf(0.0, dash_cooldown - delta)
 	cloak_cooldown = maxf(0.0, cloak_cooldown - delta)
@@ -130,6 +136,8 @@ func try_cloak() -> bool:
 	return true
 
 func take_damage(amount: int, source: Vector2) -> void :
+	if world.admin_enabled("god_mode"):
+		return
 	if invulnerable > 0.0 or health <= 0:
 		return
 	health = maxi(health_floor, health - amount)
