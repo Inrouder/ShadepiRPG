@@ -1,4 +1,4 @@
-# Projektaufbau · v0.12.0
+# Projektaufbau · v0.13.1
 
 ## Einstieg und Kapitel
 
@@ -18,7 +18,7 @@
 - `scripts/painted_world.gd` ordnet 16 PNG-Kulissen aus `assets/world/painted/` zu und definiert begehbare Bereiche, Hindernisse und Vordergrunddarstellung.
 - `scripts/world_dressing.gd` enthält die Requisiten-Anordnungen je Umgebung.
 - `scripts/world_prop.gd` implementiert das Verhalten der Weltobjekte.
-- `assets/world/levels/` und `assets/world/destructibles.png` ergänzen die Weltressourcen.
+- `assets/world/props.png`, `assets/world/destructibles.png` und `assets/audio/` enthalten die ergänzenden Requisiten und Geräusche. Die früheren prozeduralen Levelbilder werden nicht mehr benötigt.
 
 ## Figuren und Medien
 
