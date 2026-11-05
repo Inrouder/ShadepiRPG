@@ -39,6 +39,12 @@ jobs:
         run: godot --headless --editor --import --quit
       - name: Parse test scripts before running gameplay
         run: godot --headless --check-only --script res://tests/run.gd
+      - name: Smoke launch main menu and detect runtime errors
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 25s godot --headless --quit-after 5 2>&1 | tee /tmp/startup.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|Parse Error' /tmp/startup.log; then exit 1; fi
       - name: Run gameplay and save validation
         shell: bash
         run: |
