@@ -1,5 +1,16 @@
 # Versionshinweise
 
+## v0.14.0 – Verstecktes Testmenü · 5. November 2026
+
+- Das Testmenü öffnet sich im Haupt- oder Pausenmenü mit **Strg+Umschalt+F10** oder fünf Klicks auf den Menütitel.
+- Kapitelwahl für alle sieben Kapitel; Kapitel 3–7 starten am passenden Beginn innerhalb der gemeinsamen Kampagne.
+- Testschalter: Unsterblichkeit, One-Hit-K.O., unendliche Energie, keine Abklingzeiten, Fluchttimer-Stopp und Alle-Kapitel-Freischaltung.
+- Testaktionen: Gegner im aktuellen Kampf ausschalten, Leben/Energie auffüllen und alle Testschalter zurücksetzen.
+- Normale Spielstände bleiben getrennt: Ab Öffnen des Testmenüs werden Kontrollpunkte mit Admin-Dateinamen gespeichert.
+- Testoptionen werden lokal gespeichert, es gibt keinen Passwortschutz. Storybedingte Schutzmechaniken bleiben bei regulären Treffern erhalten.
+- Neue Prüfungen für Kapitelzuordnung, getrennte Speicherpfade, UI, Unsterblichkeit und One-Hit-Modus.
+
+
 ## v0.13.2 – Direkte HQ-Sprites und weniger Altlasten · 5. November 2026
 
 - Alle Szenen laden Raven, Shadepi und die humanoiden Gegner unmittelbar aus den fertigen HQ-Atlanten.

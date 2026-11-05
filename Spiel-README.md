@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**Spieleranleitung für v0.13.2.** Aktuelle Downloads und Prüfstatus: [Repository-Startseite](README.md). Änderungen: [Versionshinweise](CHANGELOG.md).
+**Spieleranleitung für v0.14.0.** Aktuelle Downloads und Prüfstatus: [Repository-Startseite](README.md). Änderungen: [Versionshinweise](CHANGELOG.md).
 
 **Kapitel und Kontrollpunkte:** Mit „Weiter zu Kapitel …“ beginnt das folgende Kapitel am Anfang. Die Menüoption „Fortsetzen“ lädt dessen vorhandenen Kontrollpunkt. Kapitel 2 verläuft über Industriegebiet → Versteck → Kühlsystem → Deep Dive → Kryospray → Abschluss. Danach folgen Pakt, Hinterhalt und Verfolgung (3), Garage und Hangar (4), Heiligtum und Erinnerungen (5), Anflug, Dach, Kenzō und Flucht (6), See und Aufnahme in den Orden (7).
 
@@ -11,6 +11,10 @@
 Raven bekommt in ihrem Apartment einen Hinweis auf Chrome Jackal, räumt die Punks in Bingo Street aus dem Weg und verfolgt ihn bis zum Wartungshof. Dort hält seine Panzerung jedem Treffer stand. Nach 30 Kampfsekunden dreht er Ravens Hack gegen sie. Shadepi kämpft sich durch die Wartungsgasse und stellt Jackal mit 360 HP. Sobald die Hälfte seiner Lebenspunkte weg ist, steht Raven auf und steigt in den Kampf ein.
 
 Die Zwischenszenen nutzen Ausschnitte aus dem Comic „Shadepi – Im Schatten des Raben“ (deutsche Fassung, PDF-Seiten 2, 4, 5, 6 und 9) mit eigens für das Spiel geschriebenen Dialogen.
+
+## Verstecktes Test-/Admin-Menü
+
+Im Haupt- oder Pausenmenü **Strg + Umschalt + F10** drücken oder fünfmal auf die Überschrift klicken. Alle Kapitel freischalten und Kapitel 1–7 direkt starten; zusätzlich unendlich Leben/Energie, One-Hit-K.O., keine Abklingzeiten und ein Fluchttimer-Stopp. Im Testmenü können aktuelle Gegner besiegt oder Figuren geheilt werden. Das erste Jackal-Duell ist weiterhin ein geskriptetes Storyereignis. Test-Kontrollpunkte bleiben von normalen Spielständen getrennt. [Weitere Details](docs/admin-testmodus.md).
 
 ## Illustrierte Helden in v0.12.0
 
