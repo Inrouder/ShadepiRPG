@@ -102,6 +102,9 @@ func run() -> void:
 		for row in 3:
 			var texture := Art.texture(column, row)
 			check(Rect2(Vector2.ZERO, Art.ATLAS.get_size()).encloses(texture.region), "HQ atlas region in bounds")
+	check(Art.SIZES[3] == Vector2(160, 74), "parked cars have believable proportions beside the heroes")
+	check(Art.SIZES[4] == Vector2(104, 70), "dumpsters have believable proportions beside the heroes")
+	check(Vector2i(Drive.VEHICLES.get_size()) == Vector2i(1254, 1254), "vehicle atlas keeps its 2x2 layout")
 	print("Drive action: %d checks, %d failures" % [checks, failures])
 	world.queue_free()
 	await process_frame

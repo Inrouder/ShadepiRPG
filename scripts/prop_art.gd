@@ -3,7 +3,7 @@ extends RefCounted
 const ATLAS = preload("res://assets/world/hq/props.png")
 const EDGES = [0, 244, 480, 699, 1000, 1234, 1470, 1714, 1944, 2172]
 const ROWS = [0, 250, 505, 724]
-const SIZES = [Vector2(54, 58), Vector2(44, 58), Vector2(74, 111), Vector2(116, 67), Vector2(76, 62), Vector2(52, 74), Vector2(59, 79), Vector2(56, 78), Vector2(67, 69)]
+const SIZES = [Vector2(54, 58), Vector2(44, 58), Vector2(74, 111), Vector2(160, 74), Vector2(104, 70), Vector2(52, 74), Vector2(59, 79), Vector2(56, 78), Vector2(67, 69)]
 
 static func texture(column: int, row: int = 0) -> AtlasTexture:
 	var result := AtlasTexture.new()
