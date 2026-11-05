@@ -16,9 +16,10 @@ func check(condition: bool, message: String) -> void:
 
 func run() -> void:
 	check_admin_core()
-	check(MusicLibrary.SLOTS.size() == 25, "every menu and story section has a replaceable music slot")
-	check(MusicLibrary.candidates("chapter_2_dive")[0] == "res://assets/music/chapter-2-dive.mp3", "music slots prefer manually replaceable MP3 files")
-	check(MusicLibrary.path_for("chapter_2_dive") == MusicLibrary.FALLBACK, "missing custom tracks use the bundled fallback")
+	check(MusicLibrary.SLOTS.size() == 27, "every menu, combat and story section has an assigned music slot")
+	check(MusicLibrary.candidates("chapter_2_dive")[0] == "res://assets/music/Fight.mp3", "regular fights use the shared Fight track")
+	check(MusicLibrary.path_for("boss") == "res://assets/music/Boss.mp3", "boss encounters use the supplied boss track")
+	check(MusicLibrary.path_for("menu") == "res://assets/music/menu.mp3", "the main menu uses the supplied menu track")
 	check(load("res://assets/menu/start-city.png").get_size() == Vector2(1280, 720), "start menu artwork keeps its 16:9 master resolution")
 	check(CombatRules.can_strike(Vector2.ZERO, Vector2.RIGHT, Vector2(40, 0)), "frontal target can be hit")
 	check(not CombatRules.can_strike(Vector2.ZERO, Vector2.RIGHT, Vector2(-40, 0)), "target behind player is safe")
@@ -81,6 +82,7 @@ func run() -> void:
 	scene.interact()
 	await physics_frame
 	check(scene.stage == 2 and scene.gate_open, "terminal unlocks gate and combat")
+	check(MusicLibrary.path_for(scene.music_section).ends_with("Boss.mp3"), "the demo Jackal fight switches to boss music")
 	scene.player.position = Vector2(720, 350)
 	scene.player.facing = (scene.enemy.position - scene.player.position).normalized()
 	check(scene.raven_hack(), "Raven hack succeeds at valid range")
@@ -111,6 +113,7 @@ func run() -> void:
 	check(scene.enemy.health == before, "turning away prevents damage")
 	scene.enemy.take_damage(1000)
 	check(scene.stage == 3 and scene.enemy.health == 0, "boss defeat advances exactly to data objective")
+	check(MusicLibrary.path_for(scene.music_section).ends_with("Level.mp3"), "boss defeat restores the level track")
 	scene.player.position = WorldData.EXIT
 	scene.interact()
 	for i in 3:
@@ -537,6 +540,7 @@ func check_chapter() -> void:
 	check(chapter.ui.comic_art.texture.resource_path.ends_with("apartment.jpg"), "Raven gets the lead in her apartment")
 	finish_dialogue(chapter)
 	check(chapter.phase == chapter.Phase.HUNT and chapter.actor_is_playable(chapter.raven) and not chapter.actor_is_playable(chapter.player), "the hunt gives primary controls to Raven")
+	check(MusicLibrary.path_for(chapter.music_section).ends_with("Fight.mp3"), "street combat uses the regular fight track")
 	check(chapter.saved_checkpoint(true) == chapter.Phase.HUNT, "the hunt is saved in the co-op slot")
 	check(chapter.patrol.size() == 4 and not chapter.gate_open, "four street punks guard Raven's route")
 	check(chapter.patrol[1].shot_range > 0.0, "carbine-equipped gang member uses ranged attacks")
@@ -569,6 +573,7 @@ func check_chapter() -> void:
 		await walk_to(chapter.raven, point)
 		check(chapter.raven.position.distance_to(point) < 20.0, "Raven can walk to %s through chapter geometry" % point)
 	check(chapter.phase == chapter.Phase.DUEL and chapter.enemy.active, "the trail opens the gate and starts the first Jackal fight")
+	check(MusicLibrary.path_for(chapter.music_section).ends_with("Boss.mp3"), "the first Jackal duel uses boss music")
 	finish_dialogue(chapter)
 	chapter.enemy.take_damage(1000)
 	check(chapter.enemy.health == 360 and not chapter.raven_hack(), "Jackal blocks all damage and early hacks during the first duel")
@@ -591,6 +596,7 @@ func check_chapter() -> void:
 	check(chapter.phase == chapter.Phase.REVIVE, "interacting with Raven starts the rescue dialogue")
 	finish_dialogue(chapter)
 	check(chapter.phase == chapter.Phase.TEAM and not chapter.coop and chapter.raven.health == 0, "Shadepi starts the 360 HP fight alone")
+	check(MusicLibrary.path_for(chapter.music_section).ends_with("Boss.mp3"), "the team fight against Jackal keeps boss music")
 	chapter.enemy.take_damage(1000)
 	check(chapter.enemy.health == 180 and not chapter.raven_joined, "damage stops at exactly half health for the handoff")
 	chapter._process(0.01)
@@ -666,6 +672,7 @@ func check_chapter_two() -> void:
 	chapter.player.position = chapter.BATH
 	chapter.interact()
 	check(chapter.raven_leads() and chapter.actor_is_playable(chapter.raven), "deep dive switches control to Raven")
+	check(MusicLibrary.path_for(chapter.music_section).ends_with("Fight.mp3"), "Deep Dive combat uses the fight track")
 	chapter.raven.position = chapter.RELAYS[0]
 	chapter.ice_cycle = 1.5
 	chapter.interact()
@@ -711,6 +718,7 @@ func check_campaign() -> void:
 		scene.interact()
 	finish_dialogue(scene)
 	check(scene.beat == scene.Beat.AMBUSH and scene._living() == 2, "pact leads to the two-shooter ambush")
+	check(MusicLibrary.path_for(scene.music_section).ends_with("Fight.mp3"), "the ambush uses the regular fight track")
 	for foe in scene.foes:
 		foe.take_damage(1000)
 	scene.player.position = scene._target()
@@ -801,6 +809,7 @@ func check_campaign() -> void:
 		scene.interact()
 	finish_dialogue(scene)
 	check(scene.beat == scene.Beat.ROOF and scene._living() == 2, "lift guards fight outside the penthouse")
+	check(MusicLibrary.path_for(scene.music_section).ends_with("Fight.mp3"), "Tower exploration switches to fight music at the lift guards")
 	for foe in scene.foes:
 		foe.hack()
 		foe.take_damage(1000)
@@ -808,6 +817,7 @@ func check_campaign() -> void:
 	await process_frame
 	finish_dialogue(scene)
 	check(scene.beat == scene.Beat.BOSS and scene._living() == 1, "Kenzō is alone in the penthouse")
+	check(MusicLibrary.path_for(scene.music_section).ends_with("Boss.mp3"), "Kenzō's encounter uses boss music")
 	scene.foes.back().take_damage(1000)
 	await process_frame
 	await process_frame

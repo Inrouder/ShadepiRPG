@@ -196,6 +196,8 @@ func _retry(title: String) -> void :
 	ui.show_menu(title)
 
 func _spawn_wave() -> void :
+	if beat == Beat.ROOF:
+		set_music_section("fight")
 	if beat == Beat.BOSS:
 		_spawn_foe(Vector2(858, 340), 360, -1)
 		return

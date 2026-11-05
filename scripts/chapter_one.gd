@@ -211,6 +211,8 @@ func _enter_checkpoint(next_phase: Phase) -> void:
 			set_music_section("chapter_1_rooftop")
 		Phase.RESCUE, Phase.REVIVE:
 			set_music_section("chapter_1_rescue")
+		Phase.TEAM:
+			set_music_section("boss")
 		_:
 			set_music_section("chapter_1_finale")
 	stage = 4 if phase == Phase.COMPLETE else (2 if phase == Phase.TEAM else 1)
@@ -280,6 +282,7 @@ func _update_apartment_lighting() -> void:
 
 func _leave_apartment() -> void:
 	phase = Phase.HUNT
+	set_music_section("chapter_1_hunt")
 	set_dressing("street")
 	_update_apartment_lighting()
 	checkpoint = Phase.HUNT
@@ -310,6 +313,7 @@ func _check_hunt_gate() -> void:
 
 func _begin_duel() -> void:
 	phase = Phase.DUEL
+	set_music_section("boss")
 	stage = 2
 	duel_time = 0.0
 	counter_warning = false
@@ -346,6 +350,7 @@ func _lose_duel() -> void:
 	effects.burst(enemy.position, Color("ff596e"), 24)
 	_down_raven()
 	phase = Phase.ROOFTOP
+	set_music_section("chapter_1_rooftop")
 	stage = 1
 	enemy.active = false
 	enemy.windup = 0.0
@@ -455,6 +460,7 @@ func enemy_defeated(foe: PixelActor = null) -> void:
 
 func _begin_epilogue() -> void:
 	phase = Phase.EPILOGUE
+	set_music_section("chapter_1_finale")
 	stage = 3
 	set_coop(false)
 	ui.dialogue([

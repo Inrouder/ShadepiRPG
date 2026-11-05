@@ -21,7 +21,9 @@ Im Spiel gibt es ein Startmenü mit Einzelspieler und Lokal-Koop, eine gemeinsam
 - **Kapitel 3–5:** Pakt, Hinterhalt, Fahrzeugverfolgung, Hangar, Heiligtum und Erinnerungssequenzen.
 - **Kapitel 6–7:** Anflug, Tower, Konfrontation mit Kenzō, Flucht und Abschluss am See.
 
-Die Spielwelt nutzt **16 gemalte Kulissen** aus `assets/world/painted/`. Wände und verdeckende Bildteile sind in `scripts/painted_world.gd` abgestimmt. Zerstörbare Objekte, Audio, HQ-Sprites und die Original-Keyframes sind im Repository enthalten.
+Die Spielwelt nutzt **16 gemalte Kulissen** aus `assets/world/painted/`. Wände und verdeckende Bildteile sind in `scripts/painted_world.gd` abgestimmt. Zerstörbare Objekte, die sechs zugeordneten Musikstücke, HQ-Sprites und die Original-Keyframes sind im Repository enthalten.
+
+Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und Bosskämpfen. Die vollständige Zuordnung und Hinweise zum Austauschen der MP3-Dateien stehen unter [Musik austauschen](assets/music/README.md).
 
 ## Neu in v0.15.0
 
@@ -40,7 +42,7 @@ Die Spielwelt nutzt **16 gemalte Kulissen** aus `assets/world/painted/`. Wände 
 | --- | --- |
 | Einstieg und Kapitel | `scenes/`, `scripts/chapter_one.gd`, `scripts/chapter_two.gd`, `scripts/campaign.gd` |
 | Gemalte Level | `assets/world/painted/`, `scripts/painted_world.gd` |
-| Requisiten und Sound | `assets/world/`, `assets/audio/`, `scripts/world_dressing.gd` |
+| Requisiten und Sound | `assets/world/`, `assets/audio/`, `assets/music/`, `scripts/world_dressing.gd` |
 | Charaktere und Gegner | `assets/sprites/heroes/`, `assets/sprites/npcs/` |
 | Editierbare Originalposen | `tools/hero_sources/`, `tools/npc_sources/` |
 | Animationen zusammensetzen | `tools/compile_heroes.py`, `tools/compile_npcs.py` |

@@ -730,6 +730,7 @@ func interact(actor: PixelActor = null) -> void :
 	elif stage == 1 and actor.position.distance_to(WorldData.TERMINAL) < 54:
 		set_gate(true)
 		stage = 2
+		set_music_section("boss")
 		sound("hack")
 		effects.burst(WorldData.TERMINAL, Color("61e0ec"), 22)
 		toast("Raven: Sperre offen. Seine Panzerung schwäche ich mit %s." % hack_input_hint())
@@ -828,6 +829,7 @@ func damage_number(point: Vector2, text: String) -> void :
 
 func enemy_defeated(_foe: PixelActor = null) -> void :
 	stage = 3
+	set_music_section("demo")
 	toast("Raven: Der Weg ist frei. Sichere die Daten am Ausgang im Nordosten.")
 	autosave()
 
@@ -891,7 +893,7 @@ func load_game(requested_mode: Variant = null) -> bool:
 		var follow_position: Vector2 = player.position + Vector2(-44, 24)
 		reset_raven(free_saved_position(follow_position if stage >= 2 and WorldData.walkable(follow_position, gate_open) else WorldData.RAVEN))
 	hack_cooldown = 0.0
-	set_music_section("demo")
+	set_music_section("boss" if stage == 2 else "demo")
 	ui.dialogue_open = false
 	ui.dialogue_panel.hide()
 	close_menu()
