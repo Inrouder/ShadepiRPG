@@ -337,7 +337,19 @@ func check_admin_runtime(scene: Node2D) -> void:
 	check(scene.ui.admin_panel != null and not scene.ui.admin_panel.visible, "dev panel stays hidden initially")
 	check(scene.ui.admin_chapter_picker.get_item_count() == 7, "chapter selector offers seven chapters")
 	check(scene.ui.admin_chapter_picker.disabled == not scene.admin_enabled("unlock_all"), "chapter selection gated by unlock toggle")
+	var standard_path: String = scene.save_path()
+	scene.ui._toggle_admin_panel()
+	check(scene.ui.admin_panel.visible, "secret developer overlay opens when requested")
+	check(AdminTools.is_test_session(self) and scene.save_path() != standard_path, "opening developer tools isolates checkpoint storage")
+	scene.ui._close_admin_panel()
+	check(not scene.ui.admin_panel.visible and scene.menu_open, "closing admin overlay leaves game menu intact")
+	remove_meta(AdminTools.SESSION_KEY)
 	var previous_flags: Dictionary = scene.admin_flags.duplicate()
+	scene.admin_flags["unlock_all"] = true
+	scene.ui._refresh_admin_controls()
+	check(not scene.ui.admin_chapter_picker.disabled, "unlock setting enables full chapter selection")
+	scene.admin_flags = previous_flags.duplicate()
+	scene.ui._refresh_admin_controls()
 	var health_before: int = scene.player.health
 	scene.admin_flags["god_mode"] = true
 	scene.player.take_damage(33, scene.player.global_position + Vector2.RIGHT)
