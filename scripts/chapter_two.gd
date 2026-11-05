@@ -90,6 +90,15 @@ func new_game(save_checkpoint: bool = true) -> void :
 
 func _enter(next: Section, saved_relay: int = 0) -> void :
 	section = next
+	match section:
+		Section.YARD:
+			set_music_section("chapter_2_industry")
+		Section.DIVE:
+			set_music_section("chapter_2_dive")
+		Section.RECOVERY, Section.COOLING, Section.END:
+			set_music_section("chapter_2_recovery")
+		_:
+			set_music_section("chapter_2_hideout")
 	set_dressing("industry" if next == Section.YARD else "dive" if next == Section.DIVE else "hideout")
 	set_painted_solids("industry" if next == Section.YARD else "dive" if next == Section.DIVE else "hideout")
 	stage = 0

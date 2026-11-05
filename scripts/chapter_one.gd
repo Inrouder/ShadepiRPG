@@ -200,6 +200,19 @@ func _enter_checkpoint(next_phase: Phase) -> void:
 	patrol.clear()
 	checkpoint = next_phase
 	phase = next_phase
+	match phase:
+		Phase.APARTMENT:
+			set_music_section("chapter_1_apartment")
+		Phase.HUNT:
+			set_music_section("chapter_1_hunt")
+		Phase.DUEL:
+			set_music_section("chapter_1_duel")
+		Phase.ROOFTOP:
+			set_music_section("chapter_1_rooftop")
+		Phase.RESCUE, Phase.REVIVE:
+			set_music_section("chapter_1_rescue")
+		_:
+			set_music_section("chapter_1_finale")
 	stage = 4 if phase == Phase.COMPLETE else (2 if phase == Phase.TEAM else 1)
 	raven_joined = false
 	set_coop(false)

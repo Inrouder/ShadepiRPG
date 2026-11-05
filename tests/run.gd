@@ -1,5 +1,7 @@
 extends SceneTree
 
+const MusicLibrary = preload("res://scripts/music_library.gd")
+
 var checks := 0
 var failures := 0
 
@@ -14,6 +16,10 @@ func check(condition: bool, message: String) -> void:
 
 func run() -> void:
 	check_admin_core()
+	check(MusicLibrary.SLOTS.size() == 25, "every menu and story section has a replaceable music slot")
+	check(MusicLibrary.candidates("chapter_2_dive")[0] == "res://assets/music/chapter-2-dive.mp3", "music slots prefer manually replaceable MP3 files")
+	check(MusicLibrary.path_for("chapter_2_dive") == MusicLibrary.FALLBACK, "missing custom tracks use the bundled fallback")
+	check(load("res://assets/menu/start-city.png").get_size() == Vector2(1280, 720), "start menu artwork keeps its 16:9 master resolution")
 	check(CombatRules.can_strike(Vector2.ZERO, Vector2.RIGHT, Vector2(40, 0)), "frontal target can be hit")
 	check(not CombatRules.can_strike(Vector2.ZERO, Vector2.RIGHT, Vector2(-40, 0)), "target behind player is safe")
 	check(not CombatRules.can_strike(Vector2.ZERO, Vector2.RIGHT, Vector2(70, 0)), "target outside blade reach is safe")
@@ -30,6 +36,7 @@ func run() -> void:
 	var scene = load("res://scenes/main.tscn").instantiate()
 	root.add_child(scene)
 	await process_frame
+	check(scene.ui.start_backdrop.visible and scene.music_section == "menu", "live city and menu music are active on startup")
 	check(SpriteAssets.valid_sheet(scene.player.visual.texture), "selected player sprite fits a supported grid")
 	var invalid_sprite := ImageTexture.create_from_image(Image.create_empty(48, 64, false, Image.FORMAT_RGBA8))
 	check(not SpriteAssets.valid_sheet(invalid_sprite), "single-frame replacement is rejected")
@@ -48,6 +55,7 @@ func run() -> void:
 	scene.set_visual_quality(2)
 	check(scene.atmosphere_filter.visible and scene.shadow_lights[0].shadow_enabled, "atmospheric mode restores lighting and post filter")
 	scene.close_menu()
+	check(not scene.ui.start_backdrop.visible, "live start backdrop closes with the menu")
 	check_npc_attack_animation(scene)
 	var start: Vector2 = scene.player.position
 	Input.action_press("move_right")

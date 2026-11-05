@@ -113,6 +113,13 @@ func _enter(next: int) -> void :
 		foe.queue_free()
 	foes.clear()
 	beat = next
+	var music_sections := [
+		"chapter_3_pact", "chapter_3_ambush", "chapter_3_chase",
+		"chapter_4_garage", "chapter_4_hangar", "chapter_5_sanctuary",
+		"chapter_6_flight", "chapter_6_tower", "chapter_6_boss",
+		"chapter_6_escape", "chapter_7_lake", "chapter_7_finale",
+	]
+	set_music_section(music_sections[beat])
 	var layouts: = ["hideout", "ambush", "", "garage", "hangar", "chamber", "", "roof", "suite", "suite", "lake", "lake"]
 	set_dressing(layouts[beat])
 	stage = 0
@@ -121,7 +128,6 @@ func _enter(next: int) -> void :
 	clock = 0.0
 	countdown = 60.0
 	ritual_flash = 0.0
-	music.stream_paused = next in [Beat.LAKE, Beat.END] or not audio_on
 	hack_cooldown = 0.0
 	player.health = 100
 	player.energy = 100.0
@@ -449,6 +455,7 @@ func _enter_echo() -> void :
 	timing = null
 	gamepads.assign(Input.get_connected_joypads(), false)
 	echo_ready = true
+	set_music_section("chapter_5_echo")
 	reset_raven(SPAWN)
 	set_painted_solids("memory")
 	set_dressing("")

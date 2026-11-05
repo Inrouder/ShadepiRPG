@@ -11,6 +11,7 @@ const PropScript = preload("res://scripts/world_prop.gd")
 const Painted = preload("res://scripts/painted_world.gd")
 const Dressing = preload("res://scripts/world_dressing.gd")
 const GroundAtmosphereScript = preload("res://scripts/ground_atmosphere.gd")
+const MusicLibrary = preload("res://scripts/music_library.gd")
 const VISUAL_PRESETS: = ["Reduziert", "Ausgewogen", "Atmosphärisch"]
 const VISUAL_SETTINGS: = "user://shadepi-graphics.cfg"
 var player
@@ -34,6 +35,8 @@ var gate_open: = false
 var audio_on: = true
 var sfx: Array[AudioStreamPlayer] = []
 var music: AudioStreamPlayer
+var music_section := ""
+var music_fade: Tween
 var light_texture: = preload("res://assets/world/light.png")
 var screenshot_mode: = false
 var visual_quality: = 2
@@ -584,19 +587,31 @@ func cycle_visual_quality() -> void :
 
 func _build_audio() -> void :
 	music = AudioStreamPlayer.new()
-	var stream: AudioStreamWAV = preload("res://assets/audio/neon-loop.wav").duplicate()
-	stream.loop_mode = AudioStreamWAV.LOOP_FORWARD
-	stream.loop_end = stream.data.size() / 2
-	music.stream = stream
 	music.volume_db = -12
 	add_child(music)
-	if DisplayServer.get_name() != "headless" and AudioServer.get_driver_name() != "Dummy":
-		music.play()
+	set_music_section("menu", true)
 	for i in 4:
 		var channel: = AudioStreamPlayer.new()
 		channel.volume_db = -8
 		add_child(channel)
 		sfx.append(channel)
+
+func set_music_section(section: String, restart: bool = false) -> void:
+	if not restart and music_section == section and music.stream != null:
+		return
+	music_section = section
+	if music_fade != null:
+		music_fade.kill()
+	music.stop()
+	music.stream = MusicLibrary.stream_for(section)
+	music.stream_paused = not audio_on
+	music.volume_db = -28.0
+	if audio_on and DisplayServer.get_name() != "headless" and AudioServer.get_driver_name() != "Dummy":
+		music.play()
+		music_fade = create_tween()
+		music_fade.tween_property(music, "volume_db", -12.0, 0.65)
+	else:
+		music.volume_db = -12.0
 
 func _process(delta: float) -> void :
 	if admin_enabled("no_cooldowns"):
@@ -677,7 +692,7 @@ func is_busy() -> bool:
 func close_menu() -> void :
 	menu_open = false
 	started = true
-	ui.menu.hide()
+	ui.hide_menu()
 	if ui.admin_panel != null:
 		ui.admin_panel.hide()
 
@@ -876,6 +891,7 @@ func load_game(requested_mode: Variant = null) -> bool:
 		var follow_position: Vector2 = player.position + Vector2(-44, 24)
 		reset_raven(free_saved_position(follow_position if stage >= 2 and WorldData.walkable(follow_position, gate_open) else WorldData.RAVEN))
 	hack_cooldown = 0.0
+	set_music_section("demo")
 	ui.dialogue_open = false
 	ui.dialogue_panel.hide()
 	close_menu()
@@ -901,6 +917,7 @@ func new_game(save_checkpoint: bool = true) -> void :
 	enemy.active = false
 	reset_raven(WorldData.RAVEN)
 	hack_cooldown = 0.0
+	set_music_section("demo")
 	ui.dialogue_open = false
 	ui.dialogue_panel.hide()
 	close_menu()
@@ -923,6 +940,8 @@ func sound(kind: String) -> void :
 func toggle_audio() -> void :
 	audio_on = not audio_on
 	music.stream_paused = not audio_on
+	if audio_on and not music.playing and DisplayServer.get_name() != "headless" and AudioServer.get_driver_name() != "Dummy":
+		music.play()
 	for channel in sfx:
 		if not audio_on:
 			channel.stop()

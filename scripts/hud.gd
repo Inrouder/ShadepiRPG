@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+const StartMenuBackdrop = preload("res://scripts/start_menu_backdrop.gd")
+
 var world: Node2D
 var root: Control
 var vitals: Label
@@ -29,6 +31,8 @@ var resume_button: Button
 var load_button: Button
 var restart_button: Button
 var menu_help: Label
+var start_backdrop: Control
+var game_hud_nodes: Array[CanvasItem] = []
 var visual_button: Button
 var mode_button: Button
 var requested_coop: = false
@@ -78,7 +82,10 @@ func _ready() -> void :
 	root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(root)
+	start_backdrop = StartMenuBackdrop.new()
+	root.add_child(start_backdrop)
 	var top: = panel(Rect2(12, 10, 184, 53))
+	game_hud_nodes.append(top)
 	vitals = label_at("SHADEPI / 100", Vector2(10, 4), Vector2(160, 14), top)
 	for y in [25, 37]:
 		var bar: = ColorRect.new()
@@ -107,22 +114,28 @@ func _ready() -> void :
 	raven_energy.color = energy_bar.color
 	top.add_child(raven_energy)
 	var mission: = panel(Rect2(394, 10, 234, 54))
+	game_hud_nodes.append(mission)
 	mission_title = label_at("ECHOS IN NEON / SPÄTERE SZENE", Vector2(10, 4), Vector2(218, 14), mission, 10, Color("65d4df"))
 	objective = label_at("Sprich mit Raven", Vector2(10, 22), Vector2(214, 28), mission, 11)
 	objective.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	boss_panel = panel(Rect2(204, 10, 182, 54))
+	game_hud_nodes.append(boss_panel)
 	boss = label_at("", Vector2(5, 7), Vector2(172, 35), boss_panel, 10, Color("f18aaa"))
 	boss.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	var bar: = panel(Rect2(0, 334, 640, 26))
+	game_hud_nodes.append(bar)
 	controls = label_at("WASD  Bewegen     J / Maus  Katana     Leertaste  Ausweichen     Esc  Menü", Vector2(12, 5), Vector2(616, 18), bar, 10)
 	abilities = label_at("", Vector2(12, 307), Vector2(615, 22), root, 10, Color("91c5d9"))
 	prompt = label_at("", Vector2(30, 270), Vector2(580, 34), root, 12, Color("e1f5ff"))
+	game_hud_nodes.append(abilities)
+	game_hud_nodes.append(prompt)
 	prompt.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	prompt.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	var shadow: = StyleBoxFlat.new()
 	shadow.bg_color = Color(0.03, 0.05, 0.09, 0.9)
 	prompt.add_theme_stylebox_override("normal", shadow)
 	notice = label_at("", Vector2(100, 73), Vector2(440, 44), root, 11, Color("b5e9f0"))
+	game_hud_nodes.append(notice)
 	notice.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	notice.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	comic_panel = panel(Rect2(0, 0, 640, 360))
@@ -161,17 +174,25 @@ func _ready() -> void :
 	dialogue_next = label_at("E / Enter / A · Weiter", Vector2(360, 74), Vector2(218, 14), dialogue_panel, 9, Color("9eb2c7"))
 	dialogue_next.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	dialogue_panel.hide()
-	menu = panel(Rect2(145, 19, 350, 321))
-	menu_title = label_at("ECHOS IN NEON", Vector2(20, 12), Vector2(310, 26), menu, 19)
-	label_at("Shadepi · Im Schatten des Raben", Vector2(20, 40), Vector2(310, 22), menu, 11, Color("7cc4d4"))
-	menu_description = label_at("Späterer Testabschnitt\nRaven und Shadepi kennen sich bereits.", Vector2(20, 62), Vector2(310, 28), menu, 10, Color("9db0c4"))
+	menu = panel(Rect2(350, 14, 276, 332))
+	var menu_style := StyleBoxFlat.new()
+	menu_style.bg_color = Color(0.018, 0.034, 0.063, 0.88)
+	menu_style.border_color = Color(0.28, 0.78, 0.88, 0.64)
+	menu_style.set_border_width_all(1)
+	menu_style.border_width_left = 3
+	menu_style.corner_radius_top_right = 8
+	menu_style.corner_radius_bottom_right = 8
+	menu.add_theme_stylebox_override("panel", menu_style)
+	menu_title = label_at("SHADEPI", Vector2(16, 12), Vector2(244, 27), menu, 21, Color("e9fbff"))
+	label_at("ECHOS IN NEON", Vector2(16, 40), Vector2(244, 20), menu, 12, Color("66e7f2"))
+	menu_description = label_at("IM SCHATTEN DES RABEN\nEine Cyberpunk-Saga", Vector2(16, 61), Vector2(244, 29), menu, 9, Color("9db0c4"))
 	mode_button = button_at("Modus · Einzelspieler", 94, _switch_mode)
 	resume_button = button_at("Testszene starten", 124, start_selected)
 	load_button = button_at("Spielstand laden", 154, func(): world.load_game(requested_coop))
 	restart_button = button_at("Testszene neu starten", 184, _start_new)
 	button_at("Musik / Ton umschalten", 214, func(): world.toggle_audio())
 	visual_button = button_at("Bildstil: " + world.VISUAL_PRESETS[world.visual_quality], 244, func(): world.cycle_visual_quality())
-	menu_help = label_at("Controller · Stick / Steuerkreuz wählen, A bestätigen\nF5 / LB Speichern   F9 Laden   V Bildstil", Vector2(20, 279), Vector2(310, 35), menu, 10, Color("9db0c4"))
+	menu_help = label_at("Controller · Stick wählen, A bestätigen\nF5 Speichern · F9 Laden · V Bildstil", Vector2(16, 279), Vector2(244, 37), menu, 9, Color("9db0c4"))
 
 	_build_admin_panel()
 	menu_title.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -180,8 +201,8 @@ func _ready() -> void :
 func button_at(text: String, y: float, callback: Callable) -> Button:
 	var button: = Button.new()
 	button.text = text
-	button.position = Vector2(20, y)
-	button.size = Vector2(310, 27)
+	button.position = Vector2(16, y)
+	button.size = Vector2(244, 27)
 	button.add_theme_font_size_override("font_size", 11)
 	button.pressed.connect(callback)
 	menu.add_child(button)
@@ -190,11 +211,23 @@ func button_at(text: String, y: float, callback: Callable) -> Button:
 func show_menu(title: String = "ECHOS IN NEON") -> void :
 	if admin_panel != null:
 		admin_panel.hide()
-	menu_title.text = title
+	var opening: bool = not world.started
+	start_backdrop.visible = opening
+	menu.position = Vector2(350, 14) if opening else Vector2(182, 14)
+	menu_title.text = "SHADEPI" if opening and title == "ECHOS IN NEON" else title
+	menu_description.text = "IM SCHATTEN DES RABEN\nEine Cyberpunk-Saga" if opening else "Pause · Einsatzstatus und Optionen"
+	if opening:
+		world.set_music_section("menu")
 	requested_coop = world.coop
 	_update_mode_buttons()
 	menu.show()
 	resume_button.grab_focus()
+
+func hide_menu() -> void:
+	menu.hide()
+	start_backdrop.hide()
+	for node in game_hud_nodes:
+		node.show()
 
 func _switch_mode() -> void :
 	requested_coop = not requested_coop
@@ -498,3 +531,6 @@ func _process(delta: float) -> void :
 	abilities.visible = not dialogue_open and not world.menu_open
 	boss.text = "CHROME JACKAL\n" + ("IMPLANTATE GESTÖRT" if world.enemy.exposed > 0 else "Panzerung aktiv") if world.stage == 2 else ""
 	boss_panel.visible = world.stage == 2
+	if start_backdrop.visible:
+		for node in game_hud_nodes:
+			node.hide()
