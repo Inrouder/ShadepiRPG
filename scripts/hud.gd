@@ -342,6 +342,7 @@ func _toggle_admin_panel() -> void:
 	if admin_panel.visible:
 		_close_admin_panel()
 	else:
+		world.begin_admin_test_session()
 		for option in admin_checks:
 			var checkbox: CheckBox = admin_checks[option]
 			checkbox.set_pressed_no_signal(world.admin_enabled(option))

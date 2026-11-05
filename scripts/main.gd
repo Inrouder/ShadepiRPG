@@ -173,6 +173,9 @@ func admin_jump_to_chapter(chapter: int) -> bool:
 		return false
 	return true
 
+func begin_admin_test_session() -> void:
+	get_tree().set_meta(Admin.SESSION_KEY, true)
+
 func admin_heal() -> void:
 	for character in [player, raven]:
 		if character != null:
