@@ -8,10 +8,10 @@ const ChapterHud = preload("res://scripts/campaign_hud.gd")
 const SAVE: = "user://shadepi-campaign.cfg"
 const SPAWN: = Vector2(134, 421)
 const PACT_SPAWN: = Vector2(437, 427)
-const SHOOTERS: = [preload("res://assets/sprites/shooter-visor.png"), preload("res://assets/sprites/shooter-violet.png")]
+const SHOOTERS: = [preload("res://assets/sprites/npcs/shooter-visor.png"), preload("res://assets/sprites/npcs/shooter-violet.png")]
 const GUARDS: = [
-	preload("res://assets/sprites/punk-1.png"), preload("res://assets/sprites/punk-2.png"), 
-	preload("res://assets/sprites/punk-3.png"), preload("res://assets/sprites/punk-4.png"), 
+	preload("res://assets/sprites/npcs/punk-1.png"), preload("res://assets/sprites/npcs/punk-2.png"), 
+	preload("res://assets/sprites/npcs/punk-3.png"), preload("res://assets/sprites/npcs/punk-4.png"), 
 ]
 var beat: = Beat.PACT
 var point_index: = 0
@@ -199,7 +199,7 @@ func _spawn_wave() -> void :
 func _spawn_foe(point: Vector2, hp: int, variant: int) -> void :
 	var foe: = EnemyScript.new()
 	foe.max_health = hp
-	var sprite: Texture2D = SHOOTERS[variant] if beat == Beat.AMBUSH else (GUARDS[variant] if variant >= 0 else preload("res://assets/sprites/kenzo.png"))
+	var sprite: Texture2D = SHOOTERS[variant] if beat == Beat.AMBUSH else (GUARDS[variant] if variant >= 0 else preload("res://assets/sprites/npcs/kenzo.png"))
 	foe.setup(sprite, self)
 	foe.position = point
 	foe.hit_damage = 16 if variant >= 0 else 24
