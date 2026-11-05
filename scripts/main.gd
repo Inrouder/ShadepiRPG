@@ -676,6 +676,8 @@ func close_menu() -> void :
 	menu_open = false
 	started = true
 	ui.menu.hide()
+	if ui.admin_panel != null:
+		ui.admin_panel.hide()
 
 func interaction_prompt() -> String:
 	if stage == 0 and player.position.distance_to(raven.position) < 62:

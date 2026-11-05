@@ -505,7 +505,7 @@ func save_game() -> bool:
 
 func _write_checkpoint() -> bool:
 	var config := ConfigFile.new()
-	config.load(CHAPTER_SAVE)
+	config.load(Admin.checkpoint_path(CHAPTER_SAVE, get_tree()))
 	config.set_value("chapter_one", "coop" if chapter_coop else "solo", checkpoint)
 	config.set_value("props", "coop" if chapter_coop else "solo", dressing_state())
 	return config.save(Admin.checkpoint_path(CHAPTER_SAVE, get_tree())) == OK
@@ -518,7 +518,7 @@ func load_game(requested_mode: Variant = null) -> bool:
 		return false
 	chapter_coop = mode
 	var config := ConfigFile.new()
-	config.load(CHAPTER_SAVE)
+	config.load(Admin.checkpoint_path(CHAPTER_SAVE, get_tree()))
 	restore_dressing_state(config.get_value("props", "coop" if mode else "solo", {}))
 	_enter_checkpoint(saved as Phase)
 	toast("Kontrollpunkt geladen")

@@ -39,6 +39,12 @@ var raven_energy: ColorRect
 var vital_tracks: Array[ColorRect] = []
 var message_time: = 0.0
 var dialogue_next: Label
+var admin_panel: Panel
+var admin_close_button: Button
+var admin_chapter_picker: OptionButton
+var admin_chapter_button: Button
+var admin_checks: Dictionary = {}
+var admin_title_clicks := 0
 
 func panel(rect: Rect2, parent: Node = null) -> Panel:
 	if parent == null:
@@ -167,6 +173,10 @@ func _ready() -> void :
 	visual_button = button_at("Bildstil: " + world.VISUAL_PRESETS[world.visual_quality], 244, func(): world.cycle_visual_quality())
 	menu_help = label_at("Controller · Stick / Steuerkreuz wählen, A bestätigen\nF5 / LB Speichern   F9 Laden   V Bildstil", Vector2(20, 279), Vector2(310, 35), menu, 10, Color("9db0c4"))
 
+	_build_admin_panel()
+	menu_title.mouse_filter = Control.MOUSE_FILTER_STOP
+	menu_title.gui_input.connect(_secret_title_click)
+
 func button_at(text: String, y: float, callback: Callable) -> Button:
 	var button: = Button.new()
 	button.text = text
@@ -178,6 +188,8 @@ func button_at(text: String, y: float, callback: Callable) -> Button:
 	return button
 
 func show_menu(title: String = "ECHOS IN NEON") -> void :
+	if admin_panel != null:
+		admin_panel.hide()
 	menu_title.text = title
 	requested_coop = world.coop
 	_update_mode_buttons()
@@ -204,6 +216,160 @@ func start_selected() -> void :
 	else:
 		world.set_coop(requested_coop)
 		world.new_game(false)
+
+# Intentional QA-only entry: Ctrl+Shift+F10 or five title clicks in the main menu.
+func _input(event: InputEvent) -> void:
+	if world == null or not world.menu_open:
+		return
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.ctrl_pressed and event.shift_pressed and event.keycode == KEY_F10:
+			_toggle_admin_panel()
+			get_viewport().set_input_as_handled()
+		elif event.keycode == KEY_ESCAPE and admin_panel != null and admin_panel.visible:
+			_close_admin_panel()
+			get_viewport().set_input_as_handled()
+
+func _secret_title_click(event: InputEvent) -> void:
+	if not world.menu_open or admin_panel.visible:
+		return
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		admin_title_clicks += 1
+		if admin_title_clicks >= 5:
+			admin_title_clicks = 0
+			_toggle_admin_panel()
+
+func _build_admin_panel() -> void:
+	admin_panel = panel(Rect2(72, 10, 496, 339))
+	admin_panel.mouse_filter = Control.MOUSE_FILTER_STOP
+	label_at("DEV // TESTLAB", Vector2(18, 9), Vector2(355, 24), admin_panel, 19, Color("79e7f0"))
+	label_at("Testwerkzeuge · separate Kontrollpunkte", Vector2(19, 32), Vector2(385, 14), admin_panel, 10, Color("b8c1d8"))
+	admin_close_button = Button.new()
+	admin_close_button.text = "X"
+	admin_close_button.position = Vector2(454, 10)
+	admin_close_button.size = Vector2(27, 27)
+	admin_close_button.pressed.connect(_close_admin_panel)
+	admin_panel.add_child(admin_close_button)
+
+	var scroll := ScrollContainer.new()
+	scroll.position = Vector2(15, 54)
+	scroll.size = Vector2(466, 267)
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	admin_panel.add_child(scroll)
+	var content := VBoxContainer.new()
+	content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	content.add_theme_constant_override("separation", 4)
+	scroll.add_child(content)
+
+	var settings := [
+		["unlock_all", "Alle Kapitel (1–7) freischalten"],
+		["god_mode", "Unendlich Leben · auch im Fahrzeug"],
+		["one_hit", "Ein Treffer = K.O. (Story-Schutz bleibt)"],
+		["infinite_energy", "Unendliche Energie"],
+		["no_cooldowns", "Keine Wartezeiten bei Fähigkeiten"],
+		["freeze_timer", "60-Sekunden-Fluchttimer anhalten"],
+	]
+	for entry in settings:
+		var option := str(entry[0])
+		var checkbox := CheckBox.new()
+		checkbox.text = str(entry[1])
+		checkbox.button_pressed = world.admin_enabled(option)
+		checkbox.add_theme_font_size_override("font_size", 12)
+		checkbox.toggled.connect(_set_admin_checkbox.bind(option))
+		content.add_child(checkbox)
+		admin_checks[option] = checkbox
+
+	var chapter_heading := Label.new()
+	chapter_heading.text = "KAPITEL-WAHL · separater Test-Spielstand"
+	chapter_heading.add_theme_font_size_override("font_size", 11)
+	chapter_heading.add_theme_color_override("font_color", Color("79e7f0"))
+	content.add_child(chapter_heading)
+	var row := HBoxContainer.new()
+	content.add_child(row)
+	admin_chapter_picker = OptionButton.new()
+	admin_chapter_picker.custom_minimum_size = Vector2(269, 29)
+	admin_chapter_picker.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	for entry in [
+		[1, "Kapitel 1 · Raven / Jackal"],
+		[2, "Kapitel 2 · Deep Dive"],
+		[3, "Kapitel 3 · Pakt"],
+		[4, "Kapitel 4 · Hangar"],
+		[5, "Kapitel 5 · Heiligtum"],
+		[6, "Kapitel 6 · Tower / Kenzō"],
+		[7, "Kapitel 7 · See / Finale"],
+	]:
+		admin_chapter_picker.add_item(str(entry[1]), int(entry[0]))
+	row.add_child(admin_chapter_picker)
+	admin_chapter_button = Button.new()
+	admin_chapter_button.text = "Test starten"
+	admin_chapter_button.pressed.connect(_admin_start_chapter)
+	row.add_child(admin_chapter_button)
+	_refresh_admin_controls()
+
+	var actions := HBoxContainer.new()
+	content.add_child(actions)
+	var heal := Button.new()
+	heal.text = "Leben / Energie auffüllen"
+	heal.pressed.connect(func(): world.admin_heal())
+	actions.add_child(heal)
+	var defeat := Button.new()
+	defeat.text = "Aktuelle Gegner besiegen"
+	defeat.pressed.connect(_admin_defeat_enemies)
+	actions.add_child(defeat)
+	var reset := Button.new()
+	reset.text = "Alle Cheats AUS"
+	reset.pressed.connect(_admin_reset)
+	content.add_child(reset)
+	var note := Label.new()
+	note.text = "Test-Kontrollpunkte getrennt von normalen Spielständen.\nEsc schließt das Fenster."
+	note.add_theme_font_size_override("font_size", 10)
+	note.add_theme_color_override("font_color", Color("aab8c8"))
+	content.add_child(note)
+	admin_panel.hide()
+
+func _refresh_admin_controls() -> void:
+	if admin_chapter_picker == null:
+		return
+	var unlocked := world.admin_enabled("unlock_all")
+	admin_chapter_picker.disabled = not unlocked
+	admin_chapter_button.disabled = not unlocked
+
+func _set_admin_checkbox(checked: bool, option: String) -> void:
+	if not world.set_admin_option(option, checked):
+		world.toast("Test-Einstellung konnte nicht gespeichert werden.")
+	_refresh_admin_controls()
+
+func _toggle_admin_panel() -> void:
+	if admin_panel.visible:
+		_close_admin_panel()
+	else:
+		for option in admin_checks:
+			var checkbox: CheckBox = admin_checks[option]
+			checkbox.set_pressed_no_signal(world.admin_enabled(option))
+		_refresh_admin_controls()
+		admin_panel.show()
+		admin_close_button.grab_focus()
+
+func _close_admin_panel() -> void:
+	admin_panel.hide()
+	resume_button.grab_focus()
+
+func _admin_start_chapter() -> void:
+	if world.admin_enabled("unlock_all"):
+		world.admin_jump_to_chapter(admin_chapter_picker.get_selected_id())
+
+func _admin_defeat_enemies() -> void:
+	_close_admin_panel()
+	world.close_menu()
+	var amount: int = world.admin_defeat_enemies()
+	world.toast("Test: %d Gegner besiegt." % amount if amount > 0 else "Keine frei besiegbaren Gegner im Abschnitt.")
+
+func _admin_reset() -> void:
+	for option in admin_checks:
+		var checkbox: CheckBox = admin_checks[option]
+		checkbox.set_pressed_no_signal(false)
+		world.set_admin_option(option, false)
+	_refresh_admin_controls()
+	world.toast("Alle Test-Cheats deaktiviert.")
 
 func toast(text: String) -> void :
 	notice.text = text

@@ -348,7 +348,7 @@ func load_game(_requested_mode: Variant = null) -> bool:
 	if saved < 0:
 		return false
 	var config: = ConfigFile.new()
-	config.load(SLOT)
+	config.load(Admin.checkpoint_path(SLOT, get_tree()))
 	restore_dressing_state(config.get_value("props", "state", {}))
 	_enter(saved as Section, int(config.get_value("chapter", "relay", 0)))
 	return true
