@@ -1,5 +1,15 @@
 # Versionshinweise
 
+## v0.13.2 – Direkte HQ-Sprites und weniger Altlasten · 5. November 2026
+
+- Alle Szenen laden Raven, Shadepi und die humanoiden Gegner unmittelbar aus den fertigen HQ-Atlanten.
+- Zehn alte Pixel-Sprites samt Godot-Importdateien entfernt; die HQ-Atlanten, Original-Keyframes und digitalen Gegner bleiben bestehen.
+- `SpriteAssets` auf die Custom-Sprite-Auswahl und Atlasgrößenprüfung vereinfacht. Benutzereigene ältere 4-/8-Richtungs-Pixelraster bleiben kompatibel.
+- Gameplay- und Animationstests prüfen den direkten HQ-Ladevorgang und das Fehlen der Pixel-Zwischendateien.
+- Node-Generator auf die weiterhin genutzten Pixel-Requisiten, Lichttextur und Basissounds reduziert; keine Figuren/Level/Icons werden mehr überschrieben.
+- Aktualisierte Dokumentation, identische Kapitel- und Spielstandformate.
+
+
 ## v0.13.1 – Story, Kapitel und Szenen · 5. November 2026
 
 - Story-Ausgänge starten das folgende Kapitel am Anfang, auch bei älteren abgeschlossenen Spielständen. Menü-Fortsetzen lädt weiterhin den gespeicherten Kontrollpunkt; ungültige Dateien schalten keine Kapitel frei.

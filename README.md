@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.13.1 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.13.2 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -40,7 +40,7 @@ Die Spielwelt nutzt **16 gemalte Kulissen** aus `assets/world/painted/`. Wände 
 
 Zum Bearbeiten von Figuren siehe [Figuren bearbeiten](docs/figuren-bearbeiten.md), [Helden-Sprites](docs/helden-sprites.md) und [NPC-Sprites](docs/npc-sprites.md). Weitere technische Hinweise: [Architektur](docs/architecture.md).
 
-**Hinweis zur Medienstruktur:** Die kleinen Pixel-Sprites unter `assets/sprites/` bleiben vorerst erhalten: Spielskripte laden sie noch als Ausgangsressourcen, bevor `scripts/sprite_assets.gd` sie gegen die HQ-Atlanten austauscht. Sie dürfen nicht ohne Code- und Testanpassung gelöscht werden. Gleiches gilt für die `.import`-/`.uid`-Dateien genutzter Godot-Ressourcen.
+**Bereinigte Sprite-Struktur (v0.13.2):** Alle Szenen laden die HQ-Atlanten direkt aus `assets/sprites/heroes/` und `assets/sprites/npcs/`. Die alten Pixel-Zwischendateien sind entfernt. `scripts/sprite_assets.gd` bietet weiterhin eigene Grafiken unter `assets/custom/` an und unterstützt dabei auch ältere selbst erstellte Pixelraster. `npm run assets` erzeugt nur noch Requisiten, Licht und Basissounds – keine Figuren, Hintergründe oder App-Symbole.
 
 ## Qualitätssicherung und Builds
 
@@ -55,7 +55,7 @@ godot --headless --script res://tests/story_audit.gd
 godot --headless --script res://tests/npc_dive_visuals.gd
 ```
 
-Für **v0.13.1** sind 501 automatisierte Prüfungen ohne Fehler dokumentiert; ein vollständiger manueller Spieldurchlauf ist damit nicht ersetzt. [Prüfbericht und Einschränkungen](docs/v0.13.1-fehlerpruefung.md). Der [GitHub-Build des Standes v0.13.1](https://github.com/Inrouder/ShadepiRPG/actions/runs/42095527700) wurde erfolgreich abgeschlossen.
+Für **v0.13.1** sind 501 automatisierte Prüfungen ohne Fehler dokumentiert. Für die direkte HQ-Einbindung von **v0.13.2** laufen dieselben Gameplay-, Story- und NPC-Tests im GitHub-Workflow; ein vollständiger manueller Spieldurchlauf wird dadurch nicht ersetzt. [Prüfbericht und Einschränkungen](docs/v0.13.1-fehlerpruefung.md). Der [GitHub-Build des Standes v0.13.1](https://github.com/Inrouder/ShadepiRPG/actions/runs/42095527700) wurde erfolgreich abgeschlossen.
 
 ## Hintergrund und Lizenzhinweise
 

@@ -33,6 +33,8 @@ jobs:
           target="$HOME/.local/share/godot/export_templates/${GODOT_VERSION}.stable"
           mkdir -p "$target"
           unzip -q -j /tmp/templates.tpz 'templates/windows_release_x86_64.exe' 'templates/linux_release.x86_64' -d "$target"
+      - name: Validate auxiliary asset generator
+        run: node --check tools/generate_assets.cjs
       - name: Import resources
         run: godot --headless --editor --import --quit
       - name: Run gameplay and save validation
