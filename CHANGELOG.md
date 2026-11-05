@@ -1,5 +1,15 @@
 # Versionshinweise
 
+## v0.15.0 – HQ-Weltobjekte und Fahrzeug-Action · 5. November 2026
+
+- Neun HQ-Objekttypen mit drei Schadenszuständen; feste Requisiten verwenden dieselbe Grafikbasis. Alte Pixel-Atlanten entfernt.
+- Gemalte Fahrzeuge ersetzen die geometrischen Platzhalter in Anflug und Verfolgungsjagd.
+- Einmaliger Triebwerksausfall mit acht Sekunden Reparaturzeit, zwölf einzelnen Klopf-Eingaben, Rauch, Schräglage und Wiederzündung. Anflugzeit und Scannerfenster bleiben während der Reparatur erhalten.
+- Träge, bildratenstabile Lenkung, Rückstoß, Trefferfunken, Mündungsfeuer, Explosionen und begrenzte Trümmer-/Rauchsysteme.
+- Fünf eigenständig synthetisierte Sounds respektieren den vorhandenen Ton-Schalter.
+- Neue automatisierte Tests für Reparatur, Pause, Fehlversuch, Scanner, Physik, Treffer und Effektgrenzen.
+
+
 ## v0.14.0 – Verstecktes Testmenü · 5. November 2026
 
 - Das Testmenü öffnet sich im Haupt- oder Pausenmenü mit **Strg+Umschalt+F10** oder fünf Klicks auf den Menütitel.

@@ -245,13 +245,10 @@ func _build_world() -> void :
 	for prop in world_props():
 		_collider(prop.collision)
 		var sprite: = Sprite2D.new()
-		sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-		var atlas: = AtlasTexture.new()
-		atlas.atlas = preload("res://assets/world/props.png")
-		atlas.region = [Rect2(0, 0, 64, 48), Rect2(64, 0, 32, 32), Rect2(96, 0, 32, 48)][prop.kind]
-		sprite.texture = atlas
-		sprite.position = prop.position
-		sprite.offset = Vector2(0, - atlas.region.size.y * 0.5 + 4)
+		var column: int = [4, 0, 5][prop.kind]
+		preload("res://scripts/prop_art.gd").apply(sprite, column)
+		var height: float = sprite.position.y
+		sprite.position = prop.position + Vector2(0, height)
 		actors.add_child(sprite)
 	gate_body = _collider(WorldData.GATE, false)
 	player = PlayerScript.new()

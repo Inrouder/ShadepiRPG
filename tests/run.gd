@@ -727,6 +727,7 @@ func check_campaign() -> void:
 	finish_dialogue(scene)
 	scene.drive.armour = 0
 	scene.drive._process(0.01)
+	scene.drive._process(1.2)
 	check(scene.beat == scene.Beat.GARAGE, "defeating the car opens chapter four")
 	finish_dialogue(scene)
 	scene.player.position = scene._target()
@@ -767,11 +768,17 @@ func check_campaign() -> void:
 		scene.interact()
 	finish_dialogue(scene)
 	check(scene.beat == scene.Beat.FLIGHT and scene.drive.flight, "chapter five leads to the Aerodyne flight")
+	scene.drive.start_engine_failure()
+	for tap in scene.drive.REPAIR_TAPS:
+		scene.drive.knock_engine()
 	scene.drive.elapsed = 15.0
 	scene.drive._process(0.01)
 	check(scene.beat == scene.Beat.FLIGHT and scene.menu_open, "landing requires a transmitted transponder code")
 	scene.close_menu()
 	finish_dialogue(scene)
+	scene.drive.start_engine_failure()
+	for tap in scene.drive.REPAIR_TAPS:
+		scene.drive.knock_engine()
 	scene.drive.elapsed = 9.1
 	Input.action_press("hack")
 	scene.drive._process(0.01)

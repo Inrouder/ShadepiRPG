@@ -18,7 +18,7 @@
 - `scripts/painted_world.gd` ordnet 16 PNG-Kulissen aus `assets/world/painted/` zu und definiert begehbare Bereiche, Hindernisse und Vordergrunddarstellung.
 - `scripts/world_dressing.gd` enthält die Requisiten-Anordnungen je Umgebung.
 - `scripts/world_prop.gd` implementiert das Verhalten der Weltobjekte.
-- `assets/world/props.png`, `assets/world/destructibles.png` und `assets/audio/` enthalten die ergänzenden Requisiten und Geräusche. Die früheren prozeduralen Levelbilder werden nicht mehr benötigt.
+- `assets/world/hq/props.png`, `assets/world/hq/vehicles.png` und `assets/audio/` enthalten die ergänzenden Requisiten und Geräusche. Die früheren prozeduralen Levelbilder werden nicht mehr benötigt.
 
 ## Figuren und Medien
 
@@ -28,7 +28,7 @@
 - `assets/sprites/npcs/`: direkt geladene HQ-Atlanten und digitale Gegner.
 - `assets/custom/`: eigene Grafiken mit Vorrang vor Standardgrafiken; ältere selbst erstellte Pixelraster bleiben kompatibel.
 - `tools/hero_sources/` und `tools/npc_sources/`: originale Schlüsselposen; `tools/compile_heroes.py` und `tools/compile_npcs.py` stellen die HQ-Atlanten zusammen.
-- `tools/generate_assets.cjs`: Generator nur für Pixel-Requisiten, Lichttextur und Basissounds.
+- `tools/generate_assets.cjs`: Generator nur für Lichttextur und Basissounds.
 
 Raster und Bearbeitungsregeln: [HQ-Sprites](helden-sprites.md) und [Figuren bearbeiten](figuren-bearbeiten.md).
 
@@ -51,3 +51,6 @@ Die Tests erzeugen Kontrollpunkte. Lokal dafür ein separates Godot-Benutzerverz
 ## Herkunft
 
 Dieser Quellstand wurde aus dem originalen Windows-Spiel wiederhergestellt und durch Dateien aus dem HQ-Archiv ergänzt. Die [Wiederherstellungsdokumentation](v0.12.0-wiederherstellung.md) nennt die Medienverluste und Prüfgrenzen. `.godot/` ist ein generierter Importcache und gehört nicht zu den versionierten Quellen.
+
+- `scripts/prop_art.gd`: HQ-Atlasregionen, Darstellungsgrößen und Schadenszustände.
+- `tests/drive_action.gd`: Flugnotfall und Verfolgungsphysik; `tools/generate_drive_audio.py`: reproduzierbare Fahrzeugsounds.

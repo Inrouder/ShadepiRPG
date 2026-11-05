@@ -1,7 +1,7 @@
 class_name WorldProp
 extends StaticBody2D
 
-const ATLAS: = preload("res://assets/world/destructibles.png")
+const Art = preload("res://scripts/prop_art.gd")
 const TYPES: = {
 	"crate": {"column": 0, "hp": 40, "footprint": Vector2(43, 22), "color": "b28d64", "label": "Frachtkiste"}, 
 	"barrel": {"column": 1, "hp": 34, "footprint": Vector2(31, 21), "color": "bd7163", "label": "Brennstofffass"}, 
@@ -40,8 +40,7 @@ func setup(game: Node2D, id: String, type: String, point: Vector2) -> void :
 	shape.position.y = - rectangle.size.y * 0.5
 	add_child(shape)
 	sprite = Sprite2D.new()
-	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	sprite.texture = ATLAS
+	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	sprite.region_enabled = true
 	sprite.position.y = -50
 	add_child(sprite)
@@ -90,7 +89,7 @@ func take_damage(amount: int) -> void :
 
 func _update_art() -> void :
 	var row: = 2 if health == 0 else 1 if health <= max_health / 2 else 0
-	sprite.region_rect = Rect2(TYPES[kind].column * 128, row * 128, 128, 128)
+	Art.apply(sprite, TYPES[kind].column, row)
 	if lamp != null:
 		lamp.enabled = health > 0
 		lamp.energy = 0.74 if row == 0 else 0.3

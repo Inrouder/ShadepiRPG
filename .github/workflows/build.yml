@@ -51,6 +51,8 @@ jobs:
           set -euo pipefail
           timeout 90s godot --headless --script res://tests/run.gd 2>&1 | tee /tmp/tests.log
           if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/tests.log; then exit 1; fi
+      - name: Validate flight emergency and chase physics
+        run: godot --headless --script res://tests/drive_action.gd
       - name: Validate digital NPC visuals
         run: godot --headless --script res://tests/npc_dive_visuals.gd
       - name: Validate story, chapter flow, geometry and dialogue

@@ -40,7 +40,7 @@ Die Gassen, das Industriegebiet, das Versteck, die Garage, der Hangar und der To
 
 **F5 / LB** speichert die Schäden zusammen mit dem Kapitelkontrollpunkt. Solo und Koop behalten ihre getrennten Zustände. Im Penthouse bleiben die Schäden während der anschließenden Flucht sichtbar.
 
-Requisiten, Lichttextur und Basissounds lassen sich mit `npm ci` und `npm run assets` neu erzeugen. Der Generator verändert **keine** Charakter-Sprites, gemalten Level oder das App-Symbol. Vor Änderungen an Requisiten/Geräuschen die vorhandenen Dateien sichern. Die Platzierungen stehen in `scripts/world_dressing.gd`.
+Lichttextur und Basissounds lassen sich mit `npm ci` und `npm run assets` neu erzeugen. Der Generator verändert **keine** Charakter-Sprites, gemalten Level oder das App-Symbol. Vor Änderungen an Requisiten/Geräuschen die vorhandenen Dateien sichern. Die Platzierungen stehen in `scripts/world_dressing.gd`.
 
 ## Comicgestaltung in v0.9.0
 
@@ -154,7 +154,7 @@ Repository herunterladen oder klonen, `project.godot` importieren, Ressourcenimp
 ```bash
 godot --headless --editor --import --quit
 godot --headless --script res://tests/run.gd
-godot --headless --script res://tests/destructibles.gd
+godot --headless --script res://tests/drive_action.gd
 godot --headless --script res://tests/painted_world.gd
 mkdir -p build/windows build/linux
 godot --headless --export-release "Windows Desktop" build/windows/Shadepi-Echos-in-Neon.exe
@@ -183,3 +183,10 @@ npm run assets
 ## Weiterentwicklung
 
 Neue Änderungen auf dem vollständigen v0.12-Projekt aufbauen. Vor größeren Eingriffen einen Projektstand sichern und anschließend Import, Tests sowie einen Starttest durchführen. Aktuelle Hinweise stehen in der [README](README.md).
+
+
+### Tower-Anflug und Fahrzeug-Action (v0.15.0)
+
+Beim Anflug fällt nach etwa drei Sekunden das rechte Triebwerk aus. **J** auf der Tastatur oder **X** am Controller zwölfmal innerhalb von acht Sekunden drücken: Jeder einzelne Druck klopft hörbar gegen das Cockpit. Gedrückthalten zählt nicht mehrfach. **A/D bzw. linker Stick** gleichen den seitlichen Drift aus. Nach erfolgreichem Neustart werden beide Triebwerke wieder hell; im Scannerfenster weiterhin **Q / RB** für die kopierte Kennung drücken. Eine Pause hält auch die Reparaturfrist an. Ein Fehlversuch startet den vorhandenen Flug-Kontrollpunkt neu.
+
+In der Motorradverfolgung schießt Raven nach hinten: **J / X** halten, **Q / RB** hackt auf der Spur des Verfolgers, **Leertaste / B** wirft eine Granate. Der Wagen wechselt seine Spur jetzt weich. Warnlinien kündigen Rammangriffe an. Treffer und Hindernisse versetzen das Motorrad seitlich; Rauch zeigt den beschädigten Verfolger. Seine letzte Explosion bleibt kurz sichtbar, bevor es in der Garage weitergeht.

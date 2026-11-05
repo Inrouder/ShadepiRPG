@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.14.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.15.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -23,6 +23,15 @@ Im Spiel gibt es ein Startmenü mit Einzelspieler und Lokal-Koop, eine gemeinsam
 
 Die Spielwelt nutzt **16 gemalte Kulissen** aus `assets/world/painted/`. Wände und verdeckende Bildteile sind in `scripts/painted_world.gd` abgestimmt. Zerstörbare Objekte, Audio, HQ-Sprites und die Original-Keyframes sind im Repository enthalten.
 
+## Neu in v0.15.0
+
+- Alle neun zerstörbaren Requisitentypen in gemaltem HQ-Stil, jeweils intakt, beschädigt und zerstört; auch die festen Demo-Requisiten nutzen die neuen Grafiken.
+- HQ-Aerodyne, Motorrad mit beiden Figuren, Verfolgerwagen und Drohnen.
+- Tower-Anflug: rechtes Triebwerk fällt aus, Rauch und Schräglage; **J / X zwölfmal in acht Sekunden** drücken, um gegen das Cockpit zu klopfen und den Antrieb neu zu starten. Danach **Q / RB** für die Gleiterkennung.
+- Verfolgungsjagd mit träger Lenkung, Einschlagfunken, Mündungsfeuer, Granatenexplosionen, fliegenden Trümmern, Rückstoß und Verfolgerrauch.
+
+[Grafiken, Ablauf und Testhinweise](docs/hq-welt-und-fahrzeuge.md).
+
 ## Godot-Projekt entwickeln
 
 `project.godot` mit **Godot 4.7.2 Standard** öffnen, Ressourcenimport abwarten und mit **F5** starten (Compatibility-Renderer; kein C#).
@@ -42,7 +51,7 @@ Die Spielwelt nutzt **16 gemalte Kulissen** aus `assets/world/painted/`. Wände 
 
 Zum Bearbeiten von Figuren siehe [Figuren bearbeiten](docs/figuren-bearbeiten.md), [Helden-Sprites](docs/helden-sprites.md) und [NPC-Sprites](docs/npc-sprites.md). Weitere technische Hinweise: [Architektur](docs/architecture.md).
 
-**Bereinigte Sprite-Struktur (v0.13.2):** Alle Szenen laden die HQ-Atlanten direkt aus `assets/sprites/heroes/` und `assets/sprites/npcs/`. Die alten Pixel-Zwischendateien sind entfernt. `scripts/sprite_assets.gd` bietet weiterhin eigene Grafiken unter `assets/custom/` an und unterstützt dabei auch ältere selbst erstellte Pixelraster. `npm run assets` erzeugt nur noch Requisiten, Licht und Basissounds – keine Figuren, Hintergründe oder App-Symbole.
+**Bereinigte Sprite-Struktur (v0.13.2):** Alle Szenen laden die HQ-Atlanten direkt aus `assets/sprites/heroes/` und `assets/sprites/npcs/`. Die alten Pixel-Zwischendateien sind entfernt. `scripts/sprite_assets.gd` bietet weiterhin eigene Grafiken unter `assets/custom/` an und unterstützt dabei auch ältere selbst erstellte Pixelraster. `npm run assets` erzeugt nur noch Licht und Basissounds – keine Figuren, Hintergründe oder App-Symbole.
 
 ## Qualitätssicherung und Builds
 
@@ -53,6 +62,7 @@ Lokale Testbefehle (aus dem Projektordner):
 ```bash
 godot --headless --editor --import --quit
 godot --headless --script res://tests/run.gd
+godot --headless --script res://tests/drive_action.gd
 godot --headless --script res://tests/story_audit.gd
 godot --headless --script res://tests/npc_dive_visuals.gd
 ```

@@ -12,6 +12,6 @@ Unterstützte Atlasgrößen:
 
 Das Spiel erkennt gültige eigene Figuren beim Import und richtet Animation, Schatten und Fußpunkt am Raster aus. Ein ungültiges Raster wird unter Ausgabe einer Warnung ignoriert.
 
-`npm run assets` erzeugt ausschließlich einfache Requisiten, Licht und Basissounds; es überschreibt keine Charaktergrafiken.
+`npm run assets` erzeugt ausschließlich Licht und Basissounds; es überschreibt keine Charaktergrafiken.
 
 [Figuren bearbeiten](../../docs/figuren-bearbeiten.md) · [HQ-Helden](../../docs/helden-sprites.md) · [NPCs](../../docs/npc-sprites.md)
