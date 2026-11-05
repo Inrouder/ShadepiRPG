@@ -107,7 +107,7 @@ func take_damage(base: int) -> void:
 		world.effects.burst(global_position, Color("efc788"), 7)
 		world.damage_number(global_position + Vector2(0, -48), "BLOCK")
 		return
-	var amount := CombatRules.damage(base, exposed > 0.0)
+	var amount := health - min_health if world.admin_enabled("one_hit") else CombatRules.damage(base, exposed > 0.0)
 	amount = mini(amount, health - min_health)
 	health -= amount
 	flash_time = 0.17

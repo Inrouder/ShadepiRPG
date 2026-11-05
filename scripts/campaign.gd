@@ -33,7 +33,11 @@ func create_hud() -> CanvasLayer:
 
 func _ready() -> void :
 	super._ready()
-	if ChapterFlow.consume_entry(get_tree(), "res://scenes/campaign.tscn") or not load_game():
+	var admin_chapter: int = Admin.consume_chapter(get_tree(), "res://scenes/campaign.tscn")
+	if admin_chapter >= 3:
+		restore_dressing_state({})
+		_enter(Admin.first_beat(admin_chapter))
+	elif ChapterFlow.consume_entry(get_tree(), "res://scenes/campaign.tscn") or not load_game():
 		new_game()
 
 func world_walls() -> Array[Rect2]:
@@ -71,7 +75,7 @@ func _process(delta: float) -> void :
 	if is_busy():
 		return
 	clock += delta
-	if beat == Beat.ESCAPE:
+	if beat == Beat.ESCAPE and not admin_enabled("freeze_timer"):
 		countdown = maxf(0, countdown - delta)
 		if countdown == 0:
 			_retry("Zeit abgelaufen · Kontrollpunkt")
@@ -454,7 +458,7 @@ func _enter_echo() -> void :
 
 func saved_checkpoint() -> int:
 	var config: = ConfigFile.new()
-	if config.load(SAVE) != OK:
+	if config.load(Admin.checkpoint_path(SAVE, get_tree())) != OK:
 		return -1
 	var value: Variant = config.get_value("campaign", "beat", -1)
 	return value if value is int and value >= Beat.PACT and value <= Beat.END else -1
@@ -467,7 +471,7 @@ func save_game() -> bool:
 	var config: = ConfigFile.new()
 	config.set_value("campaign", "beat", beat)
 	config.set_value("props", "state", dressing_state())
-	return config.save(SAVE) == OK
+	return config.save(Admin.checkpoint_path(SAVE, get_tree())) == OK
 
 func load_game(_requested_mode: Variant = null) -> bool:
 	var saved: = saved_checkpoint()

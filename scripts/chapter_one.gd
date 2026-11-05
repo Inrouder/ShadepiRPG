@@ -41,6 +41,11 @@ var patrol: Array[PixelActor] = []
 var street_lights: Array[PointLight2D] = []
 var apartment_lights: Array[PointLight2D] = []
 
+func _ready() -> void:
+	super._ready()
+	if Admin.consume_chapter(get_tree(), "res://scenes/chapter_one.tscn") == 1:
+		new_game(false)
+
 func create_hud() -> CanvasLayer:
 	return ChapterHud.new()
 
@@ -418,6 +423,14 @@ func _raven_rejoins() -> void:
 	set_coop(chapter_coop)
 	toast("Raven: Ich bin wieder drin! Seine Panzerung ist offen.")
 
+func admin_defeat_enemies() -> int:
+	if phase == Phase.DUEL:
+		toast("Das erste Jackal-Duell ist ein Story-Timer. Bitte Kapitelabschnitt weiterspielen.")
+		return 0
+	if phase == Phase.TEAM and not raven_joined:
+		_raven_rejoins()
+	return super.admin_defeat_enemies()
+
 func enemy_defeated(foe: PixelActor = null) -> void:
 	if phase == Phase.HUNT:
 		_check_hunt_gate()
@@ -474,7 +487,7 @@ func player_defeated() -> void:
 
 func saved_checkpoint(local_coop: bool) -> int:
 	var config := ConfigFile.new()
-	if config.load(CHAPTER_SAVE) != OK:
+	if config.load(Admin.checkpoint_path(CHAPTER_SAVE, get_tree())) != OK:
 		return -1
 	var saved: Variant = config.get_value("chapter_one", "coop" if local_coop else "solo", -1)
 	if saved is int and saved in [Phase.APARTMENT, Phase.HUNT, Phase.RESCUE, Phase.TEAM, Phase.COMPLETE]:
@@ -495,7 +508,7 @@ func _write_checkpoint() -> bool:
 	config.load(CHAPTER_SAVE)
 	config.set_value("chapter_one", "coop" if chapter_coop else "solo", checkpoint)
 	config.set_value("props", "coop" if chapter_coop else "solo", dressing_state())
-	return config.save(CHAPTER_SAVE) == OK
+	return config.save(Admin.checkpoint_path(CHAPTER_SAVE, get_tree())) == OK
 
 func load_game(requested_mode: Variant = null) -> bool:
 	var mode := chapter_coop if requested_mode == null else bool(requested_mode)

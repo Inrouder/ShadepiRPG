@@ -36,6 +36,10 @@ func _process(delta: float) -> void :
 	if not active or world.is_busy():
 		return
 	elapsed += delta
+	if world.admin_enabled("no_cooldowns"):
+		hack_cooldown = 0.0
+		grenade_cooldown = 0.0
+		shot_cooldown = 0.0
 	hack = maxf(0, hack - delta)
 	hack_cooldown = maxf(0, hack_cooldown - delta)
 	grenade_cooldown = maxf(0, grenade_cooldown - delta)
@@ -124,6 +128,8 @@ func _process(delta: float) -> void :
 		completed.emit()
 
 func _hit(amount: int) -> void :
+	if world.admin_enabled("god_mode"):
+		return
 	if hurt > 0.0:
 		return
 	health -= amount

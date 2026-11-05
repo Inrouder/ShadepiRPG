@@ -1,6 +1,7 @@
 extends Node2D
 
 const GamepadBindings = preload("res://scripts/gamepad_bindings.gd")
+const Admin = preload("res://scripts/admin_tools.gd")
 const ChapterFlow = preload("res://scripts/chapter_flow.gd")
 const PlayerScript = preload("res://scripts/player.gd")
 const EnemyScript = preload("res://scripts/enemy.gd")
@@ -26,6 +27,7 @@ var gate_body: StaticBody2D
 var stage: = 0
 var menu_open: = true
 var started: = false
+var admin_flags: Dictionary = {}
 var hack_cooldown: = 0.0
 var shake: = 0.0
 var gate_open: = false
@@ -53,6 +55,7 @@ var painted_masks: Array[Polygon2D] = []
 var painted_layout: = ""
 
 func _ready() -> void :
+	admin_flags = Admin.read_flags()
 	_bind_inputs()
 	Input.joy_connection_changed.connect(_on_joy_connection_changed)
 	gamepads.assign(Input.get_connected_joypads(), coop)
@@ -149,7 +152,47 @@ func hack_input_hint() -> String:
 	return "Q / RB" if gamepads.shadepi_device >= 0 else "Q"
 
 func save_path() -> String:
-	return SaveService.COOP_PATH if coop else SaveService.PATH
+	return Admin.checkpoint_path(SaveService.COOP_PATH if coop else SaveService.PATH, get_tree())
+
+func admin_enabled(option: String) -> bool:
+	return bool(admin_flags.get(option, false))
+
+func set_admin_option(option: String, enabled: bool) -> bool:
+	if not option in Admin.OPTIONS:
+		return false
+	admin_flags[option] = enabled
+	return Admin.save_flags(admin_flags)
+
+func admin_jump_to_chapter(chapter: int) -> bool:
+	if not admin_enabled("unlock_all"):
+		toast("Zuerst im Admin-Menü alle Kapitel freischalten.")
+		return false
+	var error := Admin.request_chapter(get_tree(), chapter)
+	if error != OK:
+		toast("Kapitel konnte nicht geladen werden (%d)." % error)
+		return false
+	return true
+
+func admin_heal() -> void:
+	for character in [player, raven]:
+		if character != null:
+			# Story-driven incapacitation remains under chapter control.
+			if character.health > 0:
+				character.health = 100
+			character.energy = 100.0
+	toast("Test: Gesundheit und Energie aufgefüllt.")
+
+func admin_defeat_enemies() -> int:
+	var defeated := 0
+	for node in actors.get_children():
+		if node is PixelActor and node != player and node != raven and node.visible and node.health > 0 and node.active:
+			node.armoured = false
+			node.front_shield = false
+			node.min_health = 0
+			node.take_damage(node.health + 10000)
+			defeated += 1
+	return defeated
+
 
 func limit_coop_motion(actor: PixelActor, motion: Vector2, delta: float) -> Vector2:
 	if not coop:
