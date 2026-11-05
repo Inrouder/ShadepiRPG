@@ -602,6 +602,8 @@ func _build_audio() -> void :
 		sfx.append(channel)
 
 func _process(delta: float) -> void :
+	if admin_enabled("no_cooldowns"):
+		hack_cooldown = 0.0
 	if not is_busy():
 		hack_cooldown = maxf(0, hack_cooldown - delta)
 		next_step_ripple = maxf(0.0, next_step_ripple - delta)
