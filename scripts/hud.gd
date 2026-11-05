@@ -329,7 +329,7 @@ func _build_admin_panel() -> void:
 func _refresh_admin_controls() -> void:
 	if admin_chapter_picker == null:
 		return
-	var unlocked := world.admin_enabled("unlock_all")
+	var unlocked: bool = world.admin_enabled("unlock_all")
 	admin_chapter_picker.disabled = not unlocked
 	admin_chapter_button.disabled = not unlocked
 
