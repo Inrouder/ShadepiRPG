@@ -1,5 +1,17 @@
 # Versionshinweise
 
+## v0.16.0 – Ravens Terminals, Arcade-Kämpfe und Live-Menü · 6. November 2026
+
+- Fünf interaktive Terminal-Rätseltypen an acht Storypunkten mit Eingaben per Maus, Tastatur und Controller, Pause, Wiederholung und gespeichertem Fortschritt. Aerodyne-Notfall nun per Jumper-Wartungsdeck statt Klopf-Sequenz.
+- Zusätzliche Gegnerwellen mit Abschnittssperren und Kontrollpunkten; aufladbarer Katana-Schlag mit Energiewelle, Kick und Ravens aufgeladener Pistolenschuss samt HQ-Kampfposen.
+- Bewegtes Hauptmenü mit Neonstadt, Parallax-Effekt, Regen, Reflexionen und Windanimationen; Steuerung über Maus und Controller.
+- Korrekturen an der Dachkante für Raven, Größenverhältnissen im Versteck sowie dem Boden-/Straßenübergang von Bingo Street zur Gasse.
+- Automatisierte Tests für Terminal-Mechanik, Arcade-Wellen und neue Kampfbewegungen in den Build-Workflow eingebunden. **Build-/Release-Erfolg für v0.16.0 noch nicht bestätigt.**
+- Versionsnummer in `project.godot` und auf der Projektstartseite vereinheitlicht.
+
+**Hinweis:** v0.16.0 bezeichnet zunächst den dokumentierten Quellstand auf `main`. Ein GitHub Release wird nicht allein durch die Änderung der Versionsnummer angelegt.
+
+
 ## Weiterentwicklung – Ravens Terminals · 6. November 2026
 
 - Acht Story-Einsätze mit fünf Rätseltypen: Hex-Matrix samt überlappenden Daemons, Glitch-/Passwort-Decoder, Leitungsnetz mit Active ICE und Überlast, Oszilloskop-Abgleich und Jumper-Platine.
