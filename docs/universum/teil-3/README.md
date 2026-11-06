@@ -2,7 +2,7 @@
 
 Quelle: fünf eingebettete Bilder aus der Nutzernachricht „teil 3“ vom 6. November 2026. Die Reihenfolge unten entspricht der Nachricht.
 
-**Speicherstatus:** Die Bilder sind im Chat sichtbar, aber nicht als lokale Originaldateien verfügbar. Dieses Dokument sichert ihre sichtbaren Merkmale als Text; es enthält keine Originalbilder oder nachgenerierten Ersatzbilder. Der zuvor angekündigte Comic steht weiterhin aus.
+**Speicherstatus:** Die Bilder sind im Chat sichtbar, aber nicht als lokale Originaldateien verfügbar. Dieses Dokument sichert ihre sichtbaren Merkmale als Text; es enthält keine Originalbilder oder nachgenerierten Ersatzbilder. Der zuvor angekündigte Comic wurde wegen seiner Größe nicht hochgeladen. Der Nutzer hat die vorhandenen Storydaten und Figurenreferenzen als ausreichende Arbeitsgrundlage bestätigt.
 
 ## Bild 1: Raven Black – Character Design Sheet
 

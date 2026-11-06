@@ -2,7 +2,7 @@
 
 Quelle: fünf eingebettete Bilder aus der Nutzernachricht vom 6. November 2026, mit dem Hinweis, dass der Comic danach folgt. Die Reihenfolge unten entspricht der Nachricht.
 
-**Speicherstatus:** Die Bilder sind im Chat sichtbar, wurden aber nicht als lokal verfügbare Dateianhänge bereitgestellt. Dieses Dokument archiviert ihre sichtbaren Merkmale als Text. Es enthält weder die Originalbilddateien noch nachgenerierte Ersatzbilder. Die Originaldateien können später ergänzt werden. Der Comic ist noch nicht eingegangen.
+**Speicherstatus:** Die Bilder sind im Chat sichtbar, wurden aber nicht als lokal verfügbare Dateianhänge bereitgestellt. Dieses Dokument archiviert ihre sichtbaren Merkmale als Text. Es enthält weder die Originalbilddateien noch nachgenerierte Ersatzbilder. Die Originaldateien können später ergänzt werden. Der Comic wurde wegen seiner Größe nicht hochgeladen; laut anschließender Nutzerbestätigung reichen die vorhandenen Quellen für weitere Arbeiten aus.
 
 ## Bild 1: Shadepi vor schwebenden Tempelbauten
 
@@ -58,4 +58,4 @@ Einordnung: Material-, Form- und Detailreferenz für die Maske. Funktionen einze
 
 Die neuen Bilder ergänzen die bisherigen Quellen. Insbesondere Ravens offener und geschlossener Anzugkragen bleiben als sichtbare Varianten dokumentiert; keine Variante wurde ohne Nutzerentscheidung zur einzig gültigen erklärt. Das goldfarbene Septum-Piercing ist in den neuen Detailreferenzen klar erkennbar und bei künftigen Figurenarbeiten zu berücksichtigen.
 
-Die Aufnahme dieser Referenzen ändert keine Spiel-Assets. Für den weiteren Abgleich der Geschichte wird der angekündigte Comic abgewartet.
+Die Aufnahme dieser Referenzen ändert keine Spiel-Assets. Für weitere Arbeiten werden der vorhandene Storyverlauf und die archivierten Figurenreferenzen verwendet; auf den Comic muss laut Nutzerbestätigung nicht gewartet werden.

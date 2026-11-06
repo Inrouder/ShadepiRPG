@@ -4,7 +4,7 @@ Dieses Archiv hält die vom Nutzer im Chat bereitgestellten Quellen dauerhaft be
 
 ## Stand
 
-Teil 1 sowie jeweils fünf weitere Bildreferenzen aus Teil 2 und Teil 3 wurden am 6. November 2026 bereitgestellt. Der Nutzer hat außerdem den Comic angekündigt; dieser steht noch aus. Neue Quellen ergänzen; vorhandene Originale nicht stillschweigend ersetzen. Abweichende Aussagen und Zeitstände der Quellen bei späteren Arbeiten kenntlich machen.
+Teil 1 sowie jeweils fünf weitere Bildreferenzen aus Teil 2 und Teil 3 wurden am 6. November 2026 bereitgestellt. Der zunächst angekündigte Comic wurde wegen seiner Größe nicht hochgeladen. Der Nutzer hat anschließend bestätigt, dass der vorhandene Storyverlauf und die Figurenreferenzen als Grundlage für weitere Arbeiten ausreichen. Der Comic ist keine Voraussetzung für die Fortsetzung. Neue Quellen ergänzen; vorhandene Originale nicht stillschweigend ersetzen. Abweichende Aussagen und Zeitstände der Quellen bei späteren Arbeiten kenntlich machen.
 
 Die [Bildnotizen zu Teil 2](teil-2/README.md) erfassen Shadepis Tempelmotiv, sein Maskendetail und drei weitere Raven-Referenzen. [Teil 3](teil-3/README.md) ergänzt Ravens Designblatt, das KOBAN-TEC-Logo und drei Kostümfotos. Die Originaldateien der insgesamt zwölf Chat-Bilder sind bislang nicht lokal verfügbar; im Repository liegen hierzu Beschreibungen vor.
 
@@ -41,6 +41,6 @@ Der Nutzer hat zusätzlich zwei Referenzblätter als eingebettete Chat-Bilder ge
 - Lange, ausgefranste Stoffbahnen; dunkle Stiefel.
 - Futuristisches rotes Laser-Katana mit dunklem Griff.
 - Vorder-, Dreiviertel-, Seiten- und Rückansicht, Lauf- und Kampfpose sowie Detailansichten von Kopf, Waffe und Gürtel.
-- Das Blatt zeigt zusätzlich rosa beziehungsweise violette Augenlinsen bei einzelnen Ausdrucksvarianten. Daraus wird vor Eingang der weiteren Quellen keine allgemeine Regel für das Spiel abgeleitet.
+- Das Blatt zeigt zusätzlich rosa beziehungsweise violette Augenlinsen bei einzelnen Ausdrucksvarianten. Diese sind als Varianten dieser Quelle dokumentiert; eine allgemeine Regel für das Spiel ist damit nicht festgelegt.
 
-Kleine oder unleserliche Bildbeschriftungen und Maßangaben wurden nicht als belastbare Fakten übernommen. Ein Abgleich der Quellen und mögliche Spieländerungen folgen erst nach den weiteren Daten und einem entsprechenden Arbeitsauftrag.
+Kleine oder unleserliche Bildbeschriftungen und Maßangaben wurden nicht als belastbare Fakten übernommen. Weitere Arbeitsaufträge können auf dem aktuellen Storyverlauf im Repository und diesen Quellen aufbauen. Inhalte des nicht vorliegenden Comics werden nicht als bekannt vorausgesetzt.
