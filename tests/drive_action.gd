@@ -6,6 +6,19 @@ var failures := 0
 class World extends Node2D:
 	var busy := false
 	var visual_quality := 2
+	var terminal: CanvasLayer
+	func open_terminal(context: String, callback: Callable) -> void:
+		if busy: return
+		busy = true
+		terminal = preload("res://scripts/terminal_ui.gd").new()
+		terminal.context = context
+		add_child(terminal)
+		terminal.finished.connect(func(success):
+			terminal.queue_free()
+			terminal = null
+			busy = false
+			if success: callback.call()
+		)
 	func is_busy() -> bool: return busy
 	func admin_enabled(_key: String) -> bool: return false
 	func sound(_key: String) -> void: pass
@@ -39,24 +52,24 @@ func run() -> void:
 	drive._process(0.02)
 	check(drive.engine_failed, "flight triggers engine failure")
 	var progress: float = drive.elapsed
-	world.busy = true
+	check(world.busy and world.terminal != null, "engine failure opens Raven's wiring terminal")
 	drive._process(2.0)
-	check(drive.repair_left > 7.9, "pause freezes emergency deadline")
-	world.busy = false
+	check(drive.repair_left == drive.REPAIR_SECONDS, "terminal freezes emergency deadline")
+	world.terminal.finish(false)
+	check(not drive.engine_repaired, "cancel cannot repair engine")
 	Input.action_press("attack")
 	drive._process(0.01)
-	check(drive.repair_taps == 1, "press knocks once")
+	check(world.terminal != null, "attack reopens repair terminal")
 	await process_frame
 	drive._process(0.1)
-	check(drive.repair_taps == 1, "holding the button cannot auto-complete")
+	check(not drive.engine_repaired, "holding the button cannot auto-complete repair")
 	Input.action_release("attack")
 	check(drive.elapsed == progress, "emergency preserves scanner window")
-	for i in 11:
-		await process_frame
-		Input.action_press("attack")
-		drive._process(0.05)
-		Input.action_release("attack")
-	check(drive.engine_repaired and not drive.engine_failed, "twelve presses restart engine")
+	world.terminal.puzzle.check_wiring()
+	world.terminal.finish(true)
+	check(not drive.engine_repaired and world.busy, "wrong wiring cannot restart engine")
+	check(preload("res://tests/terminal_solver.gd").complete(world), "correct wiring accepted")
+	check(drive.engine_repaired and not drive.engine_failed, "verified jumpers restart engine")
 	check(drive.restart_flash > 0 and not drive.debris.is_empty(), "restart emits effects")
 	drive.start_engine_failure()
 	check(not drive.engine_failed, "failure only occurs once per flight")
@@ -75,7 +88,8 @@ func run() -> void:
 	var crashes := [0]
 	failed.crashed.connect(func(): crashes[0] += 1)
 	failed.start_engine_failure()
-	failed._process(8.1)
+	world.terminal.finish(false)
+	failed._process(failed.REPAIR_SECONDS + 0.1)
 	failed._process(1.0)
 	check(crashes[0] == 1 and not failed.active, "missed repair deadline fails exactly once")
 	var slow = make_drive(world, false)

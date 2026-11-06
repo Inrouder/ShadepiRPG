@@ -35,9 +35,9 @@ func _process(delta: float) -> void :
 			abilities.text = "Kennung bestätigt" if world.drive.transponder_sent else ("Scanner in Reichweite · Q / RB" if world.drive.elapsed >= 9.0 else "Scanner noch außer Reichweite")
 			if world.drive.engine_failed:
 				objective.text = "TRIEBWERK AUS · %.1f s" % world.drive.repair_left
-				controls.text = "J / X wiederholt drücken · Cockpit klopfen    A/D / Stick · Gegenlenken"
-				abilities.text = "Neustart: %d / %d Schläge" % [world.drive.repair_taps, world.drive.REPAIR_TAPS]
-				energy_bar.size.x = 164.0 * world.drive.repair_taps / world.drive.REPAIR_TAPS
+				controls.text = "J / X · Ravens Wartungsdeck    A/D / Stick · Gegenlenken"
+				abilities.text = "Jumper prüfen · TX/RX kreuzen · Alpha 120 Ω"
+				energy_bar.size.x = 164.0 * world.drive.repair_left / world.drive.REPAIR_SECONDS
 			elif world.drive.restart_flash > 0:
 				abilities.text = "TRIEBWERK LÄUFT · Anflug fortsetzen"
 		else:

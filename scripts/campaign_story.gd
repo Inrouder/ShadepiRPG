@@ -60,7 +60,7 @@ const DIALOGUE: = {
 	], 
 	Beat.GARAGE: [
 		["RAVEN", "Eine rostige Garage. Das ist dein Versteck?", "garage"], 
-		["SHADEPI", "Sieh dir die Werkbank an. Darunter liegt der Zugang zum Sanktuarium.", "garage"], 
+		["SHADEPI", "Sieh dir die Werkbank an. Darunter liegt der Zugang zum Sanktuarium. Raven, entschlüssle das alte Zugangsterminal.", "garage"],
 	], 
 	Beat.HANGAR: [
 		["SHADEPI", "Schau dich um. Ich wechsle den Servo. Der Aerodyne braucht die Kennung von Kenzōs Gleiter.", "hangar"], 
@@ -90,7 +90,7 @@ const DIALOGUE: = {
 		["RAVEN", "Jahrelang bin ich vor dir geflohen, Kenzō. Damit ist Schluss.", "kenzo"], 
 		["PENTHOUSE", "Shadepi tritt zurück. Ravens kybernetische Fäden spannen sich ein letztes Mal.", "kenzo"], 
 		["SYSTEM / NOTFALLPROTOKOLL", "Kenzōs Sicherheitssystem überlastet die Energieversorgung. Kritischer Zustand in sechzig Sekunden.", "flucht"],
-		["RAVEN", "Sichere die Daten und blockiere den Aufzug. Starte dann die Treibstoffpumpe per Fernzugriff. Ich bereite unseren Abflug vor.", "flucht"],
+		["RAVEN", "Sichere die Daten. Ich synchronisiere die Sperrladung am Aufzug über mein Deck. Starte dann die Treibstoffpumpe per Fernzugriff.", "flucht"],
 	], 
 	Beat.LAKE: [
 		["ARTOS", "Triebwerke instabil. Neustart.", "flucht"], 

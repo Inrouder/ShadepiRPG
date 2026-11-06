@@ -32,6 +32,8 @@ var admin_flags: Dictionary = {}
 var hack_cooldown: = 0.0
 var shake: = 0.0
 var gate_open: = false
+var terminal: CanvasLayer
+
 var audio_on: = true
 var sfx: Array[AudioStreamPlayer] = []
 var music: AudioStreamPlayer
@@ -56,6 +58,34 @@ var dressing_generation: = 0
 var painted_solids: Array[StaticBody2D] = []
 var painted_masks: Array[Polygon2D] = []
 var painted_layout: = ""
+
+func open_terminal(context: String, on_success: Callable) -> void:
+	if terminal != null or is_busy():
+		return
+	player.cancel_charge()
+	raven.cancel_charge()
+	player.velocity = Vector2.ZERO
+	raven.velocity = Vector2.ZERO
+	var panel = preload("res://scripts/terminal_ui.gd").new()
+	panel.context = context
+	terminal = panel
+	add_child(panel)
+	panel.alarm.connect(func(): sound("hit"))
+	panel.finished.connect(func(success: bool):
+		if terminal != panel:
+			return
+		cancel_terminal()
+		if success and on_success.is_valid():
+			sound("hack")
+			on_success.call()
+	)
+
+func cancel_terminal() -> void:
+	if is_instance_valid(terminal):
+		terminal.closed = true
+		terminal.hide()
+		terminal.queue_free()
+	terminal = null
 
 func _ready() -> void :
 	admin_flags = Admin.read_flags()
@@ -654,6 +684,8 @@ func _update_raven_follower(delta: float) -> void :
 			raven.animate("walk", delta)
 
 func _unhandled_input(event: InputEvent) -> void :
+	if terminal != null:
+		return
 	if event is InputEventKey and event.echo:
 		return
 	if event.is_action_pressed("graphics_game"):
@@ -692,7 +724,7 @@ func _unhandled_input(event: InputEvent) -> void :
 		toggle_audio()
 
 func is_busy() -> bool:
-	return menu_open or (ui != null and ui.dialogue_open) or player.health <= 0
+	return terminal != null or menu_open or (ui != null and ui.dialogue_open) or player.health <= 0
 
 func close_menu() -> void :
 	menu_open = false
@@ -946,6 +978,7 @@ func reset_raven(point: Vector2) -> void :
 	raven.reset_transients()
 
 func new_game(save_checkpoint: bool = true) -> void :
+	cancel_terminal()
 	restore_dressing_state({})
 	stage = 0
 	set_gate(false)

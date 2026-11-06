@@ -1,5 +1,13 @@
 # Versionshinweise
 
+## Weiterentwicklung – Ravens Terminals · 6. November 2026
+
+- Acht Story-Einsätze mit fünf Rätseltypen: Hex-Matrix samt überlappenden Daemons, Glitch-/Passwort-Decoder, Leitungsnetz mit Active ICE und Überlast, Oszilloskop-Abgleich und Jumper-Platine.
+- Jackals Schleuse verlangt nach den Wellen einen Raven-Hack. Garagenzugang, Hangar, Dach und Penthouse erhalten interaktive Terminals; der Aufzug wird per synchronisierter Sperrladung blockiert.
+- Aerodyne-Reparatur ersetzt die Klopf-Eingaben durch Pins und Widerstände. Scannerfenster bleibt erhalten; Abbruch, Wiederholung und 45-Sekunden-Wiederzugriff sind möglich.
+- Maus-, Tastatur- und Controller-Bedienung, Terminal-Pause, Erfolgsbestätigung und gespeicherter Kampagnenfortschritt. Laufende Rätsel frieren die Welt ein.
+- Regel-, Fehlerpfad- und Integrationstests sowie eine Godot-Bildergalerie und aktualisierte Spieleranleitung.
+
 ## v0.15.0 – HQ-Weltobjekte und Fahrzeug-Action · 5. November 2026
 
 - Neun HQ-Objekttypen mit drei Schadenszuständen; feste Requisiten verwenden dieselbe Grafikbasis. Alte Pixel-Atlanten entfernt.

@@ -66,6 +66,8 @@ func _process(delta: float) -> void :
 				objective.text = "Betritt den Wartungshof"
 			elif world._guards_left() > 0:
 				objective.text = "Folge der Spur · %d Punks übrig" % world._guards_left()
+			elif world._hunt_terminal_ready():
+				objective.text = "Raven: Jackals Torschleuse hacken"
 			else:
 				objective.text = "Folge der Spur zur Schleuse"
 		world.Phase.DUEL:

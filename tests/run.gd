@@ -589,6 +589,9 @@ func check_chapter() -> void:
 			await walk_to(chapter.raven, Vector2(125, 451))
 		await walk_to(chapter.raven, point)
 		check(chapter.raven.position.distance_to(point) < 20.0, "Raven can walk to %s through chapter geometry" % point)
+		if point == Vector2(480, 365):
+			chapter.interact()
+			check(preload("res://tests/terminal_solver.gd").complete(chapter), "Raven solves Jackal's matrix before entering")
 	check(chapter.phase == chapter.Phase.DUEL and chapter.enemy.active, "the trail opens the gate and starts the first Jackal fight")
 	check(MusicLibrary.path_for(chapter.music_section).ends_with("Boss.mp3"), "the first Jackal duel uses boss music")
 	finish_dialogue(chapter)
@@ -784,19 +787,18 @@ func check_campaign() -> void:
 	check(scene.beat == scene.Beat.GARAGE, "lift waits for Raven")
 	scene.raven.position = scene._target()
 	scene.interact()
+	check(preload("res://tests/terminal_solver.gd").complete(scene), "garage decoder opens the lift")
 	finish_dialogue(scene)
 	for i in 3:
 		scene.clock = 0
 		scene.raven.position = scene._target()
 		scene.interact()
-	check(scene.beat == scene.Beat.HANGAR and scene.point_index == 3, "transponder preparation opens the port puzzle")
-	scene.raven.position = scene.PORTS[0]
+		if scene.terminal != null:
+			check(preload("res://tests/terminal_solver.gd").complete(scene), "hangar routing restores power")
+	check(scene.beat == scene.Beat.HANGAR and scene.point_index == 3, "transponder preparation opens the matrix")
+	scene.raven.position = scene._target()
 	scene.interact()
-	check(scene.port_index == 0, "wrong port resets the diagnostic")
-	for i in 3:
-		scene.clock = 0
-		scene.raven.position = scene._target()
-		scene.interact()
+	check(preload("res://tests/terminal_solver.gd").complete(scene), "overlapping daemons unlock transponder")
 	finish_dialogue(scene)
 	scene.player.position = scene._target()
 	scene.interact()
@@ -816,16 +818,14 @@ func check_campaign() -> void:
 	finish_dialogue(scene)
 	check(scene.beat == scene.Beat.FLIGHT and scene.drive.flight, "chapter five leads to the Aerodyne flight")
 	scene.drive.start_engine_failure()
-	for tap in scene.drive.REPAIR_TAPS:
-		scene.drive.knock_engine()
+	check(preload("res://tests/terminal_solver.gd").complete(scene), "wiring repairs Aerodyne")
 	scene.drive.elapsed = 15.0
 	scene.drive._process(0.01)
 	check(scene.beat == scene.Beat.FLIGHT and scene.menu_open, "landing requires a transmitted transponder code")
 	scene.close_menu()
 	finish_dialogue(scene)
 	scene.drive.start_engine_failure()
-	for tap in scene.drive.REPAIR_TAPS:
-		scene.drive.knock_engine()
+	check(preload("res://tests/terminal_solver.gd").complete(scene), "repair can be repeated after crash checkpoint")
 	scene.drive.elapsed = 9.1
 	Input.action_press("hack")
 	scene.drive._process(0.01)
@@ -838,6 +838,7 @@ func check_campaign() -> void:
 		scene.clock = 0
 		scene.raven.position = scene._target()
 		scene.interact()
+		check(preload("res://tests/terminal_solver.gd").complete(scene), "Raven solves roof terminal")
 	finish_dialogue(scene)
 	check(scene.beat == scene.Beat.ROOF and scene._living() == 2, "lift guards fight outside the penthouse")
 	check(MusicLibrary.path_for(scene.music_section).ends_with("Fight.mp3"), "Tower exploration switches to fight music at the lift guards")
@@ -856,6 +857,8 @@ func check_campaign() -> void:
 		scene.clock = 0
 		scene.player.position = scene._target()
 		scene.interact()
+		if scene.terminal != null:
+			check(preload("res://tests/terminal_solver.gd").complete(scene), "Raven synchronizes elevator charge")
 	finish_dialogue(scene)
 	for i in 4:
 		scene.player.position = scene._target()

@@ -17,9 +17,7 @@ const GUARDS: = [
 ]
 var beat: = Beat.PACT
 var point_index: = 0
-var port_index: = 0
 const PORTS: = [Vector2(725, 359), Vector2(785, 350), Vector2(842, 367)]
-const PORT_ORDER: = [1, 0, 2]
 var clock: = 0.0
 var countdown: = 60.0
 var ritual_flash: = 0.0
@@ -101,7 +99,8 @@ func new_game(_save_checkpoint: bool = true) -> void :
 	restore_dressing_state({})
 	_enter(Beat.PACT)
 
-func _enter(next: int, saved_section: int = 0) -> void :
+func _enter(next: int, saved_section: int = 0, saved_point: int = 0) -> void :
+	cancel_terminal()
 	if is_instance_valid(encounter):
 		remove_child(encounter)
 		encounter.queue_free()
@@ -134,7 +133,8 @@ func _enter(next: int, saved_section: int = 0) -> void :
 	set_dressing(layouts[beat])
 	stage = 0
 	point_index = 0
-	port_index = 0
+	if beat in [Beat.GARAGE, Beat.HANGAR, Beat.ROOF, Beat.ESCAPE]:
+		point_index = clampi(saved_point, 0, 3 if beat in [Beat.HANGAR, Beat.ESCAPE] else (2 if beat == Beat.ROOF else 1))
 	clock = 0.0
 	countdown = 60.0
 	ritual_flash = 0.0
@@ -142,6 +142,8 @@ func _enter(next: int, saved_section: int = 0) -> void :
 	player.health = 100
 	player.energy = 100.0
 	player.position = PACT_SPAWN if beat == Beat.PACT else SPAWN
+	if point_index > 0:
+		player.position = Story.POINTS[beat][mini(point_index, Story.POINTS[beat].size() - 1)] + Vector2(-45, 20)
 	if beat == Beat.ECHO:
 		player.position = Painted.chamber_point(SPAWN)
 		camera.position = Painted.CHAMBER_CAMERA
@@ -205,7 +207,7 @@ func _advance() -> void :
 
 func _retry(title: String) -> void :
 	var saved_section: int = encounter.section_index if encounter != null else 0
-	_enter(beat, saved_section)
+	_enter(beat, saved_section, point_index)
 	menu_open = true
 	ui.show_menu(title)
 
@@ -325,7 +327,7 @@ func chapter_label() -> String:
 
 func _target() -> Vector2:
 	if beat == Beat.HANGAR and point_index == 3:
-		return PORTS[PORT_ORDER[port_index]]
+		return PORTS[1]
 	if beat == Beat.ECHO and echo_ready and point_index < Painted.ECHO_POINTS.size():
 		return Painted.ECHO_POINTS[point_index]
 	if (encounter != null and not encounter.finished) or (is_combat() and _living() > 0) or point_index >= Story.POINTS[beat].size():
@@ -333,7 +335,16 @@ func _target() -> Vector2:
 	return Story.POINTS[beat][point_index]
 
 func _timed_node() -> bool:
-	return beat in [Beat.HANGAR, Beat.ROOF] or (beat == Beat.ESCAPE and point_index in [0, 2])
+	return (beat == Beat.HANGAR and point_index in [1, 2]) or (beat == Beat.ESCAPE and point_index in [0, 2])
+
+func _terminal_context() -> String:
+	if beat == Beat.GARAGE and point_index == 1: return "garage"
+	if beat == Beat.HANGAR and point_index == 0: return "power"
+	if beat == Beat.HANGAR and point_index == 3: return "transponder"
+	if beat == Beat.ROOF and point_index == 0: return "roof_signal"
+	if beat == Beat.ROOF and point_index == 1: return "penthouse"
+	if beat == Beat.ESCAPE and point_index == 1: return "charge"
+	return ""
 
 func _signal_open() -> bool:
 	return fposmod(clock, 2.1) < 1.0
@@ -347,10 +358,10 @@ func chapter_objective() -> String:
 		Beat.ECHO:
 			return "Erinnerungen ordnen · %d / 3" % point_index if echo_ready else "Heiligtum am Sessel prüfen"
 		Beat.GARAGE:
-			return "Gemeinsam auf die Plattform" if point_index == 1 else Story.OBJECTIVES[beat]
+			return "Raven: Zugangscode entschlüsseln" if point_index == 1 else Story.OBJECTIVES[beat]
 		Beat.HANGAR:
 			if point_index == 3:
-				return "Prüf-ICE · Portfolge 2, 1, 3 · %d / 3" % port_index
+				return "Raven: Prüf-ICE per Matrix umgehen"
 			return Story.OBJECTIVES[beat] %point_index
 		Beat.ROOF:
 			return "Aufzugwachen ausschalten" if point_index == 2 else ["Kennung am Dachterminal prüfen", "Penthouse-Zugang öffnen"][point_index]
@@ -362,7 +373,7 @@ func chapter_objective() -> String:
 		Beat.LAKE:
 			return ["Mit Raven am Ufer sprechen", "Bitte am Wasser sprechen", "Antwort des Heiligtums hören", "Aufnahme vollziehen"][point_index]
 		Beat.ESCAPE:
-			return "%s · %02d s" % [["Daten sichern", "Aufzug blockieren", "Treibstoffpumpe fernstarten", "Zum Dachausgang"][point_index], ceili(countdown)]
+			return "%s · %02d s" % [["Daten sichern", "Sperrladung synchronisieren", "Treibstoffpumpe fernstarten", "Zum Dachausgang"][point_index], ceili(countdown)]
 	return Story.OBJECTIVES[beat]
 
 func interaction_prompt() -> String:
@@ -376,10 +387,10 @@ func interaction_prompt() -> String:
 		var prop: = _hangar_prop()
 		if not prop.is_empty():
 			return "E / A · " + prop
-		if point_index == 3 and _near_port() >= 0:
-			return "E / A · Port %d prüfen" % (_near_port() + 1)
 	if target == Vector2.ZERO or actor.position.distance_to(target) > 43.0:
 		return ""
+	if not _terminal_context().is_empty():
+		return "E / A · Ravens Terminal öffnen"
 	if _timed_node():
 		return "E / A · Daten abgreifen" if _signal_open() else "ICE scannt · auf Cyan warten"
 	return "E / A · " + chapter_objective()
@@ -389,12 +400,6 @@ func _hangar_prop() -> String:
 		if raven.position.distance_to(item[0]) <= 24.0:
 			return item[1]
 	return ""
-
-func _near_port() -> int:
-	for i in PORTS.size():
-		if raven.position.distance_to(PORTS[i]) <= 22.0:
-			return i
-	return -1
 
 func interact(_actor: PixelActor = null) -> void :
 	if is_busy() or interaction_prompt().is_empty():
@@ -423,15 +428,18 @@ func interact(_actor: PixelActor = null) -> void :
 	if beat == Beat.HANGAR and not _hangar_prop().is_empty():
 		toast(_hangar_prop() + " · Bestände des Ordens.")
 		return
-	if beat == Beat.HANGAR and point_index == 3:
-		if _near_port() != PORT_ORDER[port_index] or not _signal_open():
-			port_index = 0
-			toast("Prüf-ICE hat ausgelöst. Prüfe 2, 1, 3 bei Cyan.")
-			return
-		effects.hack_arc(PORTS[PORT_ORDER[port_index]], Vector2(884, 328))
-		port_index += 1
-		if port_index == PORTS.size():
-			_advance()
+	var context := _terminal_context()
+	if not context.is_empty():
+		var expected_beat := beat
+		var expected_point := point_index
+		open_terminal(context, func():
+			if beat != expected_beat or point_index != expected_point:
+				return
+			if beat == Beat.HANGAR and point_index == 3:
+				_advance()
+			else:
+				_complete_point()
+		)
 		return
 	if _timed_node() and not _signal_open():
 		toast("Zugriff blockiert. Warte auf das Cyan-Signal.")
@@ -439,22 +447,28 @@ func interact(_actor: PixelActor = null) -> void :
 	if _timed_node():
 		effects.burst(_target(), Color("70f5f7"), 28)
 		sound("hack")
+	_complete_point()
+
+func _complete_point() -> void:
 	if beat == Beat.PACT:
 		toast(["Aufzug: Sicherheitskräfte eine Etage tiefer.", "Dachzugang: privater Landeplatz.", "Scanner: Kennung von Kenzōs Gleiter erforderlich."][point_index])
 	if beat == Beat.HANGAR:
 		effects.hack_arc(_target(), Vector2(884, 328))
-		toast(["Stromversorgung aktiv.", "Kennung kopiert.", "Transponder bereit. Prüf-ICE verlangt Portfolge 2, 1, 3."][point_index])
+		toast(["Stromversorgung aktiv.", "Kennung kopiert.", "Transponder bereit. Raven muss die Prüf-ICE-Matrix umgehen."][point_index])
 	if beat == Beat.ESCAPE:
-		toast(["Daten gesichert. Spuren gelöscht.", "Aufzug blockiert.", "Fernstart bestätigt. Zum Dachausgang!", "Dach erreicht. Der Aerodyne hebt ab."][point_index])
+		toast(["Daten gesichert. Spuren gelöscht.", "Raven: Sperrladung scharf. Aufzug blockiert.", "Fernstart bestätigt. Zum Dachausgang!", "Dach erreicht. Der Aerodyne hebt ab."][point_index])
 	point_index += 1
 	if beat == Beat.ROOF and point_index == 2:
 		player.position = raven.position + Vector2(-50, 15)
 		player.show()
 		ui.dialogue([["RAVEN", "Wachen am Aufzug. Weitere sind unterwegs. Ich störe auf dein Signal ihre Implantate. Umgehe die Schilde oder nutze das Hackfenster.", "tower"]])
 		_spawn_wave()
+		autosave()
 		return
 	if beat != Beat.HANGAR and point_index == Story.POINTS[beat].size():
 		_advance()
+	else:
+		autosave()
 
 func _ritual_step() -> void :
 	var lines: Array = [
@@ -511,6 +525,7 @@ func autosave() -> void :
 func save_game() -> bool:
 	var config: = ConfigFile.new()
 	config.set_value("campaign", "beat", beat)
+	config.set_value("campaign", "point", point_index)
 	config.set_value("campaign", "arcade_section", encounter.section_index if encounter != null else 0)
 	config.set_value("props", "state", dressing_state())
 	return config.save(Admin.checkpoint_path(SAVE, get_tree())) == OK
@@ -523,7 +538,8 @@ func load_game(_requested_mode: Variant = null) -> bool:
 	config.load(Admin.checkpoint_path(SAVE, get_tree()))
 	restore_dressing_state(config.get_value("props", "state", {}))
 	var saved_section: Variant = config.get_value("campaign", "arcade_section", 0)
-	_enter(saved, saved_section if saved_section is int else 0)
+	var saved_point: Variant = config.get_value("campaign", "point", 0)
+	_enter(saved, saved_section if saved_section is int else 0, saved_point if saved_point is int else 0)
 	return true
 
 func _draw() -> void :
@@ -538,7 +554,7 @@ func _draw() -> void :
 	if beat == Beat.HANGAR and point_index == 3:
 		for port in PORTS:
 			draw_rect(Rect2(port - Vector2(12, 9), Vector2(24, 18)), Color("253747"))
-			draw_rect(Rect2(port - Vector2(9, 6), Vector2(18, 12)), Color("69dae0") if _signal_open() else Color("b65869"), false, 2)
+			draw_rect(Rect2(port - Vector2(9, 6), Vector2(18, 12)), Color("69dae0") if port == PORTS[1] else Color("315667"), false, 2)
 	if beat == Beat.ECHO and echo_ready:
 		for i in 15:
 			var p: = Vector2(340 + (i * 83) % 550, 280 + fposmod(i * 34 - clock * 8, 170))

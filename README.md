@@ -18,6 +18,8 @@ Im Spiel gibt es ein Startmenü mit Einzelspieler und Lokal-Koop, eine gemeinsam
 
 **Neue Kampfbewegungen:** Aufladbarer Katana-Schlag mit Energiewelle, Kick und Ravens aufgeladener Pistolenschuss. [Steuerung und animierte Vorschau](docs/kampfbewegungen.md).
 
+**Ravens Terminal-Aufgaben:** Matrix-Hacks, Passwort-Decoder, Schaltungsnetz mit Active ICE, Wellen-Synchronisation und Jumper-Reparatur ersetzen einfache Zugriffe an acht Storypunkten. [Steuerung, Vorschau und Aufgaben](docs/ravens-terminals.md).
+
 **Kartenkorrekturen:** Das Versteck hat passende Möbelproportionen; Bingo Street geht mit durchgehender Bodenkante in die Gasse über. [Vergleich im Spiel](docs/karten-proportionen.md).
 
 Das Startmenü zeigt Shadepi und Raven vor einer Neonstadt mit weißem Drachen. Mausbewegungen verschieben Stadt und Figuren gegeneinander; Ravens Haare und Shadepis Schal bewegen sich im Wind. Mehrschichtiger Regen, Wasserreflexe und Neonlicht ergänzen die Szene. Die Menüknöpfe reagieren auf Maus und Controller-Fokus. Der vorhandene Bildstil-Schalter reduziert bei Bedarf Bewegung, Regen und Filter. [Vorschau und technische Hinweise](docs/live-startmenue.md).
@@ -37,7 +39,7 @@ Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und
 
 - Alle neun zerstörbaren Requisitentypen in gemaltem HQ-Stil, jeweils intakt, beschädigt und zerstört; auch die festen Demo-Requisiten nutzen die neuen Grafiken.
 - HQ-Aerodyne, Motorrad mit beiden Figuren, Verfolgerwagen und Drohnen.
-- Tower-Anflug: rechtes Triebwerk fällt aus, Rauch und Schräglage; **J / X zwölfmal in acht Sekunden** drücken, um gegen das Cockpit zu klopfen und den Antrieb neu zu starten. Danach **Q / RB** für die Gleiterkennung.
+- Tower-Anflug: rechtes Triebwerk fällt aus, Rauch und Schräglage. Raven repariert es jetzt über das **Jumper-Wartungsdeck**; **J / X** öffnet das Deck nach Abbruch erneut. Danach **Q / RB** für die Gleiterkennung.
 - Verfolgungsjagd mit träger Lenkung, Einschlagfunken, Mündungsfeuer, Granatenexplosionen, fliegenden Trümmern, Rückstoß und Verfolgerrauch.
 
 [Grafiken, Ablauf und Testhinweise](docs/hq-welt-und-fahrzeuge.md).

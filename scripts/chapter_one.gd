@@ -196,6 +196,7 @@ func new_game(save_checkpoint: bool = true) -> void:
 		autosave()
 
 func _enter_checkpoint(next_phase: Phase, saved_section: int = 0) -> void:
+	cancel_terminal()
 	_clear_encounter()
 	ui.clear_dialogue()
 	if ending != null:
@@ -340,9 +341,11 @@ func _guards_left() -> int:
 	return living
 
 func _check_hunt_gate() -> void:
-	if not gate_open and trail_index == TRAIL.size() and _guards_left() == 0 and (encounter == null or encounter.finished):
-		set_gate(true)
-		toast("Raven: Die Schleuse ist offen. Jackal ist gleich dahinter.")
+	if _hunt_terminal_ready():
+		toast("Raven: Wachen erledigt. Jetzt die Torschleuse am Terminal hacken.")
+
+func _hunt_terminal_ready() -> bool:
+	return phase == Phase.HUNT and not gate_open and trail_index == TRAIL.size() and _guards_left() == 0 and (encounter == null or encounter.finished)
 
 func _begin_duel() -> void:
 	_clear_encounter()
@@ -442,6 +445,8 @@ func player_strike(amount: int) -> void:
 		super.player_strike(amount)
 
 func interaction_prompt() -> String:
+	if _hunt_terminal_ready() and raven.position.distance_to(TRAIL.back()) < 43.0:
+		return "E / A · Raven: Jackals Torschleuse hacken"
 	if phase == Phase.COMPLETE:
 		return "E / A · Weiter zu Kapitel 2"
 	if phase == Phase.RESCUE and gate_open and player.position.distance_to(raven.position) < 47.0:
@@ -453,6 +458,13 @@ func interact(_actor: PixelActor = null) -> void:
 		ChapterFlow.advance(get_tree(), "res://scenes/chapter_two.tscn")
 		return
 	if is_busy() or interaction_prompt().is_empty():
+		return
+	if phase == Phase.HUNT:
+		open_terminal("jackal", func():
+			if _hunt_terminal_ready():
+				set_gate(true)
+				toast("Raven: Schleuse offen. Jackal ist gleich dahinter.")
+		)
 		return
 	phase = Phase.REVIVE
 	ui.dialogue([
@@ -594,7 +606,7 @@ func _draw() -> void:
 			draw_rect(Rect2(507, y, 4, 5), Color(0.28, 0.8, 0.95, 0.75))
 	var point := Vector2.ZERO
 	if phase == Phase.HUNT:
-		point = TRAIL[trail_index] if trail_index < TRAIL.size() else (ARENA_ENTRY if gate_open else Vector2.ZERO)
+		point = TRAIL[trail_index] if trail_index < TRAIL.size() else (ARENA_ENTRY if gate_open else (TRAIL.back() if _hunt_terminal_ready() else Vector2.ZERO))
 	elif phase == Phase.RESCUE and gate_open:
 		point = DOWNED_SPOT
 	if point != Vector2.ZERO:

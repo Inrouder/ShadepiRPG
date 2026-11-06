@@ -17,7 +17,7 @@ Die kleinen alten Pixelatlanten wurden entfernt. `npm run assets` überschreibt 
 
 ## Verhalten
 
-Der Flugnotfall startet einmal pro Anflug ab 3,2 Sekunden. Die Anflugzeit pausiert dabei; die Reparaturfrist läuft separat acht Sekunden. Zwölf neue Attack-Eingaben beheben den Fehler. Gedrückthalten zählt nur einmal. Nach der Wiederzündung läuft das Scannerfenster von Sekunde 9 bis 15 weiter. Ohne Reparatur oder ohne Kennung ist die Landung nicht erfolgreich. Pausen halten Simulation und Reparaturfrist an.
+Der Flugnotfall startet einmal pro Anflug ab 3,2 Sekunden. Die Anflugzeit pausiert dabei. Die ursprüngliche Klopf-Reparatur wurde durch [Ravens Jumper-Wartungsdeck](ravens-terminals.md) ersetzt: Pins und Widerstände korrekt verbinden, prüfen und übernehmen. Nach Abbruch bleiben separat 45 Sekunden zum erneuten Öffnen mit J/X. Das offene Deck und die Pause halten die Reparaturfrist an. Nach der Wiederzündung läuft das Scannerfenster von Sekunde 9 bis 15 weiter. Ohne Reparatur oder ohne Kennung ist die Landung nicht erfolgreich.
 
 Die Verfolgung verwendet federnde Spurwechsel mit kleinen Integrationsschritten, seitlichen Trefferimpulsen, angekündigten Rammangriffen und zunehmend kürzeren Hindernisintervallen. Geschosse und Hindernisse prüfen das Überqueren der Trefferlinie. Granaten erzeugen Explosionen auch dann, wenn sie den Wagen verfehlen. Die finale Explosion verzögert den Szenenwechsel um 1,1 Sekunden. Trümmer erhalten Geschwindigkeit, Schwerkraft, Dämpfung und Rotation; maximal 150 Trümmer, 45 Rauchwolken und acht Explosionen, bei reduzierter Qualität maximal 50 Trümmer und 14 Rauchwolken. Das ist eine Arcade-Fahrzeugphysik, keine starre 3D-Fahrzeugsimulation.
 
@@ -33,7 +33,7 @@ godot --headless --script res://tests/story_audit.gd
 godot --headless --script res://tests/npc_dive_visuals.gd
 ```
 
-Manuell: Kapitel 6 im versteckten Testmenü öffnen, Dialog beenden, zwölfmal J/X tippen, anschließend Kennung senden. Zweiter Durchlauf ohne Klopfen prüft den Kontrollpunkt. In Kapitel 3 über den Hinterhalt zur Verfolgung gehen; Spurwechsel, Schüsse, Hack, Granate, Rammwarnung und Abschluss prüfen. Bei beiden Sequenzen Pause und Ton-Schalter testen.
+Manuell: Kapitel 6 im versteckten Testmenü öffnen, Dialog beenden, Jumper-Rätsel lösen und übernehmen, anschließend Kennung senden. Zweiter Durchlauf mit abgebrochenem Deck und abgelaufener Frist prüft den Kontrollpunkt. In Kapitel 3 über den Hinterhalt zur Verfolgung gehen; Spurwechsel, Schüsse, Hack, Granate, Rammwarnung und Abschluss prüfen. Bei beiden Sequenzen Pause und Ton-Schalter testen.
 
 ## Spielaufnahmen
 

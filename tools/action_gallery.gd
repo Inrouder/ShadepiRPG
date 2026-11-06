@@ -25,8 +25,8 @@ func run() -> void:
 	scene.process_mode = Node.PROCESS_MODE_DISABLED
 	scene.drive.elapsed = 3.2
 	scene.drive.start_engine_failure()
+	scene.cancel_terminal()
 	for i in 30: scene.drive._process(1.0 / 60.0)
-	for i in 5: scene.drive.knock_engine()
 	await capture(scene, "hq-anflug")
 	scene.ui.message_time = 0.0
 	scene._enter(scene.Beat.CHASE)

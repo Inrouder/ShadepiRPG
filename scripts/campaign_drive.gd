@@ -35,13 +35,10 @@ var ram_warning: = 0.0
 var ram_recovery: = 0.0
 
 # Flight progress freezes during the emergency; the repair has its own deadline.
-const REPAIR_TAPS := 12
-const REPAIR_SECONDS := 8.0
+const REPAIR_SECONDS := 45.0
 var engine_failed := false
 var engine_repaired := false
-var repair_taps := 0
 var repair_left := REPAIR_SECONDS
-var knock_flash := 0.0
 var restart_flash := 0.0
 var velocity_x := 0.0
 var boss_x := 320.0
@@ -72,22 +69,22 @@ func start_engine_failure() -> void:
 	shake = 4.0
 	velocity_x += 95.0
 	_sound("engine_fail")
-	world.toast("ARTOS: Triebwerk ausgefallen! J / X wiederholt drücken – gegen das Cockpit klopfen!")
+	world.toast("ARTOS: Triebwerk ausgefallen! Raven öffnet das Wartungsdeck. J / X öffnet es erneut.")
+	request_repair()
 
-func knock_engine() -> void:
-	if not engine_failed or repair_left <= 0.0:
+func request_repair() -> void:
+	if not active or not engine_failed or repair_left <= 0.0:
 		return
-	repair_taps += 1
-	knock_flash = 0.16
-	shake = maxf(shake, 1.8)
-	_sound("knock")
-	if repair_taps >= REPAIR_TAPS:
+	world.open_terminal("repair", func():
+		if not active or not engine_failed:
+			return
 		engine_failed = false
 		engine_repaired = true
 		restart_flash = 1.2
 		_sound("engine_restart")
 		impact(Vector2(x + 19, FLIGHT_Y + 29), false, Color("75edff"))
-		world.toast("SHADEPI: Geht doch. – ARTOS: Schub wiederhergestellt.")
+		world.toast("RAVEN: Brücken geprüft. – ARTOS: Schub wiederhergestellt.")
+	)
 
 func _steer(delta: float) -> void:
 	# Fixed-sized integration makes steering stable even during frame stalls.
@@ -121,7 +118,6 @@ func _smoke(point: Vector2) -> void:
 func _update_fx(delta: float) -> void:
 	fx_clock += delta
 	shake = move_toward(shake, 0.0, delta * 9.0)
-	knock_flash = maxf(0.0, knock_flash - delta)
 	restart_flash = maxf(0.0, restart_flash - delta)
 	for i in range(debris.size() - 1, -1, -1):
 		var bit: Dictionary = debris[i]
@@ -185,12 +181,15 @@ func _process(delta: float) -> void :
 		elapsed += delta
 		if elapsed >= 3.2 and not engine_repaired:
 			start_engine_failure()
+			return
 	elif not flight:
 		elapsed += delta
 	if engine_failed:
 		repair_left = maxf(0.0, repair_left - delta)
 		if Input.is_action_just_pressed("attack"):
-			knock_engine()
+			request_repair()
+			if world.is_busy():
+				return
 		if repair_left <= 0.0 and engine_failed:
 			active = false
 			crashed.emit()
@@ -353,15 +352,11 @@ func _draw() -> void :
 				draw_line(nozzle, nozzle + Vector2(0, length), Color(1.0, 0.4, 0.12, 0.35) if failing else Color(0.1, 0.8, 1, 0.4), 9, true)
 				draw_line(nozzle, nozzle + Vector2(0, length * 0.8), Color("fff1bb") if failing else Color("b8f6ff"), 3, true)
 	_draw_fx()
-	if engine_failed or knock_flash > 0:
-		# Cockpit bracket bucks with every physical knock.
-		var knock := sin(knock_flash * 70.0) * knock_flash * 22.0
-		draw_rect(Rect2(210 + knock, 118, 220, 18), Color(0.04, 0.07, 0.12, 0.92))
+	if engine_failed:
+		draw_rect(Rect2(210, 118, 220, 18), Color(0.04, 0.07, 0.12, 0.92))
 		draw_rect(Rect2(218, 124, 204, 6), Color("4d2431"))
-		draw_rect(Rect2(218, 124, 204.0 * repair_taps / REPAIR_TAPS, 6), cyan)
+		draw_rect(Rect2(218, 124, 204.0 * repair_left / REPAIR_SECONDS, 6), cyan)
 		draw_arc(bike, 47, -PI, 0, 32, Color(pink, 0.6 + sin(fx_clock * 9) * 0.3), 2)
-		if knock_flash > 0:
-			draw_arc(bike + Vector2(8, -5), (0.16 - knock_flash) * 125 + 3, 0, TAU, 24, Color(1.0, 0.87, 0.65, knock_flash * 6), 2)
 	if hurt > 0.0:
 		draw_arc(bike, 25.0, 0.0, TAU, 24, Color(paint, hurt), 2.0)
 
