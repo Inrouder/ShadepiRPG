@@ -5,6 +5,8 @@ const Beat = Story.Beat
 const Timing = preload("res://scripts/sanctuary_timing.gd")
 const Drive = preload("res://scripts/campaign_drive.gd")
 const ChapterHud = preload("res://scripts/campaign_hud.gd")
+const Arcade = preload("res://scripts/arcade_encounter.gd")
+const Waves = preload("res://scripts/arcade_waves.gd")
 const SAVE: = "user://shadepi-campaign.cfg"
 const SPAWN: = Vector2(134, 421)
 const PACT_SPAWN: = Vector2(437, 427)
@@ -27,6 +29,7 @@ var drive: Node2D
 var timing: Node2D
 var echo_ready: = false
 var drive_layer: CanvasLayer
+var encounter: Node2D
 
 func create_hud() -> CanvasLayer:
 	return ChapterHud.new()
@@ -96,7 +99,11 @@ func new_game(_save_checkpoint: bool = true) -> void :
 	restore_dressing_state({})
 	_enter(Beat.PACT)
 
-func _enter(next: int) -> void :
+func _enter(next: int, saved_section: int = 0) -> void :
+	if is_instance_valid(encounter):
+		remove_child(encounter)
+		encounter.queue_free()
+	encounter = null
 	if is_instance_valid(timing):
 		timing.hide()
 		timing.queue_free()
@@ -150,7 +157,6 @@ func _enter(next: int) -> void :
 	_update_lighting()
 	ui.clear_dialogue()
 	close_menu()
-	autosave()
 	if beat in [Beat.CHASE, Beat.FLIGHT]:
 		drive = Drive.new()
 		drive.world = self
@@ -159,7 +165,8 @@ func _enter(next: int) -> void :
 		drive.completed.connect(_advance)
 		drive.crashed.connect( func(): _retry("Landung abgebrochen · Kontrollpunkt" if beat == Beat.FLIGHT else "Fahrzeug ausgefallen · Kontrollpunkt"))
 	if is_combat():
-		_spawn_wave()
+		_spawn_wave(saved_section)
+	autosave()
 	ui.dialogue(Story.DIALOGUE[beat])
 
 func _update_lighting() -> void :
@@ -191,27 +198,40 @@ func _advance() -> void :
 		_enter(beat + 1)
 
 func _retry(title: String) -> void :
-	_enter(beat)
+	var saved_section: int = encounter.section_index if encounter != null else 0
+	_enter(beat, saved_section)
 	menu_open = true
 	ui.show_menu(title)
 
-func _spawn_wave() -> void :
+func _spawn_wave(saved_section: int = 0) -> void :
 	if beat == Beat.ROOF:
 		set_music_section("fight")
 	if beat == Beat.BOSS:
 		_spawn_foe(Vector2(858, 340), 360, -1)
 		return
-	if beat == Beat.ROOF:
-		_spawn_foe(Vector2(735, 335), 80, 2)
-		_spawn_foe(Vector2(870, 320), 72, 1)
-		return
-	_spawn_foe(Vector2(481, 355), 64, 0)
-	_spawn_foe(Vector2(717, 364), 72, 1)
+	var plan: Array = Waves.ROOF if beat == Beat.ROOF else Waves.AMBUSH
+	var index := clampi(saved_section, 0, plan.size() - 1)
+	if saved_section > 0:
+		player.position = plan[index].start
+		reset_raven(player.position + Vector2(-20, 10))
+	encounter = Arcade.new()
+	add_child(encounter)
+	encounter.configure(self, plan, _spawn_arcade_foe, index)
+	encounter.section_changed.connect(autosave)
+	encounter.completed.connect(func():
+		if beat == Beat.ROOF:
+			_finish_encounter.call_deferred(beat)
+		else:
+			toast("ALLE ABSCHNITTE FREI · Zum Motorrad →")
+	)
 
-func _spawn_foe(point: Vector2, hp: int, variant: int) -> void :
+func _spawn_arcade_foe(point: Vector2, variant: int) -> PixelActor:
+	return _spawn_foe(point, 64 if beat == Beat.AMBUSH else 72, variant)
+
+func _spawn_foe(point: Vector2, hp: int, variant: int) -> PixelActor:
 	var foe: = EnemyScript.new()
 	foe.max_health = hp
-	var sprite: Texture2D = SHOOTERS[variant] if beat == Beat.AMBUSH else (GUARDS[variant] if variant >= 0 else preload("res://assets/sprites/npcs/kenzo.png"))
+	var sprite: Texture2D = SHOOTERS[variant] if beat == Beat.AMBUSH and variant < 2 else (GUARDS[variant] if variant >= 0 else preload("res://assets/sprites/npcs/kenzo.png"))
 	foe.setup(sprite, self)
 	foe.position = point
 	foe.hit_damage = 16 if variant >= 0 else 24
@@ -226,6 +246,7 @@ func _spawn_foe(point: Vector2, hp: int, variant: int) -> void :
 	if beat == Beat.ROOF and variant == 2:
 		foe.front_shield = true
 	foes.append(foe)
+	return foe
 
 func combat_target(origin: Vector2, include_cloaked: bool = false) -> PixelActor:
 	return super.combat_target(origin, include_cloaked) if is_combat() else null
@@ -265,6 +286,8 @@ func raven_hack() -> bool:
 	return true
 
 func enemy_defeated(_foe: PixelActor = null) -> void :
+	if encounter != null and not encounter.finished:
+		return
 	if _living() != 0:
 		return
 	if beat in [Beat.ROOF, Beat.BOSS]:
@@ -299,7 +322,7 @@ func _target() -> Vector2:
 		return PORTS[PORT_ORDER[port_index]]
 	if beat == Beat.ECHO and echo_ready and point_index < Painted.ECHO_POINTS.size():
 		return Painted.ECHO_POINTS[point_index]
-	if (is_combat() and _living() > 0) or point_index >= Story.POINTS[beat].size():
+	if (encounter != null and not encounter.finished) or (is_combat() and _living() > 0) or point_index >= Story.POINTS[beat].size():
 		return Vector2.ZERO
 	return Story.POINTS[beat][point_index]
 
@@ -310,6 +333,8 @@ func _signal_open() -> bool:
 	return fposmod(clock, 2.1) < 1.0
 
 func chapter_objective() -> String:
+	if encounter != null and not encounter.finished:
+		return encounter.status_text()
 	match beat:
 		Beat.AMBUSH:
 			return "Hinterhalt · %d Gegner" % _living() if _living() else "Zum Motorrad"
@@ -419,7 +444,7 @@ func interact(_actor: PixelActor = null) -> void :
 	if beat == Beat.ROOF and point_index == 2:
 		player.position = raven.position + Vector2(-50, 15)
 		player.show()
-		ui.dialogue([["RAVEN", "Zwei Wachen am Aufzug. Ich störe auf dein Signal ihre Implantate. Du musst den Schild umgehen oder im Hackfenster zuschlagen.", "tower"]])
+		ui.dialogue([["RAVEN", "Wachen am Aufzug. Weitere sind unterwegs. Ich störe auf dein Signal ihre Implantate. Umgehe die Schilde oder nutze das Hackfenster.", "tower"]])
 		_spawn_wave()
 		return
 	if beat != Beat.HANGAR and point_index == Story.POINTS[beat].size():
@@ -479,6 +504,7 @@ func autosave() -> void :
 func save_game() -> bool:
 	var config: = ConfigFile.new()
 	config.set_value("campaign", "beat", beat)
+	config.set_value("campaign", "arcade_section", encounter.section_index if encounter != null else 0)
 	config.set_value("props", "state", dressing_state())
 	return config.save(Admin.checkpoint_path(SAVE, get_tree())) == OK
 
@@ -489,7 +515,8 @@ func load_game(_requested_mode: Variant = null) -> bool:
 	var config: = ConfigFile.new()
 	config.load(Admin.checkpoint_path(SAVE, get_tree()))
 	restore_dressing_state(config.get_value("props", "state", {}))
-	_enter(saved)
+	var saved_section: Variant = config.get_value("campaign", "arcade_section", 0)
+	_enter(saved, saved_section if saved_section is int else 0)
 	return true
 
 func _draw() -> void :

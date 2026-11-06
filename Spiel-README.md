@@ -10,6 +10,8 @@
 
 Raven bekommt in ihrem Apartment einen Hinweis auf Chrome Jackal, räumt die Punks in Bingo Street aus dem Weg und verfolgt ihn bis zum Wartungshof. Dort hält seine Panzerung jedem Treffer stand. Nach 30 Kampfsekunden dreht er Ravens Hack gegen sie. Shadepi kämpft sich durch die Wartungsgasse und stellt Jackal mit 360 HP. Sobald die Hälfte seiner Lebenspunkte weg ist, steht Raven auf und steigt in den Kampf ein.
 
+**Gegnerwellen:** Die Jagd, der Rettungsweg, der Hinterhalt und der Towerkampf sind in gesperrte Kampfabschnitte aufgeteilt. Besiege alle Wellen, bis „WEITER →“ erscheint. Zwischen Wellen hast du zwei Sekunden Pause. Ein geschaffter Abschnitt gibt bis zu 15 Lebenspunkte und 20 Energie zurück. Am nächsten Abschnitt wird automatisch gespeichert; nach einer Niederlage beginnt dessen erste Welle erneut. Neue Kampf-Moves folgen später. [Alle Abschnitte und Gegnerzahlen](docs/arcade-wellen.md).
+
 Die Zwischenszenen nutzen Ausschnitte aus dem Comic „Shadepi – Im Schatten des Raben“ (deutsche Fassung, PDF-Seiten 2, 4, 5, 6 und 9) mit eigens für das Spiel geschriebenen Dialogen.
 
 ## Verstecktes Test-/Admin-Menü
@@ -139,7 +141,7 @@ Vor dem gemeinsamen Kampf steuert der erste Controller die jeweils aktive Figur.
 - Begehbare Gasse mit Gebäudekollisionen, Hindernissen, Sicherheitsschleuse und markierter Jagdroute.
 - Gegner mit angekündigtem Angriff, Vorstoß, Erholungsphase und hackbarer Panzerung.
 - Katana-Kombination, Energie, Ausweichen, zehn Sekunden maximales Tarnfenster und Fähigkeitencooldowns.
-- Comic-Zwischenszenen, zwei Kämpfe gegen Jackal, vier animierte Punk-Varianten, eine Rettung mit drei Wachen und separate Kapitel-Kontrollpunkte für Solo und Koop.
+- Comic-Zwischenszenen, zwei Kämpfe gegen Jackal, vier animierte Punk-Varianten, eine Rettung mit drei Gegnerwellen und separate Kapitel-Kontrollpunkte für Solo und Koop.
 - Geworfene Schatten, Neonhalos, nasse Spiegelungen, Schritte im Regen, Dampf, Hackentladungen und ein dezenter Farb- und Lichtfilter. Die drei Bildstile sind im Menü und mit **V** umschaltbar; die Einstellung bleibt beim Neustart erhalten.
 - Eigens synthetisierte elektronische Hintergrundmusik und Kampf-/Hackeffekte.
 

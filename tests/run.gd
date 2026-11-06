@@ -557,12 +557,8 @@ func check_chapter() -> void:
 	check(chapter.phase == chapter.Phase.HUNT and chapter.actor_is_playable(chapter.raven) and not chapter.actor_is_playable(chapter.player), "the hunt gives primary controls to Raven")
 	check(MusicLibrary.path_for(chapter.music_section).ends_with("Fight.mp3"), "street combat uses the regular fight track")
 	check(chapter.saved_checkpoint(true) == chapter.Phase.HUNT, "the hunt is saved in the co-op slot")
-	check(chapter.patrol.size() == 4 and not chapter.gate_open, "four street punks guard Raven's route")
+	check(chapter.patrol.size() == 2 and not chapter.gate_open, "the hunt begins with the first arcade wave")
 	check(chapter.patrol[1].shot_range > 0.0, "carbine-equipped gang member uses ranged attacks")
-	var sprites := {}
-	for guard in chapter.patrol:
-		sprites[guard.visual.texture.resource_path] = true
-	check(sprites.size() == 4, "hunt punks use four distinct sprites")
 	var first_guard = chapter.patrol[0]
 	chapter.raven.facing = (first_guard.position - chapter.raven.position).normalized()
 	await physics_frame
@@ -576,6 +572,12 @@ func check_chapter() -> void:
 	check(first_guard.health < hp, "Raven can shoot a street punk with her pistol")
 	for guard in chapter.patrol:
 		guard.take_damage(100)
+	finish_arcade(chapter)
+	var sprites := {}
+	for guard in chapter.patrol:
+		sprites[guard.visual.texture.resource_path] = true
+	check(sprites.size() == 4, "hunt waves use four distinct sprites")
+	chapter.raven.position = chapter.APARTMENT_EXIT
 	check(not chapter.gate_open, "clearing the gang still requires following the trail")
 	var route := [
 		Vector2(-543, 448), Vector2(-297, 448), Vector2(-297, 346), Vector2(-158, 346),
@@ -605,6 +607,7 @@ func check_chapter() -> void:
 	check(chapter.patrol.size() == 3 and not chapter.gate_open, "the patrol guards the way to Raven")
 	for guard in chapter.patrol:
 		guard.take_damage(100)
+	finish_arcade(chapter)
 	check(chapter.gate_open, "the patrol's defeat opens the rescue gate")
 	chapter.player.position = chapter.raven.position + Vector2(-20, 0)
 	chapter.interact()
@@ -644,6 +647,20 @@ func check_chapter() -> void:
 	check(not chapter.coop and chapter.raven_joined and chapter.enemy.health < 180, "solo Raven assists with aimed shots after the handoff")
 	chapter.queue_free()
 	await process_frame
+
+func finish_arcade(scene: Node2D) -> void:
+	var encounter = scene.encounter
+	for step in 40:
+		if encounter.finished:
+			return
+		if encounter.waiting:
+			encounter.leader().position = encounter.sections[encounter.section_index].start
+		for foe in encounter.fighters:
+			foe.hack()
+			foe.take_damage(1000)
+		encounter._process(0.0)
+		encounter._process(encounter.WAVE_BREAK)
+	check(false, "arcade encounter completes within its finite wave plan")
 
 func finish_dialogue(chapter: Node2D) -> void:
 	for _line in 16:
@@ -734,8 +751,7 @@ func check_campaign() -> void:
 	finish_dialogue(scene)
 	check(scene.beat == scene.Beat.AMBUSH and scene._living() == 2, "pact leads to the two-shooter ambush")
 	check(MusicLibrary.path_for(scene.music_section).ends_with("Fight.mp3"), "the ambush uses the regular fight track")
-	for foe in scene.foes:
-		foe.take_damage(1000)
+	finish_arcade(scene)
 	scene.player.position = scene._target()
 	scene.interact()
 	finish_dialogue(scene)
@@ -825,9 +841,7 @@ func check_campaign() -> void:
 	finish_dialogue(scene)
 	check(scene.beat == scene.Beat.ROOF and scene._living() == 2, "lift guards fight outside the penthouse")
 	check(MusicLibrary.path_for(scene.music_section).ends_with("Fight.mp3"), "Tower exploration switches to fight music at the lift guards")
-	for foe in scene.foes:
-		foe.hack()
-		foe.take_damage(1000)
+	finish_arcade(scene)
 	await process_frame
 	await process_frame
 	finish_dialogue(scene)

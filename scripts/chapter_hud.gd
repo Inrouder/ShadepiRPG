@@ -82,6 +82,8 @@ func _process(delta: float) -> void :
 			objective.text = "Der Auftrag danach"
 		world.Phase.COMPLETE:
 			objective.text = "Kapitel 1 abgeschlossen"
+	if world.encounter != null and not world.encounter.finished:
+		objective.text = world.encounter.status_text()
 	abilities.visible = abilities.visible and world.phase in [world.Phase.DUEL, world.Phase.RESCUE, world.Phase.TEAM]
 	if world.phase == world.Phase.DUEL:
 		var remaining: = ceili(world.DUEL_DURATION - world.duel_time)

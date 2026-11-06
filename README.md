@@ -14,6 +14,8 @@ Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben�
 
 Im Spiel gibt es ein Startmenü mit Einzelspieler und Lokal-Koop, eine gemeinsame Kamera und getrennte Kapitel-Kontrollpunkte. Details zu Tastatur, Controllern, Kampf, Speicherständen und Kapiteln stehen in der [Spieleranleitung](Spiel-README.md).
 
+**Arcade-Kampfabschnitte:** Ravens Jagd, Shadepis Rettungsweg, der Hinterhalt und die Aufzugwachen bieten mehrere Gegnerwellen mit gesperrten Ausgängen, kurzen Pausen und Abschnitts-Kontrollpunkten. [Ablauf, Umfang und Entwicklung](docs/arcade-wellen.md).
+
 Das Startmenü zeigt Shadepi und Raven vor einer Neonstadt mit weißem Drachen. Mausbewegungen verschieben Stadt und Figuren gegeneinander; Ravens Haare und Shadepis Schal bewegen sich im Wind. Mehrschichtiger Regen, Wasserreflexe und Neonlicht ergänzen die Szene. Die Menüknöpfe reagieren auf Maus und Controller-Fokus. Der vorhandene Bildstil-Schalter reduziert bei Bedarf Bewegung, Regen und Filter. [Vorschau und technische Hinweise](docs/live-startmenue.md).
 
 ## Geschichte und Spielumfang
@@ -68,6 +70,7 @@ godot --headless --editor --import --quit
 godot --headless --script res://tests/run.gd
 godot --headless --script res://tests/drive_action.gd
 godot --headless --script res://tests/story_audit.gd
+godot --headless --script res://tests/arcade_waves.gd
 godot --headless --script res://tests/npc_dive_visuals.gd
 ```
 

@@ -142,6 +142,17 @@ func run() -> void:
 		finish_dialogue(campaign)
 		freeze(campaign)
 		check_ui(campaign)
+		# Story routes open only after the arcade sections have been cleared.
+		if beat == Story.Beat.AMBUSH:
+			for step in 40:
+				if campaign.encounter.finished:
+					break
+				if campaign.encounter.waiting:
+					campaign.player.position = campaign.encounter.sections[campaign.encounter.section_index].start
+				for foe in campaign.encounter.fighters:
+					foe.take_damage(1000)
+				campaign.encounter._process(0.0)
+				campaign.encounter._process(2.0)
 		if beat > 0:
 			check(Story.CHAPTERS[beat] >= Story.CHAPTERS[beat - 1] and Story.CHAPTERS[beat] <= Story.CHAPTERS[beat - 1] + 1, "chapter order at beat %d" % beat)
 		if beat not in [Story.Beat.CHASE, Story.Beat.FLIGHT]:

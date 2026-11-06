@@ -53,6 +53,12 @@ jobs:
           if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/tests.log; then exit 1; fi
       - name: Validate flight emergency and chase physics
         run: godot --headless --script res://tests/drive_action.gd
+      - name: Validate arcade waves, barriers and checkpoints
+        shell: bash
+        run: |
+          set -euo pipefail
+          godot --headless --script res://tests/arcade_waves.gd 2>&1 | tee /tmp/arcade-waves.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/arcade-waves.log; then exit 1; fi
       - name: Validate digital NPC visuals
         run: godot --headless --script res://tests/npc_dive_visuals.gd
       - name: Validate story, chapter flow, geometry and dialogue

@@ -3,6 +3,8 @@ extends "res://scripts/main.gd"
 enum Phase { APARTMENT, HUNT, DUEL, ROOFTOP, RESCUE, REVIVE, TEAM, COMPLETE, EPILOGUE }
 
 const ChapterHud = preload("res://scripts/chapter_hud.gd")
+const Arcade = preload("res://scripts/arcade_encounter.gd")
+const Waves = preload("res://scripts/arcade_waves.gd")
 const CHAPTER_SAVE := "user://shadepi-chapter-one.cfg"
 const WEST_EDGE := -640
 const DUEL_DURATION := 30.0
@@ -13,8 +15,6 @@ const PUNKS := [
 	preload("res://assets/sprites/npcs/punk-1.png"), preload("res://assets/sprites/npcs/punk-2.png"),
 	preload("res://assets/sprites/npcs/punk-3.png"), preload("res://assets/sprites/npcs/punk-4.png"),
 ]
-const HUNT_GUARDS := [Vector2(-491, 401), Vector2(-329, 432), Vector2(-156, 356), Vector2(81, 404)]
-const RESCUE_GUARDS := [Vector2(347, 351), Vector2(466, 382), Vector2(483, 442)]
 const ARENA_ENTRY := Vector2(568, 356)
 const DOWNED_SPOT := Vector2(636, 365)
 const RESCUE_START := Vector2(295, 451)
@@ -40,6 +40,7 @@ var ending: Tween
 var patrol: Array[PixelActor] = []
 var street_lights: Array[PointLight2D] = []
 var apartment_lights: Array[PointLight2D] = []
+var encounter: Node2D
 
 func _ready() -> void:
 	super._ready()
@@ -188,7 +189,8 @@ func new_game(save_checkpoint: bool = true) -> void:
 	if save_checkpoint:
 		autosave()
 
-func _enter_checkpoint(next_phase: Phase) -> void:
+func _enter_checkpoint(next_phase: Phase, saved_section: int = 0) -> void:
+	_clear_encounter()
 	ui.clear_dialogue()
 	if ending != null:
 		ending.kill()
@@ -261,12 +263,11 @@ func _enter_checkpoint(next_phase: Phase) -> void:
 				["RAVEN", "Dann nehme ich die Gassen unter den Kameras. Mal sehen, wer da für ihn die Augen offen hält.", "apartment"],
 			], _leave_apartment)
 		Phase.HUNT:
-			_spawn_hunt()
+			_start_arcade(saved_section)
 		Phase.RESCUE, Phase.TEAM:
 			_down_raven()
 			if phase == Phase.RESCUE:
-				for index in RESCUE_GUARDS.size():
-					_spawn_patrol(RESCUE_GUARDS[index], (index + 2) % PUNKS.size())
+				_start_arcade(saved_section)
 
 func _update_apartment_lighting() -> void:
 	effects.rain = phase != Phase.APARTMENT
@@ -286,12 +287,38 @@ func _leave_apartment() -> void:
 	set_dressing("street")
 	_update_apartment_lighting()
 	checkpoint = Phase.HUNT
-	_spawn_hunt()
+	_start_arcade()
 	autosave()
 
-func _spawn_hunt() -> void:
-	for index in HUNT_GUARDS.size():
-		_spawn_patrol(HUNT_GUARDS[index], index)
+func _clear_encounter() -> void:
+	if is_instance_valid(encounter):
+		remove_child(encounter)
+		encounter.queue_free()
+	encounter = null
+
+func _start_arcade(saved_section: int = 0) -> void:
+	_clear_encounter()
+	var plan: Array = Waves.HUNT if phase == Phase.HUNT else Waves.RESCUE
+	var index := clampi(saved_section, 0, plan.size() - 1)
+	var actor: PixelActor = raven if raven_leads() else player
+	actor.position = plan[index].start
+	if phase == Phase.HUNT:
+		trail_index = plan[index].trail
+	encounter = Arcade.new()
+	add_child(encounter)
+	encounter.configure(self, plan, _spawn_patrol, index)
+	encounter.section_changed.connect(func():
+		if phase == Phase.HUNT:
+			trail_index = maxi(trail_index, plan[encounter.section_index].trail)
+		autosave()
+	)
+	encounter.completed.connect(func():
+		if phase == Phase.HUNT:
+			_check_hunt_gate()
+		else:
+			set_gate(true)
+			toast("Wartungsgasse frei. Raven liegt hinter der Schleuse.")
+	)
 
 func _down_raven() -> void:
 	raven.health = 0
@@ -307,11 +334,12 @@ func _guards_left() -> int:
 	return living
 
 func _check_hunt_gate() -> void:
-	if not gate_open and trail_index == TRAIL.size() and _guards_left() == 0:
+	if not gate_open and trail_index == TRAIL.size() and _guards_left() == 0 and (encounter == null or encounter.finished):
 		set_gate(true)
 		toast("Raven: Die Schleuse ist offen. Jackal ist gleich dahinter.")
 
 func _begin_duel() -> void:
+	_clear_encounter()
 	phase = Phase.DUEL
 	set_music_section("boss")
 	stage = 2
@@ -329,7 +357,7 @@ func _begin_duel() -> void:
 	enemy.lunge_speed = 295.0
 	enemy.active = true
 	ui.dialogue([
-		["CHROME JACKAL / WARTUNGSHOF", "Vier meiner Leute senden nicht mehr. Dein Signal dagegen ist laut genug, um den ganzen Hof zu wecken.", "jackal"],
+		["CHROME JACKAL / WARTUNGSHOF", "Meine Leute senden nicht mehr. Dein Signal dagegen ist laut genug, um den ganzen Hof zu wecken.", "jackal"],
 		["RAVEN", "Ich bin wegen deines Kopfgelds hier. Mal sehen, wie lange deine Panzerung durchhält, wenn ich die Steuerung finde.", "jackal"],
 		["CHROME JACKAL", "Dann steck dich ruhig ein. Die letzte Netrunnerin hat denselben Fehler gemacht.", "jackal"],
 	])
@@ -372,7 +400,7 @@ func _rooftop_dialogue() -> void:
 		autosave()
 	)
 
-func _spawn_patrol(point: Vector2, variant: int) -> void:
+func _spawn_patrol(point: Vector2, variant: int) -> PixelActor:
 	var foe := EnemyScript.new()
 	foe.max_health = 32 if phase == Phase.HUNT else 39
 	foe.hit_damage = 11 + variant
@@ -385,6 +413,7 @@ func _spawn_patrol(point: Vector2, variant: int) -> void:
 	foe.reset_fight(foe.max_health)
 	foe.active = true
 	patrol.append(foe)
+	return foe
 
 func raven_shot_target(origin: Vector2) -> PixelActor:
 	if phase != Phase.HUNT:
@@ -450,6 +479,8 @@ func admin_defeat_enemies() -> int:
 	return super.admin_defeat_enemies()
 
 func enemy_defeated(foe: PixelActor = null) -> void:
+	if encounter != null and not encounter.finished:
+		return
 	if phase == Phase.HUNT:
 		_check_hunt_gate()
 	elif phase == Phase.RESCUE and _guards_left() == 0:
@@ -499,7 +530,8 @@ func _jump_to_roof() -> void:
 	)
 
 func player_defeated() -> void:
-	_enter_checkpoint(checkpoint)
+	var saved_section: int = encounter.section_index if encounter != null else 0
+	_enter_checkpoint(checkpoint, saved_section)
 	menu_open = true
 	ui.show_menu("SYSTEM GESTÖRT")
 	ui.resume_button.text = "Am Kontrollpunkt fortsetzen"
@@ -526,6 +558,7 @@ func _write_checkpoint() -> bool:
 	var config := ConfigFile.new()
 	config.load(Admin.checkpoint_path(CHAPTER_SAVE, get_tree()))
 	config.set_value("chapter_one", "coop" if chapter_coop else "solo", checkpoint)
+	config.set_value("arcade", "coop" if chapter_coop else "solo", encounter.section_index if encounter != null else 0)
 	config.set_value("props", "coop" if chapter_coop else "solo", dressing_state())
 	return config.save(Admin.checkpoint_path(CHAPTER_SAVE, get_tree())) == OK
 
@@ -539,7 +572,8 @@ func load_game(requested_mode: Variant = null) -> bool:
 	var config := ConfigFile.new()
 	config.load(Admin.checkpoint_path(CHAPTER_SAVE, get_tree()))
 	restore_dressing_state(config.get_value("props", "coop" if mode else "solo", {}))
-	_enter_checkpoint(saved as Phase)
+	var saved_section: Variant = config.get_value("arcade", "coop" if mode else "solo", 0)
+	_enter_checkpoint(saved as Phase, saved_section if saved_section is int else 0)
 	toast("Kontrollpunkt geladen")
 	return true
 
