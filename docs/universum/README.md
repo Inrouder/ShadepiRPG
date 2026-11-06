@@ -10,6 +10,10 @@ Die [Bildnotizen zu Teil 2](teil-2/README.md) erfassen Shadepis Tempelmotiv, sei
 
 **Verbindlich bestätigt am 6. November 2026: Raven ist 160 cm groß.** Der Nutzer hat ausdrücklich „160cm ist richtig“ festgelegt. Die 168-cm-Angabe auf dem Referenzblatt in Teil 2 bleibt als ursprüngliche Bildbeschriftung dokumentiert, ist aber überholt und darf nicht für neue Darstellungen oder Proportionsentscheidungen verwendet werden.
 
+## Teil 4 (6. November 2026)
+
+Der Archivordner des Nutzers ist jetzt gefüllt. [Teil 4](teil-4/README.md) enthält das Heiligtum-Dossier, die Raven-Akte, Firmen- und Ordensnotizen sowie die **Romanfassung „Shadepi im Schatten des Raben“ (Kapitel 1–7)** mit vom Nutzer bestätigten Storyfakten.
+
 ## Teil 1: Dokumente
 
 | Original | Einordnung | Durchsuchbare Textkopie |

@@ -550,9 +550,8 @@ func check_chapter() -> void:
 	chapter.ui.show_menu()
 	check(chapter.ui.requested_coop and not chapter.ui.start_backdrop.visible, "chapter pause preserves pending co-op and keeps the opening art hidden")
 	chapter.close_menu()
-	check(chapter.ui.dialogue_open and chapter.ui.comic_art.texture != null, "chapter opens with comic artwork")
-	chapter.ui.advance_dialogue()
-	check(chapter.ui.comic_art.texture.resource_path.ends_with("apartment.jpg"), "Raven gets the lead in her apartment")
+	check(chapter.in_cinematic() and not chapter.ui.dialogue_open and chapter.ui.comic_art.texture == null, "chapter opens with an in-engine scene instead of comic pages")
+	check(chapter.raven.position.x < -100 and chapter.phase == chapter.Phase.APARTMENT, "Raven gets the lead in her apartment")
 	finish_dialogue(chapter)
 	check(chapter.phase == chapter.Phase.HUNT and chapter.actor_is_playable(chapter.raven) and not chapter.actor_is_playable(chapter.player), "the hunt gives primary controls to Raven")
 	check(MusicLibrary.path_for(chapter.music_section).ends_with("Fight.mp3"), "street combat uses the regular fight track")
@@ -628,13 +627,10 @@ func check_chapter() -> void:
 	await physics_frame
 	check(chapter.raven_hack() and chapter.enemy.exposed > 0.0, "Raven hacks Jackal during the team fight")
 	chapter.enemy.take_damage(200)
-	check(chapter.phase == chapter.Phase.EPILOGUE and chapter.ui.dialogue_open, "winning starts the closing conversation")
+	check(chapter.phase == chapter.Phase.EPILOGUE and chapter.in_cinematic(), "winning starts the closing scene")
 	finish_dialogue(chapter)
-	chapter.ending.custom_step(3.0)
-	check(not chapter.raven.visible and chapter.ui.dialogue_open, "Raven leaves through the door before Shadepi speaks")
-	finish_dialogue(chapter)
-	chapter.ending.custom_step(2.0)
-	check(chapter.phase == chapter.Phase.COMPLETE and chapter.ui.dialogue_open, "the rooftop jump completes the chapter")
+	check(not chapter.raven.visible and chapter.player.position.y == 223.0, "Raven leaves through the door and Shadepi leaps onto the roof")
+	check(chapter.phase == chapter.Phase.COMPLETE and not chapter.in_cinematic(), "the rooftop jump completes the chapter")
 	check(is_equal_approx(chapter.player.visual.position.y, chapter.player.standing_visual_position.y), "rooftop landing restores the HQ sprite foot position")
 	check(chapter.load_game(true) and chapter.phase == chapter.Phase.COMPLETE and not chapter.enemy.visible, "the completed co-op checkpoint can be reloaded")
 	chapter.chapter_coop = false
@@ -714,6 +710,7 @@ func check_chapter_two() -> void:
 	check(chapter.section == chapter.Section.COOLING, "Raven must be connected to the cooling system before diving")
 	chapter.player.position = chapter.BATH
 	chapter.interact()
+	finish_dialogue(chapter)
 	check(chapter.raven_leads() and chapter.actor_is_playable(chapter.raven), "deep dive switches control to Raven")
 	check(MusicLibrary.path_for(chapter.music_section).ends_with("Fight.mp3"), "Deep Dive combat uses the fight track")
 	chapter.raven.position = chapter.RELAYS[0]
@@ -850,7 +847,7 @@ func check_campaign() -> void:
 	finish_dialogue(scene)
 	check(scene.beat == scene.Beat.BOSS and scene._living() == 1, "the penthouse door leads straight to Kenzō without guards before him")
 	check(MusicLibrary.path_for(scene.music_section).ends_with("Boss.mp3"), "Kenzō's encounter uses boss music")
-	check(not scene.in_cinematic() and scene.foes.back().position.x > 800.0, "penthouse cutscene ends with Kenzō at the window")
+	check(not scene.in_cinematic() and scene.foes.back().health == 360 and scene.player.cloak_time == 0.0, "penthouse scene ends with Shadepi revealed and Kenzō ready to fight")
 	scene.foes.back().take_damage(1000)
 	await process_frame
 	await process_frame
@@ -869,7 +866,7 @@ func check_campaign() -> void:
 	finish_arcade(scene)
 	await process_frame
 	await process_frame
-	check(scene.escape_guards_cleared and scene.ui.dialogue_open, "alarm briefing follows the last lift wave")
+	check(scene.escape_guards_cleared and scene.in_cinematic(), "alarm briefing follows the last lift wave")
 	finish_dialogue(scene)
 	check(scene.beat == scene.Beat.ESCAPE, "boss defeat starts the sixty-second escape")
 	for i in 4:

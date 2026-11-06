@@ -98,6 +98,7 @@ func begin() -> int:
 	skipping = false
 	visible = true
 	home_zoom = world.camera.zoom.x
+	_refresh_actors()
 	bars_target = 1.0
 	return generation
 
@@ -126,8 +127,16 @@ func abort() -> void:
 	bars_target = 0.0
 	_layout_bars()
 
+func _refresh_actors() -> void:
+	# Health bars and markers hide during scenes; force a redraw of every actor.
+	if world != null and world.actors != null:
+		for node in world.actors.get_children():
+			if node is CanvasItem:
+				node.queue_redraw()
+
 func _release() -> void:
 	running = false
+	_refresh_actors()
 	waiting_input = false
 	camera_moving = false
 	for actor: PixelActor in walkers.keys():
@@ -267,6 +276,33 @@ func drop(actor: PixelActor, height: float, seconds: float = 0.4) -> void:
 			t += get_process_delta_time()
 		var k := clampf(t / seconds, 0.0, 1.0)
 		actor.visual.position.y = base - height * (1.0 - k * k)
+	actor.visual.position.y = base
+
+## Speaks several [speaker, text] lines in order.
+func lines(entries: Array) -> void:
+	for entry: Array in entries:
+		if not running:
+			return
+		await say(str(entry[0]), str(entry[1]))
+
+## Jumps an actor along an arc to a new floor position (roof leaps, vaults).
+func leap(actor: PixelActor, target: Vector2, height: float = 70.0, seconds: float = 0.6) -> void:
+	if not running or not is_instance_valid(actor):
+		return
+	var start := actor.position
+	var base := actor.standing_visual_position.y
+	if not skipping:
+		var gen := generation
+		var t := 0.0
+		while t < seconds and not skipping:
+			if not await _frame(gen):
+				return
+			if not _paused():
+				t += get_process_delta_time()
+			var k := clampf(t / seconds, 0.0, 1.0)
+			actor.position = start.lerp(target, k)
+			actor.visual.position.y = base - sin(k * PI) * height
+	actor.position = target
 	actor.visual.position.y = base
 
 func say(speaker: String, text: String) -> void:

@@ -24,11 +24,11 @@ Die Dateien unter `assets/custom/` werden vom Generator nicht überschrieben. En
 
 | Was du ändern möchtest | Wo du es findest |
 | --- | --- |
-| Comicbilder und Zwischensequenzen | `assets/comic/`. Ersetze ein JPG unter demselben Namen und lass Godot neu importieren. Die Bildzuordnung steht in `scripts/chapter_hud.gd` unter `COMIC`. |
-| Dialoge und Abläufe | `scripts/chapter_one.gd`. Ein Dialogeintrag enthält Sprecher, Text und Bildschlüssel. |
+| Zwischensequenzen | Funktionen `_scene_…` in `scripts/chapter_one.gd`, `scripts/chapter_two.gd` und `scripts/campaign.gd`. Anleitung: [Zwischensequenzen](zwischensequenzen.md). Die alten Comicbilder in `assets/comic/` werden seit v0.18.0 nicht mehr eingeblendet. |
+| Dialoge und Abläufe | `scripts/chapter_one.gd`. Gesprochene Zeilen stehen als `["SPRECHER", "Text"]` in den Szenenfunktionen. |
 | Boden, Fassaden und Schilder in Bingo Street | `assets/world/painted/market.png` und `assets/world/painted/alley.png`. Die Bildmaße beibehalten und Hindernisse in `scripts/painted_world.gd` abgleichen. |
 | Wege, Hindernisse und Gegner | `scripts/chapter_one.gd` mit `BARRIERS`, `TRAIL`, `HUNT_GUARDS` und `RESCUE_GUARDS`. Gemeinsame Wände und Requisiten stehen in `scripts/world_data.gd`. |
 
 Die Kapitelkarte wird aus den gemalten Kulissen und den Szenendaten aufgebaut. Wenn du eine Mauer versetzt, passe sowohl das Bild als auch die Kollisionen in `scripts/painted_world.gd` an. Starte das Kapitel in Godot und prüfe den Weg bis zur Schleuse. Für eine eigene Windows-Fassung exportierst du anschließend neu.
 
-Kapitel 2 nutzt die Szene `scenes/chapter_two.tscn`. Dialoge, Scanpunkte, Netzwerkknoten und Hindernisse stehen in `scripts/chapter_two.gd`; die Comiczuordnung steht in `scripts/chapter_two_hud.gd`.
+Kapitel 2 nutzt die Szene `scenes/chapter_two.tscn`. Dialoge, Scanpunkte, Netzwerkknoten und Hindernisse stehen in `scripts/chapter_two.gd`; die Szenen stehen dort in den Funktionen `_scene_…`.

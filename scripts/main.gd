@@ -747,6 +747,16 @@ func camera_home() -> Vector2:
 		return player.position.lerp(raven.position, 0.5) + Vector2(0, -27)
 	return player.position + Vector2(0, -60) + player.facing * 8
 
+## Plays plain spoken lines as an in-engine scene (no comic page).
+func play_lines(entries: Array, done: Callable = Callable()) -> void:
+	var cs = begin_cutscene()
+	await cs.lines(entries)
+	cs.end(done)
+
+## Hides combat hints in calm story moments; chapters narrow this down.
+func combat_ready() -> bool:
+	return true
+
 func in_cinematic() -> bool:
 	return cutscene != null and cutscene.running
 

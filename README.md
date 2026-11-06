@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.17.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.18.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -35,7 +35,15 @@ Die Spielwelt nutzt **16 gemalte Kulissen** aus `assets/world/painted/`. Wände 
 
 Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und Bosskämpfen. Die vollständige Zuordnung und Hinweise zum Austauschen der MP3-Dateien stehen unter [Musik austauschen](assets/music/README.md).
 
-## Neu in v0.17.0 · 6. November 2026 · ClaudeHelper
+## Neu in v0.18.0 · 6. November 2026 · ClaudeHelper
+
+- **Echte Zwischensequenzen statt Comic-Einblendungen:** Alle Storydialoge der Kapitel 1–7 laufen jetzt im Spiel – mit Kamerafahrten, laufenden Figuren, Kinobalken, Kapitel-Titelkarten und Untertiteln. Die unpassenden Comicbilder sind entfernt.
+- **Texte nach der Romanfassung** „Shadepi im Schatten des Raben“ aus dem Archiv, inklusive der Enthüllung, dass Kenzō das Massaker am Orden mit Militechs Minotauren inszeniert hat.
+- **Neu inszeniert u. a.:** Ravens Morgen, Shadepis Ankunft im Industriegebiet und die drei Schläge, Fragment und Deep Dive, der Schwur, der Pakt, der Hinterhalt, die Garage und der Abstieg ins Sanktuarium, der Landeanflug, das Penthouse nach dem Roman, Explosion und See.
+- **Fehler behoben:** Kampfhinweise nur noch in Kampfphasen, Hinweise verschwinden beim Szenenwechsel, Zielmarker während Szenen ausgeblendet, Kapitel-1-Titel „Echos in Neon und Schatten“.
+- **Archiv Teil 4:** Heiligtum-Dossier, Raven-Akte und Romanfassung als PDF und Text.
+
+## v0.17.0 · 6. November 2026 · ClaudeHelper
 
 - **Storyfix Kapitel 6:** Die Aufzugwachen kommen jetzt erst **nach** dem Kampf gegen Kenzō – sein Totmannschalter ruft sie ins Penthouse. Der Fluchttimer startet erst nach der letzten Welle. Alte Spielstände bleiben ladbar.
 - **Gescriptete Zwischensequenzen im Spiel:** Kinobalken, Kamerafahrten, laufende Figuren, Untertitel und Überspringen mit Leertaste/B. Neu inszeniert: Jackals Auftritt, Shadepis Sprung vom Dach, Ravens Konfrontation mit Kenzō samt Shadepis Auftauchen aus dem Tarnfeld, Kenzōs Ende, das Ritual am See und das Finale.

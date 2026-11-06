@@ -37,7 +37,6 @@ var assist_time := 0.0
 var feedback_time := 0.0
 var raven_joined := false
 var counter_warning := false
-var ending: Tween
 var patrol: Array[PixelActor] = []
 var street_lights: Array[PointLight2D] = []
 var apartment_lights: Array[PointLight2D] = []
@@ -100,6 +99,9 @@ func _build_world() -> void:
 	raven.position = APARTMENT_EXIT
 	enemy.hide()
 
+func combat_ready() -> bool:
+	return phase in [Phase.HUNT, Phase.DUEL, Phase.RESCUE, Phase.TEAM]
+
 func raven_leads() -> bool:
 	return phase in [Phase.APARTMENT, Phase.HUNT, Phase.DUEL]
 
@@ -141,16 +143,6 @@ func _process(delta: float) -> void:
 	super._process(delta)
 	if (raven_leads() or phase == Phase.ROOFTOP) and not in_cinematic():
 		camera.position = raven.position + Vector2(0, -57) + raven.facing * 8
-	if ending != null and ending.is_valid():
-		if phase == Phase.EPILOGUE and not ui.dialogue_open and not menu_open:
-			if raven.visible:
-				raven.animate("walk", delta)
-			else:
-				player.animate("walk", delta)
-		if menu_open:
-			ending.pause()
-		elif not ending.is_running():
-			ending.play()
 	if is_busy():
 		return
 	match phase:
@@ -197,12 +189,10 @@ func new_game(save_checkpoint: bool = true) -> void:
 
 func _enter_checkpoint(next_phase: Phase, saved_section: int = 0) -> void:
 	cutscene.abort()
+	ui.clear_toast()
 	cancel_terminal()
 	_clear_encounter()
 	ui.clear_dialogue()
-	if ending != null:
-		ending.kill()
-		ending = null
 	for foe in patrol:
 		foe.hide()
 		foe.set_physics_process(false)
@@ -264,12 +254,7 @@ func _enter_checkpoint(next_phase: Phase, saved_section: int = 0) -> void:
 	set_dressing("" if phase == Phase.APARTMENT else "street")
 	match phase:
 		Phase.APARTMENT:
-			ui.dialogue([
-				["NIGHT CITY / MORGENGRAUEN", "Der Regen drückt den Rauch der Nacht zurück auf die Straße. In Ravens Apartment klingelt das Kopfgeldterminal.", "stadt"],
-				["RAVEN / APARTMENT", "Chrome Jackal. Die Prämie ist gerade wieder gestiegen. Entweder will ihn jemand dringend tot sehen oder die anderen Jäger haben aufgegeben.", "apartment"],
-				["KOPFGELDTERMINAL", "Letzter Ping an Bingo Street. Ein Wartungshof hinter der Schleuse. Die Kameras dort senden seit zwölf Minuten dasselbe Bild.", "apartment"],
-				["RAVEN", "Dann nehme ich die Gassen unter den Kameras. Mal sehen, wer da für ihn die Augen offen hält.", "apartment"],
-			], _leave_apartment)
+			_scene_apartment()
 		Phase.HUNT:
 			_start_arcade(saved_section)
 		Phase.RESCUE, Phase.TEAM:
@@ -288,6 +273,39 @@ func _update_apartment_lighting() -> void:
 		light.enabled = not effects.rain
 	for light in street_lights:
 		light.enabled = effects.rain
+
+## Kapitel 1: Ravens Morgen – nach dem Roman „Im Schatten des Raben“.
+func _scene_apartment() -> void:
+	raven.position = Vector2(-190, 318)
+	raven.facing = Vector2.LEFT
+	var cs = begin_cutscene()
+	cs.pose(raven, "idle")
+	await cs.camera(Vector2(-320, 300), 0.0, 1.0)
+	await cs.fade(Color.BLACK, 0.0)
+	await cs.fade(Color(0, 0, 0, 0), 1.2)
+	await cs.title("KAPITEL 1", "Echos in Neon und Schatten", 2.4)
+	await cs.lines([
+		["NIGHT CITY / MORGENGRAUEN", "Der Morgen kriecht wie eine ölige Lache durch die Jalousien. Für Raven beginnt der Tag nicht mit der Sonne, sondern mit dem faden Geschmack von gestern."],
+		["RAVEN", "Wieder so ein langweiliger Tag. Und nervige Jobs."],
+	])
+	cs.do(func():
+		sound("hack")
+		effects.burst(Vector2(-570, 262), Color("6fd6e8"), 14)
+	)
+	await cs.wait(0.4)
+	await cs.walk(raven, Vector2(-540, 318), 78)
+	cs.face(raven, Vector2(-570, 250))
+	cs.pose(raven, "idle")
+	await cs.lines([
+		["KOPFGELDTERMINAL", "Chrome Jackal. Prämie erhöht. Letzter Ping an Bingo Street, Wartungshof hinter der Schleuse. Die Kameras senden seit zwölf Minuten dasselbe Bild."],
+		["RAVEN", "Entweder will ihn jemand dringend tot sehen, oder die anderen Jäger haben aufgegeben. Dann nehme ich die Gassen unter den Kameras."],
+	])
+	await cs.walk(raven, APARTMENT_EXIT, 70)
+	await cs.fade(Color.BLACK, 0.6)
+	await cs.say("HOCH ÜBER DER STADT", "Auf dem Sims eines Wolkenkratzers kauert eine Gestalt, reglos wie eine Gargoyle aus Stahl und Schatten. Fünf Jahre ist es her, seit sein Orden fiel.")
+	cs.do(func(): _leave_apartment())
+	await cs.fade(Color(0, 0, 0, 0), 0.8)
+	cs.end()
 
 func _leave_apartment() -> void:
 	phase = Phase.HUNT
@@ -379,9 +397,11 @@ func _scene_jackal() -> void:
 	await cs.walk(enemy, enemy.position + (raven.position - enemy.position).normalized() * 36.0, 38)
 	cs.face(enemy, raven.position)
 	cs.pose(enemy, "idle")
-	await cs.say("CHROME JACKAL", "Meine Leute senden nicht mehr. Dein Signal dagegen ist laut genug, um den ganzen Hof zu wecken.")
-	await cs.say("RAVEN", "Ich bin wegen deines Kopfgelds hier. Mal sehen, wie lange deine Panzerung durchhält, wenn ich die Steuerung finde.")
-	await cs.say("CHROME JACKAL", "Dann steck dich ruhig ein. Die letzte Netrunnerin hat denselben Fehler gemacht.")
+	await cs.lines([
+		["CHROME JACKAL", "Was will so ein Püppchen von mir? Hast du dich verlaufen, Kleine?"],
+		["RAVEN", "Ich bin wegen deines Kopfgelds hier. Mal sehen, wie lange deine Panzerung hält, wenn ich die Steuerung finde."],
+		["CHROME JACKAL", "Meine Leute senden nicht mehr. Dann steck dich ruhig ein – die letzte Netrunnerin hat denselben Fehler gemacht."],
+	])
 	cs.do(func():
 		effects.hack_arc(raven.position + Vector2(4, -22), enemy.position + Vector2(0, -26))
 		sound("hack")
@@ -410,8 +430,10 @@ func _scene_shadepi_lands() -> void:
 		cs.face(player, foe.position)
 		cs.face(foe, player.position)
 		cs.pose(foe, "idle")
-	await cs.say("SHADEPI", "Ihr steht zwischen mir und ihr. Letzte Gelegenheit zu gehen.")
-	await cs.say("GANGER", "Noch so ein Freak mit Schwert. Macht ihn fertig!")
+	await cs.lines([
+		["SHADEPI", "Ihr steht zwischen mir und ihr. Letzte Gelegenheit zu gehen."],
+		["GANGER", "Noch so ein Freak mit Schwert. Macht ihn fertig!"],
+	])
 	cs.end()
 
 func camera_home() -> Vector2:
@@ -446,13 +468,26 @@ func _lose_duel() -> void:
 	shake = 8.0
 	sound("hack")
 
+## Kapitel 1: Jackal steht über Raven – hoch oben bemerkt Shadepi den Kampf.
 func _rooftop_dialogue() -> void:
-	ui.dialogue([
-		["RAVEN / SYSTEMFEHLER", "Ich hatte seine Schnittstelle. Dann hat er die Verbindung umgedreht … ich spüre meine Beine nicht mehr.", "niederlage"],
-		["CHROME JACKAL", "Dein Deck hat mir die Tür aufgemacht. Jetzt brauche ich nur noch das Kopfgeld auf dich einzusammeln.", "niederlage"],
-		["SHADEPI / ÜBER DEN DÄCHERN", "Zwei Wärmesignaturen im Hof. Eine am Boden. Die anderen auf der Straße schneiden ihr den Rückweg ab.", "dach"],
-		["SHADEPI", "Wenn ich über die Hauptgasse gehe, sehen sie mich kommen. Die Wartungsgasse liegt im Schatten.", "dach"],
-	], func():
+	feedback_time = INF
+	var cs = begin_cutscene()
+	cs.pose(raven, "hurt")
+	cs.pose(enemy, "idle")
+	await cs.camera(raven.position + Vector2(20, -50), 0.6, 1.2)
+	await cs.say("RAVEN", "Ich hatte seine Schnittstelle. Dann hat er die Verbindung umgedreht … ich spüre meine Beine nicht mehr.")
+	await cs.walk(enemy, raven.position + Vector2(44, -6), 46)
+	cs.face(enemy, raven.position)
+	cs.pose(enemy, "idle")
+	await cs.say("CHROME JACKAL", "Da musst du schneller sein, Süße. Dein Deck hat mir die Tür aufgemacht – jetzt kassiere ich das Kopfgeld auf dich.")
+	await cs.camera(raven.position + Vector2(-140, -250), 1.6, 1.0)
+	await cs.lines([
+		["SHADEPI / ÜBER DEN DÄCHERN", "Zwei Wärmesignaturen. Eine groß und rotglühend vor Aggression, eine flackernd wie eine Kerze im Sturm."],
+		["SHADEPI", "Ungewöhnlich … ein Kampf. Über die Hauptgasse sehen sie mich kommen. Die Wartungsgasse liegt im Schatten."],
+		["SHADEPI", "Das reicht. Tarnung."],
+	])
+	await cs.fade(Color.BLACK, 0.5)
+	cs.do(func():
 		_enter_checkpoint(Phase.RESCUE)
 		autosave()
 		_scene_shadepi_lands()
@@ -516,11 +551,31 @@ func interact(_actor: PixelActor = null) -> void:
 		)
 		return
 	phase = Phase.REVIVE
-	ui.dialogue([
-		["SHADEPI", "Kannst du mich hören? Bleib liegen. Der Rückstoß hat deine Beinimplantate verriegelt.", "rettung"],
-		["RAVEN", "Er ist noch auf meiner Leitung. Solange seine Panzerung volle Leistung hat, komme ich nicht aus der Schleife.", "rettung"],
-		["SHADEPI", "Dann kümmere ich mich um die Panzerung. Wenn dein Deck wieder hochfährt, brauche ich deine Hilfe.", "rettung"],
-	], func():
+	_scene_revive()
+
+## Kapitel 1: Shadepi erreicht Raven; Jackal tritt aus dem Hof.
+func _scene_revive() -> void:
+	var cs = begin_cutscene()
+	cs.pose(raven, "hurt")
+	await cs.camera(raven.position + Vector2(0, -50), 0.6, 1.25)
+	await cs.walk(player, raven.position + Vector2(-26, 8), 70)
+	cs.face(player, raven.position)
+	cs.pose(player, "idle")
+	await cs.lines([
+		["SHADEPI", "Kannst du mich hören? Bleib liegen. Der Rückstoß hat deine Beinimplantate verriegelt."],
+		["RAVEN", "Er ist noch auf meiner Leitung. Solange seine Panzerung volle Leistung hat, komme ich nicht aus der Schleife."],
+	])
+	cs.do(func():
+		enemy.position = WorldData.JACKAL
+		enemy.show()
+	)
+	await cs.camera(WorldData.JACKAL + Vector2(-40, -50), 0.9, 1.1)
+	cs.pose(enemy, "idle")
+	cs.face(enemy, player.position)
+	await cs.say("CHROME JACKAL", "Noch so ein Held. Wie viele Teile von dir passen in meinen Kofferraum?")
+	cs.face(player, enemy.position)
+	await cs.say("SHADEPI", "Dann kümmere ich mich um seine Panzerung. Wenn dein Deck wieder hochfährt, brauche ich deine Hilfe.")
+	cs.end(func():
 		_enter_checkpoint(Phase.TEAM)
 		autosave()
 	)
@@ -561,40 +616,56 @@ func _begin_epilogue() -> void:
 	set_music_section("chapter_1_finale")
 	stage = 3
 	set_coop(false)
-	ui.dialogue([
-		["RAVEN", "Das Kopfgeld gehört mir. Und bevor du fragst: Ja, ich kann wieder stehen. Was bist du überhaupt? Ein Cyber-Ninja?", "begegnung"],
-		["SHADEPI", "Shadepi. Du bist also die Netrunnerin, die ich suche. Ich brauche deine Dienste, um an Informationen zu kommen.", "begegnung"],
-		["RAVEN", "Raven. Und meine Dienste kosten. Nur weil wir denselben Mann zu Boden geschickt haben, gebe ich dir noch keinen Zugriff auf mein Netz.", "begegnung"],
-		["SHADEPI", "Hier. Jackals Telefon. Der Code war 1-2-3-4. Reicht das als Anzahlung?", "begegnung"],
-		["RAVEN", "Das ist Blutgeld. Behalt es. Aber du hast mir da draußen den Rücken freigehalten. Nimm die Karte. Die Adresse steht drauf. Dort reden wir weiter.", "begegnung"],
-	], _raven_exits)
+	_scene_epilogue()
 
-func _raven_exits() -> void:
-	raven.facing = (Vector2(EXIT_DOOR.x, 327) - raven.position).normalized()
-	ending = create_tween()
-	ending.tween_property(raven, "position", Vector2(EXIT_DOOR.x, 327), 1.45)
-	ending.tween_callback(func(): raven.facing = Vector2.UP)
-	ending.tween_property(raven, "position", EXIT_DOOR + Vector2(0, 4), 0.8)
-	ending.tween_callback(func():
-		raven.hide()
-		ui.dialogue([["SHADEPI / LEISE", "Geld ist doch Geld. … Danke, Raven.", ""]], _jump_to_roof)
-	)
-
-func _jump_to_roof() -> void:
-	player.facing = Vector2.UP
-	ending = create_tween()
+## Kapitel 1: Die erste Begegnung – nach „Shadepi – Im Schatten des Raben“.
+func _scene_epilogue() -> void:
+	var cs = begin_cutscene()
+	var body: Vector2 = enemy.position
+	cs.pose(player, "idle")
+	cs.pose(raven, "idle")
+	await cs.camera(player.position.lerp(raven.position, 0.5) + Vector2(0, -50), 0.8, 1.2)
+	cs.face(raven, player.position)
+	cs.face(player, raven.position)
+	await cs.lines([
+		["RAVEN", "Hey, sein Kopfgeld gehört aber mir!"],
+		["RAVEN", "… Trotzdem danke. Du bist ein Cyber-Ninja?"],
+		["SHADEPI", "Hmm, also doch eine Netrunnerin. Geld interessiert mich nicht. Ich brauche Informationen. Wie gut bist du?"],
+		["RAVEN", "Wie kommst du darauf, dass ich dir helfe? Du hast meine Frage noch nicht beantwortet."],
+		["SHADEPI", "Ja, ich bin ein Cyber-Ninja. Man nennt mich Shadepi. Und wie darf ich dich nennen?"],
+		["RAVEN", "Man sieht wenige von euch. Mein Name ist Raven. Vielleicht bin ich beim Running auf nützliche Informationen gestoßen. Aber das kostet …"],
+	])
+	await cs.walk(player, body + Vector2(-22, 10), 70)
+	cs.face(player, body)
+	cs.pose(player, "attack")
+	cs.do(func(): effects.burst(body + Vector2(0, -6), Color("b98cff"), 10))
+	await cs.wait(0.5)
+	cs.pose(player, "idle")
+	cs.face(player, raven.position)
+	await cs.say("SHADEPI", "1-2-3-4. Das war einfach. Bezahlt dich das?")
+	cs.do(func(): effects.hack_arc(player.position + Vector2(0, -20), raven.position + Vector2(0, -20)))
+	await cs.lines([
+		["RAVEN", "Was soll ich damit? Das Konto ist voll von seinem Blutgeld."],
+		["RAVEN", "Aber da du mir geholfen hast, helfe ich dir. Ich bin mal nicht so. Triff mich dort – dann sehe ich nach den Infos, die du brauchst."],
+	])
+	cs.do(func(): effects.burst(player.position + Vector2(0, -24), Color("8be0e4"), 8))
+	cs.release(raven)
+	await cs.walk(raven, Vector2(EXIT_DOOR.x, 327), 80)
+	await cs.walk(raven, EXIT_DOOR + Vector2(0, 4), 60)
+	cs.do(func(): raven.hide())
+	await cs.wait(0.4)
+	await cs.say("SHADEPI / LEISE", "Ein Hauch von Rosen … Geld ist doch Geld. … Danke, Raven.")
 	var roof := Vector2(clampf(player.position.x + 40.0, 550.0, 1000.0), 223.0)
-	ending.tween_property(player, "position", roof, 0.7).set_trans(Tween.TRANS_SINE)
-	ending.parallel().tween_property(player.visual, "position:y", -78.0, 0.33)
-	ending.tween_property(player.visual, "position:y", player.standing_visual_position.y, 0.24)
-	ending.tween_callback(func():
+	cs.face(player, roof)
+	await cs.leap(player, roof, 78.0, 0.7)
+	cs.do(func():
 		phase = Phase.COMPLETE
 		checkpoint = Phase.COMPLETE
 		stage = 4
-		player.animate("idle", 0.0)
 		autosave()
-		ui.dialogue([["KAPITEL 1 / ENDE", "Die Stadt verschluckt seine Silhouette. Auf der Datenkarte blinkt eine Adresse.", "dach"]])
 	)
+	await cs.title("KAPITEL 1 · ENDE", "Auf der Datenkarte blinkt eine Adresse.", 2.6)
+	cs.end()
 
 func player_defeated() -> void:
 	var saved_section: int = encounter.section_index if encounter != null else 0
@@ -658,7 +729,7 @@ func _draw() -> void:
 		point = TRAIL[trail_index] if trail_index < TRAIL.size() else (ARENA_ENTRY if gate_open else (TRAIL.back() if _hunt_terminal_ready() else Vector2.ZERO))
 	elif phase == Phase.RESCUE and gate_open:
 		point = DOWNED_SPOT
-	if point != Vector2.ZERO:
+	if point != Vector2.ZERO and not in_cinematic():
 		draw_arc(point, 13.0, 0.0, TAU, 24, Color(0.35, 0.88, 0.95, 0.7), 1.0)
 		var tip := point + Vector2(0, -62.0 + sin(Time.get_ticks_msec() * 0.006) * 4.0)
 		draw_polyline(PackedVector2Array([tip + Vector2(-6, -6), tip, tip + Vector2(6, -6)]), Color("a5eff6"), 2.0)

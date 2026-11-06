@@ -459,6 +459,10 @@ func _admin_reset() -> void:
 	_refresh_admin_controls()
 	world.toast("Alle Test-Cheats deaktiviert.")
 
+func clear_toast() -> void:
+	message_time = 0.0
+	notice.visible = false
+
 func toast(text: String) -> void :
 	notice.text = text
 	message_time = maxf(3.2, text.length() * 0.055)
@@ -553,7 +557,7 @@ func _process(delta: float) -> void :
 	vitals.text = "SHADEPI / %03d   EN %03d" % [world.player.health, roundi(world.player.energy)]
 	var coop: bool = world.coop
 	var lead = world.raven if world.raven_leads() else world.player
-	combat_hint.visible = not world.is_busy() and world.actor_is_playable(lead)
+	combat_hint.visible = not world.is_busy() and world.actor_is_playable(lead) and world.combat_ready()
 	combat_hint.text = "K / RT halten · Kraftschuss" if lead.second_player else "K / RT halten · Kraftschlag    L / LT · Kick"
 	if coop:
 		combat_hint.text += "\nRaven: I / RT halten · Kraftschuss"

@@ -1,17 +1,18 @@
-# Zwischensequenzen (seit v0.17.0)
+# Zwischensequenzen (seit v0.17.0, vollständig ab v0.18.0)
 
-Neben den Comic-Seiten gibt es jetzt **im Spiel inszenierte Szenen**: Die Kamera fährt, Figuren laufen und reagieren, Untertitel erscheinen in Kinobalken. Die Comic-Seiten bleiben für Kapitelübergänge und Rückblicke erhalten.
+Die gesamte Story läuft als **im Spiel inszenierte Szenen**: Die Kamera fährt, Figuren laufen und reagieren, Untertitel erscheinen in Kinobalken, Kapitel beginnen mit Titelkarten. Comic-Einblendungen gibt es seit v0.18.0 nicht mehr. Textgrundlage ist die Romanfassung in [Archiv Teil 4](universum/teil-4/README.md).
 
 **Bedienung:** E / Enter / A blättert weiter · Leertaste / B überspringt die restliche Szene · Esc / Start pausiert.
 
-| Kapitel | Szene | Inhalt |
-| --- | --- | --- |
-| 1 | Jackals Auftritt | Kamera zwischen Raven und Jackal, er tritt aus dem Schatten; Raven steckt sich in seine Panzerung ein. |
-| 1 | Shadepis Landung | Sprung vom Dach in die Wartungsgasse, Aufprall, kurze Warnung an die Gang. |
-| 6 | Penthouse | Raven betritt das Penthouse, Shadepi folgt im Tarnfeld. Kenzō dreht sich um, geht auf sie zu – Shadepi enttarnt sich und schlägt ihn zurück. |
-| 6 | Kenzōs Ende | Shadepi tritt zurück; Raven beendet es mit ihren kybernetischen Fäden. Totmannschalter, Alarm, die Aufzugtüren öffnen sich – erst jetzt kommen die Wachen. |
-| 7 | Ritual am See | Raven und Shadepi gehen gemeinsam ans Wasser (kein Teleport mehr), jeder Schritt mit eigener Kameraeinstellung. |
-| 7 | Finale | Maskenkodex: Shadepi zeigt sein Gesicht nur Ordensgeschwistern – Raven ist jetzt eine. Überblendung, Titelkarte „Der Orden des Weißen Drachen ist wiedergeboren“. |
+| Kapitel | Szenen |
+| --- | --- |
+| 1 | Ravens Morgen im Apartment, Shadepi über den Dächern · Jackals Auftritt · Jackal über Raven, Shadepi beobachtet · Sprung in die Wartungsgasse · Shadepi erreicht Raven · Erste Begegnung, Telefon „1-2-3-4“, Datenkarte, Sprung aufs Dach |
+| 2 | Landung im Industriegebiet · drei Schläge an der Stahltür · Ravens Versteck · Minotaurus-Fragment · Deep Dive · Rückkehr mit 85 % Eindämmung · Schwur |
+| 3 | Der Pakt und Ravens Vergangenheit · Der Plan (Landeplatz, Kennung, Wachen eine Etage tiefer) · Hinterhalt vor dem Versteck · Motorrad |
+| 4 | Ankunft an der Garage · Abstieg ins Sanktuarium · Hangar und Aerodyne |
+| 5 | Mensch oder Metall – Shadepi erzählt vom Massaker · Eindämmung bricht · Raven sieht seine Erinnerungen |
+| 6 | Prophezeiung und ARToS-Start · Landung auf dem Tower, Tarnfeld · Penthouse (Romanfassung) · Kenzōs Ende und die Enthüllung · Totmannschalter und Aufzugwachen · Notfallprotokoll |
+| 7 | Explosion beim Abflug · Ankunft am See · vierstufiges Ritual · Maske, Kuss, Titelkarte |
 
 ## Eigene Szenen schreiben
 
@@ -28,6 +29,6 @@ func _meine_szene() -> void:
 	cs.end(func(): toast("Weiter geht's"))    # Kamera zurück, danach Callback
 ```
 
-Weitere Schritte: `wait`, `pose` (idle/walk/attack/hurt), `release`, `drop` (Sprung von oben), `fade`, `title`. Seiteneffekte gehören in `cs.do(...)` oder den `end`-Callback: Wird die Szene durch Kontrollpunkt, Neustart oder Kapitelwahl abgebrochen, laufen sie nicht mehr. Überspringen führt alle Schritte sofort und in Reihenfolge aus.
+Weitere Schritte: `lines` (mehrere Zeilen), `leap` (Sprungbogen), `wait`, `pose` (idle/walk/attack/hurt), `release`, `drop` (Sprung von oben), `fade`, `title`. Seiteneffekte gehören in `cs.do(...)` oder den `end`-Callback: Wird die Szene durch Kontrollpunkt, Neustart oder Kapitelwahl abgebrochen, laufen sie nicht mehr. Überspringen führt alle Schritte sofort und in Reihenfolge aus.
 
-Vorschau: `xvfb-run godot --rendering-driver opengl3 --script res://tools/cutscene_gallery.gd` speichert Einzelbilder unter `/tmp/shadepi-cutscene-*.png`.
+Vorschau: `xvfb-run godot --rendering-driver opengl3 --script res://tools/cutscene_gallery.gd` speichert Einzelbilder unter `/tmp/shadepi-cutscene-*.png`; mit `-- c6` nur Szenen eines Kapitels. Für reine Gesprächsszenen ohne Bewegung gibt es `play_lines(zeilen, fertig)`.

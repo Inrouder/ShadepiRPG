@@ -1,12 +1,5 @@
 extends "res://scripts/hud.gd"
 
-const PANELS: = {
-	"industrie": preload("res://assets/comic/industrie.jpg"), 
-	"versteck": preload("res://assets/comic/versteck.jpg"), 
-	"netz": preload("res://assets/comic/netz.jpg"), 
-	"rueckkehr": preload("res://assets/comic/rueckkehr.jpg"), 
-}
-
 var campaign_button: Button
 
 func _ready() -> void :
@@ -31,8 +24,8 @@ func _update_mode_buttons() -> void :
 	campaign_button.visible = world.admin_enabled("unlock_all") or world.section == world.Section.END or world.saved_checkpoint() == world.Section.END or later >= 0
 	campaign_button.text = "Kapitel 3–7 fortsetzen" if later >= 0 else "Kapitel 3 starten"
 
-func comic_texture(key: String) -> Texture2D:
-	return PANELS.get(key, null)
+func comic_texture(_key: String) -> Texture2D:
+	return null
 
 func _process(delta: float) -> void :
 	super._process(delta)

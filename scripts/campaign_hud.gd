@@ -13,8 +13,8 @@ func _update_mode_buttons() -> void :
 	load_button.text = "Kontrollpunkt laden"
 	load_button.disabled = world.saved_checkpoint() < 0
 
-func comic_texture(key: String) -> Texture2D:
-	return world.Story.PANELS.get(key, null)
+func comic_texture(_key: String) -> Texture2D:
+	return null
 
 func comic_heading() -> String:
 	return world.chapter_label()

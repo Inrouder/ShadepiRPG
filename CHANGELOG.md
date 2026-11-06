@@ -1,5 +1,16 @@
 # Versionshinweise
 
+## v0.18.0 – ClaudeHelper: Zwischensequenzen statt Comicseiten · 6. November 2026
+
+- Alle Story-Dialoge in Kapitel 1, 2 und der Kampagne (3–7) sind jetzt inszenierte Szenen im Spiel; die Comic-Einblendungen der Dialoge entfallen (`comic_texture` liefert keine Bilder mehr, `Story.DIALOGUE`/`PANELS` entfernt).
+- Texte folgen der Romanfassung „Shadepi im Schatten des Raben“ (Archiv Teil 4). Kenzōs Deck enthüllt nach seinem Tod, dass er das Massaker mit Militech-Minotauren inszeniert hat.
+- Penthouse nach dem Roman: Kenzō im Sessel, „Lange nicht gesehen“, Raven wird quer durch den Raum geschleudert, das Tarnfeld fällt, erster Schlag in die Schulterservos.
+- Kapitel-Titelkarten, Rückblende Shadepi über den Dächern, Explosion beim Abflug, Ritual und Maskenkodex mit Romantexten.
+- Fehlerkorrekturen: Kampfhinweise (`combat_ready`) nur in Kampfphasen; Hinweistexte werden beim Szenen-/Kontrollpunktwechsel gelöscht; Zielmarker und Lebensbalken während Szenen ausgeblendet; Kapitel-1-Titel ergänzt.
+- Cutscene-Werkzeuge: `lines`, `leap`, `play_lines`; `tools/cutscene_gallery.gd` rendert alle Szenen (Filter per Argument).
+- Archiv Teil 4 mit sechs PDFs, Textkopien und bestätigten Storyfakten; AGENTS.md ergänzt.
+
+
 ## v0.17.0 – ClaudeHelper: Szenen und Kapitel-6-Fix · 6. November 2026
 
 - **Fehlerkorrektur:** Die Aufzugwachen griffen bisher auf dem Dach *vor* Kenzōs Kampf an. Sie folgen jetzt seinem Tod (Totmannschalter) mit drei Wellen im Penthouse; der 60-Sekunden-Timer läuft erst danach. Speicherstand merkt sich den Zwischenstand, alte Stände am Dachkampf springen direkt zu Kenzō.
