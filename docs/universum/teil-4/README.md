@@ -18,4 +18,4 @@ Nicht ins Repository übernommen (Größe bzw. Bildrechte nicht geklärt): die 1
 - Der Antagonist heißt **Kenzō Moriyama**.
 - Der Angriff der Militech-Minotauren auf das Kloster geschah **vor** Shadepis Begegnung mit Raven; Shadepi suchte seither nach den Minotauren.
 - **Durch Raven** findet Shadepi heraus, dass **Kenzō das Massaker mit den Minotauren von Militech inszeniert hat.** Im Spiel bestätigt sich das nach Kenzōs Tod auf seinem Deck.
-- Quellenhinweis: Die Raven-Akte nennt den Mord am **Vater**, die Romanfassung spricht von den **Eltern**. Das Spiel folgt der Romanfassung.
+- **Ravens Eltern** wurden auf Kenzōs Befehl ermordet (Nutzerbestätigung vom 6. November 2026, wie in der Romanfassung). Die Raven-Akte nennt nur den Vater; maßgeblich sind die Eltern.
