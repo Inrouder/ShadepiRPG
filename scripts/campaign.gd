@@ -195,7 +195,9 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0) -> void :
 		drive_layer.add_child(drive)
 		drive.completed.connect(_advance)
 		drive.crashed.connect( func(): _retry("Landung abgebrochen · Kontrollpunkt" if beat == Beat.FLIGHT else "Fahrzeug ausgefallen · Kontrollpunkt"))
-	if beat == Beat.ESCAPE and fresh:
+	if beat != Beat.ESCAPE:
+		escape_guards_cleared = true
+	elif fresh:
 		escape_guards_cleared = false
 	if beat == Beat.ESCAPE:
 		_spawn_kenzo_body(boss_spot, escape_guards_cleared or not fresh)
@@ -586,7 +588,7 @@ func load_game(_requested_mode: Variant = null) -> bool:
 	var saved_section: Variant = config.get_value("campaign", "arcade_section", 0)
 	var saved_point: Variant = config.get_value("campaign", "point", 0)
 	var cleared: Variant = config.get_value("campaign", "escape_guards_cleared", true)
-	escape_guards_cleared = cleared if cleared is bool else true
+	escape_guards_cleared = (cleared if cleared is bool else true) or saved != Beat.ESCAPE
 	# Saves from v0.16.0 could stop at the old roof guard fight (point 2);
 	# those guards now follow Kenzō, so resume directly at the penthouse.
 	if saved == Beat.ROOF and saved_point is int and saved_point >= 2:
