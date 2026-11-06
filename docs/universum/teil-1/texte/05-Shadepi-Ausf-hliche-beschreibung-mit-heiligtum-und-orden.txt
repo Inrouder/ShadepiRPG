@@ -1,0 +1,293 @@
+Dossier: Shadepi — Erster Krieger des Ordens des Weißen Drachen (Cyberpunk
+2077-Universum, Jahre nach Viktors Tod)
+Dieses Dokument bündelt alle bekannten Details zu Shadepi, seinem Orden, dem Heiligtum,
+seiner Ausrüstung, Physiologie, Ethik, Feinden und seiner Gegenwart in Night City. Es ist als
+„Lore-Bibel“ gedacht: präzise, vollständig, spiel- und erzählbereit.
+
+1) Identität & Status
+Name: Shadepi
+Alter: Unbestimmt (biologisch schwer zu schätzen, Implantate/Naniten regenerieren
+altersrelevante Marker)
+Spezies/Form: Mensch, Cyberninja
+Fraktion: Orden des Weißen Drachen (geheim operierender, uralter Wächterorden)
+Rang (früher): Erster Krieger & Beschützer des Heiligtums
+Rang (heute): Letzter Krieger & Bewacher des Heiligtums (Orden vernichtet)
+Wohnort: Versteckte unterirdische Anlage des Ordens im Großraum Night City, eigenhändig
+erweitert und reaktiviert
+Besonderer Status: Temporärer Träger des Heiligtums (siehe Abschnitt 4). Er kann es bis zu 1
+Woche im Körper führen; danach muss es in ein biometrisches Gefäß ausgelagert werden, um
+sein Leben zu erhalten.
+Beziehungsstatus: unglaublich in Raven (eine netrunnerin) verliebt und in einer beziehung mit
+Ihr (5 jahre nach klosterfall)
+
+2) Erscheinung & Disziplin
+Kleidung/Auftritt: Schwarzer, gepanzerter Reishut (Kasa-Silhouette) und Maske mit rot
+digitalisierten Augen (variable Luminanz; kann Statussignale codieren).
+Gesichtskodex: Gesicht nur vor Brüdern/Schwestern des Ordens zeigen—heiliges Gelübde;
+Bruch gilt als Entweihung.
+Körpersprache: Minimalistisch, lautlos, ökonomisch. Bewegungsabläufe sind auf
+Trägheitsdämpfer und Mikro-Servo-Feinsteuerung abgestimmt.
+
+3) Körper & Implantate (Technoprofil)
+Zielarchitektur: Überlebens-, Tarn- und Nahkampfoptimierung bei gleichzeitigem
+Schnittstellen-Frieden mit dem Heiligtum.
+3.1 Kopf/HUD
+Linkes Auge (biomechanisch):
+Thermalsicht (passiv und aktiv verstärkt)
+Vitalaura-Erkennung (Herzfrequenz, Mikrodurchblutung, Atmungsmuster)
+Mikrobewegungstracking (Ganganalyse, Zielvorhersage)
+Low-Light/IR-Stacking, Entblendung, Smart-Zoom
+Neuro-HUD: Datenfusion aus Sensorik, taktischer Karte, Missions-Telemetrie und
+Heiligtums-Gefühls/Visions-Streams (nonverbal, symbolisch).
+3.2 Oberkörper & Skelett
+Brustkorb/Knochenverstärkung: Titan-Keramik-Laminate + Naniten-Remodeling; erhöht
+Bruchlast, verteilt Kinetik.
+Servonetz-Mikroaktuatoren: Stabilisieren Treffereinwirkung, mindern Zittern bei
+Präzisionsbewegungen.
+3.3 Rechter Arm (Schwertarm)
+Biomechanisch, Servo-verstärkt; Mikrolager & lineare Aktoren für explosive Hiebs- und
+Stichkraft, Null-Spiel-Handgelenk.
+Klingenführung: Gyro-Assist, Kantenhaltung per µ-Aktuatoren, Resonanz-Feedback zur
+Schnittoptimierung gegen Verbundpanzer.
+3.4 Beine (beidseitig)
+Biomechanisch, Servo-verstärkt mit Trägheitsdämpfern;
+Laufprofile: „Silent-Step“ (Sub-40 dB), „Burst-Traverse“ (Kurzsprint, geringer Abdruck),
+„Torsion-Leap“ (lautloser Sprung).
+Sturzmanagement: Gelenk-Entkoppelung + Vektorentladung über Schienenelemente.
+3.5 Metasysteme
+Tarnfeld: Optisch-akustische Streuung + Wärme-Diffusion.
+Basis: ~10 Sekunden stabil
+Übertaktet (über Heiligtum): bis ~20 Sekunden mit post-Cooldown-Risiko (Überhitzung,
+Naniten-Stress).
+Symbiose-Booster (Heiligtum):
+Erhöht Implantat-Toleranz, dämpft Abstoßungsreaktionen
+Gestattet kurzfristige Übertaktung kritischer Module (mit Kosten, siehe 4.5)
+
+4) Das Heiligtum (Wesen, Regeln, Mechanik)
+4.1 Natur
+Uraltes Lebewesen aus einem anderen Universum/Zeitsaum/Parallaxe.
+Form: Schwarm-Naniten mit Hive-Mind—alle Einheiten sind „das Heiligtum“.
+Koexistenz: Symbiose mit Wirten (Menschen). Kein Parasitismus; zielgerichtete Kooperation.
+4.2 Ethik & Kosmischer Auftrag
+Ethisch gut; agiert nach Ordnung und Wohl des Universums.
+Kommunikation: Nur innerhalb eines Sonnensystems möglich
+(Reichweiten-/Resonanzgrenzwert).
+Wirken: Stellt Gleichgewicht her, verhindert Machtmonopole, schützt Hilfsbedürftige;
+Manipulation zum Eigennutz → Verbannung.
+4.3 Träger & Krieger
+Krieger: Tragen Teil-Konzentrationen; erhalten
+höhere Kraft/Schnelligkeit,
+verbesserte Schock-/Übertaktungstoleranz,
+Null-Abstoßung bei Implantaten.
+Träger (Gefäß): Hohe Naniten-Dichte; nur prophezeite Linie dauerhaft tragfähig.
+Zeugung: Alter Träger + prophezeite Frau → Kind, das ab ~1 Jahr tragen kann.
+Fünf Hauptkrieger existieren stets—Erster Krieger ist Schlüssel (Shadepi füllt diese Funktion
+aktuell allein).
+Shadepi kann das Heiligtum max. 1 Woche im Körper führen; danach biometrische Auslagerung
+zwingend, sonst letal.
+4.4 Wahrnehmung & Visionen
+Empathische Koppelung: Krieger/Träger spüren Gefühle anderer Verbundener.
+Visionen: Nicht-verbale Symbolbilder, von Shadepi in Taktik übersetzt; keine wörtliche Sprache.
+4.5 Übertragung & Training
+Kanäle: Training, Bluttransfusion, Sex → Übertragungsgrad steuerbar, ein Minimalanteil wird
+immer übertragen.
+Risiken: Zu schnelle Dichtezunahme → Organstress, kognitive Überlast, Identitätsdiffusion.
+4.6 Grenzen & Gefahren
+Zeitlimit im Wirt: >1 Woche → Multisystem-Versagen.
+EM/Resonanz-Angriffe: Hochenergetische EMP/Skalar-Störungen können Schwarmkohärenz
+stören.
+Übertaktungskosten: Gewebserwärmung, Mikronekrosen, Naniten-Erschöpfung (erfordern
+Ruhe/Medium im Gefäß zur Rekonstitution).
+
+5) Der Orden des Weißen Drachen
+5.1 Ursprung & Auftrag
+Gründung: „Frühe Menschheitsgeschichte“ (präzise Daten verschleiert).
+Mandat: Schutz des Heiligtums, Wiederherstellung weltlicher Ordnung, Korrektur von
+Machtungleichgewichten.
+Betriebsmodus: Verschwiegen, abseits von Staaten/Konzernen, Zivil-Schutz als Grundsatz.
+5.2 Tarnung & Kultur
+Deckmantel: Kloster (abgeschieden), Pflege alter Kampfkünste; reale Anwendung in urbaner
+Kriegsführung.
+Kodex:
+Keine ungerechten Taten (Heiligtum blockiert aktiv).
+Manipulation (Ordensinterne Willensbeugung, Verrat) → sofortige Verbannung.
+Gesicht nur vor Ordensgeschwistern zeigen.
+5.3 Auswahl & Nachfolge
+Ernennung von Kriegern: Durch Bestimmung des Trägers (Heiligtum „wählt“ instinktiv).
+Trägerlinie: Prophezeiung identifiziert die Frau, die das Träger-Kind austragen kann (kein
+Zwang; das Heiligtum akzeptiert nur freie Bindung).
+5.4 Vernichtung des Ordens
+Zeitpunkt: Vor 5 Jahren
+Angreifer: Militech-„Minotauren“ (experimentelle Cyborg-/Mech-Hybriden) und schwere
+Cyborg-Truppen.
+Folgen: Kloster ausgelöscht; Shadepi einziger Überlebender.
+
+6) Shadepis Wendepunkt & Gegenwart
+6.1 Letzte Schlacht & Übergang
+Während der Evakuierung brachte Shadepi Schutzbefohlene in Fluchttunnel, verriegelte diese
+und band Verfolger.
+Schwer verwundet erreichte er den damaligen Träger. Nach dem Sieg über die Angreifer nahm
+er – im Sterben des Trägers – das Heiligtum in sich auf.
+Bewusstlosigkeit; 3 Wochen später erwacht er in einem geheimen Ordenslager (vermutet:
+Lebenserhalt durch das Heiligtum).
+6.2 Untergrundstation (aktueller Stützpunkt)
+Standort: Unterirdisch, mehrschichtig, EM-gedämpft.
+Module:
+Medbay/Naniten-Bad (Regeneration, Auslagerungsvorgänge)
+Waffenwerkstatt (Klingen-Resonanztuning, Servokalibrierung)
+Netrunner-Zelle (abgeschirmt, Luftspalt-Terminals)
+Taktikraum (Holo-Sandtable, urbane Routen-Bibliothek)
+Biometrisches Gefäß (versiegeltes Host-Medium fürs Heiligtum)
+Versorgung (Reaktor-Mikrozelle, Wasserrecycling)
+Fluchtrouten (mehrfach verschachtet, einseitige Fallen)
+6.3 Operationsmuster in Night City
+Missionstypen:
+Schutz/Extraktion Hilfsbedürftiger
+Aufklärung zu Militech-Minotauren (Lieferketten, Black-Sites, Schmiergeldpfade)
+Sabotage gegen Systeme, die Machtgleichgewicht kippen
+Methodik: Präzision vor Gewalt; Tarnfeld-Fenster werden nur für Schlüsselphasen genutzt.
+Bezahlung: Häufig Sachwerte/Informationen; Kodex erlaubt keine Aufträge gegen Unschuldige.
+6.4 Prophezeiung & Raven (nur Status, keine Details)
+Fünf Jahre nach dem Fall empfängt Shadepi eine Vision des Heiligtums: Die Frau, die den
+nächsten Träger austragen kann.
+Er trifft Raven, eine Netrunnerin, die ihm hilft, die Militech-Minotauren aufzuspüren.
+Kenzo (Täter, der Ravens Vater ermordete und sie jahrelang missbrauchte) wird von Raven
+eliminiert; er trug Daten über Minotauren-Programme.
+Wichtig: Raven nicht beschreiben (zur Wahrung deiner Vorgabe).
+
+7) Ausrüstung & Waffentechnik
+7.1 Primärwaffe: Laserkatana (Spezial, Rücken/Gesäß-Montage)
+Trageposition: Horizontal an der Lenden-Rückenlinie („am Gesäß“), flach anliegend; verhindert
+Silhouettenbildung, erlaubt blitzschnelles Über-Schulter-Ziehen.
+Klinge:
+Monomolekular-Kern mit Photonen-Führung (Laser-Einspiegelung entlang einer Kantenbahn)
+Modi:
+Schneid-Kontinuum (heiße Kante → Verbund-/Keramikpanzer trennbar)
+Resonanz-Hieb (kurzer Energie-„Chirp“ verstärkt Impuls)
+Thermische Saumkontrolle → minimiert Funken/Signatur; Tarnverträglichkeit.
+Sicherung: Biometrisch + Heiligtum-Signal; Diebstahl unbrauchbar.
+Wartung: Spektral-Kalibrierung in Werkstatt (Hertz-Sweep gegen Materialtypen).
+7.2 Sekundärsysteme
+Wurfklingen/Micro-Spikes (keramisch, nichtmetallisch, IR-arm)
+Short-Pulse-Dämpfer für Kameras/Sensoren (lokale Blindzeit < 0,8 s)
+Notfall-Grapple (leise, rückstoßarm)
+Modulare Panzerhaut (Textil-Verbund mit Kälte-/Hitze-Abfuhrkanälen)
+
+8) Fähigkeiten (Gameplay-Logik & Kosten)
+Fähigkeit
+Basiswert
+Über-Taktung (Heiligtum)
+Kosten/Risiken
+Tarnfeld
+~10 s
+~20 s
+Hitze, Naniten-Stress, längerer Cooldown
+Sprint/Bewegung
++40–60 %
++90–120 %
+Sehnen/Mikrorisse → Medbay nötig
+Hiebkraft
++80 %
++150 %
+Arm-Servo-Überlast, Kalibrierpflicht
+Sensorik (Thermal/Vital/Motion)
+Feinkalibriert
+Vorhersage-Assist (0,3–0,5 s)
+Neuro-Fatigue, visueller Bloom
+Implantat-Toleranz
+Sehr hoch
+Nahezu voll
+Naniten-Erschöpfung bei Dauerlast
+Prinzip: Jede Übertaktung „leiht“ sich Ordnung aus dem Schwarm—und muss sie in Ruhe
+wieder zurückzahlen (Regeneration im Gefäß/Medbay).
+
+9) Feindbild: Militech-„Minotauren“
+Typ: Schwer gepanzerte Cyborg-/Mech-Hybriden; Nah-/Mittelkampf, Stadtkontroll-Design.
+Module: Mehrschicht-Panzer, Wärmefallen (Anti-Thermal-Tracking), Anti-Material-MG,
+Nahbereichs-Kollisionsschild.
+Taktik: Rudel-Vorstoß, Drohnen-Voraufklärung, IR-Sättigung.
+Schwachstellen (Shadepis Dossier):
+Gelenkspalte & Servoschächte (schräger Laser-Kanten-Schnitt)
+Visier-Thermalkompensatoren (Überhitzbar → Sicht-Blindheit)
+Sync-Node (Kurz-Pulse-Dämpfer erzeugt Lags)
+Anmerkung: Sie führten die Auslöschung des Ordens an; primäres Jagdziel für Shadepi.
+
+10) Ethik, Regeln & Psychologie
+Gütegebot: Schutz Unschuldiger; Hilfe ohne Gegenleistung ist ehrenvoll.
+Machtgleichgewicht: Eingreifen, wenn Systeme kippen (Konzern-Übergriff, Kartell-Terror,
+Staatswillkür).
+Identität: Shadepi ist ruhig, nicht kalt; in Visionen empfindet er Fremdgefühle der
+Verbundenen—und stärkt so seine Empathie.
+Grenzen: Er darf nicht manipulieren; jede Mission wird gegen Ordensethik gespiegelt (Heiligtum
+blockt unrechtmäßige Intentionen).
+
+11) Zeitlinie (kompakt)
+Vor 5 Jahren: Angriff der Militech-Minotauren → Kloster fällt.
+Evakuierung: Shadepi sichert Zivilisten, verriegelt Fluchttunnel.
+Endkampf: Alter Träger stirbt; Shadepi übernimmt Heiligtum.
+Koma: 3 Wochen; Erwachen im geheimen Lager (Heiligtum hat Leben stabilisiert).
+Jahre 1–5: Aufbau Untergrundstation, Hilfe-Aufträge, Jagd nach Informationen zu Minotauren.
+Heute: Prophezeiung weist auf die Frau hin; Raven tritt in Shadepis Kreis (Details bewusst
+ausgespart). Kenzo eliminiert → Daten zu Minotauren gesichert.
+
+12) Spiel-/Erzählhaken & Mechaniken
+Wöchentlicher Zyklus: „Trage-Fenster“ von 7 Tagen → Missionen müssen auf
+Auslagerungs-Rituale getaktet werden (Spannung, Zeitdruck).
+Visionen als Quests: Symbolische Traum-/Vision-Sequenzen liefern Ziele, Warnungen,
+moralische Prüfungen.
+Doppelressource: Hitze (Implantate) & Kohärenz (Heiligtum) müssen balanciert werden.
+Maskenkodex: Gesichtsenthüllung als sozialer Vertrag—selten, aber mächtig (Vertrauensboni,
+neue Pfade).
+Minotauren-Jagd: Sammeln von Telemetrie-Bruchstücken (Kenzo-Daten → Black-Site-Karte,
+Leiterketten, Testserien).
+
+13) Praktische Spielwerte (Vorschlag)
+Stealth: S-Tier (Tarnfeld, Silent-Step, IR-Diffusion)
+Melee: S-Tier (Laserkatana + Servoarm)
+Fernkampf: B (situativ, Fokus Nahkampf)
+Haltbarkeit: A (Panzerhaut + Knochenverstärkung), fällt unter Dauer-Übertaktung ab
+Mobilität: A+ (Trägheitsdämpfer, Grapple)
+Hacks/Net: B (eigene Zelle vorhanden; primär externe Netrunner-Allies wie Raven)
+Regeneration: A (Naniten/Medbay), gebunden an Gefäß-Zyklen
+
+14) Rituale & Protokolle
+Auslagerungsritual:
+Raum EM-gedämpft, sterile Luft.
+Biometrisches Gefäß auf Trägerwerte geeicht.
+Geführte Atmung + Symbol-Mantras des Ordens.
+Übertragung: 6–9 Min, anschließende Kohärenzruhe 2–4 Std.
+Einsatz-Start: Kurze Vision-Meditation; HUD nimmt Heiligtums-Symbole als Wegpunkte auf.
+Einsatz-Ende: Naniten-Bad, Muskel-Remapping, Kalibrierung von Servo-Offsets.
+
+15) Beziehungen & Netz (aus Shadepis Sicht)
+Zivilisten/Schutzbefohlene: Priorität „Hoch“.
+Raven: Verbündete, Schlüssel zur Prophezeiung und zur Minotauren-Aufklärung (keine
+weiteren Details).
+Konzerne: Neutral bis feindlich; Militech = Feind.
+Gangs/Schwarzmärkte: Zweckbündnisse möglich, wenn Kodex nicht verletzt wird.
+
+16) Schwächen & Plot-Druck
+Zeitliche Abhängigkeit vom Gefäß (7-Tage-Limit).
+EM-/Resonanz-Verwundbarkeit in Hochenergie-Zonen.
+Übertaktungs-Nachbrenner: Nachwirkungen zwingen zu Zwangspausen.
+Psychische Belastung durch Visionen/Empathie-Echo (fremde Schreie, Schuldspitzen).
+
+17) Visuelle Kurznotizen für Artists
+Schwarzer Reishut, matte Panzertextur; Maske mit rot pulsierenden, digitalen Augen.
+Laserkatana flach an der Lendenlinie; Ziehbewegung über rechte Schulter, Flare minimal.
+Beinschienen mit mikroskopischen Luftschlitzen (Kühlung), Schulter-Servos kaum sichtbar.
+HUD-Overlays: rote Vektorlinien, Vital-Auren als warme Konturen, Vision-Symbole als
+geometrische Glyphen.
+
+18) Kurzes „Was wäre wenn?“ (Story-Seeds)
+Gefäß sabotiert: Shadepi muss 72 Std. ohne Auslagerung überstehen → Heist, um Ersatz zu
+besorgen.
+Falsche Propheten: Eine Gruppierung versucht, die Prophezeiung zu fälschen → Ethiktest.
+Minotauren-Kernel: Gefundener Sync-Node erlaubt erstmals Gegensabotage—aber nur, wenn
+Shadepi sein Gesicht einem ehemaligen Ordensbruder zeigt (Vertrauenstor).
+Abschluss
+Shadepi ist Klinge und Kompass: ein lautloser Vollstrecker, der nicht im Namen von Konzernen
+oder Staaten handelt, sondern als Wächter eines uralten Gleichgewichts. Seine größte
+Stärke—die Symbiose mit dem Heiligtum—ist zugleich seine Verwundbarkeit: Zeit, Kohärenz
+und Ethik sind die drei Schrauben, an denen jede Geschichte mit ihm
+
