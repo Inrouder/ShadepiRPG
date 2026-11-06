@@ -22,7 +22,7 @@ const LEVEL_ART: = [
 const OBJECTIVES: = [
 	"Towerplan prüfen · %d / 3", "Hinterhalt überleben · %d / %d", "Verfolger ausschalten", 
 	"Geheimes Werkbanksymbol finden", "Aerodyne vorbereiten · %d / 3", "Mit Raven sprechen", 
-	"Den Tower erreichen", "Landekennung und Tür hacken · %d / 2", "Kenzōs Wachen und Kenzō ausschalten", 
+	"Den Tower erreichen", "Landekennung und Tür hacken · %d / 2", "Kenzō ausschalten", 
 	"Daten sichern und zum Aerodyne", "Raven zum Wasser folgen", "Geschichte abgeschlossen", 
 ]
 const POINTS: = [
@@ -87,10 +87,8 @@ const DIALOGUE: = {
 		["SHADEPI", "Raven, runter! Stör seine Implantate, ich halte ihn auf. Wenn er die Leitung sperrt, warte auf das Flackern am Schulterservo.", "kenzo"],
 	], 
 	Beat.ESCAPE: [
-		["RAVEN", "Jahrelang bin ich vor dir geflohen, Kenzō. Damit ist Schluss.", "kenzo"], 
-		["PENTHOUSE", "Shadepi tritt zurück. Ravens kybernetische Fäden spannen sich ein letztes Mal.", "kenzo"], 
 		["SYSTEM / NOTFALLPROTOKOLL", "Kenzōs Sicherheitssystem überlastet die Energieversorgung. Kritischer Zustand in sechzig Sekunden.", "flucht"],
-		["RAVEN", "Sichere die Daten. Ich synchronisiere die Sperrladung am Aufzug über mein Deck. Starte dann die Treibstoffpumpe per Fernzugriff.", "flucht"],
+		["RAVEN", "Weitere Teams im Schacht! Sichere die Daten, ich synchronisiere die Sperrladung am Aufzug. Dann die Treibstoffpumpe per Fernzugriff.", "flucht"],
 	], 
 	Beat.LAKE: [
 		["ARTOS", "Triebwerke instabil. Neustart.", "flucht"], 
@@ -98,6 +96,6 @@ const DIALOGUE: = {
 		["NACHT / AUSSERHALB DER STADT", "Die Druckwelle trifft den Aerodyne. Shadepi fängt den Sturz ab und bringt sie zu einem See fern der Stadt.", "ankunft-see"], 
 	], 
 	Beat.END: [
-		["EPILOG", "Shadepi nimmt seine Maske ab. Raven küsst ihn. Am See wird der Orden des Weißen Drachen wiedergeboren.", "see"], 
+		["EPILOG", "Night City schläft nie. Doch zwischen Neon und Regen wacht wieder ein Orden über das Gleichgewicht.", "see"], 
 	], 
 }

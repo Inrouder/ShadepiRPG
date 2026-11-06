@@ -204,7 +204,7 @@ func interact(_actor: PixelActor = null) -> void :
 		Section.HIDEOUT:
 			ui.dialogue([
 				["SHADEPI", "Militech Minotaurus XC2534S. Das Fragment stammt von einem der Mechs. Ich suche den Betreiber.", "versteck"], 
-				["SHADEPI", "Vor fünf Jahren wurde der Orden der Weißen Drachen ausgelöscht. Ich bin der Letzte.", "versteck"], 
+				["SHADEPI", "Vor fünf Jahren wurde der Orden des Weißen Drachen ausgelöscht. Ich bin der Letzte.", "versteck"], 
 				["RAVEN", "Dann sehe ich nach, wer die Maschinen bezahlt hat. Im Eisbad kann ich tiefer ins Netz. Behalte meine Werte im Blick.", "versteck"], 
 			], func():
 				_enter(Section.COOLING)

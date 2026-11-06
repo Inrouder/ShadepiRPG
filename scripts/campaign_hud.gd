@@ -22,6 +22,11 @@ func comic_heading() -> String:
 func _process(delta: float) -> void :
 	super._process(delta)
 	mission_title.text = world.chapter_label()
+	if world.beat == world.Beat.BOSS and not world.foes.is_empty() and not world.in_cinematic():
+		var kenzo: PixelActor = world.foes.back()
+		var window: bool = kenzo.health <= 180 and fposmod(world.clock, 3.0) <= 1.45
+		boss_panel.visible = kenzo.health > 0
+		boss.text = "KENZŌ MORIYAMA / %d HP\n%s" % [maxi(0, kenzo.health), "SCHULTERSERVO OFFEN · Q / RB" if window else ("Leitung gesperrt" if kenzo.health <= 180 else "Implantate aktiv")]
 	if world.raven_leads():
 		vitals.text = "RAVEN / NETRUNNERIN"
 	if world.drive != null:

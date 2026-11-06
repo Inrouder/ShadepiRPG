@@ -666,6 +666,14 @@ func finish_arcade(scene: Node2D) -> void:
 	check(false, "arcade encounter completes within its finite wave plan")
 
 func finish_dialogue(chapter: Node2D) -> void:
+	for _round in 4:
+		if chapter.in_cinematic():
+			chapter.cutscene.skip()
+		_finish_dialogue_once(chapter)
+	if chapter.in_cinematic():
+		chapter.cutscene.skip()
+
+func _finish_dialogue_once(chapter: Node2D) -> void:
 	for _line in 16:
 		if not chapter.ui.dialogue_open:
 			break
@@ -840,17 +848,28 @@ func check_campaign() -> void:
 		scene.interact()
 		check(preload("res://tests/terminal_solver.gd").complete(scene), "Raven solves roof terminal")
 	finish_dialogue(scene)
-	check(scene.beat == scene.Beat.ROOF and scene._living() == 2, "lift guards fight outside the penthouse")
-	check(MusicLibrary.path_for(scene.music_section).ends_with("Fight.mp3"), "Tower exploration switches to fight music at the lift guards")
-	finish_arcade(scene)
-	await process_frame
-	await process_frame
-	finish_dialogue(scene)
-	check(scene.beat == scene.Beat.BOSS and scene._living() == 1, "Kenzō is alone in the penthouse")
+	check(scene.beat == scene.Beat.BOSS and scene._living() == 1, "the penthouse door leads straight to Kenzō without guards before him")
 	check(MusicLibrary.path_for(scene.music_section).ends_with("Boss.mp3"), "Kenzō's encounter uses boss music")
+	check(not scene.in_cinematic() and scene.foes.back().position.x > 800.0, "penthouse cutscene ends with Kenzō at the window")
 	scene.foes.back().take_damage(1000)
 	await process_frame
 	await process_frame
+	check(scene.beat == scene.Beat.ESCAPE and scene.in_cinematic(), "Kenzō's fall plays as a scripted scene")
+	check(scene.encounter == null and not scene.escape_guards_cleared, "lift guards are not called before Kenzō has fallen")
+	finish_dialogue(scene)
+	check(scene.encounter != null and scene._living() == 2, "the dead-man switch brings the lift guards after Kenzō's defeat")
+	check(scene.kenzo_body != null and scene.kenzo_body.health <= 0 and scene.kenzo_body.visual.rotation > 1.0, "Kenzō remains lying in the penthouse")
+	check(MusicLibrary.path_for(scene.music_section).ends_with("Fight.mp3"), "lift guards use fight music")
+	var timer_before: float = scene.countdown
+	scene._process(5.0)
+	check(scene.countdown == timer_before, "escape timer waits until the lift guards are down")
+	scene.save_game()
+	check(scene.load_game() and scene.encounter != null and not scene.escape_guards_cleared and not scene.in_cinematic(), "loading during the lift fight resumes the guards without replaying the kill scene")
+	finish_dialogue(scene)
+	finish_arcade(scene)
+	await process_frame
+	await process_frame
+	check(scene.escape_guards_cleared and scene.ui.dialogue_open, "alarm briefing follows the last lift wave")
 	finish_dialogue(scene)
 	check(scene.beat == scene.Beat.ESCAPE, "boss defeat starts the sixty-second escape")
 	for i in 4:

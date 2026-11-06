@@ -12,6 +12,7 @@ const Painted = preload("res://scripts/painted_world.gd")
 const Dressing = preload("res://scripts/world_dressing.gd")
 const GroundAtmosphereScript = preload("res://scripts/ground_atmosphere.gd")
 const MusicLibrary = preload("res://scripts/music_library.gd")
+const CutsceneScript = preload("res://scripts/cutscene.gd")
 const VISUAL_PRESETS: = ["Reduziert", "Ausgewogen", "Atmosphärisch"]
 const VISUAL_SETTINGS: = "user://shadepi-graphics.cfg"
 var player
@@ -58,6 +59,7 @@ var dressing_generation: = 0
 var painted_solids: Array[StaticBody2D] = []
 var painted_masks: Array[Polygon2D] = []
 var painted_layout: = ""
+var cutscene: CanvasLayer
 
 func open_terminal(context: String, on_success: Callable) -> void:
 	if terminal != null or is_busy():
@@ -103,6 +105,9 @@ func _ready() -> void :
 	ui = create_hud()
 	ui.world = self
 	add_child(ui)
+	cutscene = CutsceneScript.new()
+	cutscene.world = self
+	add_child(cutscene)
 	ui.show_menu()
 	var args: = OS.get_cmdline_user_args()
 	if "--capture" in args or "--capture-reduced" in args:
@@ -665,7 +670,9 @@ func _process(delta: float) -> void :
 	blade_light.enabled = player.cloak_time <= 0.0
 	blade_light.position = Vector2(5, -18) + player.facing * 9.0
 	blade_light.energy = 1.6 if player.attack_time > 0.12 else 0.8
-	if coop:
+	if in_cinematic():
+		pass
+	elif coop:
 		camera.position = player.position.lerp(raven.position, 0.5) + Vector2(0, -27)
 	else:
 		camera.position = player.position + Vector2(0, -60) + player.facing * 8
@@ -705,6 +712,14 @@ func _unhandled_input(event: InputEvent) -> void :
 		return
 	if menu_open:
 		return
+	if in_cinematic():
+		if event.is_action_pressed("interact") or (coop and event.is_action_pressed("raven_interact")):
+			cutscene.advance()
+			get_viewport().set_input_as_handled()
+		elif event.is_action_pressed("dash") or event.is_action_pressed("raven_dash"):
+			cutscene.skip()
+			get_viewport().set_input_as_handled()
+		return
 	if ui.dialogue_open:
 		if event.is_action_pressed("interact") or (coop and event.is_action_pressed("raven_interact")):
 			ui.advance_dialogue()
@@ -724,7 +739,22 @@ func _unhandled_input(event: InputEvent) -> void :
 		toggle_audio()
 
 func is_busy() -> bool:
-	return terminal != null or menu_open or (ui != null and ui.dialogue_open) or player.health <= 0
+	return terminal != null or menu_open or (ui != null and ui.dialogue_open) or player.health <= 0 or in_cinematic()
+
+## Where the gameplay camera rests; cutscenes blend back to it when they end.
+func camera_home() -> Vector2:
+	if coop:
+		return player.position.lerp(raven.position, 0.5) + Vector2(0, -27)
+	return player.position + Vector2(0, -60) + player.facing * 8
+
+func in_cinematic() -> bool:
+	return cutscene != null and cutscene.running
+
+## Starts a scripted scene; returns the director. Aborts any running scene.
+func begin_cutscene() -> CanvasLayer:
+	ui.clear_dialogue()
+	cutscene.begin()
+	return cutscene
 
 func close_menu() -> void :
 	menu_open = false

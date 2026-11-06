@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.16.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.17.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -29,13 +29,22 @@ Das Startmenü zeigt Shadepi und Raven vor einer Neonstadt mit weißem Drachen. 
 - **Kapitel 1:** Ravens Jagd auf Chrome Jackal, Shadepis Eingreifen und gemeinsamer Kampf.
 - **Kapitel 2:** Industriegebiet, Ravens Versteck, Kühlsystem, Deep Dive und ICE-Abwehr.
 - **Kapitel 3–5:** Pakt, Hinterhalt, Fahrzeugverfolgung, Hangar, Heiligtum und Erinnerungssequenzen.
-- **Kapitel 6–7:** Anflug, Tower, Konfrontation mit Kenzō, Flucht und Abschluss am See.
+- **Kapitel 6–7:** Anflug, Tower, Konfrontation mit Kenzō, Aufzugwachen, Flucht und Abschluss am See.
 
 Die Spielwelt nutzt **16 gemalte Kulissen** aus `assets/world/painted/`. Wände und verdeckende Bildteile sind in `scripts/painted_world.gd` abgestimmt. Zerstörbare Objekte, die sechs zugeordneten Musikstücke, HQ-Sprites und die Original-Keyframes sind im Repository enthalten.
 
 Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und Bosskämpfen. Die vollständige Zuordnung und Hinweise zum Austauschen der MP3-Dateien stehen unter [Musik austauschen](assets/music/README.md).
 
-## Neu in v0.16.0 · 6. November 2026
+## Neu in v0.17.0 · 6. November 2026 · ClaudeHelper
+
+- **Storyfix Kapitel 6:** Die Aufzugwachen kommen jetzt erst **nach** dem Kampf gegen Kenzō – sein Totmannschalter ruft sie ins Penthouse. Der Fluchttimer startet erst nach der letzten Welle. Alte Spielstände bleiben ladbar.
+- **Gescriptete Zwischensequenzen im Spiel:** Kinobalken, Kamerafahrten, laufende Figuren, Untertitel und Überspringen mit Leertaste/B. Neu inszeniert: Jackals Auftritt, Shadepis Sprung vom Dach, Ravens Konfrontation mit Kenzō samt Shadepis Auftauchen aus dem Tarnfeld, Kenzōs Ende, das Ritual am See und das Finale.
+- **Boss-Anzeige für Kenzō** mit Hinweis auf das Hackfenster am Schulterservo.
+- **Lore-Korrektur:** „Orden des Weißen Drachen“ einheitlich geschrieben.
+
+[Zwischensequenzen](docs/zwischensequenzen.md)
+
+## v0.16.0 · 6. November 2026
 
 - **Ravens Terminal-Minigames:** Fünf unterschiedliche Rätselmechaniken an acht Storypunkten, darunter Matrix-Hacking, Passwort-Decoder, Leitungsnetz mit ICE, Signalabgleich und Jumper-Reparatur.
 - **Erweiterte Kämpfe:** Aufladbare Katana-Energiewelle, Kick und Ravens aufgeladener Pistolenschuss mit passenden HQ-Kampfposen.

@@ -33,7 +33,8 @@ func _physics_process(delta: float) -> void :
 		return
 	if world.is_busy():
 		cancel_charge()
-		animate("idle", delta)
+		if not (world.in_cinematic() and (world.cutscene.walkers.has(self) or world.cutscene.poses.has(self))):
+			animate("idle", delta)
 		return
 	if world.admin_enabled("infinite_energy"):
 		energy = 100.0

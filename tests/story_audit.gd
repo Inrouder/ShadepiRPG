@@ -72,6 +72,14 @@ func check_ui(scene: Node2D) -> void:
 	check(objective.get_theme_font("font").get_multiline_string_size(objective.text, HORIZONTAL_ALIGNMENT_LEFT, 214, 11).y <= 28, "Objective fits: " + objective.text)
 
 func finish_dialogue(scene: Node2D) -> void:
+	for _round in 4:
+		if scene.in_cinematic():
+			scene.cutscene.skip()
+		_finish_dialogue_once(scene)
+	if scene.in_cinematic():
+		scene.cutscene.skip()
+
+func _finish_dialogue_once(scene: Node2D) -> void:
 	for i in 100:
 		if not scene.ui.dialogue_open:
 			return
