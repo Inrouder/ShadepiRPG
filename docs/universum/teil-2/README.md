@@ -30,7 +30,7 @@ Einordnung: Material-, Form- und Detailreferenz für die Maske. Funktionen einze
 
 - Dunkles Querformat mit Ganzkörperansichten, Gesichtsausdrücken, Detailbildern, Aktionsposen, Ausrüstung und Farbpalette.
 - Beschriftung: „RAVEN BLACK | OPERATIVE NIGHTWING“; das Blatt führt „INDEPENDENT / NIGHTWING“ und „STEALTH · RECON · ASSASSINATION“ auf. Diese Angaben bleiben als Beschriftungen dieser Quelle erfasst und ersetzen keine anderen Rollenbeschreibungen aus dem Archiv.
-- Das Blatt nennt eine Körpergröße von **168 cm** und zeigt eine schlanke, athletische Figur.
+- Das Blatt nennt ursprünglich **168 cm** und zeigt eine schlanke, athletische Figur. **Korrektur durch den Nutzer am 6. November 2026: Raven ist verbindlich 160 cm groß; die Bildbeschriftung ist überholt.**
 - Lange schwarze Haare mit kräftigem blauem Verlauf, rote Augen, heller Teint und goldfarbenes Septum-Piercing.
 - Schwarzer, hochgeschlossener Kampfanzug mit cyan leuchtenden Linien, roten Rabenemblemen auf den Schultern und taktischen Taschen beziehungsweise Oberschenkelholstern.
 - Fünf Körperansichten: frontal, Dreiviertel vorn, seitlich, Dreiviertel hinten und hinten.

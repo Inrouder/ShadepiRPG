@@ -8,7 +8,7 @@ Teil 1 sowie jeweils fünf weitere Bildreferenzen aus Teil 2 und Teil 3 wurden a
 
 Die [Bildnotizen zu Teil 2](teil-2/README.md) erfassen Shadepis Tempelmotiv, sein Maskendetail und drei weitere Raven-Referenzen. [Teil 3](teil-3/README.md) ergänzt Ravens Designblatt, das KOBAN-TEC-Logo und drei Kostümfotos. Die Originaldateien der insgesamt zwölf Chat-Bilder sind bislang nicht lokal verfügbar; im Repository liegen hierzu Beschreibungen vor.
 
-Offener Quellenunterschied: Das Raven-Referenzblatt in Teil 2 nennt **168 cm**, das Designblatt in Teil 3 **160 cm**. Beide Angaben bleiben mit ihrer Herkunft dokumentiert, bis der Nutzer eine verbindliche Größe festlegt.
+**Verbindlich bestätigt am 6. November 2026: Raven ist 160 cm groß.** Der Nutzer hat ausdrücklich „160cm ist richtig“ festgelegt. Die 168-cm-Angabe auf dem Referenzblatt in Teil 2 bleibt als ursprüngliche Bildbeschriftung dokumentiert, ist aber überholt und darf nicht für neue Darstellungen oder Proportionsentscheidungen verwendet werden.
 
 ## Teil 1: Dokumente
 

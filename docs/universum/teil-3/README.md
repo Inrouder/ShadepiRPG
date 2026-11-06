@@ -16,7 +16,7 @@ Quelle: fünf eingebettete Bilder aus der Nutzernachricht „teil 3“ vom 6. No
 - Aktionsposen: ausgestreckter Arm mit Pistole sowie eine tiefe, seitliche Hocke mit einer Hand am Boden.
 - Material-/Farbpalette: mattes und glänzendes Schwarz, leuchtendes Cyan, Rot, schwarze und blaue Haare, Haut, Gold, Gummi, Metall und Stoff.
 
-**Quellenunterschied:** In Teil 2 nennt das erweiterte Raven-Referenzblatt 168 cm; dieses Blatt nennt 160 cm. Der Nutzer hat mit der Lieferung keine ausdrückliche Entscheidung zwischen beiden Angaben getroffen. Die neue Angabe wird deshalb als weiterer Quellenstand dokumentiert, ohne die ältere Angabe oder Spielproportionen automatisch zu überschreiben.
+**Quellenunterschied geklärt:** Der Nutzer hat am 6. November 2026 ausdrücklich bestätigt: „160cm ist richtig“. Damit ist Ravens Körpergröße verbindlich **160 cm**, wie auf diesem Blatt angegeben. Die 168-cm-Beschriftung des Referenzblatts in Teil 2 ist überholt; die ursprüngliche Quelle bleibt zur Nachvollziehbarkeit dokumentiert.
 
 ## Bild 2: KOBAN-TEC-Logo
 
