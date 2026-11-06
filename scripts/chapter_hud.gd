@@ -20,11 +20,8 @@ func _ready() -> void :
 	menu_help.text = "Controller · Stick / Steuerkreuz und A"
 	restart_button.text = "Kapitel 1 neu starten"
 func show_menu(title: String = "KAPITEL 1") -> void :
-	menu_title.text = title
 	requested_coop = world.chapter_coop
-	_update_mode_buttons()
-	menu.show()
-	resume_button.grab_focus()
+	_show_menu_shell(title)
 
 func _update_mode_buttons() -> void :
 	var mode: = "Lokal-Koop" if requested_coop else "Einzelspieler"

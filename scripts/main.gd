@@ -575,6 +575,7 @@ func set_visual_quality(level: int) -> void :
 		halo.visible = visual_quality > 0
 	if ui != null:
 		ui.visual_button.text = "Bildstil: " + VISUAL_PRESETS[visual_quality]
+		ui.start_backdrop.set_quality(visual_quality)
 
 func cycle_visual_quality() -> void :
 	set_visual_quality((visual_quality + 1) % VISUAL_PRESETS.size())
