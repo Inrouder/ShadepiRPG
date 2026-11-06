@@ -5,7 +5,8 @@ const HEROES := preload("res://assets/menu/start-heroes.png")
 const WIND := preload("res://shaders/menu_wind.gdshader")
 const ATMOSPHERE := preload("res://shaders/menu_atmosphere.gdshader")
 const VIEW := Vector2(640, 360)
-const HERO_RECT := Rect2(0, 6, 340, 340)
+# Leave roof clearance below both pairs of boots, including full parallax travel.
+const HERO_RECT := Rect2(0, 6, 310, 310)
 
 var elapsed := 0.0
 var quality := 2

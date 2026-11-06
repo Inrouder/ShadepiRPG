@@ -17,7 +17,7 @@ Shadepis Darstellung orientiert sich an der Figur aus `03-Berschreibung-Shadepi.
 
 ## Visuell prüfen
 
-`godot --audio-driver Dummy --script res://tools/menu_gallery.gd` benötigt ein Display mit echtem Renderer (auch Xvfb/Mesa ist geeignet). Das Werkzeug schreibt neutrale, Wind-, Fokus-, reduzierte und Pause-Aufnahmen nach `/tmp/shadepi-menu-*.png`. Die automatisierten Gameplay-Prüfungen kontrollieren zusätzlich Parallax, Grafikoptionen, den angehaltenen Hintergrund und den Kapitel-1-Menüablauf.
+`godot --audio-driver Dummy --script res://tools/menu_gallery.gd` benötigt ein Display mit echtem Renderer (auch Xvfb/Mesa ist geeignet). Das Werkzeug schreibt neutrale, Wind-, Fokus-, reduzierte und Pause-Aufnahmen sowie die vier äußersten Parallaxpositionen nach `/tmp/shadepi-menu-*.png`. Die Figuren sind gemeinsam so skaliert, dass beide Fußpaare auch bei maximaler Mausbewegung innerhalb der Dachkante stehen. Diese Positionen wurden im OpenGL-Renderer visuell geprüft. Die automatisierten Gameplay-Prüfungen kontrollieren zusätzlich Parallax, Grafikoptionen, den angehaltenen Hintergrund und den Kapitel-1-Menüablauf.
 
 Geprüft mit Godot 4.7.2: 303 Gameplay-/Menüprüfungen, 46 Fahrzeugprüfungen, 240 Story-Prüfungen und 20 NPC-/Dive-Prüfungen ohne Fehler. Die Screenshots wurden zusätzlich unter OpenGL Compatibility mit Xvfb/Mesa gerendert; dabei wurden auch die beiden neuen Shader ausgeführt.
 

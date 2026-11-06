@@ -24,6 +24,12 @@ func run() -> void:
 	for i in 12:
 		await process_frame
 	await capture("/tmp/shadepi-menu-focus.png")
+	# Check the entire parallax range against the sloped rooftop edge.
+	var corners := [Vector2.ZERO, Vector2(640, 0), Vector2(0, 360), Vector2(640, 360)]
+	for i in corners.size():
+		scene.ui.start_backdrop.aim_at(corners[i])
+		scene.ui.start_backdrop.pointer = scene.ui.start_backdrop.target_pointer
+		await capture("/tmp/shadepi-menu-corner-%d.png" % i)
 	scene.set_visual_quality(0)
 	await capture("/tmp/shadepi-menu-reduced.png")
 	scene.new_game(false)
