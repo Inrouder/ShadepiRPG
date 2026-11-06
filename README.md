@@ -18,6 +18,8 @@ Im Spiel gibt es ein Startmenü mit Einzelspieler und Lokal-Koop, eine gemeinsam
 
 **Neue Kampfbewegungen:** Aufladbarer Katana-Schlag mit Energiewelle, Kick und Ravens aufgeladener Pistolenschuss. [Steuerung und animierte Vorschau](docs/kampfbewegungen.md).
 
+**Kartenkorrekturen:** Das Versteck hat passende Möbelproportionen; Bingo Street geht mit durchgehender Bodenkante in die Gasse über. [Vergleich im Spiel](docs/karten-proportionen.md).
+
 Das Startmenü zeigt Shadepi und Raven vor einer Neonstadt mit weißem Drachen. Mausbewegungen verschieben Stadt und Figuren gegeneinander; Ravens Haare und Shadepis Schal bewegen sich im Wind. Mehrschichtiger Regen, Wasserreflexe und Neonlicht ergänzen die Szene. Die Menüknöpfe reagieren auf Maus und Controller-Fokus. Der vorhandene Bildstil-Schalter reduziert bei Bedarf Bewegung, Regen und Filter. [Vorschau und technische Hinweise](docs/live-startmenue.md).
 
 ## Geschichte und Spielumfang

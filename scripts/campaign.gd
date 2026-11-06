@@ -74,6 +74,8 @@ func _process(delta: float) -> void :
 	super._process(delta)
 	if raven_leads():
 		camera.position = raven.position + Vector2(0, -52)
+	if beat == Beat.ECHO and not echo_ready:
+		camera.position = Painted.CHAMBER_CAMERA
 	ritual_flash = maxf(0.0, ritual_flash - delta)
 	if is_busy():
 		return
@@ -110,6 +112,7 @@ func _enter(next: int, saved_section: int = 0) -> void :
 		timing = null
 		gamepads.assign(Input.get_connected_joypads(), false)
 	echo_ready = false
+	camera.zoom = Vector2.ONE * (1.15 if next == Beat.ECHO else 1.0)
 	if is_instance_valid(drive):
 		drive.hide()
 		drive.queue_free()
@@ -139,6 +142,9 @@ func _enter(next: int, saved_section: int = 0) -> void :
 	player.health = 100
 	player.energy = 100.0
 	player.position = PACT_SPAWN if beat == Beat.PACT else SPAWN
+	if beat == Beat.ECHO:
+		player.position = Painted.chamber_point(SPAWN)
+		camera.position = Painted.CHAMBER_CAMERA
 	player.reset_transients()
 	reset_raven(player.position + Vector2(-27, 14))
 	raven.visible = true
@@ -183,7 +189,7 @@ func _update_lighting() -> void :
 			if echo_ready:
 				set_scene_lighting(Color("c9aed4"), [[Vector2(553, 364), "a65378", 3.1, 0.55], [Vector2(871, 346), "d96654", 2.5, 0.74]])
 			else:
-				set_scene_lighting(Color("bdacba"), [[Vector2(446, 258), "e4ae87", 2.4, 0.62], [Vector2(682, 259), "70b0ce", 2.7, 0.62]])
+				set_scene_lighting(Color("bdacba"), [[Painted.chamber_point(Vector2(446, 258)), "e4ae87", 1.32, 0.62], [Painted.chamber_point(Vector2(682, 259)), "70b0ce", 1.48, 0.62]])
 		Beat.ROOF:
 			set_scene_lighting(Color("acb9d4"), [[Vector2(797, 281), "6cdf9a", 2.5, 0.83], [Vector2(305, 315), "80b8da", 2.7, 0.54]])
 		Beat.BOSS, Beat.ESCAPE:
@@ -482,6 +488,7 @@ func _enter_echo() -> void :
 	timing = null
 	gamepads.assign(Input.get_connected_joypads(), false)
 	echo_ready = true
+	camera.zoom = Vector2.ONE
 	set_music_section("chapter_5_echo")
 	reset_raven(SPAWN)
 	set_painted_solids("memory")
@@ -523,7 +530,11 @@ func _draw() -> void :
 	var art: Texture2D = Story.LEVEL_ART[beat]
 	if beat == Beat.ECHO and echo_ready:
 		art = Painted.ART.memory
-	draw_texture_rect(art, Rect2(0, 0, 1024, 640), false)
+	if beat == Beat.ECHO and not echo_ready:
+		draw_rect(Rect2(0, 0, 1024, 640), Color("080c11"))
+		draw_texture_rect(art, Painted.CHAMBER_RECT, false)
+	else:
+		draw_texture_rect(art, Rect2(0, 0, 1024, 640), false)
 	if beat == Beat.HANGAR and point_index == 3:
 		for port in PORTS:
 			draw_rect(Rect2(port - Vector2(12, 9), Vector2(24, 18)), Color("253747"))

@@ -168,8 +168,15 @@ func run() -> void:
 				check(clear_at(campaign, point) and clear_at(campaign, point + Vector2(18, 5)), "both ritual participants stand on shore at " + str(point))
 			check(clear_at(campaign, campaign.player.position) and clear_at(campaign, campaign.raven.position), "finale actors have clearance on land")
 		if beat == Story.Beat.ECHO:
+			check(clear_at(campaign, campaign._target()), "chamber chair interaction has full player clearance")
+			check(not clear_at(campaign, Vector2(470, 300)), "rescaled chair blocks the player's feet")
+			check(not clear_at(campaign, Vector2(600, 298)), "rescaled bed blocks the player's feet")
+			check(clear_at(campaign, Vector2(400, 315)), "old oversized furniture leaves no invisible collision")
+			check(not clear_at(campaign, Vector2(220, 350)), "compact room cannot be left through its left wall")
+			check(not clear_at(campaign, Vector2(805, 350)), "compact room cannot be left through its right wall")
 			campaign._start_echo()
 			campaign._enter_echo()
+			check(campaign.camera.zoom == Vector2.ONE, "memory sequence restores the normal camera scale")
 			freeze(campaign)
 			finish_dialogue(campaign)
 			await physics_frame

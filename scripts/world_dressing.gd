@@ -49,7 +49,7 @@ const LAYOUTS: = {
 		["parts_case", "crate", Vector2(582, 305)], ["diagnostics", "server", Vector2(948, 434)], 
 	], 
 	"chamber": [
-		["wall_box", "electrical", Vector2(925, 330)],
+		["wall_box", "electrical", Vector2(738.75, 301.5)],
 	], 
 	"roof": [
 		["entry_lamp", "lamp", Vector2(117, 285)], ["cargo_1", "crate", Vector2(479, 475)], 

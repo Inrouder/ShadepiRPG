@@ -7,6 +7,7 @@ const Arcade = preload("res://scripts/arcade_encounter.gd")
 const Waves = preload("res://scripts/arcade_waves.gd")
 const CHAPTER_SAVE := "user://shadepi-chapter-one.cfg"
 const WEST_EDGE := -640
+const STREET_HEIGHT_OFFSET := 12
 const DUEL_DURATION := 30.0
 const JACKAL_HEALTH := 360
 const APARTMENT_EXIT := Vector2(-554, 356)
@@ -19,7 +20,7 @@ const ARENA_ENTRY := Vector2(568, 356)
 const DOWNED_SPOT := Vector2(636, 365)
 const RESCUE_START := Vector2(295, 451)
 const BARRIERS: Array[Rect2] = [
-	Rect2(-441, 272, 36, 107), Rect2(-270, 376, 41, 104), Rect2(-113, 272, 38, 107),
+	Rect2(-441, 284, 36, 107), Rect2(-270, 388, 41, 104), Rect2(-113, 284, 38, 107),
 	Rect2(181, 272, 29, 128), Rect2(381, 375, 28, 121),
 ]
 const TRAIL: Array[Vector2] = [
@@ -66,12 +67,17 @@ func _build_world() -> void:
 	effects.rain_start = WEST_EDGE
 	enemy.max_health = JACKAL_HEALTH
 	var west := Sprite2D.new()
+	west.name = "BingoStreet"
 	west.texture = Painted.ART.market
-	west.material = material
-	west.scale = Vector2(640, 640) / west.texture.get_size()
+	var join := ShaderMaterial.new()
+	join.shader = preload("res://shaders/street_join.gdshader")
+	join.set_shader_parameter("alley_art", Painted.ART.alley)
+	join.set_shader_parameter("west_height_offset", float(STREET_HEIGHT_OFFSET))
+	west.material = join
+	west.scale = Vector2(704, 640) / west.texture.get_size()
 	west.centered = false
 	west.position.x = WEST_EDGE
-	west.z_index = -10
+	west.z_index = -9
 	add_child(west)
 	for point in [Vector2(-537, 283), Vector2(-315, 390), Vector2(-170, 318), Vector2(-61, 438)]:
 		_halo(point, Color(0.9, 0.24, 0.43, 0.44), 0.8)
@@ -84,7 +90,7 @@ func _build_world() -> void:
 		light.enabled = false
 	for barrier in BARRIERS:
 		_collider(barrier)
-	add_painted_masks("market", Vector2(WEST_EDGE, 0), Vector2(640, 640))
+	add_painted_masks("market", Vector2(WEST_EDGE, STREET_HEIGHT_OFFSET), Vector2(640, 640))
 	add_painted_masks("alley")
 	_halo(Vector2(197, 383), Color(0.94, 0.2, 0.55, 0.42), 0.67)
 	_halo(Vector2(395, 386), Color(0.17, 0.87, 0.95, 0.42), 0.72)
