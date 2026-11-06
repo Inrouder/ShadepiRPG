@@ -135,6 +135,14 @@ func hack() -> void:
 	cooldown = 1.2
 	flash_time = 0.1
 
+func hack_interrupt(duration: float) -> void:
+	# A kick interrupts a vulnerable attacker without granting the hack damage bonus.
+	stun = maxf(stun, duration)
+	windup = 0.0
+	lunge = 0.0
+	attack_visual_time = 0.0
+	cooldown = maxf(cooldown, duration)
+
 func reset_fight(hp: int = 180) -> void:
 	health = hp
 	exposed = 0.0

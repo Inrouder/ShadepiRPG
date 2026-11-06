@@ -106,12 +106,14 @@ func _bind_inputs() -> void :
 		"move_left": [KEY_A, KEY_LEFT], "move_right": [KEY_D, KEY_RIGHT], 
 		"move_up": [KEY_W, KEY_UP], "move_down": [KEY_S, KEY_DOWN], 
 		"attack": [KEY_J], "dash": [KEY_SPACE, KEY_SHIFT], "cloak": [KEY_C], 
+		"charge": [KEY_K], "kick": [KEY_L],
 		"hack": [KEY_Q], "interact": [KEY_E, KEY_ENTER], "pause_game": [KEY_ESCAPE], 
 		"save_game": [KEY_F5], "load_game": [KEY_F9], "help_game": [KEY_H], "mute_game": [KEY_M], 
 		"graphics_game": [KEY_V], 
 		"raven_move_left": [KEY_LEFT], "raven_move_right": [KEY_RIGHT], 
 		"raven_move_up": [KEY_UP], "raven_move_down": [KEY_DOWN], 
 		"raven_attack": [KEY_U], "raven_hack": [KEY_O], 
+		"raven_charge": [KEY_I], "raven_kick": [],
 		"raven_dash": [KEY_P], "raven_interact": [KEY_ENTER]
 	}
 	for action in bindings:
@@ -147,6 +149,8 @@ func set_coop(enabled: bool) -> void :
 			InputMap.action_add_event(actions[i], event)
 
 func _on_joy_connection_changed(_device: int, _connected: bool) -> void :
+	player.cancel_charge()
+	raven.cancel_charge()
 	gamepads.assign(Input.get_connected_joypads(), coop)
 
 func hack_input_hint() -> String:
@@ -803,6 +807,40 @@ func player_strike(amount: int) -> void :
 	strike_scenery(player.position, player.facing, amount)
 	if stage == 2 and CombatRules.can_strike(player.position, player.facing, enemy.position) and _line_clear(player.position, enemy.position):
 		enemy.take_damage(amount)
+
+func special_targets() -> Array[Node2D]:
+	var targets: Array[Node2D] = []
+	for node in actors.get_children():
+		if node is EnemyScript and node.active and node.visible and node.health > 0:
+			targets.append(node)
+	return targets
+
+func special_hit(target: Node2D, amount: int, source: PixelActor, kick: bool) -> void:
+	var before: int = target.health
+	target.take_damage(amount)
+	if kick and target.health > 0 and target.health < before:
+		target.hack_interrupt(0.5)
+		target.move_and_collide(source.facing * 22)
+
+func power_attack(source: PixelActor) -> void:
+	var projectile := preload("res://scripts/power_projectile.gd").new()
+	projectile.world = self
+	projectile.source = source
+	projectile.generation = source.combat_generation
+	projectile.ranged = source.second_player
+	projectile.remaining = 300.0 if projectile.ranged else 240.0
+	projectile.direction = source.facing.normalized()
+	projectile.position = source.position
+	projectile.z_index = 45
+	add_child(projectile)
+	sound("hack" if source.second_player else "slash")
+
+func player_kick(source: PixelActor) -> void:
+	strike_scenery(source.position, source.facing, 28)
+	for target in special_targets():
+		var offset: Vector2 = target.position - source.position
+		if offset.length() <= 46 and offset.normalized().dot(source.facing) > 0.5 and _line_clear(source.position, target.position):
+			special_hit(target, 28, source, true)
 
 func spawn_slash(point: Vector2, direction: Vector2) -> void :
 	effects.slash(point, direction)

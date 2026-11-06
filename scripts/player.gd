@@ -1,6 +1,16 @@
 extends PixelActor
 
 const SPEED: = 94.0
+const CHARGE_SECONDS := 1.1
+const COMBAT_POSES := preload("res://assets/sprites/heroes/combat-poses.png")
+var charging := false
+var charge_time := 0.0
+var charge_ready := false
+var attack_kind := "normal"
+var kick_pending := false
+var combat_generation := 0
+var normal_texture: Texture2D
+var special_pose := false
 var health: = 100
 var health_floor: = 0
 var energy: = 100.0
@@ -22,6 +32,7 @@ func _physics_process(delta: float) -> void :
 	if not world.actor_is_playable(self):
 		return
 	if world.is_busy():
+		cancel_charge()
 		animate("idle", delta)
 		return
 	if world.admin_enabled("infinite_energy"):
@@ -56,6 +67,14 @@ func _physics_process(delta: float) -> void :
 			aim_stick = Vector2(Input.get_joy_axis(device, JOY_AXIS_RIGHT_X), Input.get_joy_axis(device, JOY_AXIS_RIGHT_Y))
 		if aim_stick.length() > 0.25 and dash_time <= 0.0:
 			facing = aim_stick.normalized()
+	if Input.is_action_just_pressed(prefix + "charge"):
+		start_charge()
+	if charging:
+		update_charge(delta)
+		if not Input.is_action_pressed(prefix + "charge"):
+			release_charge()
+	if not second_player and Input.is_action_just_pressed(prefix + "kick"):
+		try_kick()
 	if mouse_shot or Input.is_action_just_pressed(prefix + "attack"):
 		if mouse_shot:
 			var aim: = get_global_mouse_position() - global_position + Vector2(0, 24)
@@ -68,10 +87,16 @@ func _physics_process(delta: float) -> void :
 		try_cloak()
 	set_cloaked(cloak_time > 0.0)
 	var state: = "idle"
-	if attack_time > 0.0:
+	if charging:
+		velocity = direction * SPEED * 0.3
+		state = "charge"
+	elif attack_time > 0.0:
 		attack_time = maxf(0.0, attack_time - delta)
 		velocity = direction * SPEED * 0.25
-		state = "attack"
+		state = "kick" if attack_kind == "kick" else "attack"
+		if kick_pending and attack_time <= 0.29:
+			kick_pending = false
+			world.player_kick(self)
 		if hit_pending and attack_time < 0.26:
 			hit_pending = false
 			world.player_strike([22, 25, 32][combo])
@@ -90,8 +115,9 @@ func _physics_process(delta: float) -> void :
 	animate(state, delta)
 
 func try_attack() -> bool:
-	if attack_cooldown > 0.0 or dash_time > 0.0 or energy < 5.0:
+	if charging or attack_cooldown > 0.0 or dash_time > 0.0 or energy < 5.0:
 		return false
+	attack_kind = "normal"
 	if second_player:
 		energy -= 5.0
 		attack_time = 0.22
@@ -113,9 +139,73 @@ func try_attack() -> bool:
 	world.spawn_slash(global_position, facing)
 	return true
 
+func charge_cost() -> float:
+	return 25.0 if second_player else 30.0
+
+func start_charge() -> bool:
+	if charging or world.is_busy() or not world.actor_is_playable(self) or attack_time > 0 or attack_cooldown > 0 or dash_time > 0 or energy < charge_cost():
+		return false
+	charging = true
+	charge_time = 0
+	charge_ready = false
+	cloak_time = 0
+	combo_window = 0
+	return true
+
+func update_charge(delta: float) -> void:
+	if not charging or world.is_busy():
+		return
+	charge_time = minf(CHARGE_SECONDS, charge_time + delta)
+	if charge_time >= CHARGE_SECONDS and not charge_ready:
+		charge_ready = true
+		world.effects.charge_ready(position, second_player)
+		world.sound("hack")
+	queue_redraw()
+
+func cancel_charge() -> void:
+	charging = false
+	charge_time = 0
+	charge_ready = false
+	queue_redraw()
+
+func release_charge() -> bool:
+	if not charging:
+		return false
+	var ready := charge_ready
+	cancel_charge()
+	if world.is_busy() or not world.actor_is_playable(self):
+		return false
+	if not ready:
+		return try_attack()
+	if energy < charge_cost():
+		return false
+	energy -= charge_cost()
+	attack_time = 0.48
+	attack_cooldown = 0.8
+	attack_kind = "power"
+	hit_pending = false
+	kick_pending = false
+	world.power_attack(self)
+	return true
+
+func try_kick() -> bool:
+	if second_player or world.is_busy() or not world.actor_is_playable(self) or charging or attack_time > 0 or attack_cooldown > 0 or dash_time > 0 or energy < 12:
+		return false
+	energy -= 12
+	cloak_time = 0
+	attack_kind = "kick"
+	attack_time = 0.48
+	attack_cooldown = 0.65
+	kick_pending = true
+	hit_pending = false
+	combo_window = 0
+	world.sound("slash")
+	return true
+
 func try_dash(direction: Vector2) -> bool:
 	if dash_cooldown > 0.0 or energy < 22.0 or attack_time > 0.0:
 		return false
+	cancel_charge()
 	if direction.length() > 0.1:
 		facing = direction.normalized()
 	energy -= 22.0
@@ -128,7 +218,7 @@ func try_cloak() -> bool:
 	if cloak_time > 0.0:
 		cloak_time = 0.0
 		return true
-	if cloak_cooldown > 0.0 or energy < 20.0 or attack_time > 0.0:
+	if charging or cloak_cooldown > 0.0 or energy < 20.0 or attack_time > 0.0:
 		return false
 	cloak_time = 10.0
 	cloak_cooldown = 18.0
@@ -140,6 +230,7 @@ func take_damage(amount: int, source: Vector2) -> void :
 		return
 	if invulnerable > 0.0 or health <= 0:
 		return
+	cancel_charge()
 	health = maxi(health_floor, health - amount)
 	invulnerable = 0.8
 	cloak_time = 0.0
@@ -150,6 +241,12 @@ func take_damage(amount: int, source: Vector2) -> void :
 		world.player_defeated()
 
 func reset_transients() -> void :
+	combat_generation += 1
+	cancel_charge()
+	kick_pending = false
+	attack_kind = "normal"
+	if special_pose:
+		animate("idle", 0)
 	velocity = Vector2.ZERO
 	attack_time = 0.0
 	attack_cooldown = 0.0
@@ -163,8 +260,56 @@ func reset_transients() -> void :
 	combo_window = 0.0
 	set_cloaked(false)
 
+func animate(state: String, delta: float) -> void:
+	if normal_texture == null:
+		normal_texture = visual.texture
+	if special_pose:
+		visual.texture = normal_texture
+		visual.hframes = 8
+		visual.vframes = directions * 4
+		visual.scale = Vector2.ONE * SpriteAssets.display_scale(normal_texture)
+		visual.position = standing_visual_position
+		cast_shadow.texture = normal_texture
+		cast_shadow.hframes = 8
+		cast_shadow.vframes = directions * 4
+		cast_shadow.scale = Vector2(1.05, 0.3) * SpriteAssets.display_scale(normal_texture)
+		special_pose = false
+	super.animate("idle" if state == "charge" else "attack" if state == "kick" else state, delta)
+	if state == "attack" and attack_kind == "power":
+		# The charge already supplied the windup; show the cut/discharge on release.
+		var release_frame := (0 if second_player else 2) if attack_time > 0.22 else 6
+		visual.frame = (2 * directions + _direction_row(false, delta)) * 8 + release_frame
+		cast_shadow.frame = visual.frame
+	# Custom replacement heroes keep their own identity and use the same effects.
+	if normal_texture.resource_path.begins_with("res://assets/custom/") or state not in ["charge", "kick"]:
+		return
+	var row := 3 if second_player else 0
+	if state == "kick":
+		row = 2 if attack_time <= 0.29 and attack_time > 0.1 else 1
+	var direction := _direction_row(false, delta)
+	visual.frame = 0
+	cast_shadow.frame = 0
+	visual.texture = COMBAT_POSES
+	visual.hframes = 8
+	visual.vframes = 4
+	visual.scale = Vector2.ONE * 0.25
+	visual.position = Vector2(0, -30.5)
+	visual.frame = row * 8 + direction
+	cast_shadow.texture = COMBAT_POSES
+	cast_shadow.hframes = 8
+	cast_shadow.vframes = 4
+	cast_shadow.scale = Vector2(1.05, 0.3) * 0.25
+	cast_shadow.frame = visual.frame
+	special_pose = true
+
 func _draw() -> void :
 	super._draw()
+	if charging and not world.is_busy():
+		var progress := charge_time / CHARGE_SECONDS
+		var color := Color("66eaff") if second_player else Color("ff4f70")
+		draw_arc(Vector2(0, -22), 15, -PI / 2, -PI / 2 + TAU * progress, 32, color, 2)
+		if charge_ready:
+			draw_circle(Vector2(0, -24) + facing * 19, 3.5 + sin(Time.get_ticks_msec() * 0.015), Color(color, 0.75))
 	if second_player and health > 0 and world.actor_is_playable(self) and not world.is_busy() and aim_stick.length() > 0.25:
 		var tip: = Vector2(0, -24) + facing * 64.0
 		draw_line(Vector2(0, -24) + facing * 12.0, tip, Color(0.38, 0.9, 1.0, 0.55))

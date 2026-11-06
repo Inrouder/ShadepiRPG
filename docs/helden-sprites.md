@@ -5,6 +5,8 @@ Zwei neue illustrierte Figuren, orientiert an den vorhandenen Comicvorlagen:
 - **Raven:** schwarze Rüstung mit Materialdetails, cyanfarbene Leuchtlinien, schwarze Haare mit blauen Spitzen und eine Impulspistole.
 - **Shadepi:** breiter Kasa-Hut, maskiertes Gesicht mit roten Augen, segmentierte Rüstung, Mantel mit weißem Drachen und rotes Katana.
 
+**Ergänzung:** Die separaten Lade- und Kick-Posen in `assets/sprites/heroes/combat-poses.png` sind unter [Kampfbewegungen](kampfbewegungen.md) beschrieben. Sie erweitern diese Basisatlanten, ohne deren Raster zu ändern.
+
 Die PNGs haben einen echten transparenten Hintergrund. Die Originalbilder enthalten jeweils 32 generierte Schlüsselposen. Daraus sind die Stand-, Lauf-, Angriffs- und Treffersequenzen für das Spiel zusammengesetzt. Stand und Treffer verwenden die Ruhepose; beim Laufen werden die beiden Schrittposen mit der Ruhepose kombiniert.
 
 | Dateien | Verwendung |

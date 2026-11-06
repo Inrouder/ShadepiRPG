@@ -54,6 +54,8 @@ func _bind_player(device: int, prefix: String, special: String) -> void :
 	_button(prefix + "interact", device, JOY_BUTTON_A)
 	_button(prefix + "dash", device, JOY_BUTTON_B)
 	_button(prefix + "attack", device, JOY_BUTTON_X)
+	_axis(prefix + "charge", device, JOY_AXIS_TRIGGER_RIGHT, 1.0)
+	_axis(prefix + "kick", device, JOY_AXIS_TRIGGER_LEFT, 1.0)
 	_button(special, device, JOY_BUTTON_Y)
 	_button("pause_game", device, JOY_BUTTON_START)
 	_button("save_game", device, JOY_BUTTON_LEFT_SHOULDER)

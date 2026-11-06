@@ -10,7 +10,9 @@
 
 Raven bekommt in ihrem Apartment einen Hinweis auf Chrome Jackal, räumt die Punks in Bingo Street aus dem Weg und verfolgt ihn bis zum Wartungshof. Dort hält seine Panzerung jedem Treffer stand. Nach 30 Kampfsekunden dreht er Ravens Hack gegen sie. Shadepi kämpft sich durch die Wartungsgasse und stellt Jackal mit 360 HP. Sobald die Hälfte seiner Lebenspunkte weg ist, steht Raven auf und steigt in den Kampf ein.
 
-**Gegnerwellen:** Die Jagd, der Rettungsweg, der Hinterhalt und der Towerkampf sind in gesperrte Kampfabschnitte aufgeteilt. Besiege alle Wellen, bis „WEITER →“ erscheint. Zwischen Wellen hast du zwei Sekunden Pause. Ein geschaffter Abschnitt gibt bis zu 15 Lebenspunkte und 20 Energie zurück. Am nächsten Abschnitt wird automatisch gespeichert; nach einer Niederlage beginnt dessen erste Welle erneut. Neue Kampf-Moves folgen später. [Alle Abschnitte und Gegnerzahlen](docs/arcade-wellen.md).
+**Gegnerwellen:** Die Jagd, der Rettungsweg, der Hinterhalt und der Towerkampf sind in gesperrte Kampfabschnitte aufgeteilt. Besiege alle Wellen, bis „WEITER →“ erscheint. Zwischen Wellen hast du zwei Sekunden Pause. Ein geschaffter Abschnitt gibt bis zu 15 Lebenspunkte und 20 Energie zurück. Am nächsten Abschnitt wird automatisch gespeichert; nach einer Niederlage beginnt dessen erste Welle erneut. [Alle Abschnitte und Gegnerzahlen](docs/arcade-wellen.md).
+
+**Neue Kampfbewegungen:** Halte **K / RT**, bis nach 1,1 Sekunden der kurze Wellenring „bereit“ signalisiert. Loslassen sendet Shadepis Katana-Welle oder Ravens Kraftschuss aus. Im Koop lädt Raven mit **I / RT** an ihrem Controller. **L / LT** führt Shadepis Kick aus. Frühes Loslassen ergibt einen normalen Angriff; Treffer, Ausweichen und Pausen brechen das Laden ab. [Details und animierte Vorschau](docs/kampfbewegungen.md).
 
 Die Zwischenszenen nutzen Ausschnitte aus dem Comic „Shadepi – Im Schatten des Raben“ (deutsche Fassung, PDF-Seiten 2, 4, 5, 6 und 9) mit eigens für das Spiel geschriebenen Dialogen.
 
@@ -76,6 +78,8 @@ Im Start- oder Pausenmenü über **Modus** den **Lokal-Koop** auswählen. Ravens
 | --- | --- | --- |
 | Bewegen | WASD | Pfeiltasten |
 | Angriff | J oder linke Maustaste für das Katana | U für einen Impulsschuss in Blickrichtung |
+| Aufgeladener Angriff | K halten und nach dem Bereitschaftsimpuls loslassen | I halten und nach dem Bereitschaftsimpuls loslassen |
+| Kick | L | – |
 | Ausweichen | Leertaste oder Umschalt | P |
 | Spezialfähigkeit | C für Tarnung | O für einen Hack aus Ravens Reichweite |
 | Interagieren | E | Enter |

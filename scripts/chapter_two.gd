@@ -281,6 +281,27 @@ func raven_hack() -> bool:
 			return true
 	return false
 
+func special_targets() -> Array[Node2D]:
+	var targets := super.special_targets()
+	if section == Section.DIVE:
+		targets.append_array(threats)
+	return targets
+
+func special_hit(target: Node2D, amount: int, source: PixelActor, kick: bool) -> void:
+	if target not in threats:
+		super.special_hit(target, amount, source, kick)
+		return
+	if not target.vulnerable():
+		toast("Hülle geladen. Die Entladung abwarten.")
+		return
+	effects.burst(target.position, Color("97f7ff"), 24)
+	threats.erase(target)
+	target.set_process(false)
+	target.queue_free()
+	if threats.is_empty() and relay_index == 1 and not next_wave:
+		next_wave = true
+		_spawn_ice()
+
 func admin_defeat_enemies() -> int:
 	var amount := super.admin_defeat_enemies()
 	if section == Section.DIVE:

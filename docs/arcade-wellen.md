@@ -17,7 +17,7 @@ Pausenmenü und Dialoge halten die Wellenpausen an. Das Motorrad und der nächst
 
 Beim Wechsel zum nächsten Kampfabschnitt wird automatisch gespeichert. Niederlage oder Laden starten diesen Abschnitt bei Welle 1 mit voller Gesundheit. Kapitel 1 speichert den Abschnitt getrennt für Solo und Koop. Alte Spielstände ohne Abschnittsnummer bleiben ladbar. Der Tower-Kontrollpunkt beginnt wie bisher vor den beiden Zugangshacks; der Aufzugkampf folgt danach erneut.
 
-Jackals Storyduell, sein gemeinsamer Bosskampf, Kenzōs Einzelkampf, die vorhandene ICE-Abwehr sowie Fahr-, Rätsel- und Storysequenzen behalten ihren Ablauf. Neue Spieler-Moves sind für eine spätere Erweiterung vorgesehen und werden durch diese Änderung noch nicht eingeführt.
+Jackals Storyduell, sein gemeinsamer Bosskampf, Kenzōs Einzelkampf, die vorhandene ICE-Abwehr sowie Fahr-, Rätsel- und Storysequenzen behalten ihren Ablauf. Die inzwischen ergänzten [Kraftangriffe und der Kick](kampfbewegungen.md) sind separat dokumentiert.
 
 ## Entwicklung und Prüfung
 

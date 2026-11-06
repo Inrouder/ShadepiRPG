@@ -6,6 +6,7 @@ var world: Node2D
 var root: Control
 var vitals: Label
 var objective: Label
+var combat_hint: Label
 var abilities: Label
 var prompt: Label
 var notice: Label
@@ -119,6 +120,11 @@ func _ready() -> void :
 	mission_title = label_at("ECHOS IN NEON / SPÄTERE SZENE", Vector2(10, 4), Vector2(218, 14), mission, 10, Color("65d4df"))
 	objective = label_at("Sprich mit Raven", Vector2(10, 22), Vector2(214, 28), mission, 11)
 	objective.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	combat_hint = label_at("", Vector2(14, 65), Vector2(360, 28), root, 10, Color("aeeaf2"))
+	combat_hint.add_theme_color_override("font_shadow_color", Color.BLACK)
+	combat_hint.add_theme_constant_override("shadow_offset_x", 1)
+	combat_hint.add_theme_constant_override("shadow_offset_y", 1)
+	game_hud_nodes.append(combat_hint)
 	boss_panel = panel(Rect2(204, 10, 182, 54))
 	game_hud_nodes.append(boss_panel)
 	boss = label_at("", Vector2(5, 7), Vector2(172, 35), boss_panel, 10, Color("f18aaa"))
@@ -135,7 +141,7 @@ func _ready() -> void :
 	var shadow: = StyleBoxFlat.new()
 	shadow.bg_color = Color(0.03, 0.05, 0.09, 0.9)
 	prompt.add_theme_stylebox_override("normal", shadow)
-	notice = label_at("", Vector2(100, 73), Vector2(440, 44), root, 11, Color("b5e9f0"))
+	notice = label_at("", Vector2(100, 100), Vector2(440, 44), root, 11, Color("b5e9f0"))
 	game_hud_nodes.append(notice)
 	notice.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	notice.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -546,6 +552,15 @@ func _process(delta: float) -> void :
 	notice.visible = message_time > 0.0
 	vitals.text = "SHADEPI / %03d   EN %03d" % [world.player.health, roundi(world.player.energy)]
 	var coop: bool = world.coop
+	var lead = world.raven if world.raven_leads() else world.player
+	combat_hint.visible = not world.is_busy() and world.actor_is_playable(lead)
+	combat_hint.text = "K / RT halten · Kraftschuss" if lead.second_player else "K / RT halten · Kraftschlag    L / LT · Kick"
+	if coop:
+		combat_hint.text += "\nRaven: I / RT halten · Kraftschuss"
+	for actor in [world.player, world.raven]:
+		if actor.charging:
+			combat_hint.text = ("RAVEN" if actor.second_player else "SHADEPI") + (" · BEREIT – loslassen!" if actor.charge_ready else " · Lädt … %d %%" % roundi(actor.charge_time / actor.CHARGE_SECONDS * 100))
+			break
 	var width: = 78.0 if coop else 164.0
 	health_bar.position = Vector2(10, 20 if coop else 25)
 	energy_bar.position = Vector2(94, 20) if coop else Vector2(10, 37)

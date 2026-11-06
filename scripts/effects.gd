@@ -16,6 +16,10 @@ var rng: = RandomNumberGenerator.new()
 var fragments: Array[Dictionary] = []
 var smoke: Array[Dictionary] = []
 var blasts: Array[Dictionary] = []
+var charge_rings: Array[Dictionary] = []
+
+func charge_ready(point: Vector2, ranged: bool) -> void:
+	charge_rings.append({"p": point, "t": 0.4, "c": Color("67eaff") if ranged else Color("ff4b6b")})
 
 func _ready() -> void :
 	rng.seed = 84
@@ -64,6 +68,10 @@ func prop_explosion(point: Vector2) -> void :
 func _process(delta: float) -> void :
 	elapsed += delta
 	if not world.is_busy():
+		for i in range(charge_rings.size() - 1, -1, -1):
+			charge_rings[i].t -= delta
+			if charge_rings[i].t <= 0:
+				charge_rings.remove_at(i)
 		for i in range(fragments.size() - 1, -1, -1):
 			fragments[i].t -= delta
 			fragments[i].v.y += delta * 140.0
@@ -93,6 +101,9 @@ func _process(delta: float) -> void :
 	queue_redraw()
 
 func _draw() -> void :
+	for ring in charge_rings:
+		var age: float = 1.0 - ring.t / 0.4
+		draw_arc(ring.p + Vector2(0, -20), 12 + 36 * age, 0, TAU, 40, Color(ring.c, 1 - age), 2.5)
 	for cloud in smoke:
 		var age: float = 1.0 - cloud.t / cloud.life
 		draw_circle(cloud.p, cloud.size * (1.0 + age), Color(0.23, 0.28, 0.34, (1.0 - age) * 0.48))
