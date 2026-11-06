@@ -139,7 +139,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _process(delta: float) -> void:
 	super._process(delta)
-	if raven_leads() or phase == Phase.ROOFTOP:
+	if (raven_leads() or phase == Phase.ROOFTOP) and not in_cinematic():
 		camera.position = raven.position + Vector2(0, -57) + raven.facing * 8
 	if ending != null and ending.is_valid():
 		if phase == Phase.EPILOGUE and not ui.dialogue_open and not menu_open:
@@ -196,6 +196,7 @@ func new_game(save_checkpoint: bool = true) -> void:
 		autosave()
 
 func _enter_checkpoint(next_phase: Phase, saved_section: int = 0) -> void:
+	cutscene.abort()
 	cancel_terminal()
 	_clear_encounter()
 	ui.clear_dialogue()
@@ -365,11 +366,58 @@ func _begin_duel() -> void:
 	enemy.attack_recovery = 0.53
 	enemy.lunge_speed = 295.0
 	enemy.active = true
-	ui.dialogue([
-		["CHROME JACKAL / WARTUNGSHOF", "Meine Leute senden nicht mehr. Dein Signal dagegen ist laut genug, um den ganzen Hof zu wecken.", "jackal"],
-		["RAVEN", "Ich bin wegen deines Kopfgelds hier. Mal sehen, wie lange deine Panzerung durchhält, wenn ich die Steuerung finde.", "jackal"],
-		["CHROME JACKAL", "Dann steck dich ruhig ein. Die letzte Netrunnerin hat denselben Fehler gemacht.", "jackal"],
-	])
+	_scene_jackal()
+
+## Kapitel 1: Jackal tritt aus dem Schatten des Wartungshofs.
+func _scene_jackal() -> void:
+	var cs = begin_cutscene()
+	cs.pose(raven, "idle")
+	cs.pose(enemy, "idle")
+	cs.face(raven, enemy.position)
+	cs.face(enemy, raven.position)
+	await cs.camera(raven.position.lerp(enemy.position, 0.5) + Vector2(0, -55), 1.1, 1.15)
+	await cs.walk(enemy, enemy.position + (raven.position - enemy.position).normalized() * 36.0, 38)
+	cs.face(enemy, raven.position)
+	cs.pose(enemy, "idle")
+	await cs.say("CHROME JACKAL", "Meine Leute senden nicht mehr. Dein Signal dagegen ist laut genug, um den ganzen Hof zu wecken.")
+	await cs.say("RAVEN", "Ich bin wegen deines Kopfgelds hier. Mal sehen, wie lange deine Panzerung durchhält, wenn ich die Steuerung finde.")
+	await cs.say("CHROME JACKAL", "Dann steck dich ruhig ein. Die letzte Netrunnerin hat denselben Fehler gemacht.")
+	cs.do(func():
+		effects.hack_arc(raven.position + Vector2(4, -22), enemy.position + Vector2(0, -26))
+		sound("hack")
+	)
+	await cs.wait(0.35)
+	cs.end(func(): toast("Raven: Handshake läuft. Halt ihn auf Abstand!"))
+
+## Kapitel 1: Shadepi springt vom Dach in die Wartungsgasse.
+func _scene_shadepi_lands() -> void:
+	var cs = begin_cutscene()
+	player.facing = Vector2.RIGHT
+	cs.pose(player, "idle")
+	await cs.camera(player.position + Vector2(70, -62), 0.0, 1.1)
+	player.visual.position.y = player.standing_visual_position.y - 190.0
+	await cs.wait(0.5)
+	await cs.drop(player, 190.0, 0.38)
+	cs.do(func():
+		effects.burst(player.position, Color("9fb3c6"), 20)
+		effects.water_step(player.position)
+		shake = 10.0
+		sound("hit")
+	)
+	await cs.wait(0.6)
+	var foe: PixelActor = patrol.back() if not patrol.is_empty() else null
+	if foe != null:
+		cs.face(player, foe.position)
+		cs.face(foe, player.position)
+		cs.pose(foe, "idle")
+	await cs.say("SHADEPI", "Ihr steht zwischen mir und ihr. Letzte Gelegenheit zu gehen.")
+	await cs.say("GANGER", "Noch so ein Freak mit Schwert. Macht ihn fertig!")
+	cs.end()
+
+func camera_home() -> Vector2:
+	if raven_leads() or phase == Phase.ROOFTOP:
+		return raven.position + Vector2(0, -57) + raven.facing * 8
+	return super.camera_home()
 
 func raven_hack() -> bool:
 	if phase == Phase.DUEL:
@@ -407,6 +455,7 @@ func _rooftop_dialogue() -> void:
 	], func():
 		_enter_checkpoint(Phase.RESCUE)
 		autosave()
+		_scene_shadepi_lands()
 	)
 
 func _spawn_patrol(point: Vector2, variant: int) -> PixelActor:

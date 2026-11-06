@@ -28,6 +28,14 @@ func clear_at(scene: Node2D, point: Vector2) -> bool:
 	return scene.get_world_2d().direct_space_state.intersect_shape(query, 1).is_empty()
 
 func finish_dialogue(scene: Node2D) -> void:
+	for _round in 4:
+		if scene.in_cinematic():
+			scene.cutscene.skip()
+		_finish_dialogue_once(scene)
+	if scene.in_cinematic():
+		scene.cutscene.skip()
+
+func _finish_dialogue_once(scene: Node2D) -> void:
 	for page in 60:
 		if not scene.ui.dialogue_open:
 			return
@@ -194,8 +202,14 @@ func run() -> void:
 		campaign.interact()
 		check(preload("res://tests/terminal_solver.gd").complete(campaign), "Raven solves roof access terminal")
 	finish_dialogue(campaign)
-	await verify_encounter(campaign, 7)
-	check(campaign.beat == campaign.Beat.BOSS and campaign._living() == 1, "all roof waves lead to the single Kenzō boss")
+	check(campaign.beat == campaign.Beat.BOSS and campaign._living() == 1, "roof terminals lead straight to the single Kenzō boss")
+	campaign.foes.back().take_damage(1000)
+	await process_frame
+	await process_frame
+	finish_dialogue(campaign)
+	check(campaign.beat == campaign.Beat.ESCAPE, "Kenzō's defeat opens the escape")
+	await verify_encounter(campaign, 8)
+	check(campaign.escape_guards_cleared and campaign.beat == campaign.Beat.ESCAPE, "all lift waves after Kenzō release the escape timer")
 	campaign.queue_free()
 	await process_frame
 	print("ARCADE WAVES: %d checks, %d failures" % [checks, failures])

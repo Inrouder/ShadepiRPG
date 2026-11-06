@@ -33,10 +33,12 @@ const AMBUSH := [
 		[[Vector2(700, 390), 3], [Vector2(865, 360), 0], [Vector2(930, 415), 2]],
 	]},
 ]
-const ROOF := [
-	{"bounds": Vector2(540, 1000), "floor": Vector2(235, 495), "start": Vector2(700, 360), "waves": [
-		[[Vector2(735, 335), 2], [Vector2(870, 320), 1]],
-		[[Vector2(680, 395), 0], [Vector2(920, 370), 1]],
-		[[Vector2(720, 370), 2], [Vector2(895, 400), 3], [Vector2(940, 345), 1]],
+# Kenzō's guards storm the penthouse from the lift (bottom centre) only after
+# Kenzō has fallen; the dead-man switch calls them up from the floor below.
+const LIFT := [
+	{"bounds": Vector2(12, 1012), "floor": Vector2(283, 523), "start": Vector2(60, 420), "waves": [
+		[[Vector2(450, 482), 0], [Vector2(575, 486), 1]],
+		[[Vector2(380, 470), 2], [Vector2(650, 475), 1], [Vector2(512, 498), 0]],
+		[[Vector2(420, 490), 3], [Vector2(600, 494), 2], [Vector2(512, 470), 1]],
 	]},
 ]

@@ -1,5 +1,15 @@
 # Versionshinweise
 
+## v0.17.0 – ClaudeHelper: Szenen und Kapitel-6-Fix · 6. November 2026
+
+- **Fehlerkorrektur:** Die Aufzugwachen griffen bisher auf dem Dach *vor* Kenzōs Kampf an. Sie folgen jetzt seinem Tod (Totmannschalter) mit drei Wellen im Penthouse; der 60-Sekunden-Timer läuft erst danach. Speicherstand merkt sich den Zwischenstand, alte Stände am Dachkampf springen direkt zu Kenzō.
+- **Zwischensequenz-System** (`scripts/cutscene.gd`): Kinobalken, Kamerafahrten mit Zoom, Laufwege, Untertitel mit Sprecherfarben, Blitz/Überblendung, Titelkarten, Dachsprung. E/A blättert weiter, Leertaste/B überspringt. Pause, Kontrollpunkt und Neustart brechen Szenen sauber ab.
+- **Neue Szenen:** Jackals Auftritt, Shadepis Landung in der Wartungsgasse, Penthouse-Konfrontation mit Enttarnung, Kenzōs Ende durch Raven, Alarm und Aufzug, Ritual am See ohne Teleport, Finale mit Maskenkodex und Titelkarte.
+- Kenzō erhält eine Boss-Anzeige; Lebensbalken werden in Zwischensequenzen ausgeblendet.
+- „Orden des Weißen Drachen“ in Kapitel 2 korrigiert.
+- Tests angepasst und erweitert (Reihenfolge Kenzō → Wachen, Timer, Laden während der Wachen); `tools/cutscene_gallery.gd` rendert alle Szenen.
+
+
 ## v0.16.0 – Ravens Terminals, Arcade-Kämpfe und Live-Menü · 6. November 2026
 
 - Fünf interaktive Terminal-Rätseltypen an acht Storypunkten mit Eingaben per Maus, Tastatur und Controller, Pause, Wiederholung und gespeichertem Fortschritt. Aerodyne-Notfall nun per Jumper-Wartungsdeck statt Klopf-Sequenz.

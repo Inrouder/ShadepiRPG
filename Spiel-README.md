@@ -4,7 +4,7 @@
 
 **Kapitel und Kontrollpunkte:** Mit „Weiter zu Kapitel …“ beginnt das folgende Kapitel am Anfang. Die Menüoption „Fortsetzen“ lädt dessen vorhandenen Kontrollpunkt. Kapitel 2 verläuft über Industriegebiet → Versteck → Kühlsystem → Deep Dive → Kryospray → Abschluss. Danach folgen Pakt, Hinterhalt und Verfolgung (3), Garage und Hangar (4), Heiligtum und Erinnerungen (5), Anflug, Dach, Kenzō und Flucht (6), See und Aufnahme in den Orden (7).
 
-**Flucht:** Daten sichern, Aufzug blockieren, Treibstoffpumpe fernstarten, Dachausgang erreichen. Die sechzig Sekunden laufen während des Spielens; Dialoge und Pause halten den Timer an. Lange Dialoge besitzen mehrere Seiten, die vollständig mit E / Enter / A weitergeschaltet werden.
+**Flucht:** Nach Kenzōs Fall und den Aufzugwachen: Daten sichern, Aufzug blockieren, Treibstoffpumpe fernstarten, Dachausgang erreichen. Die sechzig Sekunden laufen während des Spielens; Dialoge und Pause halten den Timer an. Lange Dialoge besitzen mehrere Seiten, die vollständig mit E / Enter / A weitergeschaltet werden.
 
 **Kapitel 1 · Echos in Neon und Schatten** ist der spielbare Auftakt zu „Shadepi – Im Schatten des Raben“.
 
@@ -102,7 +102,7 @@ Mit **E / A** nach Kapitel 2 startet die restliche Kampagne. Der Kontrollpunkt l
 - **Sanktuarium:** Fahre gemeinsam mit Raven auf der Plattform hinab. Schalte Strom, Gleiterkennung und Transponder frei und prüfe die Ports 2, 1 und 3 bei Cyan.
 - **Heiligtum:** Starte die Timing-Runde mit J/X im Solo oder Leertaste/B zu zweit. Shadepi tippt mit J, Raven mit U. Mit zwei Controllern nutzen beide X. Anschließend ordnet Raven die drei Erinnerungsanker.
 - **Aerodyne:** Wechsle beim Tower-Anflug die Flugspur und sende die Kennung mit Q/RB, sobald der Scanner in Reichweite ist.
-- **Kampf und Flucht:** Q/RB stört gegnerische Implantate. Die Aufzugwachen stehen vor dem Penthouse. Kenzō kämpft dort allein. Sichere anschließend die Daten, blockiere den Aufzug, starte die Pumpe neu und erreiche den Aerodyne vor Ablauf von 60 Sekunden.
+- **Kampf und Flucht:** Q/RB stört gegnerische Implantate. Kenzō kämpft im Penthouse allein. Erst nach seinem Tod ruft sein Totmannschalter die Aufzugwachen (drei Wellen); danach startet der Fluchttimer. Sichere anschließend die Daten, blockiere den Aufzug, starte die Pumpe neu und erreiche den Aerodyne vor Ablauf von 60 Sekunden.
 
 Die Geschichte bleibt im Spiel vollständig bis zum Ende am See. Die Geschichte wechselt zwischen den Figuren an der Hauptsteuerung. Kapitel 5 bietet zusätzlich ein lokales Timing-Duell. Der Kapiteltext, die Comiczuordnungen und die Missionsziele stehen in `scripts/campaign_story.gd`.
 

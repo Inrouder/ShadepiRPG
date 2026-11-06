@@ -9,13 +9,13 @@ Die Bodenkämpfe nutzen einen Arcade-Ablauf: Abschnitt betreten, Gegnerwellen be
 | Ravens Jagd, Kapitel 1 | 3 | 2 / 2 / 2 | 12 |
 | Shadepis Rettungsweg, Kapitel 1 | 1 | 3 | 8 |
 | Hinterhalt, Kapitel 3 | 2 | 3 / 3 | 13 |
-| Aufzugwachen, Kapitel 6 | 1 | 3 | 7 |
+| Aufzugwachen nach Kenzōs Tod, Kapitel 6 | 1 | 3 | 8 |
 
 Nahkämpfer, Schützen und die vorhandenen Schildwachen wechseln sich ab. Gegner behalten moderate Lebenspunkte. Verstärkung sucht freie Ankunftspositionen mit Abstand zu den Figuren und hat zunächst 1,3 Sekunden Angriffs-Abklingzeit. Pro abgeschlossenem Abschnitt erhalten lebende Figuren bis zu 15 Lebenspunkte und 20 Energie zurück; die Obergrenze bleibt 100. Die am Boden liegende Raven wird dadurch nicht vorzeitig wiederbelebt.
 
 Pausenmenü und Dialoge halten die Wellenpausen an. Das Motorrad und der nächste Storyabschnitt bleiben auch während der Wellenpause gesperrt. Die Jagd verlangt weiterhin das Verfolgen von Ravens Spur, bevor Jackals Hof aufgeht.
 
-Beim Wechsel zum nächsten Kampfabschnitt wird automatisch gespeichert. Niederlage oder Laden starten diesen Abschnitt bei Welle 1 mit voller Gesundheit. Kapitel 1 speichert den Abschnitt getrennt für Solo und Koop. Alte Spielstände ohne Abschnittsnummer bleiben ladbar. Der Tower-Kontrollpunkt beginnt wie bisher vor den beiden Zugangshacks; der Aufzugkampf folgt danach erneut.
+Beim Wechsel zum nächsten Kampfabschnitt wird automatisch gespeichert. Niederlage oder Laden starten diesen Abschnitt bei Welle 1 mit voller Gesundheit. Kapitel 1 speichert den Abschnitt getrennt für Solo und Koop. Alte Spielstände ohne Abschnittsnummer bleiben ladbar. Seit v0.17.0 kommen die Aufzugwachen erst **nach** Kenzōs Kampf: Sein Totmannschalter ruft sie ins Penthouse, der Fluchttimer startet erst nach der letzten Welle. Laden oder Niederlage während dieses Kampfes setzt ihn ohne erneute Zwischensequenz fort. Alte Spielstände am früheren Dachkampf starten direkt bei Kenzō.
 
 Jackals Storyduell, sein gemeinsamer Bosskampf, Kenzōs Einzelkampf, die vorhandene ICE-Abwehr sowie Fahr-, Rätsel- und Storysequenzen behalten ihren Ablauf. Die inzwischen ergänzten [Kraftangriffe und der Kick](kampfbewegungen.md) sind separat dokumentiert.
 

@@ -159,7 +159,7 @@ func _draw() -> void:
 	super._draw()
 	if health <= 0:
 		return
-	if active:
+	if active and not world.in_cinematic():
 		draw_rect(Rect2(-22, -64, 44, 3), Color("162435"))
 		draw_rect(Rect2(-22, -64, 44.0 * health / max_health, 3), Color("57d5e4") if exposed > 0 else Color("ec597e"))
 	if windup > 0.0:
