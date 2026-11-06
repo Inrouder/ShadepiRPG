@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.15.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.16.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -35,7 +35,18 @@ Die Spielwelt nutzt **16 gemalte Kulissen** aus `assets/world/painted/`. Wände 
 
 Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und Bosskämpfen. Die vollständige Zuordnung und Hinweise zum Austauschen der MP3-Dateien stehen unter [Musik austauschen](assets/music/README.md).
 
-## Neu in v0.15.0
+## Neu in v0.16.0 · 6. November 2026
+
+- **Ravens Terminal-Minigames:** Fünf unterschiedliche Rätselmechaniken an acht Storypunkten, darunter Matrix-Hacking, Passwort-Decoder, Leitungsnetz mit ICE, Signalabgleich und Jumper-Reparatur.
+- **Erweiterte Kämpfe:** Aufladbare Katana-Energiewelle, Kick und Ravens aufgeladener Pistolenschuss mit passenden HQ-Kampfposen.
+- **Längere Arcade-Abschnitte:** Zusätzliche Gegnerwellen, Abschnittssperren und Kontrollpunkte bei Jagd, Rettungsweg, Hinterhalt und Aufzugwachen.
+- **Interaktives Hauptmenü:** Neonstadt mit Parallax-Bewegung, Wind in Haaren und Schal, Regen und Reflexionen sowie Maus-/Controller-Fokus.
+- **Levelkorrekturen:** Ravens Position an der Dachkante, maßstabsgerechtes Versteck und verbesserter Übergang von Bingo Street zur Gasse.
+- **Prüfungen:** Neue automatisierte Tests für Terminal-Regeln, Kampfbewegungen und Arcade-Wellen im bestehenden GitHub-Build. Ein erfolgreicher Build von v0.16.0 ist noch nicht bestätigt.
+
+[Terminal-Rätsel](docs/ravens-terminals.md) · [Kampfbewegungen](docs/kampfbewegungen.md) · [Arcade-Wellen](docs/arcade-wellen.md) · [Startmenü](docs/live-startmenue.md)
+
+## Änderungen in v0.15.0
 
 - Alle neun zerstörbaren Requisitentypen in gemaltem HQ-Stil, jeweils intakt, beschädigt und zerstört; auch die festen Demo-Requisiten nutzen die neuen Grafiken.
 - HQ-Aerodyne, Motorrad mit beiden Figuren, Verfolgerwagen und Drohnen.
