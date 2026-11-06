@@ -4,7 +4,9 @@ Dieses Archiv hält die vom Nutzer im Chat bereitgestellten Quellen dauerhaft be
 
 ## Stand
 
-Teil 1 wurde am 6. November 2026 bereitgestellt. Teil 2 ist angekündigt und noch nicht eingegangen. Die Sammlung ist deshalb noch unvollständig. Neue Quellen ergänzen; vorhandene Originale nicht stillschweigend ersetzen. Abweichende Aussagen und Zeitstände der Quellen bei späteren Arbeiten kenntlich machen.
+Teil 1 und die fünf weiteren Bildreferenzen aus Teil 2 wurden am 6. November 2026 bereitgestellt. Der Nutzer hat als nächste Lieferung den Comic angekündigt; dieser steht noch aus. Neue Quellen ergänzen; vorhandene Originale nicht stillschweigend ersetzen. Abweichende Aussagen und Zeitstände der Quellen bei späteren Arbeiten kenntlich machen.
+
+Die [Bildnotizen zu Teil 2](teil-2/README.md) erfassen Shadepis Tempelmotiv, sein Maskendetail und drei weitere Raven-Referenzen. Die Originaldateien der insgesamt sieben Chat-Bilder sind bislang nicht lokal verfügbar; im Repository liegen hierzu Beschreibungen vor.
 
 ## Teil 1: Dokumente
 

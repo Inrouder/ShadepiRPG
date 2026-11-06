@@ -13,4 +13,4 @@ Vom Nutzer festgelegte Arbeitsregeln:
 
 Das [Shadepi-Universum-Archiv](docs/universum/README.md) enthält die bereitgestellten Originalquellen, Textkopien und Hinweise zu Figurenreferenzen. Vor Arbeiten an Lore, Figuren oder ihrem Aussehen die passenden Quellen konsultieren. Vorhandene HQ-Assets und den aktuellen GitHub-Stand berücksichtigen.
 
-Stand der Archivaufnahme: Teil 1 ist aufgenommen, Teil 2 vom Nutzer angekündigt. Die Originaldateien der beiden eingebetteten Figurenbilder sind noch nicht als Dateianhänge vorhanden; dieser Unterschied ist im Archiv dokumentiert. Archivaufnahme allein ist kein Auftrag, die Spielwelt oder Figuren zu ändern.
+Stand der Archivaufnahme: Teil 1 enthält die drei Original-PDFs und Notizen zu zwei Figurenreferenzen; Teil 2 dokumentiert fünf weitere Bildreferenzen. Der Comic ist angekündigt und steht noch aus. Die sieben eingebetteten Bilder liegen bislang nur im Chat vor, nicht als lokal verfügbare Originaldateien; dieser Unterschied ist im Archiv dokumentiert. Archivaufnahme allein ist kein Auftrag, die Spielwelt oder Figuren zu ändern.
