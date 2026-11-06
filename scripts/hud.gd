@@ -203,6 +203,7 @@ func _ready() -> void :
 	menu_help = label_at("Controller · Stick wählen, A bestätigen\nF5 Speichern · F9 Laden · V Bildstil", Vector2(16, 279), Vector2(244, 37), menu, 9, Color("9db0c4"))
 
 	_build_admin_panel()
+	_build_feedback()
 	menu_title.mouse_filter = Control.MOUSE_FILTER_STOP
 	menu_title.gui_input.connect(_secret_title_click)
 
@@ -459,6 +460,43 @@ func _admin_reset() -> void:
 	_refresh_admin_controls()
 	world.toast("Alle Test-Cheats deaktiviert.")
 
+var combo_label: Label
+var hurt_overlay: ColorRect
+var shown_combo := 0
+
+func _build_feedback() -> void:
+	hurt_overlay = ColorRect.new()
+	hurt_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	hurt_overlay.color = Color(0.85, 0.05, 0.12, 0.0)
+	hurt_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(hurt_overlay)
+	root.move_child(hurt_overlay, 1)
+	combo_label = label_at("", Vector2(470, 72), Vector2(160, 30), root, 20, Color("ffe08a"))
+	combo_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	combo_label.add_theme_color_override("font_outline_color", Color("1a0d16"))
+	combo_label.add_theme_constant_override("outline_size", 5)
+	combo_label.pivot_offset = Vector2(140, 15)
+	game_hud_nodes.append(combo_label)
+
+func hurt_flash() -> void:
+	if hurt_overlay != null:
+		hurt_overlay.color.a = 0.32
+
+func _update_feedback(delta: float) -> void:
+	if combo_label == null:
+		return
+	hurt_overlay.color.a = maxf(0.0, hurt_overlay.color.a - delta * 1.4)
+	var hits: int = world.combo_hits
+	combo_label.visible = hits >= 2 and not world.is_busy()
+	if hits != shown_combo:
+		shown_combo = hits
+		if hits >= 2:
+			combo_label.text = "%d TREFFER" % hits
+			combo_label.scale = Vector2.ONE * 1.45
+			combo_label.modulate = Color("ffe08a") if hits < 6 else (Color("ff9b5e") if hits < 10 else Color("ff5f86"))
+	combo_label.scale = combo_label.scale.move_toward(Vector2.ONE, delta * 4.0)
+	combo_label.modulate.a = clampf(world.combo_time / 0.5, 0.0, 1.0)
+
 func clear_toast() -> void:
 	message_time = 0.0
 	notice.visible = false
@@ -598,6 +636,7 @@ func _process(delta: float) -> void :
 	abilities.visible = not dialogue_open and not world.menu_open
 	boss.text = "CHROME JACKAL\n" + ("IMPLANTATE GESTÖRT" if world.enemy.exposed > 0 else "Panzerung aktiv") if world.stage == 2 else ""
 	boss_panel.visible = world.stage == 2
+	_update_feedback(delta)
 	if start_backdrop.visible:
 		for node in game_hud_nodes:
 			node.hide()

@@ -60,6 +60,12 @@ var painted_solids: Array[StaticBody2D] = []
 var painted_masks: Array[Polygon2D] = []
 var painted_layout: = ""
 var cutscene: CanvasLayer
+## Combat feedback: consecutive hits, short freeze frames and camera punch.
+var combo_hits := 0
+var combo_time := 0.0
+var best_combo := 0
+var hitstop_left := 0.0
+var camera_punch := Vector2.ZERO
 
 func open_terminal(context: String, on_success: Callable) -> void:
 	if terminal != null or is_busy():
@@ -90,6 +96,7 @@ func cancel_terminal() -> void:
 	terminal = null
 
 func _ready() -> void :
+	Engine.time_scale = 1.0
 	admin_flags = Admin.read_flags()
 	_bind_inputs()
 	Input.joy_connection_changed.connect(_on_joy_connection_changed)
@@ -677,7 +684,11 @@ func _process(delta: float) -> void :
 	else:
 		camera.position = player.position + Vector2(0, -60) + player.facing * 8
 	shake = maxf(0, shake - delta * 20)
-	camera.offset = Vector2(sin(Time.get_ticks_msec() * 0.1), cos(Time.get_ticks_msec() * 0.15)) * shake
+	camera_punch = camera_punch.move_toward(Vector2.ZERO, delta * 60.0)
+	combo_time = maxf(0.0, combo_time - delta)
+	if combo_time == 0.0:
+		combo_hits = 0
+	camera.offset = Vector2(sin(Time.get_ticks_msec() * 0.1), cos(Time.get_ticks_msec() * 0.15)) * shake + camera_punch
 	queue_redraw()
 
 func _update_raven_follower(delta: float) -> void :
@@ -857,8 +868,8 @@ func raven_shot() -> void :
 		endpoint = wall.position
 	var target: = raven_shot_target(origin)
 	if target != null:
-		endpoint = origin + raven.facing * (target.position - origin).dot(raven.facing)
-		target.take_damage(17)
+		endpoint = target.position
+		target.take_damage(17, origin)
 	elif not wall.is_empty() and wall.collider is WorldProp:
 		wall.collider.take_damage(17)
 	effects.pulse_trace(origin, endpoint)
@@ -867,10 +878,12 @@ func raven_shot() -> void :
 func raven_shot_target(origin: Vector2) -> PixelActor:
 	return enemy if stage == 2 and raven_can_hit(enemy, origin) else null
 
+## Pistol shots forgive slightly off-axis aim: a cone that widens with distance
+## (aim assist) instead of an eight-pixel line.
 func raven_can_hit(target: PixelActor, origin: Vector2) -> bool:
 	var offset: = target.position - origin
 	var depth: float = offset.dot(raven.facing)
-	return depth >= 0.0 and depth <= 152.0 and absf(offset.cross(raven.facing)) <= 8.0 and _line_clear(origin, origin + raven.facing * depth)
+	return depth >= 0.0 and depth <= 160.0 and absf(offset.cross(raven.facing)) <= 14.0 + depth * 0.12 and _line_clear(origin, target.position)
 
 func _line_clear(from: Vector2, to: Vector2) -> bool:
 	return trace_scenery(from, to).is_empty()
@@ -878,7 +891,7 @@ func _line_clear(from: Vector2, to: Vector2) -> bool:
 func player_strike(amount: int) -> void :
 	strike_scenery(player.position, player.facing, amount)
 	if stage == 2 and CombatRules.can_strike(player.position, player.facing, enemy.position) and _line_clear(player.position, enemy.position):
-		enemy.take_damage(amount)
+		enemy.take_damage(amount, player.position)
 
 func special_targets() -> Array[Node2D]:
 	var targets: Array[Node2D] = []
@@ -889,7 +902,7 @@ func special_targets() -> Array[Node2D]:
 
 func special_hit(target: Node2D, amount: int, source: PixelActor, kick: bool) -> void:
 	var before: int = target.health
-	target.take_damage(amount)
+	target.take_damage(amount, source.position)
 	if kick and target.health > 0 and target.health < before:
 		target.hack_interrupt(0.5)
 		target.move_and_collide(source.facing * 22)
@@ -922,20 +935,77 @@ func spawn_trail(point: Vector2, color: Color) -> void :
 
 func impact(point: Vector2, foe: bool) -> void :
 	effects.burst(point, Color("ff648a") if foe else Color("a6d6ea"))
-	shake = 2.2 if foe else 3.5
-	sound("hit")
+	shake = maxf(shake, 2.2 if foe else 4.5)
+	sound("hit", 0.12)
+	if not foe and ui != null and ui.has_method("hurt_flash"):
+		ui.hurt_flash()
+		hitstop(0.05)
 
-func damage_number(point: Vector2, text: String) -> void :
+## One place for hit feedback: freeze frame, camera punch, sparks, combo count.
+func register_hit(target: Node2D, amount: int, direction: Vector2, killed: bool) -> void:
+	var heavy: = amount >= 30
+	combo_hits += 1
+	best_combo = maxi(best_combo, combo_hits)
+	combo_time = 1.4
+	hitstop(0.11 if killed else (0.075 if heavy else 0.045))
+	shake = maxf(shake, 6.0 if killed else (4.0 if heavy else 2.6))
+	camera_punch = direction.normalized() * (5.0 if heavy or killed else 2.5)
+	var point: Vector2 = target.global_position
+	effects.slash(point + direction.normalized() * 6.0, direction)
+	effects.burst(point, Color("ffe0a8") if heavy else Color("ff648a"), 22 if killed else (14 if heavy else 9))
+	if killed:
+		effects.burst(point, Color("9fe8ff"), 18)
+		sound("prop_blast", 0.1)
+
+## Brief freeze frame on impact. Skipped in headless runs so tests keep timing.
+func hitstop(seconds: float) -> void:
+	if DisplayServer.get_name() == "headless" or seconds <= 0.0:
+		return
+	if hitstop_left > 0.0:
+		hitstop_left = maxf(hitstop_left, seconds)
+		return
+	hitstop_left = seconds
+	Engine.time_scale = 0.06
+	while hitstop_left > 0.0:
+		var started := Time.get_ticks_usec()
+		await get_tree().create_timer(0.016, true, false, true).timeout
+		if not is_inside_tree():
+			return
+		hitstop_left -= (Time.get_ticks_usec() - started) / 1000000.0
+	Engine.time_scale = 1.0
+
+## Melee aim assist: turn toward the closest enemy just outside the blade cone.
+func melee_assist(actor: PixelActor) -> void:
+	var best: Node2D
+	var best_distance := 66.0
+	for target in special_targets():
+		var offset: Vector2 = target.global_position - actor.position
+		var distance := offset.length()
+		if distance < best_distance and distance > 4.0 and offset.normalized().dot(actor.facing) > 0.2 and _line_clear(actor.position, target.global_position):
+			best = target
+			best_distance = distance
+	if best != null:
+		actor.facing = (best.global_position - actor.position).normalized()
+
+
+func damage_number(point: Vector2, text: String, big: bool = false) -> void :
 	var label: = Label.new()
 	label.text = text
+	var heavy: = big or (text.is_valid_int() and int(text) >= 30)
+	point += Vector2(randf_range(-8, 8), 0)
 	label.position = point
 	label.z_index = 80
-	label.add_theme_font_size_override("font_size", 12)
-	label.modulate = Color("ffd4de")
+	label.add_theme_font_size_override("font_size", 15 if heavy else 12)
+	label.add_theme_color_override("font_outline_color", Color("1a0d16"))
+	label.add_theme_constant_override("outline_size", 4)
+	label.modulate = Color("ffe08a") if heavy else (Color("aab6c4") if text == "BLOCK" else Color("ffd4de"))
+	label.pivot_offset = Vector2(12, 8)
+	label.scale = Vector2.ONE * (1.7 if heavy else 1.35)
 	add_child(label)
 	var tween: = create_tween().set_parallel(true)
-	tween.tween_property(label, "position:y", point.y - 22, 0.55)
-	tween.tween_property(label, "modulate:a", 0, 0.55)
+	tween.tween_property(label, "scale", Vector2.ONE, 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.tween_property(label, "position:y", point.y - 26, 0.6).set_ease(Tween.EASE_OUT)
+	tween.tween_property(label, "modulate:a", 0, 0.25).set_delay(0.4)
 	tween.chain().tween_callback(label.queue_free)
 
 func enemy_defeated(_foe: PixelActor = null) -> void :
@@ -1042,12 +1112,13 @@ func toast(text: String) -> void :
 	if ui != null:
 		ui.toast(text)
 
-func sound(kind: String) -> void :
+func sound(kind: String, pitch_variance: float = 0.0) -> void :
 	if not audio_on or DisplayServer.get_name() == "headless" or AudioServer.get_driver_name() == "Dummy":
 		return
 	for channel in sfx:
 		if not channel.playing:
 			channel.stream = load("res://assets/audio/" + kind + ".wav")
+			channel.pitch_scale = 1.0 + randf_range(-pitch_variance, pitch_variance)
 			channel.play()
 			return
 
@@ -1062,6 +1133,9 @@ func toggle_audio() -> void :
 	toast("Ton an" if audio_on else "Ton aus")
 
 func _exit_tree() -> void :
+	# A freeze frame must never outlive its scene (chapter change mid-hit).
+	hitstop_left = 0.0
+	Engine.time_scale = 1.0
 	gamepads.clear()
 	if is_instance_valid(music):
 		music.stop()

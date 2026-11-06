@@ -25,6 +25,9 @@ var hit_done := false
 var scenery_hit_done := false
 var attack_direction := Vector2.DOWN
 var attack_visual_time := 0.0
+## Hit reaction: knockback impulse that slides with collision and decays.
+var knock_velocity := Vector2.ZERO
+var death_tween: Tween
 
 func _physics_process(delta: float) -> void:
 	if health <= 0 or world.is_busy():
@@ -34,6 +37,7 @@ func _physics_process(delta: float) -> void:
 	cooldown = maxf(0.0, cooldown - delta)
 	attack_visual_time = maxf(0.0, attack_visual_time - delta)
 	velocity = Vector2.ZERO
+	knock_velocity = knock_velocity.move_toward(Vector2.ZERO, 900.0 * delta)
 	var state := "idle"
 	var target = world.combat_target(global_position)
 	var offset: Vector2 = target.global_position - global_position if target != null else Vector2.ZERO
@@ -93,6 +97,7 @@ func _physics_process(delta: float) -> void:
 		elif offset.length() > 35.0:
 			velocity = facing * move_speed
 			state = "walk"
+	velocity += knock_velocity
 	move_and_slide()
 	# Ranged shots and sweeps resolve immediately, but their pose needs a full cycle.
 	# This timer affects artwork only; damage and attack recovery keep their timing.
@@ -100,9 +105,14 @@ func _physics_process(delta: float) -> void:
 		state = "attack"
 	animate(state, delta)
 
-func take_damage(base: int) -> void:
+func is_boss() -> bool:
+	return max_health >= 300
+
+func take_damage(base: int, source: Vector2 = Vector2.INF) -> void:
 	if health <= 0:
 		return
+	if source == Vector2.INF:
+		source = world.player.global_position
 	if armoured or (front_shield and exposed <= 0.0 and global_position.direction_to(world.player.position).dot(facing) > 0.55):
 		world.effects.burst(global_position, Color("efc788"), 7)
 		world.damage_number(global_position + Vector2(0, -48), "BLOCK")
@@ -113,6 +123,14 @@ func take_damage(base: int) -> void:
 	flash_time = 0.17
 	world.impact(global_position, true)
 	world.damage_number(global_position + Vector2(0, -48), str(amount))
+	var direction: Vector2 = (global_position - source).normalized() if global_position != source else facing * -1.0
+	var heavy: = amount >= 30
+	# Hit reaction: knockback and a short flinch. Bosses only flinch on heavy hits.
+	knock_velocity = direction * ((40.0 if is_boss() else 120.0) + amount * (1.5 if is_boss() else 4.0))
+	if not is_boss() or heavy:
+		stun = maxf(stun, 0.22 if heavy else 0.14)
+	if world.has_method("register_hit"):
+		world.register_hit(self, amount, direction, health <= 0)
 	if health <= 0:
 		queue_redraw()
 		active = false
@@ -122,7 +140,21 @@ func take_damage(base: int) -> void:
 		visual.modulate = Color(0.45, 0.5, 0.6, 0.7)
 		visual.rotation = PI * 0.5
 		visual.position.y = -10
+		_fall(direction)
 		world.enemy_defeated(self)
+
+## Death reaction: thrown back a little, a hop and a dimming fade-in of the KO pose.
+func _fall(direction: Vector2) -> void:
+	if not is_inside_tree():
+		return
+	if death_tween != null:
+		death_tween.kill()
+	visual.rotation = 0.0
+	visual.position.y = standing_visual_position.y
+	death_tween = create_tween().set_parallel(true)
+	death_tween.tween_property(self, "position", position + direction * 26.0, 0.3).set_ease(Tween.EASE_OUT)
+	death_tween.tween_property(visual, "rotation", PI * 0.5 * (1.0 if direction.x >= 0.0 else -1.0), 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	death_tween.tween_property(visual, "position:y", -10.0, 0.3).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
 
 func hack() -> void:
 	if health <= 0:
@@ -144,6 +176,10 @@ func hack_interrupt(duration: float) -> void:
 	cooldown = maxf(cooldown, duration)
 
 func reset_fight(hp: int = 180) -> void:
+	if death_tween != null:
+		death_tween.kill()
+		death_tween = null
+	knock_velocity = Vector2.ZERO
 	health = hp
 	exposed = 0.0
 	stun = 0.0

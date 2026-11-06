@@ -105,6 +105,8 @@ func run() -> void:
 	check(scene.player.cloak_time == 10, "cloak has the promised ten second window")
 	await physics_frame
 	await physics_frame
+	await process_frame
+	await process_frame
 	check(not scene.player.light_occluder.visible and not scene.blade_light.enabled, "cloaked player does not give away position with light and cast shadow")
 	check(scene.player.try_attack(), "player can attack")
 	check(scene.player.cloak_time == 0, "attack cancels stealth")
@@ -162,6 +164,7 @@ func run() -> void:
 	await check_chapter()
 	await check_chapter_two()
 	await check_campaign()
+	await check_feedback()
 	print("SHADEPI TESTS: %d checks, %d failures" % [checks, failures])
 	quit(1 if failures else 0)
 
@@ -882,4 +885,87 @@ func check_campaign() -> void:
 		finish_dialogue(scene)
 	check(scene.beat == scene.Beat.END and scene.saved_checkpoint() == scene.Beat.END, "consent and three ritual steps reach and save the ending")
 	scene.queue_free()
+	await process_frame
+
+func check_feedback() -> void:
+	# v0.19.0: apartment scale, chapter-two positions, net walls/hitboxes, hit feedback.
+	var one = load("res://scenes/chapter_one.tscn").instantiate()
+	root.add_child(one)
+	await process_frame
+	check(is_equal_approx(one.APARTMENT_RECT.size.x / one.APARTMENT_RECT.size.y, 1.6), "apartment art keeps its 16:10 aspect instead of a squeezed 640 x 640 square")
+	var door_height: float = 145.0 * one.APARTMENT_SCALE
+	check(door_height > 52.0 and door_height < 80.0, "apartment door is about 1.25 times Raven's sprite height")
+	one.queue_free()
+	await process_frame
+	var two = load("res://scenes/chapter_two.tscn").instantiate()
+	root.add_child(two)
+	await process_frame
+	two.close_menu()
+	two._enter(two.Section.HIDEOUT)
+	finish_dialogue(two)
+	two.player.position = two.WORKBENCH
+	two.interact()
+	finish_dialogue(two)
+	check(two.section == two.Section.COOLING and two.player.position.distance_to(two.WORKBENCH) < 60.0, "Shadepi stays at the workbench instead of snapping back to the entrance")
+	var cooling_spot: Vector2 = two.player.position
+	two.player.position = two.BATH
+	two.interact()
+	finish_dialogue(two)
+	check(two.section == two.Section.DIVE and two.player.position == two.BATH, "Shadepi waits at the ice bath during the dive")
+	# Viruses slide along data walls instead of passing through them.
+	var wall: Rect2 = two.Painted.SOLIDS["dive"][0]
+	for threat in two.threats:
+		threat.queue_free()
+	two.threats.clear()
+	var virus = load("res://scripts/dive_threat.gd").new()
+	virus.world = two
+	virus.position = Vector2(wall.position.x - 30, wall.get_center().y)
+	two.actors.add_child(virus)
+	two.threats.append(virus)
+	two.raven.position = Vector2(wall.end.x + 40, wall.get_center().y)
+	var entered := false
+	for i in 120:
+		virus._process(1.0 / 60.0)
+		if wall.has_point(virus.position):
+			entered = true
+	check(not entered, "net enemies no longer move through data walls")
+	# Shell crack: a protected virus can be shot, cracks open and dies on the follow-up.
+	virus.position = two.raven.position + Vector2(60, 12)
+	virus.elapsed = 0.2
+	two.raven.facing = Vector2.RIGHT
+	check(not virus.vulnerable(), "virus starts protected")
+	two.raven_shot()
+	check(virus.vulnerable() and virus.cracked > 0.0 and virus in two.threats, "an off-axis shot still locks on and cracks the shell")
+	two.raven_shot()
+	check(virus not in two.threats, "the follow-up shot deletes the cracked virus")
+	two.queue_free()
+	await process_frame
+	var camp = load("res://scenes/campaign.tscn").instantiate()
+	root.add_child(camp)
+	await process_frame
+	camp._enter(camp.Beat.AMBUSH)
+	finish_dialogue(camp)
+	var foe = camp.foes[0]
+	foe.position = Vector2(480, 420)
+	for other in camp.foes:
+		if other != foe:
+			other.position = Vector2(900, 300)
+	camp.player.position = Vector2(450, 420)
+	camp.player.facing = Vector2.RIGHT
+	var hits_before: int = camp.combo_hits
+	foe.take_damage(10, camp.player.position)
+	check(foe.knock_velocity.x > 0.0 and foe.stun > 0.0, "regular enemies are knocked back and flinch on every hit")
+	check(camp.combo_hits == hits_before + 1 and camp.combo_time > 0.0, "hits build the combo counter")
+	camp.player.facing = Vector2(0.6, 0.8).normalized()
+	camp.melee_assist(camp.player)
+	check(camp.player.facing.dot((foe.position - camp.player.position).normalized()) > 0.99, "melee aim assist turns toward a nearby enemy")
+	camp._enter(camp.Beat.BOSS)
+	finish_dialogue(camp)
+	var kenzo = camp.foes.back()
+	kenzo.stun = 0.0
+	kenzo.take_damage(10, kenzo.position + Vector2(-20, 0))
+	check(kenzo.stun == 0.0 and kenzo.knock_velocity.length() > 0.0, "bosses only budge slightly on light hits")
+	kenzo.take_damage(1000, kenzo.position + Vector2(-20, 0))
+	check(kenzo.health <= 0 and kenzo.death_tween != null, "defeated enemies fall with a knockback animation")
+	camp.queue_free()
 	await process_frame

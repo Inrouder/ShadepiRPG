@@ -11,6 +11,16 @@ const STREET_HEIGHT_OFFSET := 12
 const DUEL_DURATION := 30.0
 const JACKAL_HEALTH := 360
 const APARTMENT_EXIT := Vector2(-554, 356)
+## Ravens Apartment wird im Figurenmaßstab gezeichnet (Tür ≈ 1,25 × Ravens Höhe)
+## statt auf 640 × 640 gestaucht. apartment_point() rechnet Bildkoordinaten
+## (1024 × 640) in Weltkoordinaten um.
+const APARTMENT_SCALE := 0.46
+const APARTMENT_RECT := Rect2(-555.5, 150, 471.04, 294.4)
+const APARTMENT_CAMERA := Vector2(-320, 300)
+const APARTMENT_ZOOM := 1.36
+
+static func apartment_point(point: Vector2) -> Vector2:
+	return APARTMENT_RECT.position + point * APARTMENT_SCALE
 const EXIT_DOOR := Vector2(961, 255)
 const PUNKS := [
 	preload("res://assets/sprites/npcs/punk-1.png"), preload("res://assets/sprites/npcs/punk-2.png"),
@@ -82,8 +92,8 @@ func _build_world() -> void:
 		_halo(point, Color(0.9, 0.24, 0.43, 0.44), 0.8)
 		street_lights.append(_light(point, Color("f66892"), 1.55, 1.0))
 	apartment_lights = [
-		_light(Vector2(-530, 265), Color("6abac9"), 1.95, 0.63),
-		_light(Vector2(-401, 271), Color("91cbdc"), 1.5, 0.42),
+		_light(apartment_point(Vector2(180, 230)), Color("6abac9"), 1.3, 0.63),
+		_light(apartment_point(Vector2(800, 170)), Color("e0a36f"), 1.0, 0.42),
 	]
 	for light in apartment_lights:
 		light.enabled = false
@@ -276,11 +286,12 @@ func _update_apartment_lighting() -> void:
 
 ## Kapitel 1: Ravens Morgen – nach dem Roman „Im Schatten des Raben“.
 func _scene_apartment() -> void:
-	raven.position = Vector2(-190, 318)
+	var desk := apartment_point(Vector2(180, 250))
+	raven.position = apartment_point(Vector2(760, 360))
 	raven.facing = Vector2.LEFT
 	var cs = begin_cutscene()
 	cs.pose(raven, "idle")
-	await cs.camera(Vector2(-320, 300), 0.0, 1.0)
+	await cs.camera(APARTMENT_CAMERA, 0.0, APARTMENT_ZOOM)
 	await cs.fade(Color.BLACK, 0.0)
 	await cs.fade(Color(0, 0, 0, 0), 1.2)
 	await cs.title("KAPITEL 1", "Echos in Neon und Schatten", 2.4)
@@ -290,20 +301,28 @@ func _scene_apartment() -> void:
 	])
 	cs.do(func():
 		sound("hack")
-		effects.burst(Vector2(-570, 262), Color("6fd6e8"), 14)
+		effects.burst(desk + Vector2(0, 14), Color("6fd6e8"), 14)
 	)
 	await cs.wait(0.4)
-	await cs.walk(raven, Vector2(-540, 318), 78)
-	cs.face(raven, Vector2(-570, 250))
+	await cs.walk(raven, apartment_point(Vector2(180, 330)), 70)
+	cs.face(raven, desk)
 	cs.pose(raven, "idle")
 	await cs.lines([
 		["KOPFGELDTERMINAL", "Chrome Jackal. Prämie erhöht. Letzter Ping an Bingo Street, Wartungshof hinter der Schleuse. Die Kameras senden seit zwölf Minuten dasselbe Bild."],
 		["RAVEN", "Entweder will ihn jemand dringend tot sehen, oder die anderen Jäger haben aufgegeben. Dann nehme ich die Gassen unter den Kameras."],
 	])
-	await cs.walk(raven, APARTMENT_EXIT, 70)
+	await cs.walk(raven, apartment_point(Vector2(350, 318)), 66)
+	cs.face(raven, apartment_point(Vector2(350, 250)))
+	cs.pose(raven, "idle")
+	await cs.wait(0.3)
+	cs.do(func(): raven.hide())
 	await cs.fade(Color.BLACK, 0.6)
 	await cs.say("HOCH ÜBER DER STADT", "Auf dem Sims eines Wolkenkratzers kauert eine Gestalt, reglos wie eine Gargoyle aus Stahl und Schatten. Fünf Jahre ist es her, seit sein Orden fiel.")
-	cs.do(func(): _leave_apartment())
+	cs.do(func():
+		raven.show()
+		_leave_apartment()
+	)
+	await cs.camera(camera_home(), 0.0, 1.0)
 	await cs.fade(Color(0, 0, 0, 0), 0.8)
 	cs.end()
 
@@ -524,7 +543,7 @@ func player_strike(amount: int) -> void:
 	if phase == Phase.RESCUE:
 		for foe in patrol:
 			if CombatRules.can_strike(player.position, player.facing, foe.position) and _line_clear(player.position, foe.position):
-				foe.take_damage(amount)
+				foe.take_damage(amount, player.position)
 	elif phase == Phase.TEAM:
 		super.player_strike(amount)
 
@@ -717,7 +736,8 @@ func load_game(requested_mode: Variant = null) -> bool:
 
 func _draw() -> void:
 	if phase == Phase.APARTMENT:
-		draw_texture_rect(Painted.ART.apartment, Rect2(WEST_EDGE, 0, 640, 640), false)
+		draw_rect(Rect2(WEST_EDGE - 200, -100, 1100, 840), Color("07090f"))
+		draw_texture_rect(Painted.ART.apartment, APARTMENT_RECT, false)
 		return
 	if phase == Phase.EPILOGUE and raven.visible and raven.position.distance_to(EXIT_DOOR) < 53.0:
 		draw_rect(Rect2(947, 186, 39, 79), Color("090e19"))

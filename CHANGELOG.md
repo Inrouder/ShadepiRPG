@@ -1,5 +1,15 @@
 # Versionshinweise
 
+## v0.19.0 – ClaudeHelper: Kampfgefühl, Deep Dive, Apartment · 7. November 2026
+
+- Trefferrückmeldung: Trefferstopp, Rückstoß/Zucken (Bosse nur bei schweren Treffern), Kamerastoß, Funken, neue Schadenszahlen, Kombozähler, K.O.-Fallanimation, roter Treffer-Blitz, Tonhöhenvariation.
+- Shadepi: Ausfallschritt pro Hieb und Nahkampf-Zielhilfe. Raven: Zielkegel statt 8-Pixel-Linie.
+- Deep Dive: ICE kollidiert mit Datenwänden, Schuss-Zielhilfe, „Schale knacken“ macht ICE sofort verwundbar.
+- Ravens Apartment im Figurenmaßstab (16:10, Skalierung 0,46) mit eigener Kamera; Szene und Lichter angepasst.
+- Kapitel 2: Storyschritte im Versteck behalten die Positionen (kein Zurückspringen zum Eingang).
+- Unsicherer Cloak-Test stabilisiert; 13 neue Prüfungen; `tools/feedback_gallery.gd`.
+
+
 ## v0.18.0 – ClaudeHelper: Zwischensequenzen statt Comicseiten · 6. November 2026
 
 - Alle Story-Dialoge in Kapitel 1, 2 und der Kampagne (3–7) sind jetzt inszenierte Szenen im Spiel; die Comic-Einblendungen der Dialoge entfallen (`comic_texture` liefert keine Bilder mehr, `Story.DIALOGUE`/`PANELS` entfernt).

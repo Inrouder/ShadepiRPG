@@ -93,7 +93,9 @@ func new_game(save_checkpoint: bool = true) -> void :
 		autosave()
 	_scene_arrival()
 
-func _enter(next: Section, saved_relay: int = 0) -> void :
+## keep_positions: story steps inside the hideout keep both characters where
+## the scene left them instead of snapping back to the room entrance.
+func _enter(next: Section, saved_relay: int = 0, keep_positions: bool = false) -> void :
 	cutscene.abort()
 	ui.clear_toast()
 	section = next
@@ -122,12 +124,18 @@ func _enter(next: Section, saved_relay: int = 0) -> void :
 	previous_ice_open = false
 	ice_cycle = 0.0
 	ui.clear_dialogue()
-	player.position = YARD_START if section == Section.YARD else Vector2(440, 430)
+	if not keep_positions:
+		player.position = YARD_START if section == Section.YARD else Vector2(440, 430)
 	player.health = 100
 	player.energy = 100.0
 	hack_cooldown = 0.0
 	player.reset_transients()
-	reset_raven((Vector2(145, 436) if relay_index == 0 else RELAYS[relay_index - 1]) if raven_leads() else BATH)
+	if raven_leads():
+		reset_raven(Vector2(145, 436) if relay_index == 0 else RELAYS[relay_index - 1])
+	elif not keep_positions or section == Section.RECOVERY:
+		reset_raven(BATH)
+	else:
+		reset_raven(raven.position)
 	raven.modulate = Color(0.57, 0.92, 1.0, 0.56) if raven_leads() else Color.WHITE
 	if raven_leads():
 		_spawn_ice()
@@ -230,6 +238,32 @@ func _spawn_ice() -> void :
 		actors.add_child(threat)
 		threats.append(threat)
 
+func dive_blocked(point: Vector2, radius: float) -> bool:
+	for box: Rect2 in Painted.SOLIDS["dive"]:
+		if box.grow(radius).has_point(point):
+			return true
+	return false
+
+## Raven's net shots lock onto the nearest ICE inside a forgiving cone, so the
+## eight-way stick aim never feels like a miss on a visibly targeted enemy.
+func _dive_aim(origin: Vector2) -> Node2D:
+	var best: Node2D
+	var best_score := INF
+	for threat in threats:
+		var offset: Vector2 = threat.position - origin
+		var distance := offset.length()
+		if distance > 170.0 or distance < 1.0:
+			continue
+		var along := offset.dot(raven.facing)
+		if along <= 0.0 or absf(offset.cross(raven.facing)) > 26.0 + distance * 0.18:
+			continue
+		if not _line_clear(origin, threat.position):
+			continue
+		if distance < best_score:
+			best_score = distance
+			best = threat
+	return best
+
 func raven_shot() -> void :
 	if not raven_leads():
 		return
@@ -238,30 +272,36 @@ func raven_shot() -> void :
 	var wall: = trace_scenery(origin, endpoint)
 	if not wall.is_empty():
 		endpoint = wall.position
-	var hit_threat: Node2D
-	var best: float = origin.distance_to(endpoint)
-	for threat in threats:
-		var offset: Vector2 = threat.position - origin
-		var depth: float = offset.dot(raven.facing)
-		if depth > 0.0 and depth < best and absf(offset.cross(raven.facing)) < 16.0 and _line_clear(origin, threat.position):
-			best = depth
-			hit_threat = threat
+	var hit_threat: = _dive_aim(origin)
 	if hit_threat != null:
-		endpoint = origin + raven.facing * best
+		endpoint = hit_threat.position
 		if hit_threat.vulnerable():
-			effects.burst(hit_threat.position, Color("97f7ff"), 24)
-			threats.erase(hit_threat)
-			hit_threat.set_process(false)
-			hit_threat.queue_free()
-			if threats.is_empty() and relay_index == 1 and not next_wave:
-				next_wave = true
-				_spawn_ice()
+			_destroy_threat(hit_threat)
 		else:
-			toast("Hülle geladen. Die Entladung abwarten.")
+			hit_threat.crack(origin)
+			effects.burst(hit_threat.position, Color("e2c6ff"), 10)
+			damage_number(hit_threat.position + Vector2(-10, -40), "RISS")
+			hitstop(0.04)
+			shake = 2.5
+			sound("hit", 0.15)
 	elif not wall.is_empty() and wall.collider is WorldProp:
 		wall.collider.take_damage(17)
 	effects.pulse_trace(origin, endpoint)
 	sound("hack")
+
+func _destroy_threat(target: Node2D) -> void:
+	effects.burst(target.position, Color("97f7ff"), 30)
+	effects.slash(target.position + Vector2(0, 14), Vector2.RIGHT)
+	damage_number(target.position + Vector2(-14, -44), "GELÖSCHT", true)
+	hitstop(0.07)
+	shake = 4.0
+	sound("hit", 0.2)
+	threats.erase(target)
+	target.set_process(false)
+	target.queue_free()
+	if threats.is_empty() and relay_index == 1 and not next_wave:
+		next_wave = true
+		_spawn_ice()
 
 func raven_hack() -> bool:
 	if not raven_leads() or is_busy() or hack_cooldown > 0.0:
@@ -286,15 +326,10 @@ func special_hit(target: Node2D, amount: int, source: PixelActor, kick: bool) ->
 		super.special_hit(target, amount, source, kick)
 		return
 	if not target.vulnerable():
-		toast("Hülle geladen. Die Entladung abwarten.")
+		target.crack(source.position)
+		damage_number(target.position + Vector2(-10, -40), "RISS")
 		return
-	effects.burst(target.position, Color("97f7ff"), 24)
-	threats.erase(target)
-	target.set_process(false)
-	target.queue_free()
-	if threats.is_empty() and relay_index == 1 and not next_wave:
-		next_wave = true
-		_spawn_ice()
+	_destroy_threat(target)
 
 func admin_defeat_enemies() -> int:
 	var amount := super.admin_defeat_enemies()
@@ -328,7 +363,7 @@ func _trace_relay() -> void :
 
 func _finish_download() -> void :
 	effects.burst(raven.position, Color("b992ff"), 55)
-	_enter(Section.RECOVERY)
+	_enter(Section.RECOVERY, 0, true)
 	autosave()
 	_scene_return()
 
@@ -424,7 +459,7 @@ func _scene_fragment() -> void:
 	cs.pose(raven, "idle")
 	await cs.say("RAVEN", "Falls ich einen Kurzschluss erleide … verschwinde von hier.")
 	cs.end(func():
-		_enter(Section.COOLING)
+		_enter(Section.COOLING, 0, true)
 		autosave()
 	)
 
@@ -437,7 +472,7 @@ func _scene_dive() -> void:
 	cs.do(func(): sound("hack"))
 	await cs.flash(Color(0.45, 0.95, 1.0, 0.85), 0.7)
 	cs.end(func():
-		_enter(Section.DIVE)
+		_enter(Section.DIVE, 0, true)
 		autosave()
 	)
 
@@ -486,7 +521,7 @@ func _scene_oath() -> void:
 		["SHADEPI", "Ich, Shadepi, der letzte Krieger des Ordens des Weißen Drachen, verspreche dir, sie dafür bezahlen zu lassen."],
 	])
 	cs.do(func():
-		_enter(Section.END)
+		_enter(Section.END, 0, true)
 		autosave()
 		_scene_chapter_end()
 	)

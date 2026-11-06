@@ -292,7 +292,7 @@ func player_strike(amount: int) -> void :
 		return
 	for foe in foes:
 		if foe.health > 0 and CombatRules.can_strike(player.position, player.facing, foe.position) and _line_clear(player.position, foe.position):
-			foe.take_damage(amount)
+			foe.take_damage(amount, player.position)
 
 func raven_hack() -> bool:
 	if not is_combat() or is_busy():

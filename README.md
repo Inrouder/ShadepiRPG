@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.18.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.19.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -35,7 +35,14 @@ Die Spielwelt nutzt **16 gemalte Kulissen** aus `assets/world/painted/`. Wände 
 
 Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und Bosskämpfen. Die vollständige Zuordnung und Hinweise zum Austauschen der MP3-Dateien stehen unter [Musik austauschen](assets/music/README.md).
 
-## Neu in v0.18.0 · 6. November 2026 · ClaudeHelper
+## Neu in v0.19.0 · 7. November 2026 · ClaudeHelper
+
+- **Kampfgefühl:** Trefferstopp, Rückstoß und Zucken, Kamerastoß, gerichtete Funken, aufspringende Schadenszahlen, Kombozähler, K.O.-Animation, Ausfallschritt und Zielhilfe für Shadepi, Zielhilfe für Ravens Pistole, roter Blitz bei eigenen Treffern. [Details](docs/kampf-feedback.md)
+- **Deep Dive:** ICE fliegt nicht mehr durch Wände, Schüsse rasten ein, ein Treffer knackt die Schale, der nächste löscht das ICE.
+- **Ravens Apartment** im richtigen Maßstab: Das Bild wird nicht mehr auf 640 × 640 gestaucht, Möbel passen zu den Figuren. ![Apartment](docs/apartment-proportionen.png)
+- **Kapitel 2:** Shadepi springt im Storyverlauf nicht mehr zum Eingang zurück.
+
+## v0.18.0 · 6. November 2026 · ClaudeHelper
 
 - **Echte Zwischensequenzen statt Comic-Einblendungen:** Alle Storydialoge der Kapitel 1–7 laufen jetzt im Spiel – mit Kamerafahrten, laufenden Figuren, Kinobalken, Kapitel-Titelkarten und Untertiteln. Die unpassenden Comicbilder sind entfernt.
 - **Texte nach der Romanfassung** „Shadepi im Schatten des Raben“ aus dem Archiv, inklusive der Enthüllung, dass Kenzō das Massaker am Orden mit Militechs Minotauren inszeniert hat.
