@@ -4,6 +4,8 @@
 
 **Kapitel und Kontrollpunkte:** Mit „Weiter zu Kapitel …“ beginnt das folgende Kapitel am Anfang. Die Menüoption „Fortsetzen“ lädt dessen vorhandenen Kontrollpunkt. Kapitel 2 verläuft über Industriegebiet → Versteck → Kühlsystem → Deep Dive → Kryospray → Abschluss. Danach folgen Pakt, Hinterhalt und Verfolgung (3), Garage und Hangar (4), Heiligtum und Erinnerungen (5), Anflug, Dach, Kenzō und Flucht (6), See und Aufnahme in den Orden (7).
 
+**Zwischensequenzen:** Die Story läuft in inszenierten Szenen mit Kinobalken. E / Enter / A blättert weiter, Leertaste / B überspringt die Szene.
+
 **Flucht:** Nach Kenzōs Fall und den Aufzugwachen: Daten sichern, Aufzug blockieren, Treibstoffpumpe fernstarten, Dachausgang erreichen. Die sechzig Sekunden laufen während des Spielens; Dialoge und Pause halten den Timer an. Lange Dialoge besitzen mehrere Seiten, die vollständig mit E / Enter / A weitergeschaltet werden.
 
 **Kapitel 1 · Echos in Neon und Schatten** ist der spielbare Auftakt zu „Shadepi – Im Schatten des Raben“.
@@ -14,7 +16,7 @@ Raven bekommt in ihrem Apartment einen Hinweis auf Chrome Jackal, räumt die Pun
 
 **Neue Kampfbewegungen:** Halte **K / RT**, bis nach 1,1 Sekunden der kurze Wellenring „bereit“ signalisiert. Loslassen sendet Shadepis Katana-Welle oder Ravens Kraftschuss aus. Im Koop lädt Raven mit **I / RT** an ihrem Controller. **L / LT** führt Shadepis Kick aus. Frühes Loslassen ergibt einen normalen Angriff; Treffer, Ausweichen und Pausen brechen das Laden ab. [Details und animierte Vorschau](docs/kampfbewegungen.md).
 
-Die Zwischenszenen nutzen Ausschnitte aus dem Comic „Shadepi – Im Schatten des Raben“ (deutsche Fassung, PDF-Seiten 2, 4, 5, 6 und 9) mit eigens für das Spiel geschriebenen Dialogen.
+Seit v0.18.0 laufen alle Zwischenszenen im Spiel selbst – mit Kamerafahrten, Figurenbewegung und Untertiteln nach der Romanfassung „Shadepi im Schatten des Raben“. [Übersicht der Szenen](docs/zwischensequenzen.md).
 
 ## Verstecktes Test-/Admin-Menü
 
@@ -46,9 +48,9 @@ Die Gassen, das Industriegebiet, das Versteck, die Garage, der Hangar und der To
 
 Lichttextur und Basissounds lassen sich mit `npm ci` und `npm run assets` neu erzeugen. Der Generator verändert **keine** Charakter-Sprites, gemalten Level oder das App-Symbol. Vor Änderungen an Requisiten/Geräuschen die vorhandenen Dateien sichern. Die Platzierungen stehen in `scripts/world_dressing.gd`.
 
-## Comicgestaltung in v0.9.0
+## Comicgestaltung in v0.9.0 (bis v0.17.0)
 
-Die Bildregie orientiert sich an der deutschen Comicfassung. Zwischenszenen nutzen einen gemeinsamen Panelrahmen mit Kapitelkennung und getrenntem Dialogfeld.
+Die Bildregie orientierte sich an der deutschen Comicfassung. Bis v0.17.0 nutzten Zwischenszenen einen gemeinsamen Panelrahmen; seit v0.18.0 sind sie durch Szenen im Spiel ersetzt. Die Bilder liegen weiterhin unter `assets/comic/`.
 
 | Kapitel | PDF-Seiten | Motive im Spiel |
 | --- | --- | --- |

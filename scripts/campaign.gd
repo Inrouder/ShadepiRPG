@@ -45,6 +45,7 @@ func _ready() -> void :
 	var admin_chapter: int = Admin.consume_chapter(get_tree(), "res://scenes/campaign.tscn")
 	if admin_chapter >= 3:
 		restore_dressing_state({})
+		fresh_entry = true
 		_enter(Admin.first_beat(admin_chapter))
 	elif ChapterFlow.consume_entry(get_tree(), "res://scenes/campaign.tscn") or not load_game():
 		new_game()
@@ -72,6 +73,9 @@ func actor_is_playable(actor: PixelActor) -> bool:
 
 func actor_input_prefix(_actor: PixelActor) -> String:
 	return ""
+
+func combat_ready() -> bool:
+	return is_combat()
 
 func is_combat() -> bool:
 	return beat in [Beat.AMBUSH, Beat.BOSS] or (beat == Beat.ESCAPE and not escape_guards_cleared)
@@ -106,12 +110,14 @@ func _update_raven_follower(delta: float) -> void :
 
 func new_game(_save_checkpoint: bool = true) -> void :
 	restore_dressing_state({})
+	fresh_entry = true
 	_enter(Beat.PACT)
 
 func _enter(next: int, saved_section: int = 0, saved_point: int = 0) -> void :
 	var fresh: = fresh_entry
 	fresh_entry = false
 	cutscene.abort()
+	ui.clear_toast()
 	cancel_terminal()
 	if beat == Beat.BOSS and not foes.is_empty():
 		boss_spot = foes.back().position
@@ -197,18 +203,7 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0) -> void :
 	if is_combat() and not (beat == Beat.ESCAPE and fresh):
 		_spawn_wave(saved_section)
 	autosave()
-	if beat == Beat.BOSS and fresh:
-		_scene_penthouse()
-	elif beat == Beat.BOSS:
-		toast("Kenzō · Hackfenster nur beim Flackern am Schulterservo")
-	elif beat == Beat.ESCAPE and fresh:
-		_scene_kenzo_falls()
-	elif beat == Beat.END and fresh:
-		_scene_finale()
-	elif beat == Beat.ESCAPE and not escape_guards_cleared:
-		toast("Kenzōs Aufzugwachen · Halte sie von Raven fern")
-	else:
-		ui.dialogue(Story.DIALOGUE[beat])
+	_beat_scene(fresh)
 
 func _update_lighting() -> void :
 	match beat:
@@ -449,10 +444,7 @@ func interact(_actor: PixelActor = null) -> void :
 			return
 		toast(["Das Kloster.", "Die früheren Träger.", "Die Nacht des Angriffs."][point_index])
 		if point_index == 2:
-			ui.dialogue([
-				["RAVEN", "Ich habe gesehen, was du verloren hast.", "echo"], 
-				["SHADEPI", "Das Heiligtum lebt in mir. Jetzt hast du seine Erinnerungen gesehen.", "echo"], 
-			], _advance)
+			_scene_echo_end()
 			return
 	if beat == Beat.GARAGE and point_index == 1 and raven.position.distance_to(_target()) > 35.0:
 		toast("Warte auf Raven.")
@@ -490,17 +482,27 @@ func _complete_point() -> void:
 	if beat == Beat.ESCAPE:
 		toast(["Daten gesichert. Spuren gelöscht.", "Raven: Sperrladung scharf. Aufzug blockiert.", "Fernstart bestätigt. Zum Dachausgang!", "Dach erreicht. Der Aerodyne hebt ab."][point_index])
 	point_index += 1
-	if beat != Beat.HANGAR and point_index == Story.POINTS[beat].size():
+	if beat == Beat.PACT and point_index == Story.POINTS[beat].size():
+		_scene_plan()
+	elif beat == Beat.GARAGE and point_index == Story.POINTS[beat].size():
+		_scene_descent()
+	elif beat == Beat.ESCAPE and point_index == Story.POINTS[beat].size():
+		_advance()
+	elif beat != Beat.HANGAR and point_index == Story.POINTS[beat].size():
 		_advance()
 	else:
 		autosave()
 
 const RITUAL: = [
-	[["SHADEPI", "Das Heiligtum hat dich erkannt. Wenn du es freiwillig willst, kannst du dem Orden beitreten."],
-		["RAVEN", "Ich habe lange genug zurückgeschaut. Ich will nach vorne blicken. Ja."]],
-	[["SHADEPI", "Heiligtum, höre unsere Bitte. Raven tritt aus freiem Willen vor dich."]],
-	[["HEILIGTUM", "Dein Wille ist stark. Ich nehme dich in meine Obhut."]],
-	[["SHADEPI", "Raven, ich nehme dich als Zweite Kriegerin und Behüterin des Heiligtums in den Orden des Weißen Drachen auf."]],
+	[["SHADEPI", "Raven … das Heiligtum in mir hat dich erkannt. Schon in der Gasse. Es hat dich erwählt."],
+		["SHADEPI", "Aber ich würde an deiner Seite stehen, selbst wenn es das nicht getan hätte. Nicht als Werkzeug einer Prophezeiung – sondern weil du mich daran erinnert hast, was es heißt, nicht nur ein Schatten zu sein."],
+		["RAVEN", "Das klingt … irgendwie sehr schön. Ich würde dich ja küssen, aber mit der Maske geht das schwer."],
+		["SHADEPI", "Ich kann dich im Orden aufnehmen. Wenn du es freiwillig willst. Dann kann ich mich dir auch zeigen."],
+		["RAVEN", "Ich habe nichts mehr zu verlieren. Ich bin bereit, nach vorne zu blicken."]],
+	[["SEE", "Sobald ihre Füße das Wasser berühren, vibriert der Boden. Ein neonblaues Leuchten steigt aus der Tiefe, Tropfen schweben in der Luft."],
+		["SHADEPI", "Ich, Shadepi, Überlebender und ehemals Erster Krieger des Ordens des Weißen Drachen, erbitte dich: Nimm diese Seele in deine Obhut."]],
+	[["HEILIGTUM", "Dein Wille ist stark. Ich spüre viel Gutes in dir. Ich akzeptiere dich."]],
+	[["SHADEPI", "Hiermit nehme ich dich, Raven, in den Orden des Weißen Drachen auf. Ich ernenne dich zur Zweiten Kriegerin des Ordens und Behüterin des Heiligtums."]],
 ]
 
 func _ritual_step() -> void :
@@ -552,7 +554,7 @@ func _enter_echo() -> void :
 	set_dressing("")
 	_update_lighting()
 	player.hide()
-	ui.dialogue([["HEILIGTUM", "Eindämmung bricht. Ein Teil des Schwarms geht auf Raven über. Finde die stabilen Erinnerungsanker.", "echo"]])
+	_scene_containment()
 
 func saved_checkpoint() -> int:
 	var config: = ConfigFile.new()
@@ -646,7 +648,7 @@ func _draw() -> void :
 		var boss: PixelActor = foes.back()
 		if boss.health > 0 and boss.health <= 180 and fposmod(clock, 3.0) <= 1.45:
 			draw_circle(boss.position + Vector2(8, -34), 4.0, Color("72eff4"))
-	var point: = _target()
+	var point: = Vector2.ZERO if in_cinematic() else _target()
 	if point != Vector2.ZERO:
 		var signal_color: = Color("f45d79") if _timed_node() and not _signal_open() else Color("72eff4")
 		draw_circle(point, 12.0, signal_color, false, 2)
@@ -654,73 +656,6 @@ func _draw() -> void :
 		draw_polyline(PackedVector2Array([tip + Vector2(-6, -5), tip, tip + Vector2(6, -5)]), signal_color, 2)
 
 # --- Scripted scenes ---------------------------------------------------------
-
-func camera_home() -> Vector2:
-	if beat == Beat.ECHO and not echo_ready:
-		return Painted.CHAMBER_CAMERA
-	if raven_leads():
-		return raven.position + Vector2(0, -52)
-	return super.camera_home()
-
-## Kapitel 6: Raven betritt das Penthouse, Shadepi folgt im Tarnfeld.
-func _scene_penthouse() -> void:
-	var kenzo: PixelActor = foes.back()
-	kenzo.position = Vector2(858, 340)
-	kenzo.facing = Vector2.UP
-	player.position = Vector2(36, 446)
-	raven.position = Vector2(60, 414)
-	player.facing = Vector2.RIGHT
-	raven.facing = Vector2.RIGHT
-	player.set_cloaked(true)
-	var cs = begin_cutscene()
-	for actor in [kenzo, player, raven]:
-		cs.pose(actor, "idle")
-	await cs.camera(Vector2(820, 300), 0.0, 1.3)
-	await cs.fade(Color.BLACK, 0.0)
-	await cs.fade(Color(0, 0, 0, 0), 0.9)
-	await cs.say("PENTHOUSE / OBERSTE ETAGE", "Regen trommelt gegen die Panoramascheiben. Kenzō Moriyama blickt auf die Stadt, als gehöre sie ihm.")
-	cs.camera(Vector2(420, 360), 1.8, 1.1)
-	cs.walk(player, Vector2(300, 448), 72)
-	await cs.walk(raven, Vector2(380, 412), 72)
-	cs.camera(Vector2(640, 350), 1.6, 1.05)
-	cs.walk(player, Vector2(560, 432), 60)
-	await cs.walk(raven, Vector2(648, 392), 60)
-	cs.pose(raven, "idle")
-	cs.pose(player, "idle")
-	await cs.wait(0.3)
-	cs.face(kenzo, raven.position)
-	await cs.wait(0.4)
-	await cs.say("KENZŌ MORIYAMA", "Raven. Ich habe lange nach dir gesucht.")
-	await cs.say("RAVEN", "Ich weiß. Ich habe jeden deiner Suchläufe gesehen – und jeden ins Leere geschickt.")
-	await cs.walk(kenzo, Vector2(792, 362), 42)
-	cs.face(kenzo, raven.position)
-	cs.pose(kenzo, "idle")
-	await cs.say("KENZŌ MORIYAMA", "Und trotzdem stehst du hier. Am Ende kommen sie alle zu mir zurück.")
-	await cs.say("RAVEN", "Ich bin nicht zurückgekommen. Und ich bin nicht allein.")
-	cs.do(func():
-		player.set_cloaked(false)
-		effects.burst(player.position + Vector2(0, -20), Color("ff4f70"), 22)
-		sound("slash")
-	)
-	await cs.walk(player, Vector2(742, 374), 560)
-	cs.do(func():
-		effects.slash(kenzo.position + Vector2(-10, -24), Vector2.RIGHT)
-		effects.burst(kenzo.position + Vector2(0, -24), Color("ffb36b"), 18)
-		shake = 9.0
-		sound("hit")
-	)
-	cs.pose(kenzo, "hurt")
-	cs.flash(Color(1, 0.25, 0.35, 0.5), 0.35)
-	await cs.walk(kenzo, Vector2(866, 340), 300)
-	cs.face(kenzo, player.position)
-	cs.face(player, kenzo.position)
-	cs.pose(kenzo, "idle")
-	cs.pose(player, "idle")
-	await cs.say("KENZŌ MORIYAMA", "Die Maske aus dem Kloster. Die Minotauren haben gründlich gearbeitet – nur bei dir nicht.")
-	await cs.say("SHADEPI", "Deine Akten über die Minotauren nehme ich mit. Raven – stör seine Implantate.")
-	await cs.say("SHADEPI", "Wenn er die Leitung sperrt, warte auf das Flackern am Schulterservo.")
-	await cs.walk(raven, Vector2(612, 428), 96)
-	cs.end(func(): toast("KENZŌ MORIYAMA · Hackfenster am Schulterservo nutzen"))
 
 func _spawn_kenzo_body(point: Vector2, fallen: bool) -> void:
 	var body: = EnemyScript.new()
@@ -741,8 +676,390 @@ func _lay_down(body: PixelActor) -> void:
 	body.visual.position.y = -10
 	body.queue_redraw()
 
-## Kapitel 6: Kenzōs Ende. Erst danach rufen Totmannschalter und Alarm
-## die Aufzugwachen ins Penthouse.
+func _escape_guards_done() -> void:
+	if beat != Beat.ESCAPE or escape_guards_cleared:
+		return
+	escape_guards_cleared = true
+	countdown = 60.0
+	set_music_section("chapter_6_escape")
+	autosave()
+	play_lines([
+		["SYSTEM / NOTFALLPROTOKOLL", "Kenzōs Sicherheitssystem überlastet die Energieversorgung. Kritischer Zustand in sechzig Sekunden."],
+		["SHADEPI", "Daten sammeln, Spuren verwischen!"],
+		["RAVEN", "Weitere Teams im Schacht. Ich synchronisiere die Sperrladung am Aufzug – dann starte die Treibstoffpumpe per Fernzugriff."],
+	], func(): toast("T-60 · Daten sichern"))
+
+# --- Zwischensequenzen der Kampagne ----------------------------------------
+# Texte folgen „Shadepi – Im Schatten des Raben“ (Archiv). Spielerische
+# Abweichungen (Gegnerwellen, Rätsel) bleiben, die Szenen erzählen die Story.
+
+func _beat_scene(fresh: bool) -> void:
+	match beat:
+		Beat.PACT:
+			if fresh: _scene_pact()
+		Beat.AMBUSH:
+			if fresh: _scene_ambush()
+			else: toast("Hinterhalt · Welle %d" % (encounter.wave_index + 1 if encounter != null else 1))
+		Beat.CHASE:
+			if fresh: _scene_chase()
+		Beat.GARAGE:
+			if fresh: _scene_garage()
+		Beat.HANGAR:
+			if fresh: _scene_hangar()
+		Beat.ECHO:
+			if fresh: _scene_sanctuary()
+		Beat.FLIGHT:
+			if fresh: _scene_flight()
+		Beat.ROOF:
+			if fresh: _scene_roof()
+		Beat.BOSS:
+			if fresh: _scene_penthouse()
+			else: toast("Kenzō · Hackfenster nur beim Flackern am Schulterservo")
+		Beat.ESCAPE:
+			if fresh: _scene_kenzo_falls()
+			elif not escape_guards_cleared: toast("Kenzōs Aufzugwachen · Halte sie von Raven fern")
+			else: toast("Daten sichern · Aufzug sperren · Pumpe starten · zum Dach")
+		Beat.LAKE:
+			if fresh: _scene_lake()
+		Beat.END:
+			if fresh: _scene_finale()
+	if not fresh and not in_cinematic() and beat not in [Beat.AMBUSH, Beat.BOSS, Beat.ESCAPE]:
+		toast(chapter_objective())
+
+func camera_home() -> Vector2:
+	if beat == Beat.ECHO and not echo_ready:
+		return Painted.CHAMBER_CAMERA
+	if raven_leads():
+		return raven.position + Vector2(0, -52)
+	return super.camera_home()
+
+func _two_shot(zoom: float = 1.25) -> void:
+	cutscene.camera(player.position.lerp(raven.position, 0.5) + Vector2(0, -42), 0.0, zoom)
+
+## Kapitel 3: Der Pakt.
+func _scene_pact() -> void:
+	var cs = begin_cutscene()
+	cs.pose(player, "idle")
+	cs.pose(raven, "idle")
+	cs.face(player, raven.position)
+	cs.face(raven, player.position)
+	_two_shot(1.3)
+	await cs.fade(Color.BLACK, 0.0)
+	await cs.fade(Color(0, 0, 0, 0), 0.9)
+	await cs.title("KAPITEL 3", "Der Pakt", 2.2)
+	await cs.lines([
+		["RAVEN", "Du hörst dich an wie aus einem billigen Theaterstück. Es ist lieb von dir, aber diese Typen sind Monster. Ich brauche keinen Schutz."],
+		["RAVENS VERSTECK", "Doch seine unerschütterliche Entschlossenheit bricht etwas in ihr auf. Die Dämme um ihre Vergangenheit bekommen Risse – und sie erzählt ihm alles."],
+		["RAVEN", "Mein Vater war Programmierer bei Arasaka. Kenzō Moriyama ließ meine Eltern ermorden und hielt mich jahrelang gefangen – ein Spielzeug, das er nach Belieben quälte."],
+		["RAVEN", "Ich bin geflohen, habe meine Identität gelöscht. Chrome Jackal war kein zufälliges Kopfgeld. Er war einer von Kenzōs Bluthunden. Ich habe ihn gejagt, bevor er mich jagen konnte."],
+	])
+	cs.pose(player, "attack")
+	cs.do(func(): sound("prop_metal"))
+	await cs.wait(0.35)
+	cs.pose(player, "idle")
+	await cs.lines([
+		["SHADEPI", "Das tut mir leid, was du erleben musstest. Ich kann es nicht ungeschehen machen. Aber ich biete dir meine Dienste an."],
+		["RAVEN", "Ich würde Kenzō gerne tot sehen. Ich kann nicht mein Leben lang fliehen. Ich helfe dir. Aber wir sind keine Freunde."],
+		["SHADEPI", "Perfekt. Damit komme ich klar. Wie finden wir Kenzō?"],
+	])
+	var terminal: Vector2 = Story.POINTS[Beat.PACT][0]
+	cs.camera(terminal + Vector2(0, -30), 1.0, 1.3)
+	await cs.walk(raven, terminal + Vector2(26, 12), 70)
+	cs.face(raven, terminal)
+	cs.pose(raven, "attack")
+	cs.do(func():
+		effects.burst(terminal, Color("6fdcf0"), 18)
+		sound("hack")
+	)
+	await cs.wait(0.4)
+	cs.pose(raven, "idle")
+	await cs.say("RAVEN", "Ich weiß, wo er wohnt. Immerhin war ich jahrelang sein Spielzeug. Hier – die Baupläne des Arasaka-Towers.")
+	cs.end(func(): toast("Towerplan am Terminal prüfen"))
+
+func _scene_plan() -> void:
+	var cs = begin_cutscene()
+	cs.pose(player, "idle")
+	cs.pose(raven, "idle")
+	cs.face(player, raven.position)
+	await cs.camera(player.position.lerp(raven.position, 0.5) + Vector2(0, -42), 0.6, 1.3)
+	await cs.lines([
+		["RAVEN", "Er hat einen privaten Landeplatz. Entweder wir dringen von oben ein, oder wir marschieren durch den Hauptaufzug direkt in sein Penthouse."],
+		["SHADEPI", "Dieser Sensor scannt jeden Gleiter vor der Landung. Wenn du die Kennung von Kenzōs Flieger auf einen anderen überträgst … ich weiß, wo ich einen herbekomme."],
+		["RAVEN", "Das kann ich. Aber ich komme mit. Morgen Abend schickt er seine Angestellten weg. Seine Wachen sind eine Etage tiefer, und er nutzt keine Kameras."],
+		["RAVEN", "Aber Kenzō selbst ist bis an die Zähne mit Militärtechnologie ausgestattet. Wir werden uns mit ihm einschließen."],
+		["SHADEPI", "Ich habe immer gern einen Plan C. Dann lass uns den Aerodyne holen. Komm mit."],
+	])
+	await cs.fade(Color.BLACK, 0.6)
+	cs.do(func(): _advance())
+
+## Kapitel 3: Hinterhalt vor dem Versteck.
+func _scene_ambush() -> void:
+	var door: = Vector2(178, 262)
+	player.position = door + Vector2(18, 18)
+	raven.position = door + Vector2(-8, 6)
+	player.facing = Vector2.DOWN
+	raven.facing = Vector2.UP
+	var cs = begin_cutscene()
+	cs.pose(player, "idle")
+	cs.pose(raven, "idle")
+	await cs.camera(door + Vector2(60, 40), 0.0, 1.2)
+	await cs.fade(Color.BLACK, 0.0)
+	await cs.fade(Color(0, 0, 0, 0), 0.7)
+	await cs.say("GASSE VOR DEM VERSTECK", "Sie treten in die feuchte Nachtluft. Raven schließt die Tür ab –")
+	for i in 3:
+		cs.do(func():
+			var hit: = door + Vector2(randf_range(10, 70), randf_range(-30, 0))
+			effects.burst(hit, Color("ffcf7a"), 10)
+			sound("drive_shot")
+			shake = 4.0
+		)
+		await cs.wait(0.14)
+	cs.walk(raven, Vector2(150, 420), 260)
+	await cs.walk(player, door + Vector2(46, 110), 220)
+	cs.face(player, Vector2(450, 400))
+	cs.do(func():
+		sound("slash")
+		effects.burst(player.position + Vector2(8, -22), Color("ff4f70"), 14)
+	)
+	await cs.camera(Vector2(330, 360), 0.8, 1.0)
+	await cs.lines([
+		["SHADEPI", "Rechts in der Gasse – kannst du ihn hacken? Er muss künstliche Augen haben! Ich übernehme den linken."],
+		["RAVEN", "Gib mir eine freie Verbindung, dann flute ich seine Optik mit Rauschen."],
+	])
+	cs.end(func(): toast("Hinterhalt · Nutze die Deckung"))
+
+func _scene_chase() -> void:
+	var cs = begin_cutscene()
+	await cs.lines([
+		["SHADEPI", "*pfeift* – Ein mattschwarzes Motorrad rollt wie von Geisterhand aus der Seitenstraße. Kommst du mit?"],
+		["RAVEN", "Ein bisschen eng."],
+		["SHADEPI", "Airbags im Rücken, perfekt! Der Wagen kommt hinter uns aus der Gasse – festhalten!"],
+		["RAVEN", "Du fährst, ich decke uns nach hinten. Bring mich auf seine Spur, dann hacke ich seine Lenkung."],
+	])
+	cs.end()
+
+## Kapitel 4: Die Höhle des Drachen.
+func _scene_garage() -> void:
+	player.position = Vector2(60, 420)
+	raven.position = Vector2(30, 440)
+	var cs = begin_cutscene()
+	await cs.camera(Vector2(320, 360), 0.0, 1.1)
+	await cs.fade(Color.BLACK, 0.0)
+	await cs.fade(Color(0, 0, 0, 0), 0.8)
+	await cs.title("KAPITEL 4", "Die Höhle des Drachen", 2.2)
+	cs.walk(raven, Vector2(300, 440), 80)
+	await cs.walk(player, Vector2(340, 410), 80)
+	cs.face(raven, Vector2(600, 300))
+	cs.face(player, raven.position)
+	cs.pose(player, "idle")
+	cs.pose(raven, "idle")
+	await cs.lines([
+		["RAVEN", "Und das ist dein Zuhause? Eine rostige Garage?"],
+		["SHADEPI", "Genau das ist es. Sieh dir die Werkbank an."],
+	])
+	cs.end(func(): toast("Geheimes Werkbanksymbol finden"))
+
+func _scene_descent() -> void:
+	var cs = begin_cutscene()
+	await cs.camera(Vector2(760, 320), 0.6, 1.2)
+	cs.do(func():
+		sound("prop_metal")
+		shake = 6.0
+	)
+	await cs.say("GARAGE", "Ein verstecktes Symbol leuchtet auf. Mit hydraulischem Zischen gleitet der Betonboden unter ihnen in die Tiefe.")
+	await cs.fade(Color.BLACK, 0.8)
+	cs.do(func(): _advance())
+
+func _scene_hangar() -> void:
+	player.position = Vector2(300, 420)
+	raven.position = Vector2(270, 436)
+	player.show()
+	var cs = begin_cutscene()
+	cs.pose(player, "idle")
+	cs.pose(raven, "idle")
+	await cs.camera(Vector2(420, 330), 0.0, 1.0)
+	await cs.fade(Color.BLACK, 0.0)
+	await cs.fade(Color(0, 0, 0, 0), 1.0)
+	await cs.say("SANKTUARIUM DES ORDENS", "Unten erstreckt sich eine höhlenartige Halle: exotische Fahrzeuge, Klingen aus einer anderen Zeit, Kisten voller Technologie.")
+	await cs.walk(raven, Vector2(380, 420), 60)
+	cs.face(raven, Vector2(560, 260))
+	cs.pose(raven, "idle")
+	await cs.say("RAVEN", "Wow. Beeindruckend.")
+	cs.face(player, raven.position)
+	await cs.lines([
+		["SHADEPI", "Schau dich gerne um. Ich gehe kurz hoch, meine Ausrüstung tauschen. Ein Servo macht Probleme."],
+		["SHADEPI", "Der Aerodyne unter der Plane – kannst du ihn präparieren? Vielleicht noch ein Update. Und er braucht die Kennung von Kenzōs Gleiter."],
+		["RAVEN", "Das kann ich tun. Ich prüfe den Stromkreis, kopiere die Kennung und teste das ARToS-System."],
+	])
+	cs.release(player)
+	await cs.walk(player, Vector2(40, 410), 90)
+	cs.do(func(): player.hide())
+	cs.end(func(): toast("Aerodyne vorbereiten"))
+
+## Kapitel 5: Heiligtum.
+func _scene_sanctuary() -> void:
+	var cs = begin_cutscene()
+	cs.pose(player, "idle")
+	cs.pose(raven, "idle")
+	await cs.fade(Color.BLACK, 0.0)
+	await cs.fade(Color(0, 0, 0, 0), 1.0)
+	await cs.title("KAPITEL 5", "Eine Verbindung aus Feuer und Fleisch", 2.4)
+	await cs.lines([
+		["RAVEN", "Sag mal … steckt unter der Rüstung ein Mensch oder nur Metall?"],
+		["SHADEPI", "Tatsächlich ist noch viel Menschliches an mir. Biologisch bin ich organisch, nur neuroelektronisch ergänzt. Mein Geist ist kein Computer."],
+		["SANKTUARIUM", "Er erzählt von der Nacht des Massakers. Von den gesichtslosen Militech-Minotauren, die wie eine Welle des Todes über das Kloster herfielen. Vom Tod seiner Brüder und Schwestern."],
+		["SHADEPI", "Das Heiligtum ist ein uralter Nanitenschwarm – das Herz unseres Ordens. Ich habe es mit letzter Kraft in mich aufgenommen, um es vor den Angreifern zu retten. Seitdem lebt es in mir."],
+		["SHADEPI", "Das Kloster selbst war nach dem Angriff spurlos verschwunden. Als hätte die Erde es verschluckt."],
+	])
+	cs.do(func():
+		shake = 5.0
+		sound("hack")
+	)
+	await cs.flash(Color(1, 0.18, 0.3, 0.45), 0.4)
+	await cs.lines([
+		["SHADEPIS HUD", "WARNUNG · Eindämmungsstatus des Heiligtums kritisch: 96 %."],
+		["SHADEPI", "Es reagiert auf dich … Ich muss es am Sessel stabilisieren. Halt Abstand."],
+	])
+	cs.end(func(): toast("Heiligtum am Sessel prüfen"))
+
+func _scene_containment() -> void:
+	var cs = begin_cutscene()
+	cs.pose(raven, "idle")
+	await cs.flash(Color(0.6, 0.95, 1.0, 0.8), 0.6)
+	await cs.lines([
+		["SHADEPIS HUD", "EINDÄMMUNG GESCHEITERT."],
+		["HEILIGTUM", "Ein Teil des Schwarms geht auf Raven über. Sie sieht, was er gesehen hat. Finde die stabilen Erinnerungsanker."],
+	])
+	cs.end(func(): toast("Erinnerungen ordnen"))
+
+func _scene_echo_end() -> void:
+	var cs = begin_cutscene()
+	cs.pose(raven, "idle")
+	await cs.flash(Color(1, 1, 1, 0.7), 0.6)
+	await cs.lines([
+		["RAVEN", "Ich habe gesehen, was du verloren hast. Das Kloster. Die Träger vor dir. Die Nacht des Angriffs."],
+		["SHADEPI", "Das Heiligtum hat dich nicht verletzt. Es hat dich … erkannt."],
+	])
+	await cs.fade(Color.BLACK, 0.8)
+	cs.do(func(): _advance())
+
+## Kapitel 6: Die Rache.
+func _scene_flight() -> void:
+	var cs = begin_cutscene()
+	await cs.fade(Color.BLACK, 0.0)
+	await cs.title("KAPITEL 6", "Die Rache", 2.2)
+	await cs.lines([
+		["AM NÄCHSTEN ABEND", "Die Anspannung ist elektrisch. Zwischen ihnen liegt ein neues, unausgesprochenes Band des Vertrauens."],
+		["SHADEPI", "Ich kann mich nicht mit irgendjemandem verbinden. Du wurdest mir prophezeit."],
+	])
+	await cs.fade(Color(0, 0, 0, 0), 0.8)
+	await cs.lines([
+		["ARTOS", "A-a-artos-System … b-bootet … alle Parameter … instabil."],
+		["SHADEPI", "Festhalten. Ich halte uns zwischen den Baken. Raven, sende die kopierte Kennung, sobald der Scanner in Reichweite ist."],
+		["RAVEN", "Ich mag lieber Motorräder."],
+	])
+	cs.end()
+
+func _scene_roof() -> void:
+	player.position = Vector2(300, 330)
+	raven.position = Vector2(330, 350)
+	player.show()
+	var cs = begin_cutscene()
+	cs.pose(player, "idle")
+	cs.pose(raven, "idle")
+	cs.face(raven, Vector2(770, 260))
+	cs.face(player, raven.position)
+	await cs.camera(Vector2(420, 300), 0.0, 1.1)
+	cs.do(func():
+		shake = 6.0
+		sound("drive_knock")
+	)
+	await cs.say("ARASAKA TOWER / LANDEPLATZ", "Bremsdüsen brüllen, heiße Luft peitscht über die Plattform. Das Aufsetzen ist hart.")
+	await cs.lines([
+		["SHADEPI", "Hals- und Beinbruch. Ich muss innerhalb von zwanzig Sekunden drin sein, dann fällt meine Tarnung."],
+		["RAVEN", "Dann lass mich vorgehen. Ich lenke ihn ab. Keine Angst – er wird sein Lieblingsspielzeug nicht töten wollen."],
+	])
+	cs.do(func():
+		player.set_cloaked(true)
+		effects.burst(player.position + Vector2(0, -20), Color("7fe3ee"), 12)
+	)
+	await cs.wait(0.6)
+	cs.do(func(): player.hide())
+	cs.end(func(): toast("Kennung am Dachterminal prüfen"))
+
+## Kapitel 6: Raven betritt das Penthouse, Shadepi folgt im Tarnfeld.
+func _scene_penthouse() -> void:
+	var kenzo: PixelActor = foes.back()
+	var chair: = Vector2(612, 306)
+	kenzo.position = chair
+	kenzo.facing = Vector2.DOWN
+	player.position = Vector2(36, 446)
+	raven.position = Vector2(60, 414)
+	player.facing = Vector2.RIGHT
+	raven.facing = Vector2.RIGHT
+	player.set_cloaked(true)
+	var cs = begin_cutscene()
+	for actor in [kenzo, player, raven]:
+		cs.pose(actor, "idle")
+	await cs.camera(chair + Vector2(0, -10), 0.0, 1.35)
+	await cs.fade(Color.BLACK, 0.0)
+	await cs.fade(Color(0, 0, 0, 0), 0.9)
+	await cs.say("PENTHOUSE", "Ein protziger Tempel des Exzesses. Kenzō Moriyama sitzt in echtem Leder und trinkt einen sündhaft teuren Whisky.")
+	cs.camera(Vector2(400, 370), 1.6, 1.1)
+	cs.walk(player, Vector2(300, 448), 72)
+	await cs.walk(raven, Vector2(420, 396), 72)
+	cs.walk(player, Vector2(430, 446), 50)
+	await cs.walk(raven, Vector2(540, 386), 60)
+	cs.pose(raven, "idle")
+	cs.pose(player, "idle")
+	cs.face(kenzo, raven.position)
+	await cs.camera(Vector2(570, 340), 0.8, 1.2)
+	await cs.say("RAVEN", "Lange nicht gesehen.")
+	await cs.walk(kenzo, raven.position + Vector2(30, -8), 46)
+	cs.face(kenzo, raven.position)
+	cs.pose(kenzo, "attack")
+	cs.pose(raven, "hurt")
+	cs.do(func(): raven.visual.position.y = raven.standing_visual_position.y - 12.0)
+	await cs.wait(0.5)
+	cs.do(func():
+		raven.visual.position.y = raven.standing_visual_position.y
+		shake = 5.0
+		sound("hit")
+	)
+	await cs.leap(raven, Vector2(372, 404), 34.0, 0.5)
+	cs.pose(kenzo, "idle")
+	cs.face(kenzo, raven.position)
+	await cs.say("KENZŌ MORIYAMA", "Dummes Mädchen. Ich habe ewig nach dir gesucht.")
+	await cs.say("SHADEPIS HUD", "Tarnfeld · 3 … 2 … 1 … NULL.")
+	cs.do(func():
+		player.set_cloaked(false)
+		effects.burst(player.position + Vector2(0, -20), Color("ff4f70"), 22)
+		sound("slash")
+	)
+	await cs.walk(player, kenzo.position + Vector2(-30, 10), 520)
+	cs.do(func():
+		effects.slash(kenzo.position + Vector2(8, -30), Vector2.RIGHT)
+		effects.burst(kenzo.position + Vector2(10, -30), Color("ffb36b"), 22)
+		shake = 9.0
+		sound("hit")
+	)
+	cs.pose(kenzo, "hurt")
+	cs.flash(Color(1, 0.25, 0.35, 0.5), 0.35)
+	await cs.walk(kenzo, kenzo.position + Vector2(64, -18), 280)
+	cs.face(kenzo, player.position)
+	cs.face(player, kenzo.position)
+	cs.pose(kenzo, "idle")
+	cs.pose(player, "idle")
+	await cs.lines([
+		["PENTHOUSE", "Der erste Schlag ist kein Todesstoß. Er ist eine Botschaft – die Servos in Kenzōs rechter Schulter sprühen Funken."],
+		["KENZŌ MORIYAMA", "Die Maske aus dem Kloster. Die Minotauren haben gründlich gearbeitet – nur bei dir nicht."],
+		["SHADEPI", "Raven – stör seine Implantate. Wenn er die Leitung sperrt, warte auf das Flackern am Schulterservo."],
+	])
+	cs.release(raven)
+	await cs.walk(raven, Vector2(430, 420), 90)
+	cs.end(func(): toast("KENZŌ MORIYAMA · Hackfenster am Schulterservo nutzen"))
+
+## Kapitel 6: Kenzōs Ende – und die Wahrheit über das Massaker.
 func _scene_kenzo_falls() -> void:
 	var body: PixelActor = kenzo_body
 	body.visual.rotation = 0.2
@@ -757,32 +1074,45 @@ func _scene_kenzo_falls() -> void:
 	cs.pose(player, "idle")
 	cs.pose(raven, "idle")
 	await cs.camera(body.position + Vector2(-70, -40), 0.0, 1.25)
-	await cs.say("KENZŌ MORIYAMA", "Ein Ninja … und eine Ausreißerin. Ihr habt keine Ahnung, was ihr da aufweckt.")
+	await cs.say("PENTHOUSE", "Kenzō liegt gelähmt und blutend am Boden. Ein Monster aus Chrom und Hass – allein gegen zwei Geister der Rache.")
 	await cs.walk(player, player.position + Vector2(-44, 22), 48)
 	cs.face(player, body.position)
 	cs.pose(player, "idle")
-	await cs.say("PENTHOUSE", "Shadepi senkt das Katana und tritt zurück. Dieser Moment gehört nicht ihm.")
+	await cs.say("SHADEPI", "Nicht ich töte dich. Das ist ihr Vergnügen.")
 	await cs.walk(raven, body.position + Vector2(-40, 16), 54)
 	cs.face(raven, body.position)
 	cs.pose(raven, "idle")
-	await cs.say("RAVEN", "Jahrelang bin ich vor dir geflohen, Kenzō. Damit ist Schluss.")
+	await cs.say("RAVEN", "Jahrelang bin ich vor dir geflohen, Kenzō. Wurde auch Zeit, dass dir jemand ein Ende setzt!")
 	cs.pose(raven, "attack")
 	cs.do(func(): sound("hack"))
-	for i in 5:
+	for i in 6:
 		cs.do(func():
-			var to: = body.position + Vector2(randf_range(-9, 9), randf_range(-30, -12))
+			var to: = body.position + Vector2(randf_range(-9, 9), randf_range(-30, -10))
 			effects.hack_arc(raven.position + Vector2(4, -22), to)
 			effects.burst(to, Color("72eff4"), 8)
 		)
-		await cs.wait(0.16)
+		await cs.wait(0.14)
 	cs.do(func(): shake = 7.0)
 	await cs.flash(Color(0.45, 0.95, 1.0, 0.6), 0.45)
 	cs.release(body)
 	cs.do(func(): _lay_down(body))
 	cs.pose(raven, "idle")
-	await cs.wait(1.1)
-	await cs.say("SHADEPI", "Es ist vorbei.")
-	await cs.say("RAVEN", "Noch nicht. Sein Deck trägt die Minotauren-Daten. Ich ziehe sie, bevor sein System sie löscht.")
+	await cs.wait(1.0)
+	await cs.say("PENTHOUSE", "Ihre unsichtbaren Fäden spannen sich ein letztes Mal. Ein Akt der Befreiung.")
+	cs.pose(raven, "attack")
+	cs.do(func():
+		effects.hack_arc(raven.position + Vector2(4, -22), body.position + Vector2(0, -8))
+		sound("hack")
+	)
+	await cs.wait(0.6)
+	cs.pose(raven, "idle")
+	cs.face(raven, player.position)
+	await cs.lines([
+		["RAVEN", "Sein Deck ist offen … Da. Die Minotauren, die dein Kloster überrannt haben. Militech-Einheiten – angefordert und bezahlt über Kenzōs verdeckte Projekte."],
+		["RAVEN", "Er hat das Massaker inszeniert. Es war von Anfang an er."],
+		["SHADEPI", "Fünf Jahre. Und am Ende ein Mann in einem Penthouse."],
+		["SHADEPI", "Mein Orden ist gerächt. Zieh alles über die Minotauren – Lieferketten, Black-Sites, Testserien."],
+	])
 	cs.do(func():
 		set_music_section("fight")
 		sound("drive_engine_fail")
@@ -795,35 +1125,66 @@ func _scene_kenzo_falls() -> void:
 	await cs.wait(0.5)
 	cs.do(func(): _spawn_wave())
 	await cs.wait(0.7)
-	await cs.say("SHADEPI", "Seine Wachen. Bleib an seinem Deck, Raven – ich halte sie dir vom Leib.")
-	await cs.say("RAVEN", "Gib mir eine Lücke, dann blende ich ihre Optik.")
+	await cs.lines([
+		["SHADEPI", "Seine Wachen von unten. Bleib an seinem Deck, Raven – ich halte sie dir vom Leib."],
+		["RAVEN", "Gib mir eine Lücke, dann blende ich ihre Optik."],
+	])
 	cs.end(func():
 		autosave()
 		toast("Kenzōs Aufzugwachen · Halte sie von Raven fern")
 	)
 
-func _escape_guards_done() -> void:
-	if beat != Beat.ESCAPE or escape_guards_cleared:
-		return
-	escape_guards_cleared = true
-	countdown = 60.0
-	set_music_section("chapter_6_escape")
-	autosave()
-	ui.dialogue(Story.DIALOGUE[Beat.ESCAPE])
+## Kapitel 7: Flucht, Explosion und der See.
+func _scene_lake() -> void:
+	player.position = Vector2(150, 430)
+	raven.position = Vector2(118, 446)
+	player.facing = Vector2.RIGHT
+	raven.facing = Vector2.RIGHT
+	var cs = begin_cutscene()
+	cs.pose(player, "idle")
+	cs.pose(raven, "idle")
+	await cs.fade(Color.BLACK, 0.0)
+	await cs.lines([
+		["ARTOS", "SCHHUUIII – PUFF – PUFF. Triebwerke … instabil."],
+		["SHADEPI", "Ach, scheiß Kiste!"],
+		["AERODYNE", "T-6 … er tritt gegen die Pumpeneinheit. T-4 … die Triebwerke zünden. T-2 … der Aerodyne kippt über die Kante."],
+		["SHADEPI", "HALT DICH GUT FEST, JETZT WIRD'S HOLPRIG!"],
+	])
+	cs.do(func():
+		shake = 14.0
+		sound("drive_explosion")
+	)
+	await cs.flash(Color(1, 0.92, 0.75, 1.0), 0.9)
+	await cs.say("NACHT", "Hinter ihnen zerfetzt eine gewaltige Explosion das Penthouse. Shadepi fängt das taumelnde Fluggerät ab – weg von den Flammen, weg von der Vergangenheit.")
+	await cs.camera(Vector2(330, 380), 0.0, 1.1)
+	await cs.fade(Color(0, 0, 0, 0), 1.4)
+	await cs.title("KAPITEL 7", "Der neue Orden", 2.4)
+	await cs.say("AUSSERHALB DER STADT", "Ein kleiner Wald aus uralten Bäumen. In seiner Mitte ein kristallklarer See, der im Mondlicht schimmert wie ein gefallener Stern.")
+	cs.walk(player, Vector2(300, 420), 60)
+	await cs.walk(raven, Vector2(330, 440), 60)
+	cs.face(raven, Vector2(620, 330))
+	cs.face(player, raven.position)
+	await cs.lines([
+		["RAVEN", "Was ist das hier?"],
+		["SHADEPI", "Ein Ort, den der Orden nie vergessen hat. Komm mit ans Wasser."],
+	])
+	cs.end(func(): toast("Raven zum Wasser folgen"))
 
-## Kapitel 7: Abschluss am See.
+## Kapitel 7: Maskenkodex und Kuss – der Orden ist wiedergeboren.
 func _scene_finale() -> void:
 	var center: Vector2 = player.position.lerp(raven.position, 0.5)
 	var cs = begin_cutscene()
 	cs.pose(player, "idle")
 	cs.pose(raven, "idle")
 	await cs.camera(center + Vector2(0, -30), 1.6, 1.6)
-	await cs.say("SEE / KURZ VOR MORGENGRAUEN", "Das Wasser liegt still. Zum ersten Mal seit fünf Jahren steht Shadepi nicht allein vor dem Heiligtum.")
-	await cs.say("SHADEPI", "Der Kodex sagt: Mein Gesicht gehört nur den Brüdern und Schwestern des Ordens.")
-	await cs.say("RAVEN", "Dann bin ich jetzt deine Schwester im Orden. Und hoffentlich noch ein bisschen mehr.")
-	await cs.fade(Color(1, 1, 1, 0.7), 1.1)
-	await cs.say("EPILOG", "Shadepi nimmt die Maske ab. Raven küsst ihn.")
+	await cs.say("SEE", "Langsam, fast zögerlich, greift er zu seiner Maske. Sein Kodex verbietet es, sein Gesicht jemandem außerhalb des Ordens zu zeigen. Raven gehört jetzt dazu.")
+	await cs.fade(Color(1, 1, 1, 0.55), 1.1)
+	await cs.lines([
+		["SEE", "Darunter: das Gesicht eines Mannes, gezeichnet von Kampf und Verlust. Ein dunkles, menschliches Auge – und ein leuchtend rotes."],
+		["RAVEN", "Oh."],
+		["SEE", "Sie stellt sich auf die Zehenspitzen und küsst ihn. Ein Teil des Heiligtums geht endgültig und willentlich auf sie über."],
+	])
 	await cs.fade(Color(0, 0, 0, 0.82), 1.0)
-	await cs.title("DER ORDEN DES WEISSEN DRACHEN", "ist wiedergeboren", 3.2)
+	await cs.title("DER ORDEN DES WEISSEN DRACHEN", "ist in der Stille der Nacht wiedergeboren", 3.4)
 	await cs.fade(Color(0, 0, 0, 0), 1.0)
-	cs.end(func(): ui.dialogue(Story.DIALOGUE[Beat.END]))
+	cs.end(func(): toast("Geschichte abgeschlossen · Danke fürs Spielen"))

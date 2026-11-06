@@ -1,19 +1,9 @@
 extends "res://scripts/hud.gd"
 
-const COMIC: = {
-	"stadt": preload("res://assets/comic/stadt.jpg"), 
-	"apartment": preload("res://assets/comic/apartment.jpg"), 
-	"niederlage": preload("res://assets/comic/niederlage.jpg"), 
-	"dach": preload("res://assets/comic/dach.jpg"), 
-	"jackal": preload("res://assets/comic/jackal.jpg"), 
-	"rettung": preload("res://assets/comic/rettung.jpg"), 
-	"begegnung": preload("res://assets/comic/begegnung.jpg"), 
-}
-
 var next_chapter_button: Button
 func _ready() -> void :
 	super._ready()
-	mission_title.text = "KAPITEL 1 / ECHOS IN NEON"
+	mission_title.text = "KAPITEL 1 / ECHOS IN NEON UND SCHATTEN"
 	menu_description.text = "Kapitel 1 · Ravens Jagd\nLokal-Koop beginnt mit Ravens Rückkehr."
 	next_chapter_button = button_at("Kapitel 2 öffnen", 274, func(): get_tree().change_scene_to_file("res://scenes/chapter_two.tscn"))
 	menu_help.position.y = 302
@@ -43,8 +33,8 @@ func start_selected() -> void :
 	else:
 		_start_new()
 
-func comic_texture(key: String) -> Texture2D:
-	return COMIC.get(key, null)
+func comic_texture(_key: String) -> Texture2D:
+	return null
 
 func _process(delta: float) -> void :
 	super._process(delta)
