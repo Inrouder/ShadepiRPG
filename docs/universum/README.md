@@ -4,9 +4,11 @@ Dieses Archiv hält die vom Nutzer im Chat bereitgestellten Quellen dauerhaft be
 
 ## Stand
 
-Teil 1 und die fünf weiteren Bildreferenzen aus Teil 2 wurden am 6. November 2026 bereitgestellt. Der Nutzer hat als nächste Lieferung den Comic angekündigt; dieser steht noch aus. Neue Quellen ergänzen; vorhandene Originale nicht stillschweigend ersetzen. Abweichende Aussagen und Zeitstände der Quellen bei späteren Arbeiten kenntlich machen.
+Teil 1 sowie jeweils fünf weitere Bildreferenzen aus Teil 2 und Teil 3 wurden am 6. November 2026 bereitgestellt. Der Nutzer hat außerdem den Comic angekündigt; dieser steht noch aus. Neue Quellen ergänzen; vorhandene Originale nicht stillschweigend ersetzen. Abweichende Aussagen und Zeitstände der Quellen bei späteren Arbeiten kenntlich machen.
 
-Die [Bildnotizen zu Teil 2](teil-2/README.md) erfassen Shadepis Tempelmotiv, sein Maskendetail und drei weitere Raven-Referenzen. Die Originaldateien der insgesamt sieben Chat-Bilder sind bislang nicht lokal verfügbar; im Repository liegen hierzu Beschreibungen vor.
+Die [Bildnotizen zu Teil 2](teil-2/README.md) erfassen Shadepis Tempelmotiv, sein Maskendetail und drei weitere Raven-Referenzen. [Teil 3](teil-3/README.md) ergänzt Ravens Designblatt, das KOBAN-TEC-Logo und drei Kostümfotos. Die Originaldateien der insgesamt zwölf Chat-Bilder sind bislang nicht lokal verfügbar; im Repository liegen hierzu Beschreibungen vor.
+
+Offener Quellenunterschied: Das Raven-Referenzblatt in Teil 2 nennt **168 cm**, das Designblatt in Teil 3 **160 cm**. Beide Angaben bleiben mit ihrer Herkunft dokumentiert, bis der Nutzer eine verbindliche Größe festlegt.
 
 ## Teil 1: Dokumente
 
