@@ -48,3 +48,7 @@ Der Nutzer hat zusätzlich zwei Referenzblätter als eingebettete Chat-Bilder ge
 - Das Blatt zeigt zusätzlich rosa beziehungsweise violette Augenlinsen bei einzelnen Ausdrucksvarianten. Diese sind als Varianten dieser Quelle dokumentiert; eine allgemeine Regel für das Spiel ist damit nicht festgelegt.
 
 Kleine oder unleserliche Bildbeschriftungen und Maßangaben wurden nicht als belastbare Fakten übernommen. Weitere Arbeitsaufträge können auf dem aktuellen Storyverlauf im Repository und diesen Quellen aufbauen. Inhalte des nicht vorliegenden Comics werden nicht als bekannt vorausgesetzt.
+
+## Teil 5 (7. November 2026): Die drei Kloster-Erinnerungen
+
+[Teil 5](teil-5/README.md) sichert das neue Nutzerbriefing als Textquelle: Angriff mit vier Ordenskriegern, Schutzopfer von Oni- und MG-Krieger, Lys Opfer gegen einen Minotaurus und die Übergabe des Heiligtums durch den alten Meister. Die [Produktionsroadmap](../erinnerungen-roadmap.md) beschreibt Reihenfolge, Figuren und spätere Einbindung an den Erinnerungsknoten. Der Stand ist Planung; neue Originalbilder oder PDFs wurden dafür nicht hochgeladen.

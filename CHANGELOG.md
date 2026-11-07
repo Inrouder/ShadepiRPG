@@ -1,5 +1,12 @@
 # Versionshinweise
 
+## v0.21.2 – CodexAI: Roadmap und Quellen der Kloster-Erinnerungen · 7. November 2026
+
+- Vor Beginn alle GitHub-Branches geprüft und den aktuellen Hauptstand v0.21.1 übernommen.
+- Nutzerbriefing zu drei Erinnerungsknoten als neue Textquelle in Archiv Teil 5 gesichert. Bestätigte Schutzopfer: Oni-Krieger und schwer gepanzerter MG-Krieger in Erinnerung 1; Ly überlebt bis zu seinem Opfer in Erinnerung 2. Weitere offene Rollen ausdrücklich gekennzeichnet.
+- Detaillierte Roadmap für Kulissen, vier neue Krieger, Mönche/Bewohner, begehbare Map, optionale erste Szene und späteren Bot-Kampf erstellt. Zweite und dritte Erinnerung einschließlich Dialogen, Heiligtumsübergabe und Minotauren-Kämpfen vorgeplant.
+- Vorhandene drei Erinnerungsanker und Zwischensequenz-Anbindung geprüft. Nur Planung, Archiv, Arbeitsregeln und Versionsinfos geändert; noch keine Assetgenerierung oder neue Spielszenen. Relative Dokumentlinks und Versionsangaben geprüft.
+
 ## v0.21.1 – ClaudeHelper: Downloads über Releases und Anleitung geordnet · 7. November 2026
 
 - Stand v0.21.0 von CodexAI geprüft: neun Prüfreihen mit 1.517 Prüfungen ohne Fehler; Menü-, Terminal- und Kampfgalerien gerendert. Releases v0.20.6 und v0.21.0 mit Windows-, Linux- und Projektpaket veröffentlicht.

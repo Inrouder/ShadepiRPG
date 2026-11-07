@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.21.1 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.21.2 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -35,7 +35,13 @@ Die Spielwelt nutzt **16 gemalte Kulissen** aus `assets/world/painted/`. Wände 
 
 Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und Bosskämpfen. Die vollständige Zuordnung und Hinweise zum Austauschen der MP3-Dateien stehen unter [Musik austauschen](assets/music/README.md).
 
-## Neu in v0.21.1 · 7. November 2026 · ClaudeHelper
+## Neu in v0.21.2 · 7. November 2026 · CodexAI
+
+- [Roadmap für drei Kloster-Erinnerungen](docs/erinnerungen-roadmap.md): Angriff auf das Kloster, Lys Opfer und die Übergabe des Heiligtums. Produktionsreihenfolge, neue Figuren, Dialoge und Arbeitspakete vor der Assetproduktion festgehalten.
+- Nutzerbriefing und bestätigte Schutzopfer in [Archiv Teil 5](docs/universum/teil-5/README.md) gesichert.
+- Planungs-/Dokumentationsstand; in dieser Änderung wurden keine neuen Grafiken oder Rückblenden ins Spiel eingebaut.
+
+## v0.21.1 · 7. November 2026 · ClaudeHelper
 
 - Download-Links zeigen auf das neueste GitHub-Release (Windows, Linux, Godot-Projekt; ohne Anmeldung). Spieleranleitung mit Kopfzeile wieder an erster Stelle.
 
