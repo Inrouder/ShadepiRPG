@@ -22,3 +22,24 @@ with wave.open(str(output),'wb') as file:
  file.setnchannels(1);file.setsampwidth(2);file.setframerate(rate)
  file.writeframes(b''.join(struct.pack('<h',int(v/peak*.48*32767)) for v in samples))
 print(output.name,len(samples),'samples, original seeded synthesis')
+# Seamless low energy roar with periodic harmonics, no external sound source.
+rate=44100
+length=1.0
+rng=random.Random(2807)
+noise=0.0
+values=[]
+for i in range(rate):
+ t=i/rate
+ noise=noise*.88+rng.uniform(-1,1)*.12
+ envelope=.85+.15*math.sin(math.tau*2*t)
+ values.append(envelope*(.11*math.sin(math.tau*84*t)+.07*math.sin(math.tau*168*t)+.025*math.sin(math.tau*420*t)+noise*.16))
+# Noise vanishes at the seam while the integer-period tones remain continuous.
+for i in range(rate):
+ t=i/rate
+ tonal=.11*math.sin(math.tau*84*t)+.07*math.sin(math.tau*168*t)+.025*math.sin(math.tau*420*t)
+ values[i]=tonal+(values[i]-tonal)*math.sin(math.pi*t)**2
+output=output.with_name('legacy_aura.wav')
+with wave.open(str(output),'wb') as file:
+ file.setnchannels(1);file.setsampwidth(2);file.setframerate(rate)
+ file.writeframes(b''.join(struct.pack('<h',int(max(-1,min(1,v))*32767)) for v in values))
+print(output.name,'1-second original looping aura sound')

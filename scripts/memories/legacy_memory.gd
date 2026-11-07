@@ -4,6 +4,7 @@ const INTERIOR = InteriorMap.INTERIOR
 const Figure = preload("res://scripts/memories/legacy_figure.gd")
 const Minotaur = preload("res://scripts/memories/minotaur.gd")
 const FinalBattle = preload("res://scripts/memories/legacy_battle.gd")
+const Aura = preload("res://scripts/memories/legacy_aura.gd")
 const TRANSFER = preload("res://assets/memories/legacy/transfer.png")
 var tanks: Array[PixelActor]=[]
 var tank: PixelActor
@@ -13,6 +14,8 @@ var transfer: Sprite2D
 var transfer_frame := -1
 var transferred := false
 var exhausted := false
+var master_dead := false
+var aura: Node
 var events: Array[String]=[]
 func make_map() -> Node2D:
 	return InteriorMap.new()
@@ -29,7 +32,7 @@ func _ready() -> void:
 	master=Figure.new()
 	actors.add_child(master)
 	master.position=Vector2(289,340)
-	master.set_frame(4)
+	master.set_frame(1)
 	master.hide()
 	transfer=Sprite2D.new()
 	transfer.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
@@ -48,6 +51,11 @@ func _ready() -> void:
 		mech.hide()
 		tanks.append(mech)
 	tank=tanks[0]
+	aura=Aura.new()
+	aura.world=self
+	aura.quality=map.quality
+	add_child(aura)
+	aura.attach_to(tableau,Vector2(-12,0))
 func active() -> bool: return not closed and cutscene.running
 func mark(value: String) -> void:
 	if active(): events.append(value)
@@ -66,12 +74,15 @@ func transfer_step(k: float) -> void:
 			effects.burst(tableau.position+Vector2(-8,-27),Color("edffff"),6)
 			if index in [0,3,6]: sound("legacy_transfer")
 	tableau.sprite.modulate=Color(1+k*0.25,1+k*0.25,1+k*0.25)
+	aura.set_power(clampf((k-0.25)/0.75,0,1))
 
 func breach_step(k: float) -> void:
 	if not active(): return
 	var previous: int=map.door_frame
 	map.breach_step(k)
-	if map.door_frame!=previous and map.door_frame in [1,2]: sound("drive_knock" if map.door_frame==1 else "drive_explosion")
+	if map.door_frame!=previous and map.door_frame in [1,2]:
+		sound("drive_knock" if map.door_frame==1 else "drive_explosion")
+		if not cutscene.skipping and map.door_frame==2: effects.prop_impact(InteriorMap.ENTRY,Color("a77a52"),true,"wood")
 
 func play() -> void:
 	if closed or cutscene.running: return
@@ -91,6 +102,8 @@ func play() -> void:
 	await cutscene.say("SHADEPI","Ich werde es mit meinem Leben beschützen. Der Orden muss leben. Danke für alles, Meister.")
 	if not active(): return
 	mark("vow")
+	await cutscene.camera(Vector2(295,300),0.45,1.35)
+	if not active(): return
 	phase="transfer"
 	mark("transfer_started")
 	tableau.set_frame(3)
@@ -101,13 +114,25 @@ func play() -> void:
 	transfer.hide()
 	transferred=true
 	mark("transfer_received")
+	master_dead=true
+	master.set_death_frame(3)
+	phase="master_death"
+	mark("master_died")
+	tableau.set_death_frame(0)
 	await cutscene.wait(0.6)
+	if not active(): return
+	await cutscene.say("SHADEPI","Meister …")
+	if not active(): return
+	tableau.set_death_frame(1)
+	await cutscene.wait(0.65)
 	if not active(): return
 	await cutscene.fade(Color.BLACK,0.25)
 	if not active(): return
 	tableau.hide()
 	master.show()
 	squad[0].show()
+	aura.attach_to(squad[0])
+	aura.set_power(1)
 	squad[0].facing=Vector2.RIGHT
 	squad[0].animate("idle",0)
 	await cutscene.fade(Color(0,0,0,0),0.3)
@@ -164,12 +189,13 @@ func play() -> void:
 	tableau.sprite.modulate=Color.WHITE
 	tableau.set_frame(6)
 	tableau.show()
+	aura.attach_to(tableau)
 	await cutscene.letterbox(true)
 	await cutscene.camera(Vector2(730,410),0.3,0.95)
 	await cutscene.fade(Color(0,0,0,0),0.25)
 	if not active(): return
 	phase="collapse"
-	await cutscene.wait(0.7)
+	await cutscene.animate(func(k: float): aura.set_power(1-k),0.7)
 	if not active(): return
 	tableau.set_frame(7)
 	exhausted=true
@@ -196,6 +222,7 @@ func _physics_process(delta: float) -> void:
 	if phase=="final_battle" and battle!=null: battle.tick(delta)
 	else: super._physics_process(delta)
 func cancel() -> void:
+	aura.set_power(0)
 	if battle!=null: battle.finish()
 	super.cancel()
 func _notification(what: int) -> void:

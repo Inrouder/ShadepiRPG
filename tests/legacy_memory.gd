@@ -39,6 +39,53 @@ func run() -> void:
 		scales[scene.tableau.sprite.scale]=true
 	check(scales.size()==1,"seated and collapsed poses retain body scale")
 	check(scene.Figure.ART.get_image().get_pixel(0,0).a<0.05 and scene.TRANSFER.get_image().get_pixel(0,0).a<0.05,"figure and energy sources have true transparency")
+	var death_scales:={}
+	for i in 4:
+		scene.master.set_death_frame(i)
+		var data: Dictionary=scene.master.death_frames[i]
+		var point=Vector2(data.anchor[0],data.anchor[1])-scene.master.sprite.texture.get_size()*0.5
+		check(scene.master.sprite.to_global(point).distance_to(scene.master.global_position)<0.01,"death/support poses retain measured contact without stretching the corpse")
+		death_scales[scene.master.sprite.scale]=true
+	check(death_scales.size()==1,"master collapse and corpse use one consistent body scale")
+	scene.master.set_frame(4)
+	check(scene.master.master_deceased and scene.master.frame_source=="master_death" and scene.master.frame_index==3,"dead master cannot return to the old lounging pose")
+	var body_position: Vector2=scene.squad[0].visual.position
+	var body_scale: Vector2=scene.squad[0].visual.scale
+	scene.aura.attach_to(scene.squad[0])
+	scene.aura.set_power(1)
+	for i in 8:
+		scene.squad[0].position=Vector2(500+i*2,390)
+		scene.aura._process(0.101)
+		var sprite: Sprite2D=scene.aura.back
+		var size: Vector2=sprite.texture.get_size()
+		var foot=Vector2(size.x*.5,size.y*.96)-size*.5
+		check(sprite.to_global(foot).distance_to(scene.squad[0].global_position)<0.01,"aura foot anchor follows the moving actor exactly")
+	check(scene.squad[0].visual.position==body_position and scene.squad[0].visual.scale==body_scale,"aura layers never deform or shift the character sprite")
+	check(scene.aura.back.get_index()<scene.squad[0].visual.get_index() and scene.aura.front.get_index()>scene.squad[0].visual.get_index(),"aura flames and lightning are ordered around the actual body")
+	scene.aura.quality=0
+	scene.aura._process(0.1)
+	check(scene.aura.back.visible and not scene.aura.front.visible,"reduced style keeps the aura but removes foreground lightning")
+	scene.aura.quality=2
+	scene.toggle_pause()
+	var aura_clock: float=scene.aura.elapsed
+	scene.aura._process(1)
+	check(scene.aura.elapsed==aura_clock and (not scene.aura.sound_player.playing or scene.aura.sound_player.stream_paused),"pause freezes aura animation and its looping sound")
+	scene.toggle_pause()
+	scene.aura.set_power(0)
+	check(not scene.aura.back.visible and not scene.aura.front.visible and not scene.aura.sound_player.playing,"zero energy clears both layers and the sound")
+	scene.cutscene.begin()
+	scene.effects.prop_impact(Vector2(500,400),Color.WHITE,true,"electrical")
+	scene.effects.prop_explosion(Vector2(500,400))
+	scene.effects.charge_ready(Vector2(500,400),false)
+	scene.effects._process(5)
+	check(scene.effects.fragments.is_empty() and scene.effects.smoke.is_empty() and scene.effects.blasts.is_empty() and scene.effects.charge_rings.is_empty(),"cinematic debris, smoke and shock effects continue and expire while the scene is busy")
+	scene.effects.burst(Vector2.ZERO,Color.WHITE,1)
+	scene.toggle_pause()
+	var fx_clock: float=scene.effects.elapsed
+	scene.effects._process(5)
+	check(scene.effects.elapsed==fx_clock and scene.effects.particles.size()==1,"paused cinematic effects do not advance even through a direct update")
+	scene.toggle_pause()
+	check(scene.map.impact_opacity(0.84)<0.05 and scene.map.impact_opacity(0.1)==1,"late impact frames fade to zero instead of vanishing at half opacity")
 	scene.cutscene.begin()
 	scene.battle=scene.FinalBattle.new(scene)
 	scene.battle.start()
@@ -111,6 +158,8 @@ func full_story() -> void:
 	var transfer_pause:=false
 	var breach_pause:=false
 	var promise_checked:=false
+	var death_checked:=false
+	var aura_checked:=false
 	for frame in 2400:
 		await process_frame
 		seen[scene.phase]=true
@@ -136,7 +185,13 @@ func full_story() -> void:
 		if scene.cutscene.waiting_input:
 			lines.append(scene.cutscene.line_label.text)
 			scene.cutscene.advance()
+		if scene.phase=="master_death" and not death_checked:
+			death_checked=true
+			check(scene.master_dead and scene.master.master_deceased and scene.tableau.frame_source=="master_death","master actually dies after transfer, while Shadepi remains alive")
 		if scene.phase=="final_battle" and scene.battle!=null:
+			if not aura_checked:
+				aura_checked=true
+				check(scene.aura.power==1 and scene.aura.target==scene.squad[0] and scene.master_dead,"power aura persists on the playable hero after the master's death")
 			Pilot.step(scene)
 			if scene.battle.dead: break
 		if scene.closed: break
@@ -144,6 +199,8 @@ func full_story() -> void:
 	Engine.max_fps=0
 	check(scene.completed and completed==[true],"real input-driven two-boss battle reaches complete memory exactly once")
 	check(scene.transferred and scene.exhausted and scene.tableau.frame_index==7 and scene.tableau.visible and not scene.squad[0].fallen,"Shadepi receives the sanctuary and collapses without a death flag")
+	check(death_checked and aura_checked and scene.master_dead and scene.master.master_deceased and scene.aura.power==0,"master remains dead while the exhausted hero loses the aura at the end")
+	check(scene.events.find("transfer_received")<scene.events.find("master_died") and scene.events.find("master_died")<scene.events.find("temple_door_breached"),"master death happens after transfer and before the enemy enters")
 	check(scene.tanks.all(func(t): return t.destroyed) and scene.battle.hit_count>=12,"both bosses are destroyed through actual melee hits")
 	var text=" ".join(lines)
 	check(text.contains("oberste Priorität") and text.contains("Ich werde es mit meinem Leben beschützen") and text.contains("Danke für alles, Meister"),"confirmed master/hero promises are shown on screen")

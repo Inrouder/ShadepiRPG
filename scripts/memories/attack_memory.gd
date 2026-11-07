@@ -63,6 +63,8 @@ func _ready() -> void:
 	add_child(cutscene)
 	effects = preload("res://scripts/effects.gd").new()
 	effects.world = self
+	effects.animate_while_busy = true
+	effects.quality = map.quality
 	effects.rain = false
 	effects.steam_vents.clear()
 	add_child(effects)

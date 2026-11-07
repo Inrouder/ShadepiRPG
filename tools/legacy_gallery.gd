@@ -21,6 +21,12 @@ func run() -> void:
 		if not seen.has(panel.phase):
 			seen[panel.phase]=true
 			await capture("scene-"+panel.phase)
+		if panel.phase=="master_death" and panel.master.visible and panel.cutscene.overlay.color.a<0.02 and panel.camera.zoom.x>1.2 and not seen.has("master_body"):
+			seen.master_body=true
+			await capture("master-body")
+		if panel.phase=="final_battle" and panel.aura.power>0.9 and not seen.has("aura_battle"):
+			seen.aura_battle=true
+			await capture("aura-battle")
 		if panel.phase=="temple_breach" and panel.map.door_frame==2 and not seen.has("breach_peak"):
 			seen.breach_peak=true
 			await capture("door-break")

@@ -1,6 +1,8 @@
 # Shadepi · Echos in Neon
 
-**Spieleranleitung für v0.27.0 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+**Spieleranleitung für v0.28.0 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+
+**Erinnerungseffekte v0.28.0 · CodexAI:** Der Meister stirbt nach der Übertragung des Heiligtums. Shadepi erhält dabei eine goldweiße Energieaura mit aufsteigenden Flammen und Blitzen, die ihn im Kampf begleitet und beim Zusammenbruch erlischt. „Bildstil → Reduziert“ lässt die Aura bestehen, reduziert aber Blitzakzente und Animationsfrequenz. Pause hält auch die Aura und den Energieton an; Ton aus schaltet ihn ab. [Vorschau](docs/das-vermaechtnis.md).
 
 **Erinnerung III v0.27.0 · CodexAI:** Am dritten Knoten startet „Das Vermächtnis“ im Tempelinneren über der verborgenen Hightech-Basis. Nach der Übergabe brechen die beiden Minotauren durch das Tor ein. Nach dem Versprechen und der Heiligtumsübergabe kämpfst du als Shadepi gegen zwei Minotauren. **WASD / Pfeile / Stick / Steuerkreuz** bewegt, **J / X / linke Maustaste** schlägt zu, **Leertaste / B** weicht aus. Triff die Servogelenke in Nahkampfreichweite und verlasse die angekündigten Einschlagsflächen. Beide Gegner müssen zerstört werden. Nach Niederlage startet **E / Enter / A** nur den Kampf neu. **Esc / Start** pausiert; dort lässt sich die Erinnerung bewusst überspringen oder ohne Abschluss verlassen. In Dialogen gilt E / Enter / A für Weiter und Leertaste / B für Überspringen. Nach dem Sieg folgt Shadepis Zusammenbruch. [Bilder und Ablauf](docs/das-vermaechtnis.md).
 

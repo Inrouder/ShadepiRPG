@@ -6,6 +6,10 @@ Quelle: Nutzerbriefing im Chat zu den drei Erinnerungen, einschließlich der ans
 
 Nutzerpräzisierung vom 7. November 2026: Der Tempel ist die Tarnung einer riesigen Hightech-Untergrundbasis. Erinnerung III soll räumlich aus dem früheren Schlachtfeld herausführen. Umgesetzt wird die vom Nutzer bevorzugte Tempelvariante: **Übergabe und Kampf finden im Tempelinneren statt, die Minotauren brechen in den Tempel ein.** Die Außendarstellung von v0.26.0 ist damit überholt. Die bestätigten Dialoge, der weiße Energiestrom, die zwei Gegner und Shadepis Zusammenbruch bleiben maßgeblich.
 
+## Verbindliche Präzisierung zu Tod und Aura · v0.28.0 · CodexAI
+
+Nutzerbestätigung vom 7. November 2026: **Der Meister ist nach der Übertragung des Heiligtums definitiv tot.** Er darf anschließend nicht entspannt oder aufgestützt daliegen. Shadepi soll eine kräftige Energieaura „wie ein Sajajin“ erhalten. Die Umsetzung verwendet aufsteigende goldweiße Flammen und cyanfarbene Blitze, die beim Empfang entstehen, im Kampf bestehen und beim erschöpften Zusammenbruch ausklingen. Die Todesfestlegung gilt für den Meister; Shadepis Schlusszustand bleibt der zuvor beschriebene reglose Zusammenbruch.
+
 ## Verbindliche neue Storyvorgaben
 
 Raven soll an jedem der drei Erinnerungsknoten eine Rückblende aus Shadepis Vergangenheit erleben. Raven ist die Empfängerin der Erinnerung und war beim historischen Angriff nicht im Kloster.

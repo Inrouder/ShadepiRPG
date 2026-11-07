@@ -1,5 +1,16 @@
 # Versionshinweise
 
+## v0.28.0 – CodexAI: Meistertod, Energieaura und Erinnerungseffekte · 7. November 2026
+
+- Vor Beginn alle GitHub-Branches geprüft und auf v0.27.0 aufgebaut. Nutzerpräzisierung gesichert: Der Meister ist nach der Übertragung definitiv tot; Shadepi soll eine kräftige, aufsteigende Aura wie bei einem Anime-Power-up erhalten.
+- Neuer vierteiliger HQ-Pixel-Atlas: erschlaffender Meister in Shadepis Armen, behutsames Ablegen und zwei flache Leichenposen mit geschlossenen Augen. Expliziter Szenenzustand und Ereignis für den Tod nach der vollständigen Übertragung. Die abgelegte Leiche bleibt gesperrt und kann nicht in die frühere Ellenbogenpose zurückfallen. Shadepis Schlusszustand bleibt Erschöpfung ohne Todesflag.
+- Neuer 16-teiliger HQ-Pixel-Aura-Atlas mit getrennten Flammen-/Blitzebenen. Weißgoldener Aufbau während der Übertragung, an die Originalfigur gebundene Aura im Kampf und Ausklingen beim Zusammenbruch. Sprites werden um den Körper sortiert; keine Verformung, Skalierung oder Verschiebung der Figur. Bildstil „Reduziert“ schaltet Vordergrundblitze ab und reduziert die Frequenz.
+- Eigener deterministisch synthetisierter, leiser Aura-Loop; Pause, Niederlage, Tonoption, Abbruch und Abschluss werden berücksichtigt. Meister- und Aura-PNGs unverändert übernommen; Kontakte und gemeinsame Körpergröße aus den Quellen vermessen.
+- Effektprüfung: optionale Weiteranimation für die isolierten Erinnerungswelten, damit Trümmer, Rauch, Schockeffekte und Ladungsringe nicht während einer laufenden Zwischensequenz stehenbleiben. Zeitbezogene Partikeldämpfung in diesem Modus. Die drei Erinnerungen übernehmen die gewählte Bildqualität; Einschläge blenden vor ihrem Ablauf sauber auf null aus.
+- Erweiterte gezielte Prüfungen für Meistertod, gesperrte Leichenpose, Aura-Anker und Ebenen, unveränderte Figurenproportionen, reduzierte Darstellung, Pause und Ende sowie Effektlaufzeiten. Tatsächlicher Szenenlauf und Vorschauen aktualisiert.
+
+- Validierung: sechs Prüfreihen mit **1.104 Prüfungen, 0 Fehlern** (Erinnerung III 78, Erinnerung I 143, Klosterkampf 226, Erinnerung II 69, Kampagne/Speichern 382, Story-Audit 206). Tatsächlichen Szenenlauf mit Meistertod und Aura bis zur Rückkehr im Renderer angesehen. Linux-PCK erstellt und neue Grafiken, Metadaten, Loop-Klang sowie den bestätigten Tod und die abschließende Effektbereinigung direkt daraus geprüft.
+
 ## v0.27.0 – CodexAI: Tempelinneres und Einbruch in Erinnerung III · 7. November 2026
 
 - Vor Beginn alle GitHub-Branches geprüft und auf dem aktuellen v0.26.0-Hauptstand aufgebaut.

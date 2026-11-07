@@ -21,5 +21,21 @@ for i in range(8):
  frames.append({'region':[x,y,384,512],'anchor':[anchor,floor],'bounds':list(box)})
 scale=round(64/(frames[0]['anchor'][1]-frames[0]['bounds'][1]),6)
 for frame in frames:frame['scale']=scale
-(folder/'actors.json').write_text(json.dumps({'figures':frames,'transfer_grid':[4,2]},indent=2)+'\n')
 print('8 figure regions measured; constant body scale and original source pixels preserved.')
+# The new master's corpse is measured by body length, not lying height.
+# This also keeps the two supporting poses at the existing kneeling scale.
+death_image=Image.open(folder/'master-death.png').convert('RGBA')
+death=[]
+for i in range(4):
+ x,y=(i%2)*768,(i//2)*512
+ alpha=death_image.crop((x,y,x+768,y+512)).getchannel('A')
+ box=alpha.point(lambda a:255 if a>120 else 0).getbbox()
+ if not box:raise ValueError(('death',i))
+ pix=alpha.load();floor=box[3]
+ xs=[col for row in range(max(box[1],floor-8),floor) for col in range(box[0],box[2]) if pix[col,row]>160]
+ death.append({'region':[x,y,768,512],'anchor':[(min(xs)+max(xs))/2,floor],'bounds':list(box)})
+body=death[2]['bounds']
+corpse_scale=round(64/(body[2]-body[0]),6)
+for frame in death:frame['scale']=corpse_scale
+(folder/'actors.json').write_text(json.dumps({'figures':frames,'master_death':death,'transfer_grid':[4,2],'aura_grid':[4,4]},indent=2)+'\n')
+print('4 death/support poses added at shared body scale; original PNG pixels preserved.')

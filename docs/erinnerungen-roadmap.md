@@ -1,4 +1,4 @@
-# Roadmap: Shadepis drei Erinnerungen · v0.27.0 · CodexAI
+# Roadmap: Shadepis drei Erinnerungen · v0.28.0 · CodexAI
 
 **Stand: Pakete 0–6 abgeschlossen.** Seit v0.25.0 · CodexAI ist der Abwehrkampf in Erinnerung II als 45-Sekunden-Überlebenskampf spielbar; danach folgt Lys bestehende Opferszene. Erinnerung 1 zeigt jetzt den vollständigen inszenierten Ablauf mit drei Bot-Wellen, den Schutzopfern von Oni und MG-Krieger sowie dem Rückzug der Überlebenden. Mönche und Bewohner besitzen vier Gehbilder pro Richtung. **Alle drei Erinnerungen sind eingebunden. Erinnerung III enthält seit v0.26.0 Meister, Heiligtumsübergabe, spielbaren Zweibosskampf und Zusammenbruch.** [Aktuelle dritte Erinnerung](das-vermaechtnis.md). [Lys Opfer: Szene und Vorschau](lys-opfer.md). [Aktuelle Umsetzung und Vorschau](kloster-kampf.md). Grundlage sind das [Nutzerbriefing mit bestätigten Schutzopfern](universum/teil-5/README.md), die vorhandenen Figurenreferenzen und das [Heiligtum-/Romanarchiv](universum/teil-4/README.md). Diese Roadmap hält Produktionspakete, Fortschritt und erzählerische Kontinuität fest.
 
@@ -55,7 +55,9 @@ Der Roboterkopf-Krieger ist nach Erinnerung 1 noch am Leben. Sein weiterer Einsa
 
 Das Licht beginnt im Inneren des Meisters und geht als weißer Energiestrom auf Shadepi über. Pixelpartikel, Kleidung und Rüstung reagieren auf das Licht; Knistern und Knacken steigern sich. Die Darstellung bleibt mit dem Archiv vereinbar: Das Heiligtum ist der empfindungsfähige Nanitenschwarm, keine neu eingeführte Gottheit.
 
-Nach einem Moment der Stille richtet sich Shadepi auf. Nach der Übergabe brechen **zwei Minotauren** durch den Tempelzugang in dieselbe Halle ein. Dort stellt Shadepi sich ihnen zwischen Schäden und freigelegter Technik entgegen. Nach dem Kampf bricht er reglos zusammen; die Erinnerung endet und Raven kehrt in die Gegenwart zurück. Der Zusammenbruch ist keine Todesfestlegung für Shadepi. Das spätere Verschwinden des Klosters liegt außerhalb dieser drei gezeigten Augenblicke.
+**Seit v0.28.0 bestätigt und umgesetzt:** Der Meister stirbt nach der Übertragung. Shadepi hält den erschlafften Körper und legt ihn flach ab; eine Leichenpose ersetzt die frühere gestützte Ruhepose. Gleichzeitig baut sich um Shadepi eine goldweiße Energieaura mit Blitzen auf.
+
+Nach einem Moment der Stille richtet sich Shadepi auf. Nach der Übergabe brechen **zwei Minotauren** durch den Tempelzugang in dieselbe Halle ein. Dort stellt Shadepi sich ihnen zwischen Schäden und freigelegter Technik entgegen. Beim anschließenden reglosen Zusammenbruch erlischt seine Aura; danach endet die Erinnerung und Raven kehrt in die Gegenwart zurück. Der Zusammenbruch ist keine Todesfestlegung für Shadepi. Das spätere Verschwinden des Klosters liegt außerhalb dieser drei gezeigten Augenblicke.
 
 **In v0.26.0 erstellt:** Meisterfigur in traditioneller bronze-/brauner Kampfausrüstung, Halte-/Übergabe-/Zusammenbruchposen, letzte Ruinenvariante und achtteiliger weißer Nanitenstrom. Die beiden Panzer verwenden die Grafiken aus Erinnerung 2. Der Meister erhält keinen erfundenen Eigennamen. Seit v0.27.0 ersetzen Tempelinnenraum und vierteiliger Torbruch-Atlas die frühere Hofkulisse der dritten Erinnerung.
 
@@ -69,7 +71,7 @@ Nach einem Moment der Stille richtet sich Shadepi auf. Nach der Übergabe breche
 | Ly | Shadepi-ähnliche Maske und weiße Gewandung, als eigene Person erkennbar. | Überlebt Erinnerung 1 und opfert sich in Erinnerung 2. „Bruder“ wird nicht ungefragt zu einer bestätigten biologischen Verwandtschaft ausgebaut. |
 | Schwerer MG-Krieger | Samurai-Maske, volle schwere Panzerung, sehr großes MG; breite und gewichtige Silhouette. | Stirbt in Erinnerung 1 beim Schutz Shadepis. Name offen. |
 | Mönche und Bewohner | Unbewaffnete Klosterbevölkerung in passenden Gewändern bzw. einfacher Alltagskleidung. | Fliehen auf nachvollziehbaren Wegen; keine bloß im Hintergrund eingebrannten Personen. |
-| Meister / alter Träger | Alter Mann in traditioneller Kampfausrüstung. | Übergibt in Erinnerung 3 das Heiligtum. Eigenname und endgültiges Design offen. |
+| Meister / alter Träger | Alter Mann in traditioneller Kampfausrüstung. | Übergibt in Erinnerung 3 das Heiligtum und stirbt danach. Design umgesetzt; Eigenname offen. |
 
 Neue Grafiken sind **detailreiche HQ-Pixelart**: sichtbare Pixelcluster, strukturierte Stoffe, Metall, Stein und Holz, abgestimmte Lichtstufen und echte Materialtiefe. Große Dateimaße allein reichen nicht. Perspektive, Figurengröße, Fußpunkte und Pixeldichte richten sich nach dem aktuellen Spiel. Ly darf nicht mit Shadepi oder dem Meister verwechselt werden. Keine einfachen Vektorfiguren oder glatten Ersatzillustrationen.
 

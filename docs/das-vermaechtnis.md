@@ -1,6 +1,6 @@
-# Erinnerung III: Das Vermächtnis · v0.27.0 · CodexAI
+# Erinnerung III: Das Vermächtnis · v0.28.0 · CodexAI
 
-**Erinnerung III spielt im Tempelinneren.** Der traditionelle Tempel ist die Tarnung einer riesigen unterirdischen Hightech-Basis des Ordens. Shadepi hält seinen Meister in einem geschützten Seitenbereich, empfängt das Heiligtum und verteidigt anschließend dieselbe Halle: Zwei Minotauren brechen durch den Zugang ein. Damit folgt der Schauplatz der Nutzerpräzisierung vom 7. November 2026.
+**Erinnerung III spielt im Tempelinneren.** Der traditionelle Tempel ist die Tarnung einer riesigen unterirdischen Hightech-Basis des Ordens. Shadepi hält seinen Meister in einem geschützten Seitenbereich. Nach der vollständigen Übertragung stirbt der Meister; Shadepi richtet sich mit einer kräftigen Energieaura auf und verteidigt anschließend dieselbe Halle: Zwei Minotauren brechen durch den Zugang ein. Damit folgt der Schauplatz der Nutzerpräzisierung vom 7. November 2026.
 
 ![Aktuelle Spielszenen im Tempel](previews/vermaechtnis.webp)
 
@@ -24,9 +24,21 @@ Der äußere Zugang ist geschlossen, während Shadepi den Meister stützt. Diese
 
 ![Shadepi hält den Meister im Tempel](vermaechtnis-meister.png)
 
-Licht entsteht in der Brust des Meisters und geht als weißer Nanitenstrom auf Shadepi über. Acht Bildphasen, weiße Partikel und eigenes Knistern begleiten die Übertragung. Danach richtet sich Shadepi auf; der Meister bleibt im Seitenbereich. Er hat keinen erfundenen Eigennamen. Der Roboterkopf-Krieger wird hier nicht gezeigt und erhält keinen zusätzlichen Tod.
+Licht entsteht in der Brust des Meisters und geht als weißer Nanitenstrom auf Shadepi über. Acht Bildphasen, weiße Partikel und eigenes Knistern begleiten die Übertragung. Nach der vollständigen Übertragung erschlafft der Meister in Shadepis Armen. Shadepi legt ihn flach ab: geschlossene Augen, schlaffe Arme und kein aufgestützter Oberkörper. **Sein Tod ist durch den Nutzer bestätigt.** Der Körper bleibt anschließend leblos im Seitenbereich; eine gesperrte Leichenpose verhindert die Rückkehr zur alten Ellenbogenhaltung. Er hat keinen erfundenen Eigennamen. Der Roboterkopf-Krieger wird hier nicht gezeigt und erhält keinen zusätzlichen Tod.
 
 ![Der weiße Strom zwischen Meister und Shadepi](vermaechtnis-uebergabe.png)
+
+![Der Meister erschlafft nach der Übertragung](vermaechtnis-meistertod.png)
+
+## Shadepis Energieaura
+
+Während der Übertragung wächst eine goldweiße Aura mit aufsteigenden Flammen, hellen Partikeln und cyanfarbenen Blitzen um Shadepi. Acht Hintergrundphasen und acht zugehörige Vordergrundphasen bilden einen animierten Pixel-Atlas. Die Flammen liegen hinter der Originalfigur, die sparsameren Blitzakzente davor. Maske, rote Linsen, Körperproportionen und Fußpunkte werden dadurch nicht verändert.
+
+![Aura und abgelegter Meister](vermaechtnis-aura.png)
+
+Die Aura bleibt beim Gehen, Ausweichen und im Kampf direkt an Shadepi gebunden. Angriffe verstärken ihre Vordergrundakzente kurz. Sie benötigt keine zusätzliche Taste. Beim erschöpften Zusammenbruch nach dem Sieg klingt sie aus und erlischt. **Der bestätigte Tod betrifft den Meister; Shadepis Schlusszustand ist weiterhin keine Todesfestlegung.**
+
+„Bildstil → Reduziert“ behält die Aura bei geringerer Bildfrequenz und schaltet die Vordergrundblitze ab. Pause hält ihre Animation und den leisen Energieklang an; die Tonoption schaltet ihn ab. Abbruch und Szenenende entfernen beide Ebenen und den Klang.
 
 ## Der Einbruch
 
@@ -56,7 +68,7 @@ Im Pausenmenü wählen Pfeiltasten, Steuerkreuz, Stick oder Tab den Knopf; Enter
 
 ## Zusammenbruch und Spielstände
 
-Nach dem Sieg sinkt Shadepi auf ein Knie und fällt reglos auf den Hallenboden. Beide Minotaurus-Wracks bleiben im Bild. Es gibt keinen Todesmarker für Shadepi. Die Erinnerung endet, Raven kehrt zurück und spricht über sein Versprechen. Danach geht der bestehende Ablauf in den Aerodyne-Flug über.
+Nach dem Sieg sinkt Shadepi auf ein Knie; dabei erlischt seine Aura. Anschließend fällt er reglos auf den Hallenboden. Beide Minotaurus-Wracks bleiben im Bild. Es gibt keinen Todesmarker für Shadepi. Die Erinnerung endet, Raven kehrt zurück und spricht über sein Versprechen. Danach geht der bestehende Ablauf in den Aerodyne-Flug über.
 
 ![Shadepi nach dem Kampf im Tempel](vermaechtnis-zusammenbruch.png)
 
@@ -68,21 +80,29 @@ Historische Gesundheit und Gegenwartswerte bleiben getrennt. Das bestehende typg
 | --- | --- |
 | `temple-interior.png` · 1585×992 | Neue Tempelhalle mit Tarnverkleidung und sichtbaren technischen Ebenen. |
 | `temple-door.png` · 1536×1024 | Neuer freigestellter 2×2-Atlas für geschlossenen Zugang bis zur vollständig gebrochenen Öffnung. |
-| `characters.png` · 1536×1024 | Wiederverwendete Meister-, Halte-, Empfangs- und Zusammenbruchposen. |
+| `characters.png` · 1536×1024 | Wiederverwendete Halte-, Empfangs- und Shadepi-Zusammenbruchposen. |
+| `master-death.png` · 1536×1024 | Vier neue Erschlaffungs-, Ablege- und flache Leichenposen. |
+| `shadepi-aura.png` · 1254×1254 | 16 neue Flammen-/Blitzphasen als zwei getrennte Ebenen. |
 | `transfer.png` · 1536×1024 | Acht wiederverwendete weiße Transferphasen. |
 | `actors.json` | Vermessene Quellregionen und Bodenkontakte der Figuren. |
 | `manifest.json` | Aktueller Schauplatz, Umfang und Figurenkontinuität. |
 
-Die beiden neuen HQ-Pixel-PNGs wurden mit dem Bildwerkzeug nach Palette und Stil der vorhandenen Spielgrafiken erstellt. Figuren, Nanitenstrom, Minotauren und Kampf-/Einschlagseffekte werden weiterverwendet. Die Hofquelle `courtyard.png` bleibt als historischer Grafikstand von v0.26.0 erhalten. Die aktuelle dritte Szene lädt `temple-interior.png` über ihr eigenes `temple_map.gd`.
+Für v0.28.0 wurden Meistertod und Aura als HQ-Pixel-PNGs mit dem Bildwerkzeug erstellt. Tempel, Tor, Nanitenstrom, Minotauren und vorhandene Kampf-/Einschlagsbilder werden weiterverwendet. Der Leichenatlas wird über seine Körperlänge vermessen; liegende Figuren werden nicht auf die Höhe stehender Personen vergrößert. Die Hofquelle `courtyard.png` bleibt als historischer Grafikstand von v0.26.0 erhalten. Die aktuelle dritte Szene lädt `temple-interior.png` über ihr eigenes `temple_map.gd`.
 
-`temple_map.gd` teilt Atlas-/Effekthilfen mit den anderen Erinnerungen, baut aber seine eigenen Innenraum-Kollisionskörper, Torphasen und Verdeckungen auf. Alle Sprite-Atlanten werden mit Nearest-Filter dargestellt. Knistern und Musikzuordnung bleiben erhalten: ruhige Heiligtumsmusik vor der Schlacht, **Boss.mp3** im Kampf und Musik der Erinnerungskammer danach. Die Tonoption gilt auch für die Geräusche.
+`temple_map.gd` teilt Atlas-/Effekthilfen mit den anderen Erinnerungen, baut aber seine eigenen Innenraum-Kollisionskörper, Torphasen und Verdeckungen auf. Alle Sprite-Atlanten werden mit Nearest-Filter dargestellt. `legacy_aura.gd` bindet die vorab angelegten Atlasregionen um den tatsächlichen Schauspieler an; es werden keine Texturen pro Bild neu erzeugt. `tools/generate_legacy_audio.py` erzeugt den eigenen leisen Aura-Loop ohne fremde Aufnahmen. Knistern und Musikzuordnung bleiben erhalten: ruhige Heiligtumsmusik vor der Schlacht, **Boss.mp3** im Kampf und Musik der Erinnerungskammer danach. Die Tonoption gilt auch für die Geräusche.
+
+## Prüfung der Erinnerungseffekte
+
+Die gemeinsamen Erinnerungseffekte übernehmen jetzt die gewählte Bildqualität. Trümmer, Rauch, Schockeffekte und vorhandene Ladungsringe können während einer laufenden Zwischensequenz weiterlaufen und rechtzeitig verschwinden. Beim Pausieren stehen sie still. Einschlagsbilder blenden vor ihrem Ablauf sichtbar bis auf null aus, statt mit halber Deckkraft abzubrechen. Für den übrigen Spielablauf bleibt die bisherige Steuerung der Effekte bestehen.
 
 ## Prüfung
 
-**Sechs Prüfreihen mit insgesamt 1.078 Prüfungen ohne Fehler:** Erinnerung III 52, Erinnerung I/Einbindung 143, erster Klosterkampf 226, Erinnerung II 69, Kampagne/Speichern 382 und Story-Audit 206.
+**Sechs Prüfreihen mit insgesamt 1.104 Prüfungen ohne Fehler:** Erinnerung III 78, Erinnerung I/Einbindung 143, erster Klosterkampf 226, Erinnerung II 69, Kampagne/Speichern 382 und Story-Audit 206.
+
+Zusätzlich geprüft sind die gesperrte Leichenpose, der Tod nach abgeschlossener Übertragung, Aura-Kontakte bei Bewegung, unveränderte Körpergrafik, Ebenenreihenfolge, reduzierte Darstellung, Pause und vollständiges Erlöschen.
 
 Die Prüfungen kontrollieren die eigene Innenraum-Karte, die echte Türsperre, freie Hallenflächen, den gesperrten Basisschacht, Transparenz der Öffnung und die Reihenfolge **Übergabe → Torbruch → erster Eintritt → zweiter Eintritt → Kampf**. Pause wird während des eigentlichen Bruchs geprüft. Der gesamte Zweibosskampf wird mit normalen Angriffseingaben bis zu Ravens Rückkehr durchgespielt. Die bestehenden Prüfungen für Speichern/Laden, Controller, beide früheren Erinnerungen und den weiteren Kampagnenablauf laufen zusätzlich.
 
-Ein Linux-PCK wurde erstellt. Innenraum, Tor-Atlas, Wechsel der Türsperre, Reihenfolge des Einbruchs und vollständiger Abschluss wurden direkt aus dem Exportpaket geladen und geprüft.
+Ein Linux-PCK wurde erstellt. Neue Leichenposen, Aura-Atlas, Loop-Klang, der Tod des Meisters und das vollständige Erlöschen der Effekte am Schluss wurden direkt aus dem Exportpaket geladen und geprüft.
 
 Die aktuelle Szene wurde im OpenGL-Renderer vom Tempelüberblick bis zum Zusammenbruch angesehen. `tools/legacy_gallery.gd` zeichnet den tatsächlichen Kampagneneinstieg auf. [Roadmap](erinnerungen-roadmap.md) · [Verbindliches Briefing und Schauplatzkorrektur](universum/teil-5/README.md).

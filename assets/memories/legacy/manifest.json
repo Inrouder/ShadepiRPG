@@ -1,5 +1,5 @@
 {
-  "version": "0.27.0",
+  "version": "0.28.0",
   "author": "CodexAI",
   "memory": "legacy",
   "world_size": [
@@ -11,7 +11,7 @@
   "figures": "characters.png",
   "transfer": "transfer.png",
   "actor_metadata": "actors.json",
-  "source_regions": 20,
+  "source_regions": 40,
   "minotaur_reuse": "../sacrifice/minotaur.png",
   "scene": "res://scenes/memories/legacy.tscn",
   "entry": "Beat.ECHO / Erinnerungsknoten 3",
@@ -26,5 +26,10 @@
   "door": "temple-door.png",
   "map_script": "res://scripts/memories/temple_map.gd",
   "location": "Tempelinneres als Tarnung über der großen unterirdischen Hightech-Ordensbasis",
-  "superseded_background": "courtyard.png: früherer Stand v0.26.0, in Erinnerung III nicht mehr verwendet"
+  "superseded_background": "courtyard.png: früherer Stand v0.26.0, in Erinnerung III nicht mehr verwendet",
+  "master_death": "master-death.png",
+  "aura": "shadepi-aura.png",
+  "aura_sound": "res://assets/audio/legacy_aura.wav",
+  "master_end_state": "Verbindlich tot nach vollständiger Übertragung des Heiligtums",
+  "aura_style": "goldweiße aufsteigende Energieflammen mit cyanfarbenen Blitzen, nach der Übertragung bis zur Erschöpfung"
 }

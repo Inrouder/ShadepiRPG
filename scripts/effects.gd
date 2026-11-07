@@ -18,6 +18,7 @@ var fragments: Array[Dictionary] = []
 var smoke: Array[Dictionary] = []
 var blasts: Array[Dictionary] = []
 var charge_rings: Array[Dictionary] = []
+var animate_while_busy := false
 
 func charge_ready(point: Vector2, ranged: bool) -> void:
 	charge_rings.append({"p": point, "t": 0.4, "c": Color("67eaff") if ranged else Color("ff4b6b")})
@@ -72,8 +73,9 @@ func prop_explosion(point: Vector2) -> void :
 	burst(point, Color("ffc486"), 32)
 
 func _process(delta: float) -> void :
+	if animate_while_busy and world.menu_open: return
 	elapsed += delta
-	if not world.is_busy():
+	if animate_while_busy or not world.is_busy():
 		for i in range(charge_rings.size() - 1, -1, -1):
 			charge_rings[i].t -= delta
 			if charge_rings[i].t <= 0:
@@ -95,7 +97,7 @@ func _process(delta: float) -> void :
 				blasts.remove_at(i)
 	for i in range(particles.size() - 1, -1, -1):
 		particles[i].p += particles[i].v * delta
-		particles[i].v *= 0.94
+		particles[i].v *= pow(0.94,delta*60) if animate_while_busy else 0.94
 		particles[i].t -= delta
 		if particles[i].t <= 0:
 			particles.remove_at(i)

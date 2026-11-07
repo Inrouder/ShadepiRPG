@@ -101,8 +101,11 @@ func _draw() -> void:
 	for blast in impacts:
 		var column := mini(3,int(blast.age*6))
 		var frame := region(column,3)
-		draw_texture_rect(frame,Rect2(blast.p-Vector2(46,68),Vector2(92,92)),false,Color(1,1,1,1-blast.age*0.6))
+		draw_texture_rect(frame,Rect2(blast.p-Vector2(46,68),Vector2(92,92)),false,Color(1,1,1,impact_opacity(blast.age)))
 	for i in (1 if quality==0 else 4):
 		var frame := region(int(elapsed*3+i)%4 if quality>0 else 0,2)
 		var point: Vector2 = FIRES[i]+Vector2(sin(elapsed*0.4+i)*8,-45)
 		draw_texture_rect(frame,Rect2(point-Vector2(40,72),Vector2(80,112)),false,Color(1,1,1,0.5))
+
+func impact_opacity(age: float) -> float:
+	return clampf((0.85-age)/0.35,0,1)

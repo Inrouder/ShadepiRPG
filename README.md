@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.27.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.28.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -35,7 +35,15 @@ Die Spielwelt nutzt **16 gemalte Kulissen** aus `assets/world/painted/`. Wände 
 
 Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und Bosskämpfen. Die vollständige Zuordnung und Hinweise zum Austauschen der MP3-Dateien stehen unter [Musik austauschen](assets/music/README.md).
 
-## Neu in v0.27.0 · 7. November 2026 · CodexAI
+## Neu in v0.28.0 · 7. November 2026 · CodexAI
+
+- **Meister stirbt nach der Übergabe:** Neue Erschlaffungs-, Ablege- und Leichenposen ersetzen die bisherige ruhende Darstellung. Sein Tod ist jetzt ausdrücklich Teil der Szene und im Archiv gesichert.
+- **Shadepis Energieaura:** Acht Flammen- und acht Blitzphasen bauen sich während der weißen Übertragung auf. Die goldweiße Aura folgt Shadepi durch den Kampf, verstärkt ihre Vordergrundakzente beim Angriff und erlischt beim Zusammenbruch. Maske, Körper und Füße werden nicht verschoben.
+- Erinnerungseffekte geprüft: Trümmer, Rauch und Schockeffekte laufen in Zwischensequenzen weiter und enden sauber; Einschläge blenden aus. Pause friert Aura und Effektfortschritt ein. Der Bildstil „Reduziert“ reduziert Blitzakzente; die Tonoption gilt für den neuen leisen Energieklang.
+- **1.104 Prüfungen ohne Fehler** in sechs Prüfreihen; Szenenlauf und neue Inhalte im Exportpaket geprüft.
+- [Aktuelle Bilder und Animation](docs/das-vermaechtnis.md).
+
+## v0.27.0 · 7. November 2026 · CodexAI
 
 - **Erinnerung III im Tempelinneren:** Übergabe und letzter Kampf finden jetzt in einer eigenen Tempelhalle statt. Hinter der traditionellen Verkleidung sind Technik, ein großer Schacht und mehrere Ebenen der unterirdischen Ordensbasis sichtbar.
 - **Minotauren brechen ein:** Der Zugang ist während des Meistergesprächs geschlossen. Erst nach der Übertragung bricht das Tor in vier Pixelphasen auf; beide Mechs kommen nacheinander durch dieselbe Öffnung in die Halle.
