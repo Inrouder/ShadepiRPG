@@ -1,12 +1,12 @@
-# Roadmap: Shadepis drei Erinnerungen · v0.23.0 · CodexAI
+# Roadmap: Shadepis drei Erinnerungen · v0.24.0 · CodexAI
 
-**Stand: Pakete 0–6 abgeschlossen.** Erinnerung 1 zeigt jetzt den vollständigen inszenierten Ablauf mit drei Bot-Wellen, den Schutzopfern von Oni und MG-Krieger sowie dem Rückzug der Überlebenden. Mönche und Bewohner besitzen vier Gehbilder pro Richtung. **Erinnerungen 2 und 3 stehen noch aus.** [Aktuelle Umsetzung und Vorschau](kloster-kampf.md). Grundlage sind das [Nutzerbriefing mit bestätigten Schutzopfern](universum/teil-5/README.md), die vorhandenen Figurenreferenzen und das [Heiligtum-/Romanarchiv](universum/teil-4/README.md). Diese Roadmap hält Produktionspakete, Fortschritt und erzählerische Kontinuität fest.
+**Stand: Pakete 0–6 abgeschlossen.** Erinnerung 1 zeigt jetzt den vollständigen inszenierten Ablauf mit drei Bot-Wellen, den Schutzopfern von Oni und MG-Krieger sowie dem Rückzug der Überlebenden. Mönche und Bewohner besitzen vier Gehbilder pro Richtung. **Erinnerung 2 ist in v0.24.0 umgesetzt; Erinnerung 3 steht noch aus.** [Lys Opfer: Szene und Vorschau](lys-opfer.md). [Aktuelle Umsetzung und Vorschau](kloster-kampf.md). Grundlage sind das [Nutzerbriefing mit bestätigten Schutzopfern](universum/teil-5/README.md), die vorhandenen Figurenreferenzen und das [Heiligtum-/Romanarchiv](universum/teil-4/README.md). Diese Roadmap hält Produktionspakete, Fortschritt und erzählerische Kontinuität fest.
 
 ## Ziel und vorhandener Spieleinstieg
 
 Raven erlebt an jedem der drei Erinnerungsknoten eine eigenständige Rückblende aus Shadepis Vergangenheit. Der Spieler sieht das historische Geschehen mit Shadepi und dem Orden. Raven bleibt die Empfängerin der Erinnerung; sie läuft nicht als zusätzliche Kämpferin durch das damalige Kloster.
 
-Im aktuellen Spiel existieren die drei Anker bereits: `Painted.ECHO_POINTS` in `scripts/painted_world.gd` und der Ablauf `Beat.ECHO` in `scripts/campaign.gd`. Knoten 1 zeigt jetzt „Der Angriff“ als eigene Szene. An Knoten 2 und 3 bleiben vorerst die bestehenden Hinweise und die Rückkehr zu Raven erhalten; dort folgen später **Lys Opfer → Das Vermächtnis**. Die bestehenden übrigen Kapitel, Menüs und Kontrollpunkte bleiben Ausgangsbasis.
+Im aktuellen Spiel existieren die drei Anker bereits: `Painted.ECHO_POINTS` in `scripts/painted_world.gd` und der Ablauf `Beat.ECHO` in `scripts/campaign.gd`. Knoten 1 zeigt jetzt „Der Angriff“ als eigene Szene. Knoten 2 zeigt „Lys Opfer“ als eigene Szene. An Knoten 3 bleibt vorerst der bestehende Abschluss erhalten; dort folgt später **Das Vermächtnis**. Die bestehenden übrigen Kapitel, Menüs und Kontrollpunkte bleiben Ausgangsbasis.
 
 Die erste Rückblende nutzt das vorhandene System für laufende Figuren, Kamerafahrten, Dialoge und Überspringen. Zunächst entstehen inszenierte Szenen; vollständige spielbare Kämpfe sind getrennte Ausbaupakete. Es werden keine Comicseiten als Ersatz für die Szene eingeplant.
 
@@ -39,11 +39,11 @@ Der Hof geht in einen schwer beschädigten Verteidigungsbereich über. Ein deutl
 >
 > **Ly:** „Verzeih mir, Bruder. FÜR DEN ORDEN!“
 
-Die Dialogfassung ist sprachlich geglättet, die Aussage des Nutzerbriefings bleibt erhalten. Ly rennt auf den Minotaurus zu; sein Angriff zerstört den Panzer und kostet ihn das Leben. Die technische Ursache der Zerstörung – etwa Überladung oder Sprengladung – ist noch nicht bestimmt und wird nicht als bestätigte Fähigkeit erfunden.
+Die Dialogfassung ist sprachlich geglättet, die Aussage des Nutzerbriefings bleibt erhalten. Ly rennt auf den Minotaurus zu; sein Angriff zerstört den Panzer und kostet ihn das Leben. In v0.24.0 befestigt er dazu eine Sprengladung am Servoschacht und bleibt bei der Zündung am Panzer. Das ist die konkrete Umsetzung der Szene, keine zusätzlich bestätigte Fähigkeit des Heiligtums.
 
-**Spätere Assets:** beschädigte Variante des vorhandenen Hofs, Minotaurus-Panzer mit klar erkennbaren Schwachstellen, Lys Lauf-/Opferbewegung, passende Licht-, Rauch- und Trümmerphasen. Vor der Tankgrafik ist die Bauform festzulegen: Laufbeine oder Ketten sind im Briefing noch nicht entschieden.
+**In v0.24.0 erstellt:** beschädigte Variante des vorhandenen Hofs, Minotaurus-Atlas mit Servoschacht und Wrack, weiße Ly-/Ladungsposen. Vorhandene Feuer-/Rauch-/Einschlaggrafiken werden wiederverwendet. Bauform als zweibeiniger Mech nach der Original-Dossierbeschreibung umgesetzt; diese Ausführung ist als Umsetzungsentscheidung dokumentiert.
 
-Der Roboterkopf-Krieger ist nach Erinnerung 1 noch am Leben. Sein weiterer Einsatz oder Verbleib wird nicht ohne zusätzliche Vorgabe als Tod erzählt. Diese Erinnerung wird erst nach Abschluss des ersten Erinnerungspakets produziert.
+Der Roboterkopf-Krieger ist nach Erinnerung 1 noch am Leben. Sein weiterer Einsatz oder Verbleib wird nicht ohne zusätzliche Vorgabe als Tod erzählt. Diese Erinnerung ist nach Abschluss des ersten Pakets in v0.24.0 eingebunden.
 
 ### 3. Das Vermächtnis
 
@@ -89,7 +89,7 @@ Neue Grafiken sind **detailreiche HQ-Pixelart**: sichtbare Pixelcluster, struktu
 
 Die Identitätsreferenzen kommen vor den Bewegungsatlanten. Neue Angriffssätze entstehen jeweils dann, wenn sie für den nächsten Kampfabschnitt gebraucht werden.
 
-Paket 6 ist abgeschlossen; als Nächstes folgt **Erinnerung 2**, danach **Erinnerung 3**. Erst die Roadmap umfasst alle drei; die erste Produktion konzentriert sich auf Erinnerung 1.
+Paket 6 und **Erinnerung 2** sind abgeschlossen; als Nächstes folgt **Erinnerung 3**. Erst die Roadmap umfasst alle drei; die erste Produktion konzentriert sich auf Erinnerung 1.
 
 ## Aufbau der ersten Map
 
@@ -106,7 +106,7 @@ Feuer, Rauch, Bombeneinschläge und herumfliegende Teile werden als begrenzte, w
 
 ## Einbindung an den Erinnerungsknoten
 
-Zuordnung: **Knoten 1 → Der Angriff (umgesetzt); Knoten 2 → Lys Opfer (geplant); Knoten 3 → Das Vermächtnis (geplant)**. Jede Rückblende erhält einen eigenen stabilen Bezeichner, getrennt vom sichtbaren Titel.
+Zuordnung: **Knoten 1 → Der Angriff (umgesetzt); Knoten 2 → Lys Opfer (umgesetzt); Knoten 3 → Das Vermächtnis (geplant)**. Jede Rückblende erhält einen eigenen stabilen Bezeichner, getrennt vom sichtbaren Titel.
 
 Beim Start werden Ravens aktuelle Position und der Erinnerungsknoten gehalten. Die historische Szene erhält eigene Figuren und lokalen Szenenzustand; Shadepi ist darin sichtbar und wird bei einem später spielbaren Ausbau gesteuert. Historische Figuren ersetzen keine Gegenwarts-NPCs und überschreiben keine aktuellen Lebens-/Energiewerte.
 
@@ -124,4 +124,4 @@ Spätere Prüfungen umfassen Grafik- und Fußanker, Laufwege, Sichtbarkeit der v
 
 ## Noch offene Festlegungen
 
-Die Auswahl der beiden ersten Gefallenen ist **geklärt: Oni und MG-Krieger**. **Oni: Katana; Roboterkopf-Krieger: Stab** sind ebenfalls bestätigt. Offen bleiben Eigennamen der übrigen neuen Figuren, die genaue Minotaurus-Bauform, die technische Ausführung von Lys Opfer und das spätere Schicksal des Roboterkopf-Kriegers. Diese Punkte blockieren die Roadmap nicht; sie werden vor dem jeweiligen betroffenen Asset bzw. Storymoment festgelegt. Weitere Tote oder zusätzliche Fähigkeiten werden nicht ungefragt als Kanon eingetragen.
+Die Auswahl der beiden ersten Gefallenen ist **geklärt: Oni und MG-Krieger**. **Oni: Katana; Roboterkopf-Krieger: Stab** sind ebenfalls bestätigt. Offen bleiben Eigennamen der übrigen neuen Figuren, das spätere Schicksal des Roboterkopf-Kriegers und das endgültige Design des Meisters. Minotaurus-Bauform (zwei Laufbeine nach Mech-Dossier) und Lys Sprengladung sind in v0.24.0 als Umsetzungsentscheidungen dokumentiert. Diese Punkte blockieren die Roadmap nicht; sie werden vor dem jeweiligen betroffenen Asset bzw. Storymoment festgelegt. Weitere Tote oder zusätzliche Fähigkeiten werden nicht ungefragt als Kanon eingetragen.

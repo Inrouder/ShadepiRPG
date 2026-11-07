@@ -1,6 +1,7 @@
 extends Node2D
 ## One source map, separate props/occlusion, real floor collisions and atlas FX.
 const BACKGROUND = preload("res://assets/memories/attack/courtyard.png")
+@export var background_texture: Texture2D = BACKGROUND
 const FX = preload("res://assets/memories/attack/props-fx.png")
 const SIZE := Vector2(1024,640)
 const FLOOR := Rect2(24,270,976,270)
@@ -42,18 +43,18 @@ func _ready() -> void:
 	# Reuse only the source pixels covering the foreground parapet.
 	var front := Polygon2D.new()
 	front.z_index = 80
-	front.texture = BACKGROUND
+	front.texture = background_texture
 	front.polygon = PackedVector2Array([Vector2(0,550),Vector2(1024,550),Vector2(1024,640),Vector2(0,640)])
 	var uvs := PackedVector2Array()
-	for p in front.polygon: uvs.append(p/SIZE*BACKGROUND.get_size())
+	for p in front.polygon: uvs.append(p/SIZE*background_texture.get_size())
 	front.uv = uvs
 	add_child(front)
 	var column := Polygon2D.new()
 	column.z_index = 80
-	column.texture = BACKGROUND
+	column.texture = background_texture
 	column.polygon = PackedVector2Array([Vector2(928,446),Vector2(1016,440),Vector2(1024,550),Vector2(928,550)])
 	var column_uv := PackedVector2Array()
-	for p in column.polygon: column_uv.append(p/SIZE*BACKGROUND.get_size())
+	for p in column.polygon: column_uv.append(p/SIZE*background_texture.get_size())
 	column.uv = column_uv
 	add_child(column)
 	_solid(Rect2(930,500,94,50))
@@ -95,7 +96,7 @@ func _process(delta: float) -> void:
 	queue_redraw()
 
 func _draw() -> void:
-	draw_texture_rect(BACKGROUND,Rect2(Vector2.ZERO,SIZE),false)
+	draw_texture_rect(background_texture,Rect2(Vector2.ZERO,SIZE),false)
 	# Large FX live above the map texture but do not burn figures into it.
 	for blast in impacts:
 		var column := mini(3,int(blast.age*6))

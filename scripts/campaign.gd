@@ -33,6 +33,8 @@ var memory_scene: Node2D
 var memory_layer: CanvasLayer
 var memory_serial := 0
 var memory_attack_complete := false
+var memory_sacrifice_complete := false
+var memory_anchor := -1
 var memory_return_music := "chapter_5_echo"
 var drive_layer: CanvasLayer
 var encounter: Node2D
@@ -134,7 +136,7 @@ func new_game(_save_checkpoint: bool = true) -> void :
 	fresh_entry = true
 	_enter(Beat.PACT)
 
-func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo: bool = false, seen_attack: bool = false) -> void :
+func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo: bool = false, seen_attack: bool = false, seen_sacrifice: bool = false) -> void :
 	_close_memory(false)
 	var fresh: = fresh_entry
 	fresh_entry = false
@@ -157,6 +159,7 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo:
 		gamepads.assign(Input.get_connected_joypads(), false)
 	echo_ready = false
 	memory_attack_complete = false
+	memory_sacrifice_complete = false
 	camera.zoom = Vector2.ONE * (1.15 if next == Beat.ECHO else 1.0)
 	if is_instance_valid(drive):
 		drive.hide()
@@ -209,7 +212,9 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo:
 	if beat == Beat.ECHO and saved_echo:
 		echo_ready = true
 		memory_attack_complete = seen_attack
-		point_index = clampi(saved_point,0,2) if seen_attack else 0
+		memory_sacrifice_complete = seen_attack and seen_sacrifice
+		# Old saves reached point 2 through a note; resume at the new second memory.
+		point_index = clampi(saved_point,0,2 if memory_sacrifice_complete else 1) if seen_attack else 0
 		reset_raven(SPAWN if point_index==0 else Painted.ECHO_POINTS[point_index-1])
 		player.hide()
 		camera.zoom = Vector2.ONE
@@ -503,7 +508,10 @@ func interact(_actor: PixelActor = null) -> void :
 		if point_index == 0 and not memory_attack_complete:
 			_open_first_memory()
 			return
-		toast(["Das Kloster.", "Die früheren Träger.", "Die Nacht des Angriffs."][point_index])
+		if point_index == 1 and not memory_sacrifice_complete:
+			_open_memory(1)
+			return
+		toast(["Das Kloster.", "Lys Opfer.", "Die Nacht des Angriffs."][point_index])
 		if point_index == 2:
 			_scene_echo_end()
 			return
@@ -629,9 +637,13 @@ func _input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 func _open_first_memory() -> void:
-	if is_instance_valid(memory_scene) or beat!=Beat.ECHO or point_index!=0: return
+	_open_memory(0)
+
+func _open_memory(anchor: int) -> void:
+	if is_instance_valid(memory_scene) or beat!=Beat.ECHO or point_index!=anchor or anchor not in [0,1]: return
 	memory_serial += 1
 	var ticket := memory_serial
+	memory_anchor = anchor
 	memory_return_music = music_section
 	memory_layer = CanvasLayer.new()
 	memory_layer.layer = 30
@@ -646,20 +658,23 @@ func _open_first_memory() -> void:
 	viewport.world_2d = World2D.new()
 	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	container.add_child(viewport)
-	var scene = preload("res://scenes/memories/attack.tscn").instantiate()
+	var resource = preload("res://scenes/memories/attack.tscn") if anchor==0 else preload("res://scenes/memories/sacrifice.tscn")
+	var scene = resource.instantiate()
 	scene.embedded = true
 	scene.autoplay = false
 	scene.host = self
 	memory_scene = scene
 	viewport.add_child(scene)
 	scene.finished.connect(func(done: bool):
-		if memory_scene!=scene or memory_serial!=ticket or beat!=Beat.ECHO or point_index!=0: return
+		if memory_scene!=scene or memory_serial!=ticket or beat!=Beat.ECHO or point_index!=anchor: return
 		_close_memory(done))
-	set_music_section("fight")
+	set_music_section("fight" if anchor==0 else "boss")
 	scene.play.call_deferred()
 
 func _close_memory(done: bool) -> void:
 	if not is_instance_valid(memory_layer): return
+	var anchor := memory_anchor
+	memory_anchor = -1
 	memory_serial += 1
 	if is_instance_valid(memory_scene):
 		memory_scene.closed = true
@@ -669,10 +684,11 @@ func _close_memory(done: bool) -> void:
 	memory_layer.queue_free()
 	memory_layer = null
 	set_music_section(memory_return_music)
-	if done and beat==Beat.ECHO and point_index==0:
-		memory_attack_complete = true
+	if done and beat==Beat.ECHO and point_index==anchor:
+		if anchor==0: memory_attack_complete = true
+		elif anchor==1: memory_sacrifice_complete = true
 		_complete_point()
-		toast("Der Angriff · Erinnerung gesichert")
+		toast(("Der Angriff" if anchor==0 else "Lys Opfer")+" · Erinnerung gesichert")
 
 func _exit_tree() -> void:
 	_close_memory(false)
@@ -695,6 +711,7 @@ func save_game() -> bool:
 	config.set_value("campaign", "point", point_index)
 	config.set_value("campaign", "echo_started", beat==Beat.ECHO and echo_ready)
 	config.set_value("campaign", "memory_attack_complete", memory_attack_complete)
+	config.set_value("campaign", "memory_sacrifice_complete", memory_sacrifice_complete)
 	config.set_value("campaign", "arcade_section", encounter.section_index if encounter != null else 0)
 	config.set_value("campaign", "escape_guards_cleared", escape_guards_cleared)
 	config.set_value("props", "state", dressing_state())
@@ -712,13 +729,14 @@ func load_game(_requested_mode: Variant = null) -> bool:
 	var cleared: Variant = config.get_value("campaign", "escape_guards_cleared", true)
 	var saved_echo: Variant = config.get_value("campaign", "echo_started", false)
 	var seen_attack: Variant = config.get_value("campaign", "memory_attack_complete", false)
+	var seen_sacrifice: Variant = config.get_value("campaign", "memory_sacrifice_complete", false)
 	escape_guards_cleared = (cleared if cleared is bool else true) or saved != Beat.ESCAPE
 	# Saves from v0.16.0 could stop at the old roof guard fight (point 2);
 	# those guards now follow Kenzō, so resume directly at the penthouse.
 	if saved == Beat.ROOF and saved_point is int and saved_point >= 2:
 		saved = Beat.BOSS
 		saved_point = 0
-	_enter(saved, saved_section if saved_section is int else 0, saved_point if saved_point is int else 0, saved_echo is bool and saved_echo, seen_attack is bool and seen_attack)
+	_enter(saved, saved_section if saved_section is int else 0, saved_point if saved_point is int else 0, saved_echo is bool and saved_echo, seen_attack is bool and seen_attack, seen_sacrifice is bool and seen_sacrifice)
 	return true
 
 func _draw() -> void :
@@ -1143,7 +1161,7 @@ func _scene_echo_end() -> void:
 	cs.pose(raven, "idle")
 	await cs.flash(Color(1, 1, 1, 0.7), 0.6)
 	await cs.lines([
-		["RAVEN", "Ich habe gesehen, was du verloren hast. Das Kloster. Die Träger vor dir. Die Nacht des Angriffs."],
+		["RAVEN", "Ich habe gesehen, was du verloren hast. Das Kloster. Deine Kameraden. Was Ly für dich getan hat."],
 		["SHADEPI", "Das Heiligtum hat dich nicht verletzt. Es hat dich … erkannt."],
 	])
 	await cs.fade(Color.BLACK, 0.8)

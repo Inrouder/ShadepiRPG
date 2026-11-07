@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.23.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.24.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -35,7 +35,15 @@ Die Spielwelt nutzt **16 gemalte Kulissen** aus `assets/world/painted/`. Wände 
 
 Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und Bosskämpfen. Die vollständige Zuordnung und Hinweise zum Austauschen der MP3-Dateien stehen unter [Musik austauschen](assets/music/README.md).
 
-## Neu in v0.23.0 · 7. November 2026 · CodexAI
+## Neu in v0.24.0 · 7. November 2026 · CodexAI
+
+- **Erinnerung II – Lys Opfer:** Am zweiten Erinnerungsknoten erlebt Raven den Abwehrkampf gegen einen Minotaurus. Ly greift mit einer Sprengladung den Servoschacht an; sein Opfer zerstört den Panzer. Shadepi und der Roboterkopf-Krieger überleben.
+- Neue HQ-Pixel-Kulissenvariante, animierter Minotaurus mit dauerhaftem Wrack und passende weiße Ly-Posen für Ladung, Anlauf und Sprung. Die bestätigten Dialoge sind Teil der inszenierten Szene.
+- Boss.mp3 für diesen Kampf, Pause und Controllerbedienung, Abbruch ohne Fortschritt, Überspringen mit sicherem Abschluss und kompatible Speicherfelder. Ältere Erinnerungskammer-Stände ohne neuen Abschluss starten am zweiten Knoten weiter.
+- **1.003 Prüfungen ohne Fehler** in fünf Prüfreihen; Szene im Renderer und neue Inhalte direkt aus dem Exportpaket geprüft.
+- [Bilder, Szenenvorschau und Umfang](docs/lys-opfer.md). Erinnerung III bleibt das nächste Produktionspaket.
+
+## v0.23.0 · 7. November 2026 · CodexAI
 
 - **Erinnerung I erweitert:** drei inszenierte Bot-Wellen mit Ausholen, Angriffen, Treffern und Fallbewegungen. Oni schützt Shadepi, der MG-Krieger deckt den Rückzug; Ly und der Roboterkopf-Krieger überleben.
 - **Mönche gehen sichtbar:** vier echte Schrittbilder in jeder der vier Laufrichtungen, auch für die übrigen Bewohner. Versetzte Schrittphasen, schwingende Gewänder und konstante Körpergröße ersetzen den bisherigen Zweibild-Lauf.

@@ -68,6 +68,9 @@ func animate(state: String, delta: float) -> void:
 		pose = data[key][direction]
 		texture = BOT if identity=="bot" else READY if key=="idle" else RUN
 		frame_key = "%s_%d"%[key,direction]
+	apply_pose(pose,texture,flip)
+
+func apply_pose(pose: Dictionary, texture: Texture2D, flip: bool = false) -> void:
 	var rect: Array = pose.region
 	image_region.atlas = texture
 	image_region.region = Rect2(rect[0],rect[1],rect[2],rect[3])

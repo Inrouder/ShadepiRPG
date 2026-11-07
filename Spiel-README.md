@@ -1,6 +1,8 @@
 # Shadepi · Echos in Neon
 
-**Spieleranleitung für v0.23.0 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+**Spieleranleitung für v0.24.0 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+
+**Erinnerung II v0.24.0 · CodexAI:** Am zweiten Erinnerungsknoten startet „Lys Opfer“ gegen den Minotaurus. **E / Enter / A** schaltet Dialoge weiter; **Leertaste / B** überspringt die restliche Szene. **Esc / Start** pausiert. „Erinnerung verlassen“ kehrt ohne Abschluss zum selben Knoten zurück; Ende und bewusstes Überspringen speichern den zweiten Knoten. Ältere Speicherstände in der Erinnerungskammer ohne diesen Abschluss setzen am zweiten Knoten fort, während die erste Erinnerung abgeschlossen bleibt. [Bilder und Hinweise](docs/lys-opfer.md).
 
 **Erinnerung v0.23.0 · CodexAI:** Am ersten Erinnerungsknoten startet „Der Angriff“ auf Shadepis Kloster. **E / Enter / A** blättert Dialoge weiter; **Leertaste / B** überspringt bewusst die Szene. **Esc / Start** pausiert: Fortsetzen, Szene überspringen oder Erinnerung abbrechen. Im Pausenmenü mit Steuerkreuz / linkem Stick oder Pfeiltasten wählen und mit A / Enter bestätigen. Abbrechen führt ohne Abschluss zum selben Knoten zurück; Ende und Überspringen speichern den Fortschritt. Die Szene zeigt jetzt drei inszenierte Bot-Wellen und die Schutzopfer von Oni und MG-Krieger; Mönche und Bewohner besitzen eine vierteilige Schrittfolge in jeder Laufrichtung. [Bilder und Umfang](docs/kloster-kampf.md).
 

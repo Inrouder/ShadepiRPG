@@ -27,3 +27,7 @@ Verbindlicher Stil: detailreiche HQ-Pixelgrafiken mit Materialtexturen, Tiefenwi
 - Der Meister hat noch keinen bestätigten Eigennamen.
 - Archiv Teil 4 bleibt erhalten: Das Massaker geht auf Kenzōs Militech-Verbindungen zurück. Die spätere Enthüllung durch Raven darf durch die Rückblenden nicht vorweggenommen werden.
 - Ruinen während des Angriffs widersprechen nicht dem im Roman beschriebenen späteren Verschwinden des Klosters; dessen Darstellung ist hier nicht beauftragt.
+
+## Umsetzungshinweis v0.24.0 · CodexAI
+
+Erinnerung II ist als Szene am zweiten Knoten eingebunden. Der im Originaldossier (Teil 1, Abschnitt 9) als gepanzerter Cyborg-/Mech-Hybrid mit Servoschächten beschriebene Minotaurus erhält in der Umsetzung zwei Laufbeine. Ly befestigt eine Sprengladung am Servoschacht und bleibt bei der Zündung am Panzer. Bauform und konkrete Zündtechnik sind hier **Umsetzungsentscheidungen**, keine zusätzlich bestätigten Nutzerzitate und keine neue Fähigkeit des Heiligtums. Die Handlung und bestätigten Dialoge oben bleiben maßgeblich. [Vorschau und aktueller Produktionsstand](../../lys-opfer.md).

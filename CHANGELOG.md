@@ -1,5 +1,16 @@
 # Versionshinweise
 
+## v0.24.0 – CodexAI: Erinnerung II „Lys Opfer“ · 7. November 2026
+
+- Vor Beginn alle GitHub-Branches abgerufen und mit v0.23.0 verglichen; bestehende Arbeit erhalten.
+- Zweite inszenierte Erinnerung am zweiten ECHO-Knoten: gemeinsamer Abwehrkampf der drei Überlebenden gegen den Minotaurus, freigelegter Servoschacht, Shadepis „Nein! Ly, nicht!“, Lys „Verzeih mir, Bruder. FÜR DEN ORDEN!“, Anlauf, Sprung, Anbringen der Ladung, Detonation und dauerhaft zerstörter Panzer. Nur Ly fällt; Shadepi und der Roboterkopf-Krieger überleben. Keine Vorwegnahme der späteren Kenzō-Enthüllung oder der Heiligtumsübergabe.
+- Neue HQ-Pixel-Kulissenvariante derselben Architektur, freigestellter Minotaurus-Atlas und weiße Ly-/Ladungsposen. 16 neue Quellregionen mit gemessenen Kontakten und konstanter Skalierung; alte Figuren-, Feuer- und Einschlaggrafiken wiederverwendet. Minotaurus als zweibeiniger Mech-Hybrid nach Dossier, Sprengladung als konkrete Umsetzungsentscheidung dokumentiert, nicht als zusätzliche Nutzerbestätigung.
+- Gemeinsamer Erinnerungsaufbau für Kulisse/Figuren erweitert; bestehender Angriff bleibt erhalten. Zweiter Knoten benutzt denselben Szenendirektor, Pausen- und Controllerweg, isolierte Physikwelt, Serien-/Knotenprüfung und sichere Rückkehr. Boss.mp3 während des Minotaurus-Kampfs, danach Musik der Erinnerungskammer.
+- Eigenes kompatibles Speicherfeld für Erinnerung 2. Alte ECHO-Stände am bisherigen Textknoten werden bei fehlendem Abschluss an Knoten 2 fortgesetzt. Abschluss und Überspringen zählen genau einmal; Abbruch zählt nicht. Beide Exportprofile nehmen die zusätzlichen Ankerdaten mit.
+- Gezielte Prüfungen für tatsächlichen Szenenlauf, Sprung/Ladung/Detonation, Zerstörung und Überlebende, Bildanker, Laufwege, Pause, Controller-Überspringen und Abbruch mitten im Sprung, Speicherkompatibilität und veraltete Signale. Kampagnen-Gesamttest berücksichtigt beide neuen Rückblenden. Erinnerung III bleibt ausstehend.
+
+- Validierung: fünf Prüfreihen mit **1.003 Prüfungen, 0 Fehlern** (Erinnerung II 48, Erinnerung I/Einbindung 143, Klosterkampf 226, Kampagnen-/Speicherablauf 380, Story-Audit 206). Tatsächliche Szene bis zur Rückkehr zu Raven im OpenGL-Renderer kontrolliert; Linux-PCK erstellt und neue Atlanten, Metadaten, Figuren und Opfer-/Wrackzustand direkt daraus geprüft. Animierte Vorschau und Bedienhinweise unter docs/lys-opfer.md.
+
 ## v0.23.0 – CodexAI: Klosterkampf und Gehbewegungen der Mönche · 7. November 2026
 
 - Vor Beginn alle GitHub-Branches abgerufen und mit dem aktuellen v0.22.0-Hauptstand verglichen; vorhandene Aerodyne-/Tower-Arbeit erhalten.

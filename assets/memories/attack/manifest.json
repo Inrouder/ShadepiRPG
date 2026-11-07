@@ -6,7 +6,7 @@
     1024,
     640
   ],
-  "stage": "Pakete 1–6 abgeschlossen: erste inszenierte Erinnerung mit drei Bot-Wellen, Oni-/MG-Schutzopfern und Rückzug; Erinnerungen 2 und 3 folgen später",
+  "stage": "Erste Erinnerung mit drei Bot-Wellen und Schutzopfern abgeschlossen; zweite Erinnerung ab v0.24.0 separat unter sacrifice vorhanden",
   "background": "courtyard.png",
   "layer_atlas": "props-fx.png",
   "layer_grid": [

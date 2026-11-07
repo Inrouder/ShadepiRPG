@@ -1,5 +1,7 @@
 # Klosterkampf und Gehbewegungen · v0.23.0 · CodexAI
 
+**Aktualisierung v0.24.0 · CodexAI:** [Erinnerung II – Lys Opfer](lys-opfer.md) ist inzwischen am zweiten Knoten eingebunden. Die folgende Seite dokumentiert Erinnerung I in v0.23.0.
+
 **Erinnerung I ist als inszenierte Rückblende ausgebaut:** drei Bot-Wellen, der gemeinsame Abwehrkampf, die Schutzopfer von Oni und MG-Krieger und der Rückzug der drei Überlebenden. Die Mönche und übrigen Bewohner haben zusätzlich vier Gehbilder in jeder der vier Laufrichtungen. Erinnerung 2 und 3 sind weiterhin eigene, spätere Pakete.
 
 ![Ausschnitt aus der tatsächlichen Szene](previews/kloster-kampf.webp)

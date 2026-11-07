@@ -25,7 +25,7 @@ var effects: Node2D
 var pause_axis_latched := false
 
 func _ready() -> void:
-	map = Map.new()
+	map = make_map()
 	if host != null: map.quality = host.visual_quality
 	add_child(map)
 	actors = map.actors
@@ -38,15 +38,16 @@ func _ready() -> void:
 	camera.limit_bottom = 640
 	add_child(camera)
 	camera.make_current()
-	for i in 5:
-		var actor = Actor.new()
+	var ids := squad_ids()
+	for i in ids.size():
+		var actor = make_actor(ids[i])
 		actors.add_child(actor)
-		actor.prepare(["shadepi","oni","robot","ly","heavy"][i],self)
+		actor.prepare(ids[i],self)
 		actor.position = Vector2(340-i*34,376+(i%2)*62)
 		actor.facing = Vector2.RIGHT
 		actor.animate("idle",0)
 		squad.append(actor)
-	for i in 8:
+	for i in resident_count():
 		var actor = Actor.new()
 		actors.add_child(actor)
 		actor.prepare(["elder","monk","resident","caretaker"][i%4],self)
@@ -65,8 +66,14 @@ func _ready() -> void:
 	effects.rain = false
 	effects.steam_vents.clear()
 	add_child(effects)
-	for i in 3: create_bot(Vector2(960,350+i*45)).hide()
+	for i in initial_bot_count(): create_bot(Vector2(960,350+i*45)).hide()
 	if autoplay: play.call_deferred()
+
+func make_map() -> Node2D: return Map.new()
+func make_actor(_id: String) -> PixelActor: return Actor.new()
+func squad_ids() -> Array: return ["shadepi","oni","robot","ly","heavy"]
+func resident_count() -> int: return 8
+func initial_bot_count() -> int: return 3
 
 func create_bot(point: Vector2) -> PixelActor:
 	var bot = Actor.new()

@@ -1,0 +1,38 @@
+{
+  "version": "0.24.0",
+  "author": "CodexAI",
+  "memory": "sacrifice",
+  "world_size": [
+    1024,
+    640
+  ],
+  "stage": "Erinnerung 2 als inszenierte Szene am zweiten Erinnerungsknoten eingebunden",
+  "background": "courtyard.png",
+  "minotaur": "minotaur.png",
+  "ly_charge": "ly-charge.png",
+  "actor_metadata": "actors.json",
+  "atlas_grid": [
+    4,
+    2
+  ],
+  "atlas_actor_frames": 16,
+  "scene": "res://scenes/memories/sacrifice.tscn",
+  "entry": "Beat.ECHO / Erinnerungsknoten 2",
+  "present_characters": [
+    "shadepi",
+    "robot",
+    "ly"
+  ],
+  "casualties": [
+    "ly"
+  ],
+  "survivors": [
+    "shadepi",
+    "robot"
+  ],
+  "design_decisions": {
+    "minotaur": "zweibeiniger gepanzerter Mech-Hybrid nach Servogelenk-/Mech-Beschreibung im Originaldossier",
+    "sacrifice": "Ly befestigt und zündet eine Sprengladung am Servoschacht",
+    "status": "Konkrete Umsetzungsentscheidungen; keine zusätzliche bestätigte Nutzervorgabe und keine neue Heiligtumsfähigkeit"
+  }
+}
