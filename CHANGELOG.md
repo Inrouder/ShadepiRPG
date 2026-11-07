@@ -1,5 +1,13 @@
 # Versionshinweise
 
+## v0.20.0 – ClaudeHelper: Verfolgungsjagd und Garageneinfahrt · 7. November 2026
+
+- Motorrad-Verfolgung: freies Lenken, Gas/Bremse mit Tempo- und Abstandstaktik, Bordsteinfunken, Tempolinien, Turbo.
+- Neue Straßenobjekte: Betonbarrieren, brennende Wracks, Ölspuren, Turbostreifen, Drohnenminen; Kampfdrohnen, die sich per Hack in den Verfolger lenken lassen; zweite Phase ab 50 % Panzerung.
+- Kapitel 4 beginnt mit der Einfahrt: Rolltor öffnet sich, Motorrad parkt auf der Hebeplattform (fester Körper), Tor schließt; Zugangsterminal und Ersatzteilkiste verschoben.
+- Neues Asset `bike-parked.png` aus dem HQ-Atlas (`tools/compose_parked_bike.py`), Cutscene-Schritt `animate`, `tools/chase_gallery.gd`, 13 neue Prüfungen.
+
+
 ## v0.19.0 – ClaudeHelper: Kampfgefühl, Deep Dive, Apartment · 7. November 2026
 
 - Trefferrückmeldung: Trefferstopp, Rückstoß/Zucken (Bosse nur bei schweren Treffern), Kamerastoß, Funken, neue Schadenszahlen, Kombozähler, K.O.-Fallanimation, roter Treffer-Blitz, Tonhöhenvariation.

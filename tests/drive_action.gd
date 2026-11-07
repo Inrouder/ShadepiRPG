@@ -42,7 +42,7 @@ func make_drive(world: World, flight: bool = true) -> Node2D:
 	return drive
 
 func run() -> void:
-	for action in ["move_left", "move_right", "attack", "hack", "dash"]:
+	for action in ["move_left", "move_right", "move_up", "move_down", "attack", "hack", "dash"]:
 		InputMap.add_action(action)
 	var world := World.new()
 	root.add_child(world)
@@ -119,7 +119,58 @@ func run() -> void:
 	check(Art.SIZES[3] == Vector2(160, 74), "parked cars have believable proportions beside the heroes")
 	check(Art.SIZES[4] == Vector2(104, 70), "dumpsters have believable proportions beside the heroes")
 	check(Vector2i(Drive.VEHICLES.get_size()) == Vector2i(1254, 1254), "vehicle atlas keeps its 2x2 layout")
+	await check_bike_chase(world)
 	print("Drive action: %d checks, %d failures" % [checks, failures])
 	world.queue_free()
 	await process_frame
 	quit(1 if failures else 0)
+
+func check_bike_chase(world: World) -> void:
+	# v0.20.0: throttle, drones, turbo strips, oil, mines and wrecks.
+	var bike = make_drive(world, false)
+	Input.action_press("move_up")
+	for i in 60: bike._process(1.0 / 60.0)
+	Input.action_release("move_up")
+	check(bike.bike_y < bike.BIKE_Y - 40.0 and bike.speed > 1.1, "accelerating moves the bike forward and speeds up the road")
+	var far_scroll: float = bike.scroll
+	check(far_scroll > 226.0, "road scroll follows the bike's speed")
+	Input.action_press("move_right")
+	for i in 30: bike._process(1.0 / 60.0)
+	Input.action_release("move_right")
+	check(bike.x > 360.0, "free steering moves across the whole road instead of fixed lanes")
+	bike.objects.clear(); bike.hazards.clear(); bike.drones.clear()
+	bike.next_hazard = 999.0
+	bike.next_drone = 999.0
+	bike.health = 80
+	bike.objects.append({"k": "boost", "p": Vector2(bike.x, bike.bike_y - 4), "done": false, "r": 0.0})
+	bike._process(0.01)
+	check(bike.boost > 0.0 and bike.health == 86, "turbo strip boosts and repairs a little")
+	bike.boost = 0.0
+	bike.hurt = 0.0
+	bike.objects.append({"k": "slick", "p": Vector2(bike.x, bike.bike_y), "done": false, "r": 0.0})
+	bike._process(0.01)
+	check(bike.slick > 0.0 and bike.health == 86, "oil makes the bike slide without damage")
+	bike.objects.append({"k": "wreck", "p": Vector2(bike.x, bike.bike_y), "done": false, "r": 0.0})
+	bike._process(0.01)
+	bike.hurt = 0.0
+	bike._process(0.01)
+	check(bike.health == 58, "a burning wreck damages exactly once")
+	bike.hurt = 0.0
+	bike.objects.append({"k": "mine", "p": Vector2(bike.x, bike.bike_y), "done": false, "r": 0.0})
+	bike._process(0.01)
+	check(bike.health == 38, "drone mines explode on contact")
+	bike.health = 100
+	bike.objects.clear()
+	bike.drones.append({"p": Vector2(bike.x, 92.0), "state": "hover", "t": 0.0, "drops": 0, "spin": 0.0})
+	for i in 90: bike._process(1.0 / 60.0)
+	check(bike.objects.any(func(o): return o.k == "mine"), "hovering drones drop mines onto the road")
+	var armour_before: int = bike.armour
+	bike.hack_cooldown = 0.0
+	Input.action_press("hack")
+	bike._process(0.01)
+	Input.action_release("hack")
+	check(bike.drones[0].state == "hacked", "Raven's hack captures the drone above the bike")
+	for i in 120: bike._process(1.0 / 60.0)
+	check(bike.drones.is_empty() and bike.armour <= armour_before - 18, "the captured drone crashes into the pursuing car")
+	bike.free()
+	await process_frame

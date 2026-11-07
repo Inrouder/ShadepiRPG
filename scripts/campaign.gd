@@ -36,6 +36,15 @@ var kenzo_body: PixelActor
 var boss_spot: = Vector2(858, 340)
 const LIFT_DOOR: = Vector2(512, 512)
 const KENZO: = preload("res://assets/sprites/npcs/kenzo.png")
+const VEHICLES: = preload("res://assets/world/hq/vehicles.png")
+const PARKED_BIKE: = preload("res://assets/world/hq/bike-parked.png")
+## Garage arrival: middle roller door, motorcycle path and its parking spot.
+const GARAGE_DOOR: = Rect2(238, 104, 152, 136)
+const BIKE_PARK: = Vector2(902, 386)
+var garage_door: = 0.0
+var bike_mode: = ""
+var bike_pos: = BIKE_PARK
+var bike_rot: = 0.0
 
 func create_hud() -> CanvasLayer:
 	return ChapterHud.new()
@@ -145,6 +154,10 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0) -> void :
 		foe.queue_free()
 	foes.clear()
 	beat = next
+	garage_door = 0.0
+	bike_mode = "parked" if beat == Beat.GARAGE else ""
+	bike_pos = BIKE_PARK
+	bike_rot = 0.0
 	var music_sections := [
 		"chapter_3_pact", "chapter_3_ambush", "chapter_3_chase",
 		"chapter_4_garage", "chapter_4_hangar", "chapter_5_sanctuary",
@@ -606,6 +619,8 @@ func _draw() -> void :
 		draw_texture_rect(art, Painted.CHAMBER_RECT, false)
 	else:
 		draw_texture_rect(art, Rect2(0, 0, 1024, 640), false)
+	if beat == Beat.GARAGE:
+		_draw_garage()
 	if beat == Beat.HANGAR and point_index == 3:
 		for port in PORTS:
 			draw_rect(Rect2(port - Vector2(12, 9), Vector2(24, 18)), Color("253747"))
@@ -841,25 +856,103 @@ func _scene_chase() -> void:
 	cs.end()
 
 ## Kapitel 4: Die Höhle des Drachen.
+## Kapitel 4: Nach der Verfolgung – das Tor rollt hoch, das Motorrad fährt
+## auf die Plattform und bleibt dort stehen.
 func _scene_garage() -> void:
-	player.position = Vector2(60, 420)
-	raven.position = Vector2(30, 440)
+	player.hide()
+	raven.hide()
+	bike_mode = ""
+	bike_pos = Vector2(314, 214)
+	bike_rot = PI
 	var cs = begin_cutscene()
-	await cs.camera(Vector2(320, 360), 0.0, 1.1)
+	await cs.camera(Vector2(330, 250), 0.0, 1.25)
 	await cs.fade(Color.BLACK, 0.0)
 	await cs.fade(Color(0, 0, 0, 0), 0.8)
 	await cs.title("KAPITEL 4", "Die Höhle des Drachen", 2.2)
-	cs.walk(raven, Vector2(300, 440), 80)
-	await cs.walk(player, Vector2(340, 410), 80)
-	cs.face(raven, Vector2(600, 300))
+	await cs.say("INDUSTRIEHAFEN", "Die wilde Fahrt endet vor einer unscheinbaren, heruntergekommenen Garage in einem vergessenen Teil des Hafens.")
+	cs.do(func():
+		sound("prop_metal")
+		shake = 3.0
+	)
+	await cs.animate(func(k: float):
+		garage_door = smoothstep(0.0, 1.0, k)
+		if k > 0.55:
+			bike_mode = "ride"
+	, 1.6)
+	cs.do(func(): sound("drive_engine_restart"))
+	var start := Vector2(314, 214)
+	var bend := Vector2(360, 452)
+	var finish := BIKE_PARK + Vector2(0, 34)
+	var camera_from: Vector2 = camera.position
+	await cs.animate(func(k: float):
+		var t := smoothstep(0.0, 1.0, k)
+		var a := start.lerp(bend, t)
+		var b := bend.lerp(finish, t)
+		var p := a.lerp(b, t)
+		var direction := (b - a).normalized()
+		bike_pos = p
+		bike_rot = direction.angle() + PI * 0.5
+		camera.position = camera_from.lerp(Vector2(clampf(p.x, 330.0, 700.0), 330.0), smoothstep(0.0, 1.0, k))
+		if fposmod(k * 20.0, 1.0) < 0.15:
+			effects.water_step(p + Vector2(0, 20))
+	, 2.8)
+	var turn_from: = bike_rot
+	cs.camera(Vector2(760, 360), 0.8, 1.2)
+	await cs.animate(func(k: float):
+		bike_pos = finish.lerp(BIKE_PARK, k)
+		bike_rot = lerp_angle(turn_from, 0.0, smoothstep(0.0, 1.0, k))
+	, 0.6)
+	cs.do(func():
+		bike_mode = "parked"
+		player.position = BIKE_PARK + Vector2(-34, 6)
+		raven.position = BIKE_PARK + Vector2(-34, 28)
+		player.facing = Vector2.LEFT
+		raven.facing = Vector2.LEFT
+		player.show()
+		raven.show()
+		effects.burst(BIKE_PARK + Vector2(0, 20), Color("9fb3c6"), 10)
+	)
+	cs.pose(player, "idle")
+	cs.pose(raven, "idle")
+	await cs.wait(0.4)
+	cs.walk(raven, Vector2(760, 440), 70)
+	await cs.walk(player, Vector2(790, 412), 70)
+	cs.face(raven, Vector2(560, 260))
 	cs.face(player, raven.position)
 	cs.pose(player, "idle")
 	cs.pose(raven, "idle")
+	cs.do(func(): sound("prop_metal"))
+	cs.animate(func(k: float): garage_door = 1.0 - smoothstep(0.0, 1.0, k), 1.4)
 	await cs.lines([
 		["RAVEN", "Und das ist dein Zuhause? Eine rostige Garage?"],
 		["SHADEPI", "Genau das ist es. Sieh dir die Werkbank an."],
 	])
+	cs.do(func(): garage_door = 0.0)
 	cs.end(func(): toast("Geheimes Werkbanksymbol finden"))
+
+func _draw_garage() -> void:
+	if garage_door > 0.0:
+		var h := GARAGE_DOOR.size.y * garage_door
+		var opening := Rect2(GARAGE_DOOR.position.x, GARAGE_DOOR.end.y - h, GARAGE_DOOR.size.x, h)
+		draw_rect(opening, Color("05080f"))
+		# Night street outside: wet asphalt glow and rain behind the door.
+		draw_rect(Rect2(opening.position.x, GARAGE_DOOR.end.y - minf(h, 30.0), opening.size.x, minf(h, 30.0)), Color(0.85, 0.2, 0.5, 0.18))
+		for i in 12:
+			var rx := opening.position.x + 6 + i * 12.5
+			var ry := opening.position.y + fposmod(i * 23 + clock * 260.0, maxf(1.0, h))
+			draw_line(Vector2(rx, ry), Vector2(rx - 2, ry + 7), Color(0.65, 0.75, 0.95, 0.35))
+		draw_rect(Rect2(opening.position.x - 2, opening.position.y - 5, opening.size.x + 4, 6), Color("4c535e"))
+		draw_rect(Rect2(opening.position.x - 2, opening.position.y - 1, opening.size.x + 4, 2), Color("e2b13c"))
+	if bike_mode == "ride":
+		draw_set_transform(bike_pos, bike_rot)
+		draw_texture_rect_region(VEHICLES, Rect2(Vector2(-39, -39), Vector2(78, 78)), Rect2(0, 627, 627, 627))
+		draw_set_transform(Vector2.ZERO)
+	elif bike_mode == "parked":
+		var size: = Vector2(72.0 * PARKED_BIKE.get_width() / PARKED_BIKE.get_height(), 72.0)
+		draw_set_transform(bike_pos, bike_rot)
+		draw_texture_rect(PARKED_BIKE, Rect2(-size * 0.5 + Vector2(3, 4), size), false, Color(0, 0, 0, 0.35))
+		draw_texture_rect(PARKED_BIKE, Rect2(-size * 0.5, size), false)
+		draw_set_transform(Vector2.ZERO)
 
 func _scene_descent() -> void:
 	var cs = begin_cutscene()

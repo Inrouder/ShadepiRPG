@@ -45,7 +45,7 @@ const SOLIDS: = {
 	], 
 	"dive": [Rect2(354, 264, 68, 125), Rect2(599, 386, 59, 107)], 
 	"ambush": [Rect2(282, 367, 115, 45), Rect2(559, 293, 93, 54), Rect2(729, 442, 110, 26)], 
-	"garage": [], 
+	"garage": [Rect2(884, 354, 36, 62)], # parked motorcycle on the lift platform 
 	"hangar": [Rect2(360, 280, 84, 36), Rect2(621, 410, 108, 71), Rect2(505, 250, 100, 10), Rect2(807, 281, 185, 60)], 
 	"chamber": [Rect2(449, 286.65, 47, 8.35), Rect2(566, 286.65, 68, 7.35)],
 	"memory": [], 
