@@ -1,5 +1,11 @@
 # Versionshinweise
 
+## v0.22.0 – CodexAI: Erste Kloster-Erinnerung in Produktion · 7. November 2026
+
+- Alle Remote-Branches vor Beginn geprüft; Produktionsstart auf v0.21.2.
+- Zuerst HQ-Pixel-Kulissenmaster und separates 4×4-Requisiten-/FX-Atlas erstellt. Architektur, Fluchtweg und Torbresche enthalten keine eingebrannten Figuren.
+- Nutzerbestätigung: Oni trägt Katana, Roboterkopf-Krieger einen Stab. Oni und MG-Krieger bleiben die erst später umzusetzenden Schutzopfer.
+
 ## v0.21.2 – CodexAI: Roadmap und Quellen der Kloster-Erinnerungen · 7. November 2026
 
 - Vor Beginn alle GitHub-Branches geprüft und den aktuellen Hauptstand v0.21.1 übernommen.

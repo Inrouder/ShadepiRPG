@@ -1,0 +1,27 @@
+{
+  "version": "0.22.0",
+  "author": "CodexAI",
+  "memory": "attack",
+  "world_size": [
+    1024,
+    640
+  ],
+  "stage": "Kulissen erstellt; Figuren und Map folgen",
+  "background": "courtyard.png",
+  "layer_atlas": "props-fx.png",
+  "layer_grid": [
+    4,
+    4
+  ],
+  "source_style": "HQ-Pixelart, eigenständige Architektur des Ordensklosters",
+  "warriors": {
+    "oni": "Katana",
+    "robot": "Stab",
+    "ly": "weiße Gewandung und Klinge",
+    "heavy": "Samurai-Maske, Vollpanzerung und großes MG"
+  },
+  "first_memory_casualties_later": [
+    "oni",
+    "heavy"
+  ]
+}

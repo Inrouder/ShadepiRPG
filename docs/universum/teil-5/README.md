@@ -8,7 +8,7 @@ Raven soll an jedem der drei Erinnerungsknoten eine Rückblende aus Shadepis Ver
 
 **Erinnerung 1 – Der Angriff:** Teile eines Klosters, fliehende Menschen, Bombeneinschläge und Feuer. Shadepi stürmt mit vier Ordenskriegern nach vorn und ruft sinngemäß: „Bringt euch in Sicherheit! Wir werden sie abwehren!“ Der Kampf gegen Bots beginnt. Später sollen darin zwei Krieger sterben, um Shadepi zu schützen. Der Nutzer hat ausdrücklich **Oni-Krieger und schwer gepanzerten MG-Krieger** ausgewählt.
 
-Die vier Krieger: einer mit Oni-Maske; einer mit Roboterkopf und Dreadlocks aus Kabeln; **Ly**, mit Shadepi-ähnlicher Maske und weißer Gewandung („Shadepi in Weiß“); einer voll gepanzert, mit Samurai-Maske und riesigem MG. Namen, Biografien und Waffen der beiden ersten Krieger sind noch nicht festgelegt. Shadepi bleibt eine eigene, fünfte Figur.
+Die vier Krieger: einer mit Oni-Maske; einer mit Roboterkopf und Dreadlocks aus Kabeln; **Ly**, mit Shadepi-ähnlicher Maske und weißer Gewandung („Shadepi in Weiß“); einer voll gepanzert, mit Samurai-Maske und riesigem MG. Die Bewaffnung wurde anschließend bestätigt: **Oni trägt Katana, Roboterkopf-Krieger trägt Stab**. Namen und Biografien der beiden sind noch nicht festgelegt. Shadepi bleibt eine eigene, fünfte Figur.
 
 **Erinnerung 2 – Lys Opfer:** Kampf gegen einen Minotaurus-Panzer. Ly opfert sich, um den Panzer durch einen selbstmörderischen Angriff zu zerstören. Shadepi ruft „Nein! Nicht LY!“; Ly antwortet „Verzeih mir, Bruder. FÜR DEN ORDEN!“ und stürzt sich auf den Minotaurus. Die konkrete technische Durchführung des Angriffs wurde nicht festgelegt. Ly muss Erinnerung 1 überleben.
 
