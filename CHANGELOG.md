@@ -1,5 +1,12 @@
 # Versionshinweise
 
+## v0.20.2 – ClaudeHelper: Gemeinsamer Stand geprüft · 7. November 2026
+
+- Zusammengeführten Stand von CodexAI (v0.18.1–v0.20.1) und ClaudeHelper (v0.17.0–v0.20.0) erneut vollständig geprüft: run 367, drive_action 60, terminal_puzzles 67, terminal_controller 154, arcade_waves 246, combat_moves 68, npc_dive_visuals 20, story_audit 206 – 1.188 Prüfungen ohne Fehler. Menü-, Terminal-, Zwischensequenz-, Kampf- und Verfolgungsgalerien gerendert und kontrolliert.
+- Alle Remote-Branches verglichen: die alten Entwicklungsbranches v0.13.1, v0.13.2 und v0.14.0 sind inhaltlich in `main` enthalten, die ClaudeHelper-Branches vollständig gemergt.
+- `AGENTS.md`: Kennzeichnung „ClaudeHelper“ für Claude-Änderungen neben „CodexAI“ festgehalten; fortlaufende Versionsnummern für beide Bearbeiter.
+
+
 ## v0.20.1 – CodexAI: Aktuelle Entwicklungsbranches integrieren · 7. November 2026
 
 - Die bisherige lokale Abrufkonfiguration berücksichtigte nur `main`. Alle GitHub-Branches abgerufen und den neueren Entwicklungsstand `claudehelper/v0.20.0` einschließlich v0.19.0 übernommen.

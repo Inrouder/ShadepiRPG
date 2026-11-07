@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**Spieleranleitung für v0.20.1 · CodexAI.** Aktuelle Downloads und Prüfstatus: [Repository-Startseite](README.md). Änderungen: [Versionshinweise](CHANGELOG.md).
+**Spieleranleitung für v0.20.2 · ClaudeHelper.** Aktuelle Downloads und Prüfstatus: [Repository-Startseite](README.md). Änderungen: [Versionshinweise](CHANGELOG.md).
 
 **Aktualisierung v0.20.1 · CodexAI:** Enthält zusätzlich den GitHub-Entwicklungsstand v0.20.0 mit verbessertem Kampfgefühl, passendem Apartmentmaßstab, erweiterter Verfolgungsjagd und Garageneinfahrt. [Verfolgungsjagd](docs/verfolgungsjagd.md) · [Kampfgefühl](docs/kampf-feedback.md).
 
