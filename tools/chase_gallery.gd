@@ -45,6 +45,8 @@ func run() -> void:
 	d.objects.append({"k": "wreck", "p": Vector2(236, d.bike_y - 120), "done": false, "r": 0.3})
 	d.objects.append({"k": "slick", "p": Vector2(404, d.bike_y - 90), "done": false, "r": 0.0})
 	await create_timer(0.35).timeout
+	d.health = 100
+	d.hurt = 0.0
 	await shot("objects")
 	Input.action_release("attack")
 	d.armour = 0
