@@ -6,7 +6,7 @@
     1024,
     640
   ],
-  "stage": "Kulissen, Krieger, Bewohner und begehbare Map erstellt; erste Szene noch nicht eingebunden",
+  "stage": "Pakete 1–5 abgeschlossen: Kulissen, Figuren, begehbare Map und erste inszenierte Rückblende; vollständiger Bot-Kampf und Schutzopfer folgen später",
   "background": "courtyard.png",
   "layer_atlas": "props-fx.png",
   "layer_grid": [
@@ -26,5 +26,10 @@
   ],
   "warrior_ready": "warriors-ready.png",
   "warrior_run": "warriors-run.png",
-  "residents": "residents.png"
+  "residents": "residents.png",
+  "bots": "bots.png",
+  "actor_metadata": "actors.json",
+  "scene": "res://scenes/memories/attack.tscn",
+  "entry": "Beat.ECHO / Erinnerungsknoten 1",
+  "atlas_actor_frames": 160
 }

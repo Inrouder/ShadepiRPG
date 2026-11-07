@@ -37,8 +37,11 @@ Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und
 
 ## Neu in v0.22.0 · 7. November 2026 · CodexAI
 
-- Produktion der ersten Kloster-Erinnerung „Der Angriff“ gestartet: neue HQ-Pixel-Kulisse mit Hof, Klosterfassade, Fluchtweg und zerstörtem Tor sowie getrennte Requisiten und Feuer-/Rauch-/Einschlagbilder.
-- Die weiteren Produktionspakete folgen der [Roadmap](docs/erinnerungen-roadmap.md); vollständige Bot-Kämpfe und Schutzopfer gehören zum späteren Ausbau.
+- **Erinnerung I – Der Angriff:** Am ersten Erinnerungsknoten erlebt Raven den Angriff auf Shadepis Kloster als inszenierte Szene: fliehende Bewohner, Einschläge, Feuer, Shadepis Gegenstoß mit vier Ordenskriegern und erste Feindberührung mit Bots.
+- Neue detaillierte HQ-Pixel-Kulissen, getrennte Feuer-/Rauch-/Trümmerebenen, Richtungs- und Laufsprites für Oni (Katana), Roboterkopf-Krieger (Stab), Ly und MG-Krieger sowie vier Bewohnerfiguren und Bots. Shadepi verwendet seine vorhandenen Original-Sprites.
+- Pause, Controllerbedienung, bewusstes Überspringen und sichere Rückkehr zu Raven mit gespeichertem Fortschritt. Die parallel hinzugekommenen Aerodyne-Änderungen aus v0.21.3 sind übernommen.
+- Elf Prüfreihen: **1.716 Prüfungen ohne Fehler**, zusätzliche Kontrolle im Godot-Renderer und Laden der neuen Szene aus dem Exportpaket.
+- [Bilder, animierte Vorschau und Umfang](docs/kloster-angriff.md) · [Roadmap](docs/erinnerungen-roadmap.md). Vollständige Bot-Wellen und die Schutzopfer von Oni und MG-Krieger folgen im nächsten Ausbau; Erinnerungen 2 und 3 sind noch geplant.
 
 ## v0.21.3 · 7. November 2026 · ClaudeHelper
 

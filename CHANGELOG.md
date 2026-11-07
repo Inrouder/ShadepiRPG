@@ -1,10 +1,14 @@
 # Versionshinweise
 
-## v0.22.0 – CodexAI: Erste Kloster-Erinnerung in Produktion · 7. November 2026
+## v0.22.0 – CodexAI: Erste Klosterrückblende „Der Angriff“ · 7. November 2026
 
-- Alle Remote-Branches vor Beginn geprüft; Produktionsstart auf v0.21.2.
-- Zuerst HQ-Pixel-Kulissenmaster und separates 4×4-Requisiten-/FX-Atlas erstellt. Architektur, Fluchtweg und Torbresche enthalten keine eingebrannten Figuren.
-- Nutzerbestätigung: Oni trägt Katana, Roboterkopf-Krieger einen Stab. Oni und MG-Krieger bleiben die erst später umzusetzenden Schutzopfer.
+- Alle Remote-Branches geprüft; Produktion auf v0.21.2 begonnen und währenddessen hinzugekommene Aerodyne-Änderungen v0.21.3 verlustfrei integriert. Versionsfelder und Dokumentation auf v0.22.0 abgestimmt.
+- In vorgegebener Reihenfolge HQ-Pixel-Kulisse des angegriffenen Klosters, 4×4-Requisiten-/FX-Atlas, vier Ordenskrieger mit Richtungs-/Laufbildern, vier unbewaffnete Bewohneridentitäten und eine begehbare 1024×640-Map erstellt. Eigene Bot-Grafik für den zusätzlichen Szeneneinstieg. Transparente PNG-Quellen und 160 vermessene Actor-Frames; lesendes Ankerwerkzeug enthalten.
+- Oni mit bestätigtem Katana, Roboterkopf-Krieger mit bestätigtem Stab und Kabel-Dreadlocks, Ly in Weiß, schwerer Samurai-MG-Krieger. Shadepis bestehende Original-Sprites weiterverwendet. Fußanker, getrennte Schatten, y-Sortierung, Vordergrundverdeckungen und Kollisionen für Wände/Requisiten abgestimmt.
+- Erste Rückblende an Knoten 1: Kamerafahrten, acht fliehende Bewohner, Formation der fünf Verteidiger, Shadepis Schutzruf, Bombeneinschläge und erster Schusswechsel mit drei Bots. Eigene historische Physikwelt; Gegenwart bleibt eingefroren. Noch kein vollständiger Kampf, keine Tode: Oni-/MG-Schutzopfer und die weiteren Erinnerungen bleiben spätere Pakete.
+- E / Enter / A für Dialog, Leertaste / B zum Überspringen, Esc / Start für Pause; Pausenknöpfe mit Maus, Tastatur, Steuerkreuz und linkem Stick. Abbruch schließt die Szene ohne Fortschritt; Abschluss/Überspringen speichert Knoten 1 genau einmal. Speicherstände erhalten kompatible Erinnerungsfelder; Laden, Kapitelwechsel und veraltete Rückmeldungen sind abgesichert.
+- Beide Exportprofile nehmen Actor-Anker-JSON mit. Neue Prüfungen im CI; Gesamt-Ablauftest berücksichtigt die neue Szene vor dem Aerodyne-Flug. Roadmap, Assetmanifest und Spielerhinweise aktualisiert; echte Renderer-Bilder und animierte Vorschau unter docs/kloster-angriff.md.
+- Geprüft: elf Prüfreihen mit **1.716 Prüfungen, 0 Fehlern** (davon 143 gezielte Erinnerungsprüfungen); tatsächlichen Szenenlauf bis zur Rückkehr zu Raven gerendert. Linux-PCK erzeugt und neue Szene, Anker-JSON, 16 Figuren sowie importierte Texturen direkt daraus geladen.
 
 ## v0.21.3 – ClaudeHelper: Aerodyne-Flug mit Sequenzkalibrierung und Landung auf dem Tower · 7. November 2026
 

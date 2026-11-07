@@ -848,6 +848,12 @@ func check_campaign() -> void:
 	for i in 3:
 		scene.raven.position = scene._target()
 		scene.interact()
+		if i == 0:
+			await process_frame
+			check(scene.memory_scene != null and scene.point_index == 0, "first anchor opens the monastery flashback before advancing")
+			scene.memory_scene.cutscene.skip()
+			await process_frame
+			check(scene.memory_attack_complete and scene.point_index == 1, "finishing monastery flashback resumes Raven at the next anchor")
 	finish_dialogue(scene)
 	check(scene.beat == scene.Beat.FLIGHT and scene.drive.flight and scene.drive.phase == "canyon", "chapter five leads to the Aerodyne flight")
 	scene.drive.start_engine_failure()

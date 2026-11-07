@@ -1,14 +1,14 @@
-# Roadmap: Shadepis drei Erinnerungen · v0.21.2 · CodexAI
+# Roadmap: Shadepis drei Erinnerungen · v0.22.0 · CodexAI
 
-**Stand: Planung, keine neuen Grafiken oder Spielszenen umgesetzt.** Grundlage sind das [Nutzerbriefing mit bestätigten Schutzopfern](universum/teil-5/README.md), die vorhandenen Figurenreferenzen und das [Heiligtum-/Romanarchiv](universum/teil-4/README.md). Diese Roadmap legt die Produktionspakete und die erzählerische Kontinuität vor dem ersten Asset fest.
+**Stand: Pakete 0–5 abgeschlossen.** Kulissen, vier Krieger, Bewohner, begehbare Map und die erste inszenierte Rückblende sind in v0.22.0 eingebunden. Vollständiger Bot-Kampf und Schutzopfer (Paket 6) sowie Erinnerungen 2 und 3 bleiben ausstehend. [Umsetzung, Vorschau und Prüfstatus](kloster-angriff.md). Grundlage sind das [Nutzerbriefing mit bestätigten Schutzopfern](universum/teil-5/README.md), die vorhandenen Figurenreferenzen und das [Heiligtum-/Romanarchiv](universum/teil-4/README.md). Diese Roadmap hält Produktionspakete, Fortschritt und erzählerische Kontinuität fest.
 
 ## Ziel und vorhandener Spieleinstieg
 
 Raven erlebt an jedem der drei Erinnerungsknoten eine eigenständige Rückblende aus Shadepis Vergangenheit. Der Spieler sieht das historische Geschehen mit Shadepi und dem Orden. Raven bleibt die Empfängerin der Erinnerung; sie läuft nicht als zusätzliche Kämpferin durch das damalige Kloster.
 
-Im aktuellen Spiel existieren die drei Anker bereits: `Painted.ECHO_POINTS` in `scripts/painted_world.gd` und der Ablauf `Beat.ECHO` in `scripts/campaign.gd`. Aktuell erscheinen dort nur die Hinweise „Das Kloster“, „Die früheren Träger“ und „Die Nacht des Angriffs“; am letzten Punkt folgt die Rückkehr zu Raven. Diese Anker sollen später gezielt durch **Der Angriff → Lys Opfer → Das Vermächtnis** erweitert werden. Die bestehenden übrigen Kapitel, Menüs und Kontrollpunkte bleiben Ausgangsbasis.
+Im aktuellen Spiel existieren die drei Anker bereits: `Painted.ECHO_POINTS` in `scripts/painted_world.gd` und der Ablauf `Beat.ECHO` in `scripts/campaign.gd`. Knoten 1 zeigt jetzt „Der Angriff“ als eigene Szene. An Knoten 2 und 3 bleiben vorerst die bestehenden Hinweise und die Rückkehr zu Raven erhalten; dort folgen später **Lys Opfer → Das Vermächtnis**. Die bestehenden übrigen Kapitel, Menüs und Kontrollpunkte bleiben Ausgangsbasis.
 
-Die Rückblenden nutzen später das vorhandene System für laufende Figuren, Kamerafahrten, Dialoge und Überspringen. Zunächst entstehen inszenierte Szenen; vollständige spielbare Kämpfe sind getrennte Ausbaupakete. Es werden keine Comicseiten als Ersatz für die Szene eingeplant.
+Die erste Rückblende nutzt das vorhandene System für laufende Figuren, Kamerafahrten, Dialoge und Überspringen. Zunächst entstehen inszenierte Szenen; vollständige spielbare Kämpfe sind getrennte Ausbaupakete. Es werden keine Comicseiten als Ersatz für die Szene eingeplant.
 
 ## Die drei Erinnerungen
 
@@ -64,8 +64,8 @@ Nach einem Moment der Stille richtet sich Shadepi auf. Zwischen Feuer und Trümm
 | Figur | Verbindliche Merkmale | Rolle und Kontinuität |
 | --- | --- | --- |
 | Shadepi | Bestehende Originalmerkmale: schwarzer Kasa, segmentierte Maske, rote Augenlinsen, taktische Ausrüstung, Schal, Umhang und Laser-Katana. | Führt den Gegenstoß; überlebt die drei Erinnerungen, bricht zuletzt zusammen. |
-| Oni-Krieger | Deutlich erkennbare Oni-Maske; eigene Silhouette und passende Ordensrüstung. | Stirbt in Erinnerung 1 beim Schutz Shadepis. Name und Waffe offen. |
-| Roboterkopf-Krieger | Erkennbarer Roboterkopf, Dreadlocks aus Kabelsträngen; gemeinsame Ordensgestaltung. | Überlebt Erinnerung 1; weiteres Schicksal offen. Name und Waffe offen. |
+| Oni-Krieger | Deutlich erkennbare Oni-Maske; eigene Silhouette und passende Ordensrüstung. | Stirbt in Erinnerung 1 beim Schutz Shadepis. Katana bestätigt; Name offen. |
+| Roboterkopf-Krieger | Erkennbarer Roboterkopf, Dreadlocks aus Kabelsträngen; gemeinsame Ordensgestaltung. | Überlebt Erinnerung 1; weiteres Schicksal offen. Stab bestätigt; Name offen. |
 | Ly | Shadepi-ähnliche Maske und weiße Gewandung, als eigene Person erkennbar. | Überlebt Erinnerung 1 und opfert sich in Erinnerung 2. „Bruder“ wird nicht ungefragt zu einer bestätigten biologischen Verwandtschaft ausgebaut. |
 | Schwerer MG-Krieger | Samurai-Maske, volle schwere Panzerung, sehr großes MG; breite und gewichtige Silhouette. | Stirbt in Erinnerung 1 beim Schutz Shadepis. Name offen. |
 | Mönche und Bewohner | Unbewaffnete Klosterbevölkerung in passenden Gewändern bzw. einfacher Alltagskleidung. | Fliehen auf nachvollziehbaren Wegen; keine bloß im Hintergrund eingebrannten Personen. |
@@ -79,12 +79,12 @@ Neue Grafiken sind **detailreiche HQ-Pixelart**: sichtbare Pixelcluster, struktu
 
 | Paket | Arbeit | Konkretes Ergebnis | Abschlusskriterium |
 | --- | --- | --- | --- |
-| 0 · Roadmap | Quellen, Handlung und Prioritäten sichern. | Dieses Dokument und Archiv Teil 5. | Reihenfolge, Opfer und offene Fragen sind benannt. **Aktueller Stand.** |
-| 1 · Kulissen zuerst | Ein Kloster-Master mit Tor/Hof/Hauptgebäude; beschädigte und brennende Ebenen daraus ableiten. | HQ-Pixel-PNGs, getrennte Vorder-/Mittel-/Hintergrundteile sowie erste modulare Trümmer- und Feuerbereiche. | Ort, Maßstab und Stimmung funktionieren ohne Figuren; keine Bewohner oder Krieger ins Bild einbrennen. |
-| 2 · Vier Krieger | Zuerst die vier Identitäten sauber festlegen, danach die für den Ansturm nötigen Richtungen und Bewegungen. Shadepi wiederverwenden. | Oni-, Roboterkopf-, Ly- und MG-Referenzen; nutzbare Spritebilder mit konsistenten Fußankern. | Alle vier sind im Spielmaßstab unterscheidbar und behalten Ausrüstung und Proportionen beim Blickwechsel. |
-| 3 · Mönche und Bewohner | Kleine Gruppe unterschiedlicher unbewaffneter Figuren mit Stehen, Rennen und erschrockenem Reagieren. | Wiederverwendbare Bewohner-/Mönch-Sprites statt vieler unnötiger Einzelporträts. | Ein kurzer Fluchtlauf wirkt lebendig und führt ohne Stau aus der Gefahrenzone. |
-| 4 · Map-Kulisse | Kulissenebenen, Figurenmaßstab und Laufwege zusammenführen. | Spielmap mit Torbresche, Verteidigungslinie, Fluchtweg, Kollisionskörpern und Vordergrundverdeckungen. | Niemand läuft durch Mauern; Füße stehen auf dem Boden; Figuren werden hinter Säulen/Dächern korrekt verdeckt. |
-| 5 · Szene, nur bei verbleibendem Kontingent | Kamerafahrt, Flucht, Ansturm, Shadepis Ruf, Einschläge und beginnender Bot-Angriff verbinden. | Erste inszenierte Rückblende am ersten Erinnerungsknoten. | Szene startet und endet sauber, lässt sich bedienen/überspringen und kehrt korrekt zu Raven zurück. |
+| 0 · Roadmap | Quellen, Handlung und Prioritäten sichern. | Dieses Dokument und Archiv Teil 5. | Reihenfolge, Opfer und offene Fragen sind benannt. **Abgeschlossen.** |
+| 1 · Kulissen zuerst | Ein Kloster-Master mit Tor/Hof/Hauptgebäude; beschädigte und brennende Ebenen daraus ableiten. | HQ-Pixel-PNGs, getrennte Vorder-/Mittel-/Hintergrundteile sowie erste modulare Trümmer- und Feuerbereiche. | Ort, Maßstab und Stimmung funktionieren ohne Figuren; keine Bewohner oder Krieger ins Bild einbrennen. **Abgeschlossen in v0.22.0.** |
+| 2 · Vier Krieger | Zuerst die vier Identitäten sauber festlegen, danach die für den Ansturm nötigen Richtungen und Bewegungen. Shadepi wiederverwenden. | Oni-, Roboterkopf-, Ly- und MG-Referenzen; nutzbare Spritebilder mit konsistenten Fußankern. | Alle vier sind im Spielmaßstab unterscheidbar und behalten Ausrüstung und Proportionen beim Blickwechsel. **Abgeschlossen in v0.22.0.** |
+| 3 · Mönche und Bewohner | Kleine Gruppe unterschiedlicher unbewaffneter Figuren mit Stehen, Rennen und erschrockenem Reagieren. | Wiederverwendbare Bewohner-/Mönch-Sprites statt vieler unnötiger Einzelporträts. | Ein kurzer Fluchtlauf wirkt lebendig und führt ohne Stau aus der Gefahrenzone. **Abgeschlossen in v0.22.0.** |
+| 4 · Map-Kulisse | Kulissenebenen, Figurenmaßstab und Laufwege zusammenführen. | Spielmap mit Torbresche, Verteidigungslinie, Fluchtweg, Kollisionskörpern und Vordergrundverdeckungen. | Niemand läuft durch Mauern; Füße stehen auf dem Boden; Figuren werden hinter Säulen/Dächern korrekt verdeckt. **Abgeschlossen in v0.22.0.** |
+| 5 · Szene, nur bei verbleibendem Kontingent | Kamerafahrt, Flucht, Ansturm, Shadepis Ruf, Einschläge und beginnender Bot-Angriff verbinden. | Erste inszenierte Rückblende am ersten Erinnerungsknoten. | Szene startet und endet sauber, lässt sich bedienen/überspringen und kehrt korrekt zu Raven zurück. **Abgeschlossen in v0.22.0.** |
 | 6 · Kampf-Ausbau später | Erst jetzt vollständige Bots, Wellen, Kampfposen und die Schutzopfer von Oni und MG-Krieger ergänzen. | Spielbarer oder vollständig inszenierter Angriff mit verbindlichen Storyereignissen. | Ly und Roboterkopf überleben, die beiden Schutzopfer sind klar verständlich, Fortschritt ist zuverlässig gespeichert. |
 
 Die Identitätsreferenzen kommen vor den Bewegungsatlanten. Neue Angriffssätze entstehen jeweils dann, wenn sie für den nächsten Kampfabschnitt gebraucht werden.
@@ -104,9 +104,9 @@ Nach Abschluss von Paket 6 folgt **Erinnerung 2**, danach **Erinnerung 3**. Erst
 
 Feuer, Rauch, Bombeneinschläge und herumfliegende Teile werden als begrenzte, wiederverwendbare FX-Gruppen angelegt. Reale Fluchtfiguren und bewegte Verteidiger erzeugen die Handlung; Kamera und Hintergrund werden nicht nur zur Simulation von Bewegung hin- und hergeschoben.
 
-## Spätere Einbindung an den Erinnerungsknoten
+## Einbindung an den Erinnerungsknoten
 
-Geplante Zuordnung: **Knoten 1 → Der Angriff; Knoten 2 → Lys Opfer; Knoten 3 → Das Vermächtnis**. Jede Rückblende erhält einen eigenen stabilen Bezeichner, getrennt vom sichtbaren Titel.
+Zuordnung: **Knoten 1 → Der Angriff (umgesetzt); Knoten 2 → Lys Opfer (geplant); Knoten 3 → Das Vermächtnis (geplant)**. Jede Rückblende erhält einen eigenen stabilen Bezeichner, getrennt vom sichtbaren Titel.
 
 Beim Start werden Ravens aktuelle Position und der Erinnerungsknoten gehalten. Die historische Szene erhält eigene Figuren und lokalen Szenenzustand; Shadepi ist darin sichtbar und wird bei einem später spielbaren Ausbau gesteuert. Historische Figuren ersetzen keine Gegenwarts-NPCs und überschreiben keine aktuellen Lebens-/Energiewerte.
 
@@ -124,4 +124,4 @@ Spätere Prüfungen umfassen Grafik- und Fußanker, Laufwege, Sichtbarkeit der v
 
 ## Noch offene Festlegungen
 
-Die Auswahl der beiden ersten Gefallenen ist **geklärt: Oni und MG-Krieger**. Offen bleiben Eigennamen der übrigen neuen Figuren, Waffen von Oni-/Roboterkopf-Krieger, die genaue Minotaurus-Bauform, die technische Ausführung von Lys Opfer und das spätere Schicksal des Roboterkopf-Kriegers. Diese Punkte blockieren die Roadmap nicht; sie werden vor dem jeweiligen betroffenen Asset bzw. Storymoment festgelegt. Weitere Tote oder zusätzliche Fähigkeiten werden nicht ungefragt als Kanon eingetragen.
+Die Auswahl der beiden ersten Gefallenen ist **geklärt: Oni und MG-Krieger**. **Oni: Katana; Roboterkopf-Krieger: Stab** sind ebenfalls bestätigt. Offen bleiben Eigennamen der übrigen neuen Figuren, die genaue Minotaurus-Bauform, die technische Ausführung von Lys Opfer und das spätere Schicksal des Roboterkopf-Kriegers. Diese Punkte blockieren die Roadmap nicht; sie werden vor dem jeweiligen betroffenen Asset bzw. Storymoment festgelegt. Weitere Tote oder zusätzliche Fähigkeiten werden nicht ungefragt als Kanon eingetragen.
