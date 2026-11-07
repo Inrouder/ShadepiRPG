@@ -1,5 +1,12 @@
 # Versionshinweise
 
+## v0.21.1 – ClaudeHelper: Downloads über Releases und Anleitung geordnet · 7. November 2026
+
+- Stand v0.21.0 von CodexAI geprüft: neun Prüfreihen mit 1.517 Prüfungen ohne Fehler; Menü-, Terminal- und Kampfgalerien gerendert. Releases v0.20.6 und v0.21.0 mit Windows-, Linux- und Projektpaket veröffentlicht.
+- README: Download-Link und Spielanleitung verweisen auf das neueste Release statt auf Actions-Artefakte (keine Anmeldung nötig).
+- Spiel-README: Kopfzeile mit Version wieder ganz oben, Kampfupdate-Hinweis darunter.
+- Alte Branches v0.13.1, v0.13.2 und v0.14.0 nochmals verglichen: nur bewusst entfernte Low-Res-Sprites fehlen in `main`; Löschung steht noch aus.
+
 ## v0.21.0 – CodexAI: Ravens Handblitze, Pistolenschüsse und Gegnerkampf · 7. November 2026
 
 - Alle GitHub-Branches vor Beginn geprüft; die während der Arbeit erschienenen Stände v0.20.5 und v0.20.6 sicher übernommen und lokale Kampfänderungen erhalten.
