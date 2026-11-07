@@ -40,6 +40,15 @@ Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und
 - Produktion der ersten Kloster-Erinnerung „Der Angriff“ gestartet: neue HQ-Pixel-Kulisse mit Hof, Klosterfassade, Fluchtweg und zerstörtem Tor sowie getrennte Requisiten und Feuer-/Rauch-/Einschlagbilder.
 - Die weiteren Produktionspakete folgen der [Roadmap](docs/erinnerungen-roadmap.md); vollständige Bot-Kämpfe und Schutzopfer gehören zum späteren Ausbau.
 
+## v0.21.3 · 7. November 2026 · ClaudeHelper
+
+- **Aerodyne-Flug als eigenes Level (Kapitel 6):** Häuserschluchten mit Frachtdrohnen, Stahlbrücken und engen Lücken; frei steuern, Schub/Bremse und **Ausweichrolle** (Leertaste / B); knappes Ausweichen zählt als Stunt. Danach Triebwerksausfall, Turmabwehr mit angekündigten Laserdrohnen.
+- **Sequenzkalibrierung:** Der Scannerstrahl des Towers ist sichtbar. Liegt er auf dem Aerodyne („JETZT“), rastet Raven mit der angezeigten Richtung Kenzōs Gleiterkennung Stück für Stück ein. Abweichungen lösen Alarm und einen neuen Scan aus statt eines Absturzes.
+- **Landung wie im Comic:** Driftkurve, dann Landung auf Kenzōs Tower-Plattform mit Ausrichten und Bremsdüsen; der Aerodyne bleibt auf dem Landeplatz stehen.
+- Neue Pixelart-Requisiten und selbst synthetisierte Flugsounds. [Ablauf und Bilder](docs/aerodyne-flug.md)
+
+![Sequenzkalibrierung](docs/flug-kalibrierung.png)
+
 ## v0.21.2 · 7. November 2026 · CodexAI
 
 - [Roadmap für drei Kloster-Erinnerungen](docs/erinnerungen-roadmap.md): Angriff auf das Kloster, Lys Opfer und die Übergabe des Heiligtums. Produktionsreihenfolge, neue Figuren, Dialoge und Arbeitspakete vor der Assetproduktion festgehalten.

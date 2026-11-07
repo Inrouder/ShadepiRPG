@@ -4,6 +4,8 @@ const Story = preload("res://scripts/campaign_story.gd")
 const Beat = Story.Beat
 const Timing = preload("res://scripts/sanctuary_timing.gd")
 const Drive = preload("res://scripts/campaign_drive.gd")
+const AerodyneFlight = preload("res://scripts/aerodyne_flight.gd")
+const ParkedAerodyne = preload("res://scripts/parked_aerodyne.gd")
 const ChapterHud = preload("res://scripts/campaign_hud.gd")
 const Arcade = preload("res://scripts/arcade_encounter.gd")
 const Waves = preload("res://scripts/arcade_waves.gd")
@@ -48,6 +50,11 @@ const GARAGE_DOOR: = Rect2(238, 104, 152, 136)
 const BIKE_PARK: = Vector2(902, 386)
 var garage_door: = 0.0
 var bike_mode: = ""
+## Aerodyne on the tower pad (ROOF): touchdown point from the landing.
+var aerodyne_spot := AerodyneFlight.PAD_WORLD
+var parked_aerodyne: Node2D
+## After a crash the repaired engine is not failing a second time.
+var flight_engine_repaired := false
 var bike_pos: = BIKE_PARK
 var bike_rot: = 0.0
 
@@ -155,6 +162,9 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo:
 		drive.hide()
 		drive.queue_free()
 	drive = null
+	if is_instance_valid(parked_aerodyne):
+		parked_aerodyne.queue_free()
+	parked_aerodyne = null
 	for foe in foes:
 		foe.hide()
 		foe.set_physics_process(false)
@@ -207,6 +217,12 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo:
 		set_painted_solids("memory")
 		set_dressing("")
 		set_music_section("chapter_5_echo")
+	if beat == Beat.ROOF:
+		# The Aerodyne stays where it touched down on Kenzō's pad.
+		parked_aerodyne = ParkedAerodyne.new()
+		parked_aerodyne.place(aerodyne_spot)
+		actors.add_child(parked_aerodyne)
+		painted_solids.append(_collider(parked_aerodyne.footprint(), false))
 	effects.rain = beat in [Beat.AMBUSH, Beat.ROOF]
 	effects.steam_vents.clear()
 	if beat == Beat.AMBUSH:
@@ -220,12 +236,21 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo:
 	ui.clear_dialogue()
 	close_menu()
 	if beat in [Beat.CHASE, Beat.FLIGHT]:
-		drive = Drive.new()
+		drive = AerodyneFlight.new() if beat == Beat.FLIGHT else Drive.new()
 		drive.world = self
 		drive.flight = beat == Beat.FLIGHT
+		if beat == Beat.FLIGHT:
+			drive.engine_repaired = flight_engine_repaired
 		drive_layer.add_child(drive)
-		drive.completed.connect(_advance)
-		drive.crashed.connect( func(): _retry("Landung abgebrochen · Kontrollpunkt" if beat == Beat.FLIGHT else "Fahrzeug ausgefallen · Kontrollpunkt"))
+		var vehicle = drive
+		drive.completed.connect(func():
+			if beat == Beat.FLIGHT:
+				aerodyne_spot = vehicle.touchdown_world()
+			_advance())
+		drive.crashed.connect( func():
+			if beat == Beat.FLIGHT and vehicle.engine_repaired:
+				flight_engine_repaired = true
+			_retry("Landung abgebrochen · Kontrollpunkt" if beat == Beat.FLIGHT else "Fahrzeug ausgefallen · Kontrollpunkt"))
 	if beat != Beat.ESCAPE:
 		escape_guards_cleared = true
 	elif fresh:
@@ -1136,26 +1161,29 @@ func _scene_flight() -> void:
 	await cs.fade(Color(0, 0, 0, 0), 0.8)
 	await cs.lines([
 		["ARTOS", "A-a-artos-System … b-bootet … alle Parameter … instabil."],
-		["SHADEPI", "Festhalten. Ich halte uns zwischen den Baken. Raven, sende die kopierte Kennung, sobald der Scanner in Reichweite ist."],
+		["SHADEPI", "Festhalten. Ich bringe uns durch die Häuserschluchten. Raven, sobald uns der Tower-Scanner erfasst, kalibrierst du die kopierte Kennung."],
+		["RAVEN", "Sequenz für Sequenz – genau dann, wenn der Strahl auf uns liegt. Flieg einfach nicht gegen eine Brücke."],
 		["RAVEN", "Ich mag lieber Motorräder."],
 	])
 	cs.end()
 
 func _scene_roof() -> void:
-	player.position = Vector2(300, 330)
-	raven.position = Vector2(330, 350)
+	# Both climb out of the hatch beside the freshly landed Aerodyne.
+	player.position = aerodyne_spot + Vector2(78, 52)
+	raven.position = aerodyne_spot + Vector2(56, 70)
 	player.show()
 	var cs = begin_cutscene()
 	cs.pose(player, "idle")
 	cs.pose(raven, "idle")
 	cs.face(raven, Vector2(770, 260))
 	cs.face(player, raven.position)
-	await cs.camera(Vector2(420, 300), 0.0, 1.1)
+	# Same framing as the landing view of the flight, then pan toward the door.
+	await cs.camera(AerodyneFlight.ROOF_CAMERA, 0.0, AerodyneFlight.ROOF_ZOOM)
 	cs.do(func():
 		shake = 6.0
 		sound("drive_knock")
 	)
-	await cs.say("ARASAKA TOWER / LANDEPLATZ", "Bremsdüsen brüllen, heiße Luft peitscht über die Plattform. Das Aufsetzen ist hart.")
+	await cs.say("ARASAKA TOWER / LANDEPLATZ", "Heiße Luft peitscht über die Plattform, das Metall knackt. Der Aerodyne steht.")
 	await cs.lines([
 		["SHADEPI", "Hals- und Beinbruch. Ich muss innerhalb von zwanzig Sekunden drin sein, dann fällt meine Tarnung."],
 		["RAVEN", "Dann lass mich vorgehen. Ich lenke ihn ab. Keine Angst – er wird sein Lieblingsspielzeug nicht töten wollen."],
