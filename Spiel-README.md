@@ -1,6 +1,8 @@
 # Shadepi · Echos in Neon
 
-**Spieleranleitung für v0.20.2 · ClaudeHelper.** Aktuelle Downloads und Prüfstatus: [Repository-Startseite](README.md). Änderungen: [Versionshinweise](CHANGELOG.md).
+**Spieleranleitung für v0.20.3 · ClaudeHelper.** Aktuelle Downloads und Prüfstatus: [Repository-Startseite](README.md). Änderungen: [Versionshinweise](CHANGELOG.md).
+
+**Hauptscreen v0.20.3 · CodexAI:** Das Menü zeigt die HQ-Figuren im gemalten Stil der Spielwelt, mit animiertem Regen, Nebel, Neonlicht und Wasserreflexen. Maus und Controller bedienen die Knöpfe; die Figuren bleiben auf der Plattform stehen. Unter **Bildstil → Reduziert** werden Wind, zusätzliche Filter und Menülichtanimation abgeschaltet. Das Spiel selbst behält seine ursprüngliche Darstellung.
 
 **Aktualisierung v0.20.1 · CodexAI:** Enthält zusätzlich den GitHub-Entwicklungsstand v0.20.0 mit verbessertem Kampfgefühl, passendem Apartmentmaßstab, erweiterter Verfolgungsjagd und Garageneinfahrt. [Verfolgungsjagd](docs/verfolgungsjagd.md) · [Kampfgefühl](docs/kampf-feedback.md).
 

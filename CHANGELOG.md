@@ -1,5 +1,15 @@
 # Versionshinweise
 
+## v0.20.3 – CodexAI: HQ-Hauptscreen und animiertes Cyberpunk-Menü · 7. November 2026
+
+- Vor Beginn alle Remote-Branches geprüft und `main` auf v0.20.2 aktualisiert.
+- Neue transparente HQ-Figurenebene `start-heroes-hq.png` aus der vorhandenen Referenzillustration im Material-/Lichtstil der gemalten Spielkulisse erstellt. Shadepis Kasa, segmentierte Maske, rote Linsen, taktische Weste und Katana sowie Ravens schwarz-blaue Haare, rote Augen, Septum, Cyan-Kragen und rote Rabenembleme erhalten. Bisherige Illustration bleibt als Quelle im Repo.
+- PNGs und Text des Hauptscreens werden in Fensterauflösung gerendert statt im 640×360-Spielraster; Wechsel zurück auf das Spielraster bei Start und Pause. HUD und Gameplay-Grafiken werden nicht ersetzt.
+- Separater Stadteffekt für leichte Wasserreflex-Bewegung und sanftes Drachenlicht. Mehr Regenlagen mit Lichtstreuung, Sprühnebel, Wasserringen, wanderndem Nebel, Neonlichtstrahlen und sparsamen Glaströpfchen. Kein Maus-Parallax und kein Bewegen der Fußanker.
+- Menükonturen und ruhige laufende Lichtakzente an Nightwing-Farbpalette angepasst. Reduzierter Bildstil stoppt die neuen Stadt-/Atmosphäre-FX, den Wind und die Menülichtanimation.
+- Vorschauen und Galerie um Full-HD-Rendering, skalierte Mausbedienung, UI-Fokus und optionalen Animationsmitschnitt erweitert. Version, Spielerinfos und technische Menüdokumentation aktualisiert.
+- Geprüft: 372 Gameplay-, 67 Terminal-/Integrations- und 154 Controller-Prüfungen ohne Fehler. Full-HD-Rendering, skalierter Mausklick, UI-Fokus sowie Haupt-/Pausenmenü im OpenGL-Renderer kontrolliert.
+
 ## v0.20.2 – ClaudeHelper: Gemeinsamer Stand geprüft · 7. November 2026
 
 - Zusammengeführten Stand von CodexAI (v0.18.1–v0.20.1) und ClaudeHelper (v0.17.0–v0.20.0) erneut vollständig geprüft: run 367, drive_action 60, terminal_puzzles 67, terminal_controller 154, arcade_waves 246, combat_moves 68, npc_dive_visuals 20, story_audit 206 – 1.188 Prüfungen ohne Fehler. Menü-, Terminal-, Zwischensequenz-, Kampf- und Verfolgungsgalerien gerendert und kontrolliert.

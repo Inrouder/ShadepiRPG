@@ -1,7 +1,9 @@
 extends Control
+signal quality_changed(value: int)
 
 const CITY := preload("res://assets/menu/start-city.png")
-const HEROES := preload("res://assets/menu/start-heroes.png")
+const HEROES := preload("res://assets/menu/start-heroes-hq.png")
+const CITY_FX := preload("res://shaders/menu_city.gdshader")
 const WIND := preload("res://shaders/menu_wind.gdshader")
 const ATMOSPHERE := preload("res://shaders/menu_atmosphere.gdshader")
 const VIEW := Vector2(640, 360)
@@ -18,6 +20,7 @@ var quality := 2
 var pulse := 0.0
 var pulse_position := Vector2(240, 210)
 var city: TextureRect
+var city_material: ShaderMaterial
 var heroes: Node2D
 var wind_material: ShaderMaterial
 var ground_contacts: Control
@@ -36,6 +39,9 @@ func _ready() -> void:
 	city.size = VIEW + Vector2(20, 12)
 	city.position = Vector2(-10, -6)
 	city.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	city_material = ShaderMaterial.new()
+	city_material.shader = CITY_FX
+	city.material = city_material
 	add_child(city)
 	ground_contacts = Control.new()
 	ground_contacts.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -68,6 +74,15 @@ func _ready() -> void:
 	atmosphere.material = atmosphere_material
 	add_child(atmosphere)
 	visibility_changed.connect(_sync_activity)
+	var signature := Label.new()
+	signature.text = "IM SCHATTEN DES RABEN     ·     v" + str(ProjectSettings.get_setting("application/config/version")) + " · CodexAI"
+	signature.position = Vector2(14, 344)
+	signature.add_theme_font_size_override("font_size", 8)
+	signature.add_theme_color_override("font_color", Color("aac9d9"))
+	signature.add_theme_color_override("font_shadow_color", Color.BLACK)
+	signature.add_theme_constant_override("shadow_offset_y", 1)
+	signature.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(signature)
 	set_quality(quality)
 	_sync_activity()
 
@@ -140,11 +155,14 @@ func _sync_activity() -> void:
 
 func set_quality(value: int) -> void:
 	quality = clampi(value, 0, 2)
+	if city_material != null:
+		city_material.set_shader_parameter("strength", [0.0, 0.55, 1.0][quality])
 	if wind_material != null:
 		wind_material.set_shader_parameter("strength", [0.0, 0.55, 1.0][quality])
 	if atmosphere_material != null:
 		atmosphere_material.set_shader_parameter("strength", [0.0, 0.55, 1.0][quality])
 		atmosphere.visible = quality > 0
+	quality_changed.emit(quality)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
@@ -156,6 +174,7 @@ func pulse_at(point: Vector2) -> void:
 
 func _process(delta: float) -> void:
 	elapsed += delta
+	city_material.set_shader_parameter("clock", elapsed)
 	wind_material.set_shader_parameter("clock", elapsed)
 	pulse = maxf(0.0, pulse - delta * 1.4)
 	atmosphere_material.set_shader_parameter("clock", elapsed)
@@ -165,16 +184,18 @@ func _process(delta: float) -> void:
 
 func _draw_weather() -> void:
 	# Different depths and speeds make the downpour read as a volume.
-	var counts := [35, 105, 180]
+	var counts := [35, 150, 260]
 	for i in int(counts[quality]):
 		var depth := float(i % 3 + 1) / 3.0
 		var speed := 105.0 + depth * 190.0
-		var wind := 25.0
+		var wind := 25.0 + sin(elapsed * 0.45) * 8.0
 		var p := Vector2(fposmod(i * 87.3 - elapsed * wind * depth, 690.0) - 25.0,
 			fposmod(i * 53.7 + elapsed * speed, 400.0) - 20.0)
 		var length := 4.0 + depth * 13.0
 		var alpha := (0.07 + depth * 0.19) * (0.6 if p.x > 350 else 1.0)
 		weather.draw_line(p, p + Vector2(-length * 0.28, length), Color(0.57, 0.82, 0.94, alpha), 0.55 + depth * 0.5, true)
+		if quality == 2 and i % 7 == 0:
+			weather.draw_line(p, p + Vector2(-length * 0.28, length), Color(0.42, 0.76, 1.0, alpha * 0.12), 2.5, true)
 	# Flying traffic passes across the skyline, behind the menu text area.
 	for i in 6:
 		var x := fposmod(i * 111.0 + elapsed * (12.0 + i * 3.0), 760.0) - 60.0
@@ -184,11 +205,19 @@ func _draw_weather() -> void:
 		weather.draw_line(Vector2(x, y), Vector2(x + 4, y), color, 1.5, true)
 	# Small ground rings and neon reflections, clipped to the rooftop.
 	if quality > 0:
-		for i in 16:
+		for i in 32:
 			var life := fposmod(elapsed * 0.8 + float(i) * 0.137, 1.0)
-			var p := Vector2(18 + (i * 29) % 292, 303 + (i * 7) % 28)
+			var p := Vector2(18 + (i * 29) % 250, 304 + (i * 7) % 21)
+			# Match the sloping foreground roof; no rings floating over the edge.
+			if p.y > 350 - p.x * 0.15:
+				continue
 			weather.draw_set_transform(p, 0, Vector2(1, 0.32))
 			weather.draw_arc(Vector2.ZERO, 1 + life * 7, 0, TAU, 16, Color(0.39, 0.81, 0.93, (1 - life) * 0.23), 0.6, true)
 		weather.draw_set_transform(Vector2.ZERO)
+		# Windblown spray catches the roof's pink and cyan neon.
+		for i in (24 if quality == 2 else 10):
+			var life := fposmod(elapsed * 0.6 + i * 0.171, 1.0)
+			var p := Vector2(20 + (i * 47) % 262 - life * 12, 306 - sin(life * PI) * 7)
+			weather.draw_circle(p, 0.35 + life * 0.4, Color(0.4, 0.85, 1, sin(life * PI) * 0.32))
 	if pulse > 0.0:
 		weather.draw_arc(pulse_position, (1 - pulse) * 38 + 3, 0, TAU, 40, Color(0.4, 0.9, 1, pulse * 0.32), 0.8, true)

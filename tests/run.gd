@@ -38,6 +38,7 @@ func run() -> void:
 	root.add_child(scene)
 	await process_frame
 	check(scene.ui.start_backdrop.visible and scene.music_section == "menu", "live city and menu music are active on startup")
+	check(root.content_scale_mode == Window.CONTENT_SCALE_MODE_CANVAS_ITEMS, "HQ opening menu renders at window resolution")
 	check(SpriteAssets.valid_sheet(scene.player.visual.texture), "selected player sprite fits a supported grid")
 	var invalid_sprite := ImageTexture.create_from_image(Image.create_empty(48, 64, false, Image.FORMAT_RGBA8))
 	check(not SpriteAssets.valid_sheet(invalid_sprite), "single-frame replacement is rejected")
@@ -62,6 +63,7 @@ func run() -> void:
 	var raven_transform: Transform2D = menu_backdrop.heroes.get_child(1).transform
 	for quality in 3:
 		menu_backdrop.set_quality(quality)
+		check(is_zero_approx(menu_backdrop.city_material.get_shader_parameter("strength")) == (quality == 0) and is_zero_approx(scene.ui.menu_chrome.strength) == (quality == 0), "reduced style disables city FX and menu light animation")
 		check(is_zero_approx(menu_backdrop.wind_material.get_shader_parameter("strength")) == (quality == 0), "reduced quality disables hair and cloth wind")
 		for point in [Vector2.ZERO, Vector2(640, 0), Vector2(0, 360), Vector2(640, 360)]:
 			var motion := InputEventMouseMotion.new()
@@ -83,6 +85,7 @@ func run() -> void:
 	menu_backdrop.pulse_at(Vector2(120, 240))
 	check(menu_backdrop.pulse > 0.0 and menu_backdrop.pulse_position == Vector2(120, 240), "menu interaction produces feedback at the input point")
 	scene.close_menu()
+	check(root.content_scale_mode == Window.CONTENT_SCALE_MODE_VIEWPORT, "closing HQ menu restores original gameplay viewport")
 	check(not scene.ui.start_backdrop.visible, "live start backdrop closes with the menu")
 	check(not scene.ui.start_backdrop.is_processing() and not scene.ui.start_backdrop.is_processing_input(), "hidden menu stops animation and input work")
 	check_npc_attack_animation(scene)

@@ -33,6 +33,7 @@ var load_button: Button
 var restart_button: Button
 var menu_help: Label
 var start_backdrop: Control
+var menu_chrome: Control
 var game_hud_nodes: Array[CanvasItem] = []
 var menu_button_tweens: Dictionary = {}
 var visual_button: Button
@@ -183,14 +184,18 @@ func _ready() -> void :
 	dialogue_panel.hide()
 	menu = panel(Rect2(350, 14, 276, 332))
 	var menu_style := StyleBoxFlat.new()
-	menu_style.bg_color = Color(0.018, 0.034, 0.063, 0.82)
+	menu_style.bg_color = Color(0.018, 0.034, 0.063, 0.89)
 	menu_style.border_color = Color(0.28, 0.78, 0.88, 0.5)
 	menu_style.set_border_width_all(1)
 	menu_style.border_width_left = 3
-	menu_style.corner_radius_top_right = 8
-	menu_style.corner_radius_bottom_right = 8
+	menu_style.corner_radius_top_right = 1
+	menu_style.corner_radius_bottom_right = 12
 	menu.add_theme_stylebox_override("panel", menu_style)
-	menu_title = label_at("SHADEPI", Vector2(16, 8), Vector2(244, 34), menu, 27, Color("e9fbff"))
+	menu_chrome = preload("res://scripts/menu_chrome.gd").new()
+	menu_chrome.size = menu.size
+	menu.add_child(menu_chrome)
+	start_backdrop.quality_changed.connect(func(value): menu_chrome.strength = [0.0, 0.55, 1.0][value])
+	menu_title = label_at("SHADEPI", Vector2(16, 4), Vector2(244, 40), menu, 34, Color("e9fbff"))
 	menu_title.clip_text = true
 	label_at("ECHOS IN NEON", Vector2(17, 42), Vector2(244, 18), menu, 11, Color("66e7f2"))
 	menu_description = label_at("IM SCHATTEN DES RABEN\nEine Cyberpunk-Saga", Vector2(16, 61), Vector2(244, 29), menu, 9, Color("9db0c4"))
@@ -224,9 +229,9 @@ func button_at(text: String, y: float, callback: Callable) -> Button:
 		style.set_border_width_all(1)
 		style.content_margin_left = 11
 		style.content_margin_right = 9
-		style.set_corner_radius_all(3)
+		style.set_corner_radius_all(1)
 		if state in ["hover", "pressed", "focus"]:
-			style.border_color = Color("70e1ef")
+			style.border_color = Color("86f3fc")
 			style.border_width_left = 3
 			style.bg_color = Color(0.09, 0.23, 0.29, 0.96)
 		if state == "pressed":
@@ -264,11 +269,15 @@ func _show_menu_shell(title: String) -> void:
 	if admin_panel != null:
 		admin_panel.hide()
 	var opening: bool = not world.started
+	# Draw HQ menu PNGs and fonts at window resolution, retaining the game's
+	# original viewport rendering as soon as play starts or the game is paused.
+	get_window().content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS if opening else Window.CONTENT_SCALE_MODE_VIEWPORT
 	start_backdrop.visible = opening
 	start_backdrop.set_quality(world.visual_quality)
+	menu_chrome.strength = [0.0, 0.55, 1.0][world.visual_quality]
 	menu.position = Vector2(350, 14) if opening else Vector2(182, 14)
 	menu_title.text = "SHADEPI" if opening else title
-	menu_title.add_theme_font_size_override("font_size", 27 if opening else 19)
+	menu_title.add_theme_font_size_override("font_size", 34 if opening else 19)
 	menu_description.text = "IM SCHATTEN DES RABEN\nEine Cyberpunk-Saga" if opening else "Pause · Einsatzstatus und Optionen"
 	if opening:
 		world.set_music_section("menu")
@@ -279,6 +288,7 @@ func _show_menu_shell(title: String) -> void:
 	resume_button.grab_focus()
 
 func hide_menu() -> void:
+	get_window().content_scale_mode = Window.CONTENT_SCALE_MODE_VIEWPORT
 	menu.hide()
 	start_backdrop.hide()
 	for node in game_hud_nodes:

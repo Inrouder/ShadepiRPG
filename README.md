@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.20.2 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.20.3 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -22,7 +22,7 @@ Im Spiel gibt es ein Startmenü mit Einzelspieler und Lokal-Koop, eine gemeinsam
 
 **Kartenkorrekturen:** Das Versteck hat passende Möbelproportionen; Bingo Street geht mit durchgehender Bodenkante in die Gasse über. [Vergleich im Spiel](docs/karten-proportionen.md).
 
-Das Startmenü zeigt Shadepi in Bereitschaftshaltung und Raven mit Tablet nach den aktuellen Figurenreferenzen vor einer Neonstadt mit weißem Drachen. Figuren und Dach bleiben fest verankert; die Maus verschiebt oder verformt sie nicht. Ravens Haarspitzen und Shadepis Umhangränder wehen sanft im Wind. Passende Größe, Tiefenstaffelung und Kontaktschatten verankern beide auf der vorderen Plattform. Regen, Flugverkehr, Wasserreflexe und Neonlicht beleben die Szene. Die Menüknöpfe reagieren auf Maus und Controller-Fokus. Dazu läuft die Musik des Finales am See. [Vorschau und technische Hinweise](docs/live-startmenue.md).
+Das Startmenü zeigt die detailliert gemalten HQ-Figuren Shadepi in Bereitschaftshaltung und Raven mit Tablet nach den aktuellen Figurenreferenzen vor einer Neonstadt mit weißem Drachen. Figuren und Dach bleiben fest verankert; die Maus verschiebt oder verformt sie nicht. Ravens Haarspitzen und Shadepis Umhangränder wehen sanft im Wind. Passende Größe, Tiefenstaffelung und Kontaktschatten verankern beide auf der vorderen Plattform. Regen, Flugverkehr, Wasserreflexe und Neonlicht beleben die Szene. Die Menüknöpfe reagieren auf Maus und Controller-Fokus. Dazu läuft die Musik des Finales am See. [Vorschau und technische Hinweise](docs/live-startmenue.md).
 
 ## Geschichte und Spielumfang
 
@@ -35,7 +35,16 @@ Die Spielwelt nutzt **16 gemalte Kulissen** aus `assets/world/painted/`. Wände 
 
 Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und Bosskämpfen. Die vollständige Zuordnung und Hinweise zum Austauschen der MP3-Dateien stehen unter [Musik austauschen](assets/music/README.md).
 
-## Neu in v0.20.2 · 7. November 2026 · ClaudeHelper
+## Neu in v0.20.3 · 7. November 2026 · CodexAI
+
+- HQ-Figuren-PNG im gemalten Spielstil: dieselben charakteristischen Merkmale, jetzt mit detaillierten Materialien, Regentropfen und Cyan-/Magenta-Kantenlicht.
+- Hauptscreen rendert PNGs und Menüschrift in Fensterauflösung, auch in Full HD. Beim Spielen und Pausieren gilt wieder das ursprüngliche Spielraster.
+- Mehrschichtiger Regen, Sprühnebel, animierte Wasserreflexe, Lichtstrahlen und sanftes Drachenlicht. Technische Menükonturen und Lichtakzente passen zum Nightwing-Design.
+- Figuren und Füße bleiben fest verankert; keine Maus-Parallax. „Reduziert“ deaktiviert die zusätzlichen Shader, Wind und Menülichtanimation.
+- [Full-HD-Vorschau und animierter Eindruck](docs/live-startmenue.md).
+- Geprüft: 372 Gameplay-, 67 Terminal-/Integrations- und 154 Controller-Prüfungen ohne Fehler. Full-HD-Rendering, skalierter Mausklick, UI-Fokus sowie Haupt-/Pausenmenü im OpenGL-Renderer kontrolliert.
+
+## v0.20.2 · 7. November 2026 · ClaudeHelper
 
 - Gemeinsamen Stand von CodexAI (Menü, Nightwing-Hacks, Controller-Hilfe) und ClaudeHelper (Zwischensequenzen, Kampfgefühl, Verfolgungsjagd, Garageneinfahrt) gegengeprüft: alle acht Prüfreihen mit 1.188 Prüfungen fehlerfrei, Menü, Terminals, Zwischensequenzen, Kampf und Verfolgung zusätzlich gerendert und angesehen.
 - Ältere Entwicklungsbranches (v0.13.1 bis v0.14.0) sind vollständig in `main` aufgegangen; es fehlt keine Arbeit.
