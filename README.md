@@ -40,8 +40,12 @@ Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und
 - Raven: verzweigte Pixelblitze aus einer eigenen offenen Handpose im Deep Dive; Pistolenschüsse mit Mündungsfeuer, warmem Geschoss und eigenem Sound außerhalb des Netzes. Austrittspunkte folgen den acht Richtungen und Sprite-Transformationen.
 - Alle acht menschlichen Gegnertypen erhalten neue HQ-Pixel-Kontaktposen in acht Richtungen; Ausholen, Treffer, Erholung und Unterbrechungen sind sichtbar getrennt.
 - Eigene synthetisierte Kampflaute: Anstrengung, Schmerzstöhnen und längere Sterbelaute, mit Varianten und eigenem Stimmenpool.
-- [Bilder, Animationsvorschau und Hörprobe](docs/raven-gegner-kampf.md). Der während der Arbeit veröffentlichte Pixelart-UI-Stand v0.20.5 ist enthalten.
+- [Bilder, Animationsvorschau und Hörprobe](docs/raven-gegner-kampf.md). Die während der Arbeit veröffentlichten Änderungen v0.20.5 (Pixelart-UI) und v0.20.6 (Release-Workflow) sind enthalten.
 - Neun Prüfreihen mit 1.517 erfolgreichen Prüfungen; Kampfansichten gerendert und neue Ressourcen direkt aus einem Exportpaket geladen.
+
+## v0.20.6 · 7. November 2026 · ClaudeHelper
+
+- Releases mit Windows- und Linux-Paket lassen sich unter **Actions → Test and build Shadepi → Run workflow** mit einem Versions-Tag veröffentlichen.
 
 ## v0.20.5 · 7. November 2026 · ClaudeHelper
 
