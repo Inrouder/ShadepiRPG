@@ -1,12 +1,12 @@
 {
-  "version": "0.22.0",
+  "version": "0.23.0",
   "author": "CodexAI",
   "memory": "attack",
   "world_size": [
     1024,
     640
   ],
-  "stage": "Pakete 1–5 abgeschlossen: Kulissen, Figuren, begehbare Map und erste inszenierte Rückblende; vollständiger Bot-Kampf und Schutzopfer folgen später",
+  "stage": "Pakete 1–6 abgeschlossen: erste inszenierte Erinnerung mit drei Bot-Wellen, Oni-/MG-Schutzopfern und Rückzug; Erinnerungen 2 und 3 folgen später",
   "background": "courtyard.png",
   "layer_atlas": "props-fx.png",
   "layer_grid": [
@@ -20,10 +20,6 @@
     "ly": "weiße Gewandung und Klinge",
     "heavy": "Samurai-Maske, Vollpanzerung und großes MG"
   },
-  "first_memory_casualties_later": [
-    "oni",
-    "heavy"
-  ],
   "warrior_ready": "warriors-ready.png",
   "warrior_run": "warriors-run.png",
   "residents": "residents.png",
@@ -31,5 +27,13 @@
   "actor_metadata": "actors.json",
   "scene": "res://scenes/memories/attack.tscn",
   "entry": "Beat.ECHO / Erinnerungsknoten 1",
-  "atlas_actor_frames": 160
+  "atlas_actor_frames": 264,
+  "combat": "combat.png",
+  "resident_walk": "residents-walk.png",
+  "waves": 3,
+  "bots_total": 9,
+  "first_memory_casualties": [
+    "oni",
+    "heavy"
+  ]
 }

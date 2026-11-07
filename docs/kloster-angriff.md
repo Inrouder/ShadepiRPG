@@ -1,5 +1,7 @@
 # Erinnerung I: Der Angriff · v0.22.0 · CodexAI
 
+**Historischer Stand v0.22.0.** Der aktuelle Ausbau mit drei Bot-Wellen, Schutzopfern und erweiterten Gehbewegungen steht unter [Klosterkampf · v0.23.0 · CodexAI](kloster-kampf.md). Die folgende Vorschau dokumentiert den ursprünglichen Auftakt.
+
 Die ersten fünf Produktionspakete sind umgesetzt: Klosterkulissen, die vier Ordenskrieger, Mönche und Bewohner, eine begehbare Map und der inszenierte Auftakt. Am **ersten Erinnerungsknoten in Kapitel 5** sieht Raven nun Shadepis Vergangenheit als eigene Spielszenenfolge. Sie bleibt Empfängerin der Erinnerung und erscheint nicht im historischen Hof.
 
 ![Aufgezeichnete Rückblende im Spiel](previews/kloster-angriff.webp)
@@ -65,4 +67,4 @@ Für eine direkte Hofvorschau in Godot `attack.tscn` öffnen, `autoplay` ausscha
 
 Die Szene wurde im Godot-OpenGL-Renderer bis zur bestätigten Rückkehr zu Raven kontrolliert. Ein Linux-PCK wurde erstellt; neue Szene, Anker-JSON, 16 Figuren und importierte Texturen ließen sich direkt aus diesem Exportpaket laden. Die gezielten Erinnerungsprüfungen laufen auch im GitHub-Workflow.
 
-**Als Nächstes folgt Paket 6:** vollständige Bot-Wellen, Kampfbewegungen und die festgelegten Schutzopfer von **Oni und MG-Krieger**. Im jetzigen Auftakt stirbt niemand; Ly und der Roboterkopf-Krieger bleiben erhalten. Erinnerung 2 mit Lys Opfer und Erinnerung 3 mit Meister, Heiligtumsübergabe und zwei Minotauren sind noch nicht umgesetzt. Der genaue Plan und offene Festlegungen stehen in der [Roadmap](erinnerungen-roadmap.md); die verbindlichen Storyvorgaben in [Archiv Teil 5](universum/teil-5/README.md).
+**Zum damaligen Stand noch offen, inzwischen in v0.23.0 umgesetzt: Paket 6:** vollständige Bot-Wellen, Kampfbewegungen und die festgelegten Schutzopfer von **Oni und MG-Krieger**. Im jetzigen Auftakt stirbt niemand; Ly und der Roboterkopf-Krieger bleiben erhalten. Erinnerung 2 mit Lys Opfer und Erinnerung 3 mit Meister, Heiligtumsübergabe und zwei Minotauren sind noch nicht umgesetzt. Der genaue Plan und offene Festlegungen stehen in der [Roadmap](erinnerungen-roadmap.md); die verbindlichen Storyvorgaben in [Archiv Teil 5](universum/teil-5/README.md).

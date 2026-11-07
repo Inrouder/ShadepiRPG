@@ -29,6 +29,15 @@ func run() -> void:
 		actor.facing = Vector2.LEFT
 		actor.animate('walk',0.15)
 	await capture('residents')
+	# Close view of the four real gait frames, separate from the story recording.
+	memory.camera.zoom = Vector2.ONE*1.2
+	memory.camera.position = Vector2(512,400)
+	for i in 4:
+		memory.residents[i].position = Vector2(320+i*130,400)
+		memory.residents[i].animation_name = ""
+	for frame in 4:
+		for i in 4: memory.residents[i].animate("walk",0 if frame==0 else 1.0/9.0+0.0001)
+		await capture("gait-%d"%frame)
 	memory.queue_free()
 	await process_frame
 	if "--record" in OS.get_cmdline_user_args(): await record()
@@ -44,7 +53,7 @@ func record() -> void:
 	var panel = world.memory_scene
 	var wait_time := 0.0
 	var captured := {}
-	for i in 210:
+	for i in 1500:
 		if not is_instance_valid(panel) or panel.closed: break
 		if panel.cutscene.waiting_input:
 			wait_time += 0.1

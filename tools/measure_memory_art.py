@@ -31,5 +31,20 @@ for i,name in enumerate(['oni','robot','ly','heavy']):data[name]={'idle':ready[i
 for i,name in enumerate(['elder','monk','resident','caretaker']):data[name]={'civilian':residents[i]}
 bots=measure('bots.png',4,65)
 data['bot']={'idle':bots[0],'run_a':bots[1],'run_b':bots[2],'attack':bots[3]}
+walking=measure('residents-walk.png',8,57)
+for i,name in enumerate(['elder','monk','resident','caretaker']):
+ # DOWN, LEFT, RIGHT, UP; four distinct steps each. Keep one scale per person
+ # so bent legs and flying hems do not make the body inflate each frame.
+ frames=walking[i*2+1][4:]+walking[i*2][:4]+walking[i*2+1][:4]+walking[i*2][4:]
+ scale=sorted(p['scale'] for p in frames)[len(frames)//2]
+ for pose in frames:pose['scale']=scale
+ data[name]['walk_cycle']=frames
+combat=measure('combat.png',5,64)
+for i,name in enumerate(['oni','robot','ly','heavy','bot']):
+ # Same size through windup, contact, recoil and collapse. Fallen bodies use
+ # their floor contact, not a fictional upright foot/height normalization.
+ scale=combat[i][0]['scale']
+ for pose in combat[i]:pose['scale']=scale
+ data[name]['combat']=combat[i]
 (FOLDER/'actors.json').write_text(json.dumps(data,indent=2)+'\n')
-print('Measured 160 nonempty actor cells; source pixels preserved.')
+print('Measured 264 nonempty actor cells; source pixels preserved.')

@@ -4,14 +4,20 @@ const READY = preload("res://assets/memories/attack/warriors-ready.png")
 const RUN = preload("res://assets/memories/attack/warriors-run.png")
 const PEOPLE = preload("res://assets/memories/attack/residents.png")
 const BOT = preload("res://assets/memories/attack/bots.png")
+const WALK = preload("res://assets/memories/attack/residents-walk.png")
+const COMBAT = preload("res://assets/memories/attack/combat.png")
+const COMBAT_COLUMNS := {"guard":0,"windup":1,"strike":2,"shoot":2,"recover":3,"hurt":4,"kneel":5,"fall":6,"dead":7}
 static var catalog: Dictionary = {}
 var identity := "oni"
 var frame_key := ""
 var image_region: AtlasTexture
 var last_foot := Vector2.ZERO
+var fallen := false
+var gait_offset := 0
 
 func prepare(id: String, game: Node2D) -> void:
 	identity = id
+	gait_offset = get_index()%4
 	setup(preload("res://assets/sprites/heroes/shadepi.png"),game)
 	set_physics_process(false)
 	if id == "shadepi":
@@ -23,23 +29,36 @@ func prepare(id: String, game: Node2D) -> void:
 	animate("idle",0)
 
 func animate(state: String, delta: float) -> void:
+	if fallen: state = "dead"
 	if identity == "shadepi":
 		super.animate(state,delta)
 		return
+	if state != animation_name: animation_time = 0.0
 	animation_time += delta
 	animation_name = state
 	var data: Dictionary = catalog[identity]
 	var pose: Dictionary
 	var texture: Texture2D
 	var flip := false
-	if data.has("civilian"):
+	if COMBAT_COLUMNS.has(state) and data.has("combat"):
+		var column: int = COMBAT_COLUMNS[state]
+		if state=="shoot": column = 2 if animation_time<0.08 else 3 if animation_time<0.22 else 0
+		if state=="recover" and animation_time>0.22: column = 0
+		pose = data.combat[column]
+		texture = COMBAT
+		flip = facing.x < 0
+		frame_key = "combat_%d"%column
+	elif data.has("civilian"):
 		var column := (2 if facing.x>0 else 1) if absf(facing.x)>absf(facing.y) else (3 if facing.y<0 else 0)
 		if state == "walk":
-			column = (6 if facing.y < -0.6 else 4) + int(animation_time*8)%2
-			flip = facing.x>0.4
-		pose = data.civilian[column]
-		texture = PEOPLE
-		frame_key = "civilian_%d"%column
+			column = column*4 + (int(animation_time*9)+gait_offset)%4
+			pose = data.walk_cycle[column]
+			texture = WALK
+			frame_key = "walk_cycle_%d"%column
+		else:
+			pose = data.civilian[column]
+			texture = PEOPLE
+			frame_key = "civilian_%d"%column
 	else:
 		var octant := posmod(roundi(facing.angle()/(PI/4)),8)
 		var direction: int = OCTANT_ROWS[octant]
@@ -63,6 +82,7 @@ func animate(state: String, delta: float) -> void:
 	visual.position = offset * float(pose.scale)
 	standing_visual_position = visual.position
 	visual.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	visual.modulate = Color(0.65,0.68,0.7) if fallen and identity=="bot" else Color.WHITE
 	cast_shadow.texture = image_region
 	cast_shadow.hframes = 1
 	cast_shadow.vframes = 1

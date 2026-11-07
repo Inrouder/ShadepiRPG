@@ -1,6 +1,6 @@
-# Roadmap: Shadepis drei Erinnerungen · v0.22.0 · CodexAI
+# Roadmap: Shadepis drei Erinnerungen · v0.23.0 · CodexAI
 
-**Stand: Pakete 0–5 abgeschlossen.** Kulissen, vier Krieger, Bewohner, begehbare Map und die erste inszenierte Rückblende sind in v0.22.0 eingebunden. Vollständiger Bot-Kampf und Schutzopfer (Paket 6) sowie Erinnerungen 2 und 3 bleiben ausstehend. [Umsetzung, Vorschau und Prüfstatus](kloster-angriff.md). Grundlage sind das [Nutzerbriefing mit bestätigten Schutzopfern](universum/teil-5/README.md), die vorhandenen Figurenreferenzen und das [Heiligtum-/Romanarchiv](universum/teil-4/README.md). Diese Roadmap hält Produktionspakete, Fortschritt und erzählerische Kontinuität fest.
+**Stand: Pakete 0–6 abgeschlossen.** Erinnerung 1 zeigt jetzt den vollständigen inszenierten Ablauf mit drei Bot-Wellen, den Schutzopfern von Oni und MG-Krieger sowie dem Rückzug der Überlebenden. Mönche und Bewohner besitzen vier Gehbilder pro Richtung. **Erinnerungen 2 und 3 stehen noch aus.** [Aktuelle Umsetzung und Vorschau](kloster-kampf.md). Grundlage sind das [Nutzerbriefing mit bestätigten Schutzopfern](universum/teil-5/README.md), die vorhandenen Figurenreferenzen und das [Heiligtum-/Romanarchiv](universum/teil-4/README.md). Diese Roadmap hält Produktionspakete, Fortschritt und erzählerische Kontinuität fest.
 
 ## Ziel und vorhandener Spieleinstieg
 
@@ -27,9 +27,9 @@ Die erste Rückblende nutzt das vorhandene System für laufende Figuren, Kameraf
 
 Für den ersten sichtbaren Bot-Auftritt gehört eine passende HQ-Botansicht zusätzlich zum Szenenpaket; sie entsteht nach der Map und nur bei verbleibendem Kontingent. Eine echte neue Angreiferfigur wird dabei nicht durch einen beliebigen menschlichen NPC oder eine einfache Form ersetzt.
 
-Der erste Szenenstand darf beim Beginn der Auseinandersetzung enden. Die vollständigen Bot-Wellen und Schutzopfer folgen erst im ausdrücklich getrennten Kampf-Ausbau. Ly und der Roboterkopf-Krieger überleben diese Erinnerung. Die beiden Opfer werden später als feste Storymomente inszeniert; sie sollen nicht zufällig durch die erste beliebige KI-Attacke sterben.
+Der Auftakt aus v0.22.0 endete beim Beginn der Auseinandersetzung. Der getrennte Kampf-Ausbau ist seit v0.23.0 als inszenierte Szene enthalten. Ly und der Roboterkopf-Krieger überleben diese Erinnerung. Die beiden Opfer werden später als feste Storymomente inszeniert; sie sollen nicht zufällig durch die erste beliebige KI-Attacke sterben.
 
-**Vorschlag für die beiden Schutzmomente, noch kein zusätzlicher Kanon:** Der Oni-Krieger fängt einen Nahkampfangriff ab, der Shadepi treffen würde. Der MG-Krieger hält anschließend die Bresche gegen mehrere Bots offen und ermöglicht Shadepis Rückzug zu den Überlebenden. Die konkrete Choreografie wird bei der Kampfproduktion abgestimmt.
+**Umgesetzte Choreografie:** Oni stellt sich zwischen Shadepi und einen vorrückenden Bot, wehrt ihn ab und wird vom zweiten Angreifer getroffen. Der MG-Krieger deckt später den Rückzug von Shadepi, Ly und dem Roboterkopf-Krieger, hält bis zur letzten Salve stand und fällt. Dies konkretisiert die bestätigten Schutzopfer, ohne neue Namen oder Verwandtschaften festzulegen.
 
 ### 2. Lys Opfer
 
@@ -85,11 +85,11 @@ Neue Grafiken sind **detailreiche HQ-Pixelart**: sichtbare Pixelcluster, struktu
 | 3 · Mönche und Bewohner | Kleine Gruppe unterschiedlicher unbewaffneter Figuren mit Stehen, Rennen und erschrockenem Reagieren. | Wiederverwendbare Bewohner-/Mönch-Sprites statt vieler unnötiger Einzelporträts. | Ein kurzer Fluchtlauf wirkt lebendig und führt ohne Stau aus der Gefahrenzone. **Abgeschlossen in v0.22.0.** |
 | 4 · Map-Kulisse | Kulissenebenen, Figurenmaßstab und Laufwege zusammenführen. | Spielmap mit Torbresche, Verteidigungslinie, Fluchtweg, Kollisionskörpern und Vordergrundverdeckungen. | Niemand läuft durch Mauern; Füße stehen auf dem Boden; Figuren werden hinter Säulen/Dächern korrekt verdeckt. **Abgeschlossen in v0.22.0.** |
 | 5 · Szene, nur bei verbleibendem Kontingent | Kamerafahrt, Flucht, Ansturm, Shadepis Ruf, Einschläge und beginnender Bot-Angriff verbinden. | Erste inszenierte Rückblende am ersten Erinnerungsknoten. | Szene startet und endet sauber, lässt sich bedienen/überspringen und kehrt korrekt zu Raven zurück. **Abgeschlossen in v0.22.0.** |
-| 6 · Kampf-Ausbau später | Erst jetzt vollständige Bots, Wellen, Kampfposen und die Schutzopfer von Oni und MG-Krieger ergänzen. | Spielbarer oder vollständig inszenierter Angriff mit verbindlichen Storyereignissen. | Ly und Roboterkopf überleben, die beiden Schutzopfer sind klar verständlich, Fortschritt ist zuverlässig gespeichert. |
+| 6 · Kampf-Ausbau später | Erst jetzt vollständige Bots, Wellen, Kampfposen und die Schutzopfer von Oni und MG-Krieger ergänzen. | Spielbarer oder vollständig inszenierter Angriff mit verbindlichen Storyereignissen. | Ly und Roboterkopf überleben, die beiden Schutzopfer sind klar verständlich, Fortschritt ist zuverlässig gespeichert. **Abgeschlossen in v0.23.0 als inszenierter Kampf.** |
 
 Die Identitätsreferenzen kommen vor den Bewegungsatlanten. Neue Angriffssätze entstehen jeweils dann, wenn sie für den nächsten Kampfabschnitt gebraucht werden.
 
-Nach Abschluss von Paket 6 folgt **Erinnerung 2**, danach **Erinnerung 3**. Erst die Roadmap umfasst alle drei; die erste Produktion konzentriert sich auf Erinnerung 1.
+Paket 6 ist abgeschlossen; als Nächstes folgt **Erinnerung 2**, danach **Erinnerung 3**. Erst die Roadmap umfasst alle drei; die erste Produktion konzentriert sich auf Erinnerung 1.
 
 ## Aufbau der ersten Map
 

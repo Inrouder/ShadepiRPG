@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.22.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.23.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -35,7 +35,14 @@ Die Spielwelt nutzt **16 gemalte Kulissen** aus `assets/world/painted/`. Wände 
 
 Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und Bosskämpfen. Die vollständige Zuordnung und Hinweise zum Austauschen der MP3-Dateien stehen unter [Musik austauschen](assets/music/README.md).
 
-## Neu in v0.22.0 · 7. November 2026 · CodexAI
+## Neu in v0.23.0 · 7. November 2026 · CodexAI
+
+- **Erinnerung I erweitert:** drei inszenierte Bot-Wellen mit Ausholen, Angriffen, Treffern und Fallbewegungen. Oni schützt Shadepi, der MG-Krieger deckt den Rückzug; Ly und der Roboterkopf-Krieger überleben.
+- **Mönche gehen sichtbar:** vier echte Schrittbilder in jeder der vier Laufrichtungen, auch für die übrigen Bewohner. Versetzte Schrittphasen, schwingende Gewänder und konstante Körpergröße ersetzen den bisherigen Zweibild-Lauf.
+- Zwei zusätzliche HQ-Pixel-Atlanten mit insgesamt 104 neuen Posen. Pause, Controller-Überspringen und Abbruch gelten auch mitten in den Wellen.
+- [Bilder, Geh-Animation und Umfang](docs/kloster-kampf.md). Erinnerungen 2 und 3 folgen anschließend; die erste Rückblende ist als Szene inszeniert.
+
+## v0.22.0 · 7. November 2026 · CodexAI
 
 - **Erinnerung I – Der Angriff:** Am ersten Erinnerungsknoten erlebt Raven den Angriff auf Shadepis Kloster als inszenierte Szene: fliehende Bewohner, Einschläge, Feuer, Shadepis Gegenstoß mit vier Ordenskriegern und erste Feindberührung mit Bots.
 - Neue detaillierte HQ-Pixel-Kulissen, getrennte Feuer-/Rauch-/Trümmerebenen, Richtungs- und Laufsprites für Oni (Katana), Roboterkopf-Krieger (Stab), Ly und MG-Krieger sowie vier Bewohnerfiguren und Bots. Shadepi verwendet seine vorhandenen Original-Sprites.

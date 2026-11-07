@@ -1,5 +1,14 @@
 # Versionshinweise
 
+## v0.23.0 – CodexAI: Klosterkampf und Gehbewegungen der Mönche · 7. November 2026
+
+- Vor Beginn alle GitHub-Branches abgerufen und mit dem aktuellen v0.22.0-Hauptstand verglichen; vorhandene Aerodyne-/Tower-Arbeit erhalten.
+- Neue HQ-Pixel-PNG-Atlanten für vierteilige Gehzyklen aller vier Bewohneridentitäten in vier Richtungen und für Kampf-/Fallposen der vier Krieger sowie Bots. 104 zusätzliche Quellbilder, insgesamt 264 vermessene Frames. Bildpixel bleiben unverändert; gemeinsame Skalierung pro Figur verhindert Größenwechsel beim Gehen und Fallen.
+- Drei endliche, inszenierte Bot-Wellen mit neun getrennten Angreifern. Sichtbare Aushol-/Kontakt-/Rücknahme-, Treffer-, Knie-/Fall-/Liegeposen, Katana- und Stabangriffe, kurze MG-/Bot-Schussfolgen und vorhandene Kampf-Sounds. Mündungsfeuer endet nach dem Schuss; deaktivierte Bots bleiben gedämpft sichtbar.
+- Bestätigte Schutzopfer als feste Szenenfolge: Oni wirft sich in Shadepis Angriffslinie; der schwere MG-Krieger hält die Stellung, während Shadepi, Ly und Roboterkopf zurückweichen. Gefallene bleiben liegen. Keine Zufallstode und kein vorzeitiger Tod Lys; Erinnerungen 2/3 bleiben ausstehend.
+- Sämtliche neuen Schritte verwenden den vorhandenen Szenendirektor: Pause hält Bewegung und Wellenfortschritt an; Abbruch beendet ohne Knotenfortschritt; bewusstes Überspringen löst auch mitten im Kampf den eindeutigen Endzustand aus. Bestehende Speicherfelder und Ravens Gegenwartszustand bleiben kompatibel.
+- Neuer gezielter Test und CI-Prüfschritt für Gehzyklen, konstante Körpergröße, Kollisionen aller Kampfwege, drei Wellen, richtige Opfer-/Überlebendenfolge, Pause, Abbruch und Controller-Überspringen. Galerie mit Geh-Nahaufnahme und längerer tatsächlicher Szenenaufzeichnung erweitert.
+
 ## v0.22.0 – CodexAI: Erste Klosterrückblende „Der Angriff“ · 7. November 2026
 
 - Alle Remote-Branches geprüft; Produktion auf v0.21.2 begonnen und währenddessen hinzugekommene Aerodyne-Änderungen v0.21.3 verlustfrei integriert. Versionsfelder und Dokumentation auf v0.22.0 abgestimmt.

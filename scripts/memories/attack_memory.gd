@@ -20,6 +20,7 @@ var closed := false
 var host: Node2D
 var phase := "setup"
 var bots: Array[PixelActor] = []
+var battle: RefCounted
 var effects: Node2D
 var pause_axis_latched := false
 
@@ -64,16 +65,18 @@ func _ready() -> void:
 	effects.rain = false
 	effects.steam_vents.clear()
 	add_child(effects)
-	for i in 3:
-		var bot = Actor.new()
-		actors.add_child(bot)
-		bot.prepare("bot",self)
-		bot.position = Vector2(960,335+i*45)
-		bot.facing = Vector2.LEFT
-		bot.animate("idle",0)
-		bot.hide()
-		bots.append(bot)
+	for i in 3: create_bot(Vector2(960,350+i*45)).hide()
 	if autoplay: play.call_deferred()
+
+func create_bot(point: Vector2) -> PixelActor:
+	var bot = Actor.new()
+	actors.add_child(bot)
+	bot.prepare("bot",self)
+	bot.position = point
+	bot.facing = Vector2.LEFT
+	bot.animate("idle",0)
+	bots.append(bot)
+	return bot
 
 func camera_home() -> Vector2: return Vector2(512,340)
 func is_busy() -> bool: return menu_open or cutscene.running
@@ -165,19 +168,9 @@ func play() -> void:
 		cutscene.walk(bots[i],Vector2(810+i*35,335+i*45),68)
 	await cutscene.wait(1.8)
 	if closed: return
-	phase = "exchange"
-	for bot in bots:
-		cutscene.face(bot,squad[0].position)
-		cutscene.pose(bot,"attack")
-		if not cutscene.skipping:
-			effects.weapon_trace(bot.position+Vector2(-20,-42),squad[0].position+Vector2(0,-28),false)
-			if host != null: host.sound("pistol",0.06)
-	for i in 3:
-		if not cutscene.skipping:
-			effects.weapon_trace(squad[4].position+Vector2(24,-42),bots[0].position+Vector2(0,-28),false)
-			if host != null: host.sound("pistol",0.1)
-		await cutscene.wait(0.1)
-	await cutscene.wait(0.55)
+	battle = preload("res://scripts/memories/memory_battle.gd").new(self)
+	await battle.play()
+	if closed: return
 	await cutscene.fade(Color.BLACK,0.7)
 	if closed: return
 	cutscene.end(_complete)
