@@ -1,11 +1,13 @@
 # Versionshinweise
 
-## Hauptmenü – Figurenreferenzen und ruhiger Bildaufbau · 7. November 2026
+## v0.18.1 – CodexAI: Hauptmenü, Figurenreferenzen und ruhiger Bildaufbau · 7. November 2026
 
 - Neue Menüillustration nach den aktuellen Nutzerbildern: Shadepi in Bereitschaftshaltung mit passender segmentierter Maske; Raven mit Tablet, Referenzgesicht, schwarz-blauen Haaren und taktischem Anzug im gezeichneten Stil.
 - Maus-Parallax und Figurenverformung entfernt. Figuren und Dach bleiben fest, während Regen, Flugverkehr und Licht weiter animiert werden.
 - Hauptmenü verwendet die Musik des See-Finales (`Level.mp3`); bisherige Musikdatei bleibt erhalten.
 - Vor Umsetzung mit GitHub auf v0.18.0 synchronisiert. Tower, Kampagne und Zwischensequenzen werden durch diese Änderung nicht bearbeitet.
+- Versionsnummer in Godot, Windows-Export, README und Spieleranleitung nachgetragen; Kennzeichnung **CodexAI** und die Pflicht zu Version und Änderungsinfos in `AGENTS.md` festgehalten.
+- Prüfung der Menüänderung: 329 Gameplay-/Menüprüfungen bestanden, Menü im Godot-Renderer visuell kontrolliert.
 
 ## v0.18.0 – ClaudeHelper: Zwischensequenzen statt Comicseiten · 6. November 2026
 
