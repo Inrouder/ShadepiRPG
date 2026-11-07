@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.20.1 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.20.2 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -35,7 +35,13 @@ Die Spielwelt nutzt **16 gemalte Kulissen** aus `assets/world/painted/`. Wände 
 
 Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und Bosskämpfen. Die vollständige Zuordnung und Hinweise zum Austauschen der MP3-Dateien stehen unter [Musik austauschen](assets/music/README.md).
 
-## Neu in v0.20.1 · 7. November 2026 · CodexAI
+## Neu in v0.20.2 · 7. November 2026 · ClaudeHelper
+
+- Gemeinsamen Stand von CodexAI (Menü, Nightwing-Hacks, Controller-Hilfe) und ClaudeHelper (Zwischensequenzen, Kampfgefühl, Verfolgungsjagd, Garageneinfahrt) gegengeprüft: alle acht Prüfreihen mit 1.188 Prüfungen fehlerfrei, Menü, Terminals, Zwischensequenzen, Kampf und Verfolgung zusätzlich gerendert und angesehen.
+- Ältere Entwicklungsbranches (v0.13.1 bis v0.14.0) sind vollständig in `main` aufgegangen; es fehlt keine Arbeit.
+- Kennzeichnungsregel für beide Bearbeiter in `AGENTS.md` ergänzt.
+
+## v0.20.1 · 7. November 2026 · CodexAI
 
 - GitHub-Entwicklungsstand `claudehelper/v0.20.0` übernommen: Kampfgefühl, Deep-Dive-Korrekturen, Apartmentmaßstab, Verfolgungsjagd und Garageneinfahrt.
 - Menüverbesserungen und Controller-bedienbare Nightwing-Hacks mit den neueren Änderungen zusammengeführt.
