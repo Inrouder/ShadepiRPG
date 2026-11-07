@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.24.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.25.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -35,7 +35,14 @@ Die Spielwelt nutzt **16 gemalte Kulissen** aus `assets/world/painted/`. Wände 
 
 Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und Bosskämpfen. Die vollständige Zuordnung und Hinweise zum Austauschen der MP3-Dateien stehen unter [Musik austauschen](assets/music/README.md).
 
-## Neu in v0.24.0 · 7. November 2026 · CodexAI
+## Neu in v0.25.0 · 7. November 2026 · CodexAI
+
+- **Spielbarer Minotaurus-Kampf vor Lys Opfer:** Shadepi muss am zweiten Erinnerungsknoten 45 Sekunden durchhalten. Drei Stufen steigern das markierte Sperrfeuer bis zur Übermacht.
+- Bewegen, Katana-Schläge und Ausweichsprints mit kurzer Unverwundbarkeit. Die Panzerung bleibt intakt; wiederholte Treffer bringen den Minotaurus kurz ins Taumeln.
+- Eigene Lebensanzeige, Countdown und direkter Wiederholungsversuch bei Niederlage. Bei Timerende folgt Lys bestehende Opferszene; Pause und Abbruch erhalten Ravens Zustand und den Kontrollpunkt.
+- [Steuerung und Ablauf](docs/lys-opfer.md). Im Kampf ist Leertaste / B **Ausweichen**; bewusstes Überspringen erfolgt im Pausenmenü.
+
+## v0.24.0 · 7. November 2026 · CodexAI
 
 - **Erinnerung II – Lys Opfer:** Am zweiten Erinnerungsknoten erlebt Raven den Abwehrkampf gegen einen Minotaurus. Ly greift mit einer Sprengladung den Servoschacht an; sein Opfer zerstört den Panzer. Shadepi und der Roboterkopf-Krieger überleben.
 - Neue HQ-Pixel-Kulissenvariante, animierter Minotaurus mit dauerhaftem Wrack und passende weiße Ly-Posen für Ladung, Anlauf und Sprung. Die bestätigten Dialoge sind Teil der inszenierten Szene.

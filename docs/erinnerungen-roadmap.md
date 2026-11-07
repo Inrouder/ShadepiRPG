@@ -1,6 +1,6 @@
-# Roadmap: Shadepis drei Erinnerungen · v0.24.0 · CodexAI
+# Roadmap: Shadepis drei Erinnerungen · v0.25.0 · CodexAI
 
-**Stand: Pakete 0–6 abgeschlossen.** Erinnerung 1 zeigt jetzt den vollständigen inszenierten Ablauf mit drei Bot-Wellen, den Schutzopfern von Oni und MG-Krieger sowie dem Rückzug der Überlebenden. Mönche und Bewohner besitzen vier Gehbilder pro Richtung. **Erinnerung 2 ist in v0.24.0 umgesetzt; Erinnerung 3 steht noch aus.** [Lys Opfer: Szene und Vorschau](lys-opfer.md). [Aktuelle Umsetzung und Vorschau](kloster-kampf.md). Grundlage sind das [Nutzerbriefing mit bestätigten Schutzopfern](universum/teil-5/README.md), die vorhandenen Figurenreferenzen und das [Heiligtum-/Romanarchiv](universum/teil-4/README.md). Diese Roadmap hält Produktionspakete, Fortschritt und erzählerische Kontinuität fest.
+**Stand: Pakete 0–6 abgeschlossen.** Seit v0.25.0 · CodexAI ist der Abwehrkampf in Erinnerung II als 45-Sekunden-Überlebenskampf spielbar; danach folgt Lys bestehende Opferszene. Erinnerung 1 zeigt jetzt den vollständigen inszenierten Ablauf mit drei Bot-Wellen, den Schutzopfern von Oni und MG-Krieger sowie dem Rückzug der Überlebenden. Mönche und Bewohner besitzen vier Gehbilder pro Richtung. **Erinnerung 2 ist in v0.24.0 umgesetzt; Erinnerung 3 steht noch aus.** [Lys Opfer: Szene und Vorschau](lys-opfer.md). [Aktuelle Umsetzung und Vorschau](kloster-kampf.md). Grundlage sind das [Nutzerbriefing mit bestätigten Schutzopfern](universum/teil-5/README.md), die vorhandenen Figurenreferenzen und das [Heiligtum-/Romanarchiv](universum/teil-4/README.md). Diese Roadmap hält Produktionspakete, Fortschritt und erzählerische Kontinuität fest.
 
 ## Ziel und vorhandener Spieleinstieg
 

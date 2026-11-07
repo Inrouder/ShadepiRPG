@@ -5,6 +5,7 @@ const ChargeLy = preload("res://scripts/memories/charge_ly.gd")
 var tank: PixelActor
 var charge: Sprite2D
 var events: Array[String] = []
+const Survival = preload("res://scripts/memories/minotaur_battle.gd")
 
 func make_map() -> Node2D:
 	var result = Map.new()
@@ -80,29 +81,35 @@ func play() -> void:
 	cutscene.walk(squad[2],Vector2(635,490),90)
 	await cutscene.walk(squad[0],Vector2(650,365),90)
 	if not active(): return
-	for round_index in 3:
-		pose(tank,"guard")
-		await cutscene.wait(0.45)
-		if not active(): return
-		fire_at(squad[0].position+Vector2(-24,15))
-		await cutscene.wait(0.2)
-		if not active(): return
-		await cutscene.walk(squad[0],Vector2(705,375),135)
-		if not active(): return
-		pose(squad[0],"attack")
-		pose(squad[1],"windup")
-		await cutscene.wait(0.2)
-		if not active(): return
-		pose(squad[1],"strike")
-		if not cutscene.skipping:
-			effects.slash(Vector2(735,375),Vector2.RIGHT)
-			effects.burst(Vector2(745,380),Color("f4ce8c"),12)
-			sound("slash")
-		await cutscene.wait(0.25)
-		if not active(): return
-		pose(squad[1],"recover")
-		await cutscene.walk(squad[0],Vector2(650,365),110)
-		if not active(): return
+	await cutscene.say("SHADEPI","Haltet durch! Weicht dem Sperrfeuer aus!")
+	if not active(): return
+	await cutscene.letterbox(false)
+	await cutscene.camera(Vector2(620,385),0.5,0.85)
+	if not active(): return
+	phase="survival"
+	battle=Survival.new(self)
+	battle.start()
+	mark("survival_started")
+	while active() and not cutscene.skipping and battle.elapsed<Survival.DURATION:
+		await cutscene.tick
+	battle.finish()
+	if not active(): return
+	mark("survival_resolved")
+	# Regroup behind a short fade: arbitrary player positions must never create
+	# cinematic walks through the scenery or the mech's physical footprint.
+	await cutscene.fade(Color.BLACK,0.25)
+	if not active(): return
+	squad[0].position=Vector2(650,365)
+	squad[1].position=Vector2(590,335)
+	squad[2].position=Vector2(635,490)
+	for actor in squad:
+		actor.facing=Vector2.RIGHT
+		actor.animate("idle",0)
+	await cutscene.letterbox(true)
+	await cutscene.camera(Vector2(715,385),0.1,0.9)
+	await cutscene.fade(Color(0,0,0,0),0.25)
+	if not active(): return
+	phase="defence"
 	mark("armour_holds")
 	await cutscene.say("SHADEPI","Die Klinge kommt nicht durch!")
 	if not active(): return
@@ -183,3 +190,30 @@ func play() -> void:
 	await cutscene.fade(Color.BLACK,0.8)
 	if not active(): return
 	cutscene.end(_complete)
+
+func handle_event(event: InputEvent) -> bool:
+	if closed: return false
+	if phase=="survival" and battle!=null and battle.running and not menu_open:
+		var key: int = event.keycode if event is InputEventKey else -1
+		var button: int = event.button_index if event is InputEventJoypadButton else -1
+		if not (event.is_pressed() and (key==KEY_ESCAPE or button==JOY_BUTTON_START)):
+			return battle.handle_event(event)
+	return super.handle_event(event)
+
+func toggle_pause() -> void:
+	if battle!=null: battle.clear_inputs()
+	super.toggle_pause()
+	if battle!=null and is_instance_valid(battle.hud): battle.hud.visible=not menu_open
+
+func _physics_process(delta: float) -> void:
+	if phase=="survival" and battle!=null:
+		battle.tick(delta)
+	else: super._physics_process(delta)
+
+func cancel() -> void:
+	if battle!=null: battle.finish()
+	super.cancel()
+
+func _notification(what: int) -> void:
+	if what==NOTIFICATION_APPLICATION_FOCUS_OUT and phase=="survival" and not menu_open and not closed:
+		toggle_pause()

@@ -1,5 +1,13 @@
 # Versionshinweise
 
+## v0.25.0 – CodexAI: Spielbarer Überlebenskampf gegen den Minotaurus · 7. November 2026
+
+- Erinnerung II enthält vor Lys Opfer einen echten 45-Sekunden-Kampf mit steuerbarem Shadepi, lokalen Lebenswerten, Katana-Treffern, Taumeln und Ausweichen. Die Panzerung bleibt intakt; der Spieler kann den festen Opfermoment nicht durch einen vorzeitigen Bosskill umgehen.
+- Drei Eskalationsstufen: ein, drei und fünf vorab fixierte Einschlagziele, kürzere Warnungen und höherer Schaden. Vorhandene HQ-Pixelgrafiken, Kampfposen, Einschläge und Sounds wiederverwendet.
+- Timerende führt in die vorhandene Opferszene. Niederlage hält den Timer an und erlaubt einen direkten Wiederholungsversuch; sie schließt keinen Knoten ab. Leertaste / B weicht im Kampf aus; Überspringen bleibt über das Pausenmenü verfügbar. Pause und Fokusverlust halten den Kampf an, Eingaben werden beim Pausieren gelöscht.
+- Historische Lebenswerte bleiben von Raven getrennt. Abbruch, Überspringen, Wiederholung, Controller und vollständiger Übergang einschließlich Lys Tod, Mech-Wrack und Rückkehr zur Kampagne gezielt geprüft. Alle Branches vor Beginn verglichen; ältere abweichende Entwicklungsbranches und fremde Änderungen erhalten.
+- Validierung: **1.024 Prüfungen, 0 Fehler** in fünf Prüfreihen (Erinnerung II 69, Erinnerung I 143, Klosterkampf 226, Kampagne/Speichern 380, Story-Audit 206).
+
 ## v0.24.0 – CodexAI: Erinnerung II „Lys Opfer“ · 7. November 2026
 
 - Vor Beginn alle GitHub-Branches abgerufen und mit v0.23.0 verglichen; bestehende Arbeit erhalten.
