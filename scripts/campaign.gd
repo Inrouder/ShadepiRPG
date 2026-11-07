@@ -1146,6 +1146,7 @@ func _scene_sanctuary() -> void:
 		["SHADEPI", "Tatsächlich ist noch viel Menschliches an mir. Biologisch bin ich organisch, nur neuroelektronisch ergänzt. Mein Geist ist kein Computer."],
 		["SANKTUARIUM", "Er erzählt von der Nacht des Massakers. Von den gesichtslosen Militech-Minotauren, die wie eine Welle des Todes über das Kloster herfielen. Vom Tod seiner Brüder und Schwestern."],
 		["SHADEPI", "Das Heiligtum ist ein uralter Nanitenschwarm – das Herz unseres Ordens. Ich habe es mit letzter Kraft in mich aufgenommen, um es vor den Angreifern zu retten. Seitdem lebt es in mir."],
+		["SHADEPI", "Der Tempel war nur die Tarnung. Die eigentliche Basis lag darunter, tief im Fels."],
 		["SHADEPI", "Das Kloster selbst war nach dem Angriff spurlos verschwunden. Als hätte die Erde es verschluckt."],
 	])
 	cs.do(func():

@@ -16,7 +16,20 @@ func make_scene() -> Node2D:
 func run() -> void:
 	var scene=make_scene()
 	check(scene.squad.size()==1 and scene.squad[0].identity=="shadepi" and scene.tanks.size()==2,"Shadepi alone faces two Minotaurs; no fallen companions return")
-	check(scene.map.background_texture==scene.RUINS,"last memory uses the final ruin variant")
+	check(scene.map.background_texture==scene.INTERIOR and scene.map.get_script()==scene.InteriorMap,"third memory uses its own temple interior, not the courtyard map")
+	await physics_frame
+	await physics_frame
+	check(not scene.map.breached and scene.map.door_frame==0 and blocked(scene,Vector2(940,335)),"closed temple door has a real blocking footprint")
+	check(not blocked(scene,Vector2(620,465)),"old courtyard column does not remain as an invisible indoor obstacle")
+	check(blocked(scene,Vector2(550,240)),"rear wall and base shaft cannot be crossed from the nave")
+	check(scene.tanks.all(func(t): return not t.visible and t.collision_layer==0),"mechs wait outside the closed entry without invisible indoor colliders")
+	scene.map.breach_step(0.5)
+	check(scene.map.door_frame==2 and not scene.map.breached,"damaged door stays closed until the final break phase")
+	scene.map.breach_step(1)
+	await physics_frame
+	check(scene.map.breached and scene.map.door_frame==3 and not blocked(scene,Vector2(940,335)),"breach opens the physical threshold as well as the artwork")
+	var door_image=scene.map.DOOR.get_image()
+	check(door_image.get_pixel(384,256).a>0.5 and door_image.get_pixel(1152,768).a<0.05,"door atlas has opaque closed panels and a genuinely transparent breached opening")
 	var scales:={}
 	for i in 8:
 		scene.tableau.set_frame(i)
@@ -96,9 +109,22 @@ func full_story() -> void:
 	var seen:={}
 	var lines: Array[String]=[]
 	var transfer_pause:=false
+	var breach_pause:=false
+	var promise_checked:=false
 	for frame in 2400:
 		await process_frame
 		seen[scene.phase]=true
+		if scene.phase=="promise" and not promise_checked:
+			promise_checked=true
+			check(not scene.map.breached and scene.tanks.all(func(t): return not t.visible),"master conversation is inside the protected temple before the enemy break-in")
+		if scene.phase=="temple_breach" and scene.map.door_frame==1 and not breach_pause:
+			breach_pause=true
+			scene.toggle_pause()
+			var door: int=scene.map.door_frame
+			var clock: float=scene.map.elapsed
+			for i in 8: await process_frame
+			check(door==scene.map.door_frame and clock==scene.map.elapsed and not scene.map.breached,"pause freezes the actual break-in before the threshold opens")
+			scene.toggle_pause()
 		if scene.phase=="transfer" and not transfer_pause:
 			transfer_pause=true
 			scene.toggle_pause()
@@ -122,6 +148,7 @@ func full_story() -> void:
 	var text=" ".join(lines)
 	check(text.contains("oberste Priorität") and text.contains("Ich werde es mit meinem Leben beschützen") and text.contains("Danke für alles, Meister"),"confirmed master/hero promises are shown on screen")
 	check(scene.events.find("vow")<scene.events.find("transfer_received") and scene.events.find("transfer_received")<scene.events.find("both_destroyed") and scene.events.find("both_destroyed")<scene.events.find("shadepi_collapsed"),"transfer, final fight and collapse occur in causal order")
+	check(breach_pause and scene.events.find("transfer_received")<scene.events.find("temple_door_breached") and scene.events.find("temple_door_breached")<scene.events.find("minotaur_0_entered") and scene.events.find("minotaur_0_entered")<scene.events.find("minotaur_1_entered") and scene.events.find("minotaur_1_entered")<scene.events.find("last_stand"),"sanctuary transfer precedes the physical breach and both ordered entries")
 	check(seen.has("transfer") and seen.has("two_minotaurs") and seen.has("final_battle") and seen.has("stillness"),"all required scene phases are actually played")
 	scene.queue_free()
 	await process_frame
@@ -210,3 +237,12 @@ func battle_exit_controls() -> void:
 		Engine.max_fps=0
 		scene.queue_free()
 		await process_frame
+
+func blocked(scene: Node2D,point: Vector2) -> bool:
+	var shape:=CircleShape2D.new()
+	shape.radius=7
+	var query:=PhysicsShapeQueryParameters2D.new()
+	query.shape=shape
+	query.collision_mask=1
+	query.transform=Transform2D(0,point)
+	return not scene.get_world_2d().direct_space_state.intersect_shape(query).is_empty()

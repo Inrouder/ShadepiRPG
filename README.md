@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.26.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.27.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -35,7 +35,15 @@ Die Spielwelt nutzt **16 gemalte Kulissen** aus `assets/world/painted/`. Wände 
 
 Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und Bosskämpfen. Die vollständige Zuordnung und Hinweise zum Austauschen der MP3-Dateien stehen unter [Musik austauschen](assets/music/README.md).
 
-## Neu in v0.26.0 · 7. November 2026 · CodexAI
+## Neu in v0.27.0 · 7. November 2026 · CodexAI
+
+- **Erinnerung III im Tempelinneren:** Übergabe und letzter Kampf finden jetzt in einer eigenen Tempelhalle statt. Hinter der traditionellen Verkleidung sind Technik, ein großer Schacht und mehrere Ebenen der unterirdischen Ordensbasis sichtbar.
+- **Minotauren brechen ein:** Der Zugang ist während des Meistergesprächs geschlossen. Erst nach der Übertragung bricht das Tor in vier Pixelphasen auf; beide Mechs kommen nacheinander durch dieselbe Öffnung in die Halle.
+- Eigene Innenraum-Kollisionen, gesperrter Basisschacht, passierbarer Durchbruch und passende Verdeckungen ersetzen die Außenhof-Geometrie. Figuren, Nanitenstrom, spielbarer Zweibosskampf und gespeicherte Abschlüsse werden weiterverwendet.
+- **1.078 Prüfungen ohne Fehler** in sechs Prüfreihen; vollständigen Szenenlauf und Exportpaket kontrolliert.
+- [Aktuelle Bilder und Szenenvorschau](docs/das-vermaechtnis.md).
+
+## v0.26.0 · 7. November 2026 · CodexAI
 
 - **Erinnerung III – Das Vermächtnis:** Shadepi hält seinen Meister, verspricht den Schutz des Heiligtums und empfängt dessen weißen Nanitenstrom. Danach folgt ein spielbarer Kampf gegen zwei unabhängig besiegbare Minotauren. Nach dem Sieg bricht Shadepi reglos zusammen; Raven kehrt aus der Erinnerung zurück.
 - Neue HQ-Pixel-Ruinenstufe, Meister-/Halte-/Zusammenbruchposen und animierte weiße Übertragung; vorhandene Minotaurus-Grafiken und Kampfsteuerung wiederverwendet. J / X schlägt zu, Leertaste / B weicht aus. Beide Gegner müssen besiegt werden; es gibt keinen automatischen Sieg durch Zeitablauf.

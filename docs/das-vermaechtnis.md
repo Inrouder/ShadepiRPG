@@ -1,30 +1,46 @@
-# Erinnerung III: Das Vermächtnis · v0.26.0 · CodexAI
+# Erinnerung III: Das Vermächtnis · v0.27.0 · CodexAI
 
-**Alle drei Erinnerungen sind jetzt eingebunden.** Am dritten Knoten erlebt Raven Shadepis Schutzversprechen an seinen Meister, die Übertragung des Heiligtums und den letzten Kampf gegen zwei Minotauren. Danach bricht Shadepi reglos zusammen. Der Abschluss erklärt ihn nicht für tot.
+**Erinnerung III spielt im Tempelinneren.** Der traditionelle Tempel ist die Tarnung einer riesigen unterirdischen Hightech-Basis des Ordens. Shadepi hält seinen Meister in einem geschützten Seitenbereich, empfängt das Heiligtum und verteidigt anschließend dieselbe Halle: Zwei Minotauren brechen durch den Zugang ein. Damit folgt der Schauplatz der Nutzerpräzisierung vom 7. November 2026.
 
-![Aufgezeichnete Spielszenen aus der dritten Erinnerung](previews/vermaechtnis.webp)
+![Aktuelle Spielszenen im Tempel](previews/vermaechtnis.webp)
 
 Die Vorschau zeigt Ausschnitte des tatsächlichen Godot-Spielablaufs. Ein Testpilot bedient den Kampf durch Bewegung, Angriff und Ausweichen; er verändert weder Bossleben noch Schadenswerte. Dialoge werden für die Aufzeichnung automatisch weitergeschaltet.
 
+## Tempel als Tarnung der Basis
+
+Die Tempelhalle ist als eigene Innenraum-Karte aufgebaut: geschnitzte Drachenstützen, Holz- und Steinverkleidung, freigelegte Stahlkonstruktionen, Kabel und Technik. Hinter der Rückwand sind der große Aufzugsschacht, industrielle Stege, Serverbereiche und mehrere technische Ebenen sichtbar. Der spielbare Hallenboden liegt davor; Rückwand und gesicherter Bereich verhindern, dass Figuren durch den Schacht laufen.
+
+![Tempelhalle und technische Ebenen dahinter](vermaechtnis-tempel.png)
+
+Die Halle besitzt eigene Wand-, Säulen-, Schwellen- und Vordergrundgeometrie. Die frühere Hofsäule im Kampffeld ist entfernt. Der Meister liegt im ruhigen Seitenbereich vor den Zugängen nach unten. Der Tempel wird als Tarnhülle der Ordensbasis eingeordnet; andere heutige Versteck-Karten werden dadurch nicht automatisch umgebaut.
+
 ## Die Übergabe
 
-Das Kloster ist fast vollständig zerstört. Drachenreliefs, Treppe, Seitengang und Tor bleiben als dieselbe Architektur erkennbar. In einem ruhigen Seitenbereich hält Shadepi seinen Meister: einen alten Mann mit weißem Bart, gebundenem Haar und traditioneller bronze-/brauner Kampfausrüstung. Der Meister erhält keinen erfundenen Eigennamen.
+Der äußere Zugang ist geschlossen, während Shadepi den Meister stützt. Dieser erklärt, dass die Schleuse zur Basis verriegelt ist, und fordert Shadepi auf, die Angreifer von den unteren Ebenen fernzuhalten. Das bestätigte Versprechen bleibt vollständig erhalten:
 
 > **Meister:** „Shadepi, du musst das Heiligtum beschützen. Das hat oberste Priorität.“
 >
 > **Shadepi:** „Ich werde es mit meinem Leben beschützen. Der Orden muss leben. Danke für alles, Meister.“
 
-![Shadepi hält den Meister](vermaechtnis-meister.png)
+![Shadepi hält den Meister im Tempel](vermaechtnis-meister.png)
 
-Licht entsteht in der Brust des Meisters und geht als weißer Nanitenstrom auf Shadepi über. Acht Bildphasen, weiße Partikel und eigenes Knistern begleiten die Übertragung. Danach richtet sich Shadepi auf; der Meister bleibt im Seitenbereich. Der Roboterkopf-Krieger wird in dieser Erinnerung nicht gezeigt und erhält keinen zusätzlichen Tod.
+Licht entsteht in der Brust des Meisters und geht als weißer Nanitenstrom auf Shadepi über. Acht Bildphasen, weiße Partikel und eigenes Knistern begleiten die Übertragung. Danach richtet sich Shadepi auf; der Meister bleibt im Seitenbereich. Er hat keinen erfundenen Eigennamen. Der Roboterkopf-Krieger wird hier nicht gezeigt und erhält keinen zusätzlichen Tod.
 
 ![Der weiße Strom zwischen Meister und Shadepi](vermaechtnis-uebergabe.png)
+
+## Der Einbruch
+
+Erst nach der Übergabe treffen Schläge den Tempelzugang. Die Kamera zeigt den Bruch: geschlossene Paneele, gerissene Verkleidung, aufbrechende Flügel und schließlich die offene Schwelle. Holzmaskierung und verstärktes Metall werden gemeinsam beschädigt. Vorhandene Einschlagsgrafiken und Geräusche ergänzen den vierteiligen Pixel-Atlas.
+
+![Das verstärkte Tor bricht auf](vermaechtnis-torbruch.png)
+
+Die Tür hat bis zur letzten Bruchphase einen echten Kollisionskörper. Danach öffnet sich die physische Schwelle, und die gebrochenen Paneele werden seitlich auseinandergedrückt. Der erste Minotaurus kommt durch diese Öffnung in die Halle; der zweite folgt durch denselben Zugang und nimmt die andere Kampfposition ein. Während des Bruchs pausieren Türzustand, Effekte und Fortschritt gemeinsam. Es erscheinen keine Gegner vor der geschlossenen Tür im Innenraum.
 
 ## Spielbarer Kampf gegen zwei Minotauren
 
 Shadepi tritt allein gegen beide Gegner an. Jeder Minotaurus besitzt **168 eigene Lebenspunkte**, eigene Taumelwerte und seinen eigenen Wrackzustand. Katana-Treffer in Reichweite und Blickrichtung beschädigen die Servogelenke; vier Treffer bringen den jeweiligen Gegner kurz ins Taumeln. Beide müssen zerstört werden. Ein Zeitablauf beendet den Kampf nicht automatisch.
 
-![Beide Gegner im tatsächlichen Kampf](vermaechtnis-kampf.png)
+![Beide Gegner in der Tempelhalle](vermaechtnis-kampf.png)
 
 Die Mechs wechseln sich mit angekündigtem Sperrfeuer ab. Die Einschlagsflächen werden vor dem Schuss festgelegt und verfolgen Shadepi nicht. Mit sinkenden Boss-Lebenswerten steigen Zahl und Tempo der Einschläge. Ausweichen schützt kurz vor Treffern. Ein besiegter Gegner durchläuft den Zusammenbruch und bleibt als Wrack liegen; sein Feuer setzt aus.
 
@@ -38,36 +54,35 @@ Die Mechs wechseln sich mit angekündigtem Sperrfeuer ab. Die Einschlagsflächen
 
 Im Pausenmenü wählen Pfeiltasten, Steuerkreuz, Stick oder Tab den Knopf; Enter / E / A bestätigt. **Erinnerung überspringen** löst den vollständigen Abschluss aus, **Erinnerung verlassen** kehrt ohne Abschluss zum dritten Knoten zurück. Während des Kampfs ist B Ausweichen; bewusstes Überspringen erfolgt über das Pausenmenü. Außerhalb des Kampfs gelten E / Enter / A für Weiter und Leertaste / B für Überspringen. Fokusverlust pausiert den Kampf ebenfalls.
 
-## Der Zusammenbruch und die Rückkehr
+## Zusammenbruch und Spielstände
 
-Nach dem Sieg setzt die Inszenierung ein: Shadepi sinkt auf ein Knie und fällt reglos auf den Boden. Beide Minotaurus-Wracks bleiben im Bild. Es gibt keinen Todesmarker für Shadepi. Die Erinnerung endet, Raven kehrt zurück und spricht über sein Versprechen. Danach geht der bestehende Ablauf in den Aerodyne-Flug über.
+Nach dem Sieg sinkt Shadepi auf ein Knie und fällt reglos auf den Hallenboden. Beide Minotaurus-Wracks bleiben im Bild. Es gibt keinen Todesmarker für Shadepi. Die Erinnerung endet, Raven kehrt zurück und spricht über sein Versprechen. Danach geht der bestehende Ablauf in den Aerodyne-Flug über.
 
-![Shadepi zwischen den zerstörten Minotauren](vermaechtnis-zusammenbruch.png)
+![Shadepi nach dem Kampf im Tempel](vermaechtnis-zusammenbruch.png)
 
-Die historische Gesundheit bleibt von Raven und Shadepis Gegenwartswerten getrennt. Der dritte Knoten hat ein eigenes typgeprüftes Speicherfeld `memory_legacy_complete`. Ältere ECHO-Spielstände behalten die Abschlüsse der ersten beiden Erinnerungen und bieten die dritte Szene am letzten Knoten an. Bereits abgeschlossene neue Speicherstände wiederholen den Kampf nicht; sie setzen am Rückkehrdialog fort, wenn der letzte Knoten erneut bestätigt wird. Kapitel außerhalb der Erinnerungskammer werden nicht zurückgesetzt.
+Historische Gesundheit und Gegenwartswerte bleiben getrennt. Das bestehende typgeprüfte Speicherfeld `memory_legacy_complete` wird beibehalten. Ältere ECHO-Stände behalten die ersten beiden Erinnerungsabschlüsse und bieten die dritte Szene am letzten Knoten an. Bereits abgeschlossene dritte Knoten wiederholen den Kampf nicht; für die neue Innenraumfassung Kapitel 5 neu beginnen oder einen Stand vor Knoten 3 laden. Andere Kapitel werden nicht zurückgesetzt.
 
 ## Grafiken, Ton und Umsetzung
 
-| Neue Quelle unter `assets/memories/legacy/` | Inhalt |
+| Quelle unter `assets/memories/legacy/` | Inhalt |
 | --- | --- |
-| `courtyard.png` · 1585×992 | Letzte Ruinenstufe mit gleicher Raumaufteilung. |
-| `characters.png` · 1536×1024 | Acht Meister-, Halte-, Empfangs-, Erschöpfungs- und Liegeposen. |
-| `transfer.png` · 1536×1024 | Acht weiße Transferphasen als freigestellter Pixel-FX-Atlas. |
-| `actors.json` | Gemessene Quellregionen und Bodenkontakte mit gemeinsamer Körpergröße. |
-| `manifest.json` | Figuren, Umfang und ausdrücklich nicht als Tod festgelegter Schlusszustand. |
+| `temple-interior.png` · 1585×992 | Neue Tempelhalle mit Tarnverkleidung und sichtbaren technischen Ebenen. |
+| `temple-door.png` · 1536×1024 | Neuer freigestellter 2×2-Atlas für geschlossenen Zugang bis zur vollständig gebrochenen Öffnung. |
+| `characters.png` · 1536×1024 | Wiederverwendete Meister-, Halte-, Empfangs- und Zusammenbruchposen. |
+| `transfer.png` · 1536×1024 | Acht wiederverwendete weiße Transferphasen. |
+| `actors.json` | Vermessene Quellregionen und Bodenkontakte der Figuren. |
+| `manifest.json` | Aktueller Schauplatz, Umfang und Figurenkontinuität. |
 
-Die drei PNG-Quellen wurden mit dem Bildwerkzeug auf Grundlage der vorhandenen Grafiken erstellt. `tools/measure_legacy_art.py` liest die Transparenz, ohne Bildpixel umzuschreiben. Minotauren, Shadepis Kampf-Sprites, Einschläge und die Bedienung aus Erinnerung II werden wiederverwendet. Die Halte- und Schlussposen ergänzen die Originalfigur nur für diese Inszenierung. Alle Sprite-Atlanten werden mit Nearest-Filter dargestellt.
+Die beiden neuen HQ-Pixel-PNGs wurden mit dem Bildwerkzeug nach Palette und Stil der vorhandenen Spielgrafiken erstellt. Figuren, Nanitenstrom, Minotauren und Kampf-/Einschlagseffekte werden weiterverwendet. Die Hofquelle `courtyard.png` bleibt als historischer Grafikstand von v0.26.0 erhalten. Die aktuelle dritte Szene lädt `temple-interior.png` über ihr eigenes `temple_map.gd`.
 
-`tools/generate_legacy_audio.py` erzeugt das eigene kurze Knistern `assets/audio/legacy_transfer.wav` aus deterministisch synthetisierten Impulsen; es enthält keine fremden Aufnahmen. Vor der Schlacht läuft die Musik des Heiligtums, im Bosskampf **Boss.mp3**, danach wieder die Musik der Erinnerungskammer. Die Tonoption gilt auch für die neuen Geräusche.
+`temple_map.gd` teilt Atlas-/Effekthilfen mit den anderen Erinnerungen, baut aber seine eigenen Innenraum-Kollisionskörper, Torphasen und Verdeckungen auf. Alle Sprite-Atlanten werden mit Nearest-Filter dargestellt. Knistern und Musikzuordnung bleiben erhalten: ruhige Heiligtumsmusik vor der Schlacht, **Boss.mp3** im Kampf und Musik der Erinnerungskammer danach. Die Tonoption gilt auch für die Geräusche.
 
-Laufzeitdateien: `legacy_memory.gd`, `legacy_figure.gd` und `legacy_battle.gd` unter `scripts/memories/`. Die Szene nutzt den vorhandenen Direktor, eine eigene historische Physikwelt und die sichere Rückkehr mit Serien-/Knotenprüfung. `tools/legacy_gallery.gd` zeichnet den Kampagneneinstieg auf; `tools/legacy_pilot.gd` enthält nur die Eingabeautomation für Tests und Vorschauen.
+## Prüfung
 
-## Geprüfter Stand
+**Sechs Prüfreihen mit insgesamt 1.078 Prüfungen ohne Fehler:** Erinnerung III 52, Erinnerung I/Einbindung 143, erster Klosterkampf 226, Erinnerung II 69, Kampagne/Speichern 382 und Story-Audit 206.
 
-**Sechs Prüfreihen mit insgesamt 1.068 Prüfungen ohne Fehler:** Erinnerung III 42, Erinnerung II 69, Erinnerung I/Einbindung 143, erster Klosterkampf 226, Kampagne/Speichern 382 und Story-Audit 206.
+Die Prüfungen kontrollieren die eigene Innenraum-Karte, die echte Türsperre, freie Hallenflächen, den gesperrten Basisschacht, Transparenz der Öffnung und die Reihenfolge **Übergabe → Torbruch → erster Eintritt → zweiter Eintritt → Kampf**. Pause wird während des eigentlichen Bruchs geprüft. Der gesamte Zweibosskampf wird mit normalen Angriffseingaben bis zu Ravens Rückkehr durchgespielt. Die bestehenden Prüfungen für Speichern/Laden, Controller, beide früheren Erinnerungen und den weiteren Kampagnenablauf laufen zusätzlich.
 
-Die gezielten Prüfungen spielen die komplette Szene einschließlich beider Siege durch tatsächliche Angriffs- und Ausweicheingaben. Sie prüfen getrennten Schaden, Taumeln, Warnziele, Wiederholung, Pause einschließlich des ersten Transferbilds, Controller-Abbruch/-Überspringen im Kampf, gespeicherte Abschlüsse und veraltete Rückmeldungen nach Kapitelwechsel. Shadepis Schlusszustand wird ohne Todesflag geprüft. Bestehende Erinnerungen und der Kampagnenablauf bis zum Flug werden zusätzlich kontrolliert.
+Ein Linux-PCK wurde erstellt. Innenraum, Tor-Atlas, Wechsel der Türsperre, Reihenfolge des Einbruchs und vollständiger Abschluss wurden direkt aus dem Exportpaket geladen und geprüft.
 
-Ein Linux-PCK wurde erzeugt und die neuen Figuren, Transfergrafik, Ankerdaten, Knistern, beide Mechs und der vollständige Zusammenbruchzustand direkt daraus geladen und geprüft.
-
-Die Szene wurde im OpenGL-Renderer vom Meistergespräch bis zu Ravens Rückkehr angesehen. Alle drei Erinnerungen bleiben nach der [Roadmap](erinnerungen-roadmap.md) und dem [verbindlichen Briefing](universum/teil-5/README.md) nachvollziehbar. Der weitere Verbleib des Roboterkopf-Kriegers und das spätere Verschwinden des Klosters werden durch diese Szene nicht ergänzt.
+Die aktuelle Szene wurde im OpenGL-Renderer vom Tempelüberblick bis zum Zusammenbruch angesehen. `tools/legacy_gallery.gd` zeichnet den tatsächlichen Kampagneneinstieg auf. [Roadmap](erinnerungen-roadmap.md) · [Verbindliches Briefing und Schauplatzkorrektur](universum/teil-5/README.md).

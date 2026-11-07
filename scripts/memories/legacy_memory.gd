@@ -1,5 +1,6 @@
 extends "res://scripts/memories/attack_memory.gd"
-const RUINS = preload("res://assets/memories/legacy/courtyard.png")
+const InteriorMap = preload("res://scripts/memories/temple_map.gd")
+const INTERIOR = InteriorMap.INTERIOR
 const Figure = preload("res://scripts/memories/legacy_figure.gd")
 const Minotaur = preload("res://scripts/memories/minotaur.gd")
 const FinalBattle = preload("res://scripts/memories/legacy_battle.gd")
@@ -14,9 +15,7 @@ var transferred := false
 var exhausted := false
 var events: Array[String]=[]
 func make_map() -> Node2D:
-	var result=Map.new()
-	result.background_texture=RUINS
-	return result
+	return InteriorMap.new()
 func squad_ids() -> Array: return ["shadepi"]
 func resident_count() -> int: return 0
 func initial_bot_count() -> int: return 0
@@ -43,7 +42,9 @@ func _ready() -> void:
 		var mech=Minotaur.new()
 		actors.add_child(mech)
 		mech.prepare(self)
-		mech.position=Vector2(940,350 if i==0 else 430)
+		mech.position=InteriorMap.ENTRY
+		mech.collision_layer=0
+		mech.collision_mask=0
 		mech.hide()
 		tanks.append(mech)
 	tank=tanks[0]
@@ -66,17 +67,25 @@ func transfer_step(k: float) -> void:
 			if index in [0,3,6]: sound("legacy_transfer")
 	tableau.sprite.modulate=Color(1+k*0.25,1+k*0.25,1+k*0.25)
 
+func breach_step(k: float) -> void:
+	if not active(): return
+	var previous: int=map.door_frame
+	map.breach_step(k)
+	if map.door_frame!=previous and map.door_frame in [1,2]: sound("drive_knock" if map.door_frame==1 else "drive_explosion")
+
 func play() -> void:
 	if closed or cutscene.running: return
 	cutscene.begin()
 	phase="arrival"
 	mark("master_held")
 	await cutscene.letterbox(true)
-	await cutscene.camera(Vector2(430,345),0.9,0.85)
-	await cutscene.title("ERINNERUNG III","DAS VERMÄCHTNIS",1.8)
+	await cutscene.camera(Vector2(512,285),0.9,0.64)
+	await cutscene.title("ERINNERUNG III","DAS VERMÄCHTNIS · IM TEMPEL",1.8)
 	if not active(): return
 	await cutscene.camera(Vector2(295,320),1.0,1.85)
 	phase="promise"
+	await cutscene.say("MEISTER","Die Schleuse zur Basis ist verriegelt. Sie dürfen nicht nach unten.")
+	if not active(): return
 	await cutscene.say("MEISTER","Shadepi, du musst das Heiligtum beschützen. Das hat oberste Priorität.")
 	if not active(): return
 	await cutscene.say("SHADEPI","Ich werde es mit meinem Leben beschützen. Der Orden muss leben. Danke für alles, Meister.")
@@ -105,10 +114,27 @@ func play() -> void:
 	await cutscene.camera(Vector2(630,340),1.0,0.72)
 	await cutscene.walk(squad[0],Vector2(550,420),88)
 	if not active(): return
-	phase="two_minotaurs"
-	for mech in tanks: mech.show()
+	phase="temple_breach"
+	mark("temple_door_hit")
 	sound("drive_knock")
-	cutscene.walk(tanks[0],Vector2(800,350),65)
+	await cutscene.camera(Vector2(800,285),0.7,1.35)
+	if not active(): return
+	await cutscene.animate(breach_step,1.6)
+	if not active(): return
+	mark("temple_door_breached")
+	phase="two_minotaurs"
+	tanks[0].show()
+	tanks[0].collision_layer=1
+	tanks[0].collision_mask=1
+	mark("minotaur_0_entered")
+	await cutscene.walk(tanks[0],Vector2(800,350),65)
+	if not active(): return
+	await cutscene.camera(Vector2(630,340),0.8,0.72)
+	if not active(): return
+	tanks[1].show()
+	tanks[1].collision_layer=1
+	tanks[1].collision_mask=1
+	mark("minotaur_1_entered")
 	await cutscene.walk(tanks[1],Vector2(800,430),65)
 	if not active(): return
 	await cutscene.walk(tanks[1],Vector2(800,490),65)

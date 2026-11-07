@@ -21,6 +21,9 @@ func run() -> void:
 		if not seen.has(panel.phase):
 			seen[panel.phase]=true
 			await capture("scene-"+panel.phase)
+		if panel.phase=="temple_breach" and panel.map.door_frame==2 and not seen.has("breach_peak"):
+			seen.breach_peak=true
+			await capture("door-break")
 		if panel.phase=="transfer" and panel.transfer_frame==4 and not seen.has("transfer_peak"):
 			seen.transfer_peak=true
 			await capture("transfer-peak")

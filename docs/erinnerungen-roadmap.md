@@ -1,4 +1,4 @@
-# Roadmap: Shadepis drei Erinnerungen · v0.26.0 · CodexAI
+# Roadmap: Shadepis drei Erinnerungen · v0.27.0 · CodexAI
 
 **Stand: Pakete 0–6 abgeschlossen.** Seit v0.25.0 · CodexAI ist der Abwehrkampf in Erinnerung II als 45-Sekunden-Überlebenskampf spielbar; danach folgt Lys bestehende Opferszene. Erinnerung 1 zeigt jetzt den vollständigen inszenierten Ablauf mit drei Bot-Wellen, den Schutzopfern von Oni und MG-Krieger sowie dem Rückzug der Überlebenden. Mönche und Bewohner besitzen vier Gehbilder pro Richtung. **Alle drei Erinnerungen sind eingebunden. Erinnerung III enthält seit v0.26.0 Meister, Heiligtumsübergabe, spielbaren Zweibosskampf und Zusammenbruch.** [Aktuelle dritte Erinnerung](das-vermaechtnis.md). [Lys Opfer: Szene und Vorschau](lys-opfer.md). [Aktuelle Umsetzung und Vorschau](kloster-kampf.md). Grundlage sind das [Nutzerbriefing mit bestätigten Schutzopfern](universum/teil-5/README.md), die vorhandenen Figurenreferenzen und das [Heiligtum-/Romanarchiv](universum/teil-4/README.md). Diese Roadmap hält Produktionspakete, Fortschritt und erzählerische Kontinuität fest.
 
@@ -47,7 +47,7 @@ Der Roboterkopf-Krieger ist nach Erinnerung 1 noch am Leben. Sein weiterer Einsa
 
 ### 3. Das Vermächtnis
 
-Das gleiche Kloster ist nun fast vollständig zerstört. Wiedererkennbare Säulen, Stufen und Dachreste verbinden die Bilder mit den ersten beiden Erinnerungen. In einer kurzen Ruhezone hält Shadepi den alten Meister, den bisherigen Träger des Heiligtums.
+**Schauplatzkorrektur v0.27.0 nach Nutzerpräzisierung:** Erinnerung III findet im Tempelinneren statt. Der traditionelle Tempel ist Tarnung der großen unterirdischen Hightech-Basis des Ordens. Hinter beschädigten Verkleidungen sind technische Ebenen und der große Schacht sichtbar. In einem geschützten Seitenbereich hält Shadepi den Meister; der Zugang bleibt während der Übergabe geschlossen.
 
 > **Meister:** „Shadepi, du musst das Heiligtum beschützen. Das hat oberste Priorität.“
 >
@@ -55,9 +55,9 @@ Das gleiche Kloster ist nun fast vollständig zerstört. Wiedererkennbare Säule
 
 Das Licht beginnt im Inneren des Meisters und geht als weißer Energiestrom auf Shadepi über. Pixelpartikel, Kleidung und Rüstung reagieren auf das Licht; Knistern und Knacken steigern sich. Die Darstellung bleibt mit dem Archiv vereinbar: Das Heiligtum ist der empfindungsfähige Nanitenschwarm, keine neu eingeführte Gottheit.
 
-Nach einem Moment der Stille richtet sich Shadepi auf. Zwischen Feuer und Trümmern stellen sich ihm **zwei Minotauren** entgegen. Nach dem Kampf bricht er reglos zusammen; die Erinnerung endet und Raven kehrt in die Gegenwart zurück. Der Zusammenbruch ist keine Todesfestlegung für Shadepi. Das spätere Verschwinden des Klosters liegt außerhalb dieser drei gezeigten Augenblicke.
+Nach einem Moment der Stille richtet sich Shadepi auf. Nach der Übergabe brechen **zwei Minotauren** durch den Tempelzugang in dieselbe Halle ein. Dort stellt Shadepi sich ihnen zwischen Schäden und freigelegter Technik entgegen. Nach dem Kampf bricht er reglos zusammen; die Erinnerung endet und Raven kehrt in die Gegenwart zurück. Der Zusammenbruch ist keine Todesfestlegung für Shadepi. Das spätere Verschwinden des Klosters liegt außerhalb dieser drei gezeigten Augenblicke.
 
-**In v0.26.0 erstellt:** Meisterfigur in traditioneller bronze-/brauner Kampfausrüstung, Halte-/Übergabe-/Zusammenbruchposen, letzte Ruinenvariante und achtteiliger weißer Nanitenstrom. Die beiden Panzer verwenden die Grafiken aus Erinnerung 2. Der Meister erhält keinen erfundenen Eigennamen.
+**In v0.26.0 erstellt:** Meisterfigur in traditioneller bronze-/brauner Kampfausrüstung, Halte-/Übergabe-/Zusammenbruchposen, letzte Ruinenvariante und achtteiliger weißer Nanitenstrom. Die beiden Panzer verwenden die Grafiken aus Erinnerung 2. Der Meister erhält keinen erfundenen Eigennamen. Seit v0.27.0 ersetzen Tempelinnenraum und vierteiliger Torbruch-Atlas die frühere Hofkulisse der dritten Erinnerung.
 
 ## Figuren und visuelle Kontinuität
 

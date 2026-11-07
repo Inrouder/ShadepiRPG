@@ -2,6 +2,10 @@
 
 Quelle: Nutzerbriefing im Chat zu den drei Erinnerungen, einschließlich der anschließenden Auswahl der beiden gefallenen Krieger. Dies ist eine Textsicherung der Vorgaben, keine neue PDF- oder Bildquelle. Umsetzungsplanung: [Roadmap der Erinnerungen](../../erinnerungen-roadmap.md).
 
+## Verbindliche Schauplatzkorrektur · v0.27.0 · CodexAI
+
+Nutzerpräzisierung vom 7. November 2026: Der Tempel ist die Tarnung einer riesigen Hightech-Untergrundbasis. Erinnerung III soll räumlich aus dem früheren Schlachtfeld herausführen. Umgesetzt wird die vom Nutzer bevorzugte Tempelvariante: **Übergabe und Kampf finden im Tempelinneren statt, die Minotauren brechen in den Tempel ein.** Die Außendarstellung von v0.26.0 ist damit überholt. Die bestätigten Dialoge, der weiße Energiestrom, die zwei Gegner und Shadepis Zusammenbruch bleiben maßgeblich.
+
 ## Verbindliche neue Storyvorgaben
 
 Raven soll an jedem der drei Erinnerungsknoten eine Rückblende aus Shadepis Vergangenheit erleben. Raven ist die Empfängerin der Erinnerung und war beim historischen Angriff nicht im Kloster.

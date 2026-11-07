@@ -1,5 +1,16 @@
 # Versionshinweise
 
+## v0.27.0 – CodexAI: Tempelinneres und Einbruch in Erinnerung III · 7. November 2026
+
+- Vor Beginn alle GitHub-Branches geprüft und auf dem aktuellen v0.26.0-Hauptstand aufgebaut.
+- Nutzervorgabe zur Schauplatzlogik gesichert: Der Tempel tarnt eine riesige unterirdische Hightech-Basis. Die bevorzugte Tempelvariante umgesetzt: Meistergespräch, Heiligtumsübergabe, letzter Kampf und Zusammenbruch bleiben im Tempelinneren; der frühere Außenhof wird in Erinnerung III nicht mehr benutzt.
+- Zwei neue HQ-Pixel-PNGs: Tempelhalle mit freigelegter Technik, großem Schacht und sichtbaren unteren Ebenen sowie vierteiliger freigestellter Tor-Atlas. Vorhandene Figuren, Nanitenstrom, Minotaurus- und FX-Grafiken wiederverwendet.
+- Neues Innenraum-Mapskript mit eigener Kollision, Rückwand vor dem Basisschacht, Wand-/Säulenverdeckung und Türsperre. Keine weiterwirkende Hofsäule oder Außenhof-Feuerposition im Tempel. Beim vollständigen Durchbruch wird die Türsperre entfernt; gebrochene Paneele weichen auseinander, damit die Mechs hindurchpassen.
+- Ablauf konkretisiert: geschlossener Zugang während der Übergabe, kamerageführter Durchbruch mit Einschlägen, erster Mech durch die Öffnung, zweiter folgt und nimmt die andere Kampfposition ein. Pause friert auch den Durchbruch ein. Dialog zur gesicherten Basisschleuse und Kontextzeile zum Tarn-Tempel ergänzt; bestätigte Schutzversprechen bleiben erhalten.
+- Gezielte Prüfungen um Innenraum-Geometrie, echte Türsperre, Transparenz der Öffnung, Pause beim Bruch sowie Reihenfolge Übergabe → Durchbruch → beide Eintritte → Kampf erweitert. Bereits gespeicherte Abschlüsse und die beiden früheren Erinnerungen werden beibehalten.
+
+- Validierung: sechs Prüfreihen mit **1.078 Prüfungen, 0 Fehlern** (Erinnerung III 52, Erinnerung I 143, Klosterkampf 226, Erinnerung II 69, Kampagne/Speichern 382, Story-Audit 206). Tempelüberblick, Übergabe, Torbruch, Zweibosskampf und Zusammenbruch im Godot-Renderer kontrolliert. Linux-PCK erstellt und neue Texturen, Tür-Kollision, Einbruchsreihenfolge und vollständigen Abschluss direkt daraus geprüft.
+
 ## v0.26.0 – CodexAI: Erinnerung III „Das Vermächtnis“ · 7. November 2026
 
 - Alle GitHub-Branches vor Beginn verglichen; auf dem aktuellen v0.25.0-Stand aufgebaut und bestehende Arbeit erhalten.
