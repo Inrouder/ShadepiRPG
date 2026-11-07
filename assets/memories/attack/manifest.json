@@ -6,7 +6,7 @@
     1024,
     640
   ],
-  "stage": "Kulissen und vier Krieger samt Laufposen erstellt; Bewohner und Map folgen",
+  "stage": "Kulissen, Krieger und Bewohner erstellt; Map folgt",
   "background": "courtyard.png",
   "layer_atlas": "props-fx.png",
   "layer_grid": [
@@ -25,5 +25,6 @@
     "heavy"
   ],
   "warrior_ready": "warriors-ready.png",
-  "warrior_run": "warriors-run.png"
+  "warrior_run": "warriors-run.png",
+  "residents": "residents.png"
 }
