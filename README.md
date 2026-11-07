@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.20.5 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.21.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -35,7 +35,15 @@ Die Spielwelt nutzt **16 gemalte Kulissen** aus `assets/world/painted/`. Wände 
 
 Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und Bosskämpfen. Die vollständige Zuordnung und Hinweise zum Austauschen der MP3-Dateien stehen unter [Musik austauschen](assets/music/README.md).
 
-## Neu in v0.20.5 · 7. November 2026 · ClaudeHelper
+## Neu in v0.21.0 · 7. November 2026 · CodexAI
+
+- Raven: verzweigte Pixelblitze aus einer eigenen offenen Handpose im Deep Dive; Pistolenschüsse mit Mündungsfeuer, warmem Geschoss und eigenem Sound außerhalb des Netzes. Austrittspunkte folgen den acht Richtungen und Sprite-Transformationen.
+- Alle acht menschlichen Gegnertypen erhalten neue HQ-Pixel-Kontaktposen in acht Richtungen; Ausholen, Treffer, Erholung und Unterbrechungen sind sichtbar getrennt.
+- Eigene synthetisierte Kampflaute: Anstrengung, Schmerzstöhnen und längere Sterbelaute, mit Varianten und eigenem Stimmenpool.
+- [Bilder, Animationsvorschau und Hörprobe](docs/raven-gegner-kampf.md). Der während der Arbeit veröffentlichte Pixelart-UI-Stand v0.20.5 ist enthalten.
+- Neun Prüfreihen mit 1.517 erfolgreichen Prüfungen; Kampfansichten gerendert und neue Ressourcen direkt aus einem Exportpaket geladen.
+
+## v0.20.5 · 7. November 2026 · ClaudeHelper
 
 - **Pixelart-Menüs und Hack-Oberflächen:** Rahmen, Titelleisten, Buttons, Codezellen, Regler und sechs Ziel-Embleme (Rabe, Schakal, Weißer Drache, ARToS, Moriyama-Tower, See) im Pixelwright-Studio gezeichnet, 1:1 im 640×360-Raster. Gebürsteter Stahl mit Plattennähten und Nieten, Neonkanten, Status-LEDs; keine Vektorgrafik mehr.
 - **Passend zur Szene:** Terminals übernehmen Farbe und Emblem des Zielsystems; das Pausenmenü wechselt mit Kapitel und Ort. Der Szenenhintergrund bleibt verpixelt und eingefärbt sichtbar.

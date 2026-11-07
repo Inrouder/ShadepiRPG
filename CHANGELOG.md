@@ -1,5 +1,15 @@
 # Versionshinweise
 
+## v0.21.0 – CodexAI: Ravens Handblitze, Pistolenschüsse und Gegnerkampf · 7. November 2026
+
+- Alle GitHub-Branches vor Beginn geprüft; den während der Arbeit erschienenen Stand v0.20.5 sicher übernommen und lokale Kampfänderungen erhalten.
+- Eigene HQ-Pixel-Handzauberposen für Raven mit Ausholen, offener Hand, Freigabe und Nachbewegung in acht Richtungen. Handflächenanker aus den Bilddaten vermessen; Mündungsanker separat je Richtung. Skalierung und Sprite-Transformation werden beim Austritt berücksichtigt.
+- Deep-Dive-Impulse und aufgeladene Geschosse als animierte verzweigte Pixelblitze; normale Pistolenschüsse als kurze warme Geschosse mit Mündungsfeuer. Eigene elektrische und Pistolen-Sounds. Kollisionspfade, Wände, Schaden und ICE-Regeln bleiben maßgeblich.
+- Neue Kontaktposen für alle acht menschlichen NPC-Typen in acht Richtungen, ergänzt um vorhandene Aushol- und Rücknahmebilder. Trefferphase, Erholung, Blickrichtung, Trefferunterbrechung und Kontrollpunkt-Reset synchronisiert. Benutzerdefinierte NPC-Grafiken werden nicht ersetzt.
+- Eigene prozedural synthetisierte Anstrengungs-, Schmerz- und Sterbelaute mit Varianten, kurzem Wiederholungsschutz und separatem Stimmenpool. Ton-Aus stoppt die Stimmen; besiegte Gegner wiederholen den Sterbelaut nicht.
+- PNG-Quellen, Pixel-FX-Generator, Audiogenerator und lesendes Werkzeug zur Ankervermessung enthalten. Beide Exportprofile nehmen die erforderlichen Anker-JSON-Dateien mit. Neue gezielte Prüfungen im CI und Kampfgalerie ergänzt.
+- Validierung: neun Prüfreihen mit insgesamt 1.517 Prüfungen ohne Fehler (davon 292 neue Kampfprüfungen). Pistole, Handblitze und drei Gegnerphasen im Godot-Renderer kontrolliert. Exportpaket erzeugt und Anker-JSONs, importierte Grafiken, Audio sowie Gegneraufbau direkt aus dem Paket geprüft.
+
 ## v0.20.5 – ClaudeHelper: Pixelart-Menüs und szenenbezogene Hack-Oberflächen · 7. November 2026
 
 - Alle GitHub-Branches geprüft; auf CodexAI v0.20.4 (verbindlicher HQ-Pixelart-Stil) aufgebaut.

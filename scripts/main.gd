@@ -37,6 +37,7 @@ var terminal: CanvasLayer
 
 var audio_on: = true
 var sfx: Array[AudioStreamPlayer] = []
+var combat_audio: Node
 var music: AudioStreamPlayer
 var music_section := ""
 var music_fade: Tween
@@ -633,11 +634,13 @@ func cycle_visual_quality() -> void :
 		toast("Bildstil: " + VISUAL_PRESETS[visual_quality])
 
 func _build_audio() -> void :
+	combat_audio = preload("res://scripts/combat_audio.gd").new()
+	add_child(combat_audio)
 	music = AudioStreamPlayer.new()
 	music.volume_db = -12
 	add_child(music)
 	set_music_section("menu", true)
-	for i in 4:
+	for i in 8:
 		var channel: = AudioStreamPlayer.new()
 		channel.volume_db = -8
 		add_child(channel)
@@ -860,6 +863,14 @@ func raven_hack() -> bool:
 	toast("Raven: Implantate gestört. Jetzt!")
 	return true
 
+func raven_energy_attack() -> bool:
+	return false
+
+func raven_attack_fx(endpoint: Vector2, electric: bool) -> void:
+	raven.animate("attack", 0.0)
+	effects.weapon_trace(raven.attack_attachment(electric), endpoint + Vector2(0,-28), electric)
+	sound("electric" if electric else "pistol", 0.05)
+
 func raven_shot() -> void :
 	var origin: Vector2 = raven.position
 	var endpoint: Vector2 = origin + raven.facing * 152.0
@@ -872,8 +883,7 @@ func raven_shot() -> void :
 		target.take_damage(17, origin)
 	elif not wall.is_empty() and wall.collider is WorldProp:
 		wall.collider.take_damage(17)
-	effects.pulse_trace(origin, endpoint)
-	sound("hack")
+	raven_attack_fx(endpoint, false)
 
 func raven_shot_target(origin: Vector2) -> PixelActor:
 	return enemy if stage == 2 and raven_can_hit(enemy, origin) else null
@@ -916,9 +926,14 @@ func power_attack(source: PixelActor) -> void:
 	projectile.remaining = 300.0 if projectile.ranged else 240.0
 	projectile.direction = source.facing.normalized()
 	projectile.position = source.position
+	if source.second_player:
+		source.animate("attack", 0.0)
+		projectile.electric = raven_energy_attack()
+		projectile.visual_offset = source.attack_attachment(projectile.electric) - source.position
+		effects.weapon_trace(source.attack_attachment(projectile.electric), source.attack_attachment(projectile.electric) + source.facing * 14, projectile.electric)
 	projectile.z_index = 45
 	add_child(projectile)
-	sound("hack" if source.second_player else "slash")
+	sound(("electric" if projectile.electric else "pistol") if source.second_player else "slash")
 
 func player_kick(source: PixelActor) -> void:
 	strike_scenery(source.position, source.facing, 28)
@@ -955,7 +970,6 @@ func register_hit(target: Node2D, amount: int, direction: Vector2, killed: bool)
 	effects.burst(point, Color("ffe0a8") if heavy else Color("ff648a"), 22 if killed else (14 if heavy else 9))
 	if killed:
 		effects.burst(point, Color("9fe8ff"), 18)
-		sound("prop_blast", 0.1)
 
 ## Brief freeze frame on impact. Skipped in headless runs so tests keep timing.
 func hitstop(seconds: float) -> void:
@@ -1125,6 +1139,7 @@ func sound(kind: String, pitch_variance: float = 0.0) -> void :
 func toggle_audio() -> void :
 	audio_on = not audio_on
 	music.stream_paused = not audio_on
+	if not audio_on and combat_audio != null: combat_audio.stop()
 	if audio_on and not music.playing and DisplayServer.get_name() != "headless" and AudioServer.get_driver_name() != "Dummy":
 		music.play()
 	for channel in sfx:

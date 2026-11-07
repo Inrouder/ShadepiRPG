@@ -5,6 +5,12 @@ var source: PixelActor
 var generation := 0
 var direction := Vector2.RIGHT
 var ranged := false
+var electric := false
+var visual_offset := Vector2(0,-24)
+var age := 0.0
+var travelled := 0.0
+func _ready() -> void:
+	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 var remaining := 240.0
 var hit: Array[Node2D] = []
 
@@ -17,6 +23,7 @@ func _physics_process(delta: float) -> void:
 	advance(delta)
 
 func advance(delta: float) -> void:
+	age += delta
 	var distance := minf(remaining, delta * (580.0 if ranged else 340.0))
 	var endpoint := position + direction * distance
 	var wall: Dictionary = world.trace_scenery(position, endpoint)
@@ -42,6 +49,7 @@ func advance(delta: float) -> void:
 			return
 	position = endpoint
 	remaining -= distance
+	travelled += distance
 	if not wall.is_empty():
 		if wall.collider is WorldProp:
 			wall.collider.take_damage(62 if ranged else 76)
@@ -55,9 +63,7 @@ func _draw() -> void:
 	var p := Vector2(0, -24)
 	var color := Color("65e8ff") if ranged else Color("ff395b")
 	if ranged:
-		draw_line(p - direction * 25, p + direction * 8, Color(color, 0.25), 9)
-		draw_line(p - direction * 19, p + direction * 8, color, 4)
-		draw_line(p - direction * 12, p + direction * 9, Color("e9fcff"), 1.5)
+		PixelCombatFX.packet(self, visual_offset, direction, age, electric, false, 1.0, travelled)
 	else:
 		for i in 3:
 			draw_arc(p - direction * i * 5, 24, direction.angle() - 1.1, direction.angle() + 1.1, 20, Color(color, 1.0 - i * 0.3), 3.0 - i * 0.7)

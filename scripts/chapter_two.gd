@@ -264,6 +264,9 @@ func _dive_aim(origin: Vector2) -> Node2D:
 			best = threat
 	return best
 
+func raven_energy_attack() -> bool:
+	return raven_leads()
+
 func raven_shot() -> void :
 	if not raven_leads():
 		return
@@ -286,8 +289,7 @@ func raven_shot() -> void :
 			sound("hit", 0.15)
 	elif not wall.is_empty() and wall.collider is WorldProp:
 		wall.collider.take_damage(17)
-	effects.pulse_trace(origin, endpoint)
-	sound("hack")
+	raven_attack_fx(endpoint, true)
 
 func _destroy_threat(target: Node2D) -> void:
 	effects.burst(target.position, Color("97f7ff"), 30)

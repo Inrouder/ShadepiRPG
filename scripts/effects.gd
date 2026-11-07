@@ -12,6 +12,7 @@ var quality: = 2
 var ripples: Array[Dictionary] = []
 var links: Array[Dictionary] = []
 var pulses: Array[Dictionary] = []
+var weapon_traces: Array[Dictionary] = []
 var rng: = RandomNumberGenerator.new()
 var fragments: Array[Dictionary] = []
 var smoke: Array[Dictionary] = []
@@ -23,6 +24,7 @@ func charge_ready(point: Vector2, ranged: bool) -> void:
 
 func _ready() -> void :
 	rng.seed = 84
+	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	z_index = 50
 
 func burst(point: Vector2, color: Color, count: int = 16) -> void :
@@ -43,6 +45,10 @@ func water_step(point: Vector2) -> void :
 func hack_arc(from: Vector2, to: Vector2) -> void :
 	if links.size() < 4:
 		links.append({"from": from + Vector2(0, -25), "to": to + Vector2(0, -27), "t": 0.55})
+
+func weapon_trace(from: Vector2, to: Vector2, electric: bool) -> void:
+	if weapon_traces.size() < 16:
+		weapon_traces.append({"from": from, "to": to, "electric": electric, "t": 0.22 if electric else 0.12, "life": 0.22 if electric else 0.12})
 
 func pulse_trace(from: Vector2, to: Vector2) -> void :
 	if pulses.size() < 8:
@@ -93,7 +99,7 @@ func _process(delta: float) -> void :
 		particles[i].t -= delta
 		if particles[i].t <= 0:
 			particles.remove_at(i)
-	for collection in [slashes, flashes, ripples, links, pulses]:
+	for collection in [slashes, flashes, ripples, links, pulses, weapon_traces]:
 		for i in range(collection.size() - 1, -1, -1):
 			collection[i].t -= delta
 			if collection[i].t <= 0:
@@ -101,6 +107,23 @@ func _process(delta: float) -> void :
 	queue_redraw()
 
 func _draw() -> void :
+	for shot in weapon_traces:
+		var age: float = shot.life - shot.t
+		var direction: Vector2 = shot.from.direction_to(shot.to)
+		var length: float = shot.from.distance_to(shot.to)
+		var head: Vector2 = shot.from.lerp(shot.to, minf(1.0, age / (0.16 if shot.electric else 0.07)))
+		if shot.electric:
+			# Several distinct pixel packets form a branching discharge, never a laser line.
+			for i in mini(5, int(length / 24.0) + 1):
+				var point: Vector2 = head - direction * i * 22
+				if (point-shot.from).dot(direction) >= 0:
+					var distance: float = (point-shot.from).dot(direction)
+					PixelCombatFX.packet(self, point, direction, age+i*0.05, true, false, shot.t/shot.life, distance, length-distance)
+		else:
+			var distance: float = (head-shot.from).dot(direction)
+			PixelCombatFX.packet(self, head, direction, age, false, false, shot.t/shot.life, distance, length-distance)
+		if age < 0.08: PixelCombatFX.packet(self, shot.from, direction, age, shot.electric, not shot.electric)
+
 	for ring in charge_rings:
 		var age: float = 1.0 - ring.t / 0.4
 		draw_arc(ring.p + Vector2(0, -20), 12 + 36 * age, 0, TAU, 40, Color(ring.c, 1 - age), 2.5)

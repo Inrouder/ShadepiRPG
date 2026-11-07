@@ -2,6 +2,9 @@ extends PixelActor
 
 const SPEED: = 94.0
 const CHARGE_SECONDS := 1.1
+const HAND_CAST = preload("res://assets/sprites/heroes/raven-hand-cast.png")
+static var hand_cast_data: Array = []
+var hand_pose_index := -1
 const COMBAT_POSES := preload("res://assets/sprites/heroes/combat-poses.png")
 var charging := false
 var charge_time := 0.0
@@ -114,6 +117,21 @@ func _physics_process(delta: float) -> void :
 	velocity = world.limit_coop_motion(self, velocity, delta)
 	move_and_slide()
 	animate(state, delta)
+
+# Attachment coordinates are authored in the original 128×160 attack frames.
+# Conversion through the sprite transform keeps scaled/custom actors supported.
+const MUZZLE_POINTS := [Vector2(64,71),Vector2(24,57),Vector2(105,58),Vector2(62,36),Vector2(26,46),Vector2(100,46),Vector2(34,65),Vector2(99,64)]
+const HAND_POINTS := [Vector2(64,73),Vector2(34,59),Vector2(94,59),Vector2(62,43),Vector2(35,50),Vector2(93,50),Vector2(42,67),Vector2(91,67)]
+func attack_attachment(hand: bool = false) -> Vector2:
+	if hand and visual.texture == HAND_CAST and hand_pose_index >= 0:
+		var data: Dictionary = hand_cast_data[hand_pose_index/8][hand_pose_index%8]
+		return visual.to_global(Vector2(data.palm[0],data.palm[1]) - Vector2(visual.texture.get_size())/Vector2(16,8))
+	var row := _direction_row(false, 0.0)
+	if directions == 4:
+		row = [0,1,2,3][row]
+	var point: Vector2 = (HAND_POINTS if hand else MUZZLE_POINTS)[row]
+	var frame_size := Vector2(visual.texture.get_size()) / Vector2(visual.hframes, visual.vframes)
+	return visual.to_global((point / Vector2(128,160) - Vector2(0.5,0.5)) * frame_size)
 
 func try_attack() -> bool:
 	if charging or attack_cooldown > 0.0 or dash_time > 0.0 or energy < 5.0:
@@ -285,7 +303,10 @@ func animate(state: String, delta: float) -> void:
 		visual.frame = (2 * directions + _direction_row(false, delta)) * 8 + release_frame
 		cast_shadow.frame = visual.frame
 	# Custom replacement heroes keep their own identity and use the same effects.
-	if normal_texture.resource_path.begins_with("res://assets/custom/") or state not in ["charge", "kick"]:
+	if normal_texture.resource_path.begins_with("res://assets/custom/") or (state not in ["charge", "kick"] and not (second_player and world.raven_energy_attack() and state == "attack")):
+		return
+	if second_player and world.raven_energy_attack() and state in ["charge","attack"]:
+		_show_hand_cast(state)
 		return
 	var row := 3 if second_player else 0
 	if state == "kick":
@@ -306,6 +327,28 @@ func animate(state: String, delta: float) -> void:
 	cast_shadow.frame = visual.frame
 	special_pose = true
 
+func _show_hand_cast(state: String) -> void:
+	if hand_cast_data.is_empty():
+		hand_cast_data = JSON.parse_string(FileAccess.get_file_as_string("res://assets/sprites/heroes/raven-hand-cast.json"))
+	var row := 0 if state == "charge" else 1 if attack_time > 0.1 else 2
+	var direction := _direction_row(false,0)
+	hand_pose_index = row*8+direction
+	var pose: Dictionary = hand_cast_data[row][direction]
+	var cell_size := Vector2(HAND_CAST.get_size()) / Vector2(8,4)
+	visual.texture = HAND_CAST
+	visual.hframes = 8
+	visual.vframes = 4
+	visual.frame = hand_pose_index
+	visual.scale = Vector2.ONE * float(pose.scale)
+	visual.position = (cell_size*0.5 - Vector2(pose.anchor[0],pose.anchor[1])) * float(pose.scale)
+	visual.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	cast_shadow.texture = HAND_CAST
+	cast_shadow.hframes = 8
+	cast_shadow.vframes = 4
+	cast_shadow.frame = hand_pose_index
+	cast_shadow.scale = Vector2(1.05,0.3) * float(pose.scale)
+	special_pose = true
+
 func _draw() -> void :
 	super._draw()
 	if charging and not world.is_busy():
@@ -313,7 +356,7 @@ func _draw() -> void :
 		var color := Color("66eaff") if second_player else Color("ff4f70")
 		draw_arc(Vector2(0, -22), 15, -PI / 2, -PI / 2 + TAU * progress, 32, color, 2)
 		if charge_ready:
-			draw_circle(Vector2(0, -24) + facing * 19, 3.5 + sin(Time.get_ticks_msec() * 0.015), Color(color, 0.75))
+			draw_circle(attack_attachment(world.raven_energy_attack()) - global_position if second_player else Vector2(0,-24)+facing*19, 3.5 + sin(Time.get_ticks_msec() * 0.015), Color(color, 0.75))
 	if second_player and health > 0 and world.actor_is_playable(self) and not world.is_busy() and aim_stick.length() > 0.25:
 		var tip: = Vector2(0, -24) + facing * 64.0
 		draw_line(Vector2(0, -24) + facing * 12.0, tip, Color(0.38, 0.9, 1.0, 0.55))

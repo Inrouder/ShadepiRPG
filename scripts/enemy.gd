@@ -28,10 +28,34 @@ var attack_visual_time := 0.0
 ## Hit reaction: knockback impulse that slides with collision and decays.
 var knock_velocity := Vector2.ZERO
 var death_tween: Tween
+const CONTACT = preload("res://assets/sprites/npcs/contact-poses.png")
+static var contact_catalog: Dictionary = {}
+var contact_data: Array = []
+var base_texture: Texture2D
+var contact_texture: AtlasTexture
+var voice_cooldown := 0.0
+var combat_phase := "idle"
+
+func setup(texture: Texture2D, game: Node2D) -> void:
+	super.setup(texture, game)
+	base_texture = visual.texture
+	if not base_texture.resource_path.begins_with("res://assets/custom/"):
+		if contact_catalog.is_empty():
+			contact_catalog = JSON.parse_string(FileAccess.get_file_as_string("res://assets/sprites/npcs/contact-poses.json"))
+		contact_data = contact_catalog.get(texture.resource_path.get_file().get_basename(), [])
+	contact_texture = AtlasTexture.new()
+	contact_texture.atlas = CONTACT
+
+func _voice(kind: String) -> void:
+	if kind == "hurt" and voice_cooldown > 0: return
+	voice_cooldown = 0.35
+	if world.combat_audio != null:
+		world.combat_audio.voice(kind, world.audio_on, is_boss())
 
 func _physics_process(delta: float) -> void:
 	if health <= 0 or world.is_busy():
 		return
+	voice_cooldown = maxf(0, voice_cooldown - delta)
 	exposed = maxf(0.0, exposed - delta)
 	stun = maxf(0.0, stun - delta)
 	cooldown = maxf(0.0, cooldown - delta)
@@ -46,6 +70,8 @@ func _physics_process(delta: float) -> void:
 	elif windup > 0.0:
 		windup -= delta
 		if windup <= 0.0:
+			_voice("attack")
+			if shot_range <= 0: world.sound("slash", 0.12)
 			if shot_range > 0.0:
 				attack_visual_time = 8.0 / 18.0
 				var endpoint := global_position + attack_direction * shot_range
@@ -55,7 +81,8 @@ func _physics_process(delta: float) -> void:
 				var target_exposed: bool = target != null and world._line_clear(global_position, target.global_position)
 				if not obstruction.is_empty() and obstruction.collider is WorldProp:
 					obstruction.collider.take_damage(hit_damage)
-				world.effects.pulse_trace(global_position, endpoint)
+				world.effects.weapon_trace(global_position + Vector2(0,-40) + attack_direction*18, endpoint+Vector2(0,-28), false)
+				world.sound("pistol", 0.06)
 				if target_exposed and absf(offset.cross(attack_direction)) <= 16.0 and offset.dot(attack_direction) > 0.0 and offset.length() <= shot_range:
 					target.take_damage(hit_damage, global_position)
 				cooldown = attack_recovery
@@ -69,6 +96,7 @@ func _physics_process(delta: float) -> void:
 				cooldown = attack_recovery
 			else:
 				lunge = 0.22
+				attack_visual_time = 8.0 / 18.0
 				hit_done = false
 				scenery_hit_done = false
 	elif lunge > 0.0:
@@ -84,6 +112,8 @@ func _physics_process(delta: float) -> void:
 				victim.take_damage(hit_damage, global_position)
 		if lunge <= 0.0:
 			cooldown = attack_recovery
+	elif attack_visual_time > 0:
+		state = "attack"
 	elif active and target != null and offset.length() <= awareness:
 		facing = offset.normalized()
 		var obstruction: Dictionary = world.trace_scenery(global_position, global_position + facing * 42.0)
@@ -103,6 +133,8 @@ func _physics_process(delta: float) -> void:
 	# This timer affects artwork only; damage and attack recovery keep their timing.
 	if attack_visual_time > 0.0 and state != "hurt":
 		state = "attack"
+	if windup > 0 or lunge > 0 or attack_visual_time > 0:
+		facing = attack_direction
 	animate(state, delta)
 
 func is_boss() -> bool:
@@ -120,6 +152,7 @@ func take_damage(base: int, source: Vector2 = Vector2.INF) -> void:
 	var amount := health - min_health if world.admin_enabled("one_hit") else CombatRules.damage(base, exposed > 0.0)
 	amount = mini(amount, health - min_health)
 	health -= amount
+	if amount > 0: _voice("death" if health <= 0 else "hurt")
 	flash_time = 0.17
 	world.impact(global_position, true)
 	world.damage_number(global_position + Vector2(0, -48), str(amount))
@@ -132,6 +165,9 @@ func take_damage(base: int, source: Vector2 = Vector2.INF) -> void:
 	if world.has_method("register_hit"):
 		world.register_hit(self, amount, direction, health <= 0)
 	if health <= 0:
+		animate("hurt", 0.0)
+		flash_time = 0.0
+		body_material.set_shader_parameter("flash", 0.0)
 		queue_redraw()
 		active = false
 		windup = 0.0
@@ -188,8 +224,68 @@ func reset_fight(hp: int = 180) -> void:
 	attack_visual_time = 0.0
 	cooldown = 1.0
 	flash_time = 0.0
+	voice_cooldown = 0.0
+	combat_phase = "idle"
 	visual.modulate = Color.WHITE
+	animate("idle", 0.0)
 	reset_visual_pose()
+
+func animate(state: String, delta: float) -> void:
+	# Restore the normal atlas before selecting its frame, including on interrupt.
+	if base_texture != null and visual.texture != base_texture:
+		visual.texture = base_texture
+		visual.hframes = 8
+		visual.vframes = directions * 4
+		visual.scale = Vector2.ONE * SpriteAssets.display_scale(base_texture)
+		cast_shadow.texture = base_texture
+		cast_shadow.hframes = 8
+		cast_shadow.vframes = directions * 4
+		cast_shadow.scale = Vector2(1.05,0.3) * SpriteAssets.display_scale(base_texture)
+	visual.position = standing_visual_position
+	visual.rotation = 0.0
+	visual.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	super.animate(state, delta)
+	combat_phase = "idle"
+	if health <= 0 or state == "hurt":
+		combat_phase = "hurt"
+		return
+	var row := _direction_row(false, 0)
+	if windup > 0:
+		combat_phase = "windup"
+		# Existing raised-weapon artwork is the anticipation, not the strike.
+		if shot_range == 0:
+			visual.frame = (2 * directions + row) * 8 + 2
+			cast_shadow.frame = visual.frame
+		var progress := 1.0 - windup / windup_duration
+		visual.position += -attack_direction * sin(progress*PI) * 2
+		return
+	if state != "attack": return
+	var progress := clampf(1.0 - attack_visual_time / (8.0/18.0), 0, 1)
+	combat_phase = "contact" if progress < 0.58 else "recovery"
+	if progress >= 0.58:
+		# Lower the arm/weapon with the existing returning-stride pose.
+		visual.frame = (directions + row) * 8 + 6
+		cast_shadow.frame = visual.frame
+		visual.position += attack_direction * (1-progress) * 2
+		return
+	if contact_data.is_empty() or progress > 0.86: return
+	var pose: Dictionary = contact_data[row]
+	var rect: Array = pose.region
+	contact_texture.region = Rect2(rect[0],rect[1],rect[2],rect[3])
+	visual.texture = contact_texture
+	visual.hframes = 1
+	visual.vframes = 1
+	visual.frame = 0
+	visual.scale = Vector2.ONE * float(pose.scale)
+	visual.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	var anchor: Array = pose.anchor
+	visual.position = (Vector2(rect[2],rect[3])*0.5 - Vector2(anchor[0],anchor[1])) * float(pose.scale)
+	visual.position += attack_direction * sin(progress*PI) * (1.0 if shot_range > 0 else 3.0)
+	cast_shadow.texture = contact_texture
+	cast_shadow.hframes = 1
+	cast_shadow.vframes = 1
+	cast_shadow.frame = 0
+	cast_shadow.scale = Vector2(1.05,0.3) * float(pose.scale)
 
 func _draw() -> void:
 	super._draw()
