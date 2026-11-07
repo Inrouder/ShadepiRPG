@@ -1,5 +1,29 @@
 # Versionshinweise
 
+## v0.20.1 – CodexAI: Aktuelle Entwicklungsbranches integrieren · 7. November 2026
+
+- Die bisherige lokale Abrufkonfiguration berücksichtigte nur `main`. Alle GitHub-Branches abgerufen und den neueren Entwicklungsstand `claudehelper/v0.20.0` einschließlich v0.19.0 übernommen.
+- Neuere Spieländerungen mit den bestehenden Menü- und Hack-Verbesserungen zusammengeführt; beide Entwicklungsverläufe bleiben im Git-Verlauf erhalten.
+- Abrufkonfiguration lokal auf alle Branches erweitert und die Arbeitsregel in `AGENTS.md` präzisiert. Versionsangaben einschließlich Windows-Export und Spieleranleitung vereinheitlicht.
+- Zusammengeführten Stand mit allen acht automatisierten Prüfreihen kontrolliert: 1.188 Prüfungen, keine Fehler.
+
+## v0.20.0 – ClaudeHelper: Verfolgungsjagd und Garageneinfahrt · 7. November 2026
+
+- Motorrad-Verfolgung: freies Lenken, Gas/Bremse mit Tempo- und Abstandstaktik, Bordsteinfunken, Tempolinien, Turbo.
+- Neue Straßenobjekte: Betonbarrieren, brennende Wracks, Ölspuren, Turbostreifen, Drohnenminen; Kampfdrohnen, die sich per Hack in den Verfolger lenken lassen; zweite Phase ab 50 % Panzerung.
+- Kapitel 4 beginnt mit der Einfahrt: Rolltor öffnet sich, Motorrad parkt auf der Hebeplattform (fester Körper), Tor schließt; Zugangsterminal und Ersatzteilkiste verschoben.
+- Neues Asset `bike-parked.png` aus dem HQ-Atlas (`tools/compose_parked_bike.py`), Cutscene-Schritt `animate`, `tools/chase_gallery.gd`, 13 neue Prüfungen.
+
+
+## v0.19.0 – ClaudeHelper: Kampfgefühl, Deep Dive, Apartment · 7. November 2026
+
+- Trefferrückmeldung: Trefferstopp, Rückstoß/Zucken (Bosse nur bei schweren Treffern), Kamerastoß, Funken, neue Schadenszahlen, Kombozähler, K.O.-Fallanimation, roter Treffer-Blitz, Tonhöhenvariation.
+- Shadepi: Ausfallschritt pro Hieb und Nahkampf-Zielhilfe. Raven: Zielkegel statt 8-Pixel-Linie.
+- Deep Dive: ICE kollidiert mit Datenwänden, Schuss-Zielhilfe, „Schale knacken“ macht ICE sofort verwundbar.
+- Ravens Apartment im Figurenmaßstab (16:10, Skalierung 0,46) mit eigener Kamera; Szene und Lichter angepasst.
+- Kapitel 2: Storyschritte im Versteck behalten die Positionen (kein Zurückspringen zum Eingang).
+- Unsicherer Cloak-Test stabilisiert; 13 neue Prüfungen; `tools/feedback_gallery.gd`.
+
 ## v0.18.3 – CodexAI: Nightwing-Hacks, Controller und verständliche Hilfe · 7. November 2026
 
 - Alle fünf Terminaltypen in einheitliche dunkle Nightwing-Flächen vor der Neonstadt eingebettet: Cyan-Beschriftung, goldener Fokus, getrennte Aufgaben-/Statusbereiche und sichtbare Reglerwerte.

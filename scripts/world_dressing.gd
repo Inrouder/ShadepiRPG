@@ -39,7 +39,7 @@ const LAYOUTS: = {
 		["fuse_box", "electrical", Vector2(969, 306)], 
 	], 
 	"garage": [
-		["spares", "crate", Vector2(330, 299)], ["tool_case", "electrical", Vector2(534, 299)], 
+		["spares", "crate", Vector2(210, 470)], ["tool_case", "electrical", Vector2(534, 299)],
 		["oil_drum", "barrel", Vector2(628, 476)], ["retired_car", "car", Vector2(299, 466)], 
 		["parts_bin", "dumpster", Vector2(91, 303)], 
 	], 

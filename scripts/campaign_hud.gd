@@ -47,7 +47,7 @@ func _process(delta: float) -> void :
 				abilities.text = "TRIEBWERK LÄUFT · Anflug fortsetzen"
 		else:
 			objective.text = "Verfolger · %d %% Panzerung" % maxi(0, world.drive.armour)
-			controls.text = "A/D / Stick · Lenken    J / X · Feuer    Q / RB · Hack    Leertaste / B · Granate"
+			controls.text = "A/D · Lenken   W/S · Gas/Bremse   J / X · Feuer   Q / RB · Hack (Wagen/Drohne)   Leertaste / B · Granate"
 			abilities.visible = not dialogue_open and not world.menu_open
 			abilities.text = "Hack %.0f s    Granate %.0f s" % [world.drive.hack_cooldown, world.drive.grenade_cooldown]
 	elif world.timing != null:

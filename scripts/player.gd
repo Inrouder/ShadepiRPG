@@ -131,6 +131,9 @@ func try_attack() -> bool:
 			facing = aim.normalized()
 	combo = (combo + 1) % 3 if combo_window > 0.0 else 0
 	combo_window = 0.9
+	world.melee_assist(self)
+	# A short step into the swing sells the weight of the blade.
+	knockback = facing * (150.0 if combo == 2 else 95.0)
 	energy -= 5.0
 	attack_time = 0.38
 	attack_cooldown = 0.4

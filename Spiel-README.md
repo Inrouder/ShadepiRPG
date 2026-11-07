@@ -1,6 +1,8 @@
 # Shadepi · Echos in Neon
 
-**Spieleranleitung für v0.18.3 · CodexAI.** Aktuelle Downloads und Prüfstatus: [Repository-Startseite](README.md). Änderungen: [Versionshinweise](CHANGELOG.md).
+**Spieleranleitung für v0.20.1 · CodexAI.** Aktuelle Downloads und Prüfstatus: [Repository-Startseite](README.md). Änderungen: [Versionshinweise](CHANGELOG.md).
+
+**Aktualisierung v0.20.1 · CodexAI:** Enthält zusätzlich den GitHub-Entwicklungsstand v0.20.0 mit verbessertem Kampfgefühl, passendem Apartmentmaßstab, erweiterter Verfolgungsjagd und Garageneinfahrt. [Verfolgungsjagd](docs/verfolgungsjagd.md) · [Kampfgefühl](docs/kampf-feedback.md).
 
 **Hack-Update v0.18.3 · CodexAI:** Im Terminal navigierst du mit Steuerkreuz oder linkem Stick. **A** wählt ein Feld, dreht eine Leitung oder betätigt einen Knopf. Bei Reglern und Steckplätzen ändert **Links/Rechts** den Wert; **LB/RB** wechselt durch alle verfügbaren Elemente einschließlich der Knöpfe unten. **Y / F1** öffnet die Schritt-für-Schritt-Hilfe und hält das Rätsel an. **B / Esc** schließt zuerst die Hilfe, sonst das Terminal. **Start / P** pausiert. Nach Erfolg **Übernehmen** bestätigen. [Alle Aufgaben mit Bildern](docs/ravens-terminals.md).
 

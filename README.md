@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.18.3 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.20.1 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -35,7 +35,27 @@ Die Spielwelt nutzt **16 gemalte Kulissen** aus `assets/world/painted/`. Wände 
 
 Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und Bosskämpfen. Die vollständige Zuordnung und Hinweise zum Austauschen der MP3-Dateien stehen unter [Musik austauschen](assets/music/README.md).
 
-## Neu in v0.18.3 · 7. November 2026 · CodexAI
+## Neu in v0.20.1 · 7. November 2026 · CodexAI
+
+- GitHub-Entwicklungsstand `claudehelper/v0.20.0` übernommen: Kampfgefühl, Deep-Dive-Korrekturen, Apartmentmaßstab, Verfolgungsjagd und Garageneinfahrt.
+- Menüverbesserungen und Controller-bedienbare Nightwing-Hacks mit den neueren Änderungen zusammengeführt.
+- Vor Arbeitsbeginn werden sämtliche Remote-Branches geprüft, bevor der passende Stand übernommen wird.
+- Zusammengeführten Stand mit allen acht automatisierten Prüfreihen kontrolliert: 1.188 Prüfungen, keine Fehler.
+
+## v0.20.0 · 7. November 2026 · ClaudeHelper
+
+- **Actionreichere Motorrad-Verfolgung:** freies Lenken und **Gas/Bremse (W/S)** – nach vorn fahren für Tempo und Abstand, zurückfallen für Hack und Granaten. Kampfdrohnen werfen Minen und lassen sich kapern und in den Verfolger steuern.
+- **Straßenobjekte im Spielstil:** Betonbarrieren mit Warnlichtern, brennende Wracks, Ölspuren, Neon-Turbostreifen und Drohnenminen statt Holzkisten.
+- **Einfahrt in die Garage:** Das Rolltor fährt hoch, das Motorrad rollt herein und **bleibt auf der Plattform stehen**; danach beginnt das Level. [Details](docs/verfolgungsjagd.md)
+
+## v0.19.0 · 7. November 2026 · ClaudeHelper
+
+- **Kampfgefühl:** Trefferstopp, Rückstoß und Zucken, Kamerastoß, gerichtete Funken, aufspringende Schadenszahlen, Kombozähler, K.O.-Animation, Ausfallschritt und Zielhilfe für Shadepi, Zielhilfe für Ravens Pistole, roter Blitz bei eigenen Treffern. [Details](docs/kampf-feedback.md)
+- **Deep Dive:** ICE fliegt nicht mehr durch Wände, Schüsse rasten ein, ein Treffer knackt die Schale, der nächste löscht das ICE.
+- **Ravens Apartment** im richtigen Maßstab: Das Bild wird nicht mehr auf 640 × 640 gestaucht, Möbel passen zu den Figuren. ![Apartment](docs/apartment-proportionen.png)
+- **Kapitel 2:** Shadepi springt im Storyverlauf nicht mehr zum Eingang zurück.
+
+## v0.18.3 · 7. November 2026 · CodexAI
 
 - Ravens Hacks mit einheitlicher Nightwing-Ansicht, Cyan-/Gold-Akzenten und deutlich sichtbarer Auswahl überarbeitet.
 - Controller: Steuerkreuz und linker Stick navigieren; A betätigt Felder und Knöpfe. Links/Rechts ändern Regler und Steckplätze, LB/RB erreichen alle verfügbaren Bedienelemente.

@@ -2,6 +2,7 @@
 
 Vom Nutzer festgelegte Arbeitsregeln:
 
+- Vor Projektarbeiten immer **alle GitHub-Branches** abrufen (`git fetch origin '+refs/heads/*:refs/remotes/origin/*'`), ihre Versionen und Änderungen vergleichen und erst danach den passenden aktuellen Stand übernehmen. Ein aktueller `main` allein genügt nicht, wenn neuere Arbeit auf Entwicklungsbranches liegt. Änderungen anderer Bearbeiter und lokale Arbeit erhalten.
 - Vor Projektarbeiten den lokalen Git-Stand und offene Änderungen prüfen, den aktuellen Stand von `Inrouder/ShadepiRPG` auf GitHub abrufen und nötige Aktualisierungen ohne Verlust lokaler Arbeit übernehmen.
 - Nutzungslimit und Kosten berücksichtigen: gezielte Lektüre und Prüfungen, keine unnötigen Tool-Aufrufe, Wiederholungen oder Neugenerierungen vorhandener Assets.
 - Regelmäßig Zwischenstände speichern und sinnvoll committen.

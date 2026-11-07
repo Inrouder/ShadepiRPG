@@ -285,6 +285,21 @@ func lines(entries: Array) -> void:
 			return
 		await say(str(entry[0]), str(entry[1]))
 
+## Runs `step(progress)` every frame for `seconds` (0 → 1, eased by the caller).
+## Skipping jumps straight to progress 1, so the final state is always reached.
+func animate(step: Callable, seconds: float) -> void:
+	if not running:
+		return
+	var gen := generation
+	var t := 0.0
+	while t < seconds and not skipping:
+		if not await _frame(gen):
+			return
+		if not _paused():
+			t += get_process_delta_time()
+		step.call(clampf(t / seconds, 0.0, 1.0))
+	step.call(1.0)
+
 ## Jumps an actor along an arc to a new floor position (roof leaps, vaults).
 func leap(actor: PixelActor, target: Vector2, height: float = 70.0, seconds: float = 0.6) -> void:
 	if not running or not is_instance_valid(actor):
