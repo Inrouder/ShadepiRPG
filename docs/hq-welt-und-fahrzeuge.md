@@ -33,7 +33,7 @@ godot --headless --script res://tests/story_audit.gd
 godot --headless --script res://tests/npc_dive_visuals.gd
 ```
 
-Manuell: Kapitel 6 im versteckten Testmenü öffnen, Dialog beenden, Jumper-Rätsel lösen und übernehmen, anschließend Kennung senden. Zweiter Durchlauf mit abgebrochenem Deck und abgelaufener Frist prüft den Kontrollpunkt. In Kapitel 3 über den Hinterhalt zur Verfolgung gehen; Spurwechsel, Schüsse, Hack, Granate, Rammwarnung und Abschluss prüfen. Bei beiden Sequenzen Pause und Ton-Schalter testen.
+Manuell: Kapitel 6 im versteckten Testmenü öffnen, Dialog beenden, Jumper-Rätsel lösen und übernehmen, anschließend durch Schluchten und Turmabwehr fliegen, am Scanner die Sequenzkalibrierung lösen und landen (seit v0.21.3, siehe [Aerodyne-Flug](aerodyne-flug.md)). Zweiter Durchlauf mit abgebrochenem Deck und abgelaufener Frist prüft den Kontrollpunkt. In Kapitel 3 über den Hinterhalt zur Verfolgung gehen; Spurwechsel, Schüsse, Hack, Granate, Rammwarnung und Abschluss prüfen. Bei beiden Sequenzen Pause und Ton-Schalter testen.
 
 ## Spielaufnahmen
 

@@ -1,6 +1,8 @@
 # Shadepi · Echos in Neon
 
-**Spieleranleitung für v0.21.2 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+**Spieleranleitung für v0.21.3 · ClaudeHelper.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+
+**Aerodyne-Flug v0.21.3 · ClaudeHelper:** In Kapitel 6 steuerst du den Aerodyne frei durch die Häuserschluchten (A/D, W/S für Schub und Bremse). **Leertaste / B** rollt seitlich weg – schmal genug für gelb blinkende enge Brückenlücken und kurz unverwundbar gegen Drohnen und Laser. Rote Linien zeigen, wo die Turmabwehr gleich feuert. Am Tower-Scanner folgt die **Sequenzkalibrierung**: Sobald der Strahl auf dem Aerodyne liegt („JETZT“, Ring um den Rumpf), die angezeigte Richtung drücken. Drei Abweichungen lösen Alarm aus, danach scannt der Tower erneut. Zum Schluss beim Signal die Driftkurve fliegen, den Schatten in den Landering bringen und mit **J / X** die Bremsdüsen halten. [Ablauf mit Bildern](docs/aerodyne-flug.md).
 
 **Kampfupdate v0.21.0 · CodexAI:** Im Deep Dive schleudert Raven Blitze aus der offenen Hand. Außerhalb nutzt sie ihre Pistole mit eigenem Schussgeräusch. J / X bzw. Maustaste und die bisherigen Ladetasten bleiben gültig. Gegner holen sichtbar aus, treffen und nehmen die Waffe zurück; Treffer und Tod erhalten unterschiedliche Laute. Die Tonoption schaltet auch diese Stimmen aus. [Vorschau und Hörprobe](docs/raven-gegner-kampf.md).
 

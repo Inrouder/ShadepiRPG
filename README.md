@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.21.2 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.21.3 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -35,7 +35,16 @@ Die Spielwelt nutzt **16 gemalte Kulissen** aus `assets/world/painted/`. Wände 
 
 Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und Bosskämpfen. Die vollständige Zuordnung und Hinweise zum Austauschen der MP3-Dateien stehen unter [Musik austauschen](assets/music/README.md).
 
-## Neu in v0.21.2 · 7. November 2026 · CodexAI
+## Neu in v0.21.3 · 7. November 2026 · ClaudeHelper
+
+- **Aerodyne-Flug als eigenes Level (Kapitel 6):** Häuserschluchten mit Frachtdrohnen, Stahlbrücken und engen Lücken; frei steuern, Schub/Bremse und **Ausweichrolle** (Leertaste / B); knappes Ausweichen zählt als Stunt. Danach Triebwerksausfall, Turmabwehr mit angekündigten Laserdrohnen.
+- **Sequenzkalibrierung:** Der Scannerstrahl des Towers ist sichtbar. Liegt er auf dem Aerodyne („JETZT“), rastet Raven mit der angezeigten Richtung Kenzōs Gleiterkennung Stück für Stück ein. Abweichungen lösen Alarm und einen neuen Scan aus statt eines Absturzes.
+- **Landung wie im Comic:** Driftkurve, dann Landung auf Kenzōs Tower-Plattform mit Ausrichten und Bremsdüsen; der Aerodyne bleibt auf dem Landeplatz stehen.
+- Neue Pixelart-Requisiten und selbst synthetisierte Flugsounds. [Ablauf und Bilder](docs/aerodyne-flug.md)
+
+![Sequenzkalibrierung](docs/flug-kalibrierung.png)
+
+## v0.21.2 · 7. November 2026 · CodexAI
 
 - [Roadmap für drei Kloster-Erinnerungen](docs/erinnerungen-roadmap.md): Angriff auf das Kloster, Lys Opfer und die Übergabe des Heiligtums. Produktionsreihenfolge, neue Figuren, Dialoge und Arbeitspakete vor der Assetproduktion festgehalten.
 - Nutzerbriefing und bestätigte Schutzopfer in [Archiv Teil 5](docs/universum/teil-5/README.md) gesichert.

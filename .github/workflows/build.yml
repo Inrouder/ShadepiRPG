@@ -82,6 +82,12 @@ jobs:
           set -euo pipefail
           godot --headless --script res://tests/combat_moves.gd 2>&1 | tee /tmp/combat-moves.log
           if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/combat-moves.log; then exit 1; fi
+      - name: Validate Aerodyne flight, sequence calibration and landing
+        shell: bash
+        run: |
+          set -euo pipefail
+          godot --headless --script res://tests/aerodyne_flight.gd 2>&1 | tee /tmp/aerodyne-flight.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/aerodyne-flight.log; then exit 1; fi
       - name: Validate Raven origins, enemy poses and combat voices
         shell: bash
         run: |
