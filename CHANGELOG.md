@@ -1,5 +1,15 @@
 # Versionshinweise
 
+## v0.20.5 – ClaudeHelper: Pixelart-Menüs und szenenbezogene Hack-Oberflächen · 7. November 2026
+
+- Alle GitHub-Branches geprüft; auf CodexAI v0.20.4 (verbindlicher HQ-Pixelart-Stil) aufgebaut.
+- Neue UI-Pixelart im Pixelwright-Studio (Projekt „Shadepi UI“) gezeichnet: 64×64-Stahlrahmen als Nine-Slice mit gebürsteten Flecken, Plattennähten, Nieten, Fase, Neonklammern und Status-LEDs; Button-Zustände normal/Fokus/gedrückt/gesperrt; Codezellen frei/erlaubt/Cursor/verbraucht; Titelleiste mit Warnstreifen; Regler und Griffe; Embleme für Rabe, Chrome Jackals, Weißen Drachen, ARToS-7, Moriyama-Tower und See. Quellraster und Themenfarben in `tools/ui_pixel/build_ui_pixel.py`, Ausgabe unter `assets/ui/`.
+- Sechs Farbthemen: Terminals nach Zielsystem (`jackal`, `order`, `artos`, `tower`), Pausenmenü nach Kapitel bzw. Ort der Kampagne. Rahmenkanten kacheln im 20-px-Raster statt zu verschmieren; Buttons und Fokus bleiben pixelgenau, Menü-Hover verschiebt um ganze Pixel statt zu skalieren.
+- Hack-Decks bleiben im 640×360-Spielraster. Hintergrund als verpixeltes, gedithertes Szenenbild mit Scanlines; Oszilloskop, Leitungen und Funken als Pixelgrafik.
+- Pixelschriften: „Shadepi Pixel“ (Jersey 10, OFL, Em auf 1 px = 1 Bildpunkt bei Größe 20 skaliert, Pfeile/Haken/Kreise/Ω ergänzt; `tools/ui_pixel/build_pixel_font.py`) und Silkscreen (OFL). Lizenztexte unter `assets/fonts/`.
+- Behoben: überlappende Terminal-Fußleiste; Garagen-Terminal hieß noch „Versteck“. Signatur im Hauptscreen nennt nur noch die Version.
+- Geprüft: run 372, drive_action 60, terminal_puzzles 67, terminal_controller 186 (neu: Fußleiste, Thema, Filterung, Spielraster), arcade_waves 246, combat_moves 68, npc_dive_visuals 20, story_audit 206 – ohne Fehler. Terminal- und Menügalerien im OpenGL-Renderer kontrolliert.
+
 ## v0.20.4 – CodexAI: HQ-Pixelart als verbindlichen Grafikstil festhalten · 7. November 2026
 
 - Nutzervorgabe in `AGENTS.md` dauerhaft gesichert: alle neuen Grafiken als detailreiche HQ-Pixelart, mit Materialtextur, Tiefenwirkung, abgestimmter Pixeldichte, Licht-/Schattenstufen und sauberen Pixelclustern. Keine einfachen Vektorgrafiken oder glatten Illustrationen als Pixelart-Ersatz.

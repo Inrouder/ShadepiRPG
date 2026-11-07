@@ -8,6 +8,11 @@ func _ready() -> void :
 func show_menu(title: String = "SHADEPI / KAMPAGNE") -> void :
 	super.show_menu(title)
 
+## Pause look follows the current place: Raven's deck, the order's garage,
+## the ARToS aerodyne, Moriyama's tower and the lake.
+func menu_theme() -> String:
+	return ["raven", "raven", "raven", "order", "artos", "order", "artos", "tower", "tower", "tower", "lake", "lake"][clampi(world.beat, 0, 11)]
+
 func _update_mode_buttons() -> void :
 	resume_button.text = "Fortsetzen" if world.started else "Kampagne starten"
 	load_button.text = "Kontrollpunkt laden"

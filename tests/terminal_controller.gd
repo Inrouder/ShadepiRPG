@@ -48,6 +48,18 @@ func run() -> void:
 		panel.set_process(false)
 		panel.finished.connect(func(success): accepted = success)
 		await process_frame
+		# Pixel-art deck: footer buttons never overlap, art and fonts stay pixel-exact.
+		var rects: Array[Rect2] = []
+		for button in panel.footer:
+			rects.append(Rect2(button.position, button.size))
+		var overlap := false
+		for i in rects.size():
+			for j in range(i + 1, rects.size()):
+				overlap = overlap or rects[i].intersects(rects[j])
+		check(not overlap, context + " footer buttons do not overlap")
+		check(panel.skin == preload("res://scripts/ui_skin.gd").terminal_theme(context), context + " uses its target system's skin")
+		check(panel.root.texture_filter == CanvasItem.TEXTURE_FILTER_NEAREST, context + " deck uses nearest filtering")
+		check(get_root().content_scale_mode != Window.CONTENT_SCALE_MODE_CANVAS_ITEMS, context + " deck stays in the pixel viewport")
 		# Every available control, including footer actions, is reachable both ways.
 		for control in panel._enabled_controls():
 			await seek(control)

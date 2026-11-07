@@ -3,7 +3,7 @@ extends RefCounted
 
 const CATALOG := {
 	"jackal": ["matrix", "CHROME JACKAL / TORSCHLEUSE", false],
-	"garage": ["decoder", "VERSTECK / ZUGANGSCODE", false],
+	"garage": ["decoder", "GARAGE / ZUGANGSCODE DES ORDENS", false],
 	"power": ["routing", "HANGAR / ENERGIEBUS", false],
 	"transponder": ["matrix", "AERODYNE / PRÜF-ICE", true],
 	"roof_signal": ["signal", "DACHTERMINAL / FUNKKENNUNG", false],

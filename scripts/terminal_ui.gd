@@ -4,7 +4,10 @@ signal finished(success: bool)
 signal alarm
 const Puzzle = preload("res://scripts/terminal_puzzle.gd")
 const Scope = preload("res://scripts/terminal_scope.gd")
-const CYAN := Color("66edf2")
+const UiSkin = preload("res://scripts/ui_skin.gd")
+## Scene theme of the target system (jackal, order, artos, tower or raven).
+var skin := "raven"
+var palette: Dictionary = UiSkin.THEMES.raven
 var puzzle: RefCounted
 var context := "jackal"
 var root: Control
@@ -73,40 +76,30 @@ const GUIDES := {
 
 func _ready() -> void:
 	layer = 100
+	skin = UiSkin.terminal_theme(context)
+	palette = UiSkin.colors(skin)
 	_build()
 
-func _label(text: String, rect: Rect2, font_size: int = 12, color: Color = CYAN) -> Label:
+## The deck stays in the game's 640x360 pixel viewport: pixel-art frames,
+## buttons and fonts at 1:1, like the rest of Shadepi.
+func _label(text: String, rect: Rect2, color: Color = Color.TRANSPARENT, kind: String = "ui", font_size: int = -1) -> Label:
+	if color == Color.TRANSPARENT:
+		color = palette.primary
 	var label := Label.new()
 	label.text = text
 	label.position = rect.position
 	label.size = rect.size
-	label.add_theme_font_size_override("font_size", font_size)
-	label.add_theme_color_override("font_color", color)
+	UiSkin.style_label(label, color, kind, font_size)
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(label)
 	return label
-
-func _style(color: Color, fill: Color) -> StyleBoxFlat:
-	var style := StyleBoxFlat.new()
-	style.bg_color = fill
-	style.border_color = color
-	style.set_border_width_all(1)
-	style.set_corner_radius_all(5)
-	return style
 
 func _button(text: String, rect: Rect2, callback: Callable, interactive: bool = true) -> Button:
 	var button := Button.new()
 	button.text = text
 	button.position = rect.position
 	button.size = rect.size
-	button.add_theme_font_size_override("font_size", 12)
-	button.add_theme_color_override("font_disabled_color", Color("9cafba"))
-	button.add_theme_stylebox_override("normal", _style(Color("315667"), Color("102332")))
-	button.add_theme_stylebox_override("hover", _style(CYAN, Color("19394a")))
-	button.add_theme_stylebox_override("pressed", _style(CYAN, Color("255367")))
-	var focus_style := _style(Color("ffcc77"), Color(0.1, 0.6, 0.7, 0.15))
-	focus_style.set_border_width_all(2)
-	button.add_theme_stylebox_override("focus", focus_style)
+	UiSkin.apply_button(button, skin)
 	button.focus_mode = Control.FOCUS_ALL
 	button.pressed.connect(callback)
 	root.add_child(button)
@@ -115,7 +108,7 @@ func _button(text: String, rect: Rect2, callback: Callable, interactive: bool = 
 	return button
 
 func _slider(text: String, rect: Rect2, maximum: int, initial: int, callback: Callable, minimum: int = 0) -> HSlider:
-	var value_label := _label(text, Rect2(rect.position - Vector2(0, 20), Vector2(rect.size.x, 18)))
+	var value_label := _label(text, Rect2(rect.position - Vector2(0, 21), Vector2(rect.size.x, 20)))
 	value_labels.append(value_label)
 	var slider := HSlider.new()
 	slider.position = rect.position
@@ -128,8 +121,7 @@ func _slider(text: String, rect: Rect2, maximum: int, initial: int, callback: Ca
 	slider.value_changed.connect(func(v): value_label.text = "%s  [%d]" % [text, int(v)])
 	value_label.text = "%s  [%d]" % [text, initial]
 	slider.focus_mode = Control.FOCUS_ALL
-	slider.add_theme_stylebox_override("slider", _style(Color("315667"), Color("102332")))
-	slider.add_theme_stylebox_override("focus", _style(Color("ffcc77"), Color(0, 0, 0, 0)))
+	UiSkin.apply_slider(slider, skin)
 	root.add_child(slider)
 	controls.append(slider)
 	return slider
@@ -138,10 +130,9 @@ func _option(items: Array, rect: Rect2, callback: Callable) -> OptionButton:
 	var option := OptionButton.new()
 	option.position = rect.position
 	option.size = rect.size
-	option.add_theme_font_size_override("font_size", 12)
 	option.focus_mode = Control.FOCUS_ALL
-	option.add_theme_stylebox_override("normal", _style(Color("315667"), Color("102332")))
-	option.add_theme_stylebox_override("focus", _style(Color("ffcc77"), Color("19394a")))
+	UiSkin.apply_button(option, skin)
+	option.add_theme_icon_override("arrow", UiSkin.chevron(skin))
 	for item in items:
 		option.add_item(str(item))
 	option.item_selected.connect(callback)
@@ -173,26 +164,28 @@ func _build() -> void:
 		root.queue_free()
 	root = Control.new()
 	root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	root.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	add_child(root)
-	var city := TextureRect.new()
-	city.texture = preload("res://assets/menu/start-city.png")
-	city.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	city.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	city.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-	city.modulate = Color(0.24, 0.30, 0.40, 1)
-	city.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	root.add_child(city)
-	var background := Panel.new()
-	background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	background.add_theme_stylebox_override("panel", _style(Color("315667"), Color(0.025, 0.05, 0.09, 0.90)))
-	root.add_child(background)
-	_panel(Rect2(16, 98, 348 if puzzle.kind == "signal" else 272, 169), Color("234453"))
-	_panel(Rect2(374, 98, 250, 169) if puzzle.kind == "signal" else Rect2(298, 98, 326, 169), Color("234453"))
-	_panel(Rect2(16, 270, 608, 40), Color("315667"))
-	_label("NIGHTWING  /  RAVENS DECK", Rect2(24, 8, 380, 24), 18)
-	_label("SICHERE VERBINDUNG  //  " + puzzle.kind.to_upper(), Rect2(402, 11, 218, 18), 10, Color("83aeb9"))
-	_label("Stick / Kreuz: wählen · A: Aktion · LB/RB: weiter · Y: Hilfe · Start: Pause · B: zurück", Rect2(24, 344, 600, 14), 10, Color("a7beca"))
-	_label(puzzle.title, Rect2(24, 33, 570, 20), 13, Color("ffcc77"))
+	# The live scene stays visible behind the deck, pixelated and tinted in the
+	# colours of the hacked system; frames and buttons come from assets/ui/<skin>.
+	root.add_child(UiSkin.backdrop(skin, 0.72))
+	var deck := _panel(Rect2(2, 2, 636, 356))
+	var rim := UiSkin.panel(skin)
+	rim.draw_center = false
+	deck.add_theme_stylebox_override("panel", rim)
+	_header(Rect2(10, 9, 584, 22))
+	_emblem("raven", Rect2(14, 8, 24, 24))
+	_emblem(skin, Rect2(602, 8, 24, 24))
+	_panel(Rect2(16, 98, 348 if puzzle.kind == "signal" else 272, 169))
+	_panel(Rect2(374, 98, 250, 169) if puzzle.kind == "signal" else Rect2(298, 98, 326, 169))
+	_panel(Rect2(16, 270, 608, 40), true)
+	_label("NIGHTWING / RAVENS DECK", Rect2(44, 12, 250, 10), UiSkin.THEMES.raven.primary, "title", UiSkin.SMALL_TITLE_SIZE)
+	_label("SICHERE VERBINDUNG // " + puzzle.kind.to_upper(), Rect2(44, 21, 250, 10), palette.muted, "title", UiSkin.SMALL_TITLE_SIZE)
+	var system := _label("ZIEL · " + palette.system, Rect2(250, 10, 300, 20), palette.accent)
+	system.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	var hint := _label("STICK/KREUZ WÄHLEN · A AKTION · LB/RB WEITER · Y HILFE · START PAUSE · B ZURÜCK", Rect2(20, 343, 600, 10), palette.muted, "title", UiSkin.SMALL_TITLE_SIZE)
+	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_label(puzzle.title, Rect2(20, 36, 600, 18), palette.accent, "title")
 	var instructions := {
 		"matrix": "ZIEL: Alle Codefolgen rechts in den Puffer laden. Nur helle Felder sind erlaubt.\nStarte oben; danach wechseln Spalte und Zeile. Y / F1 erklärt die Schritte.",
 		"decoder": "ZIEL: Das Türpasswort finden. Stelle zuerst den Rauschfilter auf ein stabiles Signal.\nDann Wörter vergleichen: Ähnlichkeit zählt Buchstaben an derselben Stelle.",
@@ -200,23 +193,25 @@ func _build() -> void:
 		"signal": "ZIEL: Dein cyanfarbenes Signal auf die goldene Zielwelle abstimmen.\nRegler wählen, mit Links / Rechts ändern; Deckung 1,2 Sekunden halten.",
 		"jumper": "ZIEL: Antrieb reparieren. Für jeden Pin den passenden Steckplatz wählen.\nWartungslog rechts beachten, Widerstände ergänzen, dann Verbindungen prüfen.",
 	}
-	_label(instructions[puzzle.kind], Rect2(24, 57, 592, 36), 11, Color("a7beca"))
+	_label(instructions[puzzle.kind], Rect2(22, 56, 598, 40), palette.text.darkened(0.08))
 	match puzzle.kind:
 		"matrix": _matrix()
 		"decoder": _decoder()
 		"routing": _routing()
 		"signal": _signal()
 		"jumper": _jumper()
-	feedback = _label("", Rect2(24, 273, 592, 37), 12)
+	feedback = _label("", Rect2(28, 274, 584, 34))
 	feedback.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	footer.append(_button("Abbrechen", Rect2(24, 316, 90, 27), func(): finish(false), false))
-	footer.append(_button("Neu versuchen", Rect2(122, 316, 110, 27), func():
+	feedback.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	# Footer: five buttons on one row without overlap (widths fit the pixel font).
+	footer.append(_button("Abbrechen", Rect2(18, 315, 100, 24), func(): finish(false), false))
+	footer.append(_button("Neu versuchen", Rect2(124, 315, 128, 24), func():
 		paused = false
 		_build(), false))
-	pause_button = _button("Pause", Rect2(240, 316, 70, 27), _toggle_pause, false)
-	apply_button = _button("Übernehmen", Rect2(488, 316, 128, 27), func(): finish(true), false)
+	pause_button = _button("Pause", Rect2(258, 315, 106, 24), _toggle_pause, false)
+	apply_button = _button("Übernehmen", Rect2(492, 315, 130, 24), func(): finish(true), false)
 	footer.append(pause_button)
-	footer.append(_button("Hilfe  Y / F1", Rect2(318, 316, 128, 27), _toggle_help, false))
+	footer.append(_button("Hilfe Y / F1", Rect2(370, 315, 116, 24), _toggle_help, false))
 	footer.append(apply_button)
 	sparks = preload("res://scripts/terminal_sparks.gd").new()
 	sparks.puzzle = puzzle
@@ -248,32 +243,35 @@ func _focus_available() -> void:
 
 func _matrix() -> void:
 	for i in 25:
-		cells.append(_button(puzzle.cells[i], Rect2(24 + (i % 5) * 51, 102 + (i / 5) * 31, 46, 27), func(): puzzle.select_hex(i)))
-	details = _label("", Rect2(306, 104, 310, 158), 14)
+		cells.append(_button(puzzle.cells[i], Rect2(26 + (i % 5) * 51, 106 + (i / 5) * 31, 46, 27), func(): puzzle.select_hex(i)))
+		UiSkin.apply_cell(cells[i], skin)
+	details = _label("", Rect2(310, 106, 304, 156))
 
 func _decoder() -> void:
 	for i in 6:
 		cells.append(_button("", Rect2(24 + i % 2 * 128, 108 + i / 2 * 38, 120, 30), func(): puzzle.guess(i)))
 	helper_buttons.append(_button("[A7.DUD.3F]", Rect2(24, 230, 120, 28), func(): puzzle.helper("dud")))
 	helper_buttons.append(_button("<FF.RESET>", Rect2(152, 230, 120, 28), func(): puzzle.helper("reset")))
-	glitch = _label("", Rect2(311, 99, 298, 25), 15)
+	glitch = _label("", Rect2(311, 103, 298, 20), palette.accent, "title")
 	_slider("Rauschfilter-Frequenz", Rect2(312, 153, 290, 18), 100, 0, func(v): puzzle.filter = int(v))
-	details = _label("", Rect2(312, 179, 290, 88), 12)
+	details = _label("", Rect2(312, 182, 290, 80))
 
 func _routing() -> void:
 	for i in 16:
 		cells.append(_button("", Rect2(46 + i % 4 * 52, 102 + i / 4 * 37, 47, 32), func(): puzzle.rotate(i)))
-	_label("IN", Rect2(22, 142, 24, 20), 10)
-	_label("OUT", Rect2(253, 142, 30, 20), 10)
+		UiSkin.apply_cell(cells[i], skin)
+	_label("IN", Rect2(24, 145, 24, 10), palette.accent, "title", UiSkin.SMALL_TITLE_SIZE)
+	_label("OUT", Rect2(256, 145, 30, 10), palette.accent, "title", UiSkin.SMALL_TITLE_SIZE)
 	_option(["A = 0", "A = 1"], Rect2(306, 104, 111, 27), func(i): puzzle.input_a = i == 1)
 	_option(["B = 0", "B = 1"], Rect2(432, 104, 111, 27), func(i): puzzle.input_b = i == 1)
 	_option(["1× Datenrate", "2× Datenrate"], Rect2(306, 142, 237, 27), func(i): puzzle.rate = i + 1)
 	_button("Datenfluss AN / AUS", Rect2(306, 180, 237, 29), func():
 		puzzle.powered = not puzzle.powered
 		puzzle.stability = 0.0)
-	details = _label("", Rect2(306, 217, 300, 48), 12)
+	details = _label("", Rect2(308, 216, 306, 46))
 	circuit = preload("res://scripts/terminal_circuit.gd").new()
 	circuit.puzzle = puzzle
+	circuit.flow_color = palette.primary
 	circuit.position = Vector2(46, 102)
 	circuit.size = Vector2(208, 148)
 	circuit.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -282,11 +280,12 @@ func _routing() -> void:
 func _signal() -> void:
 	scope = Scope.new()
 	scope.puzzle = puzzle
+	scope.grid_color = palette.primary.darkened(0.72)
 	scope.position = Vector2(24, 105)
 	scope.size = Vector2(330, 145)
 	scope.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(scope)
-	_label("GOLD: Ziel   /   CYAN: Dein Signal", Rect2(24, 251, 335, 18), 10)
+	_label("GOLD: ZIEL  /  CYAN: DEIN SIGNAL", Rect2(24, 253, 330, 10), palette.muted, "title", UiSkin.SMALL_TITLE_SIZE)
 	for i in 3:
 		_slider(["Frequenz", "Amplitude", "Phase"][i], Rect2(382, 126 + i * 55, 220, 20), [6, 5, 7][i], puzzle.signal_values[i], func(v):
 			puzzle.signal_values[i] = int(v)
@@ -294,11 +293,12 @@ func _signal() -> void:
 
 func _jumper() -> void:
 	for i in 5:
-		pin_labels.append(_label("", Rect2(24, 101 + i * 32, 124, 24), 12))
+		pin_labels.append(_label("", Rect2(26, 104 + i * 32, 130, 22)))
 		_option(Puzzle.SOCKETS, Rect2(159, 101 + i * 32, 110, 27), func(v):
 			puzzle.wiring[i] = v
 			puzzle.leds[i] = false)
-	_label("WARTUNGSLOG / ARTOS\nPin 3 → GND. Pin 4 → VCC.\nTX / RX kreuzen; nie an VCC.\nDATA bleibt DATA.\nKette Alpha: zusammen 120 Ω.", Rect2(306, 101, 304, 99), 12)
+	_label("WARTUNGSLOG / ARTOS", Rect2(310, 106, 300, 10), palette.accent, "title", UiSkin.SMALL_TITLE_SIZE)
+	_label("Pin 3 → GND. Pin 4 → VCC.\nTX / RX kreuzen; nie an VCC.\nDATA bleibt DATA.\nKette Alpha: zusammen 120 Ω.", Rect2(310, 118, 300, 80))
 	_option(Puzzle.RESISTORS, Rect2(306, 202, 101, 27), func(i): puzzle.resistors[0] = i)
 	_option(Puzzle.RESISTORS, Rect2(418, 202, 101, 27), func(i): puzzle.resistors[1] = i)
 	_button("Verbindungen prüfen", Rect2(306, 237, 237, 27), func(): puzzle.check_wiring())
@@ -336,7 +336,7 @@ func _refresh() -> void:
 		feedback.text = "SCHRITT 2 · Signal stabil. Wähle jetzt ein Passwort links."
 	if paused:
 		feedback.text = "PAUSE · Weiter mit Start oder Fortsetzen."
-	feedback.add_theme_color_override("font_color", Color("ff697c") if puzzle.flash > 0 or puzzle.failed else CYAN)
+	feedback.add_theme_color_override("font_color", palette.warn if puzzle.flash > 0 or puzzle.failed else palette.primary)
 	sparks.queue_redraw()
 	apply_button.disabled = not puzzle.solved or paused
 	pause_button.text = "Fortsetzen" if paused else "Pause"
@@ -349,8 +349,8 @@ func _refresh() -> void:
 		"matrix":
 			for i in cells.size():
 				cells[i].disabled = paused or not puzzle.legal(i)
-				cells[i].modulate = Color("527686") if i in puzzle.used else Color.WHITE
-			details.text = "PUFFER %d / %d\n%s\n\nDAEMONS" % [puzzle.buffer.size(), puzzle.capacity, " · ".join(puzzle.buffer)]
+				UiSkin.mark_used(cells[i], skin, i in puzzle.used)
+			details.text = "PUFFER %d / %d\n%s\n\nDAEMONS" % [puzzle.buffer.size(), puzzle.capacity, " · ".join(puzzle.buffer) if not puzzle.buffer.is_empty() else "—"]
 			for goal in puzzle.goals:
 				details.text += "\n%s  %s" % ["✓" if puzzle.has_sequence(goal) else "○", " → ".join(goal)]
 		"decoder":
@@ -379,7 +379,7 @@ func _refresh() -> void:
 			for i in 5:
 				controls[i].selected = puzzle.wiring[i]
 				pin_labels[i].text = "%s %d · %s →" % ["●" if puzzle.leds[i] else "○", i + 1, Puzzle.PINS[i]]
-				pin_labels[i].modulate = Color("7dffaa") if puzzle.leds[i] else Color.WHITE
+				pin_labels[i].add_theme_color_override("font_color", Color("7dffaa") if puzzle.leds[i] else palette.primary)
 			for i in 2:
 				controls[i + 5].selected = puzzle.resistors[i]
 	if puzzle.solved and not paused and not help_open and not completion_focused:
@@ -507,14 +507,31 @@ func _activate() -> void:
 		focus.pressed.emit()
 	_refresh()
 
-func _panel(rect: Rect2, color: Color) -> Panel:
+func _panel(rect: Rect2, slim: bool = false) -> Panel:
 	var panel := Panel.new()
 	panel.position = rect.position
 	panel.size = rect.size
 	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	panel.add_theme_stylebox_override("panel", _style(color, Color(0.03, 0.07, 0.11, 0.88)))
+	panel.add_theme_stylebox_override("panel", UiSkin.panel(skin, slim))
 	root.add_child(panel)
 	return panel
+
+func _header(rect: Rect2) -> void:
+	var plate := Panel.new()
+	plate.position = rect.position
+	plate.size = rect.size
+	plate.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	plate.add_theme_stylebox_override("panel", UiSkin.header(skin))
+	root.add_child(plate)
+
+func _emblem(theme: String, rect: Rect2) -> void:
+	var emblem := TextureRect.new()
+	emblem.texture = UiSkin.emblem(theme)
+	emblem.position = rect.position
+	emblem.size = rect.size
+	emblem.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
+	emblem.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(emblem)
 
 func _toggle_help() -> void:
 	held_direction = Vector2.ZERO
@@ -527,24 +544,31 @@ func _toggle_help() -> void:
 		return
 	help_focus = get_viewport().gui_get_focus_owner()
 	help_open = true
-	help_panel = _panel(Rect2(16, 8, 608, 338), CYAN)
-	help_panel.add_theme_stylebox_override("panel", _style(CYAN, Color("08131e")))
+	help_panel = _panel(Rect2(16, 8, 608, 338))
 	help_panel.mouse_filter = Control.MOUSE_FILTER_STOP
-	var title := Label.new()
+	var shade := ColorRect.new()
+	shade.color = Color(palette.deep, 0.96)
+	shade.position = Vector2(6, 6)
+	shade.size = help_panel.size - Vector2(12, 12)
+	shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	help_panel.add_child(shade)
+	var emblem := TextureRect.new()
+	emblem.texture = UiSkin.emblem("raven")
+	emblem.position = Vector2(16, 14)
+	help_panel.add_child(emblem)
+	var title := UiSkin.style_label(Label.new(), palette.accent, "title")
 	title.text = "RAVENS HANDBUCH / " + puzzle.kind.to_upper()
-	title.position = Vector2(18, 14)
-	title.add_theme_font_size_override("font_size", 18)
-	title.modulate = CYAN
+	title.position = Vector2(48, 18)
 	help_panel.add_child(title)
-	var guide := Label.new()
+	var guide := UiSkin.style_label(Label.new(), palette.text)
 	guide.text = GUIDES[puzzle.kind]
-	guide.position = Vector2(18, 60)
-	guide.add_theme_font_size_override("font_size", 13)
+	guide.position = Vector2(20, 52)
 	help_panel.add_child(guide)
 	var close := Button.new()
 	close.text = "Verstanden · A / B / Y / F1"
-	close.position = Vector2(18, 286)
-	close.size = Vector2(570, 32)
+	close.position = Vector2(18, 298)
+	close.size = Vector2(572, 26)
+	UiSkin.apply_button(close, skin)
 	close.pressed.connect(_toggle_help)
 	help_panel.add_child(close)
 	close.grab_focus()

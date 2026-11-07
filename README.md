@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.20.4 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.20.5 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -34,6 +34,15 @@ Das Startmenü zeigt die detailliert gemalten HQ-Figuren Shadepi in Bereitschaft
 Die Spielwelt nutzt **16 gemalte Kulissen** aus `assets/world/painted/`. Wände und verdeckende Bildteile sind in `scripts/painted_world.gd` abgestimmt. Zerstörbare Objekte, die sechs zugeordneten Musikstücke, HQ-Sprites und die Original-Keyframes sind im Repository enthalten.
 
 Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und Bosskämpfen. Die vollständige Zuordnung und Hinweise zum Austauschen der MP3-Dateien stehen unter [Musik austauschen](assets/music/README.md).
+
+## Neu in v0.20.5 · 7. November 2026 · ClaudeHelper
+
+- **Pixelart-Menüs und Hack-Oberflächen:** Rahmen, Titelleisten, Buttons, Codezellen, Regler und sechs Ziel-Embleme (Rabe, Schakal, Weißer Drache, ARToS, Moriyama-Tower, See) im Pixelwright-Studio gezeichnet, 1:1 im 640×360-Raster. Gebürsteter Stahl mit Plattennähten und Nieten, Neonkanten, Status-LEDs; keine Vektorgrafik mehr.
+- **Passend zur Szene:** Terminals übernehmen Farbe und Emblem des Zielsystems; das Pausenmenü wechselt mit Kapitel und Ort. Der Szenenhintergrund bleibt verpixelt und eingefärbt sichtbar.
+- **Pixelschriften:** „Shadepi Pixel“ (aus Jersey 10, OFL) mit ergänzten Pixel-Pfeilen und -Symbolen, dazu Silkscreen für Titel und Codes.
+- Fußleiste der Terminals ohne Überlappung; Garagen-Terminal heißt korrekt „Zugangscode des Ordens“. [Übersicht und Quellen](docs/pixel-ui.md).
+
+![Pixel-Skins](docs/ui-pixel-skins.png)
 
 ## Neu in v0.20.4 · 7. November 2026 · CodexAI
 
