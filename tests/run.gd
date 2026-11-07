@@ -848,12 +848,12 @@ func check_campaign() -> void:
 	for i in 3:
 		scene.raven.position = scene._target()
 		scene.interact()
-		if i in [0,1]:
+		if i in [0,1,2]:
 			await process_frame
 			check(scene.memory_scene != null and scene.point_index == i, "memory anchor opens its historical scene before advancing")
 			scene.memory_scene.cutscene.skip()
 			await process_frame
-			check(scene.point_index == i+1 and (scene.memory_attack_complete if i==0 else scene.memory_sacrifice_complete), "finishing historical scene resumes Raven at the next anchor")
+			check(scene.memory_legacy_complete and scene.point_index==2 if i==2 else scene.point_index==i+1 and (scene.memory_attack_complete if i==0 else scene.memory_sacrifice_complete), "finishing historical scene commits its node before returning to the campaign")
 	finish_dialogue(scene)
 	check(scene.beat == scene.Beat.FLIGHT and scene.drive.flight and scene.drive.phase == "canyon", "chapter five leads to the Aerodyne flight")
 	scene.drive.start_engine_failure()

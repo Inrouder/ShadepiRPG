@@ -1,0 +1,26 @@
+{
+  "version": "0.26.0",
+  "author": "CodexAI",
+  "memory": "legacy",
+  "world_size": [
+    1024,
+    640
+  ],
+  "stage": "Dritte Erinnerung mit Meister, Übergabe, spielbarem Kampf gegen zwei Minotauren und Zusammenbruch",
+  "background": "courtyard.png",
+  "figures": "characters.png",
+  "transfer": "transfer.png",
+  "actor_metadata": "actors.json",
+  "source_regions": 16,
+  "minotaur_reuse": "../sacrifice/minotaur.png",
+  "scene": "res://scenes/memories/legacy.tscn",
+  "entry": "Beat.ECHO / Erinnerungsknoten 3",
+  "characters": [
+    "shadepi",
+    "master"
+  ],
+  "bosses": 2,
+  "master_name": null,
+  "robot_warrior_fate": "Nicht in dieser Erinnerung dargestellt oder festgelegt",
+  "shadepi_end_state": "reglos zusammengebrochen, keine Todesfestlegung"
+}

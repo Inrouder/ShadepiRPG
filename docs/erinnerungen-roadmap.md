@@ -1,12 +1,12 @@
-# Roadmap: Shadepis drei Erinnerungen · v0.25.0 · CodexAI
+# Roadmap: Shadepis drei Erinnerungen · v0.26.0 · CodexAI
 
-**Stand: Pakete 0–6 abgeschlossen.** Seit v0.25.0 · CodexAI ist der Abwehrkampf in Erinnerung II als 45-Sekunden-Überlebenskampf spielbar; danach folgt Lys bestehende Opferszene. Erinnerung 1 zeigt jetzt den vollständigen inszenierten Ablauf mit drei Bot-Wellen, den Schutzopfern von Oni und MG-Krieger sowie dem Rückzug der Überlebenden. Mönche und Bewohner besitzen vier Gehbilder pro Richtung. **Erinnerung 2 ist in v0.24.0 umgesetzt; Erinnerung 3 steht noch aus.** [Lys Opfer: Szene und Vorschau](lys-opfer.md). [Aktuelle Umsetzung und Vorschau](kloster-kampf.md). Grundlage sind das [Nutzerbriefing mit bestätigten Schutzopfern](universum/teil-5/README.md), die vorhandenen Figurenreferenzen und das [Heiligtum-/Romanarchiv](universum/teil-4/README.md). Diese Roadmap hält Produktionspakete, Fortschritt und erzählerische Kontinuität fest.
+**Stand: Pakete 0–6 abgeschlossen.** Seit v0.25.0 · CodexAI ist der Abwehrkampf in Erinnerung II als 45-Sekunden-Überlebenskampf spielbar; danach folgt Lys bestehende Opferszene. Erinnerung 1 zeigt jetzt den vollständigen inszenierten Ablauf mit drei Bot-Wellen, den Schutzopfern von Oni und MG-Krieger sowie dem Rückzug der Überlebenden. Mönche und Bewohner besitzen vier Gehbilder pro Richtung. **Alle drei Erinnerungen sind eingebunden. Erinnerung III enthält seit v0.26.0 Meister, Heiligtumsübergabe, spielbaren Zweibosskampf und Zusammenbruch.** [Aktuelle dritte Erinnerung](das-vermaechtnis.md). [Lys Opfer: Szene und Vorschau](lys-opfer.md). [Aktuelle Umsetzung und Vorschau](kloster-kampf.md). Grundlage sind das [Nutzerbriefing mit bestätigten Schutzopfern](universum/teil-5/README.md), die vorhandenen Figurenreferenzen und das [Heiligtum-/Romanarchiv](universum/teil-4/README.md). Diese Roadmap hält Produktionspakete, Fortschritt und erzählerische Kontinuität fest.
 
 ## Ziel und vorhandener Spieleinstieg
 
 Raven erlebt an jedem der drei Erinnerungsknoten eine eigenständige Rückblende aus Shadepis Vergangenheit. Der Spieler sieht das historische Geschehen mit Shadepi und dem Orden. Raven bleibt die Empfängerin der Erinnerung; sie läuft nicht als zusätzliche Kämpferin durch das damalige Kloster.
 
-Im aktuellen Spiel existieren die drei Anker bereits: `Painted.ECHO_POINTS` in `scripts/painted_world.gd` und der Ablauf `Beat.ECHO` in `scripts/campaign.gd`. Knoten 1 zeigt jetzt „Der Angriff“ als eigene Szene. Knoten 2 zeigt „Lys Opfer“ als eigene Szene. An Knoten 3 bleibt vorerst der bestehende Abschluss erhalten; dort folgt später **Das Vermächtnis**. Die bestehenden übrigen Kapitel, Menüs und Kontrollpunkte bleiben Ausgangsbasis.
+Im aktuellen Spiel existieren die drei Anker bereits: `Painted.ECHO_POINTS` in `scripts/painted_world.gd` und der Ablauf `Beat.ECHO` in `scripts/campaign.gd`. Knoten 1 zeigt jetzt „Der Angriff“ als eigene Szene. Knoten 2 zeigt „Lys Opfer“ als eigene Szene. Knoten 3 zeigt nun **Das Vermächtnis** mit anschließendem Rückkehrdialog. Die bestehenden übrigen Kapitel, Menüs und Kontrollpunkte bleiben Ausgangsbasis.
 
 Die erste Rückblende nutzt das vorhandene System für laufende Figuren, Kamerafahrten, Dialoge und Überspringen. Zunächst entstehen inszenierte Szenen; vollständige spielbare Kämpfe sind getrennte Ausbaupakete. Es werden keine Comicseiten als Ersatz für die Szene eingeplant.
 
@@ -57,7 +57,7 @@ Das Licht beginnt im Inneren des Meisters und geht als weißer Energiestrom auf 
 
 Nach einem Moment der Stille richtet sich Shadepi auf. Zwischen Feuer und Trümmern stellen sich ihm **zwei Minotauren** entgegen. Nach dem Kampf bricht er reglos zusammen; die Erinnerung endet und Raven kehrt in die Gegenwart zurück. Der Zusammenbruch ist keine Todesfestlegung für Shadepi. Das spätere Verschwinden des Klosters liegt außerhalb dieser drei gezeigten Augenblicke.
 
-**Spätere Assets:** alte Meisterfigur in traditioneller Kampfausrüstung, Halte-/Übergabeposen, Ruinenvariante derselben Architektur, weißer Nanitenstrom und beide Panzer. Panzer und Zerstörungsteile aus Erinnerung 2 werden weiterverwendet.
+**In v0.26.0 erstellt:** Meisterfigur in traditioneller bronze-/brauner Kampfausrüstung, Halte-/Übergabe-/Zusammenbruchposen, letzte Ruinenvariante und achtteiliger weißer Nanitenstrom. Die beiden Panzer verwenden die Grafiken aus Erinnerung 2. Der Meister erhält keinen erfundenen Eigennamen.
 
 ## Figuren und visuelle Kontinuität
 
@@ -89,7 +89,7 @@ Neue Grafiken sind **detailreiche HQ-Pixelart**: sichtbare Pixelcluster, struktu
 
 Die Identitätsreferenzen kommen vor den Bewegungsatlanten. Neue Angriffssätze entstehen jeweils dann, wenn sie für den nächsten Kampfabschnitt gebraucht werden.
 
-Paket 6 und **Erinnerung 2** sind abgeschlossen; als Nächstes folgt **Erinnerung 3**. Erst die Roadmap umfasst alle drei; die erste Produktion konzentriert sich auf Erinnerung 1.
+Paket 6 sowie **Erinnerung 2 und 3** sind abgeschlossen. Erst die Roadmap umfasst alle drei; die erste Produktion konzentriert sich auf Erinnerung 1.
 
 ## Aufbau der ersten Map
 
@@ -106,7 +106,7 @@ Feuer, Rauch, Bombeneinschläge und herumfliegende Teile werden als begrenzte, w
 
 ## Einbindung an den Erinnerungsknoten
 
-Zuordnung: **Knoten 1 → Der Angriff (umgesetzt); Knoten 2 → Lys Opfer (umgesetzt); Knoten 3 → Das Vermächtnis (geplant)**. Jede Rückblende erhält einen eigenen stabilen Bezeichner, getrennt vom sichtbaren Titel.
+Zuordnung: **Knoten 1 → Der Angriff (umgesetzt); Knoten 2 → Lys Opfer (umgesetzt); Knoten 3 → Das Vermächtnis (umgesetzt)**. Jede Rückblende erhält einen eigenen stabilen Bezeichner, getrennt vom sichtbaren Titel.
 
 Beim Start werden Ravens aktuelle Position und der Erinnerungsknoten gehalten. Die historische Szene erhält eigene Figuren und lokalen Szenenzustand; Shadepi ist darin sichtbar und wird bei einem später spielbaren Ausbau gesteuert. Historische Figuren ersetzen keine Gegenwarts-NPCs und überschreiben keine aktuellen Lebens-/Energiewerte.
 
@@ -124,4 +124,4 @@ Spätere Prüfungen umfassen Grafik- und Fußanker, Laufwege, Sichtbarkeit der v
 
 ## Noch offene Festlegungen
 
-Die Auswahl der beiden ersten Gefallenen ist **geklärt: Oni und MG-Krieger**. **Oni: Katana; Roboterkopf-Krieger: Stab** sind ebenfalls bestätigt. Offen bleiben Eigennamen der übrigen neuen Figuren, das spätere Schicksal des Roboterkopf-Kriegers und das endgültige Design des Meisters. Minotaurus-Bauform (zwei Laufbeine nach Mech-Dossier) und Lys Sprengladung sind in v0.24.0 als Umsetzungsentscheidungen dokumentiert. Diese Punkte blockieren die Roadmap nicht; sie werden vor dem jeweiligen betroffenen Asset bzw. Storymoment festgelegt. Weitere Tote oder zusätzliche Fähigkeiten werden nicht ungefragt als Kanon eingetragen.
+Die Auswahl der beiden ersten Gefallenen ist **geklärt: Oni und MG-Krieger**. **Oni: Katana; Roboterkopf-Krieger: Stab** sind ebenfalls bestätigt. Offen bleiben Eigennamen der übrigen neuen Figuren, das spätere Schicksal des Roboterkopf-Kriegers. Das Meisterdesign ist in v0.26.0 als traditionelle bronze-/braune Kampfausrüstung mit weißem Bart und gebundenem Haar umgesetzt. Minotaurus-Bauform (zwei Laufbeine nach Mech-Dossier) und Lys Sprengladung sind in v0.24.0 als Umsetzungsentscheidungen dokumentiert. Diese Punkte blockieren die Roadmap nicht; sie werden vor dem jeweiligen betroffenen Asset bzw. Storymoment festgelegt. Weitere Tote oder zusätzliche Fähigkeiten werden nicht ungefragt als Kanon eingetragen.

@@ -1,5 +1,7 @@
 # Erinnerung II: Lys Opfer · v0.25.0 · CodexAI
 
+**Aktualisierung v0.26.0 · CodexAI:** [Erinnerung III – Das Vermächtnis](das-vermaechtnis.md) ist inzwischen eingebunden. Alle drei Rückblenden sind vorhanden.
+
 Am **zweiten Erinnerungsknoten in Kapitel 5** erlebt Raven jetzt den Kampf gegen den Minotaurus und Lys Opfer als eigene Szene mit spielbarem Überlebenskampf. Shadepi, Ly und der Roboterkopf-Krieger sind die drei Überlebenden aus Erinnerung I; Oni und MG-Krieger kehren nicht zurück. Raven bleibt die Empfängerin der Erinnerung und steht nicht im historischen Kloster.
 
 ![Ausschnitte der tatsächlichen Godot-Szene](previews/lys-opfer.webp)

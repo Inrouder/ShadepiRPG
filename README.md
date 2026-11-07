@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.25.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.26.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -35,7 +35,15 @@ Die Spielwelt nutzt **16 gemalte Kulissen** aus `assets/world/painted/`. Wände 
 
 Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und Bosskämpfen. Die vollständige Zuordnung und Hinweise zum Austauschen der MP3-Dateien stehen unter [Musik austauschen](assets/music/README.md).
 
-## Neu in v0.25.0 · 7. November 2026 · CodexAI
+## Neu in v0.26.0 · 7. November 2026 · CodexAI
+
+- **Erinnerung III – Das Vermächtnis:** Shadepi hält seinen Meister, verspricht den Schutz des Heiligtums und empfängt dessen weißen Nanitenstrom. Danach folgt ein spielbarer Kampf gegen zwei unabhängig besiegbare Minotauren. Nach dem Sieg bricht Shadepi reglos zusammen; Raven kehrt aus der Erinnerung zurück.
+- Neue HQ-Pixel-Ruinenstufe, Meister-/Halte-/Zusammenbruchposen und animierte weiße Übertragung; vorhandene Minotaurus-Grafiken und Kampfsteuerung wiederverwendet. J / X schlägt zu, Leertaste / B weicht aus. Beide Gegner müssen besiegt werden; es gibt keinen automatischen Sieg durch Zeitablauf.
+- Pause, Controller, Wiederholungsversuch und bewusstes Überspringen über das Pausenmenü. Dritter Knoten mit eigenem kompatiblem Abschlussfeld; die beiden früheren Erinnerungen bleiben gespeichert.
+- **1.068 Prüfungen ohne Fehler** in sechs Prüfreihen; tatsächlicher Szenenlauf und Exportpaket kontrolliert.
+- [Bilder, Ablauf und Steuerung](docs/das-vermaechtnis.md). Damit sind alle drei angeforderten Erinnerungen eingebunden.
+
+## v0.25.0 · 7. November 2026 · CodexAI
 
 - **Spielbarer Minotaurus-Kampf vor Lys Opfer:** Shadepi muss am zweiten Erinnerungsknoten 45 Sekunden durchhalten. Drei Stufen steigern das markierte Sperrfeuer bis zur Übermacht.
 - Bewegen, Katana-Schläge und Ausweichsprints mit kurzer Unverwundbarkeit. Die Panzerung bleibt intakt; wiederholte Treffer bringen den Minotaurus kurz ins Taumeln.

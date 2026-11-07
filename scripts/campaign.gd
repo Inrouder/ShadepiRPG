@@ -34,6 +34,7 @@ var memory_layer: CanvasLayer
 var memory_serial := 0
 var memory_attack_complete := false
 var memory_sacrifice_complete := false
+var memory_legacy_complete := false
 var memory_anchor := -1
 var memory_return_music := "chapter_5_echo"
 var drive_layer: CanvasLayer
@@ -136,7 +137,7 @@ func new_game(_save_checkpoint: bool = true) -> void :
 	fresh_entry = true
 	_enter(Beat.PACT)
 
-func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo: bool = false, seen_attack: bool = false, seen_sacrifice: bool = false) -> void :
+func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo: bool = false, seen_attack: bool = false, seen_sacrifice: bool = false, seen_legacy: bool = false) -> void :
 	_close_memory(false)
 	var fresh: = fresh_entry
 	fresh_entry = false
@@ -160,6 +161,7 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo:
 	echo_ready = false
 	memory_attack_complete = false
 	memory_sacrifice_complete = false
+	memory_legacy_complete = false
 	camera.zoom = Vector2.ONE * (1.15 if next == Beat.ECHO else 1.0)
 	if is_instance_valid(drive):
 		drive.hide()
@@ -213,6 +215,7 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo:
 		echo_ready = true
 		memory_attack_complete = seen_attack
 		memory_sacrifice_complete = seen_attack and seen_sacrifice
+		memory_legacy_complete = memory_sacrifice_complete and seen_legacy
 		# Old saves reached point 2 through a note; resume at the new second memory.
 		point_index = clampi(saved_point,0,2 if memory_sacrifice_complete else 1) if seen_attack else 0
 		reset_raven(SPAWN if point_index==0 else Painted.ECHO_POINTS[point_index-1])
@@ -511,7 +514,10 @@ func interact(_actor: PixelActor = null) -> void :
 		if point_index == 1 and not memory_sacrifice_complete:
 			_open_memory(1)
 			return
-		toast(["Das Kloster.", "Lys Opfer.", "Die Nacht des Angriffs."][point_index])
+		if point_index == 2 and not memory_legacy_complete:
+			_open_memory(2)
+			return
+		toast(["Das Kloster.", "Lys Opfer.", "Das Vermächtnis."][point_index])
 		if point_index == 2:
 			_scene_echo_end()
 			return
@@ -640,7 +646,7 @@ func _open_first_memory() -> void:
 	_open_memory(0)
 
 func _open_memory(anchor: int) -> void:
-	if is_instance_valid(memory_scene) or beat!=Beat.ECHO or point_index!=anchor or anchor not in [0,1]: return
+	if is_instance_valid(memory_scene) or beat!=Beat.ECHO or point_index!=anchor or anchor not in [0,1,2]: return
 	memory_serial += 1
 	var ticket := memory_serial
 	memory_anchor = anchor
@@ -658,7 +664,7 @@ func _open_memory(anchor: int) -> void:
 	viewport.world_2d = World2D.new()
 	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	container.add_child(viewport)
-	var resource = preload("res://scenes/memories/attack.tscn") if anchor==0 else preload("res://scenes/memories/sacrifice.tscn")
+	var resource: PackedScene = [preload("res://scenes/memories/attack.tscn"),preload("res://scenes/memories/sacrifice.tscn"),preload("res://scenes/memories/legacy.tscn")][anchor]
 	var scene = resource.instantiate()
 	scene.embedded = true
 	scene.autoplay = false
@@ -668,7 +674,7 @@ func _open_memory(anchor: int) -> void:
 	scene.finished.connect(func(done: bool):
 		if memory_scene!=scene or memory_serial!=ticket or beat!=Beat.ECHO or point_index!=anchor: return
 		_close_memory(done))
-	set_music_section("fight" if anchor==0 else "boss")
+	set_music_section("fight" if anchor==0 else "boss" if anchor==1 else "chapter_5_sanctuary")
 	scene.play.call_deferred()
 
 func _close_memory(done: bool) -> void:
@@ -687,6 +693,11 @@ func _close_memory(done: bool) -> void:
 	if done and beat==Beat.ECHO and point_index==anchor:
 		if anchor==0: memory_attack_complete = true
 		elif anchor==1: memory_sacrifice_complete = true
+		elif anchor==2:
+			memory_legacy_complete = true
+			autosave()
+			_scene_echo_end()
+			return
 		_complete_point()
 		toast(("Der Angriff" if anchor==0 else "Lys Opfer")+" · Erinnerung gesichert")
 
@@ -712,6 +723,7 @@ func save_game() -> bool:
 	config.set_value("campaign", "echo_started", beat==Beat.ECHO and echo_ready)
 	config.set_value("campaign", "memory_attack_complete", memory_attack_complete)
 	config.set_value("campaign", "memory_sacrifice_complete", memory_sacrifice_complete)
+	config.set_value("campaign", "memory_legacy_complete", memory_legacy_complete)
 	config.set_value("campaign", "arcade_section", encounter.section_index if encounter != null else 0)
 	config.set_value("campaign", "escape_guards_cleared", escape_guards_cleared)
 	config.set_value("props", "state", dressing_state())
@@ -730,13 +742,14 @@ func load_game(_requested_mode: Variant = null) -> bool:
 	var saved_echo: Variant = config.get_value("campaign", "echo_started", false)
 	var seen_attack: Variant = config.get_value("campaign", "memory_attack_complete", false)
 	var seen_sacrifice: Variant = config.get_value("campaign", "memory_sacrifice_complete", false)
+	var seen_legacy: Variant = config.get_value("campaign", "memory_legacy_complete", false)
 	escape_guards_cleared = (cleared if cleared is bool else true) or saved != Beat.ESCAPE
 	# Saves from v0.16.0 could stop at the old roof guard fight (point 2);
 	# those guards now follow Kenzō, so resume directly at the penthouse.
 	if saved == Beat.ROOF and saved_point is int and saved_point >= 2:
 		saved = Beat.BOSS
 		saved_point = 0
-	_enter(saved, saved_section if saved_section is int else 0, saved_point if saved_point is int else 0, saved_echo is bool and saved_echo, seen_attack is bool and seen_attack, seen_sacrifice is bool and seen_sacrifice)
+	_enter(saved, saved_section if saved_section is int else 0, saved_point if saved_point is int else 0, saved_echo is bool and saved_echo, seen_attack is bool and seen_attack, seen_sacrifice is bool and seen_sacrifice, seen_legacy is bool and seen_legacy)
 	return true
 
 func _draw() -> void :
@@ -1161,7 +1174,7 @@ func _scene_echo_end() -> void:
 	cs.pose(raven, "idle")
 	await cs.flash(Color(1, 1, 1, 0.7), 0.6)
 	await cs.lines([
-		["RAVEN", "Ich habe gesehen, was du verloren hast. Das Kloster. Deine Kameraden. Was Ly für dich getan hat."],
+		["RAVEN", "Jetzt verstehe ich dein Versprechen. Ly, dein Meister … du hast das Heiligtum durch all das getragen."],
 		["SHADEPI", "Das Heiligtum hat dich nicht verletzt. Es hat dich … erkannt."],
 	])
 	await cs.fade(Color.BLACK, 0.8)

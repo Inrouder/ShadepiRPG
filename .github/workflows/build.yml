@@ -112,6 +112,12 @@ jobs:
           set -euo pipefail
           godot --headless --script res://tests/sacrifice_memory.gd 2>&1 | tee /tmp/sacrifice-memory.log
           if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/sacrifice-memory.log; then exit 1; fi
+      - name: Validate final memory, two-boss battle and sanctuary transfer
+        shell: bash
+        run: |
+          set -euo pipefail
+          godot --headless --script res://tests/legacy_memory.gd 2>&1 | tee /tmp/legacy-memory.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/legacy-memory.log; then exit 1; fi
       - name: Validate digital NPC visuals
         run: godot --headless --script res://tests/npc_dive_visuals.gd
       - name: Validate story, chapter flow, geometry and dialogue

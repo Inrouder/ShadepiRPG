@@ -1,5 +1,16 @@
 # Versionshinweise
 
+## v0.26.0 – CodexAI: Erinnerung III „Das Vermächtnis“ · 7. November 2026
+
+- Alle GitHub-Branches vor Beginn verglichen; auf dem aktuellen v0.25.0-Stand aufgebaut und bestehende Arbeit erhalten.
+- Dritte Erinnerung am dritten ECHO-Knoten: Shadepi stützt den alten Meister, beide sprechen die bestätigten Schutzversprechen, das Heiligtum geht als weißer Nanitenstrom auf Shadepi über. Danach stellt er sich allein zwei Minotauren. Nach deren Zerstörung bricht er reglos zusammen; dies wird nicht als sein Tod festgelegt. Keine Rückkehr der Gefallenen und keine neue Festlegung zum späteren Schicksal des Roboterkopf-Kriegers.
+- Neue HQ-Pixel-Ruinenvariante derselben Architektur, Meister-/Halte-/Empfangs-/Zusammenbruchposen und achtteiliger weißer Transfer-Atlas. Gemessene Bildkontakte mit konstanter Körpergröße; Originalbilder werden nicht nachbearbeitet. Vorhandene Minotaurus- und Kampfeffekte wiederverwendet. Transfer einschließlich erstem Bild korrekt pausierbar.
+- Spielbarer Zweibosskampf auf Grundlage der vorhandenen Steuerung: eigene Lebens-, Taumel- und Zerstörungswerte für beide Mechs; wechselndes, vorab markiertes Sperrfeuer, Katana-Schaden an den Servogelenken, Ausweichen und lokaler Wiederholungsversuch. Sieg erst nach Zerstörung beider Gegner, nicht durch Countdown. Wiederholung entfernt Ereignisse eines gescheiterten Versuchs und stellt beide Gegner wieder her.
+- Abbruch und Controller-Überspringen auch während des echten Kampfes geprüft. Gegenwartswerte bleiben getrennt. Eigenes typgeprüftes Speicherfeld für Knoten 3, ältere Spielstände behalten die beiden früheren Abschlüsse. Nach Abschluss folgt Ravens Rückkehrdialog und anschließend unverändert der Aerodyne-Flug.
+- Beide Exportprofile enthalten die neuen Ankerdaten. Eigenständiger CI-Test, inputgesteuerter Testpilot und Renderer-Galerie ergänzt. Roadmap und Spielerhinweise auf den abgeschlossenen Dreiteiler aktualisiert.
+
+- Validierung: sechs Prüfreihen mit **1.068 Prüfungen, 0 Fehlern** (Erinnerung III 42, Erinnerung II 69, Erinnerung I 143, Klosterkampf 226, Kampagne/Speichern 382, Story-Audit 206). Vollständige Szene mit Eingabe-Testpilot im OpenGL-Renderer bis zu Ravens Rückkehr kontrolliert; Linux-PCK erzeugt und neue Grafiken, Ankerdaten, Knistern sowie beide Mechs und Schlusszustand direkt aus dem Paket geprüft. Vorschau und Bedienung unter docs/das-vermaechtnis.md.
+
 ## v0.25.0 – CodexAI: Spielbarer Überlebenskampf gegen den Minotaurus · 7. November 2026
 
 - Erinnerung II enthält vor Lys Opfer einen echten 45-Sekunden-Kampf mit steuerbarem Shadepi, lokalen Lebenswerten, Katana-Treffern, Taumeln und Ausweichen. Die Panzerung bleibt intakt; der Spieler kann den festen Opfermoment nicht durch einen vorzeitigen Bosskill umgehen.

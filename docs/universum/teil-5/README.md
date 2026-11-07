@@ -31,3 +31,7 @@ Verbindlicher Stil: detailreiche HQ-Pixelgrafiken mit Materialtexturen, Tiefenwi
 ## Umsetzungshinweis v0.24.0 · CodexAI
 
 Erinnerung II ist als Szene am zweiten Knoten eingebunden. Der im Originaldossier (Teil 1, Abschnitt 9) als gepanzerter Cyborg-/Mech-Hybrid mit Servoschächten beschriebene Minotaurus erhält in der Umsetzung zwei Laufbeine. Ly befestigt eine Sprengladung am Servoschacht und bleibt bei der Zündung am Panzer. Bauform und konkrete Zündtechnik sind hier **Umsetzungsentscheidungen**, keine zusätzlich bestätigten Nutzerzitate und keine neue Fähigkeit des Heiligtums. Die Handlung und bestätigten Dialoge oben bleiben maßgeblich. [Vorschau und aktueller Produktionsstand](../../lys-opfer.md).
+
+## Umsetzungshinweis v0.26.0 · CodexAI
+
+Erinnerung III ist am dritten Knoten eingebunden. Der Meister ist als älterer Mann mit weißem Bart, gebundenem Haar und traditioneller bronze-/brauner Kampfausrüstung dargestellt; ein Eigenname wird nicht ergänzt. Die bestätigten Versprechen, der weiße Nanitenstrom, zwei Minotauren und Shadepis anschließender Zusammenbruch sind enthalten. Es wird weder Shadepis Tod noch ein neuer Tod des Roboterkopf-Kriegers festgelegt. [Umsetzung und Vorschau](../../das-vermaechtnis.md).
