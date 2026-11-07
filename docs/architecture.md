@@ -10,7 +10,10 @@
 | `scenes/chapter_two.tscn`, `scripts/chapter_two.gd` | Industriegebiet und Deep Dive |
 | `scenes/campaign.tscn`, `scripts/campaign.gd` | Kampagne ab Kapitel 3 |
 | `scripts/campaign_story.gd` | Kapiteltexte, Dialoge und Missionsziele |
-| `scripts/campaign_drive.gd` | Fahrzeugsequenzen |
+| `scripts/campaign_drive.gd` | Motorrad-Verfolgung (Kapitel 3) |
+| `scripts/aerodyne_flight.gd` | Aerodyne-Flug zum Tower mit Turmabwehr und Landung (Kapitel 6) |
+| `scripts/sequence_calibration.gd` | Minispiel Sequenzkalibrierung am Tower-Scanner |
+| `scripts/parked_aerodyne.gd` | gelandeter Aerodyne auf dem Tower-Landeplatz |
 | `scenes/main.tscn`, `scripts/main.gd` | Separate Gameplay-Testszene |
 
 ## Kulissen und Requisiten

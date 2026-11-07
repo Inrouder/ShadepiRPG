@@ -39,17 +39,7 @@ func _process(delta: float) -> void :
 		health_bar.size.x = 164.0 * maxf(0.0, world.drive.health) / 100.0
 		energy_bar.size.x = 0.0
 		if world.drive.flight:
-			objective.text = "Tower-Anflug · %.0f s" % maxf(0.0, 15.0 - world.drive.elapsed)
-			controls.text = "A/D / Stick · Flugspur wechseln    Q / RB · Gleiterkennung"
-			abilities.visible = not dialogue_open and not world.menu_open
-			abilities.text = "Kennung bestätigt" if world.drive.transponder_sent else ("Scanner in Reichweite · Q / RB" if world.drive.elapsed >= 9.0 else "Scanner noch außer Reichweite")
-			if world.drive.engine_failed:
-				objective.text = "TRIEBWERK AUS · %.1f s" % world.drive.repair_left
-				controls.text = "J / X · Ravens Wartungsdeck    A/D / Stick · Gegenlenken"
-				abilities.text = "Jumper prüfen · TX/RX kreuzen · Alpha 120 Ω"
-				energy_bar.size.x = 164.0 * world.drive.repair_left / world.drive.REPAIR_SECONDS
-			elif world.drive.restart_flash > 0:
-				abilities.text = "TRIEBWERK LÄUFT · Anflug fortsetzen"
+			_flight_hud(world.drive)
 		else:
 			objective.text = "Verfolger · %d %% Panzerung" % maxi(0, world.drive.armour)
 			controls.text = "A/D · Lenken   W/S · Gas/Bremse   J / X · Feuer   Q / RB · Hack (Wagen/Drohne)   Leertaste / B · Granate"
@@ -63,3 +53,37 @@ func _process(delta: float) -> void :
 		controls.text = "Geschichte abgeschlossen · Esc / Start öffnet das Menü"
 	else:
 		controls.text = "WASD / Stick · Bewegen    E / A · Interagieren    Leertaste / B · Ausweichen    Esc · Menü"
+
+## Aerodyne flight (Kapitel 6): one clear instruction per phase.
+func _flight_hud(flight) -> void:
+	# The calibration deck and the landing gauge carry their own readouts.
+	abilities.visible = not dialogue_open and not world.menu_open and flight.phase not in ["scan", "landing", "done"]
+	var km := maxf(0.0, (flight.SCAN_AT - flight.elapsed) * 0.08)
+	match flight.phase:
+		"canyon", "defence":
+			objective.text = ("Turmabwehr · " if flight.phase == "defence" else "Tower-Anflug · ") + ("%.1f km" % km).replace(".", ",")
+			controls.text = "A/D · Steuern   W/S · Schub/Bremse   Leertaste / B · Ausweichrolle"
+			abilities.text = ("Rolle bereit" if flight.roll_cooldown <= 0.0 else "Rolle lädt …") + ("    Stunts: %d" % flight.near_misses if flight.near_misses > 0 else "")
+		"scan":
+			objective.text = "Sequenzkalibrierung · Scanner %.0f s" % flight.calibration.time_left
+			controls.text = "Pfeile / WASD / Steuerkreuz · Richtung, wenn der Strahl auf dem Aerodyne liegt"
+			abilities.text = "Code %d / %d    Abweichungen %d / 3" % [flight.calibration.index, flight.calibration.steps.size(), flight.calibration.errors]
+		"alarm":
+			objective.text = "ALARM · Neuer Scan in %.0f s" % maxf(0.0, flight.alarm_left)
+			controls.text = "A/D · Steuern   Leertaste / B · Rolle durch die Laser"
+			abilities.text = "Kennung abgelehnt – überleben"
+		"approach":
+			objective.text = "Kennung akzeptiert · Landeanflug"
+			controls.text = "Leertaste / B beim Signal · Driftkurve"
+			abilities.text = "Kontrollierter Drift" if flight.drifted else "Plattform voraus"
+		"landing", "done":
+			objective.text = "Landung · Tower-Plattform"
+			controls.text = "A/D/W/S · Schatten in den Ring   J / X halten · Bremsdüsen"
+			abilities.text = "Aufgesetzt: %s" % flight.touchdown if flight.touchdown != "" else ("Im Ring" if flight.pad_offset() <= 1.0 else "Ausrichten")
+	if flight.engine_failed:
+		objective.text = "TRIEBWERK AUS · %.1f s" % flight.repair_left
+		controls.text = "J / X · Ravens Wartungsdeck    A/D / Stick · Gegenlenken"
+		abilities.text = "Jumper prüfen · TX/RX kreuzen · Alpha 120 Ω"
+		energy_bar.size.x = 164.0 * flight.repair_left / flight.REPAIR_SECONDS
+	elif flight.restart_flash > 0:
+		abilities.text = "TRIEBWERK LÄUFT · Anflug fortsetzen"

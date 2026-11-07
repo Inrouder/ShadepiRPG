@@ -1,5 +1,18 @@
 # Versionshinweise
 
+## v0.21.3 – ClaudeHelper: Aerodyne-Flug mit Sequenzkalibrierung und Landung auf dem Tower · 7. November 2026
+
+- Alle Branches geprüft; auf CodexAI v0.21.2 (Erinnerungs-Roadmap) aufgebaut, ohne Überschneidung.
+- Kapitel-6-Flug neu als eigenes Level (`scripts/aerodyne_flight.gd`) nach der Romanfassung: Häuserschluchten mit Frachtdrohnen, Stahlbrücken mit Lücke und engen Lücken, Fassadenkontakt; freies Steuern mit Trägheit, Schub/Bremse, Ausweichrolle mit schmalem Profil und kurzer Unverwundbarkeit; Beinahe-Treffer als Stunts mit kleiner Integritätsrückgabe.
+- Triebwerksausfall mit Ravens Jumper-Reparatur bleibt; nach einem Absturz fällt das reparierte Triebwerk nicht erneut aus.
+- Turmabwehr: Abwehrdrohnen mit angekündigten Laserlinien (Warnton, blinkende Linie, dann Strahl).
+- Neues Minispiel **Sequenzkalibrierung** (`scripts/sequence_calibration.gd`): sichtbarer Scannerstrahl, Fenster = Strahl auf dem Rumpf, Richtungscode, Metronom, Fehler-LEDs, Zeitbalken. Fehlschlag löst Alarm und einen neuen Scan aus statt eines Absturzes. Das frühere unsichtbare Zeitfenster für die Kennung entfällt.
+- Driftkurve (Rolle im Signalfenster) und interaktive Landung über dem Tower-Dach im Bildausschnitt der folgenden Szene: Schatten in den Landering, Bremsdüsen halten, Höhen- und Sinkratenanzeige; präzise, harte und sehr harte Landung, Durchstarten neben der Plattform.
+- Der Aerodyne bleibt an der Aufsetzstelle auf Kenzōs Landeplatz stehen (y-sortiert, Kollision, Nachdampfen); Shadepi und Raven steigen daneben aus.
+- Pixelart: Abwehrdrohne (2 Rotorbilder), Brückensegment, Warnpylon, Scannerkopf (`assets/world/hq/flight-props.png`, `tools/flight/build_flight_props.py`). Elf selbst synthetisierte Sounds (`tools/flight/generate_flight_audio.py`).
+- Behoben: Pixel-UI-Styleboxen, die direkt gezeichnet werden, verloren ihre Textur (Texturcache in `ui_skin.gd`).
+- Geprüft: neuer Test `tests/aerodyne_flight.gd` (50 Prüfungen, im CI), Kampagnenablauf bis aufs Dach erweitert; alle zehn Prüfreihen fehlerfrei. Flugphasen und Dachszene im OpenGL-Renderer gerendert; ein automatischer Testpilot schafft den Flug in rund 43 s.
+
 ## v0.21.2 – CodexAI: Roadmap und Quellen der Kloster-Erinnerungen · 7. November 2026
 
 - Vor Beginn alle GitHub-Branches geprüft und den aktuellen Hauptstand v0.21.1 übernommen.

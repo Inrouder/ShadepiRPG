@@ -849,23 +849,39 @@ func check_campaign() -> void:
 		scene.raven.position = scene._target()
 		scene.interact()
 	finish_dialogue(scene)
-	check(scene.beat == scene.Beat.FLIGHT and scene.drive.flight, "chapter five leads to the Aerodyne flight")
+	check(scene.beat == scene.Beat.FLIGHT and scene.drive.flight and scene.drive.phase == "canyon", "chapter five leads to the Aerodyne flight")
 	scene.drive.start_engine_failure()
 	check(preload("res://tests/terminal_solver.gd").complete(scene), "wiring repairs Aerodyne")
-	scene.drive.elapsed = 15.0
+	scene.drive.health = 0
 	scene.drive._process(0.01)
-	check(scene.beat == scene.Beat.FLIGHT and scene.menu_open, "landing requires a transmitted transponder code")
+	check(scene.beat == scene.Beat.FLIGHT and scene.menu_open, "a wrecked Aerodyne restarts the flight checkpoint")
 	scene.close_menu()
 	finish_dialogue(scene)
-	scene.drive.start_engine_failure()
-	check(preload("res://tests/terminal_solver.gd").complete(scene), "repair can be repeated after crash checkpoint")
-	scene.drive.elapsed = 9.1
-	Input.action_press("hack")
+	check(scene.drive.engine_repaired and not scene.drive.engine_failed, "after a crash the repaired engine does not fail again")
+	await process_frame
+	scene.drive.elapsed = scene.drive.SCAN_AT
 	scene.drive._process(0.01)
-	Input.action_release("hack")
-	check(scene.drive.transponder_sent, "Raven transmits the code in scanner range")
-	scene.drive.elapsed = 15.0
 	scene.drive._process(0.01)
+	check(scene.drive.phase == "scan", "the tower scanner starts Raven's sequence calibration")
+	var calib = scene.drive.calibration
+	var guard := 0
+	while calib.state == "run" and guard < 4000:
+		guard += 1
+		if calib.in_window():
+			scene.drive.calibration_input(int(calib.current().dir))
+		else:
+			scene.drive._process(1.0 / 120.0)
+	check(scene.drive.transponder_sent, "Raven calibrates Kenzō's glider ID at the scanner")
+	scene.drive.approach_left = 0.0
+	scene.drive._process(0.01)
+	check(scene.drive.phase == "landing", "accepted ID leads to the landing approach")
+	scene.drive.shadow = scene.drive.pad_screen()
+	scene.drive.altitude = 0.001
+	scene.drive.descent = 0.1
+	scene.drive._process(0.01)
+	scene.drive._process(2.0)
+	check(scene.beat == scene.Beat.ROOF and scene.parked_aerodyne != null, "the Aerodyne lands on the tower pad and stays parked")
+	check(scene.parked_aerodyne.spot.distance_to(scene.drive.PAD_WORLD if scene.drive != null else Vector2(222, 326)) < 40.0, "parked Aerodyne stands where it touched down")
 	finish_dialogue(scene)
 	for i in 2:
 		scene.clock = 0

@@ -45,8 +45,15 @@ static func chapter_theme(chapter: int) -> String:
 static func colors(theme: String) -> Dictionary:
 	return THEMES.get(theme, THEMES.raven)
 
+## Textures are cached: styleboxes drawn directly from _draw() would otherwise
+## free their only texture reference before the frame is rendered.
+static var _textures := {}
+
 static func texture(theme: String, part: String) -> Texture2D:
-	return load("res://assets/ui/%s/%s.png" % [theme if THEMES.has(theme) else "raven", part])
+	var path := "res://assets/ui/%s/%s.png" % [theme if THEMES.has(theme) else "raven", part]
+	if not _textures.has(path):
+		_textures[path] = load(path)
+	return _textures[path]
 
 static func atlas(source: Texture2D, region: Rect2) -> AtlasTexture:
 	var piece := AtlasTexture.new()
@@ -55,7 +62,9 @@ static func atlas(source: Texture2D, region: Rect2) -> AtlasTexture:
 	return piece
 
 static func emblem(theme: String) -> AtlasTexture:
-	return atlas(load("res://assets/ui/emblems.png"), Rect2(maxi(0, EMBLEMS.find(theme)) * 24, 0, 24, 24))
+	if not _textures.has("emblems"):
+		_textures["emblems"] = load("res://assets/ui/emblems.png")
+	return atlas(_textures["emblems"], Rect2(maxi(0, EMBLEMS.find(theme)) * 24, 0, 24, 24))
 
 ## "ui": Shadepi Pixel (Jersey 10 on a 1 px grid at size 20, with pixel arrows).
 ## "title" / "mono": Silkscreen capitals at 8 or 16.
