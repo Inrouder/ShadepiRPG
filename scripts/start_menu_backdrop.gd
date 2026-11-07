@@ -75,8 +75,9 @@ func _ready() -> void:
 	add_child(atmosphere)
 	visibility_changed.connect(_sync_activity)
 	var signature := Label.new()
-	signature.text = "IM SCHATTEN DES RABEN     ·     v" + str(ProjectSettings.get_setting("application/config/version")) + " · CodexAI"
-	signature.position = Vector2(14, 344)
+	signature.text = "IM SCHATTEN DES RABEN  ·  V" + str(ProjectSettings.get_setting("application/config/version"))
+	signature.position = Vector2(14, 345)
+	signature.add_theme_font_override("font", preload("res://scripts/ui_skin.gd").font("title"))
 	signature.add_theme_font_size_override("font_size", 8)
 	signature.add_theme_color_override("font_color", Color("aac9d9"))
 	signature.add_theme_color_override("font_shadow_color", Color.BLACK)

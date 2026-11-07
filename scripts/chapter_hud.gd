@@ -7,11 +7,15 @@ func _ready() -> void :
 	menu_description.text = "Kapitel 1 · Ravens Jagd\nLokal-Koop beginnt mit Ravens Rückkehr."
 	next_chapter_button = button_at("Kapitel 2 öffnen", 274, func(): get_tree().change_scene_to_file("res://scenes/chapter_two.tscn"))
 	menu_help.position.y = 302
-	menu_help.text = "Controller · Stick / Steuerkreuz und A"
+	menu_help.text = "Controller · Stick / Kreuz und A"
 	restart_button.text = "Kapitel 1 neu starten"
 func show_menu(title: String = "KAPITEL 1") -> void :
 	requested_coop = world.chapter_coop
 	_show_menu_shell(title)
+
+## Chapter 1 is Raven's hunt for the Chrome Jackals.
+func menu_theme() -> String:
+	return "jackal"
 
 func _update_mode_buttons() -> void :
 	var mode: = "Lokal-Koop" if requested_coop else "Einzelspieler"

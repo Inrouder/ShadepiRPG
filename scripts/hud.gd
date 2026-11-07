@@ -2,6 +2,7 @@ extends CanvasLayer
 
 const StartMenuBackdrop = preload("res://scripts/start_menu_backdrop.gd")
 
+const UiSkin = preload("res://scripts/ui_skin.gd")
 var world: Node2D
 var root: Control
 var vitals: Label
@@ -34,6 +35,10 @@ var restart_button: Button
 var menu_help: Label
 var start_backdrop: Control
 var menu_chrome: Control
+var menu_emblem: TextureRect
+var menu_tagline: Label
+var menu_skin := "raven"
+var menu_buttons: Array[Button] = []
 var game_hud_nodes: Array[CanvasItem] = []
 var menu_button_tweens: Dictionary = {}
 var visual_button: Button
@@ -182,30 +187,28 @@ func _ready() -> void :
 	dialogue_next = label_at("E / Enter / A · Weiter", Vector2(360, 74), Vector2(218, 14), dialogue_panel, 9, Color("9eb2c7"))
 	dialogue_next.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	dialogue_panel.hide()
+	# Pixel-art menu: steel frame, title plate and buttons from assets/ui/<theme>
+	# (tools/ui_pixel), Silkscreen / Shadepi Pixel fonts at whole-pixel sizes.
 	menu = panel(Rect2(350, 14, 276, 332))
-	var menu_style := StyleBoxFlat.new()
-	menu_style.bg_color = Color(0.018, 0.034, 0.063, 0.89)
-	menu_style.border_color = Color(0.28, 0.78, 0.88, 0.5)
-	menu_style.set_border_width_all(1)
-	menu_style.border_width_left = 3
-	menu_style.corner_radius_top_right = 1
-	menu_style.corner_radius_bottom_right = 12
-	menu.add_theme_stylebox_override("panel", menu_style)
+	menu.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	menu_chrome = preload("res://scripts/menu_chrome.gd").new()
 	menu_chrome.size = menu.size
 	menu.add_child(menu_chrome)
 	start_backdrop.quality_changed.connect(func(value): menu_chrome.strength = [0.0, 0.55, 1.0][value])
-	menu_title = label_at("SHADEPI", Vector2(16, 4), Vector2(244, 40), menu, 34, Color("e9fbff"))
+	menu_emblem = TextureRect.new()
+	menu_emblem.position = Vector2(238, 14)
+	menu.add_child(menu_emblem)
+	menu_title = label_at("SHADEPI", Vector2(14, 7), Vector2(222, 36), menu)
 	menu_title.clip_text = true
-	label_at("ECHOS IN NEON", Vector2(17, 42), Vector2(244, 18), menu, 11, Color("66e7f2"))
-	menu_description = label_at("IM SCHATTEN DES RABEN\nEine Cyberpunk-Saga", Vector2(16, 61), Vector2(244, 29), menu, 9, Color("9db0c4"))
+	menu_tagline = label_at("ECHOS IN NEON", Vector2(15, 40), Vector2(244, 20), menu)
+	menu_description = label_at("IM SCHATTEN DES RABEN\nEine Cyberpunk-Saga", Vector2(15, 60), Vector2(246, 32), menu)
 	mode_button = button_at("Modus · Einzelspieler", 94, _switch_mode)
 	resume_button = button_at("Testszene starten", 124, start_selected)
 	load_button = button_at("Spielstand laden", 154, func(): world.load_game(requested_coop))
 	restart_button = button_at("Testszene neu starten", 184, _start_new)
 	button_at("Musik / Ton umschalten", 214, func(): world.toggle_audio())
 	visual_button = button_at("Bildstil: " + world.VISUAL_PRESETS[world.visual_quality], 244, func(): world.cycle_visual_quality())
-	menu_help = label_at("Controller · Stick wählen, A bestätigen\nF5 Speichern · F9 Laden · V Bildstil", Vector2(16, 279), Vector2(244, 37), menu, 9, Color("9db0c4"))
+	menu_help = label_at("Controller · Stick wählen, A bestätigen\nF5 Speichern · F9 Laden · V Bildstil", Vector2(16, 279), Vector2(246, 37), menu)
 
 	_build_admin_panel()
 	_build_feedback()
@@ -216,35 +219,13 @@ func button_at(text: String, y: float, callback: Callable) -> Button:
 	var button: = Button.new()
 	button.text = text
 	button.position = Vector2(16, y)
-	button.size = Vector2(244, 27)
-	button.add_theme_font_size_override("font_size", 11)
+	button.size = Vector2(244, 26)
 	button.alignment = HORIZONTAL_ALIGNMENT_LEFT
-	button.add_theme_color_override("font_color", Color("c8dce8"))
-	button.add_theme_color_override("font_hover_color", Color("ffffff"))
-	button.add_theme_color_override("font_focus_color", Color("ffffff"))
-	for state in ["normal", "hover", "pressed", "disabled", "focus"]:
-		var style := StyleBoxFlat.new()
-		style.bg_color = Color(0.045, 0.08, 0.12, 0.86)
-		style.border_color = Color(0.22, 0.46, 0.55, 0.55)
-		style.set_border_width_all(1)
-		style.content_margin_left = 11
-		style.content_margin_right = 9
-		style.set_corner_radius_all(1)
-		if state in ["hover", "pressed", "focus"]:
-			style.border_color = Color("86f3fc")
-			style.border_width_left = 3
-			style.bg_color = Color(0.09, 0.23, 0.29, 0.96)
-		if state == "pressed":
-			style.bg_color = Color(0.15, 0.36, 0.40, 0.98)
-		if state == "focus":
-			style.bg_color = Color.TRANSPARENT
-		if state == "disabled":
-			style.bg_color.a = 0.35
-			style.border_color.a = 0.2
-		button.add_theme_stylebox_override(state, style)
+	UiSkin.apply_button(button, menu_skin)
+	menu_buttons.append(button)
 	button.pressed.connect(callback)
 	menu.add_child(button)
-	button.pivot_offset = button.size * 0.5
+	button.set_meta("home_x", button.position.x)
 	button.mouse_entered.connect(_animate_menu_button.bind(button))
 	button.mouse_exited.connect(_animate_menu_button.bind(button))
 	button.focus_entered.connect(_animate_menu_button.bind(button))
@@ -256,10 +237,30 @@ func _animate_menu_button(button: Button) -> void:
 	if menu_button_tweens.has(button):
 		menu_button_tweens[button].kill()
 	var tween := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	tween.tween_property(button, "scale", Vector2.ONE * (1.025 if active else 1.0), 0.14)
+	# Whole-pixel slide instead of scaling, so the pixel art never resamples.
+	tween.tween_property(button, "position:x", float(button.get_meta("home_x", 16.0)) + (3.0 if active else 0.0), 0.1)
 	menu_button_tweens[button] = tween
 	if active and start_backdrop.visible:
 		start_backdrop.pulse_at(button.global_position + button.size * 0.5)
+
+## Scene look of the pause menu; chapter scripts override it.
+func menu_theme() -> String:
+	return "raven"
+
+func apply_menu_skin(theme: String) -> void:
+	menu_skin = theme
+	var c := UiSkin.colors(theme)
+	menu.add_theme_stylebox_override("panel", UiSkin.panel(theme))
+	menu_emblem.texture = UiSkin.emblem(theme)
+	UiSkin.style_label(menu_title, c.text, "title", 32)
+	UiSkin.style_label(menu_tagline, c.primary, "title")
+	UiSkin.style_label(menu_description, c.muted)
+	UiSkin.style_label(menu_help, c.muted)
+	menu_chrome.primary = c.primary
+	menu_chrome.accent = c.accent
+	for button in menu_buttons:
+		if is_instance_valid(button):
+			UiSkin.apply_button(button, theme)
 
 func show_menu(title: String = "ECHOS IN NEON") -> void :
 	requested_coop = world.coop
@@ -276,8 +277,9 @@ func _show_menu_shell(title: String) -> void:
 	start_backdrop.set_quality(world.visual_quality)
 	menu_chrome.strength = [0.0, 0.55, 1.0][world.visual_quality]
 	menu.position = Vector2(350, 14) if opening else Vector2(182, 14)
+	apply_menu_skin("raven" if opening else menu_theme())
 	menu_title.text = "SHADEPI" if opening else title
-	menu_title.add_theme_font_size_override("font_size", 34 if opening else 19)
+	menu_title.add_theme_font_size_override("font_size", 32 if opening else (16 if title.length() <= 18 else 8))
 	menu_description.text = "IM SCHATTEN DES RABEN\nEine Cyberpunk-Saga" if opening else "Pause · Einsatzstatus und Optionen"
 	if opening:
 		world.set_music_section("menu")
