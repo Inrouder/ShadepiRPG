@@ -88,6 +88,12 @@ jobs:
           set -euo pipefail
           godot --headless --script res://tests/raven_enemy_combat.gd 2>&1 | tee /tmp/raven-enemy.log
           if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/raven-enemy.log; then exit 1; fi
+      - name: Validate monastery memory map and return flow
+        shell: bash
+        run: |
+          set -euo pipefail
+          godot --headless --script res://tests/monastery_memory.gd 2>&1 | tee /tmp/monastery-memory.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/monastery-memory.log; then exit 1; fi
       - name: Validate digital NPC visuals
         run: godot --headless --script res://tests/npc_dive_visuals.gd
       - name: Validate story, chapter flow, geometry and dialogue

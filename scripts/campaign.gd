@@ -27,6 +27,11 @@ var foes: Array[PixelActor] = []
 var drive: Node2D
 var timing: Node2D
 var echo_ready: = false
+var memory_scene: Node2D
+var memory_layer: CanvasLayer
+var memory_serial := 0
+var memory_attack_complete := false
+var memory_return_music := "chapter_5_echo"
 var drive_layer: CanvasLayer
 var encounter: Node2D
 ## False between Kenzō's fall and the last lift-guard wave of the escape.
@@ -122,7 +127,8 @@ func new_game(_save_checkpoint: bool = true) -> void :
 	fresh_entry = true
 	_enter(Beat.PACT)
 
-func _enter(next: int, saved_section: int = 0, saved_point: int = 0) -> void :
+func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo: bool = false, seen_attack: bool = false) -> void :
+	_close_memory(false)
 	var fresh: = fresh_entry
 	fresh_entry = false
 	cutscene.abort()
@@ -143,6 +149,7 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0) -> void :
 		timing = null
 		gamepads.assign(Input.get_connected_joypads(), false)
 	echo_ready = false
+	memory_attack_complete = false
 	camera.zoom = Vector2.ONE * (1.15 if next == Beat.ECHO else 1.0)
 	if is_instance_valid(drive):
 		drive.hide()
@@ -189,6 +196,17 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0) -> void :
 	player.visible = not raven_leads()
 	var backgrounds: = ["hideout", "ambush", "", "garage", "hangar", "chamber", "", "rooftop", "suite", "suite", "lakeside", "lakeside"]
 	set_painted_solids(backgrounds[beat])
+	if beat == Beat.ECHO and saved_echo:
+		echo_ready = true
+		memory_attack_complete = seen_attack
+		point_index = clampi(saved_point,0,2) if seen_attack else 0
+		reset_raven(SPAWN if point_index==0 else Painted.ECHO_POINTS[point_index-1])
+		player.hide()
+		camera.zoom = Vector2.ONE
+		camera.position = raven.position+Vector2(0,-52)
+		set_painted_solids("memory")
+		set_dressing("")
+		set_music_section("chapter_5_echo")
 	effects.rain = beat in [Beat.AMBUSH, Beat.ROOF]
 	effects.steam_vents.clear()
 	if beat == Beat.AMBUSH:
@@ -457,6 +475,9 @@ func interact(_actor: PixelActor = null) -> void :
 			raven.position = SPAWN if point_index == 0 else Painted.ECHO_POINTS[point_index - 1]
 			toast("Das Bild zerfällt. Zur letzten stabilen Erinnerung.")
 			return
+		if point_index == 0 and not memory_attack_complete:
+			_open_first_memory()
+			return
 		toast(["Das Kloster.", "Die früheren Träger.", "Die Nacht des Angriffs."][point_index])
 		if point_index == 2:
 			_scene_echo_end()
@@ -570,6 +591,67 @@ func _enter_echo() -> void :
 	_update_lighting()
 	player.hide()
 	_scene_containment()
+	autosave()
+
+func is_busy() -> bool:
+	return is_instance_valid(memory_scene) or super.is_busy()
+
+func in_cinematic() -> bool:
+	return is_instance_valid(memory_scene) or super.in_cinematic()
+
+func _input(event: InputEvent) -> void:
+	if is_instance_valid(memory_scene) and memory_scene.handle_event(event):
+		get_viewport().set_input_as_handled()
+
+func _open_first_memory() -> void:
+	if is_instance_valid(memory_scene) or beat!=Beat.ECHO or point_index!=0: return
+	memory_serial += 1
+	var ticket := memory_serial
+	memory_return_music = music_section
+	memory_layer = CanvasLayer.new()
+	memory_layer.layer = 30
+	add_child(memory_layer)
+	var container := SubViewportContainer.new()
+	container.size = Vector2(640,360)
+	container.stretch = true
+	container.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	memory_layer.add_child(container)
+	var viewport := SubViewport.new()
+	viewport.size = Vector2i(640,360)
+	viewport.world_2d = World2D.new()
+	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	container.add_child(viewport)
+	var scene = preload("res://scenes/memories/attack.tscn").instantiate()
+	scene.embedded = true
+	scene.autoplay = false
+	scene.host = self
+	memory_scene = scene
+	viewport.add_child(scene)
+	scene.finished.connect(func(done: bool):
+		if memory_scene!=scene or memory_serial!=ticket or beat!=Beat.ECHO or point_index!=0: return
+		_close_memory(done))
+	set_music_section("fight")
+	scene.play.call_deferred()
+
+func _close_memory(done: bool) -> void:
+	if not is_instance_valid(memory_layer): return
+	memory_serial += 1
+	if is_instance_valid(memory_scene):
+		memory_scene.closed = true
+		memory_scene.cutscene.abort()
+	memory_scene = null
+	memory_layer.hide()
+	memory_layer.queue_free()
+	memory_layer = null
+	set_music_section(memory_return_music)
+	if done and beat==Beat.ECHO and point_index==0:
+		memory_attack_complete = true
+		_complete_point()
+		toast("Der Angriff · Erinnerung gesichert")
+
+func _exit_tree() -> void:
+	_close_memory(false)
+	super._exit_tree()
 
 func saved_checkpoint() -> int:
 	var config: = ConfigFile.new()
@@ -586,6 +668,8 @@ func save_game() -> bool:
 	var config: = ConfigFile.new()
 	config.set_value("campaign", "beat", beat)
 	config.set_value("campaign", "point", point_index)
+	config.set_value("campaign", "echo_started", beat==Beat.ECHO and echo_ready)
+	config.set_value("campaign", "memory_attack_complete", memory_attack_complete)
 	config.set_value("campaign", "arcade_section", encounter.section_index if encounter != null else 0)
 	config.set_value("campaign", "escape_guards_cleared", escape_guards_cleared)
 	config.set_value("props", "state", dressing_state())
@@ -601,13 +685,15 @@ func load_game(_requested_mode: Variant = null) -> bool:
 	var saved_section: Variant = config.get_value("campaign", "arcade_section", 0)
 	var saved_point: Variant = config.get_value("campaign", "point", 0)
 	var cleared: Variant = config.get_value("campaign", "escape_guards_cleared", true)
+	var saved_echo: Variant = config.get_value("campaign", "echo_started", false)
+	var seen_attack: Variant = config.get_value("campaign", "memory_attack_complete", false)
 	escape_guards_cleared = (cleared if cleared is bool else true) or saved != Beat.ESCAPE
 	# Saves from v0.16.0 could stop at the old roof guard fight (point 2);
 	# those guards now follow Kenzō, so resume directly at the penthouse.
 	if saved == Beat.ROOF and saved_point is int and saved_point >= 2:
 		saved = Beat.BOSS
 		saved_point = 0
-	_enter(saved, saved_section if saved_section is int else 0, saved_point if saved_point is int else 0)
+	_enter(saved, saved_section if saved_section is int else 0, saved_point if saved_point is int else 0, saved_echo is bool and saved_echo, seen_attack is bool and seen_attack)
 	return true
 
 func _draw() -> void :

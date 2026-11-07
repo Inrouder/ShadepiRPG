@@ -3,6 +3,7 @@ extends PixelActor
 const READY = preload("res://assets/memories/attack/warriors-ready.png")
 const RUN = preload("res://assets/memories/attack/warriors-run.png")
 const PEOPLE = preload("res://assets/memories/attack/residents.png")
+const BOT = preload("res://assets/memories/attack/bots.png")
 static var catalog: Dictionary = {}
 var identity := "oni"
 var frame_key := ""
@@ -44,8 +45,9 @@ func animate(state: String, delta: float) -> void:
 		var direction: int = OCTANT_ROWS[octant]
 		var key := "idle"
 		if state == "walk": key = ["run_a","run_b"][int(animation_time*8)%2]
+		if state == "attack" and data.has("attack"): key = "attack"
 		pose = data[key][direction]
-		texture = READY if key=="idle" else RUN
+		texture = BOT if identity=="bot" else READY if key=="idle" else RUN
 		frame_key = "%s_%d"%[key,direction]
 	var rect: Array = pose.region
 	image_region.atlas = texture

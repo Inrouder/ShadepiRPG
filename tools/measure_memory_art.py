@@ -29,5 +29,7 @@ residents=measure('residents.png',4,57)
 data={}
 for i,name in enumerate(['oni','robot','ly','heavy']):data[name]={'idle':ready[i],'run_a':run[i*2],'run_b':run[i*2+1]}
 for i,name in enumerate(['elder','monk','resident','caretaker']):data[name]={'civilian':residents[i]}
+bots=measure('bots.png',4,65)
+data['bot']={'idle':bots[0],'run_a':bots[1],'run_b':bots[2],'attack':bots[3]}
 (FOLDER/'actors.json').write_text(json.dumps(data,indent=2)+'\n')
-print('Measured 128 nonempty actor cells; source pixels preserved.')
+print('Measured 160 nonempty actor cells; source pixels preserved.')

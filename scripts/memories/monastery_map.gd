@@ -4,11 +4,12 @@ const BACKGROUND = preload("res://assets/memories/attack/courtyard.png")
 const FX = preload("res://assets/memories/attack/props-fx.png")
 const SIZE := Vector2(1024,640)
 const FLOOR := Rect2(24,270,976,270)
-const WALLS := [Rect2(-16,0,32,640),Rect2(1008,0,32,640),Rect2(0,0,60,268),Rect2(125,0,899,268),Rect2(0,550,1024,90)]
+const WALLS := [Rect2(-16,0,32,640),Rect2(1008,0,32,640),Rect2(0,0,60,268),Rect2(125,0,899,268),Rect2(60,0,65,235),Rect2(0,550,1024,90)]
 const PROPS := [[0,Vector2(760,322),0.24],[1,Vector2(620,465),0.34],[2,Vector2(899,480),0.23],[3,Vector2(280,310),0.29]]
 const FIRES := [Vector2(827,280),Vector2(970,289),Vector2(899,480),Vector2(490,110)]
 var actors: Node2D
 var elapsed := 0.0
+var quality := 2
 var paused := false
 var impacts: Array[Dictionary] = []
 var scenery: Array[StaticBody2D] = []
@@ -84,9 +85,10 @@ func impact(point: Vector2) -> void:
 func _process(delta: float) -> void:
 	if paused: return
 	elapsed += delta
-	for i in fx_sprites.size():
-		var texture: AtlasTexture = fx_sprites[i].texture
-		texture.region.position.x = (int(elapsed*7+i)%4)*FX.get_width()/4.0
+	if quality>0:
+		for i in fx_sprites.size():
+			var texture: AtlasTexture = fx_sprites[i].texture
+			texture.region.position.x = (int(elapsed*7+i)%4)*FX.get_width()/4.0
 	for i in range(impacts.size()-1,-1,-1):
 		impacts[i].age += delta
 		if impacts[i].age>0.85: impacts.remove_at(i)
@@ -99,7 +101,7 @@ func _draw() -> void:
 		var column := mini(3,int(blast.age*6))
 		var frame := region(column,3)
 		draw_texture_rect(frame,Rect2(blast.p-Vector2(46,68),Vector2(92,92)),false,Color(1,1,1,1-blast.age*0.6))
-	for i in 4:
-		var frame := region(int(elapsed*3+i)%4,2)
+	for i in (1 if quality==0 else 4):
+		var frame := region(int(elapsed*3+i)%4 if quality>0 else 0,2)
 		var point: Vector2 = FIRES[i]+Vector2(sin(elapsed*0.4+i)*8,-45)
 		draw_texture_rect(frame,Rect2(point-Vector2(40,72),Vector2(80,112)),false,Color(1,1,1,0.5))
