@@ -9,6 +9,8 @@
 - Sämtliche neuen Schritte verwenden den vorhandenen Szenendirektor: Pause hält Bewegung und Wellenfortschritt an; Abbruch beendet ohne Knotenfortschritt; bewusstes Überspringen löst auch mitten im Kampf den eindeutigen Endzustand aus. Bestehende Speicherfelder und Ravens Gegenwartszustand bleiben kompatibel.
 - Neuer gezielter Test und CI-Prüfschritt für Gehzyklen, konstante Körpergröße, Kollisionen aller Kampfwege, drei Wellen, richtige Opfer-/Überlebendenfolge, Pause, Abbruch und Controller-Überspringen. Galerie mit Geh-Nahaufnahme und längerer tatsächlicher Szenenaufzeichnung erweitert.
 
+- Validierung: vier Prüfreihen mit **953 Prüfungen, 0 Fehlern** (Klosterkampf 226, Erinnerungseinbindung 143, Kampagnen-/Speicherablauf 378, Story-Audit 206). Vollständige Szene bis zu Ravens Rückkehr und Geh-Nahaufnahme im OpenGL-Renderer kontrolliert. Linux-PCK erstellt; neue Texturen, Ankerdaten, neun Bots und korrekter Abschluss direkt aus dem Paket geprüft.
+
 ## v0.22.0 – CodexAI: Erste Klosterrückblende „Der Angriff“ · 7. November 2026
 
 - Alle Remote-Branches geprüft; Produktion auf v0.21.2 begonnen und währenddessen hinzugekommene Aerodyne-Änderungen v0.21.3 verlustfrei integriert. Versionsfelder und Dokumentation auf v0.22.0 abgestimmt.

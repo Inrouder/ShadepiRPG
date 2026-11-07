@@ -23,6 +23,8 @@ Die Animation im Spiel läuft mit neun Einzelbildern pro Sekunde; ein kompletter
 | Welle 3 | Der MG-Krieger geht nach vorn und deckt den Rückzug. Er wird getroffen, hält seine Stellung bis zur letzten Salve und fällt. |
 | Rückzug | Shadepi, Ly und der Roboterkopf-Krieger ziehen sich zum inneren Hof zurück. Danach kehrt Raven in die Erinnerungskammer zurück. |
 
+![Beginn der ersten Bot-Welle](kloster-botwellen.png)
+
 ![Oni stellt sich vor Shadepi](kloster-oni-schutz.png)
 
 ![Onis Schutzopfer](kloster-oni-gefallen.png)
@@ -55,7 +57,11 @@ Pause hält Figuren, Effekte und den Wellenfortschritt an. Verlassen führt ohne
 
 ## Prüfung und weiterer Ablauf
 
+**Vier Prüfreihen mit insgesamt 953 Prüfungen ohne Fehler:** Klosterkampf 226, Erinnerungseinbindung 143, vollständiger Kampagnen-/Speicherablauf 378 und Story-Audit 206.
+
 Die gezielten Prüfungen umfassen alle vier Gehbilder jeder Richtung, konstante Körpergrößen, Fußanker, begrenztes Mündungsfeuer, den tatsächlich abgespielten Kampf mit allen drei Wellen, freie Kampfwege, Reihenfolge der Schutzopfer und das Überleben von Ly und Roboterkopf. Pause, Abbruch und Controller-Überspringen werden mitten in einer Welle geprüft. Die neuen Prüfungen laufen im GitHub-Workflow.
+
+Ein Linux-Exportpaket wurde erstellt. Neue Geh-/Kampf-Atlanten und Ankerdaten wurden direkt daraus geladen; auch alle neun Bots und der korrekte Abschlusszustand nach Überspringen wurden im Paket geprüft.
 
 Der vollständige Szenenlauf wurde im Godot-OpenGL-Renderer bis zur Rückkehr zu Raven kontrolliert. Die Galerie `tools/memory_gallery.gd` erzeugt auch die Geh-Nahaufnahme; `-- --record` zeichnet die tatsächliche Kampagnenszene auf. Die animierten Dokumentationsbilder liegen im vom Spielimport ausgenommenen Ordner `docs/previews/`.
 

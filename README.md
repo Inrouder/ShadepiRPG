@@ -40,6 +40,7 @@ Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und
 - **Erinnerung I erweitert:** drei inszenierte Bot-Wellen mit Ausholen, Angriffen, Treffern und Fallbewegungen. Oni schützt Shadepi, der MG-Krieger deckt den Rückzug; Ly und der Roboterkopf-Krieger überleben.
 - **Mönche gehen sichtbar:** vier echte Schrittbilder in jeder der vier Laufrichtungen, auch für die übrigen Bewohner. Versetzte Schrittphasen, schwingende Gewänder und konstante Körpergröße ersetzen den bisherigen Zweibild-Lauf.
 - Zwei zusätzliche HQ-Pixel-Atlanten mit insgesamt 104 neuen Posen. Pause, Controller-Überspringen und Abbruch gelten auch mitten in den Wellen.
+- **953 Prüfungen ohne Fehler** in vier Prüfreihen; Szenenlauf im Renderer und neue Inhalte direkt aus dem Exportpaket geprüft.
 - [Bilder, Geh-Animation und Umfang](docs/kloster-kampf.md). Erinnerungen 2 und 3 folgen anschließend; die erste Rückblende ist als Szene inszeniert.
 
 ## v0.22.0 · 7. November 2026 · CodexAI
