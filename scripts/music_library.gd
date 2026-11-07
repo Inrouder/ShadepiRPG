@@ -4,7 +4,7 @@ const ROOT := "res://assets/music/"
 const FALLBACK := "res://assets/audio/neon-loop.wav"
 const EXTENSIONS: Array[String] = ["mp3", "ogg", "wav"]
 const SLOTS: Dictionary = {
-	"menu": "menu",
+	"menu": "Level",
 	"fight": "Fight",
 	"boss": "Boss",
 	"demo": "Level",

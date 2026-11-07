@@ -2,23 +2,19 @@ extends Control
 
 const CITY := preload("res://assets/menu/start-city.png")
 const HEROES := preload("res://assets/menu/start-heroes.png")
-const WIND := preload("res://shaders/menu_wind.gdshader")
 const ATMOSPHERE := preload("res://shaders/menu_atmosphere.gdshader")
 const VIEW := Vector2(640, 360)
-# Leave roof clearance below both pairs of boots, including full parallax travel.
+# Fixed illustration and fixed roof: pointer/focus must never slide the feet.
 const HERO_RECT := Rect2(0, 6, 310, 310)
 
 var elapsed := 0.0
 var quality := 2
-var pointer := Vector2.ZERO
-var target_pointer := Vector2.ZERO
 var pulse := 0.0
 var pulse_position := Vector2(240, 210)
 var city: TextureRect
-var heroes: MeshInstance2D
+var heroes: TextureRect
 var weather: Control
 var atmosphere: ColorRect
-var wind_material: ShaderMaterial
 var atmosphere_material: ShaderMaterial
 
 func _ready() -> void:
@@ -33,13 +29,12 @@ func _ready() -> void:
 	city.position = Vector2(-10, -6)
 	city.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(city)
-	heroes = MeshInstance2D.new()
+	heroes = TextureRect.new()
 	heroes.texture = HEROES
-	heroes.mesh = _hero_mesh()
+	heroes.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	heroes.size = HERO_RECT.size
 	heroes.position = HERO_RECT.position
-	wind_material = ShaderMaterial.new()
-	wind_material.shader = WIND
-	heroes.material = wind_material
+	heroes.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(heroes)
 	weather = Control.new()
 	weather.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -57,29 +52,6 @@ func _ready() -> void:
 	set_quality(quality)
 	_sync_activity()
 
-func _hero_mesh() -> ArrayMesh:
-	var vertices := PackedVector3Array()
-	var uvs := PackedVector2Array()
-	var indices := PackedInt32Array()
-	const GRID := 48
-	for y in GRID + 1:
-		for x in GRID + 1:
-			var uv := Vector2(x, y) / float(GRID)
-			vertices.append(Vector3(uv.x * HERO_RECT.size.x, uv.y * HERO_RECT.size.y, 0))
-			uvs.append(uv)
-	for y in GRID:
-		for x in GRID:
-			var i := y * (GRID + 1) + x
-			indices.append_array([i, i + 1, i + GRID + 1, i + 1, i + GRID + 2, i + GRID + 1])
-	var arrays := []
-	arrays.resize(Mesh.ARRAY_MAX)
-	arrays[Mesh.ARRAY_VERTEX] = vertices
-	arrays[Mesh.ARRAY_TEX_UV] = uvs
-	arrays[Mesh.ARRAY_INDEX] = indices
-	var mesh := ArrayMesh.new()
-	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
-	return mesh
-
 func _sync_activity() -> void:
 	var active := is_visible_in_tree()
 	set_process(active)
@@ -87,35 +59,21 @@ func _sync_activity() -> void:
 
 func set_quality(value: int) -> void:
 	quality = clampi(value, 0, 2)
-	if wind_material != null:
-		wind_material.set_shader_parameter("strength", [0.25, 0.7, 1.0][quality])
+	if atmosphere_material != null:
 		atmosphere_material.set_shader_parameter("strength", [0.0, 0.55, 1.0][quality])
 		atmosphere.visible = quality > 0
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
-		aim_at(get_local_mouse_position())
-	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		pulse_at(get_local_mouse_position())
-
-func aim_at(point: Vector2) -> void:
-	target_pointer = ((point / VIEW - Vector2(0.5, 0.5)) * 2.0).clamp(Vector2(-1, -1), Vector2.ONE)
 
 func pulse_at(point: Vector2) -> void:
 	pulse_position = point.clamp(Vector2.ZERO, VIEW)
 	pulse = 1.0
-	aim_at(point)
 
 func _process(delta: float) -> void:
 	elapsed += delta
-	pointer = pointer.lerp(target_pointer, 1.0 - exp(-delta * 5.0))
 	pulse = maxf(0.0, pulse - delta * 1.4)
-	var motion := [0.2, 0.65, 1.0][quality] as float
-	city.position = Vector2(-10, -6) - pointer * Vector2(4, 2) * motion
-	city.position += Vector2(sin(elapsed * 0.15), cos(elapsed * 0.12)) * motion
-	heroes.position = HERO_RECT.position + pointer * Vector2(5.0, 2.0) * motion
-	wind_material.set_shader_parameter("clock", elapsed)
-	wind_material.set_shader_parameter("gust", pointer.x + pulse)
 	atmosphere_material.set_shader_parameter("clock", elapsed)
 	atmosphere_material.set_shader_parameter("focus", pulse_position / VIEW)
 	atmosphere_material.set_shader_parameter("pulse", pulse)
@@ -127,7 +85,7 @@ func _draw_weather() -> void:
 	for i in int(counts[quality]):
 		var depth := float(i % 3 + 1) / 3.0
 		var speed := 105.0 + depth * 190.0
-		var wind := 25.0 + pointer.x * 14.0
+		var wind := 25.0
 		var p := Vector2(fposmod(i * 87.3 - elapsed * wind * depth, 690.0) - 25.0,
 			fposmod(i * 53.7 + elapsed * speed, 400.0) - 20.0)
 		var length := 4.0 + depth * 13.0

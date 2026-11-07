@@ -16,19 +16,20 @@ func run() -> void:
 	for i in 12:
 		await process_frame
 	await capture("/tmp/shadepi-menu-neutral.png")
-	scene.ui.start_backdrop.aim_at(Vector2(70, 300))
+	scene.ui.start_backdrop.pulse_at(Vector2(70, 300))
 	for i in 50:
 		await process_frame
-	await capture("/tmp/shadepi-menu-wind.png")
+	await capture("/tmp/shadepi-menu-weather.png")
 	scene.ui.visual_button.grab_focus()
 	for i in 12:
 		await process_frame
 	await capture("/tmp/shadepi-menu-focus.png")
-	# Check the entire parallax range against the sloped rooftop edge.
+	# Pointer corners must no longer move either the figures or the roof.
 	var corners := [Vector2.ZERO, Vector2(640, 0), Vector2(0, 360), Vector2(640, 360)]
 	for i in corners.size():
-		scene.ui.start_backdrop.aim_at(corners[i])
-		scene.ui.start_backdrop.pointer = scene.ui.start_backdrop.target_pointer
+		var motion := InputEventMouseMotion.new()
+		motion.position = corners[i]
+		scene.ui.start_backdrop._input(motion)
 		await capture("/tmp/shadepi-menu-corner-%d.png" % i)
 	scene.set_visual_quality(0)
 	await capture("/tmp/shadepi-menu-reduced.png")

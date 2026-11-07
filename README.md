@@ -22,7 +22,7 @@ Im Spiel gibt es ein Startmenü mit Einzelspieler und Lokal-Koop, eine gemeinsam
 
 **Kartenkorrekturen:** Das Versteck hat passende Möbelproportionen; Bingo Street geht mit durchgehender Bodenkante in die Gasse über. [Vergleich im Spiel](docs/karten-proportionen.md).
 
-Das Startmenü zeigt Shadepi und Raven vor einer Neonstadt mit weißem Drachen. Mausbewegungen verschieben Stadt und Figuren gegeneinander; Ravens Haare und Shadepis Schal bewegen sich im Wind. Mehrschichtiger Regen, Wasserreflexe und Neonlicht ergänzen die Szene. Die Menüknöpfe reagieren auf Maus und Controller-Fokus. Der vorhandene Bildstil-Schalter reduziert bei Bedarf Bewegung, Regen und Filter. [Vorschau und technische Hinweise](docs/live-startmenue.md).
+Das Startmenü zeigt Shadepi in Bereitschaftshaltung und Raven mit Tablet nach den aktuellen Figurenreferenzen vor einer Neonstadt mit weißem Drachen. Figuren und Dach bleiben fest verankert; die Maus verschiebt oder verformt sie nicht. Regen, Flugverkehr, Wasserreflexe und Neonlicht beleben die Szene. Die Menüknöpfe reagieren auf Maus und Controller-Fokus. Dazu läuft die Musik des Finales am See. [Vorschau und technische Hinweise](docs/live-startmenue.md).
 
 ## Geschichte und Spielumfang
 

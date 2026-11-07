@@ -19,7 +19,7 @@ func run() -> void:
 	check(MusicLibrary.SLOTS.size() == 27, "every menu, combat and story section has an assigned music slot")
 	check(MusicLibrary.candidates("chapter_2_dive")[0] == "res://assets/music/Fight.mp3", "regular fights use the shared Fight track")
 	check(MusicLibrary.path_for("boss") == "res://assets/music/Boss.mp3", "boss encounters use the supplied boss track")
-	check(MusicLibrary.path_for("menu") == "res://assets/music/menu.mp3", "the main menu uses the supplied menu track")
+	check(MusicLibrary.path_for("menu") == MusicLibrary.path_for("chapter_7_finale"), "main menu uses the lake finale music")
 	check(load("res://assets/menu/start-city.png").get_size() == Vector2(1280, 720), "start menu artwork keeps its 16:9 master resolution")
 	check(CombatRules.can_strike(Vector2.ZERO, Vector2.RIGHT, Vector2(40, 0)), "frontal target can be hit")
 	check(not CombatRules.can_strike(Vector2.ZERO, Vector2.RIGHT, Vector2(-40, 0)), "target behind player is safe")
@@ -58,9 +58,15 @@ func run() -> void:
 	check(scene.atmosphere_filter.visible and scene.shadow_lights[0].shadow_enabled, "atmospheric mode restores lighting and post filter")
 	check(scene.ui.start_backdrop.atmosphere.visible, "atmospheric mode restores menu weather grading")
 	var menu_backdrop = scene.ui.start_backdrop
-	menu_backdrop.aim_at(Vector2(620, 180))
-	menu_backdrop._process(0.5)
-	check(menu_backdrop.city.position.x < -10 and menu_backdrop.heroes.position.x > menu_backdrop.HERO_RECT.position.x, "pointer movement separates city and character depths")
+	for quality in 3:
+		menu_backdrop.set_quality(quality)
+		for point in [Vector2.ZERO, Vector2(640, 0), Vector2(0, 360), Vector2(640, 360)]:
+			var motion := InputEventMouseMotion.new()
+			motion.position = point
+			menu_backdrop._input(motion)
+			menu_backdrop.pulse_at(point)
+			menu_backdrop._process(0.5)
+			check(menu_backdrop.heroes.position == menu_backdrop.HERO_RECT.position and menu_backdrop.city.position == Vector2(-10, -6) and menu_backdrop.heroes.material == null, "pointer and clicks keep figures and rooftop anchored at quality %d" % quality)
 	menu_backdrop.pulse_at(Vector2(120, 240))
 	check(menu_backdrop.pulse > 0.0 and menu_backdrop.pulse_position == Vector2(120, 240), "menu interaction produces feedback at the input point")
 	scene.close_menu()
