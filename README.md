@@ -1,15 +1,15 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.21.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.21.1 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
-[**Spiel herunterladen (GitHub Actions)**](https://github.com/Inrouder/ShadepiRPG/actions/workflows/build.yml) · [**Quellcode als ZIP**](https://github.com/Inrouder/ShadepiRPG/archive/refs/heads/main.zip) · [**Versionen**](CHANGELOG.md) · [**Spieleranleitung**](Spiel-README.md)
+[**Spiel herunterladen (neuestes Release)**](https://github.com/Inrouder/ShadepiRPG/releases/latest) · [**Quellcode als ZIP**](https://github.com/Inrouder/ShadepiRPG/archive/refs/heads/main.zip) · [**Versionen**](CHANGELOG.md) · [**Spieleranleitung**](Spiel-README.md)
 
 ## Spielen
 
-1. Den **neuesten erfolgreichen** Lauf unter [Actions → Test and build Shadepi](https://github.com/Inrouder/ShadepiRPG/actions/workflows/build.yml) öffnen.
-2. Das Artefakt **ShadepiRPG-Windows** oder **ShadepiRPG-Linux** herunterladen und vollständig entpacken (für Actions-Artefakte kann eine GitHub-Anmeldung nötig sein).
+1. Das [**neueste Release**](https://github.com/Inrouder/ShadepiRPG/releases/latest) öffnen; eine GitHub-Anmeldung ist nicht nötig.
+2. **ShadepiRPG-Windows.zip** oder **ShadepiRPG-Linux.zip** herunterladen und vollständig entpacken. Entwicklungsstände zwischen zwei Releases liegen als Artefakte unter [Actions → Test and build Shadepi](https://github.com/Inrouder/ShadepiRPG/actions/workflows/build.yml) (dort ist eine Anmeldung nötig).
 3. Unter Windows `Shadepi-Echos-in-Neon.exe` bzw. unter Linux `Shadepi-Echos-in-Neon.x86_64` starten. Eine Godot-Installation ist dafür nicht erforderlich.
 
 Im Spiel gibt es ein Startmenü mit Einzelspieler und Lokal-Koop, eine gemeinsame Kamera und getrennte Kapitel-Kontrollpunkte. Details zu Tastatur, Controllern, Kampf, Speicherständen und Kapiteln stehen in der [Spieleranleitung](Spiel-README.md).
@@ -35,7 +35,11 @@ Die Spielwelt nutzt **16 gemalte Kulissen** aus `assets/world/painted/`. Wände 
 
 Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und Bosskämpfen. Die vollständige Zuordnung und Hinweise zum Austauschen der MP3-Dateien stehen unter [Musik austauschen](assets/music/README.md).
 
-## Neu in v0.21.0 · 7. November 2026 · CodexAI
+## Neu in v0.21.1 · 7. November 2026 · ClaudeHelper
+
+- Download-Links zeigen auf das neueste GitHub-Release (Windows, Linux, Godot-Projekt; ohne Anmeldung). Spieleranleitung mit Kopfzeile wieder an erster Stelle.
+
+## v0.21.0 · 7. November 2026 · CodexAI
 
 - Raven: verzweigte Pixelblitze aus einer eigenen offenen Handpose im Deep Dive; Pistolenschüsse mit Mündungsfeuer, warmem Geschoss und eigenem Sound außerhalb des Netzes. Austrittspunkte folgen den acht Richtungen und Sprite-Transformationen.
 - Alle acht menschlichen Gegnertypen erhalten neue HQ-Pixel-Kontaktposen in acht Richtungen; Ausholen, Treffer, Erholung und Unterbrechungen sind sichtbar getrennt.
@@ -56,7 +60,7 @@ Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und
 
 ![Pixel-Skins](docs/ui-pixel-skins.png)
 
-## Neu in v0.20.4 · 7. November 2026 · CodexAI
+## v0.20.4 · 7. November 2026 · CodexAI
 
 - Verbindliche Grafikvorgabe in den Projektregeln gesichert: neue Grafiken als detailreiche HQ-Pixelart mit Materialtexturen, Tiefenwirkung und abgestimmter Pixeldichte. Keine einfachen Vektorgrafiken als Ersatz.
 - Dokumentations- und Versionspflege; bestehende Grafiken und Spielmechaniken wurden dabei nicht verändert.
