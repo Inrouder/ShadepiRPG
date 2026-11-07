@@ -6,7 +6,7 @@
     1024,
     640
   ],
-  "stage": "Kulissen, Krieger und Bewohner erstellt; Map folgt",
+  "stage": "Kulissen, Krieger, Bewohner und begehbare Map erstellt; erste Szene noch nicht eingebunden",
   "background": "courtyard.png",
   "layer_atlas": "props-fx.png",
   "layer_grid": [
