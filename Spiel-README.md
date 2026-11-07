@@ -1,6 +1,8 @@
 # Shadepi · Echos in Neon
 
-**Spieleranleitung für v0.18.2 · CodexAI.** Aktuelle Downloads und Prüfstatus: [Repository-Startseite](README.md). Änderungen: [Versionshinweise](CHANGELOG.md).
+**Spieleranleitung für v0.18.3 · CodexAI.** Aktuelle Downloads und Prüfstatus: [Repository-Startseite](README.md). Änderungen: [Versionshinweise](CHANGELOG.md).
+
+**Hack-Update v0.18.3 · CodexAI:** Im Terminal navigierst du mit Steuerkreuz oder linkem Stick. **A** wählt ein Feld, dreht eine Leitung oder betätigt einen Knopf. Bei Reglern und Steckplätzen ändert **Links/Rechts** den Wert; **LB/RB** wechselt durch alle verfügbaren Elemente einschließlich der Knöpfe unten. **Y / F1** öffnet die Schritt-für-Schritt-Hilfe und hält das Rätsel an. **B / Esc** schließt zuerst die Hilfe, sonst das Terminal. **Start / P** pausiert. Nach Erfolg **Übernehmen** bestätigen. [Alle Aufgaben mit Bildern](docs/ravens-terminals.md).
 
 **Menüupdate v0.18.2 · CodexAI:** Shadepi und Raven stehen passend skaliert auf der vorderen Plattform. Ravens Haarspitzen und Shadepis Umhangränder bewegen sich sanft im Wind; Körper und Füße bleiben fest. Der Bildstil „Reduziert“ schaltet den Figurenwind ab. Im Hauptmenü läuft die Musik vom Finale am See.
 

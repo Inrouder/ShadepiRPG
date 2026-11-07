@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.18.2 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.18.3 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -35,7 +35,15 @@ Die Spielwelt nutzt **16 gemalte Kulissen** aus `assets/world/painted/`. Wände 
 
 Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und Bosskämpfen. Die vollständige Zuordnung und Hinweise zum Austauschen der MP3-Dateien stehen unter [Musik austauschen](assets/music/README.md).
 
-## Neu in v0.18.2 · 7. November 2026 · CodexAI
+## Neu in v0.18.3 · 7. November 2026 · CodexAI
+
+- Ravens Hacks mit einheitlicher Nightwing-Ansicht, Cyan-/Gold-Akzenten und deutlich sichtbarer Auswahl überarbeitet.
+- Controller: Steuerkreuz und linker Stick navigieren; A betätigt Felder und Knöpfe. Links/Rechts ändern Regler und Steckplätze, LB/RB erreichen alle verfügbaren Bedienelemente.
+- Jede Aufgabe erklärt Ziel und nächste Schritte. Y / F1 öffnet ein pausierendes Handbuch; Start pausiert, B schließt Hilfe oder Terminal. Erfolgreiche Hacks werden weiterhin mit Übernehmen bestätigt.
+
+- Prüfung: 154 Controller-, 67 Terminal-/Integrations- und 351 Gameplay-Prüfungen bestanden; Darstellung im Godot-Renderer geprüft.
+
+## v0.18.2 · 7. November 2026 · CodexAI
 
 - Menüfiguren proportional in die vordere Plattform eingepasst; Raven etwas zurückversetzt, beide Fußpaare mit Kontaktschatten innerhalb der Dachkante.
 - Sanfter Wind an Ravens Haarspitzen und Shadepis freien Umhangrändern. Gesichter, Körper, Hände, Waffen und Füße bleiben ruhig; keine Mausverschiebung.

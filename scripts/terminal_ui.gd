@@ -25,6 +25,51 @@ var previous_failure := false
 var paused := false
 var closed := false
 var completion_focused := false
+var footer: Array[Control] = []
+var value_labels: Array[Label] = []
+var help_panel: Panel
+var help_open := false
+var help_focus: Control
+var held_direction := Vector2.ZERO
+var stick := Vector2.ZERO
+var repeat_delay := 0.0
+const GUIDES := {
+ "matrix": "1  Beginne in der obersten Zeile. Wähle ein Byte mit A / Enter.
+2  Danach darfst du nur in derselben Spalte wählen, dann in derselben
+    Zeile. Helle Felder sind gültig; verbrauchte Felder sind gesperrt.
+3  Lade jede rechts angezeigte Folge ohne Lücke in den Puffer.
+    Bei zwei Folgen kann ein gemeinsames End-/Startbyte Platz sparen.
+4  Puffer voll ohne alle Folgen? Wähle Neu versuchen.
+5  Sind alle Folgen markiert, bestätige mit Übernehmen.",
+ "decoder": "1  Wähle zuerst den Rauschfilter. Links / Rechts verändert seinen Wert.
+    Je höher die Signalqualität, desto näher bist du an der Frequenz.
+2  Sobald das Signal stabil ist, werden die Wörter auswählbar.
+3  Wähle ein Passwort. 3/6 bedeutet: drei Buchstaben stehen an der
+    richtigen Stelle. Vergleiche damit die übrigen Kandidaten.
+4  [DUD] entfernt ein falsches Wort; <RESET> erneuert deine Versuche.
+    Jede Hilfe ist einmal nutzbar. Danach Übernehmen wählen.",
+ "routing": "1  A / Enter dreht eine Leitung um 90 Grad im Uhrzeigersinn.
+2  Verbinde IN links über Knoten 10 mit OUT rechts.
+3  Das AND-Gatter an Knoten 10 braucht A = 1 UND B = 1.
+4  Nutze Datenrate 1×; 2× überlastet Knoten 10.
+5  Trenne den roten ICE-Knoten vom Weg, bevor du den Bus einschaltest.
+    ICE breitet sich alle 1,4 Sekunden über verbundene Leitungen aus.
+6  Datenfluss einschalten, 3 Sekunden halten, dann Übernehmen.",
+ "signal": "1  Gold zeigt die Zielwelle, Cyan dein Signal.
+2  Frequenz verändert die Anzahl der Wellen, Amplitude ihre Höhe.
+    Phase verschiebt die Welle seitlich. Werte mit Links / Rechts ändern.
+3  Wechsle mit Oben / Unten zwischen den drei Reglern.
+4  Bringe Cyan genau auf Gold und halte die Deckung 1,2 Sekunden.
+5  Bei Rauschen warten. Bei der Sperrladung wandert die Zielphase
+    alle 12 Sekunden weiter. Nach Phase Lock Übernehmen wählen.",
+ "jumper": "1  Wähle für jeden Pin rechts einen Zielsteckplatz. Links / Rechts
+    wechselt die Belegung; der Pinname links ist der Ausgang.
+2  Kreuze TX und RX. GND bleibt GND, VCC bleibt VCC, DATA bleibt DATA.
+3  Wähle zwei Widerstände, deren Summe 120 Ohm ergibt.
+4  Verbindungen prüfen zeigt korrekte Pins als grüne LEDs.
+    Auch die Widerstandssumme muss stimmen. Drei Fehlversuche
+    sperren die Platine. Nach erfolgreicher Prüfung Übernehmen wählen."
+}
 
 func _ready() -> void:
 	layer = 100
@@ -46,7 +91,7 @@ func _style(color: Color, fill: Color) -> StyleBoxFlat:
 	style.bg_color = fill
 	style.border_color = color
 	style.set_border_width_all(1)
-	style.set_corner_radius_all(3)
+	style.set_corner_radius_all(5)
 	return style
 
 func _button(text: String, rect: Rect2, callback: Callable, interactive: bool = true) -> Button:
@@ -57,7 +102,12 @@ func _button(text: String, rect: Rect2, callback: Callable, interactive: bool = 
 	button.add_theme_font_size_override("font_size", 12)
 	button.add_theme_color_override("font_disabled_color", Color("9cafba"))
 	button.add_theme_stylebox_override("normal", _style(Color("315667"), Color("102332")))
-	button.add_theme_stylebox_override("focus", _style(CYAN, Color(0.1, 0.6, 0.7, 0.25)))
+	button.add_theme_stylebox_override("hover", _style(CYAN, Color("19394a")))
+	button.add_theme_stylebox_override("pressed", _style(CYAN, Color("255367")))
+	var focus_style := _style(Color("ffcc77"), Color(0.1, 0.6, 0.7, 0.15))
+	focus_style.set_border_width_all(2)
+	button.add_theme_stylebox_override("focus", focus_style)
+	button.focus_mode = Control.FOCUS_ALL
 	button.pressed.connect(callback)
 	root.add_child(button)
 	if interactive:
@@ -65,7 +115,8 @@ func _button(text: String, rect: Rect2, callback: Callable, interactive: bool = 
 	return button
 
 func _slider(text: String, rect: Rect2, maximum: int, initial: int, callback: Callable, minimum: int = 0) -> HSlider:
-	_label(text, Rect2(rect.position - Vector2(0, 20), Vector2(rect.size.x, 18)))
+	var value_label := _label(text, Rect2(rect.position - Vector2(0, 20), Vector2(rect.size.x, 18)))
+	value_labels.append(value_label)
 	var slider := HSlider.new()
 	slider.position = rect.position
 	slider.size = rect.size
@@ -74,6 +125,11 @@ func _slider(text: String, rect: Rect2, maximum: int, initial: int, callback: Ca
 	slider.step = 1
 	slider.value = initial
 	slider.value_changed.connect(callback)
+	slider.value_changed.connect(func(v): value_label.text = "%s  [%d]" % [text, int(v)])
+	value_label.text = "%s  [%d]" % [text, initial]
+	slider.focus_mode = Control.FOCUS_ALL
+	slider.add_theme_stylebox_override("slider", _style(Color("315667"), Color("102332")))
+	slider.add_theme_stylebox_override("focus", _style(Color("ffcc77"), Color(0, 0, 0, 0)))
 	root.add_child(slider)
 	controls.append(slider)
 	return slider
@@ -83,6 +139,9 @@ func _option(items: Array, rect: Rect2, callback: Callable) -> OptionButton:
 	option.position = rect.position
 	option.size = rect.size
 	option.add_theme_font_size_override("font_size", 12)
+	option.focus_mode = Control.FOCUS_ALL
+	option.add_theme_stylebox_override("normal", _style(Color("315667"), Color("102332")))
+	option.add_theme_stylebox_override("focus", _style(Color("ffcc77"), Color("19394a")))
 	for item in items:
 		option.add_item(str(item))
 	option.item_selected.connect(callback)
@@ -92,6 +151,12 @@ func _option(items: Array, rect: Rect2, callback: Callable) -> OptionButton:
 
 func _build() -> void:
 	completion_focused = false
+	help_open = false
+	help_panel = null
+	held_direction = Vector2.ZERO
+	stick = Vector2.ZERO
+	footer.clear()
+	value_labels.clear()
 	puzzle = Puzzle.new(context)
 	previous_attempts = puzzle.attempts
 	previous_failure = false
@@ -109,19 +174,31 @@ func _build() -> void:
 	root = Control.new()
 	root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(root)
+	var city := TextureRect.new()
+	city.texture = preload("res://assets/menu/start-city.png")
+	city.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	city.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	city.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	city.modulate = Color(0.24, 0.30, 0.40, 1)
+	city.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(city)
 	var background := Panel.new()
 	background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	background.add_theme_stylebox_override("panel", _style(Color("315667"), Color("080f19")))
+	background.add_theme_stylebox_override("panel", _style(Color("315667"), Color(0.025, 0.05, 0.09, 0.90)))
 	root.add_child(background)
-	_label("RAVEN / NIGHTWING", Rect2(24, 10, 450, 22), 18)
-	_label("Tab / Pfeile · Enter / A · Esc / B zurück", Rect2(403, 15, 215, 16), 10, Color("a7beca"))
+	_panel(Rect2(16, 98, 348 if puzzle.kind == "signal" else 272, 169), Color("234453"))
+	_panel(Rect2(374, 98, 250, 169) if puzzle.kind == "signal" else Rect2(298, 98, 326, 169), Color("234453"))
+	_panel(Rect2(16, 270, 608, 40), Color("315667"))
+	_label("NIGHTWING  /  RAVENS DECK", Rect2(24, 8, 380, 24), 18)
+	_label("SICHERE VERBINDUNG  //  " + puzzle.kind.to_upper(), Rect2(402, 11, 218, 18), 10, Color("83aeb9"))
+	_label("Stick / Kreuz: wählen · A: Aktion · LB/RB: weiter · Y: Hilfe · Start: Pause · B: zurück", Rect2(24, 344, 600, 14), 10, Color("a7beca"))
 	_label(puzzle.title, Rect2(24, 33, 570, 20), 13, Color("ffcc77"))
 	var instructions := {
-		"matrix": "Obere Zeile zuerst. Dann abwechselnd gleiche Spalte / Zeile.\nJede Zelle nur einmal. Zielsequenzen zusammenhängend in den Puffer laden.",
-		"decoder": "Rauschfilter einstellen, bis die Wörter lesbar sind. Passwort auswählen.\nÄhnlichkeit zählt Buchstaben an gleicher Stelle. Klammerpaare helfen einmalig.",
-		"routing": "Leitungen drehen: IN → Logik-Knoten 10 → OUT. Rot = Active ICE.\nA/B setzen, Datenfluss einschalten. ICE abtrennen; Knoten 10 verträgt nur 1×.",
-		"signal": "Cyan auf Gold abstimmen: Frequenz, Amplitude und Phase einstellen.\nDeckung kurz halten. Bei Störimpulsen warten; gesicherter Kanal bleibt offen.",
-		"jumper": "Ravens Wartungsdeck / Steckplätze verbinden und Widerstände wählen.\nErst prüfen, dann Neustart übernehmen. Fehler lösen die Schutzschaltung aus.",
+		"matrix": "ZIEL: Alle Codefolgen rechts in den Puffer laden. Nur helle Felder sind erlaubt.\nStarte oben; danach wechseln Spalte und Zeile. Y / F1 erklärt die Schritte.",
+		"decoder": "ZIEL: Das Türpasswort finden. Stelle zuerst den Rauschfilter auf ein stabiles Signal.\nDann Wörter vergleichen: Ähnlichkeit zählt Buchstaben an derselben Stelle.",
+		"routing": "ZIEL: IN über Knoten 10 mit OUT verbinden. A dreht die markierte Leitung.\nAND braucht A=1 und B=1. Datenrate 1×; rotes ICE vom Datenweg abtrennen.",
+		"signal": "ZIEL: Dein cyanfarbenes Signal auf die goldene Zielwelle abstimmen.\nRegler wählen, mit Links / Rechts ändern; Deckung 1,2 Sekunden halten.",
+		"jumper": "ZIEL: Antrieb reparieren. Für jeden Pin den passenden Steckplatz wählen.\nWartungslog rechts beachten, Widerstände ergänzen, dann Verbindungen prüfen.",
 	}
 	_label(instructions[puzzle.kind], Rect2(24, 57, 592, 36), 11, Color("a7beca"))
 	match puzzle.kind:
@@ -132,12 +209,15 @@ func _build() -> void:
 		"jumper": _jumper()
 	feedback = _label("", Rect2(24, 273, 592, 37), 12)
 	feedback.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_button("Abbrechen", Rect2(24, 316, 105, 27), func(): finish(false), false)
-	_button("Neu versuchen", Rect2(137, 316, 119, 27), func():
+	footer.append(_button("Abbrechen", Rect2(24, 316, 90, 27), func(): finish(false), false))
+	footer.append(_button("Neu versuchen", Rect2(122, 316, 110, 27), func():
 		paused = false
-		_build(), false)
-	pause_button = _button("Pause", Rect2(264, 316, 87, 27), _toggle_pause, false)
+		_build(), false))
+	pause_button = _button("Pause", Rect2(240, 316, 70, 27), _toggle_pause, false)
 	apply_button = _button("Übernehmen", Rect2(488, 316, 128, 27), func(): finish(true), false)
+	footer.append(pause_button)
+	footer.append(_button("Hilfe  Y / F1", Rect2(318, 316, 128, 27), _toggle_help, false))
+	footer.append(apply_button)
 	sparks = preload("res://scripts/terminal_sparks.gd").new()
 	sparks.puzzle = puzzle
 	root.add_child(sparks)
@@ -145,6 +225,15 @@ func _build() -> void:
 	_focus_available()
 
 func _focus_available() -> void:
+	if puzzle.failed:
+		footer[1].grab_focus()
+		return
+	if paused:
+		pause_button.grab_focus()
+		return
+	if puzzle.kind == "decoder" and not puzzle.filter_locked() and puzzle.available():
+		controls[8].grab_focus()
+		return
 	if puzzle.solved and not paused:
 		apply_button.grab_focus()
 		return
@@ -217,7 +306,12 @@ func _jumper() -> void:
 func _process(delta: float) -> void:
 	if closed:
 		return
-	if not paused:
+	if not help_open and held_direction != Vector2.ZERO:
+		repeat_delay -= delta
+		if repeat_delay <= 0:
+			_navigate(held_direction)
+			repeat_delay = 0.13
+	if not paused and not help_open:
 		puzzle.tick(delta)
 	if puzzle.attempts < previous_attempts or (puzzle.failed and not previous_failure):
 		alarm.emit()
@@ -228,6 +322,20 @@ func _process(delta: float) -> void:
 func _refresh() -> void:
 	var focus := get_viewport().gui_get_focus_owner()
 	feedback.text = "PAUSE · Weiter mit Start oder Fortsetzen." if paused else puzzle.status
+	if puzzle.status == "Verbindung bereit.":
+		feedback.text = {"routing": "VORBEREITUNG · Leitungen drehen, A/B setzen, dann Datenfluss einschalten.", "signal": "ABGLEICH · Frequenz, Amplitude und Phase einstellen. Gold ist dein Ziel.", "jumper": "WARTUNG · Pins und Widerstände einstellen, dann Verbindungen prüfen."}.get(puzzle.kind, puzzle.status)
+	if puzzle.solved:
+		feedback.text = "ZUGRIFF FREI · Wähle Übernehmen, um die Aufgabe abzuschließen."
+	elif puzzle.failed:
+		feedback.text += "  Wähle Neu versuchen."
+	elif puzzle.kind == "matrix" and puzzle.cursor < 0:
+		feedback.text = "SCHRITT 1 · Wähle ein helles Byte in der obersten Zeile."
+	elif puzzle.kind == "decoder" and not puzzle.filter_locked():
+		feedback.text = "SCHRITT 1 · Rauschfilter mit Links / Rechts abstimmen."
+	elif puzzle.kind == "decoder" and puzzle.history.is_empty():
+		feedback.text = "SCHRITT 2 · Signal stabil. Wähle jetzt ein Passwort links."
+	if paused:
+		feedback.text = "PAUSE · Weiter mit Start oder Fortsetzen."
 	feedback.add_theme_color_override("font_color", Color("ff697c") if puzzle.flash > 0 or puzzle.failed else CYAN)
 	sparks.queue_redraw()
 	apply_button.disabled = not puzzle.solved or paused
@@ -247,12 +355,13 @@ func _refresh() -> void:
 				details.text += "\n%s  %s" % ["✓" if puzzle.has_sequence(goal) else "○", " → ".join(goal)]
 		"decoder":
 			controls[8].set_value_no_signal(puzzle.filter)
+			value_labels[0].text = "Rauschfilter-Frequenz  [%d]" % puzzle.filter
 			for i in cells.size():
 				cells[i].text = "......" if i in puzzle.removed else (Puzzle.WORDS[i] if puzzle.filter_locked() else _scramble(Puzzle.WORDS[i], i))
 				cells[i].disabled = paused or not puzzle.available() or not puzzle.filter_locked() or i in puzzle.removed or i in puzzle.guessed
 			glitch.text = "SIGNAL STABIL" if puzzle.filter_locked() else "↓ " + _scramble("SPEICHERDUMP", 3) + " ↓"
 			glitch.position.y = 99 if puzzle.filter_locked() else 99 + sin(puzzle.clock * 4) * 5
-			details.text = "%d Versuche · Filter %d\n%s" % [puzzle.attempts, puzzle.filter, puzzle.history.left(114)]
+			details.text = "Signalqualität: %d %% · Versuche: %d\n%s" % [100 - absi(puzzle.filter - puzzle.filter_target), puzzle.attempts, puzzle.history.left(114)]
 			for i in 2:
 				helper_buttons[i].disabled = paused or not puzzle.available() or ["dud", "reset"][i] in puzzle.helpers
 		"routing":
@@ -264,6 +373,7 @@ func _refresh() -> void:
 		"signal":
 			for i in 3:
 				controls[i].set_value_no_signal(puzzle.signal_values[i])
+				value_labels[i].text = "%s  [%d]" % [["Frequenz", "Amplitude", "Phase"][i], puzzle.signal_values[i]]
 			scope.queue_redraw()
 		"jumper":
 			for i in 5:
@@ -272,10 +382,10 @@ func _refresh() -> void:
 				pin_labels[i].modulate = Color("7dffaa") if puzzle.leds[i] else Color.WHITE
 			for i in 2:
 				controls[i + 5].selected = puzzle.resistors[i]
-	if puzzle.solved and not paused and not completion_focused:
+	if puzzle.solved and not paused and not help_open and not completion_focused:
 		completion_focused = true
 		apply_button.grab_focus()
-	elif focus != null and focus is BaseButton and focus.disabled:
+	elif not help_open and focus != null and focus is BaseButton and focus.disabled:
 		_focus_available()
 
 func _scramble(word: String, salt: int) -> String:
@@ -288,19 +398,156 @@ func _scramble(word: String, salt: int) -> String:
 
 func _toggle_pause() -> void:
 	paused = not paused
+	held_direction = Vector2.ZERO
 	for control in controls:
 		if control is OptionButton:
 			control.get_popup().hide()
+	_refresh()
+	_focus_available()
 
 func _input(event: InputEvent) -> void:
 	if closed:
 		return
-	if event.is_action_pressed("ui_cancel") or (event is InputEventJoypadButton and event.pressed and event.button_index == JOY_BUTTON_B):
+	# Consume raw pad events here: gameplay bindings use these same buttons.
+	if event is InputEventJoypadMotion:
+		if event.axis in [JOY_AXIS_LEFT_X, JOY_AXIS_LEFT_Y]:
+			if event.axis == JOY_AXIS_LEFT_X: stick.x = event.axis_value
+			else: stick.y = event.axis_value
+			var direction := Vector2.ZERO
+			if stick.length() > 0.55:
+				direction = Vector2(signf(stick.x), 0) if absf(stick.x) > absf(stick.y) else Vector2(0, signf(stick.y))
+			_hold(direction)
 		get_viewport().set_input_as_handled()
-		finish(false)
+		return
+	if event is InputEventJoypadButton:
+		get_viewport().set_input_as_handled()
+		var directions := {JOY_BUTTON_DPAD_LEFT: Vector2.LEFT, JOY_BUTTON_DPAD_RIGHT: Vector2.RIGHT, JOY_BUTTON_DPAD_UP: Vector2.UP, JOY_BUTTON_DPAD_DOWN: Vector2.DOWN}
+		if event.button_index in directions:
+			_hold(directions[event.button_index] if event.pressed else Vector2.ZERO)
+		elif event.pressed:
+			match event.button_index:
+				JOY_BUTTON_Y: _toggle_help()
+				JOY_BUTTON_B:
+					if help_open: _toggle_help()
+					else: finish(false)
+				JOY_BUTTON_START:
+					if not help_open: _toggle_pause()
+				JOY_BUTTON_LEFT_SHOULDER: _cycle_focus(-1)
+				JOY_BUTTON_RIGHT_SHOULDER: _cycle_focus(1)
+				JOY_BUTTON_A: _activate()
+		return
+	if event.is_action_pressed("ui_cancel"):
+		get_viewport().set_input_as_handled()
+		if help_open: _toggle_help()
+		else: finish(false)
+	elif event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_F1:
+		get_viewport().set_input_as_handled()
+		_toggle_help()
+	elif help_open:
+		if event is InputEventKey: get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("pause_game") or (event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_P):
 		get_viewport().set_input_as_handled()
 		_toggle_pause()
+
+func _hold(direction: Vector2) -> void:
+	if direction == held_direction: return
+	held_direction = direction
+	repeat_delay = 0.32
+	if direction != Vector2.ZERO and not help_open: _navigate(direction)
+
+func _enabled_controls() -> Array[Control]:
+	var result: Array[Control] = []
+	for control in controls + footer:
+		if control is BaseButton and not control.disabled or control is Slider and control.editable:
+			result.append(control)
+	return result
+
+func _cycle_focus(step: int) -> void:
+	if help_open: return
+	var available := _enabled_controls()
+	if available.is_empty(): return
+	var index := available.find(get_viewport().gui_get_focus_owner())
+	available[posmod(index + step, available.size())].grab_focus()
+
+func _navigate(direction: Vector2) -> void:
+	var focus := get_viewport().gui_get_focus_owner()
+	if focus == null:
+		_focus_available()
+		return
+	if direction.x != 0:
+		if focus is Slider and focus.editable:
+			focus.value += direction.x * focus.step
+			return
+		if focus is OptionButton and not focus.disabled:
+			focus.select(posmod(focus.selected + int(direction.x), focus.item_count))
+			focus.item_selected.emit(focus.selected)
+			return
+	var best: Control
+	var score := INF
+	var center := focus.get_global_rect().get_center()
+	for candidate in _enabled_controls():
+		var offset := candidate.get_global_rect().get_center() - center
+		var forward := offset.dot(direction)
+		if forward <= 1: continue
+		var sideways := absf(offset.cross(direction))
+		var candidate_score := forward + sideways * 3
+		if candidate_score < score:
+			score = candidate_score
+			best = candidate
+	if best != null: best.grab_focus()
+
+func _activate() -> void:
+	if help_open:
+		_toggle_help()
+		return
+	var focus := get_viewport().gui_get_focus_owner()
+	if focus is OptionButton and not focus.disabled:
+		_navigate(Vector2.RIGHT)
+	elif focus is Button and not focus.disabled:
+		focus.pressed.emit()
+	_refresh()
+
+func _panel(rect: Rect2, color: Color) -> Panel:
+	var panel := Panel.new()
+	panel.position = rect.position
+	panel.size = rect.size
+	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	panel.add_theme_stylebox_override("panel", _style(color, Color(0.03, 0.07, 0.11, 0.88)))
+	root.add_child(panel)
+	return panel
+
+func _toggle_help() -> void:
+	held_direction = Vector2.ZERO
+	if help_open:
+		help_open = false
+		help_panel.queue_free()
+		help_panel = null
+		if is_instance_valid(help_focus) and not (help_focus is BaseButton and help_focus.disabled): help_focus.grab_focus()
+		else: _focus_available()
+		return
+	help_focus = get_viewport().gui_get_focus_owner()
+	help_open = true
+	help_panel = _panel(Rect2(16, 8, 608, 338), CYAN)
+	help_panel.add_theme_stylebox_override("panel", _style(CYAN, Color("08131e")))
+	help_panel.mouse_filter = Control.MOUSE_FILTER_STOP
+	var title := Label.new()
+	title.text = "RAVENS HANDBUCH / " + puzzle.kind.to_upper()
+	title.position = Vector2(18, 14)
+	title.add_theme_font_size_override("font_size", 18)
+	title.modulate = CYAN
+	help_panel.add_child(title)
+	var guide := Label.new()
+	guide.text = GUIDES[puzzle.kind]
+	guide.position = Vector2(18, 60)
+	guide.add_theme_font_size_override("font_size", 13)
+	help_panel.add_child(guide)
+	var close := Button.new()
+	close.text = "Verstanden · A / B / Y / F1"
+	close.position = Vector2(18, 286)
+	close.size = Vector2(570, 32)
+	close.pressed.connect(_toggle_help)
+	help_panel.add_child(close)
+	close.grab_focus()
 
 func finish(success: bool) -> void:
 	if closed or (success and (not puzzle.solved or paused)):

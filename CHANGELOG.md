@@ -1,5 +1,14 @@
 # Versionshinweise
 
+## v0.18.3 – CodexAI: Nightwing-Hacks, Controller und verständliche Hilfe · 7. November 2026
+
+- Alle fünf Terminaltypen in einheitliche dunkle Nightwing-Flächen vor der Neonstadt eingebettet: Cyan-Beschriftung, goldener Fokus, getrennte Aufgaben-/Statusbereiche und sichtbare Reglerwerte.
+- Controller-Eingaben direkt im modalen Terminal verarbeitet: räumliche Navigation über Steuerkreuz/Stick, Wiederholung beim Halten, Totzone, A für Aktionen, Links/Rechts für Regler und Steckplätze sowie LB/RB als vollständiger Fokusumlauf einschließlich Abbruch, Neustart, Pause, Hilfe und Übernehmen. Gameplay erhält diese Ereignisse nicht weiter.
+- Decoder beginnt auf dem Rauschfilter. Signalqualität hilft beim Abstimmen; nach Fehlschlag liegt der Fokus auf Neu versuchen, nach Erfolg auf Übernehmen.
+- Ziele und nächste Schritte in jeder Ansicht erklärt. Pausierendes Handbuch mit Y/F1, Rückkehr mit A/B/Y/F1 und Erhalt des vorherigen Fokus. Start/P pausiert weiterhin separat.
+- Prüfung: 154 Controller-, 67 Terminal-/Integrations- und 351 Gameplay-Prüfungen bestanden; alle fünf Ansichten und das Handbuch im Godot-Renderer kontrolliert. Controller-Ereignisse wurden simuliert, kein physisches Gerät angeschlossen.
+- Automatisierte Controller-Tests lösen alle acht Einsätze mit eingespeisten Joypad-Ereignissen; zusätzlicher CI-Prüfschritt. Terminal-Vorschaubilder erneuert, Spieleranleitung und Repository-Infos ergänzt.
+
 ## v0.18.2 – CodexAI: Plattformproportionen und gezielter Figurenwind · 7. November 2026
 
 - Beide Menüfiguren kleiner und passend auf der vorderen Plattform positioniert. Raven separat proportional skaliert und leicht zurückversetzt; weiche Kontaktschatten unter allen Stiefeln.

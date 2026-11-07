@@ -28,6 +28,11 @@ func run() -> void:
 		await process_frame
 		await RenderingServer.frame_post_draw
 		root.get_texture().get_image().save_png("res://docs/terminal-" + panel.puzzle.kind + ".png")
+		if context == "transponder":
+			panel._toggle_help()
+			await process_frame
+			await RenderingServer.frame_post_draw
+			root.get_texture().get_image().save_png("res://docs/terminal-hilfe.png")
 		world.cancel_terminal()
 	world.queue_free()
 	await process_frame
