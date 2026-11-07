@@ -13,6 +13,12 @@ Vom Nutzer festgelegte Arbeitsregeln:
 - Falls ein Push scheitert, eine vollständige Projektkopie einschließlich Git-Verlauf und ungesicherter Änderungen außerhalb des Repository-Verzeichnisses sichern und den genauen Speicherort nennen. Kann auch die Sicherung nicht erfolgen, den tatsächlichen Stand und die Blockade offen benennen.
 - Eine Veröffentlichung der Cloud-Umgebung ist eine eigene Aktion und gehört nicht automatisch zum Git-Push.
 
+## Verbindlicher Grafikstil
+
+Nutzervorgabe vom 7. November 2026: ShadepiRPG ist ein **Pixelart-Spiel**. Alle künftig erstellten Grafiken müssen **HQ-Pixelgrafiken** im passenden Cyberpunk-Stil sein. Hoher Detailgrad, erkennbare Materialtexturen, räumliche Tiefe, differenzierte Licht-/Schattenstufen und saubere Pixelcluster sind wesentlich. Keine einfachen Vektorgrafiken, flachen Ersatzformen oder glatten Illustrationen als Ersatz für Pixelart. Eine große PNG-Datei oder bloßes Hochskalieren/Verpixeln allein erfüllt HQ nicht.
+
+Vor neuen Assets vorhandene HQ-Spielgrafiken und Figurenreferenzen vergleichen; Pixeldichte, Proportionen, Palette, Perspektive und Merkmalkonsistenz beachten. Pixelkanten bei Import und Skalierung gezielt erhalten; keine unkontrollierte Weichzeichnung. Die Regel gilt auch für neue Menübilder, Sprites, Umgebungsobjekte und grafische FX-Assets. Diese Stilfestlegung allein ist kein Auftrag, vorhandene Grafiken sofort auszutauschen.
+
 ## Quellen und Figuren
 
 Das [Shadepi-Universum-Archiv](docs/universum/README.md) enthält die bereitgestellten Originalquellen, Textkopien und Hinweise zu Figurenreferenzen. Vor Arbeiten an Lore, Figuren oder ihrem Aussehen die passenden Quellen konsultieren. Vorhandene HQ-Assets und den aktuellen GitHub-Stand berücksichtigen.

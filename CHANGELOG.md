@@ -1,5 +1,11 @@
 # Versionshinweise
 
+## v0.20.4 – CodexAI: HQ-Pixelart als verbindlichen Grafikstil festhalten · 7. November 2026
+
+- Nutzervorgabe in `AGENTS.md` dauerhaft gesichert: alle neuen Grafiken als detailreiche HQ-Pixelart, mit Materialtextur, Tiefenwirkung, abgestimmter Pixeldichte, Licht-/Schattenstufen und sauberen Pixelclustern. Keine einfachen Vektorgrafiken oder glatten Illustrationen als Pixelart-Ersatz.
+- HQ wird über tatsächliche Detailqualität definiert; große PNG-Abmessungen oder bloßes Hochskalieren/Verpixeln genügen nicht. Figurenmerkmale und vorhandene Referenzen bleiben verbindlich.
+- Alle GitHub-Branches vor Beginn geprüft. Nur Projektregeln, Versionsangaben und Änderungsinfos gepflegt; keine Grafik- oder Gameplay-Änderung. Versionsfelder auf Konsistenz geprüft.
+
 ## v0.20.3 – CodexAI: HQ-Hauptscreen und animiertes Cyberpunk-Menü · 7. November 2026
 
 - Vor Beginn alle Remote-Branches geprüft und `main` auf v0.20.2 aktualisiert.

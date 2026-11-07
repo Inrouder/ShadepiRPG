@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.20.3 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.20.4 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -35,7 +35,12 @@ Die Spielwelt nutzt **16 gemalte Kulissen** aus `assets/world/painted/`. Wände 
 
 Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und Bosskämpfen. Die vollständige Zuordnung und Hinweise zum Austauschen der MP3-Dateien stehen unter [Musik austauschen](assets/music/README.md).
 
-## Neu in v0.20.3 · 7. November 2026 · CodexAI
+## Neu in v0.20.4 · 7. November 2026 · CodexAI
+
+- Verbindliche Grafikvorgabe in den Projektregeln gesichert: neue Grafiken als detailreiche HQ-Pixelart mit Materialtexturen, Tiefenwirkung und abgestimmter Pixeldichte. Keine einfachen Vektorgrafiken als Ersatz.
+- Dokumentations- und Versionspflege; bestehende Grafiken und Spielmechaniken wurden dabei nicht verändert.
+
+## v0.20.3 · 7. November 2026 · CodexAI
 
 - HQ-Figuren-PNG im gemalten Spielstil: dieselben charakteristischen Merkmale, jetzt mit detaillierten Materialien, Regentropfen und Cyan-/Magenta-Kantenlicht.
 - Hauptscreen rendert PNGs und Menüschrift in Fensterauflösung, auch in Full HD. Beim Spielen und Pausieren gilt wieder das ursprüngliche Spielraster.
