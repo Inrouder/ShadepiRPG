@@ -1,5 +1,11 @@
 # Versionshinweise
 
+## v0.20.6 – ClaudeHelper: Release per Knopfdruck · 7. November 2026
+
+- GitHub-Workflow „Test and build Shadepi“: Unter *Actions → Run workflow* kann jetzt ein Release-Tag (z. B. `v0.20.6`) eingetragen werden. Nach erfolgreichen Tests und Exporten legt GitHub Tag und Release auf genau diesem Stand an; Tag-Pushes funktionieren weiterhin.
+- Das Release enthält Windows- und jetzt auch das Linux-Paket sowie das Godot-Projekt. Ein Tag, der nicht zur Version in `project.godot` passt, wird abgelehnt.
+- Erstes veröffentlichtes Release mit den Pixelart-Menüs und Hack-Oberflächen aus v0.20.5.
+
 ## v0.20.5 – ClaudeHelper: Pixelart-Menüs und szenenbezogene Hack-Oberflächen · 7. November 2026
 
 - Alle GitHub-Branches geprüft; auf CodexAI v0.20.4 (verbindlicher HQ-Pixelart-Stil) aufgebaut.

@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**Spieleranleitung für v0.20.5 · ClaudeHelper.** Aktuelle Downloads und Prüfstatus: [Repository-Startseite](README.md). Änderungen: [Versionshinweise](CHANGELOG.md).
+**Spieleranleitung für v0.20.6 · ClaudeHelper.** Aktuelle Downloads und Prüfstatus: [Repository-Startseite](README.md). Änderungen: [Versionshinweise](CHANGELOG.md).
 
 **Menüs und Terminals v0.20.5 · ClaudeHelper:** Haupt- und Pausenmenü sowie Ravens Hack-Decks sind jetzt echte Pixelart im Spielraster: genietete Stahlrahmen mit Neonkanten, Pixel-Buttons und eine Pixelschrift. Jedes Terminal trägt die Farben und das Emblem des gehackten Systems (Chrome Jackals, Orden des Weißen Drachen, ARToS-7, Moriyama-Tower); das Pausenmenü passt sich dem Kapitel an. Der hervorgehobene Knopf zeigt einen Pfeil rechts; bei den Codezellen markieren helle Ecken den Cursor, verbrauchte Felder werden dunkel. [Übersicht](docs/pixel-ui.md).
 
