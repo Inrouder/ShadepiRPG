@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.18.1 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.18.2 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -22,7 +22,7 @@ Im Spiel gibt es ein Startmenü mit Einzelspieler und Lokal-Koop, eine gemeinsam
 
 **Kartenkorrekturen:** Das Versteck hat passende Möbelproportionen; Bingo Street geht mit durchgehender Bodenkante in die Gasse über. [Vergleich im Spiel](docs/karten-proportionen.md).
 
-Das Startmenü zeigt Shadepi in Bereitschaftshaltung und Raven mit Tablet nach den aktuellen Figurenreferenzen vor einer Neonstadt mit weißem Drachen. Figuren und Dach bleiben fest verankert; die Maus verschiebt oder verformt sie nicht. Regen, Flugverkehr, Wasserreflexe und Neonlicht beleben die Szene. Die Menüknöpfe reagieren auf Maus und Controller-Fokus. Dazu läuft die Musik des Finales am See. [Vorschau und technische Hinweise](docs/live-startmenue.md).
+Das Startmenü zeigt Shadepi in Bereitschaftshaltung und Raven mit Tablet nach den aktuellen Figurenreferenzen vor einer Neonstadt mit weißem Drachen. Figuren und Dach bleiben fest verankert; die Maus verschiebt oder verformt sie nicht. Ravens Haarspitzen und Shadepis Umhangränder wehen sanft im Wind. Passende Größe, Tiefenstaffelung und Kontaktschatten verankern beide auf der vorderen Plattform. Regen, Flugverkehr, Wasserreflexe und Neonlicht beleben die Szene. Die Menüknöpfe reagieren auf Maus und Controller-Fokus. Dazu läuft die Musik des Finales am See. [Vorschau und technische Hinweise](docs/live-startmenue.md).
 
 ## Geschichte und Spielumfang
 
@@ -35,7 +35,14 @@ Die Spielwelt nutzt **16 gemalte Kulissen** aus `assets/world/painted/`. Wände 
 
 Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und Bosskämpfen. Die vollständige Zuordnung und Hinweise zum Austauschen der MP3-Dateien stehen unter [Musik austauschen](assets/music/README.md).
 
-## Neu in v0.18.1 · 7. November 2026 · CodexAI
+## Neu in v0.18.2 · 7. November 2026 · CodexAI
+
+- Menüfiguren proportional in die vordere Plattform eingepasst; Raven etwas zurückversetzt, beide Fußpaare mit Kontaktschatten innerhalb der Dachkante.
+- Sanfter Wind an Ravens Haarspitzen und Shadepis freien Umhangrändern. Gesichter, Körper, Hände, Waffen und Füße bleiben ruhig; keine Mausverschiebung.
+- „Reduziert“ schaltet den Figurenwind ab. Bestehende Figurenreferenzen und Menüillustration bleiben die Grundlage.
+- 351 Gameplay-/Menüprüfungen bestanden; zwei gerenderte Windphasen bestätigen bewegte Haar-/Stoffenden bei pixelgleichen Gesichtern und Füßen.
+
+## v0.18.1 · 7. November 2026 · CodexAI
 
 - Menüfiguren nach den neuen Nutzerreferenzen: Shadepi in Bereitschaftshaltung mit segmentierter Maske und Raven mit Tablet.
 - Mausverschiebung und Figurenverformung entfernt; Regen, Flugverkehr und Licht bleiben animiert.

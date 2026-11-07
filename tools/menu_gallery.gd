@@ -33,6 +33,15 @@ func run() -> void:
 		await capture("/tmp/shadepi-menu-corner-%d.png" % i)
 	scene.set_visual_quality(0)
 	await capture("/tmp/shadepi-menu-reduced.png")
+	# Isolate two wind phases for pixel comparison of moving tips and fixed feet.
+	scene.set_visual_quality(2)
+	var backdrop = scene.ui.start_backdrop
+	backdrop.set_process(false)
+	backdrop.weather.hide()
+	backdrop.atmosphere.hide()
+	for i in 2:
+		backdrop.wind_material.set_shader_parameter("clock", [0.4, 1.8][i])
+		await capture("/tmp/shadepi-menu-wind-%d.png" % i)
 	scene.new_game(false)
 	scene.ui.clear_dialogue()
 	scene.menu_open = true

@@ -1,5 +1,14 @@
 # Versionshinweise
 
+## v0.18.2 – CodexAI: Plattformproportionen und gezielter Figurenwind · 7. November 2026
+
+- Beide Menüfiguren kleiner und passend auf der vorderen Plattform positioniert. Raven separat proportional skaliert und leicht zurückversetzt; weiche Kontaktschatten unter allen Stiefeln.
+- Bestehende Referenzillustration ohne neue Bildgenerierung verwendet, entlang des transparenten Zwischenraums in zwei Figuren aufgeteilt und farblich dezent an das Nachtlicht angepasst.
+- Ravens freie Haarspitzen und Shadepis äußere Umhangenden bewegen sich sanft im Wind. Geschützte Körperbereiche, Hände, Waffen und Füße bleiben fest. Keine Maus-Parallax.
+- Windstärke folgt dem Bildstil; „Reduziert“ deaktiviert die Figurenanimation. Verdeckte Menüs stoppen weiterhin ihre Verarbeitung.
+- Version in Godot, Windows-Export, Repository- und Spielerinfos auf v0.18.2 angehoben. Nur Menü und zugehörige Prüfung/Dokumentation geändert.
+- Prüfung: 351 Gameplay-/Menüprüfungen bestanden. Zwei isolierte Windphasen im Godot-Renderer verglichen: Haar- und Stoffenden bewegen sich, Gesichter und Füße bleiben pixelgleich.
+
 ## v0.18.1 – CodexAI: Hauptmenü, Figurenreferenzen und ruhiger Bildaufbau · 7. November 2026
 
 - Neue Menüillustration nach den aktuellen Nutzerbildern: Shadepi in Bereitschaftshaltung mit passender segmentierter Maske; Raven mit Tablet, Referenzgesicht, schwarz-blauen Haaren und taktischem Anzug im gezeichneten Stil.

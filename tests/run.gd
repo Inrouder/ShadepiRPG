@@ -58,15 +58,28 @@ func run() -> void:
 	check(scene.atmosphere_filter.visible and scene.shadow_lights[0].shadow_enabled, "atmospheric mode restores lighting and post filter")
 	check(scene.ui.start_backdrop.atmosphere.visible, "atmospheric mode restores menu weather grading")
 	var menu_backdrop = scene.ui.start_backdrop
+	var shadepi_transform: Transform2D = menu_backdrop.heroes.get_child(0).transform
+	var raven_transform: Transform2D = menu_backdrop.heroes.get_child(1).transform
 	for quality in 3:
 		menu_backdrop.set_quality(quality)
+		check(is_zero_approx(menu_backdrop.wind_material.get_shader_parameter("strength")) == (quality == 0), "reduced quality disables hair and cloth wind")
 		for point in [Vector2.ZERO, Vector2(640, 0), Vector2(0, 360), Vector2(640, 360)]:
 			var motion := InputEventMouseMotion.new()
 			motion.position = point
 			menu_backdrop._input(motion)
 			menu_backdrop.pulse_at(point)
 			menu_backdrop._process(0.5)
-			check(menu_backdrop.heroes.position == menu_backdrop.HERO_RECT.position and menu_backdrop.city.position == Vector2(-10, -6) and menu_backdrop.heroes.material == null, "pointer and clicks keep figures and rooftop anchored at quality %d" % quality)
+			check(menu_backdrop.heroes.position == menu_backdrop.HERO_RECT.position and menu_backdrop.city.position == Vector2(-10, -6) and menu_backdrop.heroes.get_child(0).transform == shadepi_transform and menu_backdrop.heroes.get_child(1).transform == raven_transform, "pointer and clicks keep figures and rooftop anchored at quality %d" % quality)
+	# Sample protected landmarks in the source illustration, not just node origins.
+	for uv in [Vector2(0.4, 0.13), Vector2(0.4, 0.30), Vector2(0.23, 0.52), Vector2(0.56, 0.55), Vector2(0.1, 0.7), Vector2(0.31, 0.947), Vector2(0.535, 0.953)]:
+		check(menu_backdrop.wind_weights(uv, false).is_zero_approx(), "Shadepi mask, body, hands, sword and boots stay rigid")
+	for uv in [Vector2(0.75, 0.18), Vector2(0.75, 0.4), Vector2(0.91, 0.35), Vector2(0.65, 0.55), Vector2(0.733, 0.95), Vector2(0.855, 0.94)]:
+		check(menu_backdrop.wind_weights(uv, true).is_zero_approx(), "Raven face, body, hands, tablet and boots stay rigid")
+	check(menu_backdrop.wind_weights(Vector2(0.62, 0.40), true).x > 0.9, "Raven free hair tips receive wind")
+	check(menu_backdrop.wind_weights(Vector2(0.25, 0.71), false).y > 0.9 and menu_backdrop.wind_weights(Vector2(0.59, 0.71), false).y > 0.9, "both free cloak edges receive wind")
+	var safe_roof := PackedVector2Array([Vector2(35, 299), Vector2(280, 299), Vector2(298, 305), Vector2(70, 344), Vector2(35, 334)])
+	for foot in [[Vector2(0.31, 0.947), false], [Vector2(0.535, 0.953), false], [Vector2(0.733, 0.95), true], [Vector2(0.855, 0.94), true]]:
+		check(Geometry2D.is_point_in_polygon(menu_backdrop.foot_position(foot[0], foot[1]), safe_roof), "each boot rests inside the foreground platform")
 	menu_backdrop.pulse_at(Vector2(120, 240))
 	check(menu_backdrop.pulse > 0.0 and menu_backdrop.pulse_position == Vector2(120, 240), "menu interaction produces feedback at the input point")
 	scene.close_menu()

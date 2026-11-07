@@ -2,17 +2,25 @@ extends Control
 
 const CITY := preload("res://assets/menu/start-city.png")
 const HEROES := preload("res://assets/menu/start-heroes.png")
+const WIND := preload("res://shaders/menu_wind.gdshader")
 const ATMOSPHERE := preload("res://shaders/menu_atmosphere.gdshader")
 const VIEW := Vector2(640, 360)
 # Fixed illustration and fixed roof: pointer/focus must never slide the feet.
-const HERO_RECT := Rect2(0, 6, 310, 310)
+const HERO_RECT := Rect2(10, 64, 260, 260)
+const RAVEN_SCALE := 0.92
+const RAVEN_PIVOT := Vector2(0.81, 0.95)
+const RAVEN_OFFSET := Vector2(-5, -9)
+# The cut follows the transparent gap between the two reference figures.
+const SEAM := [Vector2(0.60, 0), Vector2(0.60, 0.30), Vector2(0.594, 0.35), Vector2(0.603, 0.40), Vector2(0.615, 0.45), Vector2(0.615, 0.62), Vector2(0.635, 0.71), Vector2(0.62, 0.80), Vector2(0.62, 1)]
 
 var elapsed := 0.0
 var quality := 2
 var pulse := 0.0
 var pulse_position := Vector2(240, 210)
 var city: TextureRect
-var heroes: TextureRect
+var heroes: Node2D
+var wind_material: ShaderMaterial
+var ground_contacts: Control
 var weather: Control
 var atmosphere: ColorRect
 var atmosphere_material: ShaderMaterial
@@ -29,13 +37,24 @@ func _ready() -> void:
 	city.position = Vector2(-10, -6)
 	city.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(city)
-	heroes = TextureRect.new()
-	heroes.texture = HEROES
-	heroes.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	heroes.size = HERO_RECT.size
+	ground_contacts = Control.new()
+	ground_contacts.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	ground_contacts.draw.connect(_draw_contacts)
+	add_child(ground_contacts)
+	heroes = Node2D.new()
 	heroes.position = HERO_RECT.position
-	heroes.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(heroes)
+	wind_material = ShaderMaterial.new()
+	wind_material.shader = WIND
+	for is_raven in [false, true]:
+		var figure := MeshInstance2D.new()
+		figure.texture = HEROES
+		figure.mesh = _figure_mesh(is_raven)
+		figure.material = wind_material
+		if is_raven:
+			figure.scale = Vector2.ONE * RAVEN_SCALE
+			figure.position = RAVEN_PIVOT * HERO_RECT.size * (1.0 - RAVEN_SCALE) + RAVEN_OFFSET
+		heroes.add_child(figure)
 	weather = Control.new()
 	weather.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	weather.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -52,6 +71,68 @@ func _ready() -> void:
 	set_quality(quality)
 	_sync_activity()
 
+static func seam_at(y: float) -> float:
+	for i in range(1, SEAM.size()):
+		if y <= SEAM[i].y:
+			return lerpf(SEAM[i - 1].x, SEAM[i].x, inverse_lerp(SEAM[i - 1].y, SEAM[i].y, y))
+	return SEAM.back().x
+
+static func wind_weights(uv: Vector2, is_raven: bool) -> Vector2:
+	# Weights are zero at roots, body, hands, weapons and boots. Feathered
+	# silhouette-only regions avoid the old whole-character rubber motion.
+	if is_raven:
+		var hair := smoothstep(0.27, 0.38, uv.y) * (1.0 - smoothstep(0.425, 0.45, uv.y))
+		hair *= smoothstep(0.59, 0.61, uv.x) * (1.0 - smoothstep(0.63, 0.654, uv.x))
+		return Vector2(hair, 0)
+	var tips := smoothstep(0.58, 0.68, uv.y) * (1.0 - smoothstep(0.745, 0.78, uv.y))
+	var left_edge := smoothstep(0.21, 0.23, uv.x) * (1.0 - smoothstep(0.27, 0.30, uv.x))
+	var right_edge := smoothstep(0.53, 0.568, uv.x) * (1.0 - smoothstep(0.62, 0.64, uv.x))
+	return Vector2(0, tips * maxf(left_edge, right_edge))
+
+func _figure_mesh(is_raven: bool) -> ArrayMesh:
+	var vertices := PackedVector3Array()
+	var uvs := PackedVector2Array()
+	var weights := PackedColorArray()
+	var indices := PackedInt32Array()
+	const ROWS := 160
+	const COLS := 80
+	for row in ROWS + 1:
+		var y := float(row) / ROWS
+		var seam := seam_at(y)
+		for column in COLS + 1:
+			var x := lerpf(seam if is_raven else 0.0, 1.0 if is_raven else seam, float(column) / COLS)
+			var uv := Vector2(x, y)
+			vertices.append(Vector3(x * HERO_RECT.size.x, y * HERO_RECT.size.y, 0))
+			uvs.append(uv)
+			var weight := wind_weights(uv, is_raven)
+			weights.append(Color(weight.x, weight.y, 0, 1))
+	for row in ROWS:
+		for column in COLS:
+			var index := row * (COLS + 1) + column
+			indices.append_array([index, index + 1, index + COLS + 1, index + 1, index + COLS + 2, index + COLS + 1])
+	var arrays := []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+	arrays[Mesh.ARRAY_TEX_UV] = uvs
+	arrays[Mesh.ARRAY_COLOR] = weights
+	arrays[Mesh.ARRAY_INDEX] = indices
+	var mesh := ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	return mesh
+
+static func foot_position(uv: Vector2, is_raven: bool) -> Vector2:
+	var point := uv * HERO_RECT.size
+	if is_raven:
+		point = (point - RAVEN_PIVOT * HERO_RECT.size) * RAVEN_SCALE + RAVEN_PIVOT * HERO_RECT.size + RAVEN_OFFSET
+	return HERO_RECT.position + point
+
+func _draw_contacts() -> void:
+	for foot in [[Vector2(0.31, 0.947), false], [Vector2(0.535, 0.953), false], [Vector2(0.733, 0.95), true], [Vector2(0.855, 0.94), true]]:
+		ground_contacts.draw_set_transform(foot_position(foot[0], foot[1]), 0, Vector2(1, 0.28))
+		for ring in range(5, 0, -1):
+			ground_contacts.draw_circle(Vector2.ZERO, 6.0 + ring * 1.8, Color(0.015, 0.025, 0.045, 0.07))
+	ground_contacts.draw_set_transform(Vector2.ZERO)
+
 func _sync_activity() -> void:
 	var active := is_visible_in_tree()
 	set_process(active)
@@ -59,6 +140,8 @@ func _sync_activity() -> void:
 
 func set_quality(value: int) -> void:
 	quality = clampi(value, 0, 2)
+	if wind_material != null:
+		wind_material.set_shader_parameter("strength", [0.0, 0.55, 1.0][quality])
 	if atmosphere_material != null:
 		atmosphere_material.set_shader_parameter("strength", [0.0, 0.55, 1.0][quality])
 		atmosphere.visible = quality > 0
@@ -73,6 +156,7 @@ func pulse_at(point: Vector2) -> void:
 
 func _process(delta: float) -> void:
 	elapsed += delta
+	wind_material.set_shader_parameter("clock", elapsed)
 	pulse = maxf(0.0, pulse - delta * 1.4)
 	atmosphere_material.set_shader_parameter("clock", elapsed)
 	atmosphere_material.set_shader_parameter("focus", pulse_position / VIEW)
