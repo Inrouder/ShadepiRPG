@@ -4,6 +4,12 @@ extends RefCounted
 const CHAMBER_SCALE := 0.55
 const CHAMBER_RECT := Rect2(230, 120, 563.2, 352)
 const CHAMBER_CAMERA := Vector2(512, 310)
+## v0.33.0 · CodexAI: opaque source patch replaces the old flag in both hangars.
+const HANGAR_BRAND = preload("res://assets/story/tower/koban-banner.png")
+const HANGAR_BRAND_RECT := Rect2(691,9.7,135.6,161.3)
+
+static func draw_hangar_brand(canvas: CanvasItem) -> void:
+	canvas.draw_texture_rect(HANGAR_BRAND,HANGAR_BRAND_RECT,false)
 
 static func chamber_point(point: Vector2) -> Vector2:
 	return CHAMBER_RECT.position + point * CHAMBER_SCALE

@@ -135,6 +135,14 @@ func worlds() -> void:
 		image.scale = Vector2.ONE * minf(302.0/tex.get_width(),196.0/tex.get_height())
 		image.position = Vector2(167+col*318,205+row*246)
 		stage.add_child(image)
+		if key=="hangar":
+			var painted = preload("res://scripts/painted_world.gd")
+			var brand := Sprite2D.new()
+			brand.texture = painted.HANGAR_BRAND
+			var unit := image.scale*tex.get_size()/Vector2(1024,640)
+			brand.scale = painted.HANGAR_BRAND_RECT.size*unit/brand.texture.get_size()
+			brand.position = image.position+(painted.HANGAR_BRAND_RECT.get_center()-Vector2(512,320))*unit
+			stage.add_child(brand)
 		index += 1
 	await save_card("welten")
 

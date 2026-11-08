@@ -208,7 +208,10 @@ func run() -> void:
 	await process_frame
 	finish_dialogue(campaign)
 	check(campaign.beat == campaign.Beat.ESCAPE, "Kenzō's defeat opens the escape")
+	campaign.tower.elapsed = campaign.tower.TRANSFER_SECONDS
 	await verify_encounter(campaign, 8)
+	await process_frame
+	finish_dialogue(campaign)
 	check(campaign.escape_guards_cleared and campaign.beat == campaign.Beat.ESCAPE, "all lift waves after Kenzō release the escape timer")
 	campaign.queue_free()
 	await process_frame

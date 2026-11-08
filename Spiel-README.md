@@ -1,6 +1,8 @@
 # Shadepi · Echos in Neon
 
-**Spieleranleitung für v0.32.2 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+**Spieleranleitung für v0.33.0 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+
+**Tower v0.33.0 · CodexAI:** Nach Kenzōs Niederlage schützt du Raven bei der Datenextraktion vor drei Wachwellen. Sie bleibt am Deck und kann in dieser Zeit keine Wachensysteme hacken. **Drei Treffer auf Raven** unterbrechen die Verbindung: Du wiederholst nur den Extraktionsabschnitt, nicht den Bosskampf. Die Anzeige nennt Fortschritt und Treffer. **J / X**: Katana, **L / LT**: Kick, **K / RT halten und loslassen**: Kraftschlag, **Leertaste / B**: Ausweichen; **Esc / Start** pausiert. Erst nach gesicherten Daten folgt Ravens endgültige Abrechnung. Danach bleiben 60 Sekunden für Aufzugssperre, Fernstart und Dachausgang; Rennen, Einsteigen und knapper Abflug werden sichtbar inszeniert.
 
 **Gesamtspiel-Stilbibel v0.32.2 · CodexAI:** Die [bebilderte Referenz für alle Bereiche](docs/stilbibel/README.md) zeigt jetzt jede der 23 vorhandenen Figuren-/Gegnerarten, Kulissen, Fahrzeuge, Objekte, UI und Effekte. Sie dient Mitwirkenden als gemeinsamer Gestaltungsstandard; diese Dokumentation verändert die Spielbedienung nicht.
 

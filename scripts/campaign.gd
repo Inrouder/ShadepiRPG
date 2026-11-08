@@ -4,6 +4,10 @@ const Story = preload("res://scripts/campaign_story.gd")
 const Beat = Story.Beat
 const SanctuaryStory = preload("res://scripts/sanctuary_story.gd")
 const SanctuaryTableau = preload("res://scripts/sanctuary_tableau.gd")
+const TowerStory = preload("res://scripts/tower_story.gd")
+const TowerExtraction = preload("res://scripts/tower_extraction.gd")
+const TowerKenzo = preload("res://scripts/tower_kenzo.gd")
+const TowerEscape = preload("res://scripts/tower_escape.gd")
 const Drive = preload("res://scripts/campaign_drive.gd")
 const AerodyneFlight = preload("res://scripts/aerodyne_flight.gd")
 const ParkedAerodyne = preload("res://scripts/parked_aerodyne.gd")
@@ -47,6 +51,11 @@ var encounter: Node2D
 var escape_guards_cleared: = true
 var fresh_entry: = false
 var kenzo_body: PixelActor
+## 0 protection, 1 data secured/resolution pending, 2 bomb/escape, 3 departure.
+var tower_stage := 2
+var tower: Node2D
+var tower_grip: Node2D
+var tower_departure: Node2D
 var boss_spot: = Vector2(858, 340)
 const LIFT_DOOR: = Vector2(512, 512)
 const KENZO: = preload("res://assets/sprites/npcs/kenzo.png")
@@ -129,12 +138,16 @@ func _process(delta: float) -> void :
 	if is_busy():
 		return
 	clock += delta
-	if beat == Beat.ESCAPE and escape_guards_cleared and not admin_enabled("freeze_timer"):
+	if beat == Beat.ESCAPE and tower_stage==2 and escape_guards_cleared and not admin_enabled("freeze_timer"):
 		countdown = maxf(0, countdown - delta)
 		if countdown == 0:
 			_retry("Zeit abgelaufen · Kontrollpunkt")
 
 func _update_raven_follower(delta: float) -> void :
+	if is_instance_valid(tower) and tower.active: return
+	if beat==Beat.BOSS:
+		raven.animate("idle",delta)
+		return
 	if not is_combat() and (beat != Beat.GARAGE or point_index != 1):
 		return
 	var target: Vector2 = Story.POINTS[beat][1] + Vector2(-20, 0) if beat == Beat.GARAGE else player.position + Vector2(-35, 22)
@@ -151,11 +164,23 @@ func new_game(_save_checkpoint: bool = true) -> void :
 	fresh_entry = true
 	_enter(Beat.PACT)
 
-func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo: bool = false, seen_attack: bool = false, seen_sacrifice: bool = false, seen_legacy: bool = false, saved_sanctuary_stage: int = 0, saved_flight_intro: bool = false) -> void :
+func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo: bool = false, seen_attack: bool = false, seen_sacrifice: bool = false, seen_legacy: bool = false, saved_sanctuary_stage: int = 0, saved_flight_intro: bool = false, saved_tower_stage: int = -1) -> void :
 	_close_memory(false)
 	var fresh: = fresh_entry
 	fresh_entry = false
 	cutscene.abort()
+	for node in [tower,tower_grip,tower_departure]:
+		if is_instance_valid(node):
+			if node==tower:
+				tower.active = false
+				if is_instance_valid(tower.tableau): tower.tableau.hide()
+			node.hide()
+			node.set_process(false)
+			node.get_parent().remove_child(node)
+			node.queue_free()
+	tower = null
+	tower_grip = null
+	tower_departure = null
 	if is_instance_valid(departure):
 		departure.hide()
 		departure.queue_free()
@@ -164,7 +189,7 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo:
 	ui.clear_toast()
 	cancel_terminal()
 	if beat == Beat.BOSS and not foes.is_empty():
-		boss_spot = foes.back().position
+		boss_spot = foes.back().position.clamp(Vector2(180,350),Vector2(880,410))
 	if is_instance_valid(kenzo_body):
 		kenzo_body.queue_free()
 	kenzo_body = null
@@ -232,6 +257,9 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo:
 	player.reset_transients()
 	reset_raven(player.position + Vector2(-27, 14))
 	raven.visible = true
+	for actor in [player,raven]:
+		actor.visual.show()
+		actor.cast_shadow.show()
 	player.visible = not raven_leads()
 	var backgrounds: = ["hideout", "ambush", "", "garage", "hangar", "chamber", "", "rooftop", "suite", "suite", "lakeside", "lakeside"]
 	set_painted_solids(backgrounds[beat])
@@ -294,10 +322,17 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo:
 	elif fresh:
 		escape_guards_cleared = false
 	if beat == Beat.ESCAPE:
-		_spawn_kenzo_body(boss_spot, escape_guards_cleared or not fresh)
+		tower_stage = 0 if fresh else (clampi(saved_tower_stage,0,3) if saved_tower_stage>=0 else 2 if escape_guards_cleared else 0)
+		escape_guards_cleared = tower_stage>=2
+		if tower_stage>=2: point_index = maxi(1,point_index)
+		_spawn_kenzo_body(boss_spot,tower_stage>=2)
+		tower = TowerExtraction.new()
+		tower.world = self
+		add_child(tower)
 		set_music_section("chapter_6_escape" if escape_guards_cleared else ("chapter_6_boss" if fresh else "fight"))
-	if is_combat() and not (beat == Beat.ESCAPE and fresh):
+	if is_combat() and beat!=Beat.ESCAPE:
 		_spawn_wave(saved_section)
+	queue_redraw()
 	autosave()
 	_beat_scene(fresh)
 
@@ -360,7 +395,7 @@ func _spawn_arcade_foe(point: Vector2, variant: int) -> PixelActor:
 	return _spawn_foe(point, 64 if beat == Beat.AMBUSH else 72, variant)
 
 func _spawn_foe(point: Vector2, hp: int, variant: int) -> PixelActor:
-	var foe: = EnemyScript.new()
+	var foe = TowerKenzo.new() if variant<0 else EnemyScript.new()
 	foe.max_health = hp
 	var sprite: Texture2D = SHOOTERS[variant] if beat == Beat.AMBUSH and variant < 2 else (GUARDS[variant] if variant >= 0 else preload("res://assets/sprites/npcs/kenzo.png"))
 	foe.setup(sprite, self)
@@ -380,7 +415,13 @@ func _spawn_foe(point: Vector2, hp: int, variant: int) -> PixelActor:
 	return foe
 
 func combat_target(origin: Vector2, include_cloaked: bool = false) -> PixelActor:
+	if is_instance_valid(tower) and tower.active:
+		if origin.distance_to(player.position)<55 and player.cloak_time<=0: return player
+		return raven
 	return super.combat_target(origin, include_cloaked) if is_combat() else null
+
+func hero_damaged(actor: PixelActor, _amount: int) -> void:
+	if actor==raven and is_instance_valid(tower): tower.struck()
 
 func player_strike(amount: int) -> void :
 	strike_scenery(player.position, player.facing, amount)
@@ -391,6 +432,9 @@ func player_strike(amount: int) -> void :
 			foe.take_damage(amount, player.position)
 
 func raven_hack() -> bool:
+	if is_instance_valid(tower) and tower.active:
+		toast("Raven extrahiert Daten · Shadepi muss die Wachen abfangen")
+		return false
 	if not is_combat() or is_busy():
 		return false
 	if hack_cooldown > 0:
@@ -449,6 +493,7 @@ func chapter_label() -> String:
 	return "KAPITEL %d / %s" % [chapter, Story.TITLES[chapter - 3]]
 
 func _target() -> Vector2:
+	if beat==Beat.ESCAPE and tower_stage!=2: return Vector2.ZERO
 	if beat == Beat.HANGAR and point_index == 3:
 		return PORTS[1]
 	if beat == Beat.ECHO and not echo_ready:
@@ -475,6 +520,7 @@ func _signal_open() -> bool:
 	return fposmod(clock, 2.1) < 1.0
 
 func chapter_objective() -> String:
+	if is_instance_valid(tower) and tower.active: return tower.status_text()
 	if encounter != null and not encounter.finished:
 		return encounter.status_text()
 	match beat:
@@ -498,7 +544,9 @@ func chapter_objective() -> String:
 		Beat.LAKE:
 			return ["Mit Raven am Ufer sprechen", "Bitte am Wasser sprechen", "Antwort des Heiligtums hören", "Aufnahme vollziehen"][point_index]
 		Beat.ESCAPE:
-			return "%s · %02d s" % [["Daten sichern", "Sperrladung synchronisieren", "Treibstoffpumpe fernstarten", "Zum Dachausgang"][point_index], ceili(countdown)]
+			if tower_stage==3: return "Zum Aerodyne · Abflug"
+			if tower_stage==1: return "Daten gesichert · Kenzō stellen"
+			return "%s · %02d s" % [["Raven schützen", "Sperrladung synchronisieren", "Treibstoffpumpe fernstarten", "Zum Dachausgang"][mini(3,point_index)], ceili(countdown)]
 	return Story.OBJECTIVES[beat]
 
 func interaction_prompt() -> String:
@@ -584,6 +632,7 @@ func interact(_actor: PixelActor = null) -> void :
 	_complete_point()
 
 func _complete_point() -> void:
+	if beat==Beat.ESCAPE and tower_stage!=2: return
 	if beat == Beat.PACT:
 		toast(["Aufzug: Sicherheitskräfte eine Etage tiefer.", "Dachzugang: privater Landeplatz.", "Scanner: Kennung von Kenzōs Gleiter erforderlich."][point_index])
 	if beat == Beat.HANGAR:
@@ -597,7 +646,9 @@ func _complete_point() -> void:
 	elif beat == Beat.GARAGE and point_index == Story.POINTS[beat].size():
 		_scene_descent()
 	elif beat == Beat.ESCAPE and point_index == Story.POINTS[beat].size():
-		_advance()
+		tower_stage = 3
+		autosave()
+		_scene_tower_departure()
 	elif beat != Beat.HANGAR and point_index == Story.POINTS[beat].size():
 		_advance()
 	else:
@@ -772,6 +823,8 @@ func save_game() -> bool:
 	config.set_value("campaign", "memory_legacy_complete", memory_legacy_complete)
 	config.set_value("campaign", "arcade_section", encounter.section_index if encounter != null else 0)
 	config.set_value("campaign", "escape_guards_cleared", escape_guards_cleared)
+	config.set_value("campaign", "tower_stage",tower_stage if beat==Beat.ESCAPE else -1)
+	config.set_value("campaign", "boss_spot",boss_spot)
 	config.set_value("props", "state", dressing_state())
 	return config.save(Admin.checkpoint_path(SAVE, get_tree())) == OK
 
@@ -785,6 +838,9 @@ func load_game(_requested_mode: Variant = null) -> bool:
 	var saved_section: Variant = config.get_value("campaign", "arcade_section", 0)
 	var saved_point: Variant = config.get_value("campaign", "point", 0)
 	var cleared: Variant = config.get_value("campaign", "escape_guards_cleared", true)
+	var saved_tower: Variant = config.get_value("campaign", "tower_stage",-1)
+	var saved_spot: Variant = config.get_value("campaign", "boss_spot",Vector2(858,340))
+	if saved_spot is Vector2 and saved_spot.is_finite(): boss_spot = saved_spot.clamp(Vector2(100,320),Vector2(930,450))
 	var saved_echo: Variant = config.get_value("campaign", "echo_started", false)
 	var saved_flight_intro: Variant = config.get_value("campaign", "flight_intro_pending", false)
 	var saved_sanctuary_stage: Variant = config.get_value("campaign", "sanctuary_stage", 0)
@@ -797,7 +853,7 @@ func load_game(_requested_mode: Variant = null) -> bool:
 	if saved == Beat.ROOF and saved_point is int and saved_point >= 2:
 		saved = Beat.BOSS
 		saved_point = 0
-	_enter(saved, saved_section if saved_section is int else 0, saved_point if saved_point is int else 0, saved_echo is bool and saved_echo, seen_attack is bool and seen_attack, seen_sacrifice is bool and seen_sacrifice, seen_legacy is bool and seen_legacy, saved_sanctuary_stage if saved_sanctuary_stage is int else 0, saved_flight_intro is bool and saved_flight_intro)
+	_enter(saved, saved_section if saved_section is int else 0, saved_point if saved_point is int else 0, saved_echo is bool and saved_echo, seen_attack is bool and seen_attack, seen_sacrifice is bool and seen_sacrifice, seen_legacy is bool and seen_legacy, saved_sanctuary_stage if saved_sanctuary_stage is int else 0, saved_flight_intro is bool and saved_flight_intro, saved_tower if saved_tower is int and saved_tower>=0 and saved_tower<=3 else -1)
 	return true
 
 func _draw() -> void :
@@ -810,6 +866,7 @@ func _draw() -> void :
 		draw_texture_rect(art, Painted.CHAMBER_RECT, false)
 	else:
 		draw_texture_rect(art, Rect2(0, 0, 1024, 640), false)
+	if beat==Beat.HANGAR: Painted.draw_hangar_brand(self)
 	if beat == Beat.GARAGE:
 		_draw_garage()
 	if beat == Beat.HANGAR and point_index == 3:
@@ -874,7 +931,7 @@ func _spawn_kenzo_body(point: Vector2, fallen: bool) -> void:
 	body.active = false
 	body.facing = Vector2.LEFT
 	if fallen:
-		_lay_down(body)
+		body.health = 0
 	kenzo_body = body
 
 func _lay_down(body: PixelActor) -> void:
@@ -885,17 +942,7 @@ func _lay_down(body: PixelActor) -> void:
 	body.queue_redraw()
 
 func _escape_guards_done() -> void:
-	if beat != Beat.ESCAPE or escape_guards_cleared:
-		return
-	escape_guards_cleared = true
-	countdown = 60.0
-	set_music_section("chapter_6_escape")
-	autosave()
-	play_lines([
-		["SYSTEM / NOTFALLPROTOKOLL", "Kenzōs Sicherheitssystem überlastet die Energieversorgung. Kritischer Zustand in sechzig Sekunden."],
-		["SHADEPI", "Daten sammeln, Spuren verwischen!"],
-		["RAVEN", "Weitere Teams im Schacht. Ich synchronisiere die Sperrladung am Aufzug – dann starte die Treibstoffpumpe per Fernzugriff."],
-	], func(): toast("T-60 · Daten sichern"))
+	if beat==Beat.ESCAPE and is_instance_valid(tower): tower.completed_waves()
 
 # --- Zwischensequenzen der Kampagne ----------------------------------------
 # Texte folgen „Shadepi – Im Schatten des Raben“ (Archiv). Spielerische
@@ -926,8 +973,8 @@ func _beat_scene(fresh: bool) -> void:
 			else: toast("Kenzō · Hackfenster nur beim Flackern am Schulterservo")
 		Beat.ESCAPE:
 			if fresh: _scene_kenzo_falls()
-			elif not escape_guards_cleared: toast("Kenzōs Aufzugwachen · Halte sie von Raven fern")
-			else: toast("Daten sichern · Aufzug sperren · Pumpe starten · zum Dach")
+			elif tower_stage!=2: tower.resume()
+			else: toast("Daten gesichert · Aufzug sperren · Fernstart · zum Dach")
 		Beat.LAKE:
 			if fresh: _scene_lake()
 		Beat.END:
@@ -1286,188 +1333,20 @@ func _scene_roof() -> void:
 
 ## Kapitel 6: Raven betritt das Penthouse, Shadepi folgt im Tarnfeld.
 func _scene_penthouse() -> void:
-	var kenzo: PixelActor = foes.back()
-	var chair: = Vector2(612, 306)
-	kenzo.position = chair
-	kenzo.facing = Vector2.DOWN
-	player.position = Vector2(36, 446)
-	raven.position = Vector2(60, 414)
-	player.facing = Vector2.RIGHT
-	raven.facing = Vector2.RIGHT
-	player.set_cloaked(true)
-	var cs = begin_cutscene()
-	var ticket: int = cs.generation
-	for actor in [kenzo, player, raven]:
-		cs.pose(actor, "idle")
-	await cs.camera(chair + Vector2(0, -10), 0.0, 1.35)
-	if not cs.alive(ticket): return
-	await cs.fade(Color.BLACK, 0.0)
-	if not cs.alive(ticket): return
-	await cs.fade(Color(0, 0, 0, 0), 0.9)
-	if not cs.alive(ticket): return
-	await cs.say("PENTHOUSE", "Ein protziger Tempel des Exzesses. Kenzō Moriyama sitzt in echtem Leder und trinkt einen sündhaft teuren Whisky.")
-	if not cs.alive(ticket): return
-	cs.camera(Vector2(400, 370), 1.6, 1.1)
-	cs.walk(player, Vector2(300, 448), 72)
-	await cs.walk(raven, Vector2(420, 396), 72)
-	if not cs.alive(ticket): return
-	cs.walk(player, Vector2(430, 446), 50)
-	await cs.walk(raven, Vector2(540, 386), 60)
-	if not cs.alive(ticket): return
-	cs.pose(raven, "idle")
-	cs.pose(player, "idle")
-	cs.face(kenzo, raven.position)
-	await cs.camera(Vector2(570, 340), 0.8, 1.2)
-	if not cs.alive(ticket): return
-	await cs.say("RAVEN", "Lange nicht gesehen.")
-	if not cs.alive(ticket): return
-	await cs.walk(kenzo, raven.position + Vector2(30, -8), 46)
-	if not cs.alive(ticket): return
-	cs.face(kenzo, raven.position)
-	cs.pose(kenzo, "attack")
-	cs.pose(raven, "hurt")
-	cs.do(func(): raven.visual.position.y = raven.standing_visual_position.y - 12.0)
-	await cs.wait(0.5)
-	if not cs.alive(ticket): return
-	cs.do(func():
-		raven.visual.position.y = raven.standing_visual_position.y
-		shake = 5.0
-		sound("hit")
-	)
-	await cs.leap(raven, Vector2(372, 404), 34.0, 0.5)
-	if not cs.alive(ticket): return
-	cs.pose(kenzo, "idle")
-	cs.face(kenzo, raven.position)
-	await cs.say("KENZŌ MORIYAMA", "Dummes Mädchen. Ich habe ewig nach dir gesucht.")
-	if not cs.alive(ticket): return
-	await cs.say("SHADEPIS HUD", "Tarnfeld · 3 … 2 … 1 … NULL.")
-	if not cs.alive(ticket): return
-	cs.do(func():
-		player.set_cloaked(false)
-		effects.burst(player.position + Vector2(0, -20), Color("ff4f70"), 22)
-		sound("slash")
-	)
-	await cs.walk(player, kenzo.position + Vector2(-30, 10), 520)
-	if not cs.alive(ticket): return
-	cs.do(func():
-		effects.slash(kenzo.position + Vector2(8, -30), Vector2.RIGHT)
-		effects.burst(kenzo.position + Vector2(10, -30), Color("ffb36b"), 22)
-		shake = 9.0
-		sound("hit")
-	)
-	cs.pose(kenzo, "hurt")
-	cs.flash(Color(1, 0.25, 0.35, 0.5), 0.35)
-	await cs.walk(kenzo, kenzo.position + Vector2(64, -18), 280)
-	if not cs.alive(ticket): return
-	cs.face(kenzo, player.position)
-	cs.face(player, kenzo.position)
-	cs.pose(kenzo, "idle")
-	cs.pose(player, "idle")
-	await cs.lines([
-		["PENTHOUSE", "Der erste Schlag ist kein Todesstoß. Er ist eine Botschaft – die Servos in Kenzōs rechter Schulter sprühen Funken."],
-		["KENZŌ MORIYAMA", "Die Maske aus dem Kloster. Die Minotauren haben gründlich gearbeitet – nur bei dir nicht."],
-		["SHADEPI", "Raven – stör seine Implantate. Wenn er die Leitung sperrt, warte auf das Flackern am Schulterservo."],
-	])
-	if not cs.alive(ticket): return
-	cs.release(raven)
-	await cs.walk(raven, Vector2(430, 420), 90)
-	if not cs.alive(ticket): return
-	cs.end(func(): toast("KENZŌ MORIYAMA · Hackfenster am Schulterservo nutzen"))
+	TowerStory.opening(self)
 
-## Kapitel 6: Kenzōs Ende – und die Wahrheit über das Massaker.
 func _scene_kenzo_falls() -> void:
-	var body: PixelActor = kenzo_body
-	body.visual.rotation = 0.2
-	body.visual.position.y = body.standing_visual_position.y + 7
-	player.position = body.position + Vector2(-66, 26)
-	raven.position = body.position + Vector2(-190, 74)
-	var cs = begin_cutscene()
-	var ticket: int = cs.generation
-	cs.face(player, body.position)
-	cs.face(raven, body.position)
-	cs.face(body, player.position)
-	cs.pose(body, "hurt")
-	cs.pose(player, "idle")
-	cs.pose(raven, "idle")
-	await cs.camera(body.position + Vector2(-70, -40), 0.0, 1.25)
-	if not cs.alive(ticket): return
-	await cs.say("PENTHOUSE", "Kenzō liegt gelähmt und blutend am Boden. Ein Monster aus Chrom und Hass – allein gegen zwei Geister der Rache.")
-	if not cs.alive(ticket): return
-	await cs.walk(player, player.position + Vector2(-44, 22), 48)
-	if not cs.alive(ticket): return
-	cs.face(player, body.position)
-	cs.pose(player, "idle")
-	await cs.say("SHADEPI", "Nicht ich töte dich. Das ist ihr Vergnügen.")
-	if not cs.alive(ticket): return
-	await cs.walk(raven, body.position + Vector2(-40, 16), 54)
-	if not cs.alive(ticket): return
-	cs.face(raven, body.position)
-	cs.pose(raven, "idle")
-	await cs.say("RAVEN", "Jahrelang bin ich vor dir geflohen, Kenzō. Wurde auch Zeit, dass dir jemand ein Ende setzt!")
-	if not cs.alive(ticket): return
-	cs.pose(raven, "attack")
-	cs.do(func(): sound("hack"))
-	for i in 6:
-		cs.do(func():
-			var to: = body.position + Vector2(randf_range(-9, 9), randf_range(-30, -10))
-			effects.hack_arc(raven.position + Vector2(4, -22), to)
-			effects.burst(to, Color("72eff4"), 8)
-		)
-		await cs.wait(0.14)
-		if not cs.alive(ticket): return
-	cs.do(func(): shake = 7.0)
-	await cs.flash(Color(0.45, 0.95, 1.0, 0.6), 0.45)
-	if not cs.alive(ticket): return
-	cs.release(body)
-	cs.do(func(): _lay_down(body))
-	cs.pose(raven, "idle")
-	await cs.wait(1.0)
-	if not cs.alive(ticket): return
-	await cs.say("PENTHOUSE", "Ihre unsichtbaren Fäden spannen sich ein letztes Mal. Ein Akt der Befreiung.")
-	if not cs.alive(ticket): return
-	cs.pose(raven, "attack")
-	cs.do(func():
-		effects.hack_arc(raven.position + Vector2(4, -22), body.position + Vector2(0, -8))
-		sound("hack")
-	)
-	await cs.wait(0.6)
-	if not cs.alive(ticket): return
-	cs.pose(raven, "idle")
-	cs.face(raven, player.position)
-	await cs.lines([
-		["RAVEN", "Sein Deck ist offen … Da. Die Minotauren, die dein Kloster überrannt haben. Militech-Einheiten – angefordert und bezahlt über Kenzōs verdeckte Projekte."],
-		["RAVEN", "Er hat das Massaker inszeniert. Es war von Anfang an er."],
-		["SHADEPI", "Fünf Jahre. Und am Ende ein Mann in einem Penthouse."],
-		["SHADEPI", "Mein Orden ist gerächt. Zieh alles über die Minotauren – Lieferketten, Black-Sites, Testserien."],
-	])
-	if not cs.alive(ticket): return
-	cs.do(func():
-		set_music_section("fight")
-		sound("drive_engine_fail")
-	)
-	await cs.flash(Color(1, 0.08, 0.16, 0.45), 0.3)
-	if not cs.alive(ticket): return
-	await cs.flash(Color(1, 0.08, 0.16, 0.45), 0.3)
-	if not cs.alive(ticket): return
-	await cs.say("SYSTEM / TOTMANNSCHALTER", "Vitalzeichen des Eigentümers erloschen. Sicherheitsteams angefordert. Aufzug fährt hoch.")
-	if not cs.alive(ticket): return
-	await cs.camera(LIFT_DOOR + Vector2(0, -60), 1.1, 1.15)
-	if not cs.alive(ticket): return
-	cs.do(func(): lift_glow = 2.4)
-	await cs.wait(0.5)
-	if not cs.alive(ticket): return
-	cs.do(func(): _spawn_wave())
-	await cs.wait(0.7)
-	if not cs.alive(ticket): return
-	await cs.lines([
-		["SHADEPI", "Seine Wachen von unten. Bleib an seinem Deck, Raven – ich halte sie dir vom Leib."],
-		["RAVEN", "Gib mir eine Lücke, dann blende ich ihre Optik."],
-	])
-	if not cs.alive(ticket): return
-	cs.end(func():
-		autosave()
-		toast("Kenzōs Aufzugwachen · Halte sie von Raven fern")
-	)
+	TowerStory.defeated(self)
+
+func _scene_tower_resolution() -> void:
+	if beat==Beat.ESCAPE and tower_stage==1 and not cutscene.running: TowerStory.resolution(self)
+
+func _scene_tower_departure() -> void:
+	if is_instance_valid(tower_departure): return
+	tower_departure = TowerEscape.new()
+	tower_departure.world = self
+	drive_layer.add_child(tower_departure)
+	tower_departure.run()
 
 ## Kapitel 7: Flucht, Explosion und der See.
 func _scene_lake() -> void:
@@ -1480,21 +1359,6 @@ func _scene_lake() -> void:
 	cs.pose(player, "idle")
 	cs.pose(raven, "idle")
 	await cs.fade(Color.BLACK, 0.0)
-	if not cs.alive(ticket): return
-	await cs.lines([
-		["ARTOS", "SCHHUUIII – PUFF – PUFF. Triebwerke … instabil."],
-		["SHADEPI", "Ach, scheiß Kiste!"],
-		["AERODYNE", "T-6 … er tritt gegen die Pumpeneinheit. T-4 … die Triebwerke zünden. T-2 … der Aerodyne kippt über die Kante."],
-		["SHADEPI", "HALT DICH GUT FEST, JETZT WIRD'S HOLPRIG!"],
-	])
-	if not cs.alive(ticket): return
-	cs.do(func():
-		shake = 14.0
-		sound("drive_explosion")
-	)
-	await cs.flash(Color(1, 0.92, 0.75, 1.0), 0.9)
-	if not cs.alive(ticket): return
-	await cs.say("NACHT", "Hinter ihnen zerfetzt eine gewaltige Explosion das Penthouse. Shadepi fängt das taumelnde Fluggerät ab – weg von den Flammen, weg von der Vergangenheit.")
 	if not cs.alive(ticket): return
 	await cs.camera(Vector2(330, 380), 0.0, 1.1)
 	if not cs.alive(ticket): return
@@ -1541,4 +1405,10 @@ func _scene_finale() -> void:
 	if not cs.alive(ticket): return
 	await cs.fade(Color(0, 0, 0, 0), 1.0)
 	if not cs.alive(ticket): return
-	cs.end(func(): toast("Geschichte abgeschlossen · Danke fürs Spielen"))
+	await cs.lines([
+		["RAVEN", "Kenzō ist weg. Aber wer hat ihm den Auftrag gegeben?"],
+		["SHADEPI", "Das finden wir heraus."],
+		["RAVEN", "Diesmal bist du nicht allein."],
+	])
+	if not cs.alive(ticket): return
+	cs.end(func(): toast("Der neue Orden · Die gemeinsame Suche beginnt"))

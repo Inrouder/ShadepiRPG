@@ -23,7 +23,7 @@ const OBJECTIVES: = [
 	"Towerplan prüfen · %d / 3", "Hinterhalt überleben · %d / %d", "Verfolger ausschalten", 
 	"Geheimes Werkbanksymbol finden", "Aerodyne vorbereiten · %d / 3", "Mit Raven sprechen", 
 	"Den Tower erreichen", "Landekennung und Tür hacken · %d / 2", "Kenzō ausschalten", 
-	"Daten sichern und zum Aerodyne", "Raven zum Wasser folgen", "Geschichte abgeschlossen", 
+	"Raven schützen und zum Aerodyne", "Raven zum Wasser folgen", "Der neue Orden · Neue Spur",
 ]
 const POINTS: = [
 	[Vector2(498, 333), Vector2(498, 333), Vector2(498, 333)], [Vector2(920, 380)], [],

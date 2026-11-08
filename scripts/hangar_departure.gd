@@ -57,6 +57,7 @@ func _draw() -> void:
 		draw_texture_rect_region(COCKPIT, Rect2(wobble, Vector2(1024, 576)), Rect2(Vector2(cockpit_frame % 2, cockpit_frame / 2) * cell, cell))
 		return
 	draw_texture_rect(HANGAR, Rect2(0, 0, 1024, 640), false)
+	preload("res://scripts/painted_world.gd").draw_hangar_brand(self)
 	draw_set_transform(Vector2(884, 340), 0, Vector2(1, 0.35))
 	draw_circle(Vector2.ZERO, 70 * (1 - lift * 0.5), Color(0, 0, 0, 0.4 * (1 - lift)))
 	draw_set_transform(Vector2.ZERO)

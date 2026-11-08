@@ -259,6 +259,8 @@ func take_damage(amount: int, source: Vector2) -> void :
 	flash_time = 0.18
 	knockback = (global_position - source).normalized() * 130.0
 	world.impact(global_position, false)
+	if world.has_method("hero_damaged"):
+		world.hero_damaged(self,amount)
 	if health == 0:
 		world.player_defeated()
 

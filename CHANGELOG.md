@@ -1,5 +1,13 @@
 # Versionshinweise
 
+## v0.33.0 – CodexAI: Kenzō, Raven schützen und knappe Tower-Flucht · 8. November 2026
+
+- Physischer Griff nach Raven vor Shadepis Eingreifen. Kenzō wird im Bosskampf kampfunfähig statt vorzeitig getötet; eine eigene schwer verletzte Kniepose zeigt den gelähmten Gefangenen.
+- Raven extrahiert bei festem Standort Daten. Drei Treffer führen zum Neustart dieses Abschnitts; die drei Wachenwellen und der Transfer müssen beendet sein. Erst dann folgt Ravens endgültige Vernichtung von Kenzōs Implantaten und der 60-Sekunden-Fluchtabschnitt.
+- Kenzōs Inszenierung ist belegt, Motiv und Auftraggeber bleiben offen. Raven schließt sich der weiteren Suche an; der Abschluss am See erhält einen entsprechenden Ausblick.
+- Eigene sichtbare Flucht mit Rennen, Einsteigen, Kippen über die Kante, Zünden im Fallen und Explosion des Penthouses. Neues KOBAN-TEC-Banner als lokale Grafikschicht in beiden Hangaransichten; bestehende Raumgeometrie bleibt erhalten.
+- Kompatible Kontrollpunkte für Schutzphase, gesicherte Daten, Flucht und Abflug; neue Ablauf-/Schadensprüfungen und aktualisierte Regressionserwartungen für die neue Reihenfolge.
+
 ## v0.32.2 – CodexAI: Bebilderte Stilbibel für das gesamte Spiel · 8. November 2026
 
 - Konsistenzvorlage vom Heiligtum-Schwerpunkt zu einer [vollständigen visuellen Spielreferenz](docs/stilbibel/README.md) erweitert. Fünf Teile: Art Direction, Figuren, Welten, Fahrzeuge/Requisiten und Oberflächen/FX/Ton.

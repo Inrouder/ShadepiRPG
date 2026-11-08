@@ -899,7 +899,7 @@ func check_campaign() -> void:
 	check(scene.encounter == null and not scene.escape_guards_cleared, "lift guards are not called before Kenzō has fallen")
 	finish_dialogue(scene)
 	check(scene.encounter != null and scene._living() == 2, "the dead-man switch brings the lift guards after Kenzō's defeat")
-	check(scene.kenzo_body != null and scene.kenzo_body.health <= 0 and scene.kenzo_body.visual.rotation > 1.0, "Kenzō remains lying in the penthouse")
+	check(scene.kenzo_body != null and scene.kenzo_body.health == 1 and scene.tower.tableau.mode=="extract", "Kenzō stays alive and kneeling while Raven extracts")
 	check(MusicLibrary.path_for(scene.music_section).ends_with("Fight.mp3"), "lift guards use fight music")
 	var timer_before: float = scene.countdown
 	scene._process(5.0)
@@ -907,10 +907,11 @@ func check_campaign() -> void:
 	scene.save_game()
 	check(scene.load_game() and scene.encounter != null and not scene.escape_guards_cleared and not scene.in_cinematic(), "loading during the lift fight resumes the guards without replaying the kill scene")
 	finish_dialogue(scene)
+	scene.tower.elapsed = scene.tower.TRANSFER_SECONDS
 	finish_arcade(scene)
 	await process_frame
 	await process_frame
-	check(scene.escape_guards_cleared and scene.in_cinematic(), "alarm briefing follows the last lift wave")
+	check(scene.tower_stage==1 and not scene.escape_guards_cleared and scene.in_cinematic(), "secured data triggers resolution before execution and escape timer")
 	finish_dialogue(scene)
 	check(scene.beat == scene.Beat.ESCAPE, "boss defeat starts the sixty-second escape")
 	for i in 4:
@@ -1007,6 +1008,6 @@ func check_feedback() -> void:
 	kenzo.take_damage(10, kenzo.position + Vector2(-20, 0))
 	check(kenzo.stun == 0.0 and kenzo.knock_velocity.length() > 0.0, "bosses only budge slightly on light hits")
 	kenzo.take_damage(1000, kenzo.position + Vector2(-20, 0))
-	check(kenzo.health <= 0 and kenzo.death_tween != null, "defeated enemies fall with a knockback animation")
+	check(kenzo.health <= 0 and kenzo.subdued and kenzo.death_tween == null, "Kenzō loses combat without a premature death animation")
 	camp.queue_free()
 	await process_frame
