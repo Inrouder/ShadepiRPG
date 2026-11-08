@@ -8,7 +8,7 @@
 - Raumabhängige Farbkorrektur und geringeres Bloom bewahren warme Innenräume und Texturdetails. Bildstil reduziert beziehungsweise deaktiviert die zusätzlichen Effekte. Pause und Terminals frieren auch die bisherigen Regen-/Dampfuhren ein.
 - Ausgeblendete alte Bodenatmosphäre verarbeitet keine Frames mehr; Zusatz-FX arbeiten mit festen Zeichenbudgets und ohne Einfluss auf Gameplay-Zufall oder Speicherstände. Fahr- und Menüsequenzen behalten ihre bestehenden eigenen Wetterdarstellungen; beim Hangar-Abflug läuft das neue Raumprofil nur draußen, nicht über den Cockpitbildern.
 - 27 tatsächliche Godot-Ansichten geprüft. Stilvorschläge getrennt dokumentiert: einheitlicher Aerodyne-Atlas, vergleichbare Figurenschärfe und kompaktere Interaktionsanzeigen; weitere Vorschläge zu Alarmlicht und Umgebungsgeräuschen.
-- **2.277 Prüfungen ohne Fehler** in 17 Prüfreihen; alle sieben Kapitel, Menü, Hack-Oberfläche und Erinnerungen im Renderer gesichtet.
+- **2.277 Prüfungen ohne Fehler** in 17 Prüfreihen; alle sieben Kapitel, Menü, Hack-Oberfläche und Erinnerungen im Renderer gesichtet. Exportpaket mit Profilen, Shadern, Qualitätsstufen und Abflug erfolgreich gestartet.
 - [Animierte Vorschau und Designbericht](docs/design-atmosphaere.md).
 
 ## v0.30.0 – CodexAI: Fehlerbericht 8, Szenenpassung und Hangar-Abflug · 8. November 2026

@@ -76,3 +76,5 @@ Konfiguration: [Ortsprofile](../scripts/atmosphere_profiles.gd), [Darstellung un
 ## Prüfung
 
 **2.277 Prüfungen ohne Fehler in 17 Prüfreihen.** Die neue Prüfreihe kontrolliert 18 Profile, Dichtebegrenzung, Qualitätsstufen, kleine Raumtransformationen, Pause/Terminals, Wasserbeschnitt, unveränderte Figurenpositionen, unabhängigen Gameplay-Zufall und die drei Erinnerungsschauplätze. Dazu kommen die bisherigen Kampf-, Controller-, Hack-, Speicher-, Flug-, Heiligtums- und Storyprüfungen.
+
+Auch das exportierte Spielpaket wurde erfolgreich gestartet: Ortsprofile, Quelltexturen, Wasser-Shader, Qualitätswechsel, unveränderte Figurenpositionen, Pause und Hangar-Abflug sind darin geprüft.
