@@ -122,7 +122,6 @@ static func resolution(w) -> void:
 	if not cs.alive(ticket): return
 	cs.do(func():
 		w.tower.tableau.show_pose("dead")
-		w.tower.tableau.kenzo.modulate = Color(0.62,0.56,0.5)
 		w.kenzo_body.health = 0
 		w.effects.burst(w.boss_spot+Vector2(0,-18),Color("ffb66d"),28)
 		w.sound("drive_explosion",0.25)

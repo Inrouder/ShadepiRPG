@@ -37,10 +37,16 @@ func show_pose(value: String) -> void:
 	raven.visible = value == "extract"
 	_pose(grip,0)
 	_pose(kenzo,3 if value=="dead" else 1)
-	kenzo.modulate = Color.WHITE
+	kenzo.modulate = Color(0.62,0.56,0.5) if value=="dead" else Color.WHITE
+	raven.modulate = Color.WHITE
+	grip.modulate = Color.WHITE
 	queue_redraw()
 
 func _draw() -> void:
-	if mode != "grip":
-		draw_set_transform(Vector2.ZERO,0,Vector2(1,0.28))
-		draw_circle(Vector2.ZERO,15,Color(0,0,0,0.3))
+	var feet: Array[Vector2] = [Vector2.ZERO]
+	if mode=="grip": feet.append(Vector2(-30,0))
+	if mode=="extract": feet.append(RAVEN_OFFSET)
+	for point in feet:
+		draw_set_transform(point,0,Vector2(1,0.28))
+		draw_circle(Vector2.ZERO,12 if mode=="grip" else 15,Color(0,0,0,0.3))
+	draw_set_transform(Vector2.ZERO)

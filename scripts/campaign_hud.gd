@@ -51,6 +51,10 @@ func _process(delta: float) -> void :
 		controls.text = "WASD / Stick · Bewegen    J / X · Katana    Q / RB · Ravens Hack    Leertaste / B · Dash"
 		if is_instance_valid(world.tower) and world.tower.active:
 			controls.text = "WASD / Stick · Abfangen    J / X · Katana    L / LT · Kick    Leertaste / B · Ausweichen"
+			if not world.player.charging:
+				abilities.visible = not dialogue_open and not world.menu_open
+				var wave: int = world.encounter.wave_index+1 if is_instance_valid(world.encounter) else 1
+				abilities.text = "Welle %d/3 · %d Wachen · Raven %d/3"%[wave,world._living(),world.tower.hits]
 	elif world.beat == world.Beat.END:
 		controls.text = "Die Suche beginnt · Esc / Start öffnet das Menü"
 	else:

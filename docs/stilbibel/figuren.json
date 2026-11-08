@@ -240,5 +240,14 @@
       ],
       "diameter": 72
     }
+  ],
+  "updates": [
+    {
+      "version": "0.33.0",
+      "author": "CodexAI",
+      "source_commit": "d0f6cfc",
+      "description": "Spezialzustände Kenzō/Raven und Tower-Außenansicht ergänzt; aktive KOBAN-TEC-Hangarschicht. Grundfigurenkarten v0.32.2 bleiben gültig.",
+      "reference": "../tower-extraktion.md"
+    }
   ]
 }

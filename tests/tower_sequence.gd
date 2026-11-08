@@ -69,8 +69,19 @@ func run() -> void:
 	check(w.tower.elapsed==elapsed,"dialogue freezes transfer progress")
 	w.cutscene.abort()
 	w.raven.invulnerable = 0
-	w.raven.take_damage(16,w.raven.position+Vector2(20,0))
-	check(w.tower.hits==1,"an actual enemy hit is counted")
+	var guard = w.foes[0]
+	guard.position = w.raven.position+Vector2(0,26)
+	guard.cooldown = 0
+	guard.stun = 0
+	guard.active = true
+	guard.windup = 0
+	guard.lunge = 0
+	guard.attack_visual_time = 0
+	guard.shot_range = 0
+	guard.awareness = INF
+	for step in [0.01,guard.windup_duration+0.01,0.01]: guard._physics_process(step)
+	guard.active = false
+	check(w.tower.hits==1,"a real guard lunge damages Raven in single-player and counts the hit")
 	w.raven.take_damage(16,w.raven.position+Vector2(20,0))
 	check(w.tower.hits==1,"invulnerability prevents duplicate hit counting")
 	w.tower._process(0.81)
@@ -95,7 +106,11 @@ func run() -> void:
 	check(w.tower.hits==0 and w.encounter.wave_index==0 and not w.cutscene.running,"load restarts protection without replaying capture or boss")
 	w.tower.completed_waves()
 	check(w.tower_stage==0 and w.kenzo_body.health==1,"clearing guards cannot finish before transfer is ready")
-	w.tower._process(w.tower.TRANSFER_SECONDS)
+	w.tower.elapsed = w.tower.TRANSFER_SECONDS
+	w.raven.flash_time = 0.15
+	w.tower.tableau.raven.modulate = Color(2,0.65,0.65)
+	w.tower.completed_waves()
+	check(w.raven.flash_time==0 and w.tower.tableau.raven.modulate==Color.WHITE,"ending protection clears a last-moment damage flash before the dialogue")
 	await process_frame
 	check(w.tower_stage==1 and w.kenzo_body.health==1 and w.cutscene.running,"completed transfer enters resolution with Kenzō still alive")
 	check(w.save_game() and w.load_game() and w.tower_stage==1,"secured-data checkpoint survives loading during resolution")

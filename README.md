@@ -45,6 +45,7 @@ Für Menschen und KI: **[Bebilderte Stilbibel des gesamten Spiels](docs/stilbibe
 - Die Daten bestätigen Kenzōs Inszenierung des Massakers. Motiv und Auftraggeber bleiben unbekannt. Erst nach gesicherter Extraktion vernichtet Raven seine Implantate endgültig; beide setzen die Suche gemeinsam fort.
 - Sichtbare kurze Flucht: zum Aerodyne rennen, einsteigen, über die Kante kippen, im Fallen zünden und der Penthouse-Explosion entkommen. KOBAN-TEC ersetzt das bisherige fremde Zeichen im Hangar und beim Hangar-Abflug.
 - Eigene Figurenposen und Außenkulisse nach den aktiven Spielgrafiken; phasenbezogene Kontrollpunkte erhalten alte Spielstände.
+- **1.628 Prüfungen ohne Fehler** in zehn relevanten Prüfreihen; [Ablauf, Film und Bilder](docs/tower-extraktion.md).
 
 ## v0.32.2 · 8. November 2026 · CodexAI
 

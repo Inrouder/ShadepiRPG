@@ -64,6 +64,10 @@ func _finish_if_ready() -> void:
 	if not active or not waves_done or elapsed<TRANSFER_SECONDS: return
 	active = false
 	world.raven.health_floor = 0
+	world.raven.flash_time = 0
+	world.raven.invulnerable = 0
+	world.raven.animate("idle",0)
+	tableau.raven.modulate = Color.WHITE
 	world.tower_stage = 1
 	world.autosave()
 	world._scene_tower_resolution.call_deferred()

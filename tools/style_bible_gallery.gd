@@ -122,7 +122,7 @@ func worlds() -> void:
 	art["angriff"] = load("res://assets/memories/attack/courtyard.png")
 	art["lys-opfer"] = load("res://assets/memories/sacrifice/courtyard.png")
 	art["tempel"] = load("res://assets/memories/legacy/temple-interior.png")
-	start_card(Vector2i(1280,1340),"WELTEN · aktive Hintergrundquellen","Quellbilder ohne Figuren und Zusatz-FX · keine gemeinsame Weltmaßstabsbehauptung · v0.32.2 · CodexAI")
+	start_card(Vector2i(1280,1340),"WELTEN · aktive Hintergrundquellen","Quellbilder und aktive KOBAN-TEC-Schicht · keine gemeinsame Weltmaßstabsbehauptung · v0.33.0 · CodexAI")
 	var index := 0
 	for key in art:
 		var col: int = index % 4

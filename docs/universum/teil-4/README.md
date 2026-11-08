@@ -1,5 +1,7 @@
 # Archiv Teil 4: Heiligtum, Raven-Akte und Romanfassung
 
+**Aktualisierung v0.33.0 · CodexAI:** Die ursprüngliche Romanquelle bleibt erhalten. Die aktuelle Nutzerfortsetzung in [Teil 6](../teil-6/README.md) verlegt die geschützte Datenauslese vor Kenzōs Tod und lässt Motiv sowie Auftraggeber offen. Ältere Aussagen unten zur Spielreihenfolge sind historische Umsetzungsnotizen.
+
 Quelle: Ordner „Shadepi Universuum Archive“ des Nutzers, aufgenommen am 6. November 2026. Die PDFs liegen unverändert in `originale/`, Textkopien (`pdftotext -layout`) in `texte/`, Prüfsummen in `SHA256SUMS`.
 
 | Original | Inhalt |

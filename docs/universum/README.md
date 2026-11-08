@@ -1,5 +1,7 @@
 # Shadepi-Universum-Archiv
 
+**Ergänzung v0.33.0 · CodexAI:** [Teil 6](teil-6/README.md) sichert die aktuelle Tower-Fortsetzung: lebender Kenzō während der geschützten Datenextraktion, offene Frage nach Motiv/Auftraggeber, endgültige Abrechnung danach und sichtbare knappe Flucht. Diese Reihenfolge hat Vorrang vor dem früheren Spielablauf.
+
 Dieses Archiv hält die vom Nutzer im Chat bereitgestellten Quellen dauerhaft beim Projekt fest. Es ist eine Sammlung für spätere Arbeiten an Geschichte und Figuren; die Aufnahme der Quellen verändert das Spiel nicht.
 
 ## Stand

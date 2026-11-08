@@ -7,6 +7,7 @@
 - Kenzōs Inszenierung ist belegt, Motiv und Auftraggeber bleiben offen. Raven schließt sich der weiteren Suche an; der Abschluss am See erhält einen entsprechenden Ausblick.
 - Eigene sichtbare Flucht mit Rennen, Einsteigen, Kippen über die Kante, Zünden im Fallen und Explosion des Penthouses. Neues KOBAN-TEC-Banner als lokale Grafikschicht in beiden Hangaransichten; bestehende Raumgeometrie bleibt erhalten.
 - Kompatible Kontrollpunkte für Schutzphase, gesicherte Daten, Flucht und Abflug; neue Ablauf-/Schadensprüfungen und aktualisierte Regressionserwartungen für die neue Reihenfolge.
+- **1.628 Prüfungen ohne Fehler** in zehn relevanten Prüfreihen; neue Tower-Prüfung mit 42 Fällen im GitHub-Workflow. Tatsächliche Galerie, kurzer Fluchtfilm und Exportpaket kontrolliert. [Bilder, Film und Bedienung](docs/tower-extraktion.md).
 
 ## v0.32.2 – CodexAI: Bebilderte Stilbibel für das gesamte Spiel · 8. November 2026
 

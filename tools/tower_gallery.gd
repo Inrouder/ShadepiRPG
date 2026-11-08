@@ -8,6 +8,10 @@ func capture(tag: String) -> void:
 	root.get_texture().get_image().save_png("/tmp/tower-"+tag+".png")
 	seen[tag] = true
 func run() -> void:
+	if DisplayServer.get_name()=="headless":
+		push_error("Tower gallery requires a real renderer.")
+		quit(1)
+		return
 	var w = load("res://scenes/campaign.tscn").instantiate()
 	root.add_child(w)
 	w.set_visual_quality(2)
@@ -74,7 +78,11 @@ func run() -> void:
 	await capture("koban-hangar")
 	w.fresh_entry = true
 	w._enter(w.Beat.FLIGHT)
-	await capture("koban-departure")
+	for i in 500:
+		await process_frame
+		if is_instance_valid(w.departure) and w.departure.stage=="boarding" and w.cutscene.overlay.color.a<0.01:
+			await capture("koban-departure")
+			break
 	print("TOWER GALLERY: ",seen)
 	var ok: bool = seen.has("grip") and seen.has("kneel") and seen.has("protect") and seen.has("truth") and seen.has("departure-blast")
 	w.queue_free()

@@ -1,6 +1,6 @@
 # Verbindliche Konsistenzvorlage für ShadepiRPG
 
-**Stand v0.32.2 · CodexAI · 8. November 2026; eingeführt mit v0.32.1.** Gilt für das gesamte Spiel und alle Mitwirkenden, ob Mensch oder KI. Vor Änderungen zusammen mit [AGENTS.md](AGENTS.md) lesen und die [Arbeitsvorlage](docs/vorlagen/konsistenz-auftrag.md) verwenden. Eine neuere ausdrückliche Nutzervorgabe hat Vorrang; bestätigte Änderungen anschließend hier und in den betroffenen Referenzen nachführen.
+**Stand v0.33.0 · CodexAI · 8. November 2026; eingeführt mit v0.32.1.** Gilt für das gesamte Spiel und alle Mitwirkenden, ob Mensch oder KI. Vor Änderungen zusammen mit [AGENTS.md](AGENTS.md) lesen und die [Arbeitsvorlage](docs/vorlagen/konsistenz-auftrag.md) verwenden. Eine neuere ausdrückliche Nutzervorgabe hat Vorrang; bestätigte Änderungen anschließend hier und in den betroffenen Referenzen nachführen.
 
 ## Bebilderter Einstieg für das gesamte Spiel
 
@@ -101,6 +101,8 @@ Sonderatlanten für Sitzen, Liegen, Gegner oder Menü folgen ihren eigenen Metad
 
 ## 7. Szene, Bedienung und Ton
 
+- Tower ab v0.33.0: Kenzō hält Raven vor Shadepis Eingreifen fest und bleibt nach der Niederlage bis zur geschützten Datenextraktion lebendig. Seine Inszenierung wird bewiesen; Motiv und Auftraggeber bleiben offen. Erst anschließend folgen Ravens endgültige Abrechnung und die sichtbare gemeinsame Flucht. [Aktuelle Reihenfolge](docs/tower-extraktion.md).
+
 - Handlung, Figurenwissen und Anwesenheit gegen die aktuelle Szenenquelle prüfen. Beim Heiligtum gilt: Shadepi geht zur Eindämmung **alle sechs Tage** voraus; Raven folgt nach der Aerodyne-Reparatur, schläft zwei Stunden und sucht ihn erst danach. Die Handkontaktszene führt zu den Erinnerungen.
 - Erinnerung III spielt im Tempelinneren über der getarnten Hightech-Basis. Der Meister ist nach der Übertragung tot; Shadepis späterer Zusammenbruch ist keine bestätigte Todesfestlegung. Weitere Szenen nach den aktuellen Archivquellen behandeln.
 - Dialoge natürlich und sprechbar halten; Aktionen durch vorhandene In-Engine-Szenen, Bewegung und passende Sprechblasen zeigen. Eine neue Bildertafel ersetzt nicht ungefragt eine Spielszenen-Inszenierung.
@@ -134,6 +136,7 @@ Für jeden betroffenen Bereich im [Arbeitsnachweis](docs/vorlagen/konsistenz-auf
 | Fahrzeuge und Flug | [Fahraktion](tests/drive_action.gd), [Aerodyne](tests/aerodyne_flight.gd), [Fahrzeugreferenzen](docs/stilbibel/fahrzeuge-requisiten.md). |
 | Kloster, Bewohner, Krieger und Mechs | [Klosterfiguren](tests/monastery_memory.gd), [Bots/Schutzopfer](tests/monastery_battle.gd), [Ly](tests/sacrifice_memory.gd), [Vermächtnis](tests/legacy_memory.gd). |
 | Heiligtum-Gegenwart | [Posen](tests/sanctuary_art.gd), [Ablauf](tests/sanctuary_story.gd), [Fehlerbericht 8](tests/report8.gd). |
+| Tower, Extraktion und Abflug | [Treffer-/Kontrollpunkt-/Phasenprüfung](tests/tower_sequence.gd), [Ablauf und Bilder](docs/tower-extraktion.md), [Galerie](tools/tower_gallery.gd). |
 | Atmosphäre und Darstellung | [Ortsprofile/Pause](tests/scene_atmosphere.gd), [digitale Gegner](tests/npc_dive_visuals.gd), [Art Direction](docs/stilbibel/artdirection.md). |
 
 ```sh

@@ -51,4 +51,6 @@ Diese vorhandenen Spielaufnahmen dokumentieren die Atmosphäre ab v0.31.0; die n
 
 ## Historische Quellen
 
+**Nachtrag v0.33.0 · CodexAI:** Die [Tower-Außenansicht](../../assets/story/tower/exterior.png) ist eine zusätzliche Filmkulisse für das Kippen und Abfangen des Aerodyne, keine neue begehbare Karte. Die [Weltübersicht](bilder/welten.png) zeigt im Hangar jetzt die aktive KOBAN-TEC-Brandschicht statt des historischen Emblems. Sie wird sowohl im normalen Hangar als auch beim Hangar-Abflug gezeichnet; [Herkunft](../../assets/story/tower/README.md).
+
 `legacy/courtyard.png` ist die ersetzte Außenhofvariante von Erinnerung III. `chamber.png` und `compensator.png` sind frühere Raumstände vor integrierter Tür beziehungsweise Entfernung des Hintergrundstuhls. Sie sind keine aktuellen Layoutvorgaben. Die Höfe aus `attack` und `sacrifice` bleiben dagegen eigene gültige Schauplätze.

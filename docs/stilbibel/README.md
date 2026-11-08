@@ -6,6 +6,8 @@
 
 ## Die fünf Teile
 
+**Aktualisierung v0.33.0 · CodexAI:** [Neue Tower-Zustände, Extraktion, knappe Flucht und KOBAN-TEC-Hangar](../tower-extraktion.md). Die 23 Grundfigurenkarten bleiben gültig; Spezialposen und die zusätzliche Filmkulisse sind bei Figuren und Welten verzeichnet. Nur die betroffene Weltübersicht wird neu gerendert.
+
 | Teil | Inhalt |
 | --- | --- |
 | **[1 · Art Direction und Materialstil](artdirection.md)** | Bildsprache, Textur, Licht, Körperbau, Pixelraster, Maßstab, Animation und bekannte Unterschiede im Altbestand. |
