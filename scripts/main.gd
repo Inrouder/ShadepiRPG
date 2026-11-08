@@ -10,6 +10,7 @@ const EffectsScript = preload("res://scripts/effects.gd")
 const PropScript = preload("res://scripts/world_prop.gd")
 const Painted = preload("res://scripts/painted_world.gd")
 const Dressing = preload("res://scripts/world_dressing.gd")
+const SceneAtmosphereScript = preload("res://scripts/scene_atmosphere.gd")
 const GroundAtmosphereScript = preload("res://scripts/ground_atmosphere.gd")
 const MusicLibrary = preload("res://scripts/music_library.gd")
 const CutsceneScript = preload("res://scripts/cutscene.gd")
@@ -44,6 +45,7 @@ var music_fade: Tween
 var light_texture: = preload("res://assets/world/light.png")
 var screenshot_mode: = false
 var visual_quality: = 2
+var scene_atmosphere: Node2D
 var ground_atmosphere: Node2D
 var atmosphere_filter: ColorRect
 var filter_material: ShaderMaterial
@@ -287,6 +289,9 @@ func _build_world() -> void :
 	add_child(ground)
 	ground_atmosphere = GroundAtmosphereScript.new()
 	add_child(ground_atmosphere)
+	scene_atmosphere = SceneAtmosphereScript.new()
+	scene_atmosphere.world = self
+	add_child(scene_atmosphere)
 	for wall in world_walls():
 		_collider(wall)
 	actors = Node2D.new()
@@ -335,6 +340,7 @@ func _build_world() -> void :
 	_halo(Vector2(899, 225), Color(0.95, 0.23, 0.65, 0.35), 1.28)
 	effects = EffectsScript.new()
 	effects.world = self
+	effects.ambient_steam_enabled = false
 	add_child(effects)
 	camera = Camera2D.new()
 	camera.position = player.position
@@ -344,6 +350,12 @@ func _build_world() -> void :
 	camera.limit_bottom = 640
 	add_child(camera)
 	camera.make_current()
+
+func atmosphere_profile() -> String:
+	return painted_layout if not painted_layout.is_empty() else "alley"
+
+func atmosphere_rect() -> Rect2:
+	return Rect2(0,0,1024,640)
 
 func set_painted_solids(key: String) -> void :
 	for body in painted_solids:
@@ -614,6 +626,7 @@ func set_visual_quality(level: int) -> void :
 	filter_material.set_shader_parameter("strength", 1.0 if visual_quality == 2 else 0.55)
 	filter_material.set_shader_parameter("bloom", 0.32 if visual_quality == 2 else 0.15)
 	filter_material.set_shader_parameter("detailed", visual_quality == 2)
+	if scene_atmosphere != null: scene_atmosphere.set_quality(visual_quality)
 	for light in shadow_lights:
 		light.shadow_enabled = visual_quality > 0
 		light.shadow_filter = Light2D.SHADOW_FILTER_PCF5 if visual_quality == 2 else Light2D.SHADOW_FILTER_NONE

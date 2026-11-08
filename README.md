@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.30.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.31.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -35,7 +35,16 @@ Die Spielwelt nutzt gemalte HQ-Pixelkulissen aus `assets/world/painted/`, ergän
 
 Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und Bosskämpfen. Die vollständige Zuordnung und Hinweise zum Austauschen der MP3-Dateien stehen unter [Musik austauschen](assets/music/README.md).
 
-## Neu in v0.30.0 · 8. November 2026 · CodexAI
+## Neu in v0.31.0 · 8. November 2026 · CodexAI
+
+- **Atmosphäre passend zum Schauplatz:** Fensterregen, Staub im Licht, texturierter Anlagendampf, bewegte Neonreflexe, Diagnoseanzeigen und Datenimpulse. Die Kloster-Erinnerungen erhalten aufsteigende Glut und Asche; am See bewegen sich Wasserreflexe, dünner Ufernebel und Glühwürmchen.
+- 18 Ortsprofile berücksichtigen die tatsächlichen Raumgrößen. Die neuen Wasserbewegungen bleiben auf die Wasserfläche begrenzt und liegen hinter den Figuren. Innenräume erhalten wärmere Abstimmung und zurückhaltenderes Bloom für lesbare Texturen.
+- Pause und offene Terminals frieren die Umgebungsbewegung ein; Hintergrundeffekte der Gegenwart pausieren auch während der Erinnerungen. Der Bildstil regelt die zusätzliche Dichte. Vorhandene Pixel-FX wiederverwendet, Figuren und Spielabläufe bleiben konsistent.
+- **Projektweiter Designcheck:** 27 gerenderte Ansichten aus allen sieben Kapiteln, Hauptmenü, Hack-Oberfläche und drei Erinnerungen. Konkrete Vorschläge zu Aerodyne-Silhouette, Sprite-Schärfe und Interaktionsanzeigen stehen im Bericht.
+- **2.277 Prüfungen ohne Fehler** in 17 Prüfreihen; alle sieben Kapitel, Menü, Hack-Oberfläche und Erinnerungen im Renderer gesichtet.
+- [Animierte Spielvorschau, Vorher/Nachher und Designvorschläge](docs/design-atmosphaere.md).
+
+## v0.30.0 · 8. November 2026 · CodexAI
 
 - **Fehlerbericht 8 vollständig bearbeitet:** Die drei Hangarkonsolen haben echte Kollisionen und Verdeckungen; Bedienpunkte liegen davor. Wohnraumtür direkt in die Wand eingepasst, Shadepis Ruf mit Sprechblase an der Tür.
 - **Raven schläft sichtbar ein:** automatischer Übergang nach der Ankunft, auf das Bett steigen, hinsetzen, hinlegen, längere Nahaufnahme und sichtbares Aufwachen nach zwei Stunden. Shadepis Sitz-/Kontaktposen enthalten jetzt den dazu passenden Kompensatorstuhl.

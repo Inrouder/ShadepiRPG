@@ -17,6 +17,8 @@ var exhausted := false
 var master_dead := false
 var aura: Node
 var events: Array[String]=[]
+func atmosphere_profile() -> String: return "memory_temple"
+
 func make_map() -> Node2D:
 	return InteriorMap.new()
 func squad_ids() -> Array: return ["shadepi"]

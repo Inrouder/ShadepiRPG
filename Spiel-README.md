@@ -1,6 +1,8 @@
 # Shadepi · Echos in Neon
 
-**Spieleranleitung für v0.30.0 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+**Spieleranleitung für v0.31.0 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+
+**Atmosphäre v0.31.0 · CodexAI:** Unter „Bildstil“ steuert **Atmosphärisch** die volle neue Umgebungsdichte; **Ausgewogen** reduziert Partikel und Wasserbewegung. **Reduziert** schaltet die neuen Zusatzpartikel und den Wasser-Zusatzpass ab; vorhandene Regen- und Kampfindikatoren bleiben erhalten. Pause und offene Hack-Terminals halten die Umgebungsbewegung an. [Film und Designbericht](docs/design-atmosphaere.md).
 
 **Heiligtum und Abflug v0.30.0 · CodexAI:** Raven kommt nach der Aerodyne-Reparatur allein im Versteck an und legt sich nach dem Gespräch automatisch schlafen. Nach „Zwei Stunden später“ gehst du zur beleuchteten Tür und drückst **E / A**. Im Kompensatorraum vorsichtig an den Sessel treten und erneut **E / A** drücken. Nach den drei Erinnerungen kehrt Raven zurück; danach zeigt das Spiel das Einsteigen, den missglückten Start und den Abflug aus dem Hangar. Erst draußen beginnt die Flugsteuerung. **E / A**: Dialog weiter; **Leertaste / B**: Szene überspringen; **Esc / Start**: Pause. Speichern während des Abflugs setzt beim Laden sicher am Beginn dieser Szene fort. [Korrekturen und Bilder](docs/fehlerbericht-8.md).
 

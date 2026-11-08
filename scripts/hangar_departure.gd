@@ -14,6 +14,7 @@ var lift := 0.0
 var clock := 0.0
 var squad: Array[PixelActor] = []
 var engines := false
+var scene_atmosphere: Node2D
 
 func _ready() -> void:
 	scale = Vector2.ONE * 0.625
@@ -26,10 +27,16 @@ func _ready() -> void:
 		actor.collision_mask = 0
 		actor.position = Vector2(690 + i * 30, 392 + i * 20)
 		squad.append(actor)
+	scene_atmosphere = preload("res://scripts/scene_atmosphere.gd").new()
+	scene_atmosphere.world = world
+	scene_atmosphere.profile_override = "hangar"
+	add_child(scene_atmosphere)
+	scene_atmosphere.set_quality(world.visual_quality)
 
 func set_stage(value: String) -> void:
 	stage = value
 	if not events.has(value): events.append(value)
+	if scene_atmosphere != null: scene_atmosphere.visible = value in ["boarding","takeoff"]
 	for actor in squad: actor.visible = value == "boarding"
 	queue_redraw()
 

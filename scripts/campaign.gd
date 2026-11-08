@@ -104,6 +104,14 @@ func actor_is_playable(actor: PixelActor) -> bool:
 func actor_input_prefix(_actor: PixelActor) -> String:
 	return ""
 
+func atmosphere_profile() -> String:
+	if beat in [Beat.CHASE, Beat.FLIGHT]: return ""
+	if beat == Beat.ECHO and not echo_ready: return "compensator" if sanctuary_stage == 2 else "chamber"
+	return painted_layout
+
+func atmosphere_rect() -> Rect2:
+	return Painted.CHAMBER_RECT if beat == Beat.ECHO and not echo_ready else Rect2(0,0,1024,640)
+
 func combat_ready() -> bool:
 	return is_combat()
 

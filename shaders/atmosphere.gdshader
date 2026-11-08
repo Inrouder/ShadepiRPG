@@ -4,6 +4,7 @@ uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_n
 uniform float strength = 1.0;
 uniform float bloom = 0.3;
 uniform bool detailed = true;
+uniform vec3 grade_tint = vec3(0.98, 1.01, 1.055);
 
 vec3 bright(vec2 p) {
 	vec3 c = texture(screen_texture, p).rgb;
@@ -31,7 +32,7 @@ void fragment() {
 		float luminance = dot(color, vec3(0.2126, 0.7152, 0.0722));
 		color = mix(vec3(luminance), color, 1.10);
 		color = (color - 0.4) * 1.05 + 0.4;
-		color *= vec3(0.98, 1.01, 1.055);
+		color *= grade_tint;
 		vec2 edge = (uv - 0.5) * vec2(1.0, 0.82);
 		float vignette = smoothstep(0.25, 0.68, length(edge));
 		color *= 1.0 - vignette * 0.28;

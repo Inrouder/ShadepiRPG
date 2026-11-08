@@ -22,6 +22,7 @@ var phase := "setup"
 var bots: Array[PixelActor] = []
 var battle: RefCounted
 var effects: Node2D
+var scene_atmosphere: Node2D
 var pause_axis_latched := false
 
 func _ready() -> void:
@@ -68,8 +69,15 @@ func _ready() -> void:
 	effects.rain = false
 	effects.steam_vents.clear()
 	add_child(effects)
+	scene_atmosphere = preload("res://scripts/scene_atmosphere.gd").new()
+	scene_atmosphere.world = self
+	add_child(scene_atmosphere)
+	scene_atmosphere.set_quality(map.quality)
 	for i in initial_bot_count(): create_bot(Vector2(960,350+i*45)).hide()
 	if autoplay: play.call_deferred()
+
+func atmosphere_profile() -> String: return "memory_attack"
+func atmosphere_rect() -> Rect2: return Rect2(0,0,1024,640)
 
 func make_map() -> Node2D: return Map.new()
 func make_actor(_id: String) -> PixelActor: return Actor.new()

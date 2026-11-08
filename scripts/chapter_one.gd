@@ -109,6 +109,12 @@ func _build_world() -> void:
 	raven.position = APARTMENT_EXIT
 	enemy.hide()
 
+func atmosphere_profile() -> String:
+	return "apartment" if phase == Phase.APARTMENT else "street"
+
+func atmosphere_rect() -> Rect2:
+	return APARTMENT_RECT if phase == Phase.APARTMENT else Rect2(0,0,1024,640)
+
 func combat_ready() -> bool:
 	return phase in [Phase.HUNT, Phase.DUEL, Phase.RESCUE, Phase.TEAM]
 

@@ -19,6 +19,7 @@ var smoke: Array[Dictionary] = []
 var blasts: Array[Dictionary] = []
 var charge_rings: Array[Dictionary] = []
 var animate_while_busy := false
+var ambient_steam_enabled := true
 
 func charge_ready(point: Vector2, ranged: bool) -> void:
 	charge_rings.append({"p": point, "t": 0.4, "c": Color("67eaff") if ranged else Color("ff4b6b")})
@@ -73,7 +74,7 @@ func prop_explosion(point: Vector2) -> void :
 	burst(point, Color("ffc486"), 32)
 
 func _process(delta: float) -> void :
-	if animate_while_busy and world.menu_open: return
+	if world != null and (world.menu_open or world.terminal != null): return
 	elapsed += delta
 	if animate_while_busy or not world.is_busy():
 		for i in range(charge_rings.size() - 1, -1, -1):
@@ -180,7 +181,7 @@ func _draw() -> void :
 		color.a = effect.t * 2.0
 		draw_rect(Rect2(effect.p - Vector2(8, 40), Vector2(16, 38)), color)
 
-	for vent in steam_vents:
+	for vent in steam_vents if ambient_steam_enabled else []:
 		for i in (5 if quality == 2 else 3):
 			var progress: = fposmod(elapsed * 0.3 + i * 0.25, 1.0)
 			var p: Vector2 = vent + Vector2(sin(progress * 7 + i) * 5, - progress * 40)

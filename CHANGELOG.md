@@ -1,5 +1,16 @@
 # Versionshinweise
 
+## v0.31.0 – CodexAI: Ortsbezogene Atmosphäre und projektweiter Designcheck · 8. November 2026
+
+- 18 deterministische Ortsprofile für Straßen, Wohnung, Industrie, Versteck, Garage, Hangar, Wohn-/Kompensatorraum, virtuelle Räume, Tower, See und drei Erinnerungen. Vorhandene Pixel-Rauch-/Lichtquellen wiederverwendet; keine neuen Ersatzgrafiken für Figuren oder Gebäude.
+- Fensterregen nur auf Glas, Staub in Lichtbereichen, texturierter Dampf an Anlagen, kleine Diagnoseläufe, Datenpakete und bewegte Neonreflexe. Glut und Asche kommen von den tatsächlichen Brandstellen; dünner Nebel und Glühwürmchen beleben das Seeufer.
+- Animierter See-Zusatzpass aus den Originalpixeln, gegen die Uferkontur und Baumlinie beschnitten und hinter den Figuren gezeichnet. Keine Verformung von Ufer, Figuren oder Spielfeldgeometrie.
+- Raumabhängige Farbkorrektur und geringeres Bloom bewahren warme Innenräume und Texturdetails. Bildstil reduziert beziehungsweise deaktiviert die zusätzlichen Effekte. Pause und Terminals frieren auch die bisherigen Regen-/Dampfuhren ein.
+- Ausgeblendete alte Bodenatmosphäre verarbeitet keine Frames mehr; Zusatz-FX arbeiten mit festen Zeichenbudgets und ohne Einfluss auf Gameplay-Zufall oder Speicherstände. Fahr- und Menüsequenzen behalten ihre bestehenden eigenen Wetterdarstellungen; beim Hangar-Abflug läuft das neue Raumprofil nur draußen, nicht über den Cockpitbildern.
+- 27 tatsächliche Godot-Ansichten geprüft. Stilvorschläge getrennt dokumentiert: einheitlicher Aerodyne-Atlas, vergleichbare Figurenschärfe und kompaktere Interaktionsanzeigen; weitere Vorschläge zu Alarmlicht und Umgebungsgeräuschen.
+- **2.277 Prüfungen ohne Fehler** in 17 Prüfreihen; alle sieben Kapitel, Menü, Hack-Oberfläche und Erinnerungen im Renderer gesichtet.
+- [Animierte Vorschau und Designbericht](docs/design-atmosphaere.md).
+
 ## v0.30.0 – CodexAI: Fehlerbericht 8, Szenenpassung und Hangar-Abflug · 8. November 2026
 
 - Drei Hangarkonsolen mit eigenen festen Standflächen und Textur-Verdeckungen versehen; alle zugehörigen Interaktionspunkte erreichbar vor die Geräte gesetzt.

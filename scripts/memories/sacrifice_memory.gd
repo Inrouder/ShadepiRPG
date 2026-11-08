@@ -7,6 +7,8 @@ var charge: Sprite2D
 var events: Array[String] = []
 const Survival = preload("res://scripts/memories/minotaur_battle.gd")
 
+func atmosphere_profile() -> String: return "memory_sacrifice"
+
 func make_map() -> Node2D:
 	var result = Map.new()
 	result.background_texture = RUINS

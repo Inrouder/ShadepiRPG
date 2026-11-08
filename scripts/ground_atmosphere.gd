@@ -4,11 +4,12 @@ var elapsed: = 0.0
 var quality: = 2:
 	set(value):
 		quality = value
-		set_process(quality > 0)
+		set_process(quality > 0 and is_visible_in_tree())
 		queue_redraw()
 
 func _ready() -> void :
 	z_index = -5
+	visibility_changed.connect(func(): set_process(quality > 0 and is_visible_in_tree()))
 
 func _process(delta: float) -> void :
 	elapsed += delta
