@@ -43,3 +43,11 @@ Erinnerung II ist als Szene am zweiten Knoten eingebunden. Der im Originaldossie
 ## Umsetzungshinweis v0.26.0 · CodexAI
 
 Erinnerung III ist am dritten Knoten eingebunden. Der Meister ist als älterer Mann mit weißem Bart, gebundenem Haar und traditioneller bronze-/brauner Kampfausrüstung dargestellt; ein Eigenname wird nicht ergänzt. Die bestätigten Versprechen, der weiße Nanitenstrom, zwei Minotauren und Shadepis anschließender Zusammenbruch sind enthalten. Es wird weder Shadepis Tod noch ein neuer Tod des Roboterkopf-Kriegers festgelegt. [Umsetzung und Vorschau](../../das-vermaechtnis.md).
+
+## Gegenwartsrahmen · v0.29.0 · CodexAI · 8. November 2026
+
+Neue verbindliche Nutzervorgabe: Shadepi benötigt **alle sechs Tage** die Naniten-Eindämmung am Kompensator, sonst zerstören die Naniten seinen Körper. Er geht voraus in sein Versteck; Raven folgt nach der Aerodyne-Reparatur. Aus dem separaten Raum ruft er: „Hey Raven, ich bin hier. Ruhe dich aus, ich komme gleich.“ Raven sieht sich um und schläft. Nach **zwei Stunden** sucht sie ihn; er sitzt regungslos im Sessel. Sie fragt „Schläfst du?“, murmelt „Wer ist eigentlich unter der Maske?“ und greift danach. Er fängt ihr Handgelenk ab: „Mach das nicht.“ Sie lacht: „Hast du Angst vor einer Frau?“ Er setzt an: „Nein, ich glaube nur …“ Ein weißes Licht geht durch ihn auf Raven über, ihre Augen schimmern; erst jetzt beginnen die Erinnerungen.
+
+Danach torkelt Raven zurück: „Was war das denn? Waren das deine Erinnerungen?“ Shadepi entschuldigt sich und erklärt, dass dies während der Eindämmung geschehen kann. Er gibt ihr nur die nötigen Informationen für eine Nicht-Ordensangehörige. Keine Vorwegnahme der Kenzō-Enthüllung oder interner Ordensgeheimnisse. Die sechs Tage ersetzen widersprechende ältere Fristen.
+
+Das dazu erwähnte Referenzbild wurde in dieser Nachricht nicht angehängt. Die neue Raumgrafik ist eine Umsetzung anhand der vorhandenen HQ-Versteckgrafik, kein behaupteter Nachbau eines unbekannten Bildes. [Aktueller Ablauf](../../heiligtum-kompensator.md).

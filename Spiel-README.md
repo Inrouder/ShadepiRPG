@@ -1,6 +1,8 @@
 # Shadepi · Echos in Neon
 
-**Spieleranleitung für v0.28.0 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+**Spieleranleitung für v0.29.0 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+
+**Heiligtum v0.29.0 · CodexAI:** Nach der Aerodyne-Reparatur steuerst du Raven allein im Versteck. Am Bett mit **E / A** ausruhen. Nach „Zwei Stunden später“ zur beleuchteten Tür gehen und erneut **E / A** drücken. Im separaten Kompensatorraum vorsichtig an den Sessel herantreten und **E / A** drücken. Der Handkontakt führt zu den drei Erinnerungsankern. Schlafen und Raumwechsel werden gespeichert; Ladepunkte in den Erinnerungen bleiben erhalten. [Ablauf und Vorschau](docs/heiligtum-kompensator.md).
 
 **Erinnerungseffekte v0.28.0 · CodexAI:** Der Meister stirbt nach der Übertragung des Heiligtums. Shadepi erhält dabei eine goldweiße Energieaura mit aufsteigenden Flammen und Blitzen, die ihn im Kampf begleitet und beim Zusammenbruch erlischt. „Bildstil → Reduziert“ lässt die Aura bestehen, reduziert aber Blitzakzente und Animationsfrequenz. Pause hält auch die Aura und den Energieton an; Ton aus schaltet ihn ab. [Vorschau](docs/das-vermaechtnis.md).
 

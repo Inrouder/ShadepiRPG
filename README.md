@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.28.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.29.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -31,11 +31,20 @@ Das Startmenü zeigt die detailliert gemalten HQ-Figuren Shadepi in Bereitschaft
 - **Kapitel 3–5:** Pakt, Hinterhalt, Fahrzeugverfolgung, Hangar, Heiligtum und Erinnerungssequenzen.
 - **Kapitel 6–7:** Anflug, Tower, Konfrontation mit Kenzō, Aufzugwachen, Flucht und Abschluss am See.
 
-Die Spielwelt nutzt **16 gemalte Kulissen** aus `assets/world/painted/`. Wände und verdeckende Bildteile sind in `scripts/painted_world.gd` abgestimmt. Zerstörbare Objekte, die sechs zugeordneten Musikstücke, HQ-Sprites und die Original-Keyframes sind im Repository enthalten.
+Die Spielwelt nutzt **17 gemalte Kulissen** aus `assets/world/painted/`. Wände und verdeckende Bildteile sind in `scripts/painted_world.gd` abgestimmt. Zerstörbare Objekte, die sechs zugeordneten Musikstücke, HQ-Sprites und die Original-Keyframes sind im Repository enthalten.
 
 Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und Bosskämpfen. Die vollständige Zuordnung und Hinweise zum Austauschen der MP3-Dateien stehen unter [Musik austauschen](assets/music/README.md).
 
-## Neu in v0.28.0 · 7. November 2026 · CodexAI
+## Neu in v0.29.0 · 8. November 2026 · CodexAI
+
+- **Heiligtum mit richtiger Reihenfolge:** Shadepi geht zum Kompensator vor; Raven repariert den Aerodyne und kommt allein ins Versteck. Erst nach zwei Stunden Schlaf sucht sie ihn hinter der Tür.
+- Eigener HQ-Pixel-Kompensatorraum, sitzender Shadepi, Ravens Schlafpose und zwei Handkontaktposen. Der Griff nach der Maske, Shadepis ruhiges Abfangen und der weiße Lichtstrom lösen die Erinnerungen aus. Das bisherige vorgeschaltete Timing-Spiel entfällt.
+- Nach den drei Erinnerungen torkelt Raven am Sessel zurück. Shadepi erklärt die notwendige Eindämmung **alle sechs Tage** und wahrt weiter die Geheimnisse des Ordens.
+- Speicherpunkte nach dem Schlafen, im Kompensatorraum und an den bisherigen Erinnerungsankern; Bedienung mit E / Controller A. Alte Erinnerungsabschlüsse bleiben erhalten.
+- **1.133 Prüfungen ohne Fehler** in sieben Prüfreihen; tatsächliche Godot-Szenenbilder und Exportpaket geprüft.
+- [Ablauf, Bilder und Herkunft der Raumgestaltung](docs/heiligtum-kompensator.md).
+
+## v0.28.0 · 7. November 2026 · CodexAI
 
 - **Meister stirbt nach der Übergabe:** Neue Erschlaffungs-, Ablege- und Leichenposen ersetzen die bisherige ruhende Darstellung. Sein Tod ist jetzt ausdrücklich Teil der Szene und im Archiv gesichert.
 - **Shadepis Energieaura:** Acht Flammen- und acht Blitzphasen bauen sich während der weißen Übertragung auf. Die goldweiße Aura folgt Shadepi durch den Kampf, verstärkt ihre Vordergrundakzente beim Angriff und erlischt beim Zusammenbruch. Maske, Körper und Füße werden nicht verschoben.

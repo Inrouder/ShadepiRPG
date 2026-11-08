@@ -182,7 +182,6 @@ func run() -> void:
 			check(clear_at(campaign, Vector2(400, 315)), "old oversized furniture leaves no invisible collision")
 			check(not clear_at(campaign, Vector2(220, 350)), "compact room cannot be left through its left wall")
 			check(not clear_at(campaign, Vector2(805, 350)), "compact room cannot be left through its right wall")
-			campaign._start_echo()
 			campaign._enter_echo()
 			check(campaign.camera.zoom == Vector2.ONE, "memory sequence restores the normal camera scale")
 			freeze(campaign)

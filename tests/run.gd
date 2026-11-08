@@ -833,18 +833,12 @@ func check_campaign() -> void:
 	scene.interact()
 	check(preload("res://tests/terminal_solver.gd").complete(scene), "overlapping daemons unlock transponder")
 	finish_dialogue(scene)
-	scene.player.position = scene._target()
-	scene.interact()
-	check(scene.timing != null, "the sanctuary timing game opens before the memories")
-	var timing = scene.timing
-	await process_frame
-	await process_frame
-	timing.mode = 2
-	timing._process(0.1)
-	check(timing.scores[0] > 0 and timing.scores[1] > 0, "both players receive independent time scores")
-	timing.elapsed = 15.0
-	timing._process(0.01)
-	finish_dialogue(scene)
+	for stage in 3:
+		scene.raven.position = scene._target()
+		scene.interact()
+		check(scene.timing == null and scene.in_cinematic(), "Raven advances the present-day scene without the old timing game")
+		finish_dialogue(scene)
+	check(scene.echo_ready, "mask contact opens the memories after rest and the compensator room")
 	for i in 3:
 		scene.raven.position = scene._target()
 		scene.interact()

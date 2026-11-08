@@ -33,6 +33,7 @@ const FLOOR_EDGES: = {
 	"industry": Vector2(250, 507), "hideout": Vector2(242, 545), 
 	"dive": Vector2(243, 495), "ambush": Vector2(268, 522), 
 	"garage": Vector2(250, 516), "hangar": Vector2(232, 547), 
+	"compensator": Vector2(300, 416.45),
 	"chamber": Vector2(286.65, 416.45), "memory": Vector2(199, 495),
 	"rooftop": Vector2(235, 495), "suite": Vector2(283, 523), 
 	"lakeside": Vector2(251, 540), 
@@ -48,6 +49,7 @@ const SOLIDS: = {
 	"garage": [Rect2(884, 354, 36, 62)], # parked motorcycle on the lift platform
 	"hangar": [Rect2(360, 280, 84, 36), Rect2(621, 410, 108, 71), Rect2(505, 250, 100, 10), Rect2(807, 281, 185, 60)], 
 	"chamber": [Rect2(449, 286.65, 47, 8.35), Rect2(566, 286.65, 68, 7.35)],
+	"compensator": [Rect2(464, 300, 77, 24)],
 	"memory": [], 
 	"rooftop": [Rect2(774, 262, 160, 49), Rect2(293, 318, 94, 25)], 
 	"suite": [Rect2(330, 360, 61, 24), Rect2(573, 283, 80, 24), Rect2(755, 422, 92, 25)], 
@@ -105,7 +107,7 @@ static func walls(key: String) -> Array[Rect2]:
 	if not FLOOR_EDGES.has(key):
 		return result
 	var edges: Vector2 = FLOOR_EDGES[key]
-	if key == "chamber":
+	if key in ["chamber", "compensator"]:
 		result.append(Rect2(0, 0, CHAMBER_RECT.position.x, 640))
 		result.append(Rect2(CHAMBER_RECT.end.x, 0, 1024 - CHAMBER_RECT.end.x, 640))
 	result.append(Rect2(0, 0, 1024, edges.x))

@@ -1,5 +1,15 @@
 # Versionshinweise
 
+## v0.29.0 – CodexAI: Heiligtum-Chronologie und separater Kompensatorraum · 8. November 2026
+
+- Shadepi geht im Hangar voraus zur regelmäßigen Eindämmung; Raven macht den Aerodyne gangbar und folgt erst danach. Wohnraum, zwei Stunden Schlaf und Suche durch die geschlossene Tür ersetzen das verfrühte gemeinsame Erklärungsgespräch.
+- Neuer separater HQ-Pixel-Kompensatorraum; neue Quellposen für sitzenden Shadepi, Ravens Schlafen, Maskengriff und festgehaltenes Handgelenk. Weißer Lichtstrom und schimmernde Augen führen in die bestehenden drei Erinnerungen; das frühere Timing-Minispiel entfällt an dieser Stelle.
+- Rückkehr in denselben Raum: Raven torkelt zurück und fragt nach den Erinnerungen. Shadepi entschuldigt sich, erklärt den Sechs-Tage-Rhythmus und beschränkt Ordensinformationen auf das Nötige.
+- Kompatibles zusätzliches Speicherfeld für Schlaf-/Tür-/Raumfortschritt. Alte Erinnerungsabschlüsse bleiben erhalten; Speichern während des Rückkehrdialogs wiederholt nur diesen Dialog. Abgebrochene Szenenschritte können keine spätere Szene verändern.
+- Neues Raumdesign aus vorhandenen Spielgrafiken abgeleitet: Das im Nutzertext erwähnte neue Referenzbild wurde nicht mitgeliefert; ein exakter Abgleich damit ist weiterhin offen.
+- **1.133 Prüfungen ohne Fehler** in sieben Prüfreihen; tatsächliche Godot-Szenenbilder und Exportpaket geprüft.
+- [Bilder, Steuerung und Ablauf](docs/heiligtum-kompensator.md).
+
 ## v0.28.0 – CodexAI: Meistertod, Energieaura und Erinnerungseffekte · 7. November 2026
 
 - Vor Beginn alle GitHub-Branches geprüft und auf v0.27.0 aufgebaut. Nutzerpräzisierung gesichert: Der Meister ist nach der Übertragung definitiv tot; Shadepi soll eine kräftige, aufsteigende Aura wie bei einem Anime-Power-up erhalten.

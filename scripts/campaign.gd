@@ -2,7 +2,8 @@ extends "res://scripts/main.gd"
 
 const Story = preload("res://scripts/campaign_story.gd")
 const Beat = Story.Beat
-const Timing = preload("res://scripts/sanctuary_timing.gd")
+const SanctuaryStory = preload("res://scripts/sanctuary_story.gd")
+const SanctuaryTableau = preload("res://scripts/sanctuary_tableau.gd")
 const Drive = preload("res://scripts/campaign_drive.gd")
 const AerodyneFlight = preload("res://scripts/aerodyne_flight.gd")
 const ParkedAerodyne = preload("res://scripts/parked_aerodyne.gd")
@@ -29,6 +30,9 @@ var foes: Array[PixelActor] = []
 var drive: Node2D
 var timing: Node2D
 var echo_ready: = false
+# 0: living quarters / rest; 1: two hours later; 2: compensator room.
+var sanctuary_stage := 0
+var sanctuary_tableau: Node2D
 var memory_scene: Node2D
 var memory_layer: CanvasLayer
 var memory_serial := 0
@@ -90,7 +94,7 @@ func _build_world() -> void :
 	add_child(drive_layer)
 
 func raven_leads() -> bool:
-	return (beat == Beat.HANGAR or (beat == Beat.ROOF and point_index < 2)) or (beat == Beat.ECHO and echo_ready)
+	return (beat == Beat.HANGAR or (beat == Beat.ROOF and point_index < 2)) or beat == Beat.ECHO
 
 func actor_is_playable(actor: PixelActor) -> bool:
 	return drive == null and timing == null and beat != Beat.END and actor == (raven if raven_leads() else player)
@@ -137,7 +141,7 @@ func new_game(_save_checkpoint: bool = true) -> void :
 	fresh_entry = true
 	_enter(Beat.PACT)
 
-func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo: bool = false, seen_attack: bool = false, seen_sacrifice: bool = false, seen_legacy: bool = false) -> void :
+func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo: bool = false, seen_attack: bool = false, seen_sacrifice: bool = false, seen_legacy: bool = false, saved_sanctuary_stage: int = 0) -> void :
 	_close_memory(false)
 	var fresh: = fresh_entry
 	fresh_entry = false
@@ -159,6 +163,11 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo:
 		timing = null
 		gamepads.assign(Input.get_connected_joypads(), false)
 	echo_ready = false
+	sanctuary_stage = clampi(saved_sanctuary_stage, 0, 2)
+	if is_instance_valid(sanctuary_tableau):
+		sanctuary_tableau.hide()
+		sanctuary_tableau.queue_free()
+	sanctuary_tableau = null
 	memory_attack_complete = false
 	memory_sacrifice_complete = false
 	memory_legacy_complete = false
@@ -203,7 +212,7 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo:
 	if point_index > 0:
 		player.position = Story.POINTS[beat][mini(point_index, Story.POINTS[beat].size() - 1)] + Vector2(-45, 20)
 	if beat == Beat.ECHO:
-		player.position = Painted.chamber_point(SPAWN)
+		player.position = Vector2(365, 365)
 		camera.position = Painted.CHAMBER_CAMERA
 	player.reset_transients()
 	reset_raven(player.position + Vector2(-27, 14))
@@ -211,8 +220,14 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo:
 	player.visible = not raven_leads()
 	var backgrounds: = ["hideout", "ambush", "", "garage", "hangar", "chamber", "", "rooftop", "suite", "suite", "lakeside", "lakeside"]
 	set_painted_solids(backgrounds[beat])
+	if beat == Beat.ECHO:
+		sanctuary_tableau = SanctuaryTableau.new()
+		actors.add_child(sanctuary_tableau)
+		_set_sanctuary_room()
+		reset_raven(SanctuaryTableau.ENTRY if sanctuary_stage == 2 else SanctuaryTableau.BEDSIDE if sanctuary_stage == 1 else Vector2(365, 365))
 	if beat == Beat.ECHO and saved_echo:
 		echo_ready = true
+		sanctuary_tableau.hide()
 		memory_attack_complete = seen_attack
 		memory_sacrifice_complete = seen_attack and seen_sacrifice
 		memory_legacy_complete = memory_sacrifice_complete and seen_legacy
@@ -421,6 +436,8 @@ func chapter_label() -> String:
 func _target() -> Vector2:
 	if beat == Beat.HANGAR and point_index == 3:
 		return PORTS[1]
+	if beat == Beat.ECHO and not echo_ready:
+		return [SanctuaryTableau.BEDSIDE, SanctuaryTableau.DOOR, SanctuaryTableau.APPROACH][sanctuary_stage]
 	if beat == Beat.ECHO and echo_ready and point_index < Painted.ECHO_POINTS.size():
 		return Painted.ECHO_POINTS[point_index]
 	if (encounter != null and not encounter.finished) or (is_combat() and _living() > 0) or point_index >= Story.POINTS[beat].size():
@@ -449,7 +466,7 @@ func chapter_objective() -> String:
 		Beat.AMBUSH:
 			return "Hinterhalt · %d Gegner" % _living() if _living() else "Zum Motorrad"
 		Beat.ECHO:
-			return "Erinnerungen ordnen · %d / 3" % point_index if echo_ready else "Heiligtum am Sessel prüfen"
+			return "Erinnerungen ordnen · %d / 3" % point_index if echo_ready else ["Raven: Am Bett ausruhen", "Raven: Durch die Tür nachsehen", "Raven: Shadepi am Sessel prüfen"][sanctuary_stage]
 		Beat.GARAGE:
 			return "Raven: Zugangscode entschlüsseln" if point_index == 1 else Story.OBJECTIVES[beat]
 		Beat.HANGAR:
@@ -502,7 +519,10 @@ func interact(_actor: PixelActor = null) -> void :
 		return
 	if beat == Beat.ECHO:
 		if not echo_ready:
-			_start_echo()
+			match sanctuary_stage:
+				0: SanctuaryStory.sleep(self)
+				1: SanctuaryStory.enter_room(self)
+				2: _start_echo()
 			return
 		if raven.position.distance_to(Vector2(551, 426)) < 28.0:
 			raven.position = SPAWN if point_index == 0 else Painted.ECHO_POINTS[point_index - 1]
@@ -553,7 +573,7 @@ func _complete_point() -> void:
 		toast(["Aufzug: Sicherheitskräfte eine Etage tiefer.", "Dachzugang: privater Landeplatz.", "Scanner: Kennung von Kenzōs Gleiter erforderlich."][point_index])
 	if beat == Beat.HANGAR:
 		effects.hack_arc(_target(), Vector2(884, 328))
-		toast(["Stromversorgung aktiv.", "Kennung kopiert.", "Transponder bereit. Raven muss die Prüf-ICE-Matrix umgehen."][point_index])
+		toast(["Stromversorgung aktiv.", "Kennung kopiert.", "Aerodyne gangbar. Noch die Prüf-ICE am Transponder umgehen."][point_index])
 	if beat == Beat.ESCAPE:
 		toast(["Daten gesichert. Spuren gelöscht.", "Raven: Sperrladung scharf. Aufzug blockiert.", "Fernstart bestätigt. Zum Dachausgang!", "Dach erreicht. Der Aerodyne hebt ab."][point_index])
 	point_index += 1
@@ -610,21 +630,26 @@ func _ritual_step() -> void :
 			autosave()
 	)
 
-func _start_echo() -> void :
-	timing = Timing.new()
-	timing.world = self
-	drive_layer.add_child(timing)
-	timing.completed.connect(_enter_echo)
+func _set_sanctuary_room() -> void:
+	set_dressing("chamber" if sanctuary_stage < 2 else "")
+	set_painted_solids("chamber" if sanctuary_stage < 2 else "compensator")
+	sanctuary_tableau.show_room(sanctuary_stage == 2)
+	player.hide()
+	_update_lighting()
+	queue_redraw()
 
-func _enter_echo() -> void :
-	timing.hide()
-	timing.queue_free()
-	timing = null
+func _start_echo() -> void:
+	SanctuaryStory.contact(self)
+
+func _enter_echo() -> void:
+	if echo_ready: return
 	gamepads.assign(Input.get_connected_joypads(), false)
 	echo_ready = true
+	if is_instance_valid(sanctuary_tableau): sanctuary_tableau.hide()
 	camera.zoom = Vector2.ONE
 	set_music_section("chapter_5_echo")
 	reset_raven(SPAWN)
+	raven.show()
 	set_painted_solids("memory")
 	set_dressing("")
 	_update_lighting()
@@ -720,7 +745,8 @@ func save_game() -> bool:
 	var config: = ConfigFile.new()
 	config.set_value("campaign", "beat", beat)
 	config.set_value("campaign", "point", point_index)
-	config.set_value("campaign", "echo_started", beat==Beat.ECHO and echo_ready)
+	config.set_value("campaign", "echo_started", beat==Beat.ECHO and (echo_ready or memory_legacy_complete))
+	config.set_value("campaign", "sanctuary_stage", sanctuary_stage if beat==Beat.ECHO else 0)
 	config.set_value("campaign", "memory_attack_complete", memory_attack_complete)
 	config.set_value("campaign", "memory_sacrifice_complete", memory_sacrifice_complete)
 	config.set_value("campaign", "memory_legacy_complete", memory_legacy_complete)
@@ -740,6 +766,7 @@ func load_game(_requested_mode: Variant = null) -> bool:
 	var saved_point: Variant = config.get_value("campaign", "point", 0)
 	var cleared: Variant = config.get_value("campaign", "escape_guards_cleared", true)
 	var saved_echo: Variant = config.get_value("campaign", "echo_started", false)
+	var saved_sanctuary_stage: Variant = config.get_value("campaign", "sanctuary_stage", 0)
 	var seen_attack: Variant = config.get_value("campaign", "memory_attack_complete", false)
 	var seen_sacrifice: Variant = config.get_value("campaign", "memory_sacrifice_complete", false)
 	var seen_legacy: Variant = config.get_value("campaign", "memory_legacy_complete", false)
@@ -749,7 +776,7 @@ func load_game(_requested_mode: Variant = null) -> bool:
 	if saved == Beat.ROOF and saved_point is int and saved_point >= 2:
 		saved = Beat.BOSS
 		saved_point = 0
-	_enter(saved, saved_section if saved_section is int else 0, saved_point if saved_point is int else 0, saved_echo is bool and saved_echo, seen_attack is bool and seen_attack, seen_sacrifice is bool and seen_sacrifice, seen_legacy is bool and seen_legacy)
+	_enter(saved, saved_section if saved_section is int else 0, saved_point if saved_point is int else 0, saved_echo is bool and saved_echo, seen_attack is bool and seen_attack, seen_sacrifice is bool and seen_sacrifice, seen_legacy is bool and seen_legacy, saved_sanctuary_stage if saved_sanctuary_stage is int else 0)
 	return true
 
 func _draw() -> void :
@@ -758,6 +785,7 @@ func _draw() -> void :
 		art = Painted.ART.memory
 	if beat == Beat.ECHO and not echo_ready:
 		draw_rect(Rect2(0, 0, 1024, 640), Color("080c11"))
+		if sanctuary_stage == 2: art = SanctuaryTableau.ROOM
 		draw_texture_rect(art, Painted.CHAMBER_RECT, false)
 	else:
 		draw_texture_rect(art, Rect2(0, 0, 1024, 640), false)
@@ -866,7 +894,8 @@ func _beat_scene(fresh: bool) -> void:
 		Beat.HANGAR:
 			if fresh: _scene_hangar()
 		Beat.ECHO:
-			if fresh: _scene_sanctuary()
+			if echo_ready and memory_legacy_complete: _scene_echo_end()
+			elif not echo_ready and sanctuary_stage == 0: _scene_sanctuary()
 		Beat.FLIGHT:
 			if fresh: _scene_flight()
 		Beat.ROOF:
@@ -1124,9 +1153,9 @@ func _scene_hangar() -> void:
 	await cs.say("RAVEN", "Wow. Beeindruckend.")
 	cs.face(player, raven.position)
 	await cs.lines([
-		["SHADEPI", "Schau dich gerne um. Ich gehe kurz hoch, meine Ausrüstung tauschen. Ein Servo macht Probleme."],
-		["SHADEPI", "Der Aerodyne unter der Plane – kannst du ihn präparieren? Vielleicht noch ein Update. Und er braucht die Kennung von Kenzōs Gleiter."],
-		["RAVEN", "Das kann ich tun. Ich prüfe den Stromkreis, kopiere die Kennung und teste das ARToS-System."],
+		["SHADEPI", "Ich muss schon mal hoch in mein Versteck. Zum Kompensator. Das ist alle sechs Tage nötig."],
+		["SHADEPI", "Machst du den Aerodyne wieder gangbar? Und spiel die Kennung von Kenzōs Gleiter auf. Komm danach nach oben."],
+		["RAVEN", "Kriege ich hin. Geh ruhig vor. Ich komme, sobald er wieder läuft."],
 	])
 	cs.release(player)
 	await cs.walk(player, Vector2(40, 410), 90)
@@ -1135,51 +1164,13 @@ func _scene_hangar() -> void:
 
 ## Kapitel 5: Heiligtum.
 func _scene_sanctuary() -> void:
-	var cs = begin_cutscene()
-	cs.pose(player, "idle")
-	cs.pose(raven, "idle")
-	await cs.fade(Color.BLACK, 0.0)
-	await cs.fade(Color(0, 0, 0, 0), 1.0)
-	await cs.title("KAPITEL 5", "Eine Verbindung aus Feuer und Fleisch", 2.4)
-	await cs.lines([
-		["RAVEN", "Sag mal … steckt unter der Rüstung ein Mensch oder nur Metall?"],
-		["SHADEPI", "Tatsächlich ist noch viel Menschliches an mir. Biologisch bin ich organisch, nur neuroelektronisch ergänzt. Mein Geist ist kein Computer."],
-		["SANKTUARIUM", "Er erzählt von der Nacht des Massakers. Von den gesichtslosen Militech-Minotauren, die wie eine Welle des Todes über das Kloster herfielen. Vom Tod seiner Brüder und Schwestern."],
-		["SHADEPI", "Das Heiligtum ist ein uralter Nanitenschwarm – das Herz unseres Ordens. Ich habe es mit letzter Kraft in mich aufgenommen, um es vor den Angreifern zu retten. Seitdem lebt es in mir."],
-		["SHADEPI", "Der Tempel war nur die Tarnung. Die eigentliche Basis lag darunter, tief im Fels."],
-		["SHADEPI", "Das Kloster selbst war nach dem Angriff spurlos verschwunden. Als hätte die Erde es verschluckt."],
-	])
-	cs.do(func():
-		shake = 5.0
-		sound("hack")
-	)
-	await cs.flash(Color(1, 0.18, 0.3, 0.45), 0.4)
-	await cs.lines([
-		["SHADEPIS HUD", "WARNUNG · Eindämmungsstatus des Heiligtums kritisch: 96 %."],
-		["SHADEPI", "Es reagiert auf dich … Ich muss es am Sessel stabilisieren. Halt Abstand."],
-	])
-	cs.end(func(): toast("Heiligtum am Sessel prüfen"))
+	SanctuaryStory.arrival(self)
 
 func _scene_containment() -> void:
-	var cs = begin_cutscene()
-	cs.pose(raven, "idle")
-	await cs.flash(Color(0.6, 0.95, 1.0, 0.8), 0.6)
-	await cs.lines([
-		["SHADEPIS HUD", "EINDÄMMUNG GESCHEITERT."],
-		["HEILIGTUM", "Ein Teil des Schwarms geht auf Raven über. Sie sieht, was er gesehen hat. Finde die stabilen Erinnerungsanker."],
-	])
-	cs.end(func(): toast("Erinnerungen ordnen"))
+	SanctuaryStory.memory_entry(self)
 
 func _scene_echo_end() -> void:
-	var cs = begin_cutscene()
-	cs.pose(raven, "idle")
-	await cs.flash(Color(1, 1, 1, 0.7), 0.6)
-	await cs.lines([
-		["RAVEN", "Jetzt verstehe ich dein Versprechen. Ly, dein Meister … du hast das Heiligtum durch all das getragen."],
-		["SHADEPI", "Das Heiligtum hat dich nicht verletzt. Es hat dich … erkannt."],
-	])
-	await cs.fade(Color.BLACK, 0.8)
-	cs.do(func(): _advance())
+	SanctuaryStory.aftermath(self)
 
 ## Kapitel 6: Die Rache.
 func _scene_flight() -> void:
