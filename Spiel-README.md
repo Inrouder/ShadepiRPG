@@ -1,6 +1,8 @@
 # Shadepi · Echos in Neon
 
-**Spieleranleitung für v0.32.1 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+**Spieleranleitung für v0.32.2 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+
+**Gesamtspiel-Stilbibel v0.32.2 · CodexAI:** Die [bebilderte Referenz für alle Bereiche](docs/stilbibel/README.md) zeigt jetzt jede der 23 vorhandenen Figuren-/Gegnerarten, Kulissen, Fahrzeuge, Objekte, UI und Effekte. Sie dient Mitwirkenden als gemeinsamer Gestaltungsstandard; diese Dokumentation verändert die Spielbedienung nicht.
 
 **Projektstandard v0.32.1 · CodexAI:** Für Mitwirkende gibt es jetzt eine [verbindliche Konsistenzvorlage](KONSISTENZ.md) mit aktiven Grafikreferenzen und Prüfnachweisen. Diese Version ergänzt die Projektdokumentation; die Bedienung bleibt unverändert.
 

@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.32.1 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.32.2 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -37,9 +37,17 @@ Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und
 
 ## Mitarbeit und verbindliche Konsistenz
 
-Für Menschen und KI: [Mitarbeit](CONTRIBUTING.md) · [Konsistenzvorlage mit aktiven Grafikreferenzen](KONSISTENZ.md) · [Kopierbarer Auftrag und Arbeitsnachweis](docs/vorlagen/konsistenz-auftrag.md). Die Projektregeln in [AGENTS.md](AGENTS.md), der Einstieg für [Claude](CLAUDE.md) und die Pull-Request-Vorlage verweisen auf denselben Standard.
+Für Menschen und KI: **[Bebilderte Stilbibel des gesamten Spiels](docs/stilbibel/README.md)** · [Alle 23 Figuren mit Einzelkarten](docs/stilbibel/figuren.md) · [Konsistenzregeln](KONSISTENZ.md) · [Mitarbeit](CONTRIBUTING.md) · [Kopierbarer Auftrag und Arbeitsnachweis](docs/vorlagen/konsistenz-auftrag.md). Die Projektregeln in [AGENTS.md](AGENTS.md), der Einstieg für [Claude](CLAUDE.md) und die Pull-Request-Vorlage verweisen auf denselben Standard.
 
-## Neu in v0.32.1 · 8. November 2026 · CodexAI
+## Neu in v0.32.2 · 8. November 2026 · CodexAI
+
+- **Bebilderte Stilbibel für das gesamte Spiel:** 23 einzelne Figuren-/Gegnerkarten mit vorhandenen Ansichten, Aktion und Weltgröße; Hauptfiguren, Bosse, Straßengegner, Ordenskrieger, Zivilpersonen, Meister, Bots und digitale Gegner.
+- 31 Godot-Referenztafeln insgesamt: zusätzlich Figurenübersicht, 20 Kulissen, Fahrzeuge, neun Requisitentypen in drei Zuständen neben Raven, sechs UI-Themen und Effektfamilien. Originale Spielgrafiken unverändert wiederverwendet.
+- Eigene Kapitel zu Art Direction, Material-/Lichtfamilien, Welten, Fahrzeugen, Requisiten, Menü/HUD, fünf Hackarten, Animationen, FX und Ton. Aktive Quellen, bestätigte Merkmale und noch offene Bestandsunterschiede klar gekennzeichnet.
+- Projektregeln, Arbeitsvorlage, Claude-/Mitarbeitseinstieg und PR-Vorlage auf den Gesamtspiel-Katalog ausgerichtet. Referenzrenderer, Bildausgaben, lokale Links, Quellen und Versionsfelder geprüft; keine Änderung an Spielgrafiken oder Gameplay.
+- [Stilbibel öffnen](docs/stilbibel/README.md).
+
+## v0.32.1 · 8. November 2026 · CodexAI
 
 - **Gemeinsamer Konsistenzstandard für Menschen und KI:** aktive und historische Grafikquellen, feste Figurenmerkmale, Pixel-/Materialstil, Spielgröße, Abtastung, Kontaktanker, Szenenfolge, Controller und Ton.
 - Kopierbare Arbeitsvorlage mit Grafikbriefing und konkretem Prüfnachweis. Grafikänderungen brauchen Vergleiche im echten Godot-Renderer; ein grüner Build allein bestätigt keine Stiltreue.

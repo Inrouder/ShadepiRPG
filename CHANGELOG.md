@@ -1,5 +1,13 @@
 # Versionshinweise
 
+## v0.32.2 – CodexAI: Bebilderte Stilbibel für das gesamte Spiel · 8. November 2026
+
+- Konsistenzvorlage vom Heiligtum-Schwerpunkt zu einer [vollständigen visuellen Spielreferenz](docs/stilbibel/README.md) erweitert. Fünf Teile: Art Direction, Figuren, Welten, Fahrzeuge/Requisiten und Oberflächen/FX/Ton.
+- 23 einzelne Figurenkarten aus den aktiven Spielpixeln: Hauptfiguren, Bosse, vier Punktypen, zwei Schützen, vier Krieger, vier Ziviltypen, Meister, Bot, Minotaurus, Virus und ICE-Wächter. Vorhandene Ansichten/Aktionsposen, unveränderte Merkmale, Weltmaßstab und Quellen pro Karte; fehlende Ansichten werden nicht neu erfunden.
+- Insgesamt 31 in Godot gerenderte Tafeln mit zusätzlicher Figurenübersicht, 20 Hintergrundquellen, Fahrzeugen, drei Zuständen aller neun Requisitentypen neben Raven, sechs UI-Themen und Effektframes. Wiederholbarer Renderer und maschinenlesbarer Figurenindex; keine generierten Ersatzgrafiken und keine Änderung der Gameplay-Assets.
+- UI-/Hackbeispiele, Musikzuordnung, Material-/Lichtfamilien und Animationsregeln für alle Kapitel dokumentiert. Bekannte Abweichungen im Altbestand, insbesondere Aerodyne und Figurenschärfe, ausdrücklich vom Soll-Standard getrennt.
+- Gemeinsame Einstiegspunkte und Prüfvorlage aktualisiert; Referenzrendering, PNG-Ausgaben, Quellverweise, lokale Dokumentationslinks und Versionsfelder geprüft. Keine pauschale Gameplay-Neuprüfung für diese Dokumentationsänderung behauptet.
+
 ## v0.32.1 – CodexAI: Verbindliche Konsistenzvorlage für Menschen und KI · 8. November 2026
 
 - Zentrale [KONSISTENZ.md](KONSISTENZ.md) mit aktiven Referenzen, Quellenpriorität, festen Figurenmerkmalen, HQ-Pixelstil, tatsächlichen Heldenmaßen im Renderer, Alpha-/Abtastungsregeln sowie Animations- und Möbelkontakten.

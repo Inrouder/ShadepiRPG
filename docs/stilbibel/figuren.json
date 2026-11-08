@@ -1,0 +1,244 @@
+{
+  "version": "0.32.2",
+  "author": "CodexAI",
+  "source_commit": "2938d836f7e80b23f246c3fdcd8801b16d1f6777",
+  "note": "Aktive Spielgrafiken als Dokumentationsreferenzen. Kein neuer Figurenentwurf. Koordinaten werden beim Rendern aus den aktiven Metadaten gelesen.",
+  "figures": [
+    {
+      "id": "shadepi",
+      "title": "Shadepi",
+      "group": "Helden",
+      "kind": "hero",
+      "traits": [
+        "Schwarzer Kasa, geschlossene segmentierte Maske, rote Linsen.",
+        "Schal, taktische Weste und dunkle ausgefranste Stoffbahnen; rotes Laser-Katana.",
+        "Keine bestätigte Zentimetergröße ergänzen. Körperbau anhand des normalen Sprites erhalten."
+      ]
+    },
+    {
+      "id": "raven",
+      "title": "Raven Black",
+      "group": "Helden",
+      "kind": "hero",
+      "traits": [
+        "Verbindlich 160 cm; schwarze Haare mit blauen Spitzen, rote Augen und goldenes Septum.",
+        "Schwarzer Anzug mit schmalen Cyan-Linien, Cyan-Kragenmodule, rote Raben-Schulterzeichen.",
+        "Pistole und Holster in der physischen Welt; offene Hand für Blitze im Deep Dive."
+      ]
+    },
+    {
+      "id": "jackal",
+      "title": "Chrome Jackal",
+      "group": "Gegner der Gegenwart",
+      "kind": "npc",
+      "traits": [
+        "Breiter cybernetischer Nahkämpfer, kurze braune Haare, massive gepanzerte Unterarme.",
+        "Schieferfarbene Rüstung und magentafarbene Cyberoptik; keine Kasa-/Rabenmerkmale übernehmen."
+      ]
+    },
+    {
+      "id": "kenzo",
+      "title": "Kenzō Moriyama",
+      "group": "Gegner der Gegenwart",
+      "kind": "npc",
+      "traits": [
+        "Schwarze Haare, dunkle ärmellose Gewandung, sichtbare cybernetische Arme und Schultermechanik.",
+        "Boss der Tower-Konfrontation; Aussehen und Körperbau nicht mit Jackal vertauschen."
+      ]
+    },
+    {
+      "id": "punk-1",
+      "title": "Straßenkämpfer · roter Typ",
+      "group": "Gegner der Gegenwart",
+      "kind": "npc",
+      "traits": [
+        "Orangefarbener Irokesenschnitt, roter Mantel, dunkle Rüstung und Schlagwaffe.",
+        "Farbkennung und Haarform bleiben über Geh- und Kontaktposen erhalten."
+      ]
+    },
+    {
+      "id": "punk-2",
+      "title": "Straßenkämpfer · grüner Typ",
+      "group": "Gegner der Gegenwart",
+      "kind": "npc",
+      "traits": [
+        "Mintfarbene seitlich gelegte Haare, grüner taktischer Mantel, dunkle Panzerung.",
+        "Aktuelle Gegnerrolle und Bewaffnung aus dem aktiven NPC-Code übernehmen; alte Generierungsprompts sind kein Gameplay-Vertrag."
+      ]
+    },
+    {
+      "id": "punk-3",
+      "title": "Straßenkämpfer · violetter Typ",
+      "group": "Gegner der Gegenwart",
+      "kind": "npc",
+      "traits": [
+        "Violette stachelige Haare, violette Panzerkleidung, markanter Unterarmschutz.",
+        "Eigenständige Silhouette gegenüber den anderen Punktypen bewahren."
+      ]
+    },
+    {
+      "id": "punk-4",
+      "title": "Straßenkämpfer · ockerfarbener Typ",
+      "group": "Gegner der Gegenwart",
+      "kind": "npc",
+      "traits": [
+        "Blonder seitlicher Undercut, ockerbrauner Mantel, dunkle Rüstung und Schlagwaffe.",
+        "Keine weiße Hintergrundmatte aus älteren Quellstufen übernehmen."
+      ]
+    },
+    {
+      "id": "shooter-visor",
+      "title": "Schütze · Cyanvisier",
+      "group": "Gegner der Gegenwart",
+      "kind": "npc",
+      "traits": [
+        "Geschlossener schwarzer Taktikhelm mit Cyanvisier; segmentierte schwarze Rüstung.",
+        "Kompakte Schusswaffe, erkennbare Mündung und passende Schuss-/Erholungsphase."
+      ]
+    },
+    {
+      "id": "shooter-violet",
+      "title": "Schütze · Violettvisier",
+      "group": "Gegner der Gegenwart",
+      "kind": "npc",
+      "traits": [
+        "Graphitfarbener geschlossener Helm mit violettem Visier und Akzenten.",
+        "Vom Cyan-Schützen über Farbkennung unterscheiden; gleiche plausible Waffenhaltung."
+      ]
+    },
+    {
+      "id": "oni",
+      "title": "Oni-Krieger",
+      "group": "Orden",
+      "kind": "memory",
+      "traits": [
+        "Oni-Maske und Katana, dunkle Ordensausrüstung.",
+        "Fällt in Erinnerung I, um Shadepi zu schützen. Kein bestätigter Eigenname."
+      ]
+    },
+    {
+      "id": "robot",
+      "title": "Roboterkopf-Krieger",
+      "group": "Orden",
+      "kind": "memory",
+      "traits": [
+        "Roboterkopf mit Dreadlocks aus Kabeln; Stab als bestätigte Bewaffnung.",
+        "Überlebt Erinnerung I. Sein späteres Schicksal ist nicht festgelegt."
+      ]
+    },
+    {
+      "id": "ly",
+      "title": "Ly · weißer Ordenskrieger",
+      "group": "Orden",
+      "kind": "memory",
+      "traits": [
+        "Shadepi-ähnliche geschlossene Maske, weiße Gewandung und Klinge.",
+        "Überlebt Erinnerung I und opfert sich in Erinnerung II. Nicht als weiß eingefärbter Shadepi ohne eigenes Kostüm behandeln."
+      ]
+    },
+    {
+      "id": "heavy",
+      "title": "Schwerer MG-Krieger",
+      "group": "Orden",
+      "kind": "memory",
+      "traits": [
+        "Samurai-Maske, vollständige schwere Panzerung und großes MG.",
+        "Fällt mit Oni in Erinnerung I zum Schutz Shadepis; Gewicht und Waffengröße sichtbar erhalten."
+      ]
+    },
+    {
+      "id": "elder",
+      "title": "Älterer Klosterbewohner",
+      "group": "Zivilfiguren",
+      "kind": "civilian",
+      "traits": [
+        "Älterer unbewaffneter Bewohner in traditioneller Kleidung.",
+        "Eigenständige Zivilfigur, nicht mit dem Träger des Heiligtums gleichsetzen."
+      ]
+    },
+    {
+      "id": "monk",
+      "title": "Mönch",
+      "group": "Zivilfiguren",
+      "kind": "civilian",
+      "traits": [
+        "Traditionelle Mönchskleidung, unbewaffnete zivile Silhouette.",
+        "Flucht mit vier Gehbildern je Richtung; keine Kampfpose oder moderne Heldenrüstung hinzufügen."
+      ]
+    },
+    {
+      "id": "resident",
+      "title": "Klosterbewohner",
+      "group": "Zivilfiguren",
+      "kind": "civilian",
+      "traits": [
+        "Unbewaffnete Alltagskleidung des Klosters; Haar- und Kleidungsfarben aus dem aktiven Blatt übernehmen.",
+        "Die Karte zeigt den vorhandenen Typ, keinen neu benannten Storycharakter."
+      ]
+    },
+    {
+      "id": "caretaker",
+      "title": "Betreuungsperson",
+      "group": "Zivilfiguren",
+      "kind": "civilian",
+      "traits": [
+        "Unbewaffnete zivile Klosterkleidung; eigene Kleidungs- und Haarsilhouette.",
+        "Bezeichnung folgt der technischen ID caretaker; persönliche Biografie ist nicht bestätigt."
+      ]
+    },
+    {
+      "id": "master",
+      "title": "Meister · Träger des Heiligtums",
+      "group": "Orden",
+      "kind": "master",
+      "traits": [
+        "Älterer Mann mit weißem Bart, gebundenem Haar und traditioneller bronze-/brauner Kampfausrüstung.",
+        "Kein bestätigter Eigenname. Tod nach der Übertragung ist verbindlich; keine entspannte lebendige Nachherpose.",
+        "Für fehlende Seiten-/Rückansichten keine erfundenen Ansichten als Original ausgeben. Die Tafel zeigt vorhandene Szenenposen."
+      ]
+    },
+    {
+      "id": "bot",
+      "title": "Angreifender Kampfbot",
+      "group": "Roboter und digitale Gegner",
+      "kind": "bot",
+      "traits": [
+        "Bewaffneter mechanischer Angreifer des Klosters mit klarer nichtmenschlicher Rüstung.",
+        "Eigene Bereitschafts-, Geh-, Feuer-, Treffer- und Wrackzustände aus dem Bot-Atlas."
+      ]
+    },
+    {
+      "id": "minotaur",
+      "title": "Minotaurus · Mech-Hybrid",
+      "group": "Roboter und digitale Gegner",
+      "kind": "minotaur",
+      "traits": [
+        "Großer gepanzerter zweibeiniger Cyborg-/Mech-Hybrid mit Servomechanik und schwerer Bewaffnung.",
+        "Beine und Lys konkrete Sprengtechnik sind dokumentierte Umsetzungsentscheidungen; kein neu bestätigtes Nutzerzitat.",
+        "Ein Exemplar in Erinnerung II, zwei unabhängig besiegbare Exemplare in Erinnerung III. Gleicher Typ und gleiche Materialfamilie."
+      ]
+    },
+    {
+      "id": "dive-virus",
+      "title": "Datenvirus",
+      "group": "Roboter und digitale Gegner",
+      "kind": "digital",
+      "traits": [
+        "Schwebende violette kristalline Digitalkugel mit Tentakeln und Cyan-Schaltlinien.",
+        "Eigene virtuelle Form; nicht als physischer Kampfbot oder menschliche Figur darstellen."
+      ],
+      "diameter": 48
+    },
+    {
+      "id": "ice-guardian",
+      "title": "ICE-Wächter",
+      "group": "Roboter und digitale Gegner",
+      "kind": "digital",
+      "traits": [
+        "Größere schwere digitale Wächterkugel mit dunklen gepanzerten Segmenten, violettem Kern und Cyan-Schaltlinien.",
+        "Klar vom kleineren Virus unterscheiden; im Renderer größer, mit eigenem Strahl-/Verwundbarkeitsfenster."
+      ],
+      "diameter": 72
+    }
+  ]
+}

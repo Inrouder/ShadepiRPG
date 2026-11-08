@@ -1,6 +1,6 @@
 # Kopiervorlage: Konsistenzauftrag und Arbeitsnachweis
 
-**v0.32.1 · CodexAI.** Vor Verwendung [KONSISTENZ.md](../../KONSISTENZ.md) und [AGENTS.md](../../AGENTS.md) lesen. Für eine konkrete Aufgabe die Vorlage in einen eigenen Arbeitsnachweis kopieren, etwa `docs/arbeiten/<aufgabe>.md`, oder dieselben Felder im PR verwenden. Diese leere Vorlage erhalten. Kurze, nachvollziehbare Antworten genügen; „nicht betroffen“ jeweils begründen.
+**v0.32.2 · CodexAI.** Vor Verwendung [KONSISTENZ.md](../../KONSISTENZ.md), die [bebilderte Stilbibel für das gesamte Spiel](../stilbibel/README.md) und [AGENTS.md](../../AGENTS.md) lesen. Für eine konkrete Aufgabe die Vorlage in einen eigenen Arbeitsnachweis kopieren, etwa `docs/arbeiten/<aufgabe>.md`, oder dieselben Felder im PR verwenden. Diese leere Vorlage erhalten. Kurze, nachvollziehbare Antworten genügen; „nicht betroffen“ jeweils begründen.
 
 ## Auftrag und Ausgangslage
 
@@ -14,12 +14,16 @@
 
 ## Referenzen und unveränderte Merkmale
 
+- **Betroffene Figuren-IDs und ihre Bildkarten:** … (aus dem [gesamten Figurenkatalog](../stilbibel/figuren.md), nicht nur den Hauptfiguren).
+- **Art-/Materialfamilie, Welt-/Kapitelkulisse und gegebenenfalls UI-/FX-Familie:** …
+
 | Zweck | Tatsächlich gesichteter Pfad / Version | Was daraus übernommen wird |
 | --- | --- | --- |
 | Aktiver Gameplay-Sprite und Nachbarfigur | … | Körperbau, Material, Pixeldichte … |
 | Bestätigte Figuren-/Storyquelle | … | Feste Merkmale und Szenenreihenfolge … |
 | Aktive Kulisse und Kameradarstellung | … | Perspektive, Licht, Bodenebene … |
 | Bestehende Animation und Metadaten | … | Fuß-, Sitz-, Hand- oder Mündungsanker … |
+| Fahrzeug, Requisit, UI oder Effekt bei diesem Auftrag | … | Silhouette, Zustand, Material, Farben und Herkunft … |
 
 - **Historische oder verworfene Quellen, die nicht als aktuelle Stilreferenz gelten:** …
 - **Fehlende/unbestätigte Angaben und gewählte dokumentierte Annahmen:** …

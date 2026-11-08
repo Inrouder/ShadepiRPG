@@ -1,6 +1,14 @@
 # Verbindliche Konsistenzvorlage für ShadepiRPG
 
-**Eingeführt mit v0.32.1 · CodexAI · 8. November 2026.** Gilt für Menschen und KI bei Grafik, Animation, Szenen, Bedienung und Ton. Vor Änderungen zusammen mit [AGENTS.md](AGENTS.md) lesen und die [Arbeitsvorlage](docs/vorlagen/konsistenz-auftrag.md) verwenden. Eine neuere ausdrückliche Nutzervorgabe hat Vorrang; bestätigte Änderungen anschließend hier und in den betroffenen Referenzen nachführen.
+**Stand v0.32.2 · CodexAI · 8. November 2026; eingeführt mit v0.32.1.** Gilt für das gesamte Spiel und alle Mitwirkenden, ob Mensch oder KI. Vor Änderungen zusammen mit [AGENTS.md](AGENTS.md) lesen und die [Arbeitsvorlage](docs/vorlagen/konsistenz-auftrag.md) verwenden. Eine neuere ausdrückliche Nutzervorgabe hat Vorrang; bestätigte Änderungen anschließend hier und in den betroffenen Referenzen nachführen.
+
+## Bebilderter Einstieg für das gesamte Spiel
+
+**[Vollständige Stilbibel öffnen](docs/stilbibel/README.md)** · [Alle 23 Figuren mit eigenen Bildkarten](docs/stilbibel/figuren.md) · [Art Direction](docs/stilbibel/artdirection.md) · [Alle Schauplätze](docs/stilbibel/welten.md) · [Fahrzeuge und Requisiten](docs/stilbibel/fahrzeuge-requisiten.md) · [UI, FX und Ton](docs/stilbibel/oberflaechen-effekte.md).
+
+![Alle vorhandenen Figuren und Gegnertypen als gemeinsame Referenz](docs/stilbibel/bilder/figuren-uebersicht.png)
+
+Die Stilbibel enthält 31 aus bestehenden Spielgrafiken gerenderte Tafeln: einzelne Figurenansichten, 20 Hintergrundquellen, Fahrzeuge, neun Objektarten in drei Zuständen, sechs UI-Themen und Effektfamilien. Sie ist der visuelle Einstieg für jede neue Arbeit. Die folgenden Regeln beschreiben den gemeinsamen Arbeits- und Prüfstandard; das Heiligtum ist ein Anwendungsfall unter mehreren.
 
 ## 1. Vor Arbeitsbeginn
 
@@ -44,15 +52,15 @@ Diese Auswahl bezeichnet den Stand bei Einführung der Vorlage. Wird eine aktive
 | Oberflächen und Hacks | [Pixel-UI](docs/pixel-ui.md), [Ravens Terminals](docs/ravens-terminals.md) und [Terminal-Oberfläche](scripts/terminal_ui.gd). |
 | Musik | [Verbindliche Zuordnung und Austauschpfade](assets/music/README.md), umgesetzt in [music_library.gd](scripts/music_library.gd). |
 
-### Sichtbare Vergleichsbeispiele
+### Sichtbare Referenzen aller Bereiche
 
-| Vergleich mit normaler Raven | Handkontakt | Liegepose |
-| --- | --- | --- |
-| ![Sitzpose neben normalem Gameplay-Sprite](docs/previews/heiligtum-v032-sessel.png) | ![Abgefangenes Handgelenk](docs/previews/heiligtum-v032-hand.png) | ![Raven auf der Matratze](docs/previews/heiligtum-v032-schlaf.png) |
+Figuren und Art-Richtung werden über den [vollständigen Bildkatalog](docs/stilbibel/figuren.md) und die [Material-/Lichtregeln](docs/stilbibel/artdirection.md) abgeglichen. Die [Weltübersicht](docs/stilbibel/bilder/welten.png), [Objektgrößen neben Raven](docs/stilbibel/fahrzeuge-requisiten.md), [Fahrzeugansichten](docs/stilbibel/bilder/fahrzeuge.png) und [UI-/FX-Tafeln](docs/stilbibel/oberflaechen-effekte.md) sichern die übrigen Bereiche. Pro Figur und Objekt die passende aktive Quelle verwenden.
 
-[Der dokumentierte Stilbruch und seine Korrektur](docs/heiligtum-figuren-v032.md) zeigen, weshalb ein korrektes Kostüm allein noch keine passende Spielgrafik ergibt.
+[Der dokumentierte Heiligtum-Stilbruch](docs/heiligtum-figuren-v032.md) bleibt ein Fehlerbeispiel. Er ist nicht die alleinige Gestaltungsvorlage des Spiels. Bekannte Unterschiede im übrigen Altbestand stehen in der [Art Direction](docs/stilbibel/artdirection.md#bekannte-unterschiede-im-altbestand).
 
 ## 4. Feste Figurenmerkmale
+
+Für **alle 23 Figuren beziehungsweise visuellen Typen** gelten die individuellen Merkmale und Quellen im [bebilderten Figurenkatalog](docs/stilbibel/figuren.md), einschließlich Gegnern, Kriegern, Zivilpersonen, Meister und digitalen Formen. Die beiden Hauptfiguren sind hier zusätzlich als Kurzreferenz aufgeführt.
 
 | Figur | Bei jeder neuen Ansicht und Pose erhalten |
 | --- | --- |
@@ -118,17 +126,24 @@ Für jeden betroffenen Bereich im [Arbeitsnachweis](docs/vorlagen/konsistenz-auf
 
 ### Vorhandene gezielte Prüfmittel
 
+| Betroffener Bereich | Passende bestehende Prüfungen / Bildbelege |
+| --- | --- |
+| Gesamtspiel, Karten und Szenenfolge | [Gameplay/Speichern](tests/run.gd), [Story](tests/story_audit.gd), [Weltübersicht](docs/stilbibel/welten.md). |
+| Kampf, Gegner und Hand-/Mündungsanker | [Kampfbewegungen](tests/combat_moves.gd), [Gegner/Raven](tests/raven_enemy_combat.gd), [Wellen](tests/arcade_waves.gd), [Figurenkarten](docs/stilbibel/figuren.md). |
+| Controller und Hacks | [Terminalregeln](tests/terminal_puzzles.gd), [Controller](tests/terminal_controller.gd), [fünf UI-Familien von Rätseln](docs/stilbibel/oberflaechen-effekte.md). |
+| Fahrzeuge und Flug | [Fahraktion](tests/drive_action.gd), [Aerodyne](tests/aerodyne_flight.gd), [Fahrzeugreferenzen](docs/stilbibel/fahrzeuge-requisiten.md). |
+| Kloster, Bewohner, Krieger und Mechs | [Klosterfiguren](tests/monastery_memory.gd), [Bots/Schutzopfer](tests/monastery_battle.gd), [Ly](tests/sacrifice_memory.gd), [Vermächtnis](tests/legacy_memory.gd). |
+| Heiligtum-Gegenwart | [Posen](tests/sanctuary_art.gd), [Ablauf](tests/sanctuary_story.gd), [Fehlerbericht 8](tests/report8.gd). |
+| Atmosphäre und Darstellung | [Ortsprofile/Pause](tests/scene_atmosphere.gd), [digitale Gegner](tests/npc_dive_visuals.gd), [Art Direction](docs/stilbibel/artdirection.md). |
+
 ```sh
 godot --headless --editor --import --quit
-godot --headless --script res://tests/sanctuary_art.gd
-godot --headless --script res://tests/sanctuary_story.gd
-# Mit echtem Renderer, z. B. Desktop oder Xvfb/Mesa:
-godot --audio-driver Dummy --script res://tools/sanctuary_pose_gallery.gd
-godot --audio-driver Dummy --script res://tools/sanctuary_gallery.gd
-godot --audio-driver Dummy --script res://tools/report8_gallery.gd -- --sleep-only
+# Nur die für die Änderung relevanten Prüfreihen aus der Tabelle ausführen.
+# Referenztafeln bei geänderten Quellen mit echtem Renderer erneuern:
+godot --audio-driver Dummy --script res://tools/style_bible_gallery.gd
 ```
 
-Diese Auswahl betrifft die Heiligtum-Posen. Für andere Aufgaben die passenden Prüfreihen aus [dem GitHub-Workflow](.github/workflows/build.yml) wählen. Godot muss dafür lokal installiert und als `godot` verfügbar sein; Prüfwerkzeuge sind kein Bestandteil der Spielerbedienung.
+Die vollständigen bestehenden Aufrufe stehen im [GitHub-Workflow](.github/workflows/build.yml). Godot muss lokal als `godot` verfügbar sein; Bildtafeln benötigen einen echten Renderer, z. B. Desktop oder Xvfb/Mesa. Sie ersetzen weder die Prüfung einer neuen Animation in der Zielszene noch die relevanten Funktionstests.
 
 ## 9. Referenzen und Versionen pflegen
 
