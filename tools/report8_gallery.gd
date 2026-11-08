@@ -6,10 +6,10 @@ func capture(tag: String) -> void:
 	await RenderingServer.frame_post_draw
 	root.get_texture().get_image().save_png("/tmp/report8-" + tag + ".png")
 func run() -> void:
-	Engine.time_scale = 3
 	Engine.max_fps = 60
 	var w = load("res://scenes/campaign.tscn").instantiate()
 	root.add_child(w)
+	Engine.time_scale = 3
 	w._enter(w.Beat.ECHO)
 	var seen := {}
 	for i in 1100:

@@ -21,6 +21,8 @@ Grundlage: [Original-PDF vom 8. November 2026](fehlerberichte/Fehlerbericht-2026
 
 ![Raven sichtbar schlafend im Bett](previews/bericht8-schlafen.png)
 
+![Raven wacht sichtbar auf](previews/bericht8-aufwachen.png)
+
 ![Sitz und Handkontakt am passenden Kompensatorstuhl](previews/bericht8-sessel.png)
 
 ![Geschlossene Tempeltür in der tatsächlichen Portalfläche](previews/bericht8-tempeltuer.png)
@@ -45,4 +47,4 @@ Bei der Prüfung fiel zusätzlich auf: Ein abgebrochener alter Kampagnendialog k
 
 `tests/report8.gd` prüft tatsächliche Konsolenkollisionen, freie Bedienpunkte, den vollständigen Schlafablauf, Sprechblase, alle sieben Abflugphasen, Pause, Controller-B, Speicherwiederaufnahme und Kapitelabbruch. `tests/sanctuary_story.gd` prüft weiterhin Erinnerungsübergang und Gegenwarts-Speicherstände. Der dritte Erinnerungstest prüft zusätzlich die Reihenfolge von Erschöpfung, Einknicken und Liegen auf freiem Boden.
 
-Prüfergebnis: **2.143 Prüfungen ohne Fehler in 16 Prüfreihen**, einschließlich der bisherigen Kampagnen-, Kampf-, Hack-, Controller-, Flug- und Erinnerungsprüfungen. Der Export wird zusätzlich mit den neuen Raum-/Sitz-/Cockpit-Ressourcen und einem vollständigen übersprungenen Startlauf geprüft.
+Prüfergebnis: **2.143 Prüfungen ohne Fehler in 16 Prüfreihen**, einschließlich der bisherigen Kampagnen-, Kampf-, Hack-, Controller-, Flug- und Erinnerungsprüfungen. Auch das exportierte Paket wurde mit den neuen Raum-/Sitz-/Cockpit-Ressourcen, Shadern, automatischem Schlafen, Rückkehr aus Erinnerung III und vollständigem übersprungenem Abflug erfolgreich gestartet. Eine zusätzliche Godot-Aufnahme zeigt Sitz-, Schlaf- und Aufwachpose bis zum fertigen Suchkontrollpunkt.
