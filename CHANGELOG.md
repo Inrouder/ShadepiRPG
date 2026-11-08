@@ -1,5 +1,13 @@
 # Versionshinweise
 
+## v0.34.0 – CodexAI: Bildschirmfüllendes 16:9, Vollbild und Anzeigeoptionen · 9. November 2026
+
+- Zentrale Anzeigeverwaltung für alle Kapitel: Standard Fenstervollbild, zusätzlich Fenster und exklusives Vollbild. F11 und Alt+Enter wechseln zum Fenster und zurück zum zuletzt gewählten Vollbildmodus; Tastaturwiederholung löst keinen mehrfachen Wechsel aus.
+- Standardmäßig passende Skalierung statt erzwungener ganzer Pixelstufen: Auch ein maximiertes beziehungsweise ungerades Fenster nutzt die verfügbare Bildfläche mit korrektem 16:9. Ausgabe in Full HD, 1440p und 4K. Die Spielbasis bleibt 640×360; das HQ-Menü behält seinen Renderer in Fensterauflösung.
+- Gemeinsames Anzeige-Menü mit persistenter Modus-/Fenstergrößen-/Skalierungsauswahl, tatsächlicher Ausgabegröße und vollständiger Controller-/Tastaturbedienung. Ganze Pixelstufen bleiben optional. Größen werden mit Platz für Fensterrahmen an den aktuellen Monitor angepasst; Vollbild nutzt die native Desktopauflösung.
+- Anzeige-Knopf neben Ton ohne Überschneidung mit Kapitelknöpfen. Controller-B schließt auch native Auswahllisten, danach den Dialog; Fokus bleibt im Dialog und kehrt zum Menü zurück. Getrennte Einstellungsdatei, keine Änderung an Spielständen.
+- [Bedienung, Bildnachweise und Prüfungen](docs/bildschirm.md); [Arbeitsnachweis](docs/arbeiten/bildschirm-v034.md).
+
 ## v0.33.0 – CodexAI: Kenzō, Raven schützen und knappe Tower-Flucht · 8. November 2026
 
 - Physischer Griff nach Raven vor Shadepis Eingreifen. Kenzō wird im Bosskampf kampfunfähig statt vorzeitig getötet; eine eigene schwer verletzte Kniepose zeigt den gelähmten Gefangenen.

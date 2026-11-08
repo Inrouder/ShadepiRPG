@@ -39,6 +39,8 @@ var menu_emblem: TextureRect
 var menu_tagline: Label
 var menu_skin := "raven"
 var menu_buttons: Array[Button] = []
+var display_button: Button
+var display_panel: Control
 var game_hud_nodes: Array[CanvasItem] = []
 var menu_button_tweens: Dictionary = {}
 var visual_button: Button
@@ -206,9 +208,19 @@ func _ready() -> void :
 	resume_button = button_at("Testszene starten", 124, start_selected)
 	load_button = button_at("Spielstand laden", 154, func(): world.load_game(requested_coop))
 	restart_button = button_at("Testszene neu starten", 184, _start_new)
-	button_at("Musik / Ton umschalten", 214, func(): world.toggle_audio())
+	var audio_button := button_at("Ton An/Aus", 214, func(): world.toggle_audio())
+	audio_button.size.x = 116
+	audio_button.tooltip_text = "Musik und Spielgeräusche ein- oder ausschalten."
+	display_button = button_at("Anzeige", 214, _open_display_panel)
+	display_button.position.x = 144
+	display_button.set_meta("home_x", 144.0)
+	display_button.size.x = 116
+	display_button.tooltip_text = "Vollbild, Fenstergröße und Skalierung · F11 / Alt+Enter"
 	visual_button = button_at("Bildstil: " + world.VISUAL_PRESETS[world.visual_quality], 244, func(): world.cycle_visual_quality())
-	menu_help = label_at("Controller · Stick wählen, A bestätigen\nF5 Speichern · F9 Laden · V Bildstil", Vector2(16, 279), Vector2(246, 37), menu)
+	menu_help = label_at("Controller · Stick wählen, A bestätigen\nF11 Vollbild · F5 Speichern · F9 Laden", Vector2(16, 279), Vector2(246, 37), menu)
+	display_panel = preload("res://scripts/display_panel.gd").new()
+	root.add_child(display_panel)
+	display_panel.closed.connect(func(): display_button.grab_focus())
 
 	_build_admin_panel()
 	_build_feedback()
@@ -272,7 +284,7 @@ func _show_menu_shell(title: String) -> void:
 	var opening: bool = not world.started
 	# Draw HQ menu PNGs and fonts at window resolution, retaining the game's
 	# original viewport rendering as soon as play starts or the game is paused.
-	get_window().content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS if opening else Window.CONTENT_SCALE_MODE_VIEWPORT
+	get_node("/root/DisplaySettings").set_menu_context(opening)
 	start_backdrop.visible = opening
 	start_backdrop.set_quality(world.visual_quality)
 	menu_chrome.strength = [0.0, 0.55, 1.0][world.visual_quality]
@@ -290,11 +302,16 @@ func _show_menu_shell(title: String) -> void:
 	resume_button.grab_focus()
 
 func hide_menu() -> void:
-	get_window().content_scale_mode = Window.CONTENT_SCALE_MODE_VIEWPORT
+	get_node("/root/DisplaySettings").set_menu_context(false)
+	if display_panel != null and display_panel.visible:
+		display_panel.dismiss()
 	menu.hide()
 	start_backdrop.hide()
 	for node in game_hud_nodes:
 		node.show()
+
+func _open_display_panel() -> void:
+	display_panel.present("raven" if not world.started else menu_theme())
 
 func _switch_mode() -> void :
 	requested_coop = not requested_coop

@@ -55,6 +55,7 @@ func _bind_player(device: int, prefix: String, special: String) -> void :
 	_button("ui_left", device, JOY_BUTTON_DPAD_LEFT)
 	_button("ui_right", device, JOY_BUTTON_DPAD_RIGHT)
 	_button("ui_accept", device, JOY_BUTTON_A)
+	_button("ui_cancel", device, JOY_BUTTON_B)
 	_button(prefix + "interact", device, JOY_BUTTON_A)
 	_button(prefix + "dash", device, JOY_BUTTON_B)
 	_button(prefix + "attack", device, JOY_BUTTON_X)

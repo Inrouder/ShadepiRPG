@@ -11,10 +11,14 @@ config_version=5
 [application]
 
 config/name="Shadepi - Echos in Neon"
-config/version="0.33.0"
+config/version="0.34.0"
 run/main_scene="res://scenes/chapter_one.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://assets/icon.png"
+
+[autoload]
+
+DisplaySettings="*res://scripts/display_settings.gd"
 
 [display]
 
@@ -23,7 +27,8 @@ window/size/viewport_height=360
 window/size/window_width_override=1280
 window/size/window_height_override=720
 window/stretch/mode="viewport"
-window/stretch/scale_mode="integer"
+window/stretch/aspect="keep"
+window/stretch/scale_mode="fractional"
 
 [rendering]
 
