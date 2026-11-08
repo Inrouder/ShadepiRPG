@@ -1,5 +1,18 @@
 # Versionshinweise
 
+## v0.30.0 – CodexAI: Fehlerbericht 8, Szenenpassung und Hangar-Abflug · 8. November 2026
+
+- Drei Hangarkonsolen mit eigenen festen Standflächen und Textur-Verdeckungen versehen; alle zugehörigen Interaktionspunkte erreichbar vor die Geräte gesetzt.
+- Wohnraumtür direkt in die Wandgrafik integriert; schwebendes Türfragment und davor stehenden Elektrokasten entfernt. Verankerte Sprechblase zeigt Shadepis Ruf hinter dieser Tür.
+- Ankunft führt automatisch in eine ausführliche Schlafszene mit Aufsteigen, Sitz-, Liege- und Aufwachpose sowie Nahaufnahme. Zwei-Stunden-Sprung und kompatibler Suchkontrollpunkt bleiben erhalten.
+- Kompensatorraum ohne doppelte Hintergrundstuhl-Grafik; drei neue gemeinsam gezeichnete Stuhl-/Figurenposen passen Sitzfläche, Lehne, Armlehnen, Stiefel und Handkontakt zueinander.
+- Tempeltür aus dem passenden geschlossenen Raumzustand in die schräge Portalöffnung eingesetzt; vorhandene Schwellenkollision, Bruchphasen und Mech-Eintritt bleiben erhalten. Keine frontale freistehende Tür mehr vor der Wand.
+- Shadepis Zusammenbruch nach Erinnerung III: Erschöpfung, langsame letzte Schritte auf freier Bodenfläche, aufrechter Halt, Einknicken, schrittweise erlöschende Aura, vier Sekunden regloses Liegen und langsame Abblende. Kein Todesflag für Shadepi.
+- Neue Hangar-Abflugsequenz: sichtbares Einsteigen, vier Cockpitbilder, fehlgeschlagener ARTOS-Start, Schlag auf die Armatur, wieder aktive Anzeigen, Abheben durch die Dachschleuse und Übergabe an den bisherigen Flug. Spätere Jumper-Reparatur nicht übersprungen.
+- Optionales kompatibles Speicherfeld für einen noch laufenden Abflug; Controller-Pause, Weiterblättern, Überspringen und Kapitelabbruch berücksichtigt. Kampagnenszenen prüfen nach wartenden Schritten ihre Generation, damit abgebrochene ältere Szenen keine neue Szene beenden.
+- **2.143 Prüfungen ohne Fehler** in 16 Prüfreihen; reale Godot-Szenenbilder und vollständigen Exportinhalt kontrolliert.
+- [Punktweise Abnahme, Original-PDF und tatsächliche Godot-Bilder](docs/fehlerbericht-8.md).
+
 ## v0.29.0 – CodexAI: Heiligtum-Chronologie und separater Kompensatorraum · 8. November 2026
 
 - Shadepi geht im Hangar voraus zur regelmäßigen Eindämmung; Raven macht den Aerodyne gangbar und folgt erst danach. Wohnraum, zwei Stunden Schlaf und Suche durch die geschlossene Tür ersetzen das verfrühte gemeinsame Erklärungsgespräch.

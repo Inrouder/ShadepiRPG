@@ -1,5 +1,5 @@
 extends RefCounted
-## v0.29.0 · CodexAI: present-day chronology, separate from historical memories.
+## v0.30.0 · CodexAI: present-day chronology, separate from historical memories.
 
 static func arrival(w) -> void:
 	var cs = w.begin_cutscene()
@@ -18,8 +18,10 @@ static func arrival(w) -> void:
 	await cs.say("RAVEN", "Shadepi? Der Aerodyne läuft wieder. Wo steckst du?")
 	if not cs.alive(ticket): return
 	cs.face(w.raven, w.SanctuaryTableau.DOOR)
+	cs.do(func(): w.sanctuary_tableau.speech.speak("Hey Raven, ich bin hier. Ruhe dich aus, ich komme gleich.", w.SanctuaryTableau.DOOR + Vector2(0, -43)))
 	await cs.say("SHADEPI / HINTER DER TÜR", "Hey Raven, ich bin hier. Ruhe dich aus, ich komme gleich.")
 	if not cs.alive(ticket): return
+	cs.do(func(): w.sanctuary_tableau.speech.hide())
 	await cs.walk(w.raven, Vector2(492, 321), 55)
 	if not cs.alive(ticket): return
 	cs.face(w.raven, Vector2(399, 270))
@@ -29,23 +31,26 @@ static func arrival(w) -> void:
 	if not cs.alive(ticket): return
 	await cs.say("RAVEN", "Na gut. Dann mache ich kurz die Augen zu.")
 	if not cs.alive(ticket): return
-	cs.end(func(): w.toast("E / A am Bett · Ausruhen"))
+	cs.end(func(): sleep(w))
 
 static func sleep(w) -> void:
 	var cs = w.begin_cutscene()
 	var ticket: int = cs.generation
 	await cs.walk(w.raven, w.SanctuaryTableau.BEDSIDE, 55)
 	if not cs.alive(ticket): return
-	await cs.fade(Color.BLACK, 0.4)
+	await cs.camera(Vector2(603, 273), 0.7, 2.15)
+	if not cs.alive(ticket): return
+	await cs.leap(w.raven, w.SanctuaryTableau.BEDSIDE + Vector2(0, -24), 18, 0.6)
 	if not cs.alive(ticket): return
 	cs.do(func():
 		w.raven.hide()
 		w.sanctuary_tableau.set_pose(3)
 		w.sanctuary_tableau.sprite.show()
 	)
-	await cs.fade(Color.TRANSPARENT, 0.4)
+	await cs.wait(1.5)
 	if not cs.alive(ticket): return
-	await cs.wait(1.0)
+	cs.do(func(): w.sanctuary_tableau.set_pose(4))
+	await cs.wait(3.6)
 	if not cs.alive(ticket): return
 	await cs.fade(Color.BLACK, 0.5)
 	if not cs.alive(ticket): return
@@ -53,13 +58,18 @@ static func sleep(w) -> void:
 	if not cs.alive(ticket): return
 	cs.do(func():
 		w.sanctuary_stage = 1
-		w.sanctuary_tableau.show_room(false)
-		w.raven.position = w.SanctuaryTableau.BEDSIDE
-		w.raven.show()
+		w.sanctuary_tableau.set_pose(5)
 		w.autosave()
 	)
 	await cs.fade(Color.TRANSPARENT, 0.5)
 	if not cs.alive(ticket): return
+	await cs.wait(1.2)
+	if not cs.alive(ticket): return
+	cs.do(func():
+		w.sanctuary_tableau.show_room(false)
+		w.raven.position = w.SanctuaryTableau.BEDSIDE
+		w.raven.show()
+	)
 	cs.pose(w.raven, "idle")
 	await cs.say("RAVEN", "Zwei Stunden? Shadepi … bist du immer noch da drin?")
 	if not cs.alive(ticket): return

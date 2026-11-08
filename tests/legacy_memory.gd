@@ -198,6 +198,7 @@ func full_story() -> void:
 	Engine.time_scale=1
 	Engine.max_fps=0
 	check(scene.completed and completed==[true],"real input-driven two-boss battle reaches complete memory exactly once")
+	check(scene.events.find("collapse_started")<scene.events.find("shadepi_kneels") and scene.events.find("shadepi_kneels")<scene.events.find("shadepi_collapsed") and scene.tableau.position.y<=445,"exhaustion progresses through standing, knees and a clear floor position before lying still")
 	check(scene.transferred and scene.exhausted and scene.tableau.frame_index==7 and scene.tableau.visible and not scene.squad[0].fallen,"Shadepi receives the sanctuary and collapses without a death flag")
 	check(death_checked and aura_checked and scene.master_dead and scene.master.master_deceased and scene.aura.power==0,"master remains dead while the exhausted hero loses the aura at the end")
 	check(scene.events.find("transfer_received")<scene.events.find("master_died") and scene.events.find("master_died")<scene.events.find("temple_door_breached"),"master death happens after transfer and before the enemy enters")

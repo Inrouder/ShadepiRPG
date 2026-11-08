@@ -1,5 +1,8 @@
 # Erinnerung III: Das Vermächtnis · v0.28.0 · CodexAI
 
+**Aktualisierung v0.30.0 · CodexAI:** Die Tempelflügel verwenden nun die Perspektive der tatsächlichen Portalöffnung. Nach dem Sieg folgt ein langsamerer Zusammenbruch ohne schwarzen Positionssprung: Erschöpfung, letzte Schritte auf freien Boden, aufrechter Halt, Einknicken, erlöschende Aura, vier Sekunden regloses Liegen und langsame Abblende. [Aktuelle Bilder und Fehlerbericht-Abnahme](fehlerbericht-8.md). Die folgenden v0.28.0-Vorschauen bleiben zur Dokumentation erhalten.
+
+
 **Erinnerung III spielt im Tempelinneren.** Der traditionelle Tempel ist die Tarnung einer riesigen unterirdischen Hightech-Basis des Ordens. Shadepi hält seinen Meister in einem geschützten Seitenbereich. Nach der vollständigen Übertragung stirbt der Meister; Shadepi richtet sich mit einer kräftigen Energieaura auf und verteidigt anschließend dieselbe Halle: Zwei Minotauren brechen durch den Zugang ein. Damit folgt der Schauplatz der Nutzerpräzisierung vom 7. November 2026.
 
 ![Aktuelle Spielszenen im Tempel](previews/vermaechtnis.webp)

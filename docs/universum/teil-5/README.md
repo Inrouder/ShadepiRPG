@@ -51,3 +51,7 @@ Neue verbindliche Nutzervorgabe: Shadepi benötigt **alle sechs Tage** die Nanit
 Danach torkelt Raven zurück: „Was war das denn? Waren das deine Erinnerungen?“ Shadepi entschuldigt sich und erklärt, dass dies während der Eindämmung geschehen kann. Er gibt ihr nur die nötigen Informationen für eine Nicht-Ordensangehörige. Keine Vorwegnahme der Kenzō-Enthüllung oder interner Ordensgeheimnisse. Die sechs Tage ersetzen widersprechende ältere Fristen.
 
 Das dazu erwähnte Referenzbild wurde in dieser Nachricht nicht angehängt. Die neue Raumgrafik ist eine Umsetzung anhand der vorhandenen HQ-Versteckgrafik, kein behaupteter Nachbau eines unbekannten Bildes. [Aktueller Ablauf](../../heiligtum-kompensator.md).
+
+## Fehlerbericht 8 · v0.30.0 · CodexAI
+
+Am 8. November 2026 ergänzt der Nutzer ausdrücklich: Nach Ravens Gespräch soll der Wechsel zum Aerodyne durch sichtbares Einsteigen und Abflug aus dem Hangar erzählt werden. Das Fluggerät macht zunächst Probleme; Shadepi schlägt auf die Armatur, die Systeme laufen wieder, **danach** verlassen beide den Hangar. Diese Orts-/Reihenfolgevorgabe ersetzt für diese Szene die abweichende Reihenfolge im Roman. Die spätere spielbare Triebwerksreparatur bleibt erhalten. Der Zusammenbruch in Erinnerung III soll langsamer und dramatischer sein. [Gesicherter Bericht und Umsetzung](../../fehlerbericht-8.md).

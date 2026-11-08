@@ -181,28 +181,39 @@ func play() -> void:
 		if not events.has("minotaur_%d_destroyed"%i): mark("minotaur_%d_destroyed"%i)
 	mark("both_destroyed")
 	if host!=null: host.set_music_section("chapter_5_echo")
-	await cutscene.fade(Color.BLACK,0.25)
+	phase="collapse_approach"
+	await cutscene.letterbox(true)
+	await cutscene.camera(squad[0].position+Vector2(15,-22),0.9,1.25)
 	if not active(): return
-	squad[0].position=Vector2(690,410)
-	squad[0].hide()
+	cutscene.pose(squad[0],"hurt")
+	await cutscene.wait(1.4)
+	if not active(): return
+	var last_step:=Vector2(clampf(squad[0].position.x-34,480,740),clampf(squad[0].position.y,380,445))
+	await cutscene.walk(squad[0],last_step,20)
+	if not active(): return
 	tableau.position=squad[0].position
 	tableau.sprite.modulate=Color.WHITE
-	tableau.set_frame(6)
+	tableau.set_frame(5)
 	tableau.show()
+	squad[0].hide()
 	aura.attach_to(tableau)
-	await cutscene.letterbox(true)
-	await cutscene.camera(Vector2(730,410),0.3,0.95)
-	await cutscene.fade(Color(0,0,0,0),0.25)
-	if not active(): return
 	phase="collapse"
-	await cutscene.animate(func(k: float): aura.set_power(1-k),0.7)
+	mark("collapse_started")
+	await cutscene.animate(func(k: float): aura.set_power(0.85-0.35*k+0.1*sin(k*PI*8)),1.8)
+	if not active(): return
+	tableau.set_frame(6)
+	mark("shadepi_kneels")
+	await cutscene.camera(tableau.position+Vector2(12,-16),0.8,1.45)
+	if not active(): return
+	await cutscene.animate(func(k: float): aura.set_power(0.5*(1-k)),2.1)
 	if not active(): return
 	tableau.set_frame(7)
+	sound("prop_wood")
 	exhausted=true
 	mark("shadepi_collapsed")
 	phase="stillness"
-	await cutscene.wait(2.0)
-	await cutscene.fade(Color.BLACK,0.8)
+	await cutscene.wait(4.0)
+	await cutscene.fade(Color.BLACK,1.5)
 	if not active(): return
 	cutscene.end(_complete)
 

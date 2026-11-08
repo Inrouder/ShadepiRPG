@@ -1,4 +1,12 @@
-# Heiligtum-Posen · v0.29.0 · CodexAI
+# Heiligtum-Posen · v0.30.0 · CodexAI
+
+Aktiv ist `poses-seated.png`: 1536 × 1024 mit drei Spalten und zwei Reihen. Erste Reihe: Shadepi mit seinem tatsächlich passenden Stuhl, dann Raven beim Griff und beim abgefangenen Handgelenk. Zweite Reihe: Raven sitzend am Bett, schlafend und aufwachend. Die Regionen/Anker stehen in `scripts/sanctuary_tableau.gd`; wegen einer leicht über die nominelle Zelle ragenden Haarsträhne wird die Schlafregion gezielt als 544 Pixel breiter Ausschnitt gelesen. Keine PNG-Pixel wurden nachträglich umgeschrieben.
+
+Die Quelle enthält weiche Alpha-Reste außerhalb der Figuren. `pixel_cutout.gdshader` verwirft diese beim Darstellen und erhält harte Pixelkanten. Die Schlaf-/Sitzskalierung richtet sich nach Körperlänge beziehungsweise Haltung. Der Stuhl ist Teil der Sitz- und Kontaktposen, statt als zweite unpassende Grafik darunterzuliegen.
+
+Aktive Raumquellen: `assets/world/painted/chamber-connected.png` mit integrierter Tür und `compensator-clear.png` ohne eingebrannten Stuhl. Die Originale bleiben erhalten. Die neuen Grafiken beziehen sich auf die vorhandenen Spielquellen und die konkreten Screenshots aus Fehlerbericht 8.
+
+## Erhaltene Quellgruppe v0.29.0 · CodexAI
 
 `poses.png`: originales transparentes HQ-Pixel-Quellblatt, 1536 × 1024, 2 × 2 Zellen à 768 × 512; keine nachträgliche Bildbearbeitung.
 

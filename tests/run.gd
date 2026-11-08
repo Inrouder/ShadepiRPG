@@ -833,7 +833,7 @@ func check_campaign() -> void:
 	scene.interact()
 	check(preload("res://tests/terminal_solver.gd").complete(scene), "overlapping daemons unlock transponder")
 	finish_dialogue(scene)
-	for stage in 3:
+	for stage in 2:
 		scene.raven.position = scene._target()
 		scene.interact()
 		check(scene.timing == null and scene.in_cinematic(), "Raven advances the present-day scene without the old timing game")

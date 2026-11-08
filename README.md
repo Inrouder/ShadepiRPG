@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.29.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.30.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -31,11 +31,20 @@ Das Startmenü zeigt die detailliert gemalten HQ-Figuren Shadepi in Bereitschaft
 - **Kapitel 3–5:** Pakt, Hinterhalt, Fahrzeugverfolgung, Hangar, Heiligtum und Erinnerungssequenzen.
 - **Kapitel 6–7:** Anflug, Tower, Konfrontation mit Kenzō, Aufzugwachen, Flucht und Abschluss am See.
 
-Die Spielwelt nutzt **17 gemalte Kulissen** aus `assets/world/painted/`. Wände und verdeckende Bildteile sind in `scripts/painted_world.gd` abgestimmt. Zerstörbare Objekte, die sechs zugeordneten Musikstücke, HQ-Sprites und die Original-Keyframes sind im Repository enthalten.
+Die Spielwelt nutzt gemalte HQ-Pixelkulissen aus `assets/world/painted/`, ergänzt um eigene Erinnerungs- und Szenenkulissen. Wände und verdeckende Bildteile sind in `scripts/painted_world.gd` abgestimmt. Zerstörbare Objekte, die sechs zugeordneten Musikstücke, HQ-Sprites und die Original-Keyframes sind im Repository enthalten.
 
 Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und Bosskämpfen. Die vollständige Zuordnung und Hinweise zum Austauschen der MP3-Dateien stehen unter [Musik austauschen](assets/music/README.md).
 
-## Neu in v0.29.0 · 8. November 2026 · CodexAI
+## Neu in v0.30.0 · 8. November 2026 · CodexAI
+
+- **Fehlerbericht 8 vollständig bearbeitet:** Die drei Hangarkonsolen haben echte Kollisionen und Verdeckungen; Bedienpunkte liegen davor. Wohnraumtür direkt in die Wand eingepasst, Shadepis Ruf mit Sprechblase an der Tür.
+- **Raven schläft sichtbar ein:** automatischer Übergang nach der Ankunft, auf das Bett steigen, hinsetzen, hinlegen, längere Nahaufnahme und sichtbares Aufwachen nach zwei Stunden. Shadepis Sitz-/Kontaktposen enthalten jetzt den dazu passenden Kompensatorstuhl.
+- **Erinnerung III:** Tempeltür folgt der vorhandenen schrägen Öffnung. Shadepi taumelt nach dem Sieg, hält sich aufrecht, knickt ein und liegt länger reglos; die Aura erlischt schrittweise.
+- **Abflug aus dem Hangar:** Beide steigen ein, ARTOS stottert, Shadepi schlägt auf die Armatur, die Anzeigen springen an. Erst nach dem sichtbaren Abheben durch die Dachschleuse beginnt die Flugsteuerung. Ravens spätere Triebwerksreparatur bleibt erhalten.
+- **2.143 Prüfungen ohne Fehler** in 16 Prüfreihen; reale Godot-Szenenbilder und vollständigen Exportinhalt kontrolliert.
+- [Alle acht Korrekturen, Originalbericht und Godot-Bilder](docs/fehlerbericht-8.md).
+
+## v0.29.0 · 8. November 2026 · CodexAI
 
 - **Heiligtum mit richtiger Reihenfolge:** Shadepi geht zum Kompensator vor; Raven repariert den Aerodyne und kommt allein ins Versteck. Erst nach zwei Stunden Schlaf sucht sie ihn hinter der Tür.
 - Eigener HQ-Pixel-Kompensatorraum, sitzender Shadepi, Ravens Schlafpose und zwei Handkontaktposen. Der Griff nach der Maske, Shadepis ruhiges Abfangen und der weiße Lichtstrom lösen die Erinnerungen aus. Das bisherige vorgeschaltete Timing-Spiel entfällt.

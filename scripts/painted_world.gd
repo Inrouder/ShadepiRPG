@@ -18,7 +18,7 @@ const ART: = {
 	"ambush": preload("res://assets/world/painted/ambush.png"), 
 	"garage": preload("res://assets/world/painted/garage.png"), 
 	"hangar": preload("res://assets/world/painted/hangar.png"), 
-	"chamber": preload("res://assets/world/painted/chamber.png"), 
+	"chamber": preload("res://assets/world/painted/chamber-connected.png"),
 	"memory": preload("res://assets/world/painted/memory.png"), 
 	"rooftop": preload("res://assets/world/painted/rooftop.png"), 
 	"suite": preload("res://assets/world/painted/suite.png"), 
@@ -47,7 +47,7 @@ const SOLIDS: = {
 	"dive": [Rect2(354, 264, 68, 125), Rect2(599, 386, 59, 107)], 
 	"ambush": [Rect2(282, 367, 115, 45), Rect2(559, 293, 93, 54), Rect2(729, 442, 110, 26)], 
 	"garage": [Rect2(884, 354, 36, 62)], # parked motorcycle on the lift platform
-	"hangar": [Rect2(360, 280, 84, 36), Rect2(621, 410, 108, 71), Rect2(505, 250, 100, 10), Rect2(807, 281, 185, 60)], 
+	"hangar": [Rect2(360, 280, 84, 36), Rect2(621, 410, 108, 71), Rect2(505, 250, 100, 10), Rect2(807, 281, 185, 60), Rect2(267, 304, 93, 38), Rect2(483, 366, 111, 38), Rect2(742, 294, 65, 32)],
 	"chamber": [Rect2(449, 286.65, 47, 8.35), Rect2(566, 286.65, 68, 7.35)],
 	"compensator": [Rect2(464, 300, 77, 24)],
 	"memory": [], 
@@ -92,6 +92,9 @@ const OCCLUDERS: = {
 		[468.0, [Vector2(729, 424), Vector2(836, 424), Vector2(839, 468), Vector2(729, 468)]], 
 	], 
 	"hangar": [
+		[342.0, [Vector2(263, 278), Vector2(343, 278), Vector2(360, 342), Vector2(267, 342)]],
+		[404.0, [Vector2(479, 339), Vector2(578, 339), Vector2(594, 404), Vector2(483, 404)]],
+		[326.0, [Vector2(737, 264), Vector2(804, 264), Vector2(807, 326), Vector2(742, 326)]],
 		[316.0, [Vector2(360, 241), Vector2(444, 241), Vector2(444, 316), Vector2(360, 316)]], 
 		[481.0, [Vector2(621, 380), Vector2(729, 380), Vector2(729, 481), Vector2(621, 481)]], 
 	], 

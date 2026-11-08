@@ -3,13 +3,14 @@ extends "res://scripts/memories/monastery_map.gd"
 ## The shaft is behind the rear wall; the combat floor has its own geometry.
 const INTERIOR=preload("res://assets/memories/legacy/temple-interior.png")
 const DOOR=preload("res://assets/memories/legacy/temple-door.png")
+const CLOSED=preload("res://assets/memories/legacy/temple-closed.png")
 const ENTRY=Vector2(945,335)
 const DOOR_FOOT=Vector2(940,340)
 const ROOM_WALLS=[Rect2(-16,0,32,640),Rect2(1008,0,32,640),Rect2(0,0,1024,292),Rect2(0,555,1024,85),Rect2(0,365,72,42),Rect2(978,376,46,32),Rect2(945,465,79,90)]
 const ROOM_FIRES=[Vector2(72,390),Vector2(993,362)]
 var gate_body: StaticBody2D
-var door_sprite: Sprite2D
-var door_halves: Array[Sprite2D]=[]
+var door_sprite: Node2D
+var door_halves: Array[Polygon2D]=[]
 var door_frame:=0
 var breached:=false
 
@@ -22,19 +23,26 @@ func _ready() -> void:
 	for rect in ROOM_WALLS: _solid(rect)
 	_solid(Rect2(880,292,128,68))
 	gate_body=scenery.back()
-	door_sprite=Sprite2D.new()
+	# The panels sample the actual angled portal, not a freestanding front view.
+	door_sprite=Node2D.new()
 	door_sprite.position=DOOR_FOOT
-	door_sprite.scale=Vector2.ONE*0.35
-	door_sprite.offset=Vector2(384,256)-Vector2(384,490)
-	door_sprite.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
 	actors.add_child(door_sprite)
-	for side in 2:
-		var piece:=Sprite2D.new()
-		piece.scale=Vector2.ONE*0.35
-		piece.offset=Vector2(0,-234)
-		piece.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
-		actors.add_child(piece)
-		door_halves.append(piece)
+	var outlines := [
+		PackedVector2Array([Vector2(872,200),Vector2(925,181),Vector2(925,327),Vector2(872,310)]),
+		PackedVector2Array([Vector2(925,181),Vector2(984,160),Vector2(984,347),Vector2(925,327)]),
+	]
+	for outline in outlines:
+		var panel:=Polygon2D.new()
+		panel.texture=CLOSED
+		var local:=PackedVector2Array()
+		var uv:=PackedVector2Array()
+		for point in outline:
+			local.append(point-DOOR_FOOT)
+			uv.append(point/SIZE*CLOSED.get_size())
+		panel.polygon=local
+		panel.uv=uv
+		door_sprite.add_child(panel)
+		door_halves.append(panel)
 	set_door_frame(0)
 	for point in ROOM_FIRES:
 		var sprite:=Sprite2D.new()
@@ -62,23 +70,14 @@ func _occluder(points: PackedVector2Array) -> void:
 
 func set_door_frame(index: int) -> void:
 	door_frame=clampi(index,0,3)
-	var texture:=AtlasTexture.new()
-	texture.atlas=DOOR
-	texture.region=Rect2((door_frame%2)*768,(door_frame/2)*512,768,512)
-	door_sprite.texture=texture
-	door_sprite.visible=door_frame<2
+	door_sprite.visible=door_frame<3
 	for side in 2:
-		var piece: Sprite2D=door_halves[side]
-		piece.visible=door_frame>=2
-		var half:=AtlasTexture.new()
-		half.atlas=DOOR
-		half.region=Rect2((door_frame%2)*768+side*384,(door_frame/2)*512,384,512)
-		piece.texture=half
-		var spread:=23 if door_frame==3 else 10
-		piece.position=DOOR_FOOT+Vector2((-1 if side==0 else 1)*(192*0.35+spread),0)
-	if door_frame==3:
-		breached=true
-		gate_body.collision_layer=0
+		var panel: Polygon2D=door_halves[side]
+		panel.position=Vector2(((-1 if side==0 else 1)*5),-3) if door_frame==2 else Vector2.ZERO
+		panel.rotation=(-0.025 if side==0 else 0.025) if door_frame==2 else 0.0
+		panel.modulate=Color(1,1,1,0.7 if door_frame==2 else 1.0)
+	breached=door_frame==3
+	gate_body.collision_layer=0 if breached else 1
 
 func breach_step(k: float) -> void:
 	var next:=mini(3,int(k*4))

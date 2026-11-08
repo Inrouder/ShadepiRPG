@@ -17,7 +17,7 @@ func run() -> void:
 	w.sanctuary_stage = 0
 	w._set_sanctuary_room()
 	w.raven.hide()
-	w.sanctuary_tableau.set_pose(3)
+	w.sanctuary_tableau.set_pose(4)
 	w.sanctuary_tableau.sprite.show()
 	w.camera.position = w.Painted.CHAMBER_CAMERA
 	w.camera.zoom = Vector2.ONE * 1.15

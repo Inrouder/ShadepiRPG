@@ -50,6 +50,12 @@ jobs:
           set -euo pipefail
           timeout 25s godot --headless --quit-after 5 2>&1 | tee /tmp/startup.log
           if grep -Eq 'SCRIPT ERROR|^ERROR:|Parse Error' /tmp/startup.log; then exit 1; fi
+      - name: Validate report 8 fixes and hangar departure
+        shell: bash
+        run: |
+          set -euo pipefail
+          godot --headless --script res://tests/report8.gd 2>&1 | tee /tmp/report8.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|Parse Error' /tmp/report8.log; then exit 1; fi
       - name: Validate sanctuary chronology and controller checkpoints
         shell: bash
         run: |

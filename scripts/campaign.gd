@@ -62,6 +62,8 @@ var aerodyne_spot := AerodyneFlight.PAD_WORLD
 var parked_aerodyne: Node2D
 ## After a crash the repaired engine is not failing a second time.
 var flight_engine_repaired := false
+var departure: Node2D
+var flight_intro_pending := false
 var bike_pos: = BIKE_PARK
 var bike_rot: = 0.0
 
@@ -141,11 +143,16 @@ func new_game(_save_checkpoint: bool = true) -> void :
 	fresh_entry = true
 	_enter(Beat.PACT)
 
-func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo: bool = false, seen_attack: bool = false, seen_sacrifice: bool = false, seen_legacy: bool = false, saved_sanctuary_stage: int = 0) -> void :
+func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo: bool = false, seen_attack: bool = false, seen_sacrifice: bool = false, seen_legacy: bool = false, saved_sanctuary_stage: int = 0, saved_flight_intro: bool = false) -> void :
 	_close_memory(false)
 	var fresh: = fresh_entry
 	fresh_entry = false
 	cutscene.abort()
+	if is_instance_valid(departure):
+		departure.hide()
+		departure.queue_free()
+	departure = null
+	flight_intro_pending = next == Beat.FLIGHT and (fresh or saved_flight_intro)
 	ui.clear_toast()
 	cancel_terminal()
 	if beat == Beat.BOSS and not foes.is_empty():
@@ -196,7 +203,7 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo:
 		"chapter_6_escape", "chapter_7_lake", "chapter_7_finale",
 	]
 	set_music_section(music_sections[beat])
-	var layouts: = ["hideout", "ambush", "", "garage", "hangar", "chamber", "", "roof", "suite", "suite", "lake", "lake"]
+	var layouts: = ["hideout", "ambush", "", "garage", "hangar", "", "", "roof", "suite", "suite", "lake", "lake"]
 	set_dressing(layouts[beat])
 	stage = 0
 	point_index = 0
@@ -604,9 +611,11 @@ func _ritual_step() -> void :
 	var step: = point_index
 	var spot: Vector2 = _target()
 	var cs = begin_cutscene()
+	var ticket: int = cs.generation
 	cs.camera(spot + Vector2(-10, -42), 1.0, 1.25)
 	cs.walk(player, spot + Vector2(-30, 6), 64)
 	await cs.walk(raven, spot + Vector2(16, 4), 64)
+	if not cs.alive(ticket): return
 	cs.face(raven, spot + Vector2(60, -30))
 	cs.face(player, raven.position)
 	cs.pose(raven, "idle")
@@ -620,8 +629,10 @@ func _ritual_step() -> void :
 			sound("hack")
 		)
 		await cs.wait(0.5)
+		if not cs.alive(ticket): return
 	for line: Array in RITUAL[step]:
 		await cs.say(line[0], line[1])
+		if not cs.alive(ticket): return
 	cs.end(func():
 		point_index = step + 1
 		if point_index == Story.POINTS[Beat.LAKE].size():
@@ -631,7 +642,7 @@ func _ritual_step() -> void :
 	)
 
 func _set_sanctuary_room() -> void:
-	set_dressing("chamber" if sanctuary_stage < 2 else "")
+	set_dressing("")
 	set_painted_solids("chamber" if sanctuary_stage < 2 else "compensator")
 	sanctuary_tableau.show_room(sanctuary_stage == 2)
 	player.hide()
@@ -747,6 +758,7 @@ func save_game() -> bool:
 	config.set_value("campaign", "point", point_index)
 	config.set_value("campaign", "echo_started", beat==Beat.ECHO and (echo_ready or memory_legacy_complete))
 	config.set_value("campaign", "sanctuary_stage", sanctuary_stage if beat==Beat.ECHO else 0)
+	config.set_value("campaign", "flight_intro_pending", beat==Beat.FLIGHT and flight_intro_pending)
 	config.set_value("campaign", "memory_attack_complete", memory_attack_complete)
 	config.set_value("campaign", "memory_sacrifice_complete", memory_sacrifice_complete)
 	config.set_value("campaign", "memory_legacy_complete", memory_legacy_complete)
@@ -766,6 +778,7 @@ func load_game(_requested_mode: Variant = null) -> bool:
 	var saved_point: Variant = config.get_value("campaign", "point", 0)
 	var cleared: Variant = config.get_value("campaign", "escape_guards_cleared", true)
 	var saved_echo: Variant = config.get_value("campaign", "echo_started", false)
+	var saved_flight_intro: Variant = config.get_value("campaign", "flight_intro_pending", false)
 	var saved_sanctuary_stage: Variant = config.get_value("campaign", "sanctuary_stage", 0)
 	var seen_attack: Variant = config.get_value("campaign", "memory_attack_complete", false)
 	var seen_sacrifice: Variant = config.get_value("campaign", "memory_sacrifice_complete", false)
@@ -776,7 +789,7 @@ func load_game(_requested_mode: Variant = null) -> bool:
 	if saved == Beat.ROOF and saved_point is int and saved_point >= 2:
 		saved = Beat.BOSS
 		saved_point = 0
-	_enter(saved, saved_section if saved_section is int else 0, saved_point if saved_point is int else 0, saved_echo is bool and saved_echo, seen_attack is bool and seen_attack, seen_sacrifice is bool and seen_sacrifice, seen_legacy is bool and seen_legacy, saved_sanctuary_stage if saved_sanctuary_stage is int else 0)
+	_enter(saved, saved_section if saved_section is int else 0, saved_point if saved_point is int else 0, saved_echo is bool and saved_echo, seen_attack is bool and seen_attack, seen_sacrifice is bool and seen_sacrifice, seen_legacy is bool and seen_legacy, saved_sanctuary_stage if saved_sanctuary_stage is int else 0, saved_flight_intro is bool and saved_flight_intro)
 	return true
 
 func _draw() -> void :
@@ -897,7 +910,7 @@ func _beat_scene(fresh: bool) -> void:
 			if echo_ready and memory_legacy_complete: _scene_echo_end()
 			elif not echo_ready and sanctuary_stage == 0: _scene_sanctuary()
 		Beat.FLIGHT:
-			if fresh: _scene_flight()
+			if flight_intro_pending: _scene_flight()
 		Beat.ROOF:
 			if fresh: _scene_roof()
 		Beat.BOSS:
@@ -927,32 +940,40 @@ func _two_shot(zoom: float = 1.25) -> void:
 ## Kapitel 3: Der Pakt.
 func _scene_pact() -> void:
 	var cs = begin_cutscene()
+	var ticket: int = cs.generation
 	cs.pose(player, "idle")
 	cs.pose(raven, "idle")
 	cs.face(player, raven.position)
 	cs.face(raven, player.position)
 	_two_shot(1.3)
 	await cs.fade(Color.BLACK, 0.0)
+	if not cs.alive(ticket): return
 	await cs.fade(Color(0, 0, 0, 0), 0.9)
+	if not cs.alive(ticket): return
 	await cs.title("KAPITEL 3", "Der Pakt", 2.2)
+	if not cs.alive(ticket): return
 	await cs.lines([
 		["RAVEN", "Du hörst dich an wie aus einem billigen Theaterstück. Es ist lieb von dir, aber diese Typen sind Monster. Ich brauche keinen Schutz."],
 		["RAVENS VERSTECK", "Doch seine unerschütterliche Entschlossenheit bricht etwas in ihr auf. Die Dämme um ihre Vergangenheit bekommen Risse – und sie erzählt ihm alles."],
 		["RAVEN", "Mein Vater war Programmierer bei Arasaka. Kenzō Moriyama ließ meine Eltern ermorden und hielt mich jahrelang gefangen – ein Spielzeug, das er nach Belieben quälte."],
 		["RAVEN", "Ich bin geflohen, habe meine Identität gelöscht. Chrome Jackal war kein zufälliges Kopfgeld. Er war einer von Kenzōs Bluthunden. Ich habe ihn gejagt, bevor er mich jagen konnte."],
 	])
+	if not cs.alive(ticket): return
 	cs.pose(player, "attack")
 	cs.do(func(): sound("prop_metal"))
 	await cs.wait(0.35)
+	if not cs.alive(ticket): return
 	cs.pose(player, "idle")
 	await cs.lines([
 		["SHADEPI", "Das tut mir leid, was du erleben musstest. Ich kann es nicht ungeschehen machen. Aber ich biete dir meine Dienste an."],
 		["RAVEN", "Ich würde Kenzō gerne tot sehen. Ich kann nicht mein Leben lang fliehen. Ich helfe dir. Aber wir sind keine Freunde."],
 		["SHADEPI", "Perfekt. Damit komme ich klar. Wie finden wir Kenzō?"],
 	])
+	if not cs.alive(ticket): return
 	var terminal: Vector2 = Story.POINTS[Beat.PACT][0]
 	cs.camera(terminal + Vector2(0, -30), 1.0, 1.3)
 	await cs.walk(raven, terminal + Vector2(26, 12), 70)
+	if not cs.alive(ticket): return
 	cs.face(raven, terminal)
 	cs.pose(raven, "attack")
 	cs.do(func():
@@ -960,16 +981,20 @@ func _scene_pact() -> void:
 		sound("hack")
 	)
 	await cs.wait(0.4)
+	if not cs.alive(ticket): return
 	cs.pose(raven, "idle")
 	await cs.say("RAVEN", "Ich weiß, wo er wohnt. Immerhin war ich jahrelang sein Spielzeug. Hier – die Baupläne des Arasaka-Towers.")
+	if not cs.alive(ticket): return
 	cs.end(func(): toast("Towerplan am Terminal prüfen"))
 
 func _scene_plan() -> void:
 	var cs = begin_cutscene()
+	var ticket: int = cs.generation
 	cs.pose(player, "idle")
 	cs.pose(raven, "idle")
 	cs.face(player, raven.position)
 	await cs.camera(player.position.lerp(raven.position, 0.5) + Vector2(0, -42), 0.6, 1.3)
+	if not cs.alive(ticket): return
 	await cs.lines([
 		["RAVEN", "Er hat einen privaten Landeplatz. Entweder wir dringen von oben ein, oder wir marschieren durch den Hauptaufzug direkt in sein Penthouse."],
 		["SHADEPI", "Dieser Sensor scannt jeden Gleiter vor der Landung. Wenn du die Kennung von Kenzōs Flieger auf einen anderen überträgst … ich weiß, wo ich einen herbekomme."],
@@ -977,7 +1002,9 @@ func _scene_plan() -> void:
 		["RAVEN", "Aber Kenzō selbst ist bis an die Zähne mit Militärtechnologie ausgestattet. Wir werden uns mit ihm einschließen."],
 		["SHADEPI", "Ich habe immer gern einen Plan C. Dann lass uns den Aerodyne holen. Komm mit."],
 	])
+	if not cs.alive(ticket): return
 	await cs.fade(Color.BLACK, 0.6)
+	if not cs.alive(ticket): return
 	cs.do(func(): _advance())
 
 ## Kapitel 3: Hinterhalt vor dem Versteck.
@@ -988,12 +1015,17 @@ func _scene_ambush() -> void:
 	player.facing = Vector2.DOWN
 	raven.facing = Vector2.UP
 	var cs = begin_cutscene()
+	var ticket: int = cs.generation
 	cs.pose(player, "idle")
 	cs.pose(raven, "idle")
 	await cs.camera(door + Vector2(60, 40), 0.0, 1.2)
+	if not cs.alive(ticket): return
 	await cs.fade(Color.BLACK, 0.0)
+	if not cs.alive(ticket): return
 	await cs.fade(Color(0, 0, 0, 0), 0.7)
+	if not cs.alive(ticket): return
 	await cs.say("GASSE VOR DEM VERSTECK", "Sie treten in die feuchte Nachtluft. Raven schließt die Tür ab –")
+	if not cs.alive(ticket): return
 	for i in 3:
 		cs.do(func():
 			var hit: = door + Vector2(randf_range(10, 70), randf_range(-30, 0))
@@ -1002,28 +1034,34 @@ func _scene_ambush() -> void:
 			shake = 4.0
 		)
 		await cs.wait(0.14)
+		if not cs.alive(ticket): return
 	cs.walk(raven, Vector2(150, 420), 260)
 	await cs.walk(player, door + Vector2(46, 110), 220)
+	if not cs.alive(ticket): return
 	cs.face(player, Vector2(450, 400))
 	cs.do(func():
 		sound("slash")
 		effects.burst(player.position + Vector2(8, -22), Color("ff4f70"), 14)
 	)
 	await cs.camera(Vector2(330, 360), 0.8, 1.0)
+	if not cs.alive(ticket): return
 	await cs.lines([
 		["SHADEPI", "Rechts in der Gasse – kannst du ihn hacken? Er muss künstliche Augen haben! Ich übernehme den linken."],
 		["RAVEN", "Gib mir eine freie Verbindung, dann flute ich seine Optik mit Rauschen."],
 	])
+	if not cs.alive(ticket): return
 	cs.end(func(): toast("Hinterhalt · Nutze die Deckung"))
 
 func _scene_chase() -> void:
 	var cs = begin_cutscene()
+	var ticket: int = cs.generation
 	await cs.lines([
 		["SHADEPI", "*pfeift* – Ein mattschwarzes Motorrad rollt wie von Geisterhand aus der Seitenstraße. Kommst du mit?"],
 		["RAVEN", "Ein bisschen eng."],
 		["SHADEPI", "Airbags im Rücken, perfekt! Der Wagen kommt hinter uns aus der Gasse – festhalten!"],
 		["RAVEN", "Du fährst, ich decke uns nach hinten. Bring mich auf seine Spur, dann hacke ich seine Lenkung."],
 	])
+	if not cs.alive(ticket): return
 	cs.end()
 
 ## Kapitel 4: Die Höhle des Drachen.
@@ -1036,11 +1074,17 @@ func _scene_garage() -> void:
 	bike_pos = Vector2(314, 214)
 	bike_rot = PI
 	var cs = begin_cutscene()
+	var ticket: int = cs.generation
 	await cs.camera(Vector2(330, 250), 0.0, 1.25)
+	if not cs.alive(ticket): return
 	await cs.fade(Color.BLACK, 0.0)
+	if not cs.alive(ticket): return
 	await cs.fade(Color(0, 0, 0, 0), 0.8)
+	if not cs.alive(ticket): return
 	await cs.title("KAPITEL 4", "Die Höhle des Drachen", 2.2)
+	if not cs.alive(ticket): return
 	await cs.say("INDUSTRIEHAFEN", "Die wilde Fahrt endet vor einer unscheinbaren, heruntergekommenen Garage in einem vergessenen Teil des Hafens.")
+	if not cs.alive(ticket): return
 	cs.do(func():
 		sound("prop_metal")
 		shake = 3.0
@@ -1050,6 +1094,7 @@ func _scene_garage() -> void:
 		if k > 0.55:
 			bike_mode = "ride"
 	, 1.6)
+	if not cs.alive(ticket): return
 	cs.do(func(): sound("drive_engine_restart"))
 	var start := Vector2(314, 214)
 	var bend := Vector2(360, 452)
@@ -1067,12 +1112,14 @@ func _scene_garage() -> void:
 		if fposmod(k * 20.0, 1.0) < 0.15:
 			effects.water_step(p + Vector2(0, 20))
 	, 2.8)
+	if not cs.alive(ticket): return
 	var turn_from: = bike_rot
 	cs.camera(Vector2(760, 360), 0.8, 1.2)
 	await cs.animate(func(k: float):
 		bike_pos = finish.lerp(BIKE_PARK, k)
 		bike_rot = lerp_angle(turn_from, 0.0, smoothstep(0.0, 1.0, k))
 	, 0.6)
+	if not cs.alive(ticket): return
 	cs.do(func():
 		bike_mode = "parked"
 		player.position = BIKE_PARK + Vector2(-34, 6)
@@ -1086,8 +1133,10 @@ func _scene_garage() -> void:
 	cs.pose(player, "idle")
 	cs.pose(raven, "idle")
 	await cs.wait(0.4)
+	if not cs.alive(ticket): return
 	cs.walk(raven, Vector2(760, 440), 70)
 	await cs.walk(player, Vector2(790, 412), 70)
+	if not cs.alive(ticket): return
 	cs.face(raven, Vector2(560, 260))
 	cs.face(player, raven.position)
 	cs.pose(player, "idle")
@@ -1098,6 +1147,7 @@ func _scene_garage() -> void:
 		["RAVEN", "Und das ist dein Zuhause? Eine rostige Garage?"],
 		["SHADEPI", "Genau das ist es. Sieh dir die Werkbank an."],
 	])
+	if not cs.alive(ticket): return
 	cs.do(func(): garage_door = 0.0)
 	cs.end(func(): toast("Geheimes Werkbanksymbol finden"))
 
@@ -1127,13 +1177,17 @@ func _draw_garage() -> void:
 
 func _scene_descent() -> void:
 	var cs = begin_cutscene()
+	var ticket: int = cs.generation
 	await cs.camera(Vector2(760, 320), 0.6, 1.2)
+	if not cs.alive(ticket): return
 	cs.do(func():
 		sound("prop_metal")
 		shake = 6.0
 	)
 	await cs.say("GARAGE", "Ein verstecktes Symbol leuchtet auf. Mit hydraulischem Zischen gleitet der Betonboden unter ihnen in die Tiefe.")
+	if not cs.alive(ticket): return
 	await cs.fade(Color.BLACK, 0.8)
+	if not cs.alive(ticket): return
 	cs.do(func(): _advance())
 
 func _scene_hangar() -> void:
@@ -1141,24 +1195,33 @@ func _scene_hangar() -> void:
 	raven.position = Vector2(270, 436)
 	player.show()
 	var cs = begin_cutscene()
+	var ticket: int = cs.generation
 	cs.pose(player, "idle")
 	cs.pose(raven, "idle")
 	await cs.camera(Vector2(420, 330), 0.0, 1.0)
+	if not cs.alive(ticket): return
 	await cs.fade(Color.BLACK, 0.0)
+	if not cs.alive(ticket): return
 	await cs.fade(Color(0, 0, 0, 0), 1.0)
+	if not cs.alive(ticket): return
 	await cs.say("SANKTUARIUM DES ORDENS", "Unten erstreckt sich eine höhlenartige Halle: exotische Fahrzeuge, Klingen aus einer anderen Zeit, Kisten voller Technologie.")
+	if not cs.alive(ticket): return
 	await cs.walk(raven, Vector2(380, 420), 60)
+	if not cs.alive(ticket): return
 	cs.face(raven, Vector2(560, 260))
 	cs.pose(raven, "idle")
 	await cs.say("RAVEN", "Wow. Beeindruckend.")
+	if not cs.alive(ticket): return
 	cs.face(player, raven.position)
 	await cs.lines([
 		["SHADEPI", "Ich muss schon mal hoch in mein Versteck. Zum Kompensator. Das ist alle sechs Tage nötig."],
 		["SHADEPI", "Machst du den Aerodyne wieder gangbar? Und spiel die Kennung von Kenzōs Gleiter auf. Komm danach nach oben."],
 		["RAVEN", "Kriege ich hin. Geh ruhig vor. Ich komme, sobald er wieder läuft."],
 	])
+	if not cs.alive(ticket): return
 	cs.release(player)
 	await cs.walk(player, Vector2(40, 410), 90)
+	if not cs.alive(ticket): return
 	cs.do(func(): player.hide())
 	cs.end(func(): toast("Aerodyne vorbereiten"))
 
@@ -1174,21 +1237,10 @@ func _scene_echo_end() -> void:
 
 ## Kapitel 6: Die Rache.
 func _scene_flight() -> void:
-	var cs = begin_cutscene()
-	await cs.fade(Color.BLACK, 0.0)
-	await cs.title("KAPITEL 6", "Die Rache", 2.2)
-	await cs.lines([
-		["AM NÄCHSTEN ABEND", "Die Anspannung ist elektrisch. Zwischen ihnen liegt ein neues, unausgesprochenes Band des Vertrauens."],
-		["SHADEPI", "Ich kann mich nicht mit irgendjemandem verbinden. Du wurdest mir prophezeit."],
-	])
-	await cs.fade(Color(0, 0, 0, 0), 0.8)
-	await cs.lines([
-		["ARTOS", "A-a-artos-System … b-bootet … alle Parameter … instabil."],
-		["SHADEPI", "Festhalten. Ich bringe uns durch die Häuserschluchten. Raven, sobald uns der Tower-Scanner erfasst, kalibrierst du die kopierte Kennung."],
-		["RAVEN", "Sequenz für Sequenz – genau dann, wenn der Strahl auf uns liegt. Flieg einfach nicht gegen eine Brücke."],
-		["RAVEN", "Ich mag lieber Motorräder."],
-	])
-	cs.end()
+	departure = preload("res://scripts/hangar_departure.gd").new()
+	departure.world = self
+	drive_layer.add_child(departure)
+	departure.play()
 
 func _scene_roof() -> void:
 	# Both climb out of the hatch beside the freshly landed Aerodyne.
@@ -1196,26 +1248,31 @@ func _scene_roof() -> void:
 	raven.position = aerodyne_spot + Vector2(56, 70)
 	player.show()
 	var cs = begin_cutscene()
+	var ticket: int = cs.generation
 	cs.pose(player, "idle")
 	cs.pose(raven, "idle")
 	cs.face(raven, Vector2(770, 260))
 	cs.face(player, raven.position)
 	# Same framing as the landing view of the flight, then pan toward the door.
 	await cs.camera(AerodyneFlight.ROOF_CAMERA, 0.0, AerodyneFlight.ROOF_ZOOM)
+	if not cs.alive(ticket): return
 	cs.do(func():
 		shake = 6.0
 		sound("drive_knock")
 	)
 	await cs.say("ARASAKA TOWER / LANDEPLATZ", "Heiße Luft peitscht über die Plattform, das Metall knackt. Der Aerodyne steht.")
+	if not cs.alive(ticket): return
 	await cs.lines([
 		["SHADEPI", "Hals- und Beinbruch. Ich muss innerhalb von zwanzig Sekunden drin sein, dann fällt meine Tarnung."],
 		["RAVEN", "Dann lass mich vorgehen. Ich lenke ihn ab. Keine Angst – er wird sein Lieblingsspielzeug nicht töten wollen."],
 	])
+	if not cs.alive(ticket): return
 	cs.do(func():
 		player.set_cloaked(true)
 		effects.burst(player.position + Vector2(0, -20), Color("7fe3ee"), 12)
 	)
 	await cs.wait(0.6)
+	if not cs.alive(ticket): return
 	cs.do(func(): player.hide())
 	cs.end(func(): toast("Kennung am Dachterminal prüfen"))
 
@@ -1231,44 +1288,59 @@ func _scene_penthouse() -> void:
 	raven.facing = Vector2.RIGHT
 	player.set_cloaked(true)
 	var cs = begin_cutscene()
+	var ticket: int = cs.generation
 	for actor in [kenzo, player, raven]:
 		cs.pose(actor, "idle")
 	await cs.camera(chair + Vector2(0, -10), 0.0, 1.35)
+	if not cs.alive(ticket): return
 	await cs.fade(Color.BLACK, 0.0)
+	if not cs.alive(ticket): return
 	await cs.fade(Color(0, 0, 0, 0), 0.9)
+	if not cs.alive(ticket): return
 	await cs.say("PENTHOUSE", "Ein protziger Tempel des Exzesses. Kenzō Moriyama sitzt in echtem Leder und trinkt einen sündhaft teuren Whisky.")
+	if not cs.alive(ticket): return
 	cs.camera(Vector2(400, 370), 1.6, 1.1)
 	cs.walk(player, Vector2(300, 448), 72)
 	await cs.walk(raven, Vector2(420, 396), 72)
+	if not cs.alive(ticket): return
 	cs.walk(player, Vector2(430, 446), 50)
 	await cs.walk(raven, Vector2(540, 386), 60)
+	if not cs.alive(ticket): return
 	cs.pose(raven, "idle")
 	cs.pose(player, "idle")
 	cs.face(kenzo, raven.position)
 	await cs.camera(Vector2(570, 340), 0.8, 1.2)
+	if not cs.alive(ticket): return
 	await cs.say("RAVEN", "Lange nicht gesehen.")
+	if not cs.alive(ticket): return
 	await cs.walk(kenzo, raven.position + Vector2(30, -8), 46)
+	if not cs.alive(ticket): return
 	cs.face(kenzo, raven.position)
 	cs.pose(kenzo, "attack")
 	cs.pose(raven, "hurt")
 	cs.do(func(): raven.visual.position.y = raven.standing_visual_position.y - 12.0)
 	await cs.wait(0.5)
+	if not cs.alive(ticket): return
 	cs.do(func():
 		raven.visual.position.y = raven.standing_visual_position.y
 		shake = 5.0
 		sound("hit")
 	)
 	await cs.leap(raven, Vector2(372, 404), 34.0, 0.5)
+	if not cs.alive(ticket): return
 	cs.pose(kenzo, "idle")
 	cs.face(kenzo, raven.position)
 	await cs.say("KENZŌ MORIYAMA", "Dummes Mädchen. Ich habe ewig nach dir gesucht.")
+	if not cs.alive(ticket): return
 	await cs.say("SHADEPIS HUD", "Tarnfeld · 3 … 2 … 1 … NULL.")
+	if not cs.alive(ticket): return
 	cs.do(func():
 		player.set_cloaked(false)
 		effects.burst(player.position + Vector2(0, -20), Color("ff4f70"), 22)
 		sound("slash")
 	)
 	await cs.walk(player, kenzo.position + Vector2(-30, 10), 520)
+	if not cs.alive(ticket): return
 	cs.do(func():
 		effects.slash(kenzo.position + Vector2(8, -30), Vector2.RIGHT)
 		effects.burst(kenzo.position + Vector2(10, -30), Color("ffb36b"), 22)
@@ -1278,6 +1350,7 @@ func _scene_penthouse() -> void:
 	cs.pose(kenzo, "hurt")
 	cs.flash(Color(1, 0.25, 0.35, 0.5), 0.35)
 	await cs.walk(kenzo, kenzo.position + Vector2(64, -18), 280)
+	if not cs.alive(ticket): return
 	cs.face(kenzo, player.position)
 	cs.face(player, kenzo.position)
 	cs.pose(kenzo, "idle")
@@ -1287,8 +1360,10 @@ func _scene_penthouse() -> void:
 		["KENZŌ MORIYAMA", "Die Maske aus dem Kloster. Die Minotauren haben gründlich gearbeitet – nur bei dir nicht."],
 		["SHADEPI", "Raven – stör seine Implantate. Wenn er die Leitung sperrt, warte auf das Flackern am Schulterservo."],
 	])
+	if not cs.alive(ticket): return
 	cs.release(raven)
 	await cs.walk(raven, Vector2(430, 420), 90)
+	if not cs.alive(ticket): return
 	cs.end(func(): toast("KENZŌ MORIYAMA · Hackfenster am Schulterservo nutzen"))
 
 ## Kapitel 6: Kenzōs Ende – und die Wahrheit über das Massaker.
@@ -1299,6 +1374,7 @@ func _scene_kenzo_falls() -> void:
 	player.position = body.position + Vector2(-66, 26)
 	raven.position = body.position + Vector2(-190, 74)
 	var cs = begin_cutscene()
+	var ticket: int = cs.generation
 	cs.face(player, body.position)
 	cs.face(raven, body.position)
 	cs.face(body, player.position)
@@ -1306,15 +1382,21 @@ func _scene_kenzo_falls() -> void:
 	cs.pose(player, "idle")
 	cs.pose(raven, "idle")
 	await cs.camera(body.position + Vector2(-70, -40), 0.0, 1.25)
+	if not cs.alive(ticket): return
 	await cs.say("PENTHOUSE", "Kenzō liegt gelähmt und blutend am Boden. Ein Monster aus Chrom und Hass – allein gegen zwei Geister der Rache.")
+	if not cs.alive(ticket): return
 	await cs.walk(player, player.position + Vector2(-44, 22), 48)
+	if not cs.alive(ticket): return
 	cs.face(player, body.position)
 	cs.pose(player, "idle")
 	await cs.say("SHADEPI", "Nicht ich töte dich. Das ist ihr Vergnügen.")
+	if not cs.alive(ticket): return
 	await cs.walk(raven, body.position + Vector2(-40, 16), 54)
+	if not cs.alive(ticket): return
 	cs.face(raven, body.position)
 	cs.pose(raven, "idle")
 	await cs.say("RAVEN", "Jahrelang bin ich vor dir geflohen, Kenzō. Wurde auch Zeit, dass dir jemand ein Ende setzt!")
+	if not cs.alive(ticket): return
 	cs.pose(raven, "attack")
 	cs.do(func(): sound("hack"))
 	for i in 6:
@@ -1324,19 +1406,24 @@ func _scene_kenzo_falls() -> void:
 			effects.burst(to, Color("72eff4"), 8)
 		)
 		await cs.wait(0.14)
+		if not cs.alive(ticket): return
 	cs.do(func(): shake = 7.0)
 	await cs.flash(Color(0.45, 0.95, 1.0, 0.6), 0.45)
+	if not cs.alive(ticket): return
 	cs.release(body)
 	cs.do(func(): _lay_down(body))
 	cs.pose(raven, "idle")
 	await cs.wait(1.0)
+	if not cs.alive(ticket): return
 	await cs.say("PENTHOUSE", "Ihre unsichtbaren Fäden spannen sich ein letztes Mal. Ein Akt der Befreiung.")
+	if not cs.alive(ticket): return
 	cs.pose(raven, "attack")
 	cs.do(func():
 		effects.hack_arc(raven.position + Vector2(4, -22), body.position + Vector2(0, -8))
 		sound("hack")
 	)
 	await cs.wait(0.6)
+	if not cs.alive(ticket): return
 	cs.pose(raven, "idle")
 	cs.face(raven, player.position)
 	await cs.lines([
@@ -1345,22 +1432,30 @@ func _scene_kenzo_falls() -> void:
 		["SHADEPI", "Fünf Jahre. Und am Ende ein Mann in einem Penthouse."],
 		["SHADEPI", "Mein Orden ist gerächt. Zieh alles über die Minotauren – Lieferketten, Black-Sites, Testserien."],
 	])
+	if not cs.alive(ticket): return
 	cs.do(func():
 		set_music_section("fight")
 		sound("drive_engine_fail")
 	)
 	await cs.flash(Color(1, 0.08, 0.16, 0.45), 0.3)
+	if not cs.alive(ticket): return
 	await cs.flash(Color(1, 0.08, 0.16, 0.45), 0.3)
+	if not cs.alive(ticket): return
 	await cs.say("SYSTEM / TOTMANNSCHALTER", "Vitalzeichen des Eigentümers erloschen. Sicherheitsteams angefordert. Aufzug fährt hoch.")
+	if not cs.alive(ticket): return
 	await cs.camera(LIFT_DOOR + Vector2(0, -60), 1.1, 1.15)
+	if not cs.alive(ticket): return
 	cs.do(func(): lift_glow = 2.4)
 	await cs.wait(0.5)
+	if not cs.alive(ticket): return
 	cs.do(func(): _spawn_wave())
 	await cs.wait(0.7)
+	if not cs.alive(ticket): return
 	await cs.lines([
 		["SHADEPI", "Seine Wachen von unten. Bleib an seinem Deck, Raven – ich halte sie dir vom Leib."],
 		["RAVEN", "Gib mir eine Lücke, dann blende ich ihre Optik."],
 	])
+	if not cs.alive(ticket): return
 	cs.end(func():
 		autosave()
 		toast("Kenzōs Aufzugwachen · Halte sie von Raven fern")
@@ -1373,50 +1468,69 @@ func _scene_lake() -> void:
 	player.facing = Vector2.RIGHT
 	raven.facing = Vector2.RIGHT
 	var cs = begin_cutscene()
+	var ticket: int = cs.generation
 	cs.pose(player, "idle")
 	cs.pose(raven, "idle")
 	await cs.fade(Color.BLACK, 0.0)
+	if not cs.alive(ticket): return
 	await cs.lines([
 		["ARTOS", "SCHHUUIII – PUFF – PUFF. Triebwerke … instabil."],
 		["SHADEPI", "Ach, scheiß Kiste!"],
 		["AERODYNE", "T-6 … er tritt gegen die Pumpeneinheit. T-4 … die Triebwerke zünden. T-2 … der Aerodyne kippt über die Kante."],
 		["SHADEPI", "HALT DICH GUT FEST, JETZT WIRD'S HOLPRIG!"],
 	])
+	if not cs.alive(ticket): return
 	cs.do(func():
 		shake = 14.0
 		sound("drive_explosion")
 	)
 	await cs.flash(Color(1, 0.92, 0.75, 1.0), 0.9)
+	if not cs.alive(ticket): return
 	await cs.say("NACHT", "Hinter ihnen zerfetzt eine gewaltige Explosion das Penthouse. Shadepi fängt das taumelnde Fluggerät ab – weg von den Flammen, weg von der Vergangenheit.")
+	if not cs.alive(ticket): return
 	await cs.camera(Vector2(330, 380), 0.0, 1.1)
+	if not cs.alive(ticket): return
 	await cs.fade(Color(0, 0, 0, 0), 1.4)
+	if not cs.alive(ticket): return
 	await cs.title("KAPITEL 7", "Der neue Orden", 2.4)
+	if not cs.alive(ticket): return
 	await cs.say("AUSSERHALB DER STADT", "Ein kleiner Wald aus uralten Bäumen. In seiner Mitte ein kristallklarer See, der im Mondlicht schimmert wie ein gefallener Stern.")
+	if not cs.alive(ticket): return
 	cs.walk(player, Vector2(300, 420), 60)
 	await cs.walk(raven, Vector2(330, 440), 60)
+	if not cs.alive(ticket): return
 	cs.face(raven, Vector2(620, 330))
 	cs.face(player, raven.position)
 	await cs.lines([
 		["RAVEN", "Was ist das hier?"],
 		["SHADEPI", "Ein Ort, den der Orden nie vergessen hat. Komm mit ans Wasser."],
 	])
+	if not cs.alive(ticket): return
 	cs.end(func(): toast("Raven zum Wasser folgen"))
 
 ## Kapitel 7: Maskenkodex und Kuss – der Orden ist wiedergeboren.
 func _scene_finale() -> void:
 	var center: Vector2 = player.position.lerp(raven.position, 0.5)
 	var cs = begin_cutscene()
+	var ticket: int = cs.generation
 	cs.pose(player, "idle")
 	cs.pose(raven, "idle")
 	await cs.camera(center + Vector2(0, -30), 1.6, 1.6)
+	if not cs.alive(ticket): return
 	await cs.say("SEE", "Langsam, fast zögerlich, greift er zu seiner Maske. Sein Kodex verbietet es, sein Gesicht jemandem außerhalb des Ordens zu zeigen. Raven gehört jetzt dazu.")
+	if not cs.alive(ticket): return
 	await cs.fade(Color(1, 1, 1, 0.55), 1.1)
+	if not cs.alive(ticket): return
 	await cs.lines([
 		["SEE", "Darunter: das Gesicht eines Mannes, gezeichnet von Kampf und Verlust. Ein dunkles, menschliches Auge – und ein leuchtend rotes."],
 		["RAVEN", "Oh."],
 		["SEE", "Sie stellt sich auf die Zehenspitzen und küsst ihn. Ein Teil des Heiligtums geht endgültig und willentlich auf sie über."],
 	])
+	if not cs.alive(ticket): return
 	await cs.fade(Color(0, 0, 0, 0.82), 1.0)
+	if not cs.alive(ticket): return
 	await cs.title("DER ORDEN DES WEISSEN DRACHEN", "ist in der Stille der Nacht wiedergeboren", 3.4)
+	if not cs.alive(ticket): return
 	await cs.fade(Color(0, 0, 0, 0), 1.0)
+	if not cs.alive(ticket): return
 	cs.end(func(): toast("Geschichte abgeschlossen · Danke fürs Spielen"))

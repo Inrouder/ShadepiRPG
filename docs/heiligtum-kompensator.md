@@ -1,19 +1,21 @@
-# Heiligtum: Gegenwart und Kompensator · v0.29.0 · CodexAI
+# Heiligtum: Gegenwart und Kompensator · v0.30.0 · CodexAI
 
 Die drei Rückblenden haben jetzt den bestätigten Gegenwartsrahmen. Shadepi geht bereits im Hangar vor, weil er zur Eindämmung muss. Raven macht den Aerodyne gangbar und kommt erst danach in seine Wohnräume.
 
 ## Ablauf und Bedienung
 
 1. Raven kommt allein an. Shadepi ruft hinter der geschlossenen Tür, sie solle sich ausruhen. Raven schaut sich die alte Rüstung an und geht zum Bett.
-2. **E / Controller A am Bett:** Raven legt sich schlafen. Die Szene zeigt „Zwei Stunden später“. Shadepi ist immer noch nicht zurück.
+2. **Automatisch nach der Ankunft:** Raven steigt aufs Bett, setzt sich und legt sich sichtbar schlafen. Die Nahaufnahme bleibt länger bestehen; nach „Zwei Stunden später“ wacht sie auf. Shadepi ist immer noch nicht zurück.
 3. **E / A an der beleuchteten Tür:** Raven betritt den separaten Kompensatorraum. Shadepi sitzt regungslos im Sessel; kein zweites stehendes Shadepi-Modell.
 4. **E / A am Sessel:** „Schläfst du?“ – Raven greift neugierig nach seiner Maske. Er fängt ihr Handgelenk ab. Nach dem kurzen Wortwechsel geht weißes Licht auf sie über und ihre Augen schimmern.
 5. In der Erinnerungswelt bleiben die drei bekannten Anker: Angriff, Lys Opfer und Vermächtnis. Die historischen Schauplätze und Kämpfe sind erhalten. Das bisher vorgeschaltete Timing-Minispiel entfällt.
-6. Danach steht Raven wieder am selben Sessel und torkelt zurück. Shadepi entschuldigt sich und erklärt: Der Kompensator ist **alle sechs Tage** nötig, sonst zerstören die Naniten seinen Körper. Er bestätigt das Gesehene, wahrt aber interne Ordensgeheimnisse. Danach folgt der bisherige Flug zum Tower.
+6. Danach steht Raven wieder am selben Sessel und torkelt zurück. Shadepi entschuldigt sich und erklärt: Der Kompensator ist **alle sechs Tage** nötig, sonst zerstören die Naniten seinen Körper. Er bestätigt das Gesehene, wahrt aber interne Ordensgeheimnisse. Danach folgt seit v0.30.0 die sichtbare Hangar-Abflugszene vor der bisherigen Flugsteuerung.
 
 Zwischensequenzen: **E / A** blättert weiter, **Leertaste / B** überspringt; **Esc / Start** pausiert. In den spielbaren Erinnerungskämpfen bleibt B das Ausweichen; dort erfolgt bewusstes Überspringen über das Pausenmenü.
 
-## Tatsächliche Godot-Vorschau
+Aktuelle Passungs- und Szenenkorrekturen stehen unter [Fehlerbericht 8 · v0.30.0 · CodexAI](fehlerbericht-8.md). Die unten erhaltenen Bilder zeigen den früheren v0.29.0-Stand.
+
+## Tatsächliche Godot-Vorschau v0.29.0
 
 ![Raven schläft in den Wohnräumen](previews/heiligtum-schlafen.png)
 
