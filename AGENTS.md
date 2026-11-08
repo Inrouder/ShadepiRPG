@@ -1,5 +1,9 @@
 # Zusammenarbeit an ShadepiRPG
 
+## Vor jeder Änderung lesen
+
+**v0.32.1 · CodexAI:** Die [verbindliche Konsistenzvorlage](KONSISTENZ.md) gilt für alle Mitwirkenden, ob Mensch oder KI. Vor Grafik-, Animations- und Szenenarbeiten die aktiven Referenzen dort tatsächlich ansehen und den [Konsistenzauftrag mit Arbeitsnachweis](docs/vorlagen/konsistenz-auftrag.md) verwenden. Spielgröße, Figurenmerkmale, Materialwirkung, Transparenz und Kontaktanker anhand echter Godot-Ansichten prüfen. Ein grüner Build ersetzt keine Sichtprüfung. Historische Grafiken nicht als aktuelle Stilreferenz verwenden. Reine Dokumentationsaufgaben benötigen keine Grafikgenerierung oder vollständigen Gameplay-Testlauf. Neuere ausdrückliche Nutzervorgaben und bereits bestehende Autorisierung gelten weiter; keine zusätzliche Freigaberunde einführen.
+
 Vom Nutzer festgelegte Arbeitsregeln:
 
 - Vor Projektarbeiten immer **alle GitHub-Branches** abrufen (`git fetch origin '+refs/heads/*:refs/remotes/origin/*'`), ihre Versionen und Änderungen vergleichen und erst danach den passenden aktuellen Stand übernehmen. Ein aktueller `main` allein genügt nicht, wenn neuere Arbeit auf Entwicklungsbranches liegt. Änderungen anderer Bearbeiter und lokale Arbeit erhalten.

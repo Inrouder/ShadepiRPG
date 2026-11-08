@@ -1,5 +1,12 @@
 # Versionshinweise
 
+## v0.32.1 – CodexAI: Verbindliche Konsistenzvorlage für Menschen und KI · 8. November 2026
+
+- Zentrale [KONSISTENZ.md](KONSISTENZ.md) mit aktiven Referenzen, Quellenpriorität, festen Figurenmerkmalen, HQ-Pixelstil, tatsächlichen Heldenmaßen im Renderer, Alpha-/Abtastungsregeln sowie Animations- und Möbelkontakten.
+- Szenenlogik, Controller, Effekte und Ton in die Fertigprüfung aufgenommen. Historische Posen eindeutig von aktiven Quellen getrennt; echte Godot-Vergleiche bleiben zusätzlich zu automatisierten Prüfungen erforderlich.
+- Kopierbare [Arbeitsvorlage](docs/vorlagen/konsistenz-auftrag.md) mit Grafik-/KI-Briefing, Referenznachweis und Prüfergebnissen. Einstieg in CONTRIBUTING, AGENTS, CLAUDE, README und GitHub-PR-Vorlage verankert.
+- Reine Dokumentationsänderung; lokale Links, aktuelle Versionsfelder und Inhalte gegen aktive Quellen geprüft. Keine neuen Grafiken und keine Änderung des Spielablaufs.
+
 ## v0.32.0 – CodexAI: Heiligtum-Posen an die Spielfiguren angeglichen · 8. November 2026
 
 - Alle sechs Posen des Gegenwartsrahmens überarbeitet: Shadepi allein im Sessel, Ravens Griff nach der Maske, abgefangenes Handgelenk, Raven am Bettrand, schlafend und aufwachend. Tatsächliche Helden-Sprites dienen als Stilreferenz; dunkle matte Rüstung statt körniger Bronze-/Weißtexturen.

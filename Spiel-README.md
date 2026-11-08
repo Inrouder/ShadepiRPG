@@ -1,6 +1,8 @@
 # Shadepi · Echos in Neon
 
-**Spieleranleitung für v0.32.0 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+**Spieleranleitung für v0.32.1 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+
+**Projektstandard v0.32.1 · CodexAI:** Für Mitwirkende gibt es jetzt eine [verbindliche Konsistenzvorlage](KONSISTENZ.md) mit aktiven Grafikreferenzen und Prüfnachweisen. Diese Version ergänzt die Projektdokumentation; die Bedienung bleibt unverändert.
 
 **Heiligtum-Figuren v0.32.0 · CodexAI:** Ravens Einschlafen, Liegen und Aufwachen sowie Shadepis Sitz- und Handgriffposen verwenden grafisch an die normalen Spielfiguren angeglichene Pixelgrafiken. Ihre Größe und Standflächen bleiben beim Wechsel stimmig. Ablauf und Bedienung bleiben wie unten beschrieben. [Bildvergleich](docs/heiligtum-figuren-v032.md).
 

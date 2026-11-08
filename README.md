@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.32.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.32.1 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -35,7 +35,17 @@ Die Spielwelt nutzt gemalte HQ-Pixelkulissen aus `assets/world/painted/`, ergän
 
 Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und Bosskämpfen. Die vollständige Zuordnung und Hinweise zum Austauschen der MP3-Dateien stehen unter [Musik austauschen](assets/music/README.md).
 
-## Neu in v0.32.0 · 8. November 2026 · CodexAI
+## Mitarbeit und verbindliche Konsistenz
+
+Für Menschen und KI: [Mitarbeit](CONTRIBUTING.md) · [Konsistenzvorlage mit aktiven Grafikreferenzen](KONSISTENZ.md) · [Kopierbarer Auftrag und Arbeitsnachweis](docs/vorlagen/konsistenz-auftrag.md). Die Projektregeln in [AGENTS.md](AGENTS.md), der Einstieg für [Claude](CLAUDE.md) und die Pull-Request-Vorlage verweisen auf denselben Standard.
+
+## Neu in v0.32.1 · 8. November 2026 · CodexAI
+
+- **Gemeinsamer Konsistenzstandard für Menschen und KI:** aktive und historische Grafikquellen, feste Figurenmerkmale, Pixel-/Materialstil, Spielgröße, Abtastung, Kontaktanker, Szenenfolge, Controller und Ton.
+- Kopierbare Arbeitsvorlage mit Grafikbriefing und konkretem Prüfnachweis. Grafikänderungen brauchen Vergleiche im echten Godot-Renderer; ein grüner Build allein bestätigt keine Stiltreue.
+- Verankert in Projektregeln, Mitarbeitseinstieg und Pull-Request-Vorlage. Dokumentationsänderung mit Inhalts-, Link- und Versionsprüfung; Grafik und Spielablauf bleiben unverändert.
+
+## v0.32.0 · 8. November 2026 · CodexAI
 
 - **Stimmigere Heiligtum-Figuren:** Alle sechs Sitz-, Schlaf-, Aufwach- und Handkontaktposen an den tatsächlichen Spielfiguren abgeglichen. Dunkle Rüstung, ruhigere Pixeltexturen, Shadepis geschlossene segmentierte Maske und Ravens schwarz-blaue Haare mit Cyan-Akzenten.
 - Echte Transparenz und dieselbe verkleinerte Abtastung wie bei den normalen Helden beseitigen die harten Freistellkanten. Körpergröße, Stuhlverankerung und Ravens Standpunkt beim Maskengriff abgestimmt; Übertragungslicht setzt sich beim Posenwechsel vollständig zurück.
