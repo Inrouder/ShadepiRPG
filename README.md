@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.31.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.32.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -35,7 +35,14 @@ Die Spielwelt nutzt gemalte HQ-Pixelkulissen aus `assets/world/painted/`, ergän
 
 Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und Bosskämpfen. Die vollständige Zuordnung und Hinweise zum Austauschen der MP3-Dateien stehen unter [Musik austauschen](assets/music/README.md).
 
-## Neu in v0.31.0 · 8. November 2026 · CodexAI
+## Neu in v0.32.0 · 8. November 2026 · CodexAI
+
+- **Stimmigere Heiligtum-Figuren:** Alle sechs Sitz-, Schlaf-, Aufwach- und Handkontaktposen an den tatsächlichen Spielfiguren abgeglichen. Dunkle Rüstung, ruhigere Pixeltexturen, Shadepis geschlossene segmentierte Maske und Ravens schwarz-blaue Haare mit Cyan-Akzenten.
+- Echte Transparenz und dieselbe verkleinerte Abtastung wie bei den normalen Helden beseitigen die harten Freistellkanten. Körpergröße, Stuhlverankerung und Ravens Standpunkt beim Maskengriff abgestimmt; Übertragungslicht setzt sich beim Posenwechsel vollständig zurück.
+- **789 Prüfungen ohne Fehler** in sechs relevanten Prüfreihen; alle sechs Posen und die vollständigen Schlaf-/Kontaktabläufe im Godot-Renderer kontrolliert.
+- [Vorher/Nachher, alle Posen und Prüfdetails](docs/heiligtum-figuren-v032.md).
+
+## v0.31.0 · 8. November 2026 · CodexAI
 
 - **Atmosphäre passend zum Schauplatz:** Fensterregen, Staub im Licht, texturierter Anlagendampf, bewegte Neonreflexe, Diagnoseanzeigen und Datenimpulse. Die Kloster-Erinnerungen erhalten aufsteigende Glut und Asche; am See bewegen sich Wasserreflexe, dünner Ufernebel und Glühwürmchen.
 - 18 Ortsprofile berücksichtigen die tatsächlichen Raumgrößen. Die neuen Wasserbewegungen bleiben auf die Wasserfläche begrenzt und liegen hinter den Figuren. Innenräume erhalten wärmere Abstimmung und zurückhaltenderes Bloom für lesbare Texturen.

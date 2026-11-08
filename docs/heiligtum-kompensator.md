@@ -13,7 +13,7 @@ Die drei Rückblenden haben jetzt den bestätigten Gegenwartsrahmen. Shadepi geh
 
 Zwischensequenzen: **E / A** blättert weiter, **Leertaste / B** überspringt; **Esc / Start** pausiert. In den spielbaren Erinnerungskämpfen bleibt B das Ausweichen; dort erfolgt bewusstes Überspringen über das Pausenmenü.
 
-Aktuelle Passungs- und Szenenkorrekturen stehen unter [Fehlerbericht 8 · v0.30.0 · CodexAI](fehlerbericht-8.md). Die unten erhaltenen Bilder zeigen den früheren v0.29.0-Stand.
+Aktuelle Figurenkorrekturen und Bilder stehen unter [Heiligtum-Posen · v0.32.0 · CodexAI](heiligtum-figuren-v032.md). Passungs- und Szenenkorrekturen stehen unter [Fehlerbericht 8 · v0.30.0 · CodexAI](fehlerbericht-8.md). Die unten erhaltenen Bilder zeigen den früheren v0.29.0-Stand.
 
 ## Tatsächliche Godot-Vorschau v0.29.0
 

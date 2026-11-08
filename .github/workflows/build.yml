@@ -68,6 +68,12 @@ jobs:
           set -euo pipefail
           godot --headless --script res://tests/sanctuary_story.gd 2>&1 | tee /tmp/sanctuary-story.log
           if grep -Eq 'SCRIPT ERROR|^ERROR:|Parse Error' /tmp/sanctuary-story.log; then exit 1; fi
+      - name: Validate sanctuary art proportions and pose continuity
+        shell: bash
+        run: |
+          set -euo pipefail
+          godot --headless --script res://tests/sanctuary_art.gd 2>&1 | tee /tmp/sanctuary-art.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|Parse Error' /tmp/sanctuary-art.log; then exit 1; fi
       - name: Run gameplay and save validation
         shell: bash
         run: |

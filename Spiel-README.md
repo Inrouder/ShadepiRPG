@@ -1,6 +1,8 @@
 # Shadepi · Echos in Neon
 
-**Spieleranleitung für v0.31.0 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+**Spieleranleitung für v0.32.0 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+
+**Heiligtum-Figuren v0.32.0 · CodexAI:** Ravens Einschlafen, Liegen und Aufwachen sowie Shadepis Sitz- und Handgriffposen verwenden grafisch an die normalen Spielfiguren angeglichene Pixelgrafiken. Ihre Größe und Standflächen bleiben beim Wechsel stimmig. Ablauf und Bedienung bleiben wie unten beschrieben. [Bildvergleich](docs/heiligtum-figuren-v032.md).
 
 **Atmosphäre v0.31.0 · CodexAI:** Unter „Bildstil“ steuert **Atmosphärisch** die volle neue Umgebungsdichte; **Ausgewogen** reduziert Partikel und Wasserbewegung. **Reduziert** schaltet die neuen Zusatzpartikel und den Wasser-Zusatzpass ab; vorhandene Regen- und Kampfindikatoren bleiben erhalten. Pause und offene Hack-Terminals halten die Umgebungsbewegung an. [Film und Designbericht](docs/design-atmosphaere.md).
 

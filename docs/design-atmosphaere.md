@@ -4,6 +4,8 @@ Alle sieben Kapitel, Hauptmenü, Hack-Oberfläche, Fahrsequenzen und die drei Er
 
 Die folgenden Atmosphäre-Ergänzungen sind umgesetzt. Die weiter unten aufgeführten größeren Designänderungen sind **Vorschläge für einen folgenden Arbeitsgang**.
 
+**Nachtrag v0.32.0 · CodexAI:** Die Sitz-/Schlaf-/Handkontaktposen des Heiligtum-Gegenwartsrahmens sind inzwischen an die normalen Spielfiguren angeglichen, einschließlich Transparenz, Abtastung, Körpergröße und Standpunkt. [Bildvergleich](heiligtum-figuren-v032.md). Die weiter unten beschriebene projektweite Vereinheitlichung aller Figurensätze bleibt ein darüber hinausgehender Vorschlag.
+
 ## Vorschau in Bewegung
 
 ![Godot-Aufnahme: Hangar, See und Klosterhof](previews/atmosphaere-v031.webp)

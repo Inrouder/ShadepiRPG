@@ -1,10 +1,16 @@
-# Heiligtum-Posen · v0.30.0 · CodexAI
+# Heiligtum-Posen · v0.32.0 · CodexAI
 
-Aktiv ist `poses-seated.png`: 1536 × 1024 mit drei Spalten und zwei Reihen. Erste Reihe: Shadepi mit seinem tatsächlich passenden Stuhl, dann Raven beim Griff und beim abgefangenen Handgelenk. Zweite Reihe: Raven sitzend am Bett, schlafend und aufwachend. Die Regionen/Anker stehen in `scripts/sanctuary_tableau.gd`; wegen einer leicht über die nominelle Zelle ragenden Haarsträhne wird die Schlafregion gezielt als 544 Pixel breiter Ausschnitt gelesen. Keine PNG-Pixel wurden nachträglich umgeschrieben.
+Aktiv ist **`poses-game.png`**: 1536 × 1024 mit drei Spalten und zwei Reihen. Erste Reihe: Shadepi mit Kompensatorstuhl, dann Raven beim Griff und beim abgefangenen Handgelenk. Zweite Reihe: Raven sitzend am Bett, schlafend und aufwachend. Die Regionen/Anker stehen in `scripts/sanctuary_tableau.gd`; der Schlafausschnitt ist 552 Pixel breit, um das links über die nominelle Zelle reichende Haar vollständig zu erhalten, während die Sitzregion vor dieser Nachbarfigur endet.
 
-Die Quelle enthält weiche Alpha-Reste außerhalb der Figuren. `pixel_cutout.gdshader` verwirft diese beim Darstellen und erhält harte Pixelkanten. Die Schlaf-/Sitzskalierung richtet sich nach Körperlänge beziehungsweise Haltung. Der Stuhl ist Teil der Sitz- und Kontaktposen, statt als zweite unpassende Grafik darunterzuliegen.
+**Gestaltungsreferenz v0.32.0 · CodexAI:** Die tatsächlichen v0.31.0-Helden aus `assets/sprites/heroes/shadepi.png` und `raven.png`, per Godot als Vorder-/Seitenansichten gerendert (`tools/sanctuary_reference.gd`), bestimmen Palette, Proportionen und Materialwirkung. Das alte Blatt dient nur als Posen-/Layoutreferenz. Neues Blatt mit Bildgenerierung erstellt; unveränderte generierte Quelle, keine nachträgliche PNG-Bearbeitung. Merkmale gemäß Universumsarchiv Teil 1–3, Raven verbindlich 160 cm. [Vergleich und Prüfung](../../../docs/heiligtum-figuren-v032.md).
+
+Ruhige dunkle Pixelcluster ersetzen die vorherige körnige Bronze-/Weißtextur. Die Quelle besitzt echten transparenten Außenraum; der alte Shader, der schwache Alpha-Werte verwarf und alle übrigen Pixel undurchsichtig machte, wird hier **nicht mehr verwendet**. Lineare Verkleinerung wie bei den normalen `PixelActor`-Helden statt abweichender scharfer Unterabtastung. Sitz-/Schlafmaßstab richtet sich nach Körperlänge und Haltung. Der Stuhl bleibt Teil der zusammen passenden Kontaktgrafiken.
 
 Aktive Raumquellen: `assets/world/painted/chamber-connected.png` mit integrierter Tür und `compensator-clear.png` ohne eingebrannten Stuhl. Die Originale bleiben erhalten. Die neuen Grafiken beziehen sich auf die vorhandenen Spielquellen und die konkreten Screenshots aus Fehlerbericht 8.
+
+## Erhaltene Quellgruppe v0.30.0 · CodexAI
+
+`poses-seated.png` bleibt als historische Quelle erhalten, wird im Spiel aber durch das neue Blatt ersetzt. Es hatte dieselben sechs Posen mit gröberer Textur und grauem Alpha-Hintergrund; die frühere Laufzeit verwendete dafür `pixel_cutout.gdshader`. `tools/sanctuary_pose_gallery.gd --before` rekonstruiert nur für Vergleichsbilder diese alte Darstellung.
 
 ## Erhaltene Quellgruppe v0.29.0 · CodexAI
 

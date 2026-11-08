@@ -1,5 +1,13 @@
 # Versionshinweise
 
+## v0.32.0 – CodexAI: Heiligtum-Posen an die Spielfiguren angeglichen · 8. November 2026
+
+- Alle sechs Posen des Gegenwartsrahmens überarbeitet: Shadepi allein im Sessel, Ravens Griff nach der Maske, abgefangenes Handgelenk, Raven am Bettrand, schlafend und aufwachend. Tatsächliche Helden-Sprites dienen als Stilreferenz; dunkle matte Rüstung statt körniger Bronze-/Weißtexturen.
+- Neues transparentes Quellblatt `poses-game.png`; harte Alpha-Erzwingung entfällt. Figuren werden bei der Verkleinerung genauso abgetastet wie die normalen Helden. Sitz-/Liegegröße und Quellanker gezielt kalibriert; getrennte Ausschnitte erhalten die vollständigen Haare.
+- Ravens Annäherungspunkt auf die tatsächliche Fußposition der Kontaktposen gesetzt. Pose zurücksetzen löscht auch die weiße Aufhellung der Übertragung, zusätzlich zu Lichtstrom und Leistungswert.
+- 18 neue Grafik-/Verankerungsprüfungen im GitHub-Build; zusammen mit Ablauf, Fehlerbericht 8, Atmosphäre, Story und Gameplay **789 Prüfungen ohne Fehler**. Alle sechs Posen sowie die ungekürzten Schlaf-/Kontaktabschnitte in Godot gesichtet.
+- [Vorher/Nachher und technische Hinweise](docs/heiligtum-figuren-v032.md).
+
 ## v0.31.0 – CodexAI: Ortsbezogene Atmosphäre und projektweiter Designcheck · 8. November 2026
 
 - 18 deterministische Ortsprofile für Straßen, Wohnung, Industrie, Versteck, Garage, Hangar, Wohn-/Kompensatorraum, virtuelle Räume, Tower, See und drei Erinnerungen. Vorhandene Pixel-Rauch-/Lichtquellen wiederverwendet; keine neuen Ersatzgrafiken für Figuren oder Gebäude.
