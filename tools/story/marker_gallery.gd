@@ -27,4 +27,7 @@ func run() -> void:
 	c._enter(c.Beat.ECHO, 0, 0, false, false, false, false, 2)
 	c.raven.position = c._target() + Vector2(-16, 10)
 	await shot("compensator")
+	c.menu_open = true; c.ui.show_menu()
+	await create_timer(0.5).timeout
+	await shot("menu")
 	quit()

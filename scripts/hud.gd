@@ -45,6 +45,8 @@ var display_panel: Control
 var game_hud_nodes: Array[CanvasItem] = []
 var menu_button_tweens: Dictionary = {}
 var visual_button: Button
+var ambient_button: Button
+var audio_button: Button
 var mode_button: Button
 var requested_coop: = false
 var controls: Label
@@ -212,15 +214,22 @@ func _ready() -> void :
 	resume_button = button_at("Testszene starten", 124, start_selected)
 	load_button = button_at("Letzten Kontrollpunkt laden",154,func(): preload("res://scripts/checkpoint_resume.gd").load_latest(world,requested_coop))
 	restart_button = button_at("Testszene neu starten", 184, _start_new)
-	var audio_button := button_at("Ton An/Aus", 214, func(): world.toggle_audio())
-	audio_button.size.x = 116
+	# v0.48.0 · ClaudeHelper: Ton und Umgebung teilen sich eine Zeile, Bildstil und Anzeige die nächste.
+	audio_button = button_at("Ton: An" if world.audio_on else "Ton: Aus", 214, func(): world.toggle_audio())
+	audio_button.size.x = 70
 	audio_button.tooltip_text = "Musik und Spielgeräusche ein- oder ausschalten."
-	display_button = button_at("Anzeige", 214, _open_display_panel)
-	display_button.position.x = 144
-	display_button.set_meta("home_x", 144.0)
-	display_button.size.x = 116
-	display_button.tooltip_text = "Vollbild, Fenstergröße und Skalierung · F11 / Alt+Enter"
+	ambient_button = button_at("Umgebung: " + world.ambience.LEVELS[world.ambience.level], 214, func(): world.cycle_ambient_level())
+	ambient_button.position.x = 90
+	ambient_button.set_meta("home_x", 90.0)
+	ambient_button.size.x = 170
+	ambient_button.tooltip_text = "Leise Ortsgeräusche wie Regen, Lüftung, Stadt und See: Aus, Leise oder Normal."
 	visual_button = button_at("Bildstil: " + world.VISUAL_PRESETS[world.visual_quality], 244, func(): world.cycle_visual_quality())
+	visual_button.size.x = 168
+	display_button = button_at("Anzeige", 244, _open_display_panel)
+	display_button.position.x = 188
+	display_button.set_meta("home_x", 188.0)
+	display_button.size.x = 72
+	display_button.tooltip_text = "Vollbild, Fenstergröße und Skalierung · F11 / Alt+Enter"
 	quit_button = button_at("Zurück zum Desktop",304,func(): get_tree().quit())
 	quit_button.size.y = 24
 	menu_help = label_at("Stick / Kreuz · A wählen · F11 Vollbild", Vector2(16,333),Vector2(246,12),menu,8)
