@@ -162,7 +162,7 @@ func run() -> void:
 	var cs = world.begin_cutscene()
 	var ticket: int = cs.generation
 	set_stage("run")
-	await cs.say("RAVEN","Zum Aerodyne! Jetzt!")
+	await cs.say("RAVEN","T-%d! Zum Aerodyne – jetzt!" % maxi(1, ceili(world.countdown)))
 	if not cs.alive(ticket): return
 	for targets in roof_route():
 		await Motion.walk_pair(cs,heroes,targets,125)
@@ -178,7 +178,7 @@ func run() -> void:
 	await cs.animate(func(p: float): vehicle.set_door(1-p),0.45)
 	if not cs.alive(ticket): return
 	for actor in heroes: actor.hide()
-	await cs.say("SHADEPI","Halt dich fest. Wir starten.")
+	await cs.say("SHADEPI","Luke zu. Halt dich fest – wir starten.")
 	if not cs.alive(ticket): return
 	set_stage("launch")
 	engine = true
@@ -195,7 +195,7 @@ func run() -> void:
 	follow_to_facade()
 	set_stage("fall")
 	cs.speaker_label.text = "RAVEN"
-	cs.line_label.text = "Shadepi …!"
+	cs.line_label.text = "Shadepi! Wir fallen!"
 	for segment in 2:
 		await cs.animate(func(p: float): flight_step(segment,p),FLIGHT[segment][4])
 		if not cs.alive(ticket): return
@@ -203,7 +203,7 @@ func run() -> void:
 	engine = true
 	world.sound("drive_boost")
 	cs.speaker_label.text = "SHADEPI"
-	cs.line_label.text = "Komm schon … Ja!"
+	cs.line_label.text = "Komm schon … JA! HALT DICH GUT FEST – JETZT WIRD'S HOLPRIG!"
 	await cs.animate(func(p: float): flight_step(2,p),FLIGHT[2][4])
 	if not cs.alive(ticket): return
 	set_stage("blast")

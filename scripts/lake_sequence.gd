@@ -219,7 +219,7 @@ func play_finale() -> void:
 	glow_target = 0.65
 	await cs.camera(tableau.position+Vector2(10,-32),1.4,2.1)
 	if not cs.alive(ticket): return
-	await cs.lines([["RAVEN","Und jetzt … darf ich?"],["SHADEPI","Ja."]])
+	await cs.lines([["RAVEN","Jetzt gehöre ich zum Orden … darf ich?"],["SHADEPI","Jetzt darfst du."]])
 	if not cs.alive(ticket): return
 	set_stage("mask")
 	await tableau.transition(cs,1,0.9)

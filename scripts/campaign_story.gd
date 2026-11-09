@@ -22,7 +22,7 @@ const LEVEL_ART: = [
 const OBJECTIVES: = [
 	"Towerplan prüfen · %d / 3", "Hinterhalt überleben · %d / %d", "Verfolger ausschalten", 
 	"Geheimes Werkbanksymbol finden", "Aerodyne vorbereiten · %d / 3", "Mit Raven sprechen", 
-	"Den Tower erreichen", "Landekennung und Tür hacken · %d / 2", "Kenzō ausschalten", 
+	"Den Tower erreichen", "Biometrie-Log und Tür hacken · %d / 2", "Kenzō ausschalten", 
 	"Raven schützen und zum Aerodyne", "Raven zum Wasser folgen", "Der neue Orden · Neue Spur",
 ]
 const POINTS: = [

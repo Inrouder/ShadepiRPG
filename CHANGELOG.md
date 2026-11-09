@@ -1,5 +1,13 @@
 # Versionshinweise
 
+## v0.47.0 – ClaudeHelper: Story-Durchsicht Kapitel 1–7, Logikfehler behoben und Szenen verdichtet · 9. November 2026
+
+- Gesamten Storyverlauf gegen Roman und Briefings Teil 4–7 geprüft. Bestätigte Nutzerzeilen und Abläufe unverändert; keine neuen Grafiken, keine geänderte Spielmechanik.
+- Logik: Zeitsprung „Am nächsten Abend“ zwischen Kapitel 5 und 6 passend zum geplanten Dienstagabend. Auf dem Dach wird das Biometrie-Log gefälscht statt einer bereits akzeptierten Kennung, und Shadepis zwanzig Sekunden Tarnung beginnen erst an der Tür. Kenzō reagiert überrascht wie im Roman. Die Penthouse-Explosion ist Shadepis angekündigter Plan C, Wachen im Aufzug begründen die Sperrladung, und der Flucht-Countdown zeigt den echten Restwert. Ravens Satz zu ihren Eltern korrigiert; der Maskenkodex wird in Kapitel 5 eingeführt und am See aufgelöst.
+- Umsetzungsentscheidung: Jackals Telefon mit Peilsender erklärt den Hinterhalt vor Ravens Versteck. Kenzōs Motiv und sein Auftraggeber bleiben unbekannt.
+- Spannender: Shadepis Dachbeobachtung mit fünf Jahren Suche und Wärmesicht, Heiligtum-Unruhe (85 %) während Ravens Deep Dive, Dienstagsplan, „Mensch oder Metall?“ im Hangar, Ravens Reaktionen auf die Erinnerungen, „Du wurdest mir prophezeit“, „Nicht ich töte dich“ und Aufnahmeworte am See nach dem Romanwortlaut.
+- Alle 33 CI-Testsuiten und das Repository-Audit ohne Fehler. [Story-Durchsicht mit allen Änderungen](docs/story-durchsicht.md).
+
 ## v0.46.2 – CodexAI: Repository ordnen und historischen Bestand eindeutig kennzeichnen · 9. November 2026
 
 - Startseite und Spieleranleitung von Versionschroniken getrennt. Überholte Timing-, Tower- und Comic-Anweisungen durch den aktuellen Ablauf ersetzt; alte Texte vollständig im Entwicklungsarchiv mit Herkunft und Nachfolgern erhalten.

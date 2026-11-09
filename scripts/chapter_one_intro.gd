@@ -119,10 +119,15 @@ func observe(cs, threatened: bool):
 	await cs.wait(0.8)
 	if not cs.alive(ticket): return
 	_art(roof_pose,5,Vector2(412,273),SCALE*1.8)
+	# v0.47.0 · ClaudeHelper: Shadepis Motiv und sein Eingreifen nach dem Roman.
 	if threatened:
-		await cs.say("SHADEPI","Sie bewegt sich nicht mehr. Die Wartungsgasse … da komme ich durch.")
+		await cs.say("SHADEPI","Zwei Wärmesignaturen. Eine glüht vor Gier, die andere flackert wie eine Kerze im Sturm. Sie bewegt sich nicht mehr.")
+		if not cs.alive(ticket): return
+		await cs.say("SHADEPI","Das reicht. Tarnung – über die Wartungsgasse komme ich durch.")
 	else:
-		await cs.say("SHADEPI","Wieder dieselbe Kameraschleife. Was versteckt ihr da unten?")
+		await cs.say("SHADEPI","Fünf Jahre seit dem Feuer im Kloster. Fünf Jahre, und noch immer keine Spur.")
+		if not cs.alive(ticket): return
+		await cs.say("SHADEPI","Wieder dieselbe Kameraschleife. Kleine Verbrechen führen zu großen Monstern. Was versteckt ihr da unten?")
 	if not cs.alive(ticket): return
 	await cs.wait(0.45)
 	if not cs.alive(ticket): return

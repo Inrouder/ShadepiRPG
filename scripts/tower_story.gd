@@ -25,18 +25,22 @@ static func opening(w) -> void:
 	cs.face(k,w.raven.position)
 	await cs.walk(w.raven,RAVEN_APPROACH[0],78)
 	if not cs.alive(ticket): return
-	await cs.say("KENZŌ MORIYAMA","Raven. Du bist tatsächlich gekommen.")
+	# v0.47.0 · ClaudeHelper: Kenzō erwartet niemanden (Roman: er erschrickt sichtlich);
+	# er weiß nur, dass Jackal nicht mehr meldet.
+	await cs.say("KENZŌ MORIYAMA","Mein Gleiter landet, ohne dass ich ihn gerufen habe … Raven?")
 	if not cs.alive(ticket): return
 	await cs.walk(w.raven,RAVEN_APPROACH[1],72)
 	if not cs.alive(ticket): return
 	cs.face(w.raven,k.position)
-	await cs.say("RAVEN","Du hast lange genug nach mir gesucht. Hier bin ich.")
+	await cs.say("RAVEN","Lange nicht gesehen.")
+	if not cs.alive(ticket): return
+	await cs.say("KENZŌ MORIYAMA","Jackal meldet sich nicht mehr. Seine Leute auch nicht. Und jetzt kommst du freiwillig zu mir zurück. Wie rührend.")
 	if not cs.alive(ticket): return
 	await cs.walk(w.raven,RAVEN_APPROACH[2],64)
 	if not cs.alive(ticket): return
 	await cs.camera(Vector2(570,370),0.5,1.35)
 	if not cs.alive(ticket): return
-	await cs.say("RAVEN","Jetzt sag mir, warum.")
+	await cs.say("RAVEN","Meine Eltern. Sag mir, warum.")
 	if not cs.alive(ticket): return
 	await cs.walk(k,Vector2(600,388),52)
 	if not cs.alive(ticket): return
@@ -53,7 +57,7 @@ static func opening(w) -> void:
 	)
 	await cs.wait(0.65)
 	if not cs.alive(ticket): return
-	await cs.say("KENZŌ MORIYAMA","Und diesmal läufst du mir nicht davon.")
+	await cs.say("KENZŌ MORIYAMA","Dummes Mädchen. Ich habe ewig nach dir gesucht. Diesmal läufst du mir nicht davon.")
 	if not cs.alive(ticket): return
 	await cs.say("RAVEN","Lass. Mich. Los.")
 	if not cs.alive(ticket): return
@@ -65,7 +69,7 @@ static func opening(w) -> void:
 	cs.walk(w.player,Vector2(476,438),145)
 	await cs.camera(Vector2(500,400),0.45,1.15)
 	if not cs.alive(ticket): return
-	await cs.say("SHADEPI","Nimm die Hand von ihr.")
+	await cs.say("SHADEPI / TARNUNG · 0","Nimm die Hand von ihr.")
 	if not cs.alive(ticket): return
 	await cs.walk(w.player,k.position+Vector2(-35,15),145)
 	if not cs.alive(ticket): return
@@ -130,11 +134,12 @@ static func resolution(w) -> void:
 	await cs.camera(w.boss_spot+Vector2(-45,-35),0.5,1.55)
 	if not cs.alive(ticket): return
 	await cs.lines([
-		["RAVEN","Ich habe es. Einsatzbefehle, Zahlungen, die Minotauren. Kenzō hat den Angriff auf deinen Orden inszeniert."],
-		["SHADEPI","Warum?"],
+		["RAVEN","Ich habe es. Einsatzbefehle, Zahlungen, die Seriennummern der Minotauren. Kenzō hat den Angriff auf deinen Orden inszeniert."],
+		["SHADEPI","Fünf Jahre. Und er saß die ganze Zeit hier oben, über den Wolken. Warum?"],
 		["RAVEN","Die Begründung fehlt. Und der Auftraggeber ist aus den Daten entfernt worden. Kenzō war beteiligt – aber die Spur endet nicht bei ihm."],
 		["KENZŌ MORIYAMA","Ihr habt keine Ahnung, womit ihr euch anlegt."],
-		["RAVEN","Vielleicht. Aber du wirst niemanden mehr einsperren."],
+		["SHADEPI","Nicht ich töte dich, Kenzō. Das ist ihr Vergnügen."],
+		["RAVEN","Du wirst nie wieder jemanden einsperren. Wurde Zeit, dass dir jemand ein Ende setzt."],
 	])
 	if not cs.alive(ticket): return
 	cs.do(func(): w.sound("hack"))
@@ -157,10 +162,14 @@ static func resolution(w) -> void:
 	if not cs.alive(ticket): return
 	cs.face(w.raven,w.player.position)
 	await cs.lines([
-		["RAVEN","Meine Eltern … Wenigstens kann er ihnen niemanden mehr nachschicken."],
+		["RAVEN","Mama. Papa. … Es ist vorbei. Er jagt niemanden mehr."],
 		["SHADEPI","Deine Rache ist vorbei. Die Sache mit dem Orden nicht."],
 		["RAVEN","Dann suchen wir weiter. Zusammen."],
-		["SYSTEM","Sicherheitsprotokoll überlastet. Evakuierung. Sechzig Sekunden."],
+		# v0.47.0 · ClaudeHelper: Shadepis angekündigter Plan C erklärt die Explosion
+		# (Roman: Sprengsätze, T-60); die Wachen im Aufzug begründen die Sperrladung.
+		["SHADEPI","Daten haben wir. Jetzt die Spuren verwischen. Plan C – die Ladungen am Tragwerk sind scharf. Sechzig Sekunden."],
+		["RAVEN","Du hast sein Penthouse vermint? … Ich fange an, dich zu mögen."],
+		["SYSTEM","Sprengstoff erkannt. Aufzug fährt hoch. Wachkräfte unterwegs."],
 	])
 	if not cs.alive(ticket): return
 	cs.do(func():

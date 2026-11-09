@@ -148,7 +148,7 @@ static func memory_entry(w) -> void:
 	if not cs.alive(ticket): return
 	await cs.fade(Color.TRANSPARENT, 0.7)
 	if not cs.alive(ticket): return
-	await cs.say("RAVEN", "Das ist nicht mehr das Versteck … Wo bin ich?")
+	await cs.say("RAVEN", "Rauch … Explosionen … Schreie. Das ist nicht mehr das Versteck. Wo bin ich?")
 	if not cs.alive(ticket): return
 	cs.end(func(): w.toast("Erinnerungsanker suchen · E / A lässt dich hineinsehen"))
 
@@ -196,9 +196,17 @@ static func aftermath(w) -> void:
 	if not cs.alive(ticket): return
 	await cs.say("SHADEPI", "Der Tempel war die Tarnung unserer Basis. Mehr kann ich dir darüber gerade nicht sagen. Das sind Geheimnisse des Ordens.")
 	if not cs.alive(ticket): return
+	# v0.47.0 · ClaudeHelper: Kodex (Roman, Kapitel 6) als Grund für den abgefangenen Griff;
+	# die Aufnahme am See löst ihn später auf. Danach Zeitsprung zum Dienstagabend.
+	await cs.say("RAVEN", "Und die Maske? Du hast mein Handgelenk gepackt, als ginge es um dein Leben.")
+	if not cs.alive(ticket): return
+	await cs.say("SHADEPI", "Mein Kodex verbietet es, mein Gesicht jemandem außerhalb des Ordens zu zeigen.")
+	if not cs.alive(ticket): return
 	await cs.say("RAVEN", "Dann sag mir wenigstens, ob ich mir Sorgen machen muss.")
 	if not cs.alive(ticket): return
 	await cs.say("SHADEPI", "Atme erst mal durch. Ich erkläre dir, worauf du achten musst. Langsam.")
+	if not cs.alive(ticket): return
+	await cs.say("SHADEPI", "Und dann schlaf. Morgen Abend ist Kenzō allein – und wir sind bereit.")
 	if not cs.alive(ticket): return
 	await cs.fade(Color.BLACK, 0.6)
 	if not cs.alive(ticket): return
