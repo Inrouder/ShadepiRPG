@@ -1185,16 +1185,15 @@ func _scene_ambush() -> void:
 func _scene_chase() -> void:
 	var cs = begin_cutscene()
 	var ticket: int = cs.generation
-	# v0.47.0 · ClaudeHelper: Umsetzungsentscheidung – Jackals Telefon erklärt, warum
-	# der Hinterhalt Ravens Versteck findet; Kenzō erfährt so nur, dass Jackal fiel.
+	# v0.47.1 · ClaudeHelper (Nutzervorgabe): Ravens Deep Dive in Kenzōs ICE blieb nicht
+	# ganz unbemerkt. Kenzō schickt auf bloßen Verdacht Schläger und Soldaten an mehrere
+	# mögliche Orte; Raven will nicht zugeben, dass ihre Spuren nicht perfekt waren.
 	await cs.lines([
-		["RAVEN", "Woher wissen die, wo ich wohne? Ich habe jede Spur gelöscht!"],
-		["SHADEPI", "Jackals Telefon. Du trägst es noch bei dir."],
-		["RAVEN", "Verdammt … Sein Blutgeld hatte einen Peilsender."],
+		["RAVEN", "Das ist unmöglich. Ich habe jede Spur verwischt!"],
+		["SHADEPI", "Du warst heute Nacht in Kenzōs Daten. Vielleicht hat sein ICE mehr gesehen, als du denkst."],
+		["RAVEN", "Er hat nichts gefunden. Er rät nur – und schickt seine Schläger überall hin, wo ich sein könnte."],
+		["SHADEPI", "Dann hat er diesmal richtig geraten."],
 	])
-	if not cs.alive(ticket): return
-	cs.do(func(): sound("prop_metal"))
-	await cs.say("RAVEN", "*zertritt das Telefon* – Jetzt nicht mehr.")
 	if not cs.alive(ticket): return
 	await cs.lines([
 		["SHADEPI", "*pfeift* – Ein mattschwarzes Motorrad rollt wie von Geisterhand aus der Seitenstraße. Kommst du mit?"],

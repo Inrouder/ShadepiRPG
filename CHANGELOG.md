@@ -1,5 +1,11 @@
 # Versionshinweise
 
+## v0.47.1 – ClaudeHelper: Hinterhalt durch Kenzōs Verdacht statt Jackals Telefon · 9. November 2026
+
+- Nutzerkorrektur: Raven würde als guter Hackerin nie ein fremdes Telefon mitnehmen. Die Peilsender-Erklärung aus v0.47.0 ist entfernt.
+- Neu vor der Motorradflucht: Ravens Deep Dive in Kenzōs ICE blieb nicht ganz unbemerkt. Kenzō schickt auf bloßen Verdacht Schläger und Soldaten an mehrere mögliche Verstecke. Raven will nicht zugeben, dass ihre Spuren nicht perfekt waren („Er rät nur“); Shadepi: „Dann hat er diesmal richtig geraten.“
+- Kenzōs überraschte Begrüßung im Tower passt dazu: Er ließ mögliche Verstecke stürmen und rechnete nicht damit, dass Raven selbst kommt. Story-Durchsicht und AGENTS.md nachgeführt.
+
 ## v0.47.0 – ClaudeHelper: Story-Durchsicht Kapitel 1–7, Logikfehler behoben und Szenen verdichtet · 9. November 2026
 
 - Gesamten Storyverlauf gegen Roman und Briefings Teil 4–7 geprüft. Bestätigte Nutzerzeilen und Abläufe unverändert; keine neuen Grafiken, keine geänderte Spielmechanik.
