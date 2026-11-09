@@ -16,6 +16,7 @@ const Drive = preload("res://scripts/campaign_drive.gd")
 const AerodyneFlight = preload("res://scripts/aerodyne_flight.gd")
 const ParkedAerodyne = preload("res://scripts/parked_aerodyne.gd")
 const TowerPlan = preload("res://scripts/tower_plan_hologram.gd")
+const TowerAlarm = preload("res://scripts/tower_alarm.gd")
 const ChapterHud = preload("res://scripts/campaign_hud.gd")
 const Arcade = preload("res://scripts/arcade_encounter.gd")
 const Waves = preload("res://scripts/arcade_waves.gd")
@@ -77,6 +78,7 @@ var bike_mode: = ""
 var aerodyne_spot := AerodyneFlight.PAD_WORLD
 var parked_aerodyne: Node2D
 var tower_plan: Node2D
+var tower_alarm: Node2D
 ## After a crash the repaired engine is not failing a second time.
 var flight_engine_repaired := false
 var departure: Node2D
@@ -253,6 +255,9 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo:
 	if is_instance_valid(tower_plan):
 		tower_plan.queue_free()
 	tower_plan = null
+	if is_instance_valid(tower_alarm):
+		tower_alarm.queue_free()
+	tower_alarm = null
 	for foe in foes:
 		foe.hide()
 		foe.set_physics_process(false)
@@ -331,6 +336,12 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo:
 		tower_plan.position = PLAN_EMITTER
 		add_child(tower_plan)
 		if not fresh: tower_plan.show_plan(true)
+	if beat == Beat.ESCAPE:
+		# v0.48.0 · ClaudeHelper: Alarm aus Wandbeacons, Boden-LEDs und Aufzuglicht.
+		tower_alarm = TowerAlarm.new()
+		tower_alarm.world = self
+		add_child(tower_alarm)
+		move_child(tower_alarm, actors.get_index())
 	if beat == Beat.ROOF:
 		# The Aerodyne stays where it touched down on Kenzō's pad.
 		parked_aerodyne = ParkedAerodyne.new()
@@ -972,21 +983,11 @@ func _draw() -> void :
 		var decoy: = Vector2(551, 426)
 		draw_arc(decoy, 15, clock * 2.0, clock * 2.0 + PI, 24, Color("a35b7a"), 2)
 		draw_line(decoy + Vector2(-7, -2), decoy + Vector2(12, -2), Color("bf6d91"))
-	if beat == Beat.ESCAPE:
-		var pulse: = 0.06 + 0.08 * (1.0 + sin(clock * 6.0))
-		draw_rect(Rect2(0, 216, 1024, 280), Color(0.82, 0.06, 0.14, pulse))
-		for x in range(85, 1000, 115):
-			draw_polyline(PackedVector2Array([Vector2(x, 466), Vector2(x + 7, 471), Vector2(x, 476)]), Color("df7778"), 2)
 	if beat == Beat.ESCAPE and lift_glow > 0.0:
-		# Light spilling from the opening lift doors onto the marble floor.
-		var glow: = minf(1.0, lift_glow)
-		draw_set_transform(LIFT_DOOR + Vector2(0, -8), 0.0, Vector2(1.0, 0.38))
-		for ring in 5:
-			draw_circle(Vector2.ZERO, 26.0 + ring * 15.0, Color(0.5, 0.9, 1.0, 0.07 * glow))
-		draw_set_transform(Vector2.ZERO)
-		var gap: = 14.0 * glow
-		draw_line(LIFT_DOOR + Vector2(-gap, -18), LIFT_DOOR + Vector2(-gap, 6), Color(0.75, 0.97, 1.0, 0.8 * glow), 2.0)
-		draw_line(LIFT_DOOR + Vector2(gap, -18), LIFT_DOOR + Vector2(gap, 6), Color(0.75, 0.97, 1.0, 0.8 * glow), 2.0)
+		# Die Aufzugtüren gleiten auf; das Licht selbst kommt aus TowerAlarm.lift_light.
+		var gap: = roundf(14.0 * minf(1.0, lift_glow))
+		for side in [-1.0, 1.0]:
+			draw_rect(Rect2(LIFT_DOOR + Vector2(side * gap - 1.0, -18), Vector2(2, 24)), Color(0.75, 0.97, 1.0, 0.8 * minf(1.0, lift_glow)))
 	if beat in [Beat.LAKE, Beat.END] and ritual_flash > 0.0:
 		draw_set_transform(ritual_origin, 0.0, Vector2(1.0, 0.52))
 		draw_arc(Vector2.ZERO, 14.0 + (1.4 - ritual_flash) * 49.0, 0, TAU, 48, Color(0.46, 0.93, 1.0, ritual_flash / 1.4), 2)
@@ -1006,9 +1007,8 @@ func _draw() -> void :
 		if boss.health > 0 and boss.health <= 180 and fposmod(clock, 3.0) <= 1.45:
 			draw_circle(boss.position + Vector2(8, -34), 4.0, Color("72eff4"))
 	var point: = Vector2.ZERO if in_cinematic() else _target()
-	if point != Vector2.ZERO:
-		var actor: PixelActor = raven if raven_leads() else player
-		PixelMarker.draw(self, point, actor.position.distance_to(point) <= 43.0, _timed_node() and not _signal_open(), 36.0)
+	var marker_actor: PixelActor = raven if raven_leads() else player
+	PixelMarker.show(self, [] if point == Vector2.ZERO else [[point, marker_actor.position.distance_to(point) <= 43.0, _timed_node() and not _signal_open(), 36.0]])
 
 # --- Scripted scenes ---------------------------------------------------------
 

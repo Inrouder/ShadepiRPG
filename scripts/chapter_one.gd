@@ -707,6 +707,5 @@ func _draw() -> void:
 		point = TRAIL[trail_index] if trail_index < TRAIL.size() else (ARENA_ENTRY if gate_open else (TRAIL.back() if _hunt_terminal_ready() else Vector2.ZERO))
 	elif phase == Phase.RESCUE and gate_open:
 		point = DOWNED_SPOT
-	if point != Vector2.ZERO and not in_cinematic():
-		var actor: PixelActor = raven if raven_leads() else player
-		PixelMarker.draw(self, point, actor.position.distance_to(point) <= 47.0, false, 62.0)
+	var marker_actor: PixelActor = raven if raven_leads() else player
+	PixelMarker.show(self, [[point, marker_actor.position.distance_to(point) <= 47.0, false, 62.0]] if point != Vector2.ZERO and not in_cinematic() else [])

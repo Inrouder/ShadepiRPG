@@ -610,6 +610,5 @@ func _draw() -> void :
 		if section == Section.RECOVERY:
 			draw_rect(Rect2(SPRAY + Vector2(-4, -11), Vector2(8, 11)), tint if spray_ready else Color("a5e3e8"))
 	var marker: = Vector2.ZERO if in_cinematic() else _target()
-	if marker != Vector2.ZERO:
-		var actor: PixelActor = raven if raven_leads() else player
-		PixelMarker.draw(self, marker, actor.position.distance_to(marker) <= 43.0, net and not _ice_open(), 40.0)
+	var marker_actor: PixelActor = raven if raven_leads() else player
+	PixelMarker.show(self, [[marker, marker_actor.position.distance_to(marker) <= 43.0, net and not _ice_open(), 40.0]] if marker != Vector2.ZERO else [])

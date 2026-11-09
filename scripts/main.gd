@@ -1224,10 +1224,12 @@ func _draw() -> void :
 			draw_rect(Rect2(499, y, 21, 12), Color("2e4355"))
 			draw_rect(Rect2(504, y + 3, 11, 3), Color("76dfec"))
 	var marker: Vector2 = WorldData.RAVEN if stage == 0 else WorldData.TERMINAL if stage == 1 else enemy.position if stage == 2 else WorldData.EXIT
+	var markers: Array = []
 	if stage < 4:
-		PixelMarker.draw(self, marker, player.position.distance_to(marker) <= 40.0, false, 72.0)
+		markers.append([marker, player.position.distance_to(marker) <= 40.0, false, 72.0])
 	if stage >= 3:
-		PixelMarker.draw(self, WorldData.EXIT, true)
+		markers.append([WorldData.EXIT, true, false, 34.0])
+	PixelMarker.show(self, markers)
 
 func _capture(path: String) -> void :
 	await get_tree().process_frame

@@ -25,11 +25,14 @@ func _ready() -> void:
 	# Licht addiert sich wie eine echte Projektion zur dunklen Kulisse.
 	var glow := CanvasItemMaterial.new()
 	glow.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+	glow.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED   # Projektion leuchtet selbst
 	material = glow
 	accent = Node2D.new()
 	accent.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	accent.use_parent_material = false
-	accent.material = CanvasItemMaterial.new()
+	var accent_material := CanvasItemMaterial.new()
+	accent_material.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+	accent.material = accent_material
 	add_child(accent)
 	accent.draw.connect(_draw_accent)
 
