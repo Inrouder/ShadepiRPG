@@ -239,6 +239,8 @@ jobs:
           set -euo pipefail
           godot --headless --script res://tests/story_audit.gd 2>&1 | tee /tmp/story-audit.log
           if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/story-audit.log; then exit 1; fi
+          godot --headless --script res://tests/story_plan.gd 2>&1 | tee /tmp/story-plan.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/story-plan.log; then exit 1; fi
       - name: Export Windows and Linux
         shell: bash
         run: |
