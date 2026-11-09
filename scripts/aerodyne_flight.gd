@@ -769,13 +769,29 @@ static func draw_aerodyne_3q(canvas: CanvasItem, center: Vector2, grow: float, t
 	var size := Vector2(240, 240) * grow
 	Airframe.draw(canvas,Rect2(-size*0.5,size),time,1.0 if powered else 0.0,Color.WHITE,bank)
 	var outlets := Airframe.nozzles(bank)
-	for side in [-1.0, 1.0]:
-		var nozzle: Vector2 = outlets[0 if side<0 else 1]*grow
-		var glow := Color(1.0, 0.55, 0.2, 0.55) if braking else Color(0.3, 0.85, 1.0, 0.35)
-		var flick := 1.0 + 0.2 * sin(time * 40.0 + side)
-		canvas.draw_circle(nozzle, 12.0 * grow * flick, Color(glow, glow.a * 0.5))
-		canvas.draw_circle(nozzle, 6.0 * grow * flick, glow)
 	canvas.draw_set_transform(Vector2.ZERO)
+	if not powered:
+		return
+	# v0.48.0 · ClaudeHelper: Düsenstrahl als Pixelcluster im Bildraster statt Vektorkreisen.
+	var block := maxf(1.0, roundf(grow * 2.0))
+	for side in [0, 1]:
+		var nozzle := (xf * (outlets[side] * grow)).round()
+		var flick := int(fposmod(time * 18.0 + side * 1.7, 3.0))
+		_pixel_plume(canvas, nozzle, block, braking, flick)
+
+## Kleiner Düsenstrahl aus Pixelzeilen: heißer Kern, Ionenmantel, flackernde Spitze.
+const PLUME_ROWS := ["0110", "1221", "1331", "1221", "0110", "0100"]
+static func _pixel_plume(canvas: CanvasItem, nozzle: Vector2, block: float, braking: bool, flick: int) -> void:
+	var ramp: Array = [Color(1.0, 0.45, 0.15, 0.45), Color(1.0, 0.7, 0.3, 0.85), Color(1.0, 0.95, 0.8)] if braking else [Color(0.15, 0.5, 0.95, 0.45), Color(0.4, 0.85, 1.0, 0.85), Color(0.85, 0.98, 1.0)]
+	var rows := PLUME_ROWS.size() - (flick % 2)
+	for y in rows:
+		var row: String = PLUME_ROWS[y]
+		for x in row.length():
+			var level := int(row[x])
+			if level == 0:
+				continue
+			var at := nozzle + Vector2((x - 2) * block, y * block)
+			canvas.draw_rect(Rect2(at, Vector2(block, block)), ramp[mini(level, 3) - 1])
 
 ## Panels drawn in screen space: calibration deck, callouts.
 func _draw_overlay() -> void:
