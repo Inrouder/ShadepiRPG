@@ -1,5 +1,7 @@
 # Tower-Posen, Außenansicht und KOBAN-TEC · v0.33.0 · CodexAI
 
+**Laufzeitkorrektur v0.35.0 · CodexAI:** Die Quellbilder bleiben unverändert. `tower_escape.gd` verwendet `exterior.png` jetzt durchgehend von Rennen und Einsteigen bis Fall und Abfangen. `cinematic_aerodyne.gd` nutzt weiterhin die Fahrzeugzelle `(0,0,627,627)`; die Düsenanker stammen aus deren Quellpixeln `(214,550)` und `(421,550)`. Körper und Abgasstrahlen teilen dieselbe Projektion und Rollbewegung. Der neue Shader isoliert nur Flammenpixel aus dem vorhandenen `props-fx.png`, ohne Holz oder Trümmer. Keine neue Figuren- oder Fahrzeuggrafik. [Aktuelle Aufnahmen](../../../docs/tower-inszenierung.md).
+
 ## Aktive Quellen
 
 - `kenzo-poses.png`: unverändert generierter transparenter Atlas, 1536×1024, 2×2 Zellen. Griffpaar mit Raven, schwer verletzter kniender Kenzō, Raven allein am Extraktionsdeck und zerstörter/zusammengebrochener Kenzō. Referenzen waren die tatsächlichen v0.32.2-Bildkarten aus den normalen Kenzo-/Raven-Gameplay-Sprites. Ruhige dunkle Pixelmaterialien, kleiner erwachsener Kopf, Raven 160 cm, gleiche Masken-/Haar-/Kostümmerkmale. Kein neues Figurenmodell.

@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.34.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.35.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -39,7 +39,13 @@ Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und
 
 Für Menschen und KI: **[Bebilderte Stilbibel des gesamten Spiels](docs/stilbibel/README.md)** · [Alle 23 Figuren mit Einzelkarten](docs/stilbibel/figuren.md) · [Konsistenzregeln](KONSISTENZ.md) · [Mitarbeit](CONTRIBUTING.md) · [Kopierbarer Auftrag und Arbeitsnachweis](docs/vorlagen/konsistenz-auftrag.md). Die Projektregeln in [AGENTS.md](AGENTS.md), der Einstieg für [Claude](CLAUDE.md) und die Pull-Request-Vorlage verweisen auf denselben Standard.
 
-## Neu in v0.34.0 · 9. November 2026 · CodexAI
+## Neu in v0.35.0 · 9. November 2026 · CodexAI
+
+- **Penthouse:** Kenzō wartet sichtbar neben dem Sessel. Raven läuft vom Eingang durch den Raum auf ihn zu. Nach seinem Griff kommt Shadepi erst sichtbar vom Eingang herangelaufen und greift ein.
+- **Tower-Flucht:** Rennen, Einsteigen, Kippen, Fall und Abfangen bleiben in derselben Außenansicht. Durchgehende Fluggeschwindigkeit, passende Ausrichtung, fest an den Düsen sitzende texturierte Triebwerksstrahlen und eine einmalige Explosion ersetzen den harten Wechsel mitten im Fall.
+- **Hangar:** Beide starten auf freiem Boden, laufen um die Geräte herum und steigen nacheinander ein. [Spielaufnahmen, Film und Prüfungen](docs/tower-inszenierung.md).
+
+## v0.34.0 · 9. November 2026 · CodexAI
 
 - Start im **Fenstervollbild**; unter **Anzeige** im Haupt- und Pausenmenü zwischen Fenster, Fenstervollbild und Vollbild wechseln. **F11 / Alt+Enter** schaltet jederzeit um. Die Auswahl wird für den nächsten Start gespeichert.
 - Das Spielbild wächst jetzt mit dem Fenster. **16:9-Ausgabe in 1080p, 1440p und 4K**; andere Bildschirmformate erhalten passende Ränder. Optional bleiben ganze Pixelstufen wählbar. Fenstergrößen werden an den verfügbaren Bildschirm angepasst.

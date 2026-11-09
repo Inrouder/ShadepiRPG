@@ -1,10 +1,17 @@
 extends Node2D
-## v0.30.0 · CodexAI: visible boarding, cockpit failure, knock, takeoff.
+## v0.35.0 · CodexAI: walk through the clear aisle, board, restart, depart.
 const HANGAR = preload("res://assets/story/departure/hangar-empty.png")
 const COCKPIT = preload("res://assets/story/departure/cockpit.png")
-const Flight = preload("res://scripts/aerodyne_flight.gd")
+const Aerodyne = preload("res://scripts/cinematic_aerodyne.gd")
+const Motion = preload("res://scripts/cinematic_motion.gd")
 const HEROES = [preload("res://assets/sprites/heroes/shadepi.png"), preload("res://assets/sprites/heroes/raven.png")]
 const SMOKE = preload("res://assets/memories/attack/props-fx.png")
+const STARTS: Array[Vector2] = [Vector2(232,514),Vector2(266,526)]
+const ROUTE: Array = [
+	[Vector2(444,516),Vector2(478,526)],
+	[Vector2(758,516),Vector2(792,526)],
+	[Vector2(810,392),Vector2(845,396)],
+]
 var world: Node2D
 var stage := "boarding"
 var events: Array[String] = []
@@ -14,6 +21,8 @@ var lift := 0.0
 var clock := 0.0
 var squad: Array[PixelActor] = []
 var engines := false
+var power := 0.0
+var vehicle: Node2D
 var scene_atmosphere: Node2D
 
 func _ready() -> void:
@@ -25,8 +34,12 @@ func _ready() -> void:
 		actor.setup(HEROES[i], world)
 		actor.collision_layer = 0
 		actor.collision_mask = 0
-		actor.position = Vector2(690 + i * 30, 392 + i * 20)
+		actor.position = STARTS[i]
+		actor.z_index = 2
 		squad.append(actor)
+	vehicle = Aerodyne.new()
+	add_child(vehicle)
+	_sync_vehicle()
 	scene_atmosphere = preload("res://scripts/scene_atmosphere.gd").new()
 	scene_atmosphere.world = world
 	scene_atmosphere.profile_override = "hangar"
@@ -35,19 +48,30 @@ func _ready() -> void:
 
 func set_stage(value: String) -> void:
 	stage = value
+	# Keep the lower aisle inside the letterbox while they cross the room.
+	position.y = -62 if value=="boarding" else 0
 	if not events.has(value): events.append(value)
 	if scene_atmosphere != null: scene_atmosphere.visible = value in ["boarding","takeoff"]
 	for actor in squad: actor.visible = value == "boarding"
+	_sync_vehicle()
 	queue_redraw()
 
 func _process(delta: float) -> void:
 	if world == null or world.menu_open or world.terminal != null: return
 	clock += delta
+	_sync_vehicle()
 	queue_redraw()
+
+func _sync_vehicle() -> void:
+	if vehicle == null: return
+	vehicle.visible = stage in ["boarding","takeoff"]
+	vehicle.set_pose(craft,0.90-lift*0.18,0,power,clock)
 
 func takeoff_step(k: float) -> void:
 	lift = k
 	craft = Vector2(884, 306).lerp(Vector2(865, -105), k * k)
+	power = lerpf(0.8,1.0,k)
+	_sync_vehicle()
 	queue_redraw()
 
 func _draw() -> void:
@@ -61,7 +85,6 @@ func _draw() -> void:
 	draw_set_transform(Vector2(884, 340), 0, Vector2(1, 0.35))
 	draw_circle(Vector2.ZERO, 70 * (1 - lift * 0.5), Color(0, 0, 0, 0.4 * (1 - lift)))
 	draw_set_transform(Vector2.ZERO)
-	Flight.draw_aerodyne_3q(self, craft, 0.90 - lift * 0.18, 0, false, clock if engines else 0)
 	if engines:
 		var cell := Vector2(SMOKE.get_size()) / Vector2(4, 4)
 		for i in 4:
@@ -85,10 +108,19 @@ func play() -> void:
 	if not cs.alive(ticket): return
 	await cs.say("RAVEN", "Da steht er. Ich habe alles geprüft. Er sollte uns bis zum Tower bringen.")
 	if not cs.alive(ticket): return
-	cs.walk(squad[0], Vector2(852, 343), 65)
-	await cs.walk(squad[1], Vector2(895, 348), 65)
+	for targets in ROUTE:
+		await Motion.walk_pair(cs,squad,targets,90)
+		if not cs.alive(ticket): return
+	cs.face(squad[0],craft)
+	cs.face(squad[1],craft)
+	await cs.wait(0.35)
 	if not cs.alive(ticket): return
-	await cs.wait(0.8)
+	world.sound("prop_metal")
+	await _board(cs,squad[1],Vector2(878,339))
+	if not cs.alive(ticket): return
+	await _board(cs,squad[0],Vector2(857,344))
+	if not cs.alive(ticket): return
+	await cs.wait(0.25)
 	if not cs.alive(ticket): return
 	await cs.fade(Color.BLACK, 0.25)
 	if not cs.alive(ticket): return
@@ -126,7 +158,7 @@ func play() -> void:
 		set_stage("restart")
 		world.sound("drive_engine_restart")
 	)
-	await cs.wait(1.1)
+	await cs.animate(func(p: float): power = smoothstep(0,1,p)*0.8,1.1)
 	if not cs.alive(ticket): return
 	await cs.say("ARTOS", "Schub verfügbar. Hangarschleuse freigegeben.")
 	if not cs.alive(ticket): return
@@ -158,3 +190,13 @@ func play() -> void:
 		world.autosave()
 		queue_free()
 	)
+
+func _board(cs, actor: PixelActor, port: Vector2) -> void:
+	var start := actor.position
+	await cs.animate(func(p: float):
+		actor.facing = (port-start).normalized()
+		actor.position = start.lerp(port,p)+Vector2(0,-sin(p*PI)*8)
+		if not world.menu_open and world.terminal==null:
+			actor.animate("walk",actor.get_process_delta_time())
+		actor.modulate.a = 1-smoothstep(0.55,0.95,p)
+	,0.9)

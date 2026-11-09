@@ -1,5 +1,13 @@
 # Versionshinweise
 
+## v0.35.0 – CodexAI: Glaubhafte Tower-Ankunft, durchgehende Flucht und Hangar-Laufwege · 9. November 2026
+
+- Kenzō wartet sichtbar neben dem Sessel statt in dessen Sitz-/Standfläche. Raven kommt vom Eingang und nähert sich über freie Laufpunkte. Erst nach Griff und Bedrohung wird Shadepi sichtbar und läuft vom Eingang zu ihnen; keine unmittelbare Erscheinung am Gegner.
+- Tower-Abflug in einer einzigen Außenansicht vom Rennen bis zum Wegflug. Derselbe Schiffsknoten bleibt bestehen. Flugkurven teilen sich Position und Geschwindigkeit an den Übergängen: Kippen, beschleunigter Fall, langsamer Schubaufbau und Abfangen gehen ineinander über. Die Nase richtet sich zur Flugbahn aus. Der Kontaktschatten folgt bis zum Verlust der Bodenauflage.
+- Gemeinsamer filmischer Aerodyne-Renderer verwendet die vorhandene HQ-Fahrzeuggrafik. Tatsächliche Düsenanker aus dem Quellbild und dieselbe Perspektiv-/Rolltransformation für Körper und Abgasstrahlen. Isolierte vorhandene Flammenpixel mit Cyan-Farbe und sanft überblendeten Bildern ersetzen Fackel-/Holzfragmente und schwebende Glühkreise. Explosionsbilder laufen einmal am Penthouse ab.
+- Hangar-Start auf freiem Gang vor der Vorderwand; beide laufen unterhalb des großen Kastens und seitlich um die Konsolen zum Schiff. Kameraausschnitt hält den Gang sichtbar. Raven und Shadepi steigen nacheinander ein. Cockpit, ARTOS-Ausfall, Armatur-Schlag und anschließender Flug bleiben erhalten.
+- **1.132 Prüfungen ohne Fehler** in neun gezielten Prüfreihen, zusätzlich tatsächliche Godot-Aufnahmen aller drei Abläufe. Neue Bewegungs-/Routenprüfung im GitHub-Build. [Spielbilder und Film](docs/tower-inszenierung.md), [Konsistenznachweis](docs/arbeiten/tower-inszenierung-v035.md).
+
 ## v0.34.0 – CodexAI: Bildschirmfüllendes 16:9, Vollbild und Anzeigeoptionen · 9. November 2026
 
 - Zentrale Anzeigeverwaltung für alle Kapitel: Standard Fenstervollbild, zusätzlich Fenster und exklusives Vollbild. F11 und Alt+Enter wechseln zum Fenster und zurück zum zuletzt gewählten Vollbildmodus; Tastaturwiederholung löst keinen mehrfachen Wechsel aus.

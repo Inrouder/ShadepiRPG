@@ -1,6 +1,6 @@
 # Verbindliche Konsistenzvorlage für ShadepiRPG
 
-**Stand v0.33.0 · CodexAI · 8. November 2026; eingeführt mit v0.32.1.** Gilt für das gesamte Spiel und alle Mitwirkenden, ob Mensch oder KI. Vor Änderungen zusammen mit [AGENTS.md](AGENTS.md) lesen und die [Arbeitsvorlage](docs/vorlagen/konsistenz-auftrag.md) verwenden. Eine neuere ausdrückliche Nutzervorgabe hat Vorrang; bestätigte Änderungen anschließend hier und in den betroffenen Referenzen nachführen.
+**Stand v0.35.0 · CodexAI · 9. November 2026; eingeführt mit v0.32.1.** Gilt für das gesamte Spiel und alle Mitwirkenden, ob Mensch oder KI. Vor Änderungen zusammen mit [AGENTS.md](AGENTS.md) lesen und die [Arbeitsvorlage](docs/vorlagen/konsistenz-auftrag.md) verwenden. Eine neuere ausdrückliche Nutzervorgabe hat Vorrang; bestätigte Änderungen anschließend hier und in den betroffenen Referenzen nachführen.
 
 ## Bebilderter Einstieg für das gesamte Spiel
 
@@ -102,6 +102,8 @@ Sonderatlanten für Sitzen, Liegen, Gegner oder Menü folgen ihren eigenen Metad
 ## 7. Szene, Bedienung und Ton
 
 - Tower ab v0.33.0: Kenzō hält Raven vor Shadepis Eingreifen fest und bleibt nach der Niederlage bis zur geschützten Datenextraktion lebendig. Seine Inszenierung wird bewiesen; Motiv und Auftraggeber bleiben offen. Erst anschließend folgen Ravens endgültige Abrechnung und die sichtbare gemeinsame Flucht. [Aktuelle Reihenfolge](docs/tower-extraktion.md).
+
+- Inszenierung ab v0.35.0 · CodexAI: Kenzō steht bereits sichtbar neben dem Sessel; Raven betritt den Raum und nähert sich zu Fuß. Erst nach dem Griff läuft Shadepi vom Eingang dazu. Die Tower-Flucht bleibt von Rennen und Einsteigen bis Fall und Abfangen in einer einzigen Außenansicht. Im Hangar starten beide im freien Gang und umgehen die Einrichtung. [Kontakt-/Laufwege und Film](docs/tower-inszenierung.md).
 
 - Handlung, Figurenwissen und Anwesenheit gegen die aktuelle Szenenquelle prüfen. Beim Heiligtum gilt: Shadepi geht zur Eindämmung **alle sechs Tage** voraus; Raven folgt nach der Aerodyne-Reparatur, schläft zwei Stunden und sucht ihn erst danach. Die Handkontaktszene führt zu den Erinnerungen.
 - Erinnerung III spielt im Tempelinneren über der getarnten Hightech-Basis. Der Meister ist nach der Übertragung tot; Shadepis späterer Zusammenbruch ist keine bestätigte Todesfestlegung. Weitere Szenen nach den aktuellen Archivquellen behandeln.

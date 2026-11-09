@@ -1,26 +1,44 @@
 extends RefCounted
-## v0.33.0 · CodexAI: capture -> intervention -> living prisoner -> protected data.
+## v0.35.0 · CodexAI: visible entry, established host, approach, grip, running intervention.
 const Tableau = preload("res://scripts/tower_tableau.gd")
+const ENTRY := Vector2(286,486)
+const KENZO_WAIT := Vector2(675,340)
+const RAVEN_APPROACH: Array[Vector2] = [Vector2(412,466),Vector2(526,416),Vector2(570,388)]
 
 static func opening(w) -> void:
 	var k = w.foes.back()
-	k.position = Vector2(612,306)
-	w.player.position = Vector2(430,446)
-	w.raven.position = Vector2(420,396)
+	# Establish Kenzō beside the chair, never inside its seat/footprint.
+	k.position = KENZO_WAIT
+	k.flash_time = 0
+	w.player.position = ENTRY+Vector2(-10,12)
+	w.raven.position = ENTRY
 	w.player.set_cloaked(true)
+	w.player.hide()
 	var cs = w.begin_cutscene()
 	var ticket: int = cs.generation
 	cs.pose(k,"idle")
 	cs.pose(w.player,"idle")
 	cs.pose(w.raven,"idle")
-	await cs.camera(Vector2(570,340),0.4,1.4)
+	w.camera.position = Vector2(490,410)
+	w.camera.zoom = Vector2.ONE
+	w.camera.force_update_scroll()
+	cs.face(k,w.raven.position)
+	await cs.walk(w.raven,RAVEN_APPROACH[0],78)
 	if not cs.alive(ticket): return
-	await cs.walk(w.raven,Vector2(540,385),65)
+	await cs.say("KENZŌ MORIYAMA","Raven. Du bist tatsächlich gekommen.")
+	if not cs.alive(ticket): return
+	await cs.walk(w.raven,RAVEN_APPROACH[1],72)
 	if not cs.alive(ticket): return
 	cs.face(w.raven,k.position)
 	await cs.say("RAVEN","Du hast lange genug nach mir gesucht. Hier bin ich.")
 	if not cs.alive(ticket): return
-	await cs.walk(k,Vector2(570,386),48)
+	await cs.walk(w.raven,RAVEN_APPROACH[2],64)
+	if not cs.alive(ticket): return
+	await cs.camera(Vector2(570,370),0.5,1.35)
+	if not cs.alive(ticket): return
+	await cs.say("RAVEN","Jetzt sag mir, warum.")
+	if not cs.alive(ticket): return
+	await cs.walk(k,Vector2(600,388),52)
 	if not cs.alive(ticket): return
 	cs.do(func():
 		w.tower_grip = Tableau.new()
@@ -40,10 +58,16 @@ static func opening(w) -> void:
 	await cs.say("RAVEN","Lass. Mich. Los.")
 	if not cs.alive(ticket): return
 	# Shadepi reveals himself only after the physical grip is visibly established.
-	cs.do(func(): w.player.set_cloaked(false))
+	cs.do(func():
+		w.player.show()
+		w.player.set_cloaked(false)
+	)
+	cs.walk(w.player,Vector2(476,438),145)
+	await cs.camera(Vector2(500,400),0.45,1.15)
+	if not cs.alive(ticket): return
 	await cs.say("SHADEPI","Nimm die Hand von ihr.")
 	if not cs.alive(ticket): return
-	await cs.walk(w.player,k.position+Vector2(-35,15),420)
+	await cs.walk(w.player,k.position+Vector2(-35,15),145)
 	if not cs.alive(ticket): return
 	cs.do(func():
 		w.effects.slash(k.position+Vector2(0,-32),Vector2.RIGHT)
