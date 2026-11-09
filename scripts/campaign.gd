@@ -634,7 +634,14 @@ func interaction_prompt() -> String:
 		return "E / A · Ravens Terminal öffnen"
 	if _timed_node():
 		return "E / A · Daten abgreifen" if _signal_open() else "ICE scannt · auf Cyan warten"
-	return "E / A · " + chapter_objective()
+	return "E / A · " + _short_action(chapter_objective())
+
+## v0.48.0 · ClaudeHelper: die Aktionszeile nennt nur die Handlung; Zähler und
+## Figurenpräfix stehen bereits im Missionsfeld.
+static func _short_action(objective: String) -> String:
+	var text := objective.trim_prefix("Raven: ")
+	var counter := RegEx.create_from_string(" · \\d+ ?/ ?\\d+.*$")
+	return counter.sub(text, "").strip_edges()
 
 func _hangar_prop() -> String:
 	for item in [[Vector2(193, 289), "Klingen ansehen"], [Vector2(476, 293), "Ersatzteile ansehen"], [Vector2(895, 380), "Aerodyne ansehen"]]:
@@ -1000,10 +1007,8 @@ func _draw() -> void :
 			draw_circle(boss.position + Vector2(8, -34), 4.0, Color("72eff4"))
 	var point: = Vector2.ZERO if in_cinematic() else _target()
 	if point != Vector2.ZERO:
-		var signal_color: = Color("f45d79") if _timed_node() and not _signal_open() else Color("72eff4")
-		draw_circle(point, 12.0, signal_color, false, 2)
-		var tip: = point + Vector2(0, -31.0 + sin(clock * 5.0) * 3.0)
-		draw_polyline(PackedVector2Array([tip + Vector2(-6, -5), tip, tip + Vector2(6, -5)]), signal_color, 2)
+		var actor: PixelActor = raven if raven_leads() else player
+		PixelMarker.draw(self, point, actor.position.distance_to(point) <= 43.0, _timed_node() and not _signal_open(), 36.0)
 
 # --- Scripted scenes ---------------------------------------------------------
 

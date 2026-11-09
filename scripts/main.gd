@@ -3,6 +3,7 @@ extends Node2D
 const GamepadBindings = preload("res://scripts/gamepad_bindings.gd")
 const Admin = preload("res://scripts/admin_tools.gd")
 const ChapterFlow = preload("res://scripts/chapter_flow.gd")
+const PixelMarker = preload("res://scripts/pixel_marker.gd")
 const PlayerScript = preload("res://scripts/player.gd")
 const EnemyScript = preload("res://scripts/enemy.gd")
 const HudScript = preload("res://scripts/hud.gd")
@@ -1224,10 +1225,9 @@ func _draw() -> void :
 			draw_rect(Rect2(504, y + 3, 11, 3), Color("76dfec"))
 	var marker: Vector2 = WorldData.RAVEN if stage == 0 else WorldData.TERMINAL if stage == 1 else enemy.position if stage == 2 else WorldData.EXIT
 	if stage < 4:
-		var bounce: = sin(Time.get_ticks_msec() * 0.004) * 2
-		draw_polyline(PackedVector2Array([marker + Vector2(-5, -72 + bounce), marker + Vector2(0, -67 + bounce), marker + Vector2(5, -72 + bounce)]), Color("8aebf0"), 2)
+		PixelMarker.draw(self, marker, player.position.distance_to(marker) <= 40.0, false, 72.0)
 	if stage >= 3:
-		draw_arc(WorldData.EXIT, 18, 0.0, TAU, 24, Color(0.4, 0.9, 0.85, 0.6), 1)
+		PixelMarker.draw(self, WorldData.EXIT, true)
 
 func _capture(path: String) -> void :
 	await get_tree().process_frame

@@ -149,6 +149,7 @@ func _ready() -> void :
 	game_hud_nodes.append(prompt)
 	prompt.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	prompt.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	prompt.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	var shadow: = StyleBoxFlat.new()
 	shadow.bg_color = Color(0.03, 0.05, 0.09, 0.9)
 	prompt.add_theme_stylebox_override("normal", shadow)
@@ -259,6 +260,24 @@ func _animate_menu_button(button: Button) -> void:
 	menu_button_tweens[button] = tween
 	if active and start_backdrop.visible:
 		start_backdrop.pulse_at(button.global_position + button.size * 0.5)
+
+## v0.48.0 · ClaudeHelper: compact pixel chip sized to its text instead of a
+## screen-wide flat bar; the full objective stays in the mission panel.
+var _prompt_text := ""
+var _prompt_theme := ""
+func _fit_prompt() -> void:
+	var theme := menu_theme()
+	if prompt.text == _prompt_text and theme == _prompt_theme:
+		return
+	_prompt_text = prompt.text
+	if theme != _prompt_theme:
+		_prompt_theme = theme
+		prompt.add_theme_stylebox_override("normal", UiSkin.panel(theme, true))
+	var font := prompt.get_theme_font("font")
+	var width := font.get_string_size(prompt.text, HORIZONTAL_ALIGNMENT_LEFT, -1, prompt.get_theme_font_size("font_size")).x
+	width = clampf(roundf(width) + 34.0, 120.0, 600.0)
+	prompt.size = Vector2(width, 26)
+	prompt.position = Vector2(roundf(320.0 - width * 0.5), 275)
 
 ## Scene look of the pause menu; chapter scripts override it.
 func menu_theme() -> String:
@@ -712,6 +731,7 @@ func _process(delta: float) -> void :
 	if prompt.text.is_empty() and not world.is_busy():
 		prompt.text = world.prop_prompt()
 	prompt.visible = not prompt.text.is_empty() and not world.is_busy()
+	if prompt.visible: _fit_prompt()
 	abilities.visible = not dialogue_open and not world.menu_open
 	boss.text = "CHROME JACKAL\n" + ("IMPLANTATE GESTÖRT" if world.enemy.exposed > 0 else "Panzerung aktiv") if world.stage == 2 else ""
 	boss_panel.visible = world.stage == 2
