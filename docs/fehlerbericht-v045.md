@@ -16,7 +16,7 @@ Raven und Shadepi besitzen je 64 neue detaillierte Pixelposen: acht Richtungen, 
 
 Die Quelle hat ungleichmäßige Zellabstände. Deshalb werden tatsächliche vollständige Figurenregionen und Sohlenanker einzeln registriert. Das verhindert abgeschnittene Silhouetten und Größensprünge; insbesondere Ravens Ostbewegung behält über alle Gehbilder dieselbe sichtbare Höhe. Aufgeladene Angriffe, Kick und Handblitze behalten ihre zusätzlichen bestehenden Aktionsbilder. Pistoleneffekte verwenden die registrierten Austrittspunkte der neuen Quelle.
 
-Die Originale sind unverändert erhalten und zusätzlich unter [backup-v0441](../assets/sprites/heroes/backup-v0441/README.md) gesichert. Dort steht auch der Rückweg über den vorhandenen Custom-Ordner. [Aktive Quellen, Formate und Metadaten](../assets/sprites/heroes/gameplay/README.md).
+Die Originale sind unverändert erhalten und zusätzlich unter [backup-v0441](../assets/sprites/heroes/backup-v0441/README.md) gesichert. Dort steht auch der Rückweg über den vorhandenen Custom-Ordner. [Aktive Quellen, Formate und Metadaten](archiv/assets/helden-v045/README.md).
 
 Die [beiden Figurenkarten und die vollständige Übersicht aller 23 Figuren](stilbibel/figuren.md) wurden aus tatsächlichen Quellpixeln erneuert; es bleibt eine Vorlage für das gesamte Spiel.
 

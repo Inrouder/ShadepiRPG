@@ -1,0 +1,88 @@
+# Entwicklerwerkzeuge · v0.46.2 · CodexAI
+
+[Repository-Status](../docs/repository-status.md) · [Aktive Assets](../assets/README.md) · [Mitwirken](../CONTRIBUTING.md).
+
+**Zum normalen Spielen oder Projektimport keines dieser Herstellungswerkzeuge ausführen.** Die erzeugten Ressourcen sind bereits im Git enthalten. Schreibende Compiler/Generatoren können bestehende Originalgrafiken, Schriften oder Klänge überschreiben. Erst Quellen, Zielpfade, aktuelle Nutzerentscheidung und Arbeitskopie prüfen. Die historische Herkunft eines Compilers macht seine fertigen aktiven Assets nicht veraltet.
+
+## Lesende Prüfung / Vermessung
+
+| Werkzeug | Zweck |
+| --- | --- |
+| [audit_repository.py](audit_repository.py) | Liest Statusmanifest, Markdown-Links, feste Runtimepfade, Git-/Exportgrenzen und Versionen. Keine externen Pakete, keine Bild-/Spielstandänderung. |
+| [measure_combat_anchors.py](measure_combat_anchors.py) | Analyse-/Ankermessung für die jeweilige bestehende Quelle; Code auf etwaige Ausgabedateien prüfen. |
+| [measure_legacy_art.py](measure_legacy_art.py) | Analyse-/Ankermessung für die jeweilige bestehende Quelle; Code auf etwaige Ausgabedateien prüfen. |
+| [measure_memory_art.py](measure_memory_art.py) | Analyse-/Ankermessung für die jeweilige bestehende Quelle; Code auf etwaige Ausgabedateien prüfen. |
+| [measure_sacrifice_art.py](measure_sacrifice_art.py) | Analyse-/Ankermessung für die jeweilige bestehende Quelle; Code auf etwaige Ausgabedateien prüfen. |
+
+## Herstellungsquellen mit Schreibzugriff
+
+| Werkzeug | Status / Ziel |
+| --- | --- |
+| [compile_heroes.py](compile_heroes.py) | Herstellungsquelle; schreibt die aktiven Original-Heldenatlanten neu. Nicht für normalen Start oder unaufgeforderte Neugestaltung verwenden. |
+| [compile_npcs.py](compile_npcs.py) | Herstellungsquelle; schreibt NPC-Atlanten und Herstellungsbericht. Vorhandene Kontakt-/Szenenquellen sind davon getrennt. |
+| [generate_assets.cjs](generate_assets.cjs) | Optionaler Generator für Licht und Basissounds; `npm run assets` ist kein notwendiger Setup-Schritt. |
+| [compose_parked_bike.py](compose_parked_bike.py) | Schreibendes Herstellungswerkzeug für das geparkte Motorrad. |
+| [build_flight_props.py](flight/build_flight_props.py) | Schreibendes Herstellungswerkzeug für vorhandene Flugobjekte; kein neuer HQ-Stilstandard. |
+| [generate_flight_audio.py](flight/generate_flight_audio.py) | Schreibendes Herstellungswerkzeug für Flugklänge. |
+| [generate_combat_audio.py](generate_combat_audio.py) | Schreibendes Herstellungswerkzeug für Kampfklänge. |
+| [generate_drive_audio.py](generate_drive_audio.py) | Schreibendes Herstellungswerkzeug für Fahrzeugklänge. |
+| [generate_legacy_audio.py](generate_legacy_audio.py) | Schreibendes Herstellungswerkzeug für Erinnerung III; „legacy“ ist aktiv. |
+| [build_pixel_font.py](ui_pixel/build_pixel_font.py) | Schreibendes Herstellungswerkzeug für bestehende Pixelschrift. |
+| [build_ui_pixel.py](ui_pixel/build_ui_pixel.py) | Schreibendes Herstellungswerkzeug für bestehende Pixel-UI. |
+
+[hero_sources](hero_sources/README.md) und [npc_sources](npc_sources/README.md) sind ursprüngliche Rohposen samt Prompts. Aktuelle KONSISTENZ hat Vorrang vor historischen Prompt-Stilangaben. Zum Bearbeiten vorhandener Grafiken zuerst eine Custom-Kopie beziehungsweise isolierte Arbeitskopie verwenden.
+
+## Godot-Aufnahme- und QA-Werkzeuge
+
+Diese Skripte verwenden echte Spielressourcen und bereiten oft Kapitel, Gegner oder Kontrollpunkte automatisch vor. **Versionierte Bild-/Testwerkzeuge, keine normalen Setup-Schritte und keine vollständigen manuell erspielten Durchläufe.** Nach API-Änderungen anhand des zugehörigen Berichts prüfen. Mit isoliertem `XDG_DATA_HOME` und einem nativen Renderer ausführen; nicht mit persönlichen Spielständen. Ein aufgenommenes Bild ersetzt keine Prüfung des gesamten Abschnitts.
+
+| Skript | Einordnung |
+| --- | --- |
+| [action_gallery.gd](action_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [aerodyne_art_gallery.gd](aerodyne_art_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [arcade_gallery.gd](arcade_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [atmosphere_film.gd](atmosphere_film.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [atmosphere_gallery.gd](atmosphere_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [blood_gallery.gd](blood_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [chapter_one_gallery.gd](chapter_one_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [chase_gallery.gd](chase_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [cinema_review.gd](cinema_review.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [cinematic_gallery.gd](cinematic_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [combat_gallery.gd](combat_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [cutscene_gallery.gd](cutscene_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [display_gallery.gd](display_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [feedback_gallery.gd](feedback_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [flight_gallery.gd](flight_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [generate_combat_fx.gd](generate_combat_fx.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [hangar_discovery_gallery.gd](hangar_discovery_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [ice_bath_gallery.gd](ice_bath_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [lake_gallery.gd](lake_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [legacy_gallery.gd](legacy_gallery.gd) | QA zur aktiven Erinnerung III „Das Vermächtnis“; nicht veraltet allein wegen des Namens. |
+| [legacy_pilot.gd](legacy_pilot.gd) | QA zur aktiven Erinnerung III „Das Vermächtnis“; nicht veraltet allein wegen des Namens. |
+| [map_gallery.gd](map_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [memory_gallery.gd](memory_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [menu_checkpoint_gallery.gd](menu_checkpoint_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [menu_gallery.gd](menu_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [menu_reflection_gallery.gd](menu_reflection_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [npc_gallery.gd](npc_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [pursuit_gallery.gd](pursuit_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [pursuit_pose_gallery.gd](pursuit_pose_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [raven_enemy_gallery.gd](raven_enemy_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [report8_gallery.gd](report8_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [report_gameplay_gallery.gd](report_gameplay_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [report_scenes_film.gd](report_scenes_film.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [sacrifice_gallery.gd](sacrifice_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [sanctuary_gallery.gd](sanctuary_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [sanctuary_pose_gallery.gd](sanctuary_pose_gallery.gd) | Aktuelle Kontaktposen; `--before` lädt ausdrücklich das historische Vergleichsblatt, keine aktive Grafikumschaltung. |
+| [sanctuary_reference.gd](sanctuary_reference.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [story_gallery.gd](story_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [style_bible_gallery.gd](style_bible_gallery.gd) | Aktive Quellen als Dokumentation rendern; `-- --part=heroes` erneuert nur Heldenkarten und komplette Figurenübersicht. |
+| [technology_gallery.gd](technology_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [technology_pose_gallery.gd](technology_pose_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [terminal_gallery.gd](terminal_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [tower_departure_film.gd](tower_departure_film.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [tower_gallery.gd](tower_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [vehicle_motion_gallery.gd](vehicle_motion_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [vehicle_pose_gallery.gd](vehicle_pose_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+
+Der entfernte v0.45.0-Heldenrenderer liegt als [historische Quelle](../docs/archiv/code-v045/README.md) im ignorierten Archiv. Keine aktive Laufzeit lädt ihn.

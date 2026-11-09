@@ -1,5 +1,7 @@
 # Garage, Plattformfahrt und Hangar · v0.39.0 · CodexAI
 
+> **Versionsbezogener Nachweis · Einordnung v0.46.2 · CodexAI:** Bilder, Befehle und Prüfzahlen gelten für den im Titel genannten Arbeitsstand. [Aktueller Repository-Status](../repository-status.md); keine pauschale Abnahme der heutigen Version.
+
 - **Ziel:** Zweiten Block der autorisierten Cinema-Roadmap umsetzen: körperliche Werkbankbetätigung, echte Entriegelungsbilder, sichtbare gemeinsame Abfahrt mit Motorrad, Andocken und Hangar-/Aerodyne-Enthüllung vor Ravens Reaktion. Danach weiterhin spielbare Reparatur; Shadepi geht zur Eindämmung voraus.
 - **Ausgang:** `ced9544`, v0.38.0, sauber und gleich `origin/main`; alle Remote-Branches abgerufen und Versionen/Änderungen verglichen, übrige Entwicklungsbranches unverändert bis v0.21.3. Keine neuere fremde Arbeit offen.
 - **Version:** v0.39.0 · CodexAI; Exportfelder 0.39.0.0. Fertigen Block nach Sicht-/Funktionsprüfung auf GitHub sichern; keine Cloud-Veröffentlichung.

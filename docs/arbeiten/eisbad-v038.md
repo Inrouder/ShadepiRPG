@@ -1,5 +1,7 @@
 # Eisbad, Rückkehr und Kryospray · v0.38.0 · CodexAI
 
+> **Versionsbezogener Nachweis · Einordnung v0.46.2 · CodexAI:** Bilder, Befehle und Prüfzahlen gelten für den im Titel genannten Arbeitsstand. [Aktueller Repository-Status](../repository-status.md); keine pauschale Abnahme der heutigen Version.
+
 ## Auftrag und Ausgang
 
 - **Ziel:** Ersten nächsten Block der autorisierten Cinema-Roadmap umsetzen: Ravens körperlichen Einstieg, die Deep-Dive-Rückkehr und Shadepis Rettung sichtbar erzählen. Das Holen des Kryosprays bleibt spielbar, die Datenspur und Enthüllungsreihenfolge bleiben erhalten.

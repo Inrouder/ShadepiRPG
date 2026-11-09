@@ -1,5 +1,7 @@
 # Konsistenzauftrag und Arbeitsnachweis · v0.34.0 · CodexAI
 
+> **Versionsbezogener Nachweis · Einordnung v0.46.2 · CodexAI:** Bilder, Befehle und Prüfzahlen gelten für den im Titel genannten Arbeitsstand. [Aktueller Repository-Status](../repository-status.md); keine pauschale Abnahme der heutigen Version.
+
 ## Auftrag und Ausgangslage
 
 - **Nutzerziel:** 16:9-Vollbild und Fenstervollbild, mitwachsendes Spielbild statt kleinem Bild im größeren Fenster; 1080p und höhere Ausgabe.

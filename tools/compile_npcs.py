@@ -1,3 +1,5 @@
+# v0.46.2 · CodexAI: Quellwerkzeug mit Schreibzugriff; überschreibt Spielatlanten.
+# Nicht beim normalen Setup ausführen. Status und Voraussetzungen: tools/README.md.
 """Pack illustrated NPC keyframes into Godot atlases without redrawing art.
 
 Requires Pillow. Source: transparent 1536x1024 PNG, eight directions across

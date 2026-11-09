@@ -1,5 +1,7 @@
 # Technische Gegenstände · v0.42.0 · CodexAI
 
+> **Versionsbezogener Nachweis · Einordnung v0.46.2 · CodexAI:** Bilder, Befehle und Prüfzahlen gelten für den im Titel genannten Arbeitsstand. [Aktueller Repository-Status](../repository-status.md); keine pauschale Abnahme der heutigen Version.
+
 - **Auftrag:** Nächsten Block der autorisierten Cinema-Roadmap umsetzen: technische Gegenstände mit eigenen Betriebs-/Zugriffsphasen und nachvollziehbarem Erfolg-/Fehlerfeedback. GitHub-Startseite und Doku-Galerie erhalten neue tatsächliche Spielaufnahmen.
 - **Basis:** `5940538`, v0.41.1, lokal sauber und identisch mit `origin/main`. Alle Remote-Branches abgerufen; Versionen und unveränderte Entwicklungsstände bis v0.21.3 verglichen. Keine neuere fremde Arbeit.
 - **Aktive Quellen:** `assets/world/hq/props.png`, `prop_art.gd`, `world_prop.gd`, tatsächliche Layouts in `world_dressing.gd`, Art Direction und Objektmaßstab. Kasten/Server bleiben dieselben gebrauchten technischen Geräte, Bodenanker und Standflächen erhalten. Keine neuen Figuren oder Lore.

@@ -1,59 +1,34 @@
-# Projektaufbau · v0.14.0
+# Projektaufbau · v0.46.2 · CodexAI
 
-## Einstieg und Kapitel
+[Aktuelle Spielanleitung](../Spiel-README.md) · [Repository-Status](repository-status.md) · [Asset-Katalog](../assets/README.md) · [Werkzeuge](../tools/README.md).
 
-`project.godot` startet `scenes/chapter_one.tscn`. Das Projekt verwendet Godot 4.7.2 Standard mit dem Compatibility-Renderer.
+## Laufzeit
 
-| Szene / Skript | Aufgabe |
+`project.godot` startet `scenes/chapter_one.tscn`. Godot 4.7.2 Standard, Compatibility-Renderer. `scripts/main.gd` ist die gemeinsame Laufzeitbasis; `scenes/main.tscn` ist zusätzlich eine separate Test-/Demo-Szene und darf nicht als ungenutzter Altcode entfernt werden.
+
+| Bereich | Zuständigkeit |
 | --- | --- |
-| `scenes/chapter_one.tscn`, `scripts/chapter_one.gd` | Einstieg, Raven/Jackal, Shadepis Rettung und Kapitelabschluss |
-| `scenes/chapter_two.tscn`, `scripts/chapter_two.gd` | Industriegebiet und Deep Dive |
-| `scenes/campaign.tscn`, `scripts/campaign.gd` | Kampagne ab Kapitel 3 |
-| `scripts/campaign_story.gd` | Kapiteltexte, Dialoge und Missionsziele |
-| `scripts/campaign_drive.gd` | Motorrad-Verfolgung (Kapitel 3) |
-| `scripts/aerodyne_flight.gd` | Aerodyne-Flug zum Tower mit Turmabwehr und Landung (Kapitel 6) |
-| `scripts/sequence_calibration.gd` | Minispiel Sequenzkalibrierung am Tower-Scanner |
-| `scripts/parked_aerodyne.gd` | gelandeter Aerodyne auf dem Tower-Landeplatz |
-| `scenes/main.tscn`, `scripts/main.gd` | Separate Gameplay-Testszene |
+| Kapitel 1 | `chapter_one.gd`, Auftakt, Jagd-/Rettungswellen und Jackal. |
+| Kapitel 2 | `chapter_two.gd`, Industrie, Eisbad und Deep Dive. |
+| Kapitel 3–7 | `campaign.gd` / `campaign_story.gd`, weitere Kampagne und kontrollpunktkompatible Zustände. |
+| Dialoge und Inszenierung | `cutscene.gd`, kapitelspezifische Szenenfunktionen und eigene Kontakt-/Sequenzmodule. Keine Laufzeit-Comictafeln mehr. |
+| Bewegung / Figuren / Kampf | `pixel_actor.gd`, `player.gd`, `enemy.gd`, `combat_rules.gd`, `sprite_assets.gd`. Originalhelden plus Custom-Priorität. |
+| Treffer und Atmosphäre | `effects.gd`, `blood_fx.gd`, `scene_atmosphere.gd` und Ortsprofile. |
+| Räume / Objekte | `painted_world.gd`, `world_dressing.gd`, `world_prop.gd` und jeweilige Art-/Ankerdateien. |
+| Fahrzeuge | `campaign_drive.gd`, `aerodyne_flight.gd`, `aerodyne_art.gd`, `motorcycle_art.gd`, Verfolger-/Drohnenrenderer. |
+| Erinnerungen | `scripts/memories/`; `legacy_*` ist die aktive dritte Erinnerung „Das Vermächtnis“. |
+| Tower | `tower_story.gd`, `tower_extraction.gd`, Kenzō-/Fluchtmodule; Extraktion vor endgültiger Vernichtung, Abflug vom Dach-Landeplatz. |
+| Speicherung / Testeinstiege | `save_service.gd`, Kapiteldateien, `checkpoint_resume.gd`, `test_checkpoints.gd`, `admin_tools.gd`. Normale-/Test- sowie Solo-/Koop-Dateien getrennt. |
+| Menü / HUD / Controller | `hud.gd`, Kapitel-HUDs, `start_menu_backdrop.gd`, `gamepad_bindings.gd` und Eingabeprofile. |
 
-## Kulissen und Requisiten
+Numerische Kapitel-/Abschnittswerte sind Teil bestehender Spielstände; Enum-Reihenfolge nicht als chronologische Sortierung behandeln. `chapter_flow.gd` unterscheidet Story-Ausgang und Menü-Fortsetzen. Aktuelle Szenen- und Kontinuitätsregeln stehen in [KONSISTENZ](../KONSISTENZ.md).
 
-- `scripts/painted_world.gd` ordnet 16 PNG-Kulissen aus `assets/world/painted/` zu und definiert begehbare Bereiche, Hindernisse und Vordergrunddarstellung.
-- `scripts/world_dressing.gd` enthält die Requisiten-Anordnungen je Umgebung.
-- `scripts/world_prop.gd` implementiert das Verhalten der Weltobjekte.
-- `assets/world/hq/props.png`, `assets/world/hq/vehicles.png` und `assets/audio/` enthalten die ergänzenden Requisiten und Geräusche. Die früheren prozeduralen Levelbilder werden nicht mehr benötigt.
+## Quellen, Import und Export
 
-## Figuren und Medien
+Die aktiven PNGs, MP3s, Schriften und Effekte liegen unter `assets/`; Rohposen und Quellwerkzeuge unter `tools/`. Grafiken sind bereits enthalten, Compiler/Generatoren werden beim normalen Projektimport nicht ausgeführt. Das Godot-Importcache-Verzeichnis `.godot/` ist generiert und nicht versioniert; `*.import`-Konfigurationen aktiver Assets werden dagegen bewusst erhalten.
 
-- `scripts/pixel_actor.gd`: Blickrichtung, Animation, Schatten und Material.
-- `scripts/sprite_assets.gd`: Validierung der Atlasraster und optionaler Custom-Sprite-Override; keine Pixel-Proxy-Umleitung mehr.
-- `assets/sprites/heroes/`: direkt geladene HQ-Atlanten von Raven und Shadepi.
-- `assets/sprites/npcs/`: direkt geladene HQ-Atlanten und digitale Gegner.
-- `assets/custom/`: eigene Grafiken mit Vorrang vor Standardgrafiken; ältere selbst erstellte Pixelraster bleiben kompatibel.
-- `tools/hero_sources/` und `tools/npc_sources/`: originale Schlüsselposen; `tools/compile_heroes.py` und `tools/compile_npcs.py` stellen die HQ-Atlanten zusammen.
-- `tools/generate_assets.cjs`: Generator nur für Lichttextur und Basissounds.
+Das [Entwicklungsarchiv](archiv/README.md) enthält verworfene Quellen, alte Comictafeln und frühere Anleitungen. `.gdignore` und Exportfilter trennen es von der Laufzeit. Einige historische Vergleichsbilder bleiben für Vorher-Galerien an stabilen Assetpfaden, sind aber ebenfalls vom Export ausgeschlossen. [Statuskatalog](repository-status.json) und [Audit](../tools/audit_repository.py) prüfen die Grenze. Das Universumsarchiv bleibt eine inhaltlich verbindliche Quelle, kein Altcode.
 
-Raster und Bearbeitungsregeln: [HQ-Sprites](helden-sprites.md) und [Figuren bearbeiten](figuren-bearbeiten.md).
+## Prüfung
 
-## Entwickler-Testmenü
-
-`scripts/admin_tools.gd` speichert die Testschalter, verwaltet die Kapitelzuordnung per Szenen-Metadaten und trennt die Kontrollpunktdateien vom normalen Profil. `scripts/hud.gd` enthält die versteckte Bedienoberfläche. Spieler, Gegner, Fahrzeugsequenzen und Flucht berücksichtigen die Testschalter, während Story-Sperren bei regulären Treffern bestehen bleiben. Weitere Hinweise: [Admin-Testmodus](admin-testmodus.md).
-
-## Gameplay und Prüfung
-
-`player.gd`, `enemy.gd` und `combat_rules.gd` steuern Bewegung und Kampf. HUD-Skripte verwalten Anzeigen, Menüs und Dialoge. `save_service.gd` enthält die Speichervalidierung; die Kapitel besitzen eigene Kontrollpunkte.
-
-`tests/run.gd` prüft unter anderem Kapitelabläufe, Kampagne, Koop, Controller und Heldenanimationen. Der Workflow in `.github/workflows/build.yml` importiert das Projekt, führt die Tests aus und exportiert Windows und Linux. Bei einem Versions-Tag ist zusätzlich ein Release-Schritt vorgesehen.
-
-`chapter_flow.gd` unterscheidet den einmaligen Einstieg nach einem Story-Abschluss von einem Menüaufruf mit vorhandenem Kontrollpunkt. Die numerischen Kapitel-/Abschnittswerte bleiben für bestehende Spielstände unverändert; ihre Reihenfolge im Enum ist keine chronologische Sortierung.
-
-`tests/story_audit.gd` prüft echte Szenenwechsel mit alten Spielständen, die chronologische Kampagnenfolge, Wiederherstellung, Hackreichweite, Erinnerungspunkte und Textlayout. Ein Rasterlauf prüft Wege mit Godots Physikabfragen und dem tatsächlichen Spielerradius (7 Pixel), einschließlich intakter Requisiten. Kontrollabfragen stellen sicher, dass die Physikkörper aktiv sind. `tools/story_gallery.gd` erzeugt eine Renderübersicht und einzelne Szenenbilder im Godot-Benutzerverzeichnis.
-
-Die Tests erzeugen Kontrollpunkte. Lokal dafür ein separates Godot-Benutzerverzeichnis verwenden; nicht mit persönlichen Spielständen ausführen. Der CI-Runner ist unabhängig von lokalen Spielständen.
-
-## Herkunft
-
-Dieser Quellstand wurde aus dem originalen Windows-Spiel wiederhergestellt und durch Dateien aus dem HQ-Archiv ergänzt. Die [Wiederherstellungsdokumentation](v0.12.0-wiederherstellung.md) nennt die Medienverluste und Prüfgrenzen. `.godot/` ist ein generierter Importcache und gehört nicht zu den versionierten Quellen.
-
-- `scripts/prop_art.gd`: HQ-Atlasregionen, Darstellungsgrößen und Schadenszustände.
-- `tests/drive_action.gd`: Flugnotfall und Verfolgungsphysik; `tools/generate_drive_audio.py`: reproduzierbare Fahrzeugsounds.
+[CI-Workflow](../.github/workflows/build.yml): Repository-Audit, Godot-Import, gezielte Spiel-/Darstellungsprüfungen und Windows-/Linux-Export. Neue Testeinstiege und lokale Tests brauchen ein isoliertes `XDG_DATA_HOME`, damit persönliche Spielstände erhalten bleiben. Skripte in `tools/` sind Entwicklungs-/QA-Werkzeuge; nach API-Änderungen vor Benutzung prüfen. Native Renderaufnahmen sind keine manuelle Abnahme jedes Spielabschnitts und ein Linux-Windows-Export keine tatsächliche Windows-Ausführung.

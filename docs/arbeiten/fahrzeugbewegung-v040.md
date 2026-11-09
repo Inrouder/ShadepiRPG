@@ -1,5 +1,7 @@
 # Fahrzeugbewegung · v0.40.0 · CodexAI
 
+> **Versionsbezogener Nachweis · Einordnung v0.46.2 · CodexAI:** Bilder, Befehle und Prüfzahlen gelten für den im Titel genannten Arbeitsstand. [Aktueller Repository-Status](../repository-status.md); keine pauschale Abnahme der heutigen Version.
+
 - **Auftrag:** Nächsten Fahrzeugblock der autorisierten Cinema-Roadmap umsetzen: echte Kurvenansichten des Aerodyne, eigene Schräglagen und Brems-/Federungsposen des Motorrads. Vorhandene mechanische Kabinenbilder und Spielregeln erhalten.
 - **Basis:** `557f731`, v0.39.0, sauber und identisch mit `origin/main`. Alle Remote-Branches abgerufen, Versionen und tatsächliche unveränderte Entwicklungsstände bis v0.21.3 verglichen; keine neuere fremde Arbeit.
 - **Referenzen tatsächlich gesichtet:** aktueller Aerodyne-Atlas, HQ-Fahrzeugatlas (Motorrad/Verfolger/Frachtdrohne), Raven-/Shadepi-Karten, Art Direction, Konsistenzregeln und Fahrzeug-/Objektkarte. Keine Comicquelle behauptet. Motorrad behält Shadepi vorne und Raven hinten; Merkmale, Kostüm und Raven 160 cm erhalten.

@@ -12,4 +12,4 @@ Identität: Raven 160 cm, schwarze Haare mit blauen Enden, rote Augen, goldener 
 
 Originale der Generierung außerhalb des Repos: `/workspace/generated_images/exec-678fc370-a6ca-4f5d-a641-f9d1290d74a7.png` (Raven), `exec-55d82d0b-b962-44f3-8f58-1822529267eb.png` (Shadepi). Referenzen: aktive Figurenkarten und Kapitel-1-Kontaktposen; keine neue Figurenidentität. Die Dateien wurden kopiert, nicht per Skript übermalt oder nachträglich verpixelt.
 
-[Vorherige Sprites als Backup](../backup-v0441/README.md) · [Spielvergleich und Bericht](../../../../docs/fehlerbericht-v045.md).
+[Vorherige Sprites als Backup](../../../../assets/sprites/heroes/backup-v0441/README.md) · [Spielvergleich und Bericht](../../../fehlerbericht-v045.md).

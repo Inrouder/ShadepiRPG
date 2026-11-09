@@ -38,6 +38,8 @@ jobs:
           target="$HOME/.local/share/godot/export_templates/${GODOT_VERSION}.stable"
           mkdir -p "$target"
           unzip -q -j /tmp/templates.tpz 'templates/windows_release_x86_64.exe' 'templates/linux_release.x86_64' -d "$target"
+      - name: Audit repository status, links and export boundaries
+        run: python3 tools/audit_repository.py
       - name: Validate auxiliary asset generator
         run: node --check tools/generate_assets.cjs
       - name: Import resources

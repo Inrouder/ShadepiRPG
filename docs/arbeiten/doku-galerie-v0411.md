@@ -1,5 +1,7 @@
 # GitHub-Bildvorschauen · v0.41.1 · CodexAI
 
+> **Versionsbezogener Nachweis · Einordnung v0.46.2 · CodexAI:** Bilder, Befehle und Prüfzahlen gelten für den im Titel genannten Arbeitsstand. [Aktueller Repository-Status](../repository-status.md); keine pauschale Abnahme der heutigen Version.
+
 **Auftrag:** Bebilderte Dokumentation wieder leicht auf GitHub finden und Bilder direkt sehen. Ausgang `ef7b3f6`, v0.41.0; lokal sauber und identisch mit `origin/main`. Alle Remote-Branches abgerufen, Versionen und unveränderte Entwicklungsstände verglichen. Keine neuere fremde Arbeit.
 
 **Befund:** Berichte und Bilder waren bereits in GitHub `main` enthalten. Die neuesten Abschnitte der Repository-README verlinkten jedoch nur auf die Berichte; ihre PNG-Vorschauen fehlten dort. Der öffentliche GitHub-HTML-Stand enthielt den Berichtlink, aber keine Verfolger-Bildvorschau.

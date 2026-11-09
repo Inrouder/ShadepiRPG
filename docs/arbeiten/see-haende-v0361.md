@@ -1,5 +1,7 @@
 # Handführung am See · v0.36.1 · CodexAI
 
+> **Versionsbezogener Nachweis · Einordnung v0.46.2 · CodexAI:** Bilder, Befehle und Prüfzahlen gelten für den im Titel genannten Arbeitsstand. [Aktueller Repository-Status](../repository-status.md); keine pauschale Abnahme der heutigen Version.
+
 ## Auftrag und Referenzen
 
 - **Nutzerziel:** Raven hebt Shadepis Maske mit ihrer eigenen rechten Hand; ihre eigene linke Hand berührt sein Gesicht und verdeckt weiterhin dessen Züge. Diese Zuordnung muss über Maskenabnahme und Kuss konsistent bleiben.

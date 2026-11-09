@@ -1,5 +1,7 @@
 # Originalhelden wiederherstellen · v0.46.1 · CodexAI
 
+> **Versionsbezogener Nachweis · Einordnung v0.46.2 · CodexAI:** Bilder, Befehle und Prüfzahlen gelten für den im Titel genannten Arbeitsstand. [Aktueller Repository-Status](../repository-status.md); keine pauschale Abnahme der heutigen Version.
+
 ## Auftrag und Quellen
 
 Nutzer wünscht die Original-Sprites zurück, da die neuen normalen Heldenbilder nicht gefallen. Ausgang `37fa48e`, v0.46.0; lokal sauber. Alle Remote-Branches abgerufen: main aktuell, übrige bekannte Branches unverändert höchstens v0.21.3. Keine fremden Änderungen zurückgesetzt. AGENTS, KONSISTENZ, Art Direction, Figurenkatalog und Arbeitsvorlage berücksichtigt. Gesichtet: Original-Spielvergleich `bericht-heroes-backup-v045.png` und aktueller nativer Vergleich v0.46.1. Keine neue Grafikgenerierung.

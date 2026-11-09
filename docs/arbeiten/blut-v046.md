@@ -1,5 +1,7 @@
 # Blutspritzer und Bodenlachen · v0.46.0 · CodexAI
 
+> **Versionsbezogener Nachweis · Einordnung v0.46.2 · CodexAI:** Bilder, Befehle und Prüfzahlen gelten für den im Titel genannten Arbeitsstand. [Aktueller Repository-Status](../repository-status.md); keine pauschale Abnahme der heutigen Version.
+
 ## Auftrag und Ausgangslage
 
 Nutzerziel: Blut spritzt bei Gegnertreffern und bleibt als Blutlache auf dem Boden. Ausgang `41fef63`, v0.45.0, lokal sauber. Alle Remote-Branches abgeglichen; main aktuell, andere bekannte Branches höchstens v0.21.3. Keine fremden Änderungen zu übernehmen. Umfang: reale Treffer menschlicher `Enemy`-Gegner einschließlich Cyberware-Träger; digitale Gegner und Erinnerungs-Bots/Mechs behalten ihre technische Effektfamilie. Keine neue Trefferregel, Figurenpose oder Handlung.

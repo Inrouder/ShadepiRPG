@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "version": "0.46.2",
+  "author": "CodexAI",
+  "entries": [
+    {"status":"active","paths":["scenes","scripts","shaders"],"note":"Laufzeit und aktive Spielmechaniken; historische Namen allein machen keinen Code veraltet."},
+    {"status":"active","paths":["assets/sprites/heroes/raven.png","assets/sprites/heroes/shadepi.png","assets/sprites/heroes/combat-poses.png","assets/sprites/heroes/raven-hand-cast.png","assets/sprites/heroes/raven-hand-cast.json"],"note":"Originalhelden, weiterhin aktive Sonderangriffe und Handanker."},
+    {"status":"active","paths":["assets/menu/start-city.png","assets/menu/start-heroes-hq.png","assets/story/sanctuary/poses-game.png","assets/fx/blood","assets/vehicles","assets/world/technology"],"note":"Aktuelle Menü-/Heiligtumquellen und weitere aktive Grafikfamilien."},
+    {"status":"active","paths":["assets/memories/legacy","scripts/memories/legacy_memory.gd","tests/legacy_memory.gd"],"note":"Legacy bedeutet hier Vermächtnis: aktive dritte Erinnerung, kein Altcode."},
+    {"status":"backup","paths":["assets/sprites/heroes/backup-v0441"],"note":"Explizit gewünschte bytegleiche Helden-Sicherungen; im Repository behalten, nicht im Spieleexport."},
+    {"status":"reference","paths":["assets/menu/start-heroes.png","assets/story/sanctuary/poses.png","assets/story/sanctuary/poses-seated.png"],"note":"Historische Vergleichsquellen, keine Laufzeitgrafiken. Heiligtum-Vorher-Galerie verwendet sie bewusst. Vom Spieleexport ausgeschlossen."},
+    {"status":"rejected","paths":["docs/archiv/assets/helden-v045","docs/archiv/code-v045"],"note":"Vom Nutzer verworfene v0.45.0-Helden und nicht mehr benötigter Renderer; nicht automatisch reaktivieren."},
+    {"status":"historical","paths":["docs/archiv/assets/comic-bis-v017","docs/archiv/vorschau-v001","docs/archiv/readme-bis-v0461.md","docs/archiv/spielanleitung-bis-v0461.md","docs/archiv/umsetzungsnotizen-bis-v0461.md"],"note":"Frühere Comictafeln, Vorschauen und Beschreibungen; keine aktuellen Spielanweisungen."},
+    {"status":"source","paths":["tools/hero_sources","tools/npc_sources","tools/compile_heroes.py","tools/compile_npcs.py","tools/generate_assets.cjs"],"note":"Herstellungsquellen und schreibende Quellwerkzeuge. Nicht zum Projektstart ausführen; keine Laufzeitdateien."},
+    {"status":"authoritative-source","paths":["docs/universum"],"note":"Verbindliche Nutzer-/Storyquellen, kein verworfener Altbestand. Neuere ausdrückliche Nutzervorgaben haben Vorrang."},
+    {"status":"record","paths":["docs/arbeiten","docs/fehlerberichte","docs/previews"],"note":"Versionsbezogene Arbeits-/Originalberichte und Bildbelege. Frühere Prüfzahlen sind keine aktuelle Abnahme."}
+  ]
+}

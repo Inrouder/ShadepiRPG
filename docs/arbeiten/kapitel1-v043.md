@@ -1,5 +1,7 @@
 # Kapitel 1 inszenieren · v0.43.0 · CodexAI
 
+> **Versionsbezogener Nachweis · Einordnung v0.46.2 · CodexAI:** Bilder, Befehle und Prüfzahlen gelten für den im Titel genannten Arbeitsstand. [Aktueller Repository-Status](../repository-status.md); keine pauschale Abnahme der heutigen Version.
+
 ## Auftrag und Ausgangslage
 Fortsetzung der Cinema-Roadmap: sichtbare Auftragsannahme, Ausrüstungsprüfung und erster Shadepi-Auftritt. Ausgang: `4a971c5`, v0.42.0. Alle Remote-Branches abgerufen: main unverändert am neuesten Stand, bekannte Entwicklungsbranches höchstens v0.21.3. Keine lokalen/fremden Änderungen vorhanden. Kapitel-1-Kämpfe und Kontrollpunktformat erhalten.
 

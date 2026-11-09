@@ -1,3 +1,5 @@
+// v0.46.2 · CodexAI: optional source builder; overwrites light/basic sounds, not a setup step.
+// See tools/README.md before running.
 // Generates only lighting and basic sounds; no character/level art.
 // Run: npm ci && npm run assets
 "use strict";

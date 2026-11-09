@@ -1,3 +1,5 @@
+# v0.46.2 · CodexAI: Quellwerkzeug mit Schreibzugriff; überschreibt Spielatlanten.
+# Nicht beim normalen Setup ausführen. Status und Voraussetzungen: tools/README.md.
 """Pack generated hero keyframes without redrawing the character artwork.
 
 Requires Pillow. The source has eight directions in four rows: idle, left

@@ -1,5 +1,7 @@
 # Fehlerbericht und Heldenqualität · v0.45.0 · CodexAI
 
+> **Versionsbezogener Nachweis · Einordnung v0.46.2 · CodexAI:** Bilder, Befehle und Prüfzahlen gelten für den im Titel genannten Arbeitsstand. [Aktueller Repository-Status](../repository-status.md); keine pauschale Abnahme der heutigen Version.
+
 Ausgang `810cce8`, v0.44.1. Alle Remote-Branches abgerufen; bekannte Entwicklungsbranches unverändert höchstens v0.21.3. Lokaler Stand sauber. Nutzerbericht vom 9. November 2026 (Europe/Berlin). AGENTS/KONSISTENZ, Art Direction, UI-/Weltvorgaben und Auftragsvorlage gelten.
 
 Tatsächlich gesichtete Figurenkarten: Raven, Shadepi, Jackal; aktive Kapitel-1-Kontaktposen als Materialreferenz. Raven 160 cm, schwarz-blaue Haare, Cyan/Rot; Shadepis geschlossene Maske, Kasa, Weste/Stoff; Jackals massive Magenta-Arme erhalten. Keine Storyretcons. Zwei neue 64-Posen-Gameplayquellen plus acht Reaktionsbilder; Originaldateien bleiben als Backup. Aktive Quelle, tatsächliche Regionen und Anker werden dokumentiert, Original-PNGs unverändert kopiert.

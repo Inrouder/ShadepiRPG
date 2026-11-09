@@ -127,7 +127,6 @@ func attack_attachment(hand: bool = false) -> Vector2:
 		var data: Dictionary = hand_cast_data[hand_pose_index/8][hand_pose_index%8]
 		return visual.to_global(Vector2(data.palm[0],data.palm[1]) - Vector2(visual.texture.get_size())/Vector2(16,8))
 	var row := _direction_row(false, 0.0)
-	if not hand and HeroArt.supports(visual.texture):return HeroArt.attachment(self,row)
 	if directions == 4:
 		row = [0,1,2,3][row]
 	var point: Vector2 = (HAND_POINTS if hand else MUZZLE_POINTS)[row]
@@ -287,7 +286,7 @@ func reset_transients() -> void :
 
 func animate(state: String, delta: float) -> void:
 	if normal_texture == null:
-		normal_texture = hero_sheet if hero_sheet!=null else visual.texture
+		normal_texture = visual.texture
 	if special_pose:
 		var normal_filter := CanvasItem.TEXTURE_FILTER_LINEAR if SpriteAssets.display_scale(normal_texture)<1.0 else CanvasItem.TEXTURE_FILTER_NEAREST
 		visual.texture_filter=normal_filter
@@ -303,9 +302,7 @@ func animate(state: String, delta: float) -> void:
 		cast_shadow.scale = Vector2(1.05, 0.3) * SpriteAssets.display_scale(normal_texture)
 		special_pose = false
 	super.animate("idle" if state == "charge" else "attack" if state == "kick" else state, delta)
-	if state=="attack" and attack_kind=="power" and HeroArt.supports(visual.texture):
-		HeroArt.apply(self,"attack",_direction_row(false,delta),0.2)
-	if state == "attack" and attack_kind == "power" and not HeroArt.supports(visual.texture):
+	if state == "attack" and attack_kind == "power":
 		# The charge already supplied the windup; show the cut/discharge on release.
 		var release_frame := (0 if second_player else 2) if attack_time > 0.22 else 6
 		visual.frame = (2 * directions + _direction_row(false, delta)) * 8 + release_frame

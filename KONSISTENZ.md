@@ -1,6 +1,8 @@
 # Verbindliche Konsistenzvorlage für ShadepiRPG
 
-**Stand v0.46.1 · CodexAI · 9. November 2026; eingeführt mit v0.32.1.** Gilt für das gesamte Spiel und alle Mitwirkenden, ob Mensch oder KI. Vor Änderungen zusammen mit [AGENTS.md](AGENTS.md) lesen und die [Arbeitsvorlage](docs/vorlagen/konsistenz-auftrag.md) verwenden. Eine neuere ausdrückliche Nutzervorgabe hat Vorrang; bestätigte Änderungen anschließend hier und in den betroffenen Referenzen nachführen.
+**Stand v0.46.2 · CodexAI · 9. November 2026; eingeführt mit v0.32.1.** Gilt für das gesamte Spiel und alle Mitwirkenden, ob Mensch oder KI. Vor Änderungen zusammen mit [AGENTS.md](AGENTS.md) lesen und die [Arbeitsvorlage](docs/vorlagen/konsistenz-auftrag.md) verwenden. Eine neuere ausdrückliche Nutzervorgabe hat Vorrang; bestätigte Änderungen anschließend hier und in den betroffenen Referenzen nachführen.
+
+**Repository-Ordnung v0.46.2 · CodexAI:** [Statuskatalog](docs/repository-status.md) unterscheidet aktive Quellen, Vergleichsbilder, Sicherungen und verworfene Varianten. Entwicklungsarchiv unter `docs/archiv/` nicht als Laufzeit-/Grafikstandard verwenden. `legacy` in Erinnerung III bleibt aktiv; Nutzer-/Storyquellen unter `docs/universum/` bleiben verbindlich.
 
 ## Bebilderter Einstieg für das gesamte Spiel
 

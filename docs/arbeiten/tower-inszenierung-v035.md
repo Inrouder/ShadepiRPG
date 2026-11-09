@@ -1,5 +1,7 @@
 # Konsistenzauftrag · v0.35.0 · CodexAI
 
+> **Versionsbezogener Nachweis · Einordnung v0.46.2 · CodexAI:** Bilder, Befehle und Prüfzahlen gelten für den im Titel genannten Arbeitsstand. [Aktueller Repository-Status](../repository-status.md); keine pauschale Abnahme der heutigen Version.
+
 ## Auftrag und Ausgangslage
 
 - **Aufgabe:** Ravens sichtbarer Eintritt und Annäherung an Kenzō, Shadepis späterer Lauf zum Eingreifen; glaubhafte kontinuierliche Aerodyne-Flucht ohne Ansichtswechsel im Fall; freie Laufwege und sichtbares Einsteigen im Hangar.

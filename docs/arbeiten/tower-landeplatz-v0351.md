@@ -1,5 +1,7 @@
 # Konsistenzauftrag · v0.35.1 · CodexAI
 
+> **Versionsbezogener Nachweis · Einordnung v0.46.2 · CodexAI:** Bilder, Befehle und Prüfzahlen gelten für den im Titel genannten Arbeitsstand. [Aktueller Repository-Status](../repository-status.md); keine pauschale Abnahme der heutigen Version.
+
 - **Auftrag:** Start und Einsteigen auf dem tatsächlichen Tower-Landeplatz. Erst nach dem Abheben Antriebsprobleme; danach fällt derselbe Aerodyne von oberhalb des Penthouses am Balkon vorbei und fängt sich darunter.
 - **Ausgang:** `1b38723`, v0.35.0, sauber und identisch mit GitHub `main`. Alle Remote-Branches abgerufen; Entwicklungsbranches unverändert bis v0.21.3. Keine fremden Änderungen zu übernehmen.
 - **Neueste Nutzervorgabe hat Vorrang:** Die v0.35.0-Balkon-Abflugfassung war räumlich falsch. Sie wird ersetzt. Penthouse-Annäherung, Hangar, Düsenrenderer und geschützte Extraktion bleiben erhalten.

@@ -1,5 +1,7 @@
 # Musik, Objektanimation und Filmpotenzial · v0.37.0 · CodexAI
 
+> **Versionsbezogener Nachweis · Einordnung v0.46.2 · CodexAI:** Bilder, Befehle und Prüfzahlen gelten für den im Titel genannten Arbeitsstand. [Aktueller Repository-Status](../repository-status.md); keine pauschale Abnahme der heutigen Version.
+
 ## Auftrag und Ausgang
 
 - **Nutzerziel:** `assets/music/menu.mp3` für Kapitel 7; anschließend das ganze Spiel auf Möglichkeiten für mehr Story und filmische Inszenierung prüfen. Gegenstände sollen echte zusätzliche Spritebilder erhalten, besonders der Aerodyne.

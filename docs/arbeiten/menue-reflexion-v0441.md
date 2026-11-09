@@ -1,5 +1,7 @@
 # Reflexion unter den Menüfüßen · v0.44.1 · CodexAI
 
+> **Versionsbezogener Nachweis · Einordnung v0.46.2 · CodexAI:** Bilder, Befehle und Prüfzahlen gelten für den im Titel genannten Arbeitsstand. [Aktueller Repository-Status](../repository-status.md); keine pauschale Abnahme der heutigen Version.
+
 ## Auftrag, Stand und Referenzen
 Nutzer beanstandet die helle Bodenlichtspur unter den Stiefeln. Ausgang `96d4c97`, v0.44.0, sauberer Arbeitsbaum; alle Branches erneut abgerufen und Versionsfelder verglichen. Main aktuell, andere Branches höchstens v0.21.3. AGENTS, Konsistenz-/UI-/FX-Vorgaben sowie vorhandene Arbeitsvorlage berücksichtigt. Tatsächlich betrachtete aktuelle Referenz: `docs/previews/menue-hauptscreen-v044.png`, aktiver Stadt-/Kontaktshader und dieselben fest verankerten Figuren. Keine Figuren-/Loreänderung; Raven 160 cm und Shadepis geschlossene Maske erhalten.
 

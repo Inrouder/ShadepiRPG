@@ -1,5 +1,7 @@
 # Raven & Shadepi · HQ-Sprites · v0.12.0
 
+**Statushinweis v0.46.2 · CodexAI:** Historischer Herstellungsbericht v0.12.0. Die beschriebenen fertigen Originalatlanten sind weiterhin aktiv; Stilvorgaben und Status richten sich nach KONSISTENZ und dem aktuellen Originalhelden-Bericht. [Aktuelle Einordnung](repository-status.md).
+
 Zwei neue illustrierte Figuren, orientiert an den vorhandenen Comicvorlagen:
 
 - **Raven:** schwarze Rüstung mit Materialdetails, cyanfarbene Leuchtlinien, schwarze Haare mit blauen Spitzen und eine Impulspistole.

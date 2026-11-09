@@ -1,5 +1,7 @@
 # Verfolger und Frachtdrohne · v0.41.0 · CodexAI
 
+> **Versionsbezogener Nachweis · Einordnung v0.46.2 · CodexAI:** Bilder, Befehle und Prüfzahlen gelten für den im Titel genannten Arbeitsstand. [Aktueller Repository-Status](../repository-status.md); keine pauschale Abnahme der heutigen Version.
+
 - **Auftrag:** Nächsten autorisierten Cinema-Roadmap-Block umsetzen: Verfolgerwagen mit Lenk-, Federungs-/Ramm- und Geschützrückstoßbildern; Frachtdrohne mit vier echten Rotorphasen.
 - **Basis:** `0df587a`, v0.40.0, sauber und identisch mit `origin/main`. Alle Remote-Branches samt Versionen und tatsächlichen unveränderten Änderungen verglichen; übrige Entwicklungsstände weiterhin bis v0.21.3. Keine fremde neue Arbeit zu übernehmen.
 - **Gesichtete Quellen:** aktive HQ-Fahrzeugquelle `assets/world/hq/vehicles.png`, Autobahnkulisse, neue Motorrad-/Aerodyne-Spieltafel, Art Direction, Konsistenzvorlage und Fahrzeugkarte. Wagen behält vier Räder, dunkle Panzerung, Cyan-Scheibe, Dachgeschütz und rote Rücklichter. Drohne behält orangen Frachtkörper und vier Rotor-Ringe. Keine neue Fahrzeugidentität oder Lore.

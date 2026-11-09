@@ -1,8 +1,14 @@
 # Shadepi · Bilder, Filme und Dokumentation
 
-**Stand v0.46.1 · CodexAI · 9. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
+**Stand v0.46.2 · CodexAI · 9. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
 
 Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnahmen, animierte Szenenfilme, Bedienung und technische Hinweise. Die PNG-Vorschauen sind direkt in GitHub sichtbar; die Filme bleiben zusätzlich als verlinkte WebP-Dateien erreichbar.
+
+## Orientierung und historischer Bestand · v0.46.2 · CodexAI
+
+[**Repository-Status: Was ist aktiv?**](repository-status.md) · [Asset-Katalog](../assets/README.md) · [Werkzeuge](../tools/README.md) · [Entwicklungsarchiv](archiv/README.md) · [Versionsnachweise](arbeiten/README.md).
+
+Die folgende Galerie behält ihre tatsächlichen Aufnahmeversionen. Die Spielgrafik wurde durch die Repository-Aufräumung nicht neu gestaltet; aktuelle Originalhelden im nächsten Abschnitt. Veraltete Bedien- und Entwicklungsbeschreibungen sind im Archiv gekennzeichnet.
 
 ## Originalhelden wieder aktiv · v0.46.1 · CodexAI
 

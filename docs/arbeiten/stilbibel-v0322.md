@@ -1,5 +1,7 @@
 # Arbeitsnachweis · Gesamtspiel-Stilbibel · v0.32.2 · CodexAI
 
+> **Versionsbezogener Nachweis · Einordnung v0.46.2 · CodexAI:** Bilder, Befehle und Prüfzahlen gelten für den im Titel genannten Arbeitsstand. [Aktueller Repository-Status](../repository-status.md); keine pauschale Abnahme der heutigen Version.
+
 Ausgefülltes Beispiel zur [Arbeitsvorlage](../vorlagen/konsistenz-auftrag.md).
 
 ## Auftrag und Grundlage

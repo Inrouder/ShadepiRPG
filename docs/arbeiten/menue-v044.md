@@ -1,5 +1,7 @@
 # Menü und Kontrollpunktauswahl · v0.44.0 · CodexAI
 
+> **Versionsbezogener Nachweis · Einordnung v0.46.2 · CodexAI:** Bilder, Befehle und Prüfzahlen gelten für den im Titel genannten Arbeitsstand. [Aktueller Repository-Status](../repository-status.md); keine pauschale Abnahme der heutigen Version.
+
 ## Auftrag und Ausgangslage
 Nutzerauftrag: sichtbarer Fußkontakt auf dem Menüvorsprung, Zurück zum Desktop, letzten Kontrollpunkt laden sowie gezielte Kontrollpunktauswahl im Cheat-Menü. Ausgang `7e397f9`, v0.43.0; sauberer Arbeitsbaum. Alle Remote-Branches abgerufen und Versionsfelder verglichen: main aktuell, Entwicklungsbranches höchstens v0.21.3. Keine fremde Arbeit überschrieben.
 

@@ -1,5 +1,7 @@
 # Arbeitsnachweis · Tower und KOBAN-TEC · v0.33.0 · CodexAI
 
+> **Versionsbezogener Nachweis · Einordnung v0.46.2 · CodexAI:** Bilder, Befehle und Prüfzahlen gelten für den im Titel genannten Arbeitsstand. [Aktueller Repository-Status](../repository-status.md); keine pauschale Abnahme der heutigen Version.
+
 ## Auftrag und Ausgang
 
 - **Ziel:** Kenzō packt Raven vor Shadepis Eingreifen; nach der Niederlage sichtbarer schwer verletzter, gelähmter Kenzō auf den Knien. Geschützte Datenextraktion, Wiederholung nach mehreren Raven-Treffern, erst danach endgültige Vernichtung. Inszenierung bestätigt, Motiv/Auftraggeber offen; gemeinsame weitere Suche. Sichtbarer knapper Abflug und Penthouse-Explosion. Hangarzeichen gegen KOBAN-TEC tauschen.

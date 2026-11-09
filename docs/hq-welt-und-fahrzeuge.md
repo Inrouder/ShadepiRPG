@@ -1,5 +1,7 @@
 # HQ-Welt und Fahrzeug-Action · v0.15.0
 
+**Statushinweis v0.46.2 · CodexAI:** Historischer Grafikbericht. Einzelne Quellen bleiben aktiv, Fahrzeugdarstellung und neue Bewegungsatlanten wurden später ergänzt; keine allgemeine aktuelle Ausbauanleitung. [Aktuelle Einordnung](repository-status.md).
+
 ## Grafiken
 
 Die integrierten Atlanten wurden mit dem Bildgenerator erstellt. Sie sind lokal im Projekt enthalten; das Spiel benötigt keinen Onlinezugang. Die bereits gemalten Levelkulissen bleiben die Grundlage der Welt.

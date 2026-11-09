@@ -1,5 +1,7 @@
 # Konsistenzauftrag · v0.36.0 · CodexAI
 
+> **Versionsbezogener Nachweis · Einordnung v0.46.2 · CodexAI:** Bilder, Befehle und Prüfzahlen gelten für den im Titel genannten Arbeitsstand. [Aktueller Repository-Status](../repository-status.md); keine pauschale Abnahme der heutigen Version.
+
 - **Nutzerziel:** Epischer Landeanflug zum See und sichtbares Aussteigen; romantischer Moment, kurzer Drachenschatten über dem Wasser und mystisches Leuchten. Raven nimmt Shadepis Maske ab und küsst ihn; ihre Hand verdeckt sein Gesicht, das zu keinem Zeitpunkt vollständig erkennbar sein darf.
 - **Ausgang:** `8b7e1e4`, v0.35.1, sauber und identisch mit GitHub `main`; alle Remote-Branches abgerufen, andere Entwicklungsbranches unverändert bis v0.21.3. Keine fremde Arbeit zu übernehmen.
 - **Geltende Quellen:** Aktuelle Konsistenzregeln/Stilbibel, tatsächlich gesichtete Raven-/Shadepi-Bildkarten, aktive HQ-Helden, `lakeside.png`, bestehender Aerodyne-/Düsenrenderer und Originalroman Kapitel 7. Der nicht hochgeladene Comic ist keine gesichtete Quelle; maßgeblich ist die konkrete Nutzerbeschreibung der Handverdeckung.

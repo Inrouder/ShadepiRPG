@@ -1,5 +1,7 @@
 # Illustrierte NPCs und Gegner
 
+**Statushinweis v0.46.2 · CodexAI:** Herstellungsbericht des ursprünglichen NPC-Satzes. Die fertigen Atlanten bleiben aktiv; spätere Kontaktposen und Größenkorrekturen ergänzen diesen Bestand. [Aktuelle Einordnung](repository-status.md).
+
 Die NPC-Grafiken orientieren sich an den illustrierten HQ-Helden Raven und Shadepi. Die Figurenbilder wurden mit dem eingebauten **Imagegen-Werkzeug** erzeugt. Das Packskript zeichnet keine Figuren nach: Es ordnet die vorhandenen Bildposen zu, richtet Fußpunkte aus und erstellt die Godot-Atlanten.
 
 ## Enthaltene Figuren

@@ -919,7 +919,7 @@ func raven_energy_attack() -> bool:
 	return false
 
 func raven_attack_fx(endpoint: Vector2, electric: bool) -> void:
-	raven.animate("attack",0.11 if not electric and not raven.hero_frames.is_empty() else 0.0)
+	raven.animate("attack",0.0)
 	effects.weapon_trace(raven.attack_attachment(electric), endpoint + Vector2(0,-28), electric)
 	sound("electric" if electric else "pistol", 0.05)
 

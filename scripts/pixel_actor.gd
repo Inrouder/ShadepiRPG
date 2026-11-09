@@ -4,11 +4,6 @@ extends CharacterBody2D
 const OCTANT_ROWS := [2, 7, 0, 6, 1, 4, 3, 5]
 const TURN_STEP_TIME := 0.06
 
-const HeroArt = preload("res://scripts/hero_art.gd")
-var hero_frames: Array = []
-var hero_sheet: Texture2D
-var hero_pose_texture: AtlasTexture
-var hero_frame := 0
 var external_pose := false
 var reaction: Node2D
 var visual: Sprite2D
@@ -40,13 +35,6 @@ func setup(texture: Texture2D, game: Node2D) -> void:
 	var frame_size := SpriteAssets.frame_size(sheet)
 	var display_scale := SpriteAssets.display_scale(sheet)
 	directions = int(sheet.get_height() / float(frame_size.y * 4))
-	if HeroArt.supports(sheet):
-		directions=8
-		hero_sheet=sheet
-		hero_pose_texture=AtlasTexture.new()
-		hero_pose_texture.atlas=sheet
-		hero_pose_texture.filter_clip=true
-		hero_frames=HeroArt.catalog_for(sheet)
 	cast_shadow = Sprite2D.new()
 	cast_shadow.texture = sheet
 	cast_shadow.hframes = 8
@@ -77,7 +65,6 @@ func setup(texture: Texture2D, game: Node2D) -> void:
 	body_material.shader = preload("res://shaders/cloak.gdshader")
 	visual.material = body_material
 	add_child(visual)
-	if HeroArt.supports(sheet):HeroArt.apply(self,"idle",0,0)
 
 func reset_visual_pose() -> void:
 	clear_reaction()
@@ -93,10 +80,6 @@ func animate(state: String, delta: float) -> void:
 	flash_time = maxf(0.0, flash_time - delta)
 	body_material.set_shader_parameter("flash", clampf(flash_time * 6.0, 0.0, 1.0))
 	var direction := _direction_row(continuing_walk, delta)
-	if not hero_frames.is_empty():
-		HeroArt.apply(self,state,direction,animation_time)
-		queue_redraw()
-		return
 	var row: int = {"idle": 0, "walk": 1, "attack": 2, "hurt": 3}.get(state, 0)
 	var speed := 18.0 if state == "attack" else 9.0
 	var frame := mini(7, int(animation_time * speed)) if state == "attack" else int(animation_time * speed) % 8
