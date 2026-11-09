@@ -80,6 +80,12 @@ jobs:
           set -euo pipefail
           godot --headless --script res://tests/lake_sequence.gd 2>&1 | tee /tmp/lake-sequence.log
           if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/lake-sequence.log; then exit 1; fi
+      - name: Validate registered Aerodyne mechanical frames and cabin lifecycle
+        shell: bash
+        run: |
+          set -euo pipefail
+          godot --headless --script res://tests/aerodyne_art.gd 2>&1 | tee /tmp/aerodyne-art.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/aerodyne-art.log; then exit 1; fi
       - name: Validate cinematic entrances, hangar routes and continuous flight
         shell: bash
         run: |

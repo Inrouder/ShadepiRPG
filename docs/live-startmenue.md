@@ -20,7 +20,7 @@ Die Chat-Referenzen vom 7. November sind weiterhin keine zusätzlich archivierte
 - Ein Bildschirmshader ergänzt wandernden Nebel, schwache Neonlichtstrahlen, wenige Glaströpfchenspuren, zurückhaltenden Bloom und Filmkorn. Er liegt unter der Menüschrift und verzerrt keine Gesichter oder Knöpfe.
 - Menükonturen und kleine wandernde Cyan-Lichtsegmente greifen Ravens Nightwing-Terminals auf. Hover und Fokus sind deutlich sichtbar; Klicks erzeugen einen Lichtimpuls.
 - **Reduziert** deaktiviert Stadt-/Atmosphäre-Shader, Figurenwind und Menülichtanimation; es bleibt eine sparsame Regenlage. Verdeckte Menüs stoppen ihre Zeichen- und Eingabeverarbeitung.
-- Im Hauptmenü läuft weiterhin `Level.mp3`, dieselbe Musik wie am See und im Finale.
+- Im Hauptmenü läuft weiterhin `Level.mp3`. **Musikänderung v0.37.0 · CodexAI:** Kapitel 7 und sein Finale verwenden nun ausdrücklich `menu.mp3`.
 
 ## Prüfen und Vorschau erzeugen
 

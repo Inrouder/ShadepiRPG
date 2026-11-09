@@ -58,12 +58,12 @@ Pause, Terminals und Qualitätsstufen nach dem jeweiligen vorhandenen Renderer e
 
 | Datei / Familie | Bestehende Zuordnung |
 | --- | --- |
-| `Level.mp3` | Hauptmenü, Kapitel 1, Garage, See und ruhiger Abschluss. Hauptmenü und See teilen dieselbe Musik. |
+| `Level.mp3` | Hauptmenü, Kapitel 1 und Garage; Kapitel 7 erhält ab v0.37.0 ausdrücklich einen eigenen Titel. |
 | `Level2.mp3` | Industrie, Versteck, Hangar und Tower-Erkundung. |
 | `Level3.mp3` | Pakt, Heiligtum, Echo, Flug und Flucht. |
 | `Fight.mp3` | Normale Kämpfe einschließlich Deep Dive, Hinterhalt und Verfolgung. |
 | `Boss.mp3` | Bosskämpfe gegen Chrome Jackal und Kenzō. |
-| `menu.mp3` | Aufbewahrter früherer Menütitel; aktuell nicht zugeordnet. |
+| `menu.mp3` | v0.37.0 · CodexAI: ganz Kapitel 7, vom See-Anflug über die Aufnahme bis zum Finale. |
 | Kampfklang | Pistole, Elektrizität, Anstrengung, Schmerz und Sterben sind unterschiedliche Ereignisse; Tod nicht mehrfach auslösen. [Vorhandene Hörprobe](../previews/combat-sounds.wav). |
 
 MP3-Dateinamen einschließlich Groß-/Kleinschreibung gemäß [Musikzuordnung](../../assets/music/README.md) erhalten. [music_library.gd](../../scripts/music_library.gd) bleibt die technische Zuordnung. Ton-Aus, vorhandene Lautstärke-/Stimmenbegrenzung und Pausenverhalten gelten auch für neue Klänge. Leise eigene Umgebungsgeräusche pro Ort sind im [Designbericht](../design-atmosphaere.md) bislang ein Vorschlag, kein schon vollständig eingebauter Audiobestand.

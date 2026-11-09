@@ -32,7 +32,7 @@ func _draw() -> void:
 	draw_set_transform(Vector2(0, -30), 0.0, Vector2(1.0, 0.5))
 	draw_circle(Vector2.ZERO, 54.0, Color(0, 0, 0, 0.45))
 	draw_set_transform(Vector2.ZERO)
-	Flight.draw_aerodyne_3q(self, center, 1.0 / Flight.ROOF_ZOOM, 0.0, false, clock * 0.2)
+	Flight.draw_aerodyne_3q(self, center, 1.0 / Flight.ROOF_ZOOM, 0.0, false, clock * 0.2,false)
 	for puff in steam:
 		var a: float = puff.t / 1.2
 		draw_rect(Rect2((center + puff.p).round(), Vector2(4, 4)), Color(0.75, 0.82, 0.92, 0.25 * a))

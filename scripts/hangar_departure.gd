@@ -116,9 +116,13 @@ func play() -> void:
 	await cs.wait(0.35)
 	if not cs.alive(ticket): return
 	world.sound("prop_metal")
+	await cs.animate(vehicle.set_door,0.6)
+	if not cs.alive(ticket): return
 	await _board(cs,squad[1],Vector2(878,339))
 	if not cs.alive(ticket): return
 	await _board(cs,squad[0],Vector2(857,344))
+	if not cs.alive(ticket): return
+	await cs.animate(func(p: float): vehicle.set_door(1-p),0.6)
 	if not cs.alive(ticket): return
 	await cs.wait(0.25)
 	if not cs.alive(ticket): return

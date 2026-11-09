@@ -167,9 +167,13 @@ func run() -> void:
 		if not cs.alive(ticket): return
 	set_stage("board")
 	world.sound("prop_metal")
+	await cs.animate(vehicle.set_door,0.45)
+	if not cs.alive(ticket): return
 	await _board(cs,1)
 	if not cs.alive(ticket): return
 	await _board(cs,0)
+	if not cs.alive(ticket): return
+	await cs.animate(func(p: float): vehicle.set_door(1-p),0.45)
 	if not cs.alive(ticket): return
 	for actor in heroes: actor.hide()
 	await cs.say("SHADEPI","Halt dich fest. Wir starten.")

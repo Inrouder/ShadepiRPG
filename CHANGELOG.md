@@ -1,5 +1,14 @@
 # Versionshinweise
 
+## v0.37.0 – CodexAI: Kapitel-7-Musik, Aerodyne-Sprites und Cinema-Roadmap · 9. November 2026
+
+- Beide Kapitel-7-Musikslots verwenden jetzt `assets/music/menu.mp3`. Das Hauptmenü behält `Level.mp3`; Kampf- und Bosszuordnung bleiben erhalten. Aktuelle Musikdokumentation und Regressionserwartung angepasst.
+- Neuer transparenter HQ-Aerodyne-Atlas mit sechs mechanischen Bildern: Kabine geschlossen/öffnend/halb offen/offen und zwei Triebwerksphasen. Gemessene Rumpfanker gleichen unterschiedliche Zellränder aus; gemeinsame tatsächliche Düsenzentren für Rumpf und Abgasprojektion.
+- Gemeinsame Quelle für bewegten und geparkten Aerodyne, spielbaren Flug und filmische Start-/Landeszenen. Kabine öffnet vor dem Ein-/Aussteigen und schließt danach in Hangar, Tower-Flucht und am See; Pause, Skip und Kapitelwechsel erhalten. Echte neue Flugwinkel und das eingemalte Erkundungs-Hangarschiff bleiben weiterer Bedarf.
+- Abläufe und Ressourcen aller sieben Kapitel inklusive Erinnerungen geprüft; zusätzliche Renderer-Stichproben aller Kapitel sowie vollständige Tower-/Hangar-Szenen. [Priorisierte Cinema-/Sprite-Roadmap](docs/cinema-roadmap.md) benennt konkrete Szenen, Bildbedarfe und Abnahme. Große vorgeschlagene Szenenumbauten sind noch nicht umgesetzt.
+- 811 gezielte Prüfungen und elf zusätzliche Exportprüfungen ohne Fehler. Neue Rumpfquelle, spielbare Flugansicht und tatsächliche Kapitel-7-Musikstreams auch aus dem exportierten Spielpaket geprüft.
+- [Aktueller Arbeitsnachweis](docs/arbeiten/cinema-v037.md), [Fahrzeugquelle](assets/vehicles/aerodyne/README.md) und tatsächliche Spielbilder/Technikfilm in der Roadmap. Neue 30-Fälle-Fahrzeugprüfung im GitHub-Build.
+
 ## v0.36.1 – CodexAI: Ravens rechte Hand an der Maske, linke am Gesicht · 9. November 2026
 
 - Handführung der beiden See-Kontaktposen korrigiert: Raven hebt die abgenommene Maske mit ihrer eigenen rechten Hand; ihre eigene linke Hand berührt und verdeckt Shadepis Gesicht. Dieselbe anatomische Zuordnung gilt im Kuss. Gesicht, Kasa und Kostüme bleiben konsistent.

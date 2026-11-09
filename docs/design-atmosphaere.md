@@ -1,5 +1,7 @@
 # Atmosphäre und Designprüfung · v0.31.0 · CodexAI
 
+**Aktualisierung v0.37.0 · CodexAI:** Der bewegte Aerodyne verwendet inzwischen einen gemeinsamen Atlas mit sechs mechanischen Rumpfbildern. Der normale Erkundungs-Hangar und zusätzliche Flugwinkel bleiben offen. Die aktuelle projektweite Prüfung samt Prioritäten steht in der [Cinema-/Sprite-Roadmap](cinema-roadmap.md); frühere Vorschläge weiter unten dokumentieren den Stand der damaligen Prüfung.
+
 Alle sieben Kapitel, Hauptmenü, Hack-Oberfläche, Fahrsequenzen und die drei Erinnerungen wurden anhand des aktuellen Codes und **27 gerenderter Godot-Ansichten** verglichen. Ergebnis: Die detailreichen Kulissen und die Cyan-/Magenta-/Bernstein-Palette tragen das Spiel bereits gut. Die auffälligsten Unterschiede liegen bei der Bewegung innerhalb der Kulissen, der Figurenschärfe und den unterschiedlichen Aerodyne-Ansichten.
 
 Die folgenden Atmosphäre-Ergänzungen sind umgesetzt. Die weiter unten aufgeführten größeren Designänderungen sind **Vorschläge für einen folgenden Arbeitsgang**.

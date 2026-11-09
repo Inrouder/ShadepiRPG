@@ -6,6 +6,8 @@
 
 ![Alle 23 vorhandenen Figuren und Typen](bilder/figuren-uebersicht.png)
 
+**Aktualisierung v0.37.0 · CodexAI:** [Gesamtspiel-Prüfung und Cinema-/Sprite-Roadmap](../cinema-roadmap.md), sechs registrierte [Aerodyne-Rumpfbilder](../../assets/vehicles/aerodyne/README.md) und neue Kapitel-7-Musikzuordnung. Ein Zustandsbild ist noch kein Bewegungszyklus; neue Kontakt- und Objektphasen jeweils im tatsächlichen Spiel abnehmen.
+
 ## Die fünf Teile
 
 **Aktualisierung v0.36.0 · CodexAI:** [See-Finale](../see-finale.md) mit vier eigenen HQ-Kontaktposen nach den normalen Heldenquellen. Hand-/Fußanker, breite Kasa-Silhouette und Verdeckung des Gesichts sind Teil des Grafikvertrags; kein unmaskiertes Porträt. Landung auf trockenem Uferboden, neue Drachenquelle nur als kurzzeitiger Wasserschatten.

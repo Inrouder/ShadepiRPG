@@ -154,10 +154,14 @@ func play_arrival() -> void:
 	await cs.wait(0.6)
 	if not cs.alive(ticket): return
 	set_stage("exit_raven")
+	await cs.animate(vehicle.set_door,0.65)
+	if not cs.alive(ticket): return
 	await _exit(cs,world.raven,PARK+Vector2(93,44))
 	if not cs.alive(ticket): return
 	set_stage("exit_shadepi")
 	await _exit(cs,world.player,PARK+Vector2(77,76))
+	if not cs.alive(ticket): return
+	await cs.animate(func(p: float): vehicle.set_door(1-p),0.65)
 	if not cs.alive(ticket): return
 	await cs.title("KAPITEL 7","Der neue Orden",2.2)
 	if not cs.alive(ticket): return

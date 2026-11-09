@@ -29,8 +29,8 @@ const SLOTS: Dictionary = {
 	"chapter_6_tower": "Level2",
 	"chapter_6_boss": "Boss",
 	"chapter_6_escape": "Level3",
-	"chapter_7_lake": "Level",
-	"chapter_7_finale": "Level",
+	"chapter_7_lake": "menu",
+	"chapter_7_finale": "menu",
 }
 
 static func candidates(section: String) -> Array[String]:

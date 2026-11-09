@@ -1,6 +1,7 @@
 extends Node2D
 
 const VEHICLES = preload("res://assets/world/hq/vehicles.png")
+const Airframe = preload("res://scripts/aerodyne_art.gd")
 const Painted = preload("res://scripts/painted_world.gd")
 
 signal completed
@@ -176,7 +177,10 @@ func _update_fx(delta: float) -> void:
 func _draw_vehicle(index: int, center: Vector2, size: Vector2, tilt: float = 0.0) -> void:
 	var region := Rect2((index % 2) * 627, (index / 2) * 627, 627, 627)
 	draw_set_transform(center, tilt)
-	draw_texture_rect_region(VEHICLES, Rect2(-size * 0.5, size), region)
+	if index==0:
+		Airframe.draw(self,Rect2(-size*0.5,size),fx_clock,1.0)
+	else:
+		draw_texture_rect_region(VEHICLES, Rect2(-size * 0.5, size), region)
 	draw_set_transform(Vector2.ZERO)
 
 func _draw_fx() -> void:

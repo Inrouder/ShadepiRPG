@@ -4,13 +4,15 @@
 
 ## Fahrzeuge
 
+**Ausbau v0.37.0 · CodexAI:** Der aktive bewegte Aerodyne verwendet jetzt einen [gemeinsamen Atlas mit sechs Rumpfbildern](../../assets/vehicles/aerodyne/README.md): Kabine geschlossen/öffnend/offen und Triebwerksphasen. [Aktuelle Sichtprüfung und weiterer Spritebedarf](../cinema-roadmap.md). Die folgende alte Fahrzeugtafel bleibt als Herkunftsreferenz für das ursprüngliche Einzelbild erhalten.
+
 ![Vorhandene Fahrzeugansichten](bilder/fahrzeuge.png)
 
 Die Tafel zeigt vorhandene Quellbilder zur Form-/Materialerkennung, **keinen gemeinsamen Weltmaßstab**. Im Spiel werden Top-down-Verfolgung, Flug, Landung und Garagenobjekte unterschiedlich groß und mit unterschiedlichen Kameras gezeichnet.
 
 | Objekt | Identität / Bildmerkmale | Aktive Quelle und Darstellung |
 | --- | --- | --- |
-| **Aerodyne** | Gepanzertes dunkles Fluggerät, sichtbares Cockpit, technische Fugen und Düsen; Lichtakzente passend zum Systemzustand. | [vehicles.png](../../assets/world/hq/vehicles.png), Zelle 0 im 2×2-Raster; [aerodyne_flight.gd](../../scripts/aerodyne_flight.gd), [Abflug](../../scripts/hangar_departure.gd). |
+| **Aerodyne** | Gepanzertes dunkles Fluggerät, sichtbares Cockpit, technische Fugen und Düsen; Lichtakzente passend zum Systemzustand. | [airframe.png](../../assets/vehicles/aerodyne/airframe.png), sechs registrierte Zustände über [aerodyne_art.gd](../../scripts/aerodyne_art.gd); ursprüngliche Identität aus Zelle 0 von `vehicles.png`. |
 | **Verfolgerauto** | Dunkler gepanzerter Wagen, klare Dach-/Motorflächen und Rücklichter; eigene breite Silhouette. | Gleicher Atlas, Zelle 1; [Verfolgung](../../scripts/campaign_drive.gd). |
 | **Motorrad mit Shadepi und Raven** | Rotes/dunkles Motorrad; Fahrer mit Kasa und maskiertem Kopf, Raven mit schwarz-blauem Haar und Cyan-Ausrüstung. Beide gehören sichtbar zum Motorrad, keine beliebigen generischen Fahrer. | Gleicher Atlas, Zelle 2. |
 | **Drohne** | Kompakter technischer Körper mit vier deutlich erkennbaren Rotoren. | Gleicher Atlas, Zelle 3; Größe und Warn-/Angriffsflächen nach Flug-/Fahrmodus. |
@@ -22,7 +24,7 @@ Die Tafel zeigt vorhandene Quellbilder zur Form-/Materialerkennung, **keinen gem
 | --- | --- |
 | ![Aerodyne beim Abflug](../previews/bericht8-abflug.png) | ![Aerodyne nach der Landung](../flug-dach.png) |
 
-Die Silhouette und Helligkeit des im Hangar dargestellten Fahrzeugs unterscheiden sich noch vom Fahrzeugatlas. Das ist eine **bekannte offene Vereinheitlichung**, keine neu bestätigte zweite Aerodyne-Identität. Bei einem späteren gemeinsamen Fahrzeugatlas Cockpit, Rumpf, Düsen, Beschädigung und Farbfamilie über alle Ansichten erhalten. Dieses Dokument ersetzt die Grafiken nicht ungefragt.
+Die Bilder in dieser historischen Vergleichstabelle zeigen den früheren Unterschied. Seit v0.35.0 nutzt der filmische Hangar-Abflug denselben Fahrzeugrenderer wie die Tower-Flucht; ab v0.37.0 verwenden diese, Flug, Landung und See den gemeinsamen animierten Atlas. **Offen bleibt das in die normale Erkundungs-Hangarkulisse eingemalte Schiff.** Es ist keine neue Fahrzeugidentität; dessen Freistellung sowie zusätzliche Kurven-/Seiten-/Fahrwerksansichten stehen in der [Roadmap](../cinema-roadmap.md).
 
 ## Neun Weltobjekte in allen drei Zuständen
 

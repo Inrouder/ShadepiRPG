@@ -32,7 +32,7 @@ Die beiden Clips zeigen jeweils eine durchgehende Spielszene aus tatsächlichen 
 
 E / Enter / A schaltet Dialoge weiter, Leertaste / B überspringt die aktuelle Szene, Esc / Start pausiert. Die vier Ritualpunkte bleiben erreichbar und erhalten den bisherigen Kapitelablauf. Der Kurzflug des Schattens läuft ohne wartenden Dialog durch.
 
-Ein Spielstand während Ankunft oder Finale startet die jeweilige Szene erneut. Nach ihrem Abschluss lädt man am Ufer beziehungsweise in der maskierten Schlussumarmung, ohne dieselbe Szene erneut abzuspielen. Ältere Spielstände am Kapitelanfang oder Ende erhalten die jeweilige neue Szene einmal; Ritualfortschritt dazwischen wird erhalten. Die ursprüngliche Seemusik sowie Ton- und Bildstiloptionen bleiben erhalten.
+Ein Spielstand während Ankunft oder Finale startet die jeweilige Szene erneut. Nach ihrem Abschluss lädt man am Ufer beziehungsweise in der maskierten Schlussumarmung, ohne dieselbe Szene erneut abzuspielen. Ältere Spielstände am Kapitelanfang oder Ende erhalten die jeweilige neue Szene einmal; Ritualfortschritt dazwischen wird erhalten. **Musikänderung v0.37.0 · CodexAI:** Ankunft, Ordensaufnahme und Finale spielen jetzt `assets/music/menu.mp3`. Ton- und Bildstiloptionen bleiben erhalten.
 
 ## Grafik, Herkunft und Prüfung
 

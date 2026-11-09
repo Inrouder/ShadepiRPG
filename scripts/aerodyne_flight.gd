@@ -5,6 +5,7 @@ extends Node2D
 ## Tower-Scanner → Driftkurve → Landung auf dem Landeplatz (Bremsdüsen, Ausrichten).
 
 const VEHICLES = preload("res://assets/world/hq/vehicles.png")
+const Airframe = preload("res://scripts/aerodyne_art.gd")
 const PROPS = preload("res://assets/world/hq/flight-props.png")
 const Painted = preload("res://scripts/painted_world.gd")
 const Calibration = preload("res://scripts/sequence_calibration.gd")
@@ -621,10 +622,10 @@ func _draw_aerodyne_top() -> void:
 	var paint := Color(1, 0.55, 0.6) if hurt > 0.0 and int(clock * 20.0) % 2 == 0 else Color.WHITE
 	if roll > 0.0 and squash < 0.5:
 		paint = paint.darkened(0.35)
-	draw_texture_rect_region(VEHICLES, Rect2(-size * 0.5, size), Rect2(0, 0, 627, 627), paint)
+	Airframe.draw(self,Rect2(-size*0.5,size),clock,0.25 if engine_failed else 1.0,paint)
 	# Thrusters (one sputters while the engine is dead).
 	for side in [-1, 1]:
-		var nozzle := Vector2(side * 19, 31)
+		var nozzle: Vector2 = Airframe.NOZZLES[0 if side==-1 else 1]*size/240.0
 		var failing: bool = engine_failed and side == 1
 		if failing and sin(clock * 32.0) < 0.8:
 			continue
@@ -757,13 +758,13 @@ func _draw_landing() -> void:
 	_draw_debris()
 
 ## Shared with the parked Aerodyne on the roof: top-down art in 3/4 view.
-static func draw_aerodyne_3q(canvas: CanvasItem, center: Vector2, grow: float, tilt: float, braking: bool, time: float) -> void:
+static func draw_aerodyne_3q(canvas: CanvasItem, center: Vector2, grow: float, tilt: float, braking: bool, time: float, powered: bool = true) -> void:
 	var xf := Transform2D(0.0, Vector2(1.0, 0.6), 0.0, center.round()) * Transform2D(tilt, Vector2.ZERO)
 	canvas.draw_set_transform_matrix(xf)
 	var size := Vector2(240, 240) * grow
-	canvas.draw_texture_rect_region(VEHICLES, Rect2(-size * 0.5, size), Rect2(0, 0, 627, 627))
+	Airframe.draw(canvas,Rect2(-size*0.5,size),time,1.0 if powered else 0.0)
 	for side in [-1.0, 1.0]:
-		var nozzle := Vector2(side * 38.0, 62.0) * grow
+		var nozzle: Vector2 = Airframe.NOZZLES[0 if side<0 else 1]*grow
 		var glow := Color(1.0, 0.55, 0.2, 0.55) if braking else Color(0.3, 0.85, 1.0, 0.35)
 		var flick := 1.0 + 0.2 * sin(time * 40.0 + side)
 		canvas.draw_circle(nozzle, 12.0 * grow * flick, Color(glow, glow.a * 0.5))

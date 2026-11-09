@@ -19,7 +19,7 @@ func run() -> void:
 	check(MusicLibrary.SLOTS.size() == 27, "every menu, combat and story section has an assigned music slot")
 	check(MusicLibrary.candidates("chapter_2_dive")[0] == "res://assets/music/Fight.mp3", "regular fights use the shared Fight track")
 	check(MusicLibrary.path_for("boss") == "res://assets/music/Boss.mp3", "boss encounters use the supplied boss track")
-	check(MusicLibrary.path_for("menu") == MusicLibrary.path_for("chapter_7_finale"), "main menu uses the lake finale music")
+	check(MusicLibrary.path_for("menu") == "res://assets/music/Level.mp3" and MusicLibrary.path_for("chapter_7_lake") == "res://assets/music/menu.mp3" and MusicLibrary.path_for("chapter_7_finale") == "res://assets/music/menu.mp3", "main menu keeps Level; all of chapter 7 uses menu.mp3")
 	check(load("res://assets/menu/start-city.png").get_size() == Vector2(1280, 720), "start menu artwork keeps its 16:9 master resolution")
 	check(CombatRules.can_strike(Vector2.ZERO, Vector2.RIGHT, Vector2(40, 0)), "frontal target can be hit")
 	check(not CombatRules.can_strike(Vector2.ZERO, Vector2.RIGHT, Vector2(-40, 0)), "target behind player is safe")
