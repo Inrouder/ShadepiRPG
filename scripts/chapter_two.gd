@@ -3,6 +3,7 @@ extends "res://scripts/main.gd"
 enum Section{YARD, HIDEOUT, DIVE, RECOVERY, END, COOLING}
 
 const ChapterHud = preload("res://scripts/chapter_two_hud.gd")
+const IceBath = preload("res://scripts/ice_bath_sequence.gd")
 const SLOT: = "user://shadepi-chapter-two.cfg"
 const YARD_START: = Vector2(145, 420)
 const DOOR: = Vector2(876, 295)
@@ -19,6 +20,8 @@ var relay_index: = 0
 var ice_cycle: = 0.0
 var dive_hold: = 0.0
 var spray_ready: = false
+var bath_pending := 0 # 1 entry, 2 return, 3 spray rescue; 0 completed/idle
+var ice_bath: Node2D
 var threats: Array[Node2D] = []
 var next_wave: = false
 var previous_ice_open: = false
@@ -95,8 +98,14 @@ func new_game(save_checkpoint: bool = true) -> void :
 
 ## keep_positions: story steps inside the hideout keep both characters where
 ## the scene left them instead of snapping back to the room entrance.
-func _enter(next: Section, saved_relay: int = 0, keep_positions: bool = false) -> void :
+func _enter(next: Section, saved_relay: int = 0, keep_positions: bool = false, saved_spray: bool = false, saved_bath: int = 0) -> void :
 	cutscene.abort()
+	if is_instance_valid(ice_bath):
+		ice_bath.restore_actors()
+		ice_bath.get_parent().remove_child(ice_bath)
+		ice_bath.queue_free()
+	ice_bath = null
+	bath_pending = saved_bath if (next==Section.COOLING and saved_bath==1) or (next==Section.RECOVERY and saved_bath in [2,3]) else 0
 	ui.clear_toast()
 	section = next
 	match section:
@@ -119,13 +128,14 @@ func _enter(next: Section, saved_relay: int = 0, keep_positions: bool = false) -
 		threat.queue_free()
 	threats.clear()
 	dive_hold = 0.0
-	spray_ready = false
+	spray_ready = saved_spray if next==Section.RECOVERY else false
+	if bath_pending==3: spray_ready = true
 	next_wave = false
 	previous_ice_open = false
 	ice_cycle = 0.0
 	ui.clear_dialogue()
 	if not keep_positions:
-		player.position = YARD_START if section == Section.YARD else Vector2(440, 430)
+		player.position = YARD_START if section == Section.YARD else IceBath.PLAYER_WAIT if section in [Section.COOLING,Section.RECOVERY] else IceBath.SUPPORT if section==Section.END else Vector2(440,430)
 	player.health = 100
 	player.energy = 100.0
 	hack_cooldown = 0.0
@@ -133,7 +143,7 @@ func _enter(next: Section, saved_relay: int = 0, keep_positions: bool = false) -
 	if raven_leads():
 		reset_raven(Vector2(145, 436) if relay_index == 0 else RELAYS[relay_index - 1])
 	elif not keep_positions or section == Section.RECOVERY:
-		reset_raven(BATH)
+		reset_raven(IceBath.APPROACH if section==Section.COOLING else IceBath.EXIT if section==Section.END else BATH)
 	else:
 		reset_raven(raven.position)
 	raven.modulate = Color(0.57, 0.92, 1.0, 0.56) if raven_leads() else Color.WHITE
@@ -151,6 +161,11 @@ func _enter(next: Section, saved_relay: int = 0, keep_positions: bool = false) -
 	else:
 		set_scene_lighting(Color("afbecb"), [[BATH, "6fcbda", 2.2, 0.85], [WORKBENCH, "7780b8", 1.8, 0.46]])
 	close_menu()
+	if section in [Section.COOLING,Section.RECOVERY]:
+		ice_bath = IceBath.new()
+		ice_bath.world = self
+		actors.add_child(ice_bath)
+		if section==Section.RECOVERY: ice_bath.rest_recovery()
 
 func _target() -> Vector2:
 	match section:
@@ -222,7 +237,8 @@ func interact(_actor: PixelActor = null) -> void :
 				_finish_chapter()
 			else:
 				spray_ready = true
-				toast("Kryospray aufgenommen.")
+				toast("Kryospray aufgenommen. Zurück zu Raven · E / A")
+				autosave()
 
 func _spawn_ice() -> void :
 	var positions: Array[Vector2] = []
@@ -376,40 +392,58 @@ func _finish_chapter() -> void :
 
 func _scene_arrival() -> void:
 	var cs = begin_cutscene()
+	var ticket: int = cs.generation
 	player.facing = Vector2.RIGHT
 	cs.pose(player, "idle")
 	await cs.camera(player.position + Vector2(140, -70), 0.0, 1.0)
+	if not cs.alive(ticket): return
 	await cs.fade(Color.BLACK, 0.0)
+	if not cs.alive(ticket): return
 	await cs.fade(Color(0, 0, 0, 0), 1.0)
+	if not cs.alive(ticket): return
 	await cs.title("KAPITEL 2", "Offenbarungen im Verborgenen", 2.4)
+	if not cs.alive(ticket): return
 	await cs.say("INDUSTRIEGEBIET", "Verrostete Gerippe von Fabriken ragen wie die Knochen toter Leviathane in den giftgrünen Nachthimmel.")
+	if not cs.alive(ticket): return
 	await cs.camera(player.position + Vector2(40, -60), 0.6, 1.15)
+	if not cs.alive(ticket): return
 	player.visual.position.y = player.standing_visual_position.y - 180.0
 	await cs.drop(player, 180.0, 0.4)
+	if not cs.alive(ticket): return
 	cs.do(func():
 		effects.water_step(player.position)
 		effects.burst(player.position, Color("a7b9a0"), 12)
 	)
 	await cs.wait(0.4)
+	if not cs.alive(ticket): return
 	await cs.camera(DOOR + Vector2(-60, -40), 1.4, 1.0)
+	if not cs.alive(ticket): return
 	await cs.say("SHADEPI", "Jeder Instinkt schreit nach Vorsicht. Erst die Umgebung scannen – Fluchtwege, Schützennester, Schwachstellen. Dann klopfe ich an.")
+	if not cs.alive(ticket): return
 	cs.end()
 
 func _scene_knock() -> void:
 	var cs = begin_cutscene()
+	var ticket: int = cs.generation
 	await cs.walk(player, DOOR + Vector2(0, 30), 80)
+	if not cs.alive(ticket): return
 	cs.face(player, DOOR)
 	cs.pose(player, "idle")
 	await cs.camera(DOOR + Vector2(0, -20), 0.6, 1.3)
+	if not cs.alive(ticket): return
 	for i in 3:
 		cs.do(func():
 			sound("prop_metal")
 			shake = 2.0
 		)
 		await cs.wait(0.42)
+		if not cs.alive(ticket): return
 	await cs.wait(0.5)
+	if not cs.alive(ticket): return
 	await cs.say("STAHLTÜR", "Ein lautes, protestierendes Knarren.")
+	if not cs.alive(ticket): return
 	await cs.fade(Color.BLACK, 0.5)
+	if not cs.alive(ticket): return
 	cs.do(func():
 		_enter(Section.HIDEOUT)
 		autosave()
@@ -418,16 +452,22 @@ func _scene_knock() -> void:
 
 func _scene_hideout() -> void:
 	var cs = begin_cutscene()
+	var ticket: int = cs.generation
 	player.facing = Vector2.RIGHT
 	raven.position = BATH + Vector2(-30, 30)
 	raven.facing = Vector2.LEFT
 	cs.pose(player, "idle")
 	cs.pose(raven, "idle")
 	await cs.camera(player.position.lerp(raven.position, 0.5) + Vector2(0, -40), 0.0, 1.25)
+	if not cs.alive(ticket): return
 	await cs.fade(Color.BLACK, 0.0)
+	if not cs.alive(ticket): return
 	await cs.fade(Color(0, 0, 0, 0), 0.8)
+	if not cs.alive(ticket): return
 	await cs.say("RAVENS VERSTECK", "Ein Nervenzentrum, ein Altar für den digitalen Gott. Kabel schlängeln sich über den Boden, in der Mitte steht eine Wanne mit trübem Eiswasser.")
+	if not cs.alive(ticket): return
 	await cs.walk(raven, player.position + Vector2(56, -18), 70)
+	if not cs.alive(ticket): return
 	cs.face(raven, player.position)
 	cs.face(player, raven.position)
 	cs.pose(raven, "idle")
@@ -436,18 +476,22 @@ func _scene_hideout() -> void:
 		["SHADEPI", "Du hast keine Zeit gesagt."],
 		["RAVEN", "Also … nach was suchst du? Welche Information?"],
 	])
+	if not cs.alive(ticket): return
 	cs.end()
 
 func _scene_fragment() -> void:
 	var cs = begin_cutscene()
+	var ticket: int = cs.generation
 	cs.camera(WORKBENCH + Vector2(10, -30), 1.0, 1.3)
 	cs.walk(raven, WORKBENCH + Vector2(46, 22), 70)
 	await cs.walk(player, WORKBENCH + Vector2(-20, 24), 70)
+	if not cs.alive(ticket): return
 	cs.face(player, WORKBENCH)
 	cs.face(raven, WORKBENCH)
 	cs.pose(player, "attack")
 	cs.do(func(): effects.burst(WORKBENCH + Vector2(0, -6), Color("e9b26f"), 10))
 	await cs.wait(0.4)
+	if not cs.alive(ticket): return
 	cs.pose(player, "idle")
 	cs.pose(raven, "idle")
 	await cs.lines([
@@ -456,64 +500,31 @@ func _scene_fragment() -> void:
 		["SHADEPI", "Ich bin der letzte Überlebende des Ordens des Weißen Drachen. Ich suche den Schuldigen für das Massaker an meinem Orden."],
 		["RAVEN", "Da du mir geholfen hast, werde ich sehen, was ich für dich tun kann."],
 	])
+	if not cs.alive(ticket): return
 	await cs.walk(raven, BATH + Vector2(-26, 20), 70)
+	if not cs.alive(ticket): return
 	cs.face(raven, player.position)
 	cs.pose(raven, "idle")
 	await cs.say("RAVEN", "Falls ich einen Kurzschluss erleide … verschwinde von hier.")
+	if not cs.alive(ticket): return
 	cs.end(func():
 		_enter(Section.COOLING, 0, true)
 		autosave()
 	)
 
 func _scene_dive() -> void:
-	var cs = begin_cutscene()
-	await cs.camera(BATH + Vector2(0, -30), 0.6, 1.35)
-	await cs.walk(raven, BATH, 50)
-	cs.pose(raven, "idle")
-	await cs.say("RAVENS VERSTECK", "Ein tiefer Atemzug, dann steigt sie ins eisige Wasser. Schläuche klicken, ihr Körper wird schlaff – ihr Geist stürzt ins Netz.")
-	cs.do(func(): sound("hack"))
-	await cs.flash(Color(0.45, 0.95, 1.0, 0.85), 0.7)
-	cs.end(func():
-		_enter(Section.DIVE, 0, true)
-		autosave()
-	)
+	ice_bath.play_entry()
 
 func _scene_return() -> void:
-	var cs = begin_cutscene()
-	raven.position = BATH
-	player.position = BATH + Vector2(-90, 50)
-	player.facing = Vector2.RIGHT
-	cs.pose(raven, "hurt")
-	cs.pose(player, "idle")
-	await cs.camera(BATH + Vector2(-40, -30), 0.0, 1.3)
-	cs.do(func():
-		shake = 8.0
-		effects.burst(BATH, Color("f35075"), 32)
-	)
-	await cs.flash(Color(1, 0.2, 0.35, 0.5), 0.35)
-	await cs.lines([
-		["SHADEPIS HUD", "HEILIGTUM · Eindämmungsstatus 85 %. Der Nanitenschwarm reagiert auf das Feld der Netrunnerin."],
-		["RAVEN", "Nicht gut …"],
-		["SHADEPI", "Ihr Körper überhitzt. Das Kryospray – sofort."],
-	])
-	cs.end(func(): toast("Kryospray am Überwachungstisch holen"))
+	ice_bath.play_return()
 
 func _scene_oath() -> void:
-	var cs = begin_cutscene()
-	await cs.walk(player, BATH + Vector2(-34, 20), 80)
-	cs.face(player, BATH)
-	cs.pose(player, "attack")
-	cs.do(func(): effects.burst(BATH, Color("a3eafa"), 30))
-	await cs.wait(0.6)
-	cs.pose(player, "idle")
-	cs.release(raven)
-	await cs.camera(BATH + Vector2(-30, -30), 0.6, 1.35)
-	await cs.walk(raven, player.position + Vector2(24, -6), 40)
-	cs.face(raven, player.position)
-	cs.pose(raven, "idle")
+	ice_bath.play_rescue()
+
+func _oath_words(cs) -> void:
 	await cs.lines([
-		["SHADEPI", "Hört sich nach Ärger an. Geht's?"],
-		["RAVEN", "Das kann man wohl sagen."],
+		["SHADEPI", "Besser?"],
+		["RAVEN", "Ja … Gib mir einen Moment."],
 		["SHADEPI", "Dein Kreislauf und deine Herzfrequenz sind ungewöhnlich hoch. Was hast du gefunden?"],
 		["RAVEN", "Ich bin auf jemanden gestoßen, den ich selbst verfolge. Oder besser gesagt: dem ich versuche zu entkommen."],
 		["SHADEPI", "Hast du deine Spuren verwischt? Von wem sprichst du?"],
@@ -522,15 +533,12 @@ func _scene_oath() -> void:
 		["SHADEPI", "Ich lasse nicht zu, dass dir etwas geschieht. Was auch immer dir passiert ist – ich werde dich rächen, so wie ich meine Brüder und Schwestern rächen werde."],
 		["SHADEPI", "Ich, Shadepi, der letzte Krieger des Ordens des Weißen Drachen, verspreche dir, sie dafür bezahlen zu lassen."],
 	])
-	cs.do(func():
-		_enter(Section.END, 0, true)
-		autosave()
-		_scene_chapter_end()
-	)
 
 func _scene_chapter_end() -> void:
 	var cs = begin_cutscene()
+	var ticket: int = cs.generation
 	await cs.title("KAPITEL 2 · ENDE", "Auf den Monitoren bleibt ein Name stehen: Kenzō Moriyama", 2.8)
+	if not cs.alive(ticket): return
 	cs.end(func(): toast("E / A · Weiter zu Kapitel 3"))
 
 func saved_checkpoint() -> int:
@@ -548,6 +556,8 @@ func save_game() -> bool:
 	var config: = ConfigFile.new()
 	config.set_value("chapter", "section", section)
 	config.set_value("chapter", "relay", relay_index)
+	config.set_value("chapter", "spray_ready",spray_ready)
+	config.set_value("chapter", "bath_pending",bath_pending)
 	config.set_value("props", "state", dressing_state())
 	return config.save(Admin.checkpoint_path(SLOT, get_tree())) == OK
 
@@ -558,7 +568,13 @@ func load_game(_requested_mode: Variant = null) -> bool:
 	var config: = ConfigFile.new()
 	config.load(Admin.checkpoint_path(SLOT, get_tree()))
 	restore_dressing_state(config.get_value("props", "state", {}))
-	_enter(saved as Section, int(config.get_value("chapter", "relay", 0)))
+	var relay: Variant = config.get_value("chapter","relay",0)
+	var spray: Variant = config.get_value("chapter","spray_ready",false)
+	var pending: Variant = config.get_value("chapter","bath_pending",0)
+	_enter(saved as Section,relay if relay is int else 0,false,spray is bool and spray,pending if pending is int else 0)
+	if bath_pending==1: ice_bath.play_entry()
+	elif bath_pending==2: ice_bath.play_return()
+	elif bath_pending==3: ice_bath.play_rescue()
 	return true
 
 func _draw() -> void :

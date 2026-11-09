@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.37.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.38.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -38,6 +38,12 @@ Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und
 ## Mitarbeit und verbindliche Konsistenz
 
 Für Menschen und KI: **[Bebilderte Stilbibel des gesamten Spiels](docs/stilbibel/README.md)** · [Alle 23 Figuren mit Einzelkarten](docs/stilbibel/figuren.md) · [Konsistenzregeln](KONSISTENZ.md) · [Mitarbeit](CONTRIBUTING.md) · [Kopierbarer Auftrag und Arbeitsnachweis](docs/vorlagen/konsistenz-auftrag.md). Die Projektregeln in [AGENTS.md](AGENTS.md), der Einstieg für [Claude](CLAUDE.md) und die Pull-Request-Vorlage verweisen auf denselben Standard.
+
+## Neu in v0.38.0 · CodexAI · 9. November 2026
+
+- Kapitel 2 inszeniert Ravens Einstieg ins Eisbad, Anschluss, Netzübergang, erschöpfte Rückkehr und die gestützte Kryospray-Behandlung mit acht eigenen HQ-Pixelposen. Wannenrand, Wasser und Kabel folgen den Kontaktpunkten.
+- Das Holen des Sprays bleibt spielbar; aufgenommene Vorräte und unterbrochene Szenen lassen sich sicher laden. Abgebrochene ältere Kapitel-2-Szenen verändern die nächste Szene nicht mehr.
+- [Spielbilder, Filme und Bedienung](docs/eisbad.md), [Arbeitsnachweis](docs/arbeiten/eisbad-v038.md). Erster nächster Block der [Cinema-Roadmap](docs/cinema-roadmap.md).
 
 ## Neu in v0.37.0 · CodexAI · 9. November 2026
 

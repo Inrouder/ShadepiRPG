@@ -953,7 +953,7 @@ func check_feedback() -> void:
 	two.player.position = two.BATH
 	two.interact()
 	finish_dialogue(two)
-	check(two.section == two.Section.DIVE and two.player.position == two.BATH, "Shadepi waits at the ice bath during the dive")
+	check(two.section == two.Section.DIVE and two.player.position == two.IceBath.PLAYER_WAIT, "Shadepi waits beside the ice bath rather than inside it during the dive")
 	# Viruses slide along data walls instead of passing through them.
 	var wall: Rect2 = two.Painted.SOLIDS["dive"][0]
 	for threat in two.threats:

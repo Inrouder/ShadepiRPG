@@ -1,5 +1,14 @@
 # Versionshinweise
 
+## v0.38.0 – CodexAI: Ravens Eisbad, sichtbare Rückkehr und Kryospray-Rettung · 9. November 2026
+
+- Erster nächster Cinema-Block in Kapitel 2: acht neue HQ-Pixelposen für Anschluss, Absenken, Ruhe im Wasser, Rückkehr, Erschöpfung und gestützte Kryospray-Behandlung. Vorhandene Wanne und vordere Wasser-/Randfläche verdecken eingetauchte Körperteile; texturiertes Kabel an Pumpen- und Kragenkontakt. Shadepi wartet auf freiem Boden neben dem Becken.
+- Sprayholen bleibt ein Spielerabschnitt. Raven sitzt sichtbar erschöpft am Rand; Behandlung beginnt nach dem Zurückbringen. Stützen und tatsächlicher Sprühkontakt ersetzen eine allgemeine Angriffsgeste. Normale Körper und Kontaktschatten während Ersatzposen vollständig ausgeblendet; nach Aufstehen oder Abbruch wiederhergestellt.
+- Aufgenommenes Spray und unterbrochene Anschluss-/Rückkehr-/Behandlungsszenen werden kompatibel gespeichert. Alte/ungültige Felder sicher behandelt. Bestehende Kenzō-/Minotaurus-Informationen und der anschließende Pakt bleiben erhalten.
+- Nachträgliche Aktionen alter Kapitel-2-Szenen nach Laden/Wechsel durch Generationstickets unterbunden. Neue Sicht-/Ablaufprüfung deckt auch den vollständigen Zeichenrahmen für zurückgelehnte Köpfe/Haare und saubere Atlaszuschnitte ab.
+- 792 gezielte Prüfungen und neun zusätzliche Exportprüfungen ohne Fehler. Einstieg und vollständige Rückkehr-/Spray-Rettungsfolge im tatsächlichen Renderer aufgenommen; Wasser-/Behandlungsdarstellung auch aus dem exportierten Spielpaket gesichtet.
+- [Spielbilder, Filme und Bedienung](docs/eisbad.md), [Arbeitsnachweis](docs/arbeiten/eisbad-v038.md). Roadmap um erledigten Kapitel-2-Block ergänzt; Kapitel 4 bleibt der nächste Block.
+
 ## v0.37.0 – CodexAI: Kapitel-7-Musik, Aerodyne-Sprites und Cinema-Roadmap · 9. November 2026
 
 - Beide Kapitel-7-Musikslots verwenden jetzt `assets/music/menu.mp3`. Das Hauptmenü behält `Level.mp3`; Kampf- und Bosszuordnung bleiben erhalten. Aktuelle Musikdokumentation und Regressionserwartung angepasst.

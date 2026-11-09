@@ -2,6 +2,8 @@
 
 **Prüfung vom 9. November 2026.** Die stärkste Verbesserung entsteht dort, wo eine körperliche Handlung bislang nur im Untertitel steht. Dafür zuerst die benötigten Kontakt- und Objektbilder schaffen und dann die Kamera daran ausrichten. Mehr Filter oder dauerhaftes Wackeln lösen diese Lücke nicht.
 
+**Fortschritt v0.38.0 · CodexAI:** Der erste nächste Block ist umgesetzt: [Kapitel 2 mit Eisbad, Rückkehr, spielbarem Sprayholen und gestützter Behandlung](eisbad.md). Acht HQ-Pixelposen, tatsächliche Wannen-/Wasserverdeckung und sichere Szenen-/Inventar-Kontrollpunkte sind eingebunden. Die Tabellen darunter dokumentieren den Ausgangsbedarf der v0.37.0; der Kapitel-2-Block ist nun erledigt, zusätzliche Zwischenbilder bleiben spätere Verfeinerung. **Nächster Block ist Kapitel 4: Plattformabsenkung und Hangarenthüllung.**
+
 ## Bereits in dieser Version umgesetzt
 
 - **Kapitel 7:** `assets/music/menu.mp3` läuft bei Ankunft, Ordensaufnahme und Finale. Hauptmenü bleibt bei `Level.mp3`; Boss-/Kampfmusik behalten ihre Zuordnung. [Austauschpfade](../assets/music/README.md).
@@ -56,7 +58,7 @@ Für planbaren Aufwand zuerst **ein Objekt mit allen Phasen** fertigstellen und 
 ## Produktionsreihenfolge und Abnahme
 
 1. **Fertig:** Musikzuordnung und erster Aerodyne-Satz, gemeinsame Anker und Szenenintegration.
-2. **Nächster Block:** Kapitel 2 als zusammenhängender Einstieg–Dive–Rückkehr–Rettung-Moment, danach Kapitel 4 mit Plattform und Hangarenthüllung.
+2. **Kapitel 2 fertig in v0.38.0:** zusammenhängender Einstieg–Dive–Rückkehr–Rettung-Moment. **Nächster Block:** Kapitel 4 mit Plattform und Hangarenthüllung.
 3. **Danach:** Fahrzeug-Kurven-/Rollsätze, Motorrad, Auto/Drohne; wichtige technische Props mit Zustandsreaktion.
 4. **Anschließend:** Kapitel 1/3 und Kenzō-Zwischenphasen; die bereits starken Erinnerungen und das See-Finale nur gezielt nachpolieren.
 
@@ -66,4 +68,4 @@ Pro Block: Bildbriefing → Quelle und Anker → Start/Kontakt/Ende im echten Re
 
 Quellcode und Ressourcen aller sieben Kapitel einschließlich der drei Erinnerungen geprüft. Die tatsächlichen Szenenmethoden von Kapitel 1–7 wurden zusätzlich mit `tools/cinema_review.gd` durchlaufen: **119 Renderer-Stichproben**, keine neuen Comicbilder. Tower-/Hangar-Szenen separat vollständig im Renderer durchlaufen; sechs neue Fahrzeugzustände in einer Technikvorschau geprüft. Kampfübergänge der Galerie verwenden QA-Abkürzungen. Das ist **kein vollständiger manuell erspielter Durchlauf jeder Kampf-/Controllerkombination**. Die drei Erinnerungen wurden in dieser Runde anhand ihrer aktiven Abläufe, Ressourcen und vorhandenen Abnahmen geprüft, nicht nochmals vollständig manuell gespielt. Native Aufnahmen mit Dummy-Audio; keine neue akustische Qualitätsbewertung behauptet.
 
-Diese Roadmap beschreibt bewusst **weiteren** Bedarf. Außer der oben genannten Musik und den sechs Aerodyne-Zuständen sind die vorgeschlagenen neuen Posen und großen Szenenumbauten noch nicht umgesetzt. [Aktueller Arbeits- und Prüfnachweis](arbeiten/cinema-v037.md).
+Diese Roadmap beschreibt bewusst **weiteren** Bedarf. Bei Erstellung in v0.37.0 waren außer Musik und sechs Aerodyne-Zuständen die vorgeschlagenen Posen und großen Szenenumbauten noch offen. Der Nachtrag v0.38.0 oben kennzeichnet den inzwischen umgesetzten Kapitel-2-Block. [Aktueller Arbeits- und Prüfnachweis](arbeiten/cinema-v037.md).

@@ -86,6 +86,12 @@ jobs:
           set -euo pipefail
           godot --headless --script res://tests/aerodyne_art.gd 2>&1 | tee /tmp/aerodyne-art.log
           if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/aerodyne-art.log; then exit 1; fi
+      - name: Validate ice-bath poses, physical rescue and chapter checkpoints
+        shell: bash
+        run: |
+          set -euo pipefail
+          godot --headless --script res://tests/ice_bath.gd 2>&1 | tee /tmp/ice-bath.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/ice-bath.log; then exit 1; fi
       - name: Validate cinematic entrances, hangar routes and continuous flight
         shell: bash
         run: |

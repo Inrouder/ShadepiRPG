@@ -1,6 +1,8 @@
 # Shadepi · Echos in Neon
 
-**Spieleranleitung für v0.37.0 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+**Spieleranleitung für v0.38.0 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+
+**Eisbad v0.38.0 · CodexAI:** In Kapitel 2 siehst du Ravens Anschluss und Einstieg ins Wasser sowie ihre Rückkehr aus dem Netz. Danach holst du als Shadepi das Kryospray am Überwachungstisch (**E / Enter / A**) und gehst zu Raven zurück. Dort startet dieselbe Taste das Stützen und die Behandlung. **Leertaste / B** überspringt eine Szene, **Esc / Start** pausiert. Aufgenommenes Spray bleibt beim Laden erhalten; unterbrochene Anschluss-, Rückkehr- und Behandlungsszenen beginnen sicher erneut. [Bilder und Filme](docs/eisbad.md).
 
 **Musik und Aerodyne v0.37.0 · CodexAI:** In ganz Kapitel 7 läuft nun `assets/music/menu.mp3`. Das Hauptmenü verwendet weiterhin `Level.mp3`. Der Aerodyne besitzt zusätzliche Bilder für Kabinenöffnung, Schließen und die laufende Triebwerksmechanik. Öffnen und Schließen gehören zu Ein-/Aussteigen; die Bedienung bleibt erhalten. [Musikpfade](assets/music/README.md) · [Cinema-/Sprite-Roadmap](docs/cinema-roadmap.md).
 
