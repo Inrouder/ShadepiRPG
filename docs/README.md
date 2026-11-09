@@ -1,8 +1,15 @@
 # Shadepi · Bilder, Filme und Dokumentation
 
-**Stand v0.42.0 · CodexAI · 9. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
+**Stand v0.43.0 · CodexAI · 9. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
 
 Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnahmen, animierte Szenenfilme, Bedienung und technische Hinweise. Die PNG-Vorschauen sind direkt in GitHub sichtbar; die Filme bleiben zusätzlich als verlinkte WebP-Dateien erreichbar.
+
+## Kapitel 1: Der Auftrag · v0.43.0
+
+| Raven übernimmt und prüft die Ausrüstung | Shadepi über den Dächern |
+| --- | --- |
+| [![Raven bestätigt Chrome Jackals Auftrag am Monitor](previews/kapitel1-auftrag-v043.png)](kapitel1-auftakt.md) | [![Shadepi beobachtet vom regennassen Sims die Stadt](previews/kapitel1-dach-v043.png)](kapitel1-auftakt.md) |
+| [Auftaktfilm öffnen](previews/kapitel1-auftrag-v043.webp) | [Bedrohung, Dachzwischenschnitt und Landefilm](previews/kapitel1-rettung-v043.webp) |
 
 ## Belebte Technik · v0.42.0
 

@@ -10,7 +10,9 @@
 
 **Fortschritt v0.41.0 · CodexAI:** [Verfolgerwagen mit neun Lenk-/Federungs-/Rückstoßbildern und Frachtdrohne mit vier Rotorphasen](verfolger-animationen.md) sind eingebunden. Feste Geschütz-/Abwurfkontakte, Controller und sichere Zustandsbereinigung gehören zum Block. Dieser erste Technikblock wurde mit v0.42.0 ergänzt; die Kapitel-1-/Kapitel-3-Szenen folgen nach Tabelle. Zusätzliches Aerodyne-Fahrwerk, vollständige Rollen-/Unterseiten und Cockpit-Zwischenbilder bleiben offen.
 
-**Fortschritt v0.42.0 · CodexAI:** [Schaltkästen und Serverschränke mit je acht Betriebs-/Zugriffsphasen](technik-gegenstaende.md) sind der erste technische Prop-Block. Feste Standpunkte, explizite Rückmeldungen nach bestehenden Terminalaufgaben und erhaltene Schadens-/Speicherzustände. **Nächster Schwerpunkt:** Kapitel 1 mit sichtbarer Auftragsannahme, Ausrüstungsprüfung und motiviertem ersten Shadepi-Auftritt. Automat-/Türphasen sowie weitere Fahrzeug-/Cockpitbilder bleiben spätere gezielte Blöcke.
+**Fortschritt v0.42.0 · CodexAI:** [Schaltkästen und Serverschränke mit je acht Betriebs-/Zugriffsphasen](technik-gegenstaende.md) sind der erste technische Prop-Block. Feste Standpunkte, explizite Rückmeldungen nach bestehenden Terminalaufgaben und erhaltene Schadens-/Speicherzustände. Dieser Kapitel-1-Block wurde mit v0.43.0 ergänzt. Automat-/Türphasen sowie weitere Fahrzeug-/Cockpitbilder bleiben spätere gezielte Blöcke.
+
+**Fortschritt v0.43.0 · CodexAI:** [Kapitel 1: Monitorbestätigung, Pistolenprüfung, Weg zur Tür, sichtbarer Dachzwischenschnitt und echte Lande-/Aufrichtposen](kapitel1-auftakt.md) sind umgesetzt. Acht gezielte neue Figurenbilder, vorhandene Kulissen, kompatible Kontrollpunkte. **Nächster Schwerpunkt:** Kapitel 3 mit Pakt und Planung am Terminal. Weitere Griff-/Zwischenbilder, Automat-/Türphasen und Fahrzeugdetailbilder bleiben in der Tabelle vorgemerkt; keine pauschale Zusage einer vollständigen Spritebank.
 
 ## Bereits in dieser Version umgesetzt
 

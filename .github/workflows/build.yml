@@ -104,6 +104,12 @@ jobs:
           set -euo pipefail
           godot --headless --script res://tests/technology_props.gd 2>&1 | tee /tmp/technology-props.log
           if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/technology-props.log; then exit 1; fi
+      - name: Validate Chapter-1 contact poses, visible introduction and checkpoint cancellation
+        shell: bash
+        run: |
+          set -euo pipefail
+          godot --headless --script res://tests/chapter_one_intro.gd 2>&1 | tee /tmp/chapter-one-intro.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/chapter-one-intro.log; then exit 1; fi
       - name: Validate ice-bath poses, physical rescue and chapter checkpoints
         shell: bash
         run: |

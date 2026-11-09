@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.42.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.43.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -10,10 +10,10 @@ Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben�
 
 **[Bebilderte Dokumentation mit Szenenfilmen öffnen →](docs/README.md)** · Ein Klick auf eine Vorschau öffnet den zugehörigen Bericht.
 
-| Technik in Betrieb und beim Zugriff | Verfolgung und Frachtdrohnen |
+| Neuer Auftakt in Kapitel 1 | Verfolgung und Frachtdrohnen |
 | --- | --- |
-| [![Belebte Schaltkästen und Serverschränke im Versteck](docs/previews/technik-betrieb-v042.png)](docs/technik-gegenstaende.md) | [![Verfolger mit Dachgeschütz in der tatsächlichen Spielansicht](docs/previews/verfolger-schuss-v041.png)](docs/verfolger-animationen.md) |
-| [Betrieb, Bestätigung, Fehler und Film](docs/technik-gegenstaende.md) | [Neun Wagenphasen, Rotoren und Szenenfilm](docs/verfolger-animationen.md) |
+| [![Raven übernimmt Chrome Jackals Auftrag am Monitor](docs/previews/kapitel1-auftrag-v043.png)](docs/kapitel1-auftakt.md) | [![Verfolger mit Dachgeschütz in der tatsächlichen Spielansicht](docs/previews/verfolger-schuss-v041.png)](docs/verfolger-animationen.md) |
+| [Auftrag, Ausrüstung, Shadepis Auftritt und Filme](docs/kapitel1-auftakt.md) | [Neun Wagenphasen, Rotoren und Szenenfilm](docs/verfolger-animationen.md) |
 
 | Fahrt zum geheimen Hangar | Abschluss am See |
 | --- | --- |
@@ -54,6 +54,12 @@ Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und
 ## Mitarbeit und verbindliche Konsistenz
 
 Für Menschen und KI: **[Bebilderte Stilbibel des gesamten Spiels](docs/stilbibel/README.md)** · [Alle 23 Figuren mit Einzelkarten](docs/stilbibel/figuren.md) · [Konsistenzregeln](KONSISTENZ.md) · [Mitarbeit](CONTRIBUTING.md) · [Kopierbarer Auftrag und Arbeitsnachweis](docs/vorlagen/konsistenz-auftrag.md). Die Projektregeln in [AGENTS.md](AGENTS.md), der Einstieg für [Claude](CLAUDE.md) und die Pull-Request-Vorlage verweisen auf denselben Standard.
+
+## Neu in v0.43.0 · CodexAI · 9. November 2026
+
+- Kapitel 1 zeigt Ravens Auftragsannahme am Monitor, ihre Pistolenprüfung und ihren Weg zur Tür mit neuen HQ-Pixelposen.
+- Sichtbarer Dachzwischenschnitt zu Shadepi, spätere Beobachtung von Ravens Notlage und eigene Lande-/Aufrichtphasen. Bestehende Arcade-Kämpfe und Kontrollpunkte erhalten.
+- Pause, Dialogsteuerung und Überspringen bleiben erhalten; abgebrochene Filmschritte werden sicher beendet. [Aufnahmen und Filme](docs/kapitel1-auftakt.md) · [Prüfnachweis](docs/arbeiten/kapitel1-v043.md).
 
 ## Neu in v0.42.0 · CodexAI · 9. November 2026
 

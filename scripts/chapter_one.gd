@@ -51,9 +51,13 @@ var patrol: Array[PixelActor] = []
 var street_lights: Array[PointLight2D] = []
 var apartment_lights: Array[PointLight2D] = []
 var encounter: Node2D
+var intro: Node2D
 
 func _ready() -> void:
 	super._ready()
+	intro = preload("res://scripts/chapter_one_intro.gd").new()
+	intro.world = self
+	add_child(intro)
 	if Admin.consume_chapter(get_tree(), "res://scenes/chapter_one.tscn") == 1:
 		new_game(false)
 
@@ -292,45 +296,7 @@ func _update_apartment_lighting() -> void:
 
 ## Kapitel 1: Ravens Morgen – nach dem Roman „Im Schatten des Raben“.
 func _scene_apartment() -> void:
-	var desk := apartment_point(Vector2(180, 250))
-	raven.position = apartment_point(Vector2(760, 360))
-	raven.facing = Vector2.LEFT
-	var cs = begin_cutscene()
-	cs.pose(raven, "idle")
-	await cs.camera(APARTMENT_CAMERA, 0.0, APARTMENT_ZOOM)
-	await cs.fade(Color.BLACK, 0.0)
-	await cs.fade(Color(0, 0, 0, 0), 1.2)
-	await cs.title("KAPITEL 1", "Echos in Neon und Schatten", 2.4)
-	await cs.lines([
-		["NIGHT CITY / MORGENGRAUEN", "Der Morgen kriecht wie eine ölige Lache durch die Jalousien. Für Raven beginnt der Tag nicht mit der Sonne, sondern mit dem faden Geschmack von gestern."],
-		["RAVEN", "Wieder so ein langweiliger Tag. Und nervige Jobs."],
-	])
-	cs.do(func():
-		sound("hack")
-		effects.burst(desk + Vector2(0, 14), Color("6fd6e8"), 14)
-	)
-	await cs.wait(0.4)
-	await cs.walk(raven, apartment_point(Vector2(180, 330)), 70)
-	cs.face(raven, desk)
-	cs.pose(raven, "idle")
-	await cs.lines([
-		["KOPFGELDTERMINAL", "Chrome Jackal. Prämie erhöht. Letzter Ping an Bingo Street, Wartungshof hinter der Schleuse. Die Kameras senden seit zwölf Minuten dasselbe Bild."],
-		["RAVEN", "Entweder will ihn jemand dringend tot sehen, oder die anderen Jäger haben aufgegeben. Dann nehme ich die Gassen unter den Kameras."],
-	])
-	await cs.walk(raven, apartment_point(Vector2(350, 318)), 66)
-	cs.face(raven, apartment_point(Vector2(350, 250)))
-	cs.pose(raven, "idle")
-	await cs.wait(0.3)
-	cs.do(func(): raven.hide())
-	await cs.fade(Color.BLACK, 0.6)
-	await cs.say("HOCH ÜBER DER STADT", "Auf dem Sims eines Wolkenkratzers kauert eine Gestalt, reglos wie eine Gargoyle aus Stahl und Schatten. Fünf Jahre ist es her, seit sein Orden fiel.")
-	cs.do(func():
-		raven.show()
-		_leave_apartment()
-	)
-	await cs.camera(camera_home(), 0.0, 1.0)
-	await cs.fade(Color(0, 0, 0, 0), 0.8)
-	cs.end()
+	intro.play_apartment()
 
 func _leave_apartment() -> void:
 	phase = Phase.HUNT
@@ -436,30 +402,7 @@ func _scene_jackal() -> void:
 
 ## Kapitel 1: Shadepi springt vom Dach in die Wartungsgasse.
 func _scene_shadepi_lands() -> void:
-	var cs = begin_cutscene()
-	player.facing = Vector2.RIGHT
-	cs.pose(player, "idle")
-	await cs.camera(player.position + Vector2(70, -62), 0.0, 1.1)
-	player.visual.position.y = player.standing_visual_position.y - 190.0
-	await cs.wait(0.5)
-	await cs.drop(player, 190.0, 0.38)
-	cs.do(func():
-		effects.burst(player.position, Color("9fb3c6"), 20)
-		effects.water_step(player.position)
-		shake = 10.0
-		sound("hit")
-	)
-	await cs.wait(0.6)
-	var foe: PixelActor = patrol.back() if not patrol.is_empty() else null
-	if foe != null:
-		cs.face(player, foe.position)
-		cs.face(foe, player.position)
-		cs.pose(foe, "idle")
-	await cs.lines([
-		["SHADEPI", "Ihr steht zwischen mir und ihr. Letzte Gelegenheit zu gehen."],
-		["GANGER", "Noch so ein Freak mit Schwert. Macht ihn fertig!"],
-	])
-	cs.end()
+	intro.play_landing()
 
 func camera_home() -> Vector2:
 	if raven_leads() or phase == Phase.ROOFTOP:
@@ -497,26 +440,26 @@ func _lose_duel() -> void:
 func _rooftop_dialogue() -> void:
 	feedback_time = INF
 	var cs = begin_cutscene()
+	var ticket: int = cs.generation
 	cs.pose(raven, "hurt")
 	cs.pose(enemy, "idle")
 	await cs.camera(raven.position + Vector2(20, -50), 0.6, 1.2)
-	await cs.say("RAVEN", "Ich hatte seine Schnittstelle. Dann hat er die Verbindung umgedreht … ich spüre meine Beine nicht mehr.")
+	if not cs.alive(ticket): return
+	await cs.say("RAVEN", "Er hat die Verbindung umgedreht … meine Beine. Ich kann sie nicht bewegen.")
+	if not cs.alive(ticket): return
 	await cs.walk(enemy, raven.position + Vector2(44, -6), 46)
+	if not cs.alive(ticket): return
 	cs.face(enemy, raven.position)
 	cs.pose(enemy, "idle")
-	await cs.say("CHROME JACKAL", "Da musst du schneller sein, Süße. Dein Deck hat mir die Tür aufgemacht – jetzt kassiere ich das Kopfgeld auf dich.")
-	await cs.camera(raven.position + Vector2(-140, -250), 1.6, 1.0)
-	await cs.lines([
-		["SHADEPI / ÜBER DEN DÄCHERN", "Zwei Wärmesignaturen. Eine groß und rotglühend vor Aggression, eine flackernd wie eine Kerze im Sturm."],
-		["SHADEPI", "Ungewöhnlich … ein Kampf. Über die Hauptgasse sehen sie mich kommen. Die Wartungsgasse liegt im Schatten."],
-		["SHADEPI", "Das reicht. Tarnung."],
-	])
-	await cs.fade(Color.BLACK, 0.5)
-	cs.do(func():
-		_enter_checkpoint(Phase.RESCUE)
-		autosave()
-		_scene_shadepi_lands()
-	)
+	await cs.say("CHROME JACKAL", "Dein Deck hat mir die Tür aufgemacht. Jetzt kassiere ich dein Kopfgeld.")
+	if not cs.alive(ticket): return
+	await intro.observe(cs, true)
+	if not cs.alive(ticket): return
+	await cs.fade(Color.BLACK, 0.4)
+	if not cs.alive(ticket): return
+	_enter_checkpoint(Phase.RESCUE)
+	autosave()
+	_scene_shadepi_lands()
 
 func _spawn_patrol(point: Vector2, variant: int) -> PixelActor:
 	var foe := EnemyScript.new()

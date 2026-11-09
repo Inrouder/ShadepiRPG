@@ -1,5 +1,7 @@
 # Welten und Kulissen · v0.32.2 · CodexAI
 
+**Ergänzung v0.43.0 · CodexAI:** Kapitel 1 besitzt einen sichtbaren Dachzwischenschnitt mit dem linken Ausschnitt der bestehenden Skyline aus `rooftop.png`; ohne Konzernlogo, Landeplatz oder Änderung der Spielkarte. [Aufnahmen und Ablauf](../kapitel1-auftakt.md).
+
 **Aktualisierung v0.39.0 · CodexAI:** [Plattformfahrt und Hangarentdeckung](../hangar-entdeckung.md), vier eigene Shadepi-Schalterposen, sechs Entriegelungsbilder und texturierter Schacht. Fahrt mit den tatsächlichen Figuren; danach identischer Aerodyne in normaler Erkundung und Film. [Aktive Quellen und Kontaktanker](../../assets/story/hangar-discovery/README.md).
 
 [Stilbibel](README.md) · [Art Direction](artdirection.md) · [Figuren](figuren.md)

@@ -1,6 +1,6 @@
 # Verbindliche Konsistenzvorlage für ShadepiRPG
 
-**Stand v0.42.0 · CodexAI · 9. November 2026; eingeführt mit v0.32.1.** Gilt für das gesamte Spiel und alle Mitwirkenden, ob Mensch oder KI. Vor Änderungen zusammen mit [AGENTS.md](AGENTS.md) lesen und die [Arbeitsvorlage](docs/vorlagen/konsistenz-auftrag.md) verwenden. Eine neuere ausdrückliche Nutzervorgabe hat Vorrang; bestätigte Änderungen anschließend hier und in den betroffenen Referenzen nachführen.
+**Stand v0.43.0 · CodexAI · 9. November 2026; eingeführt mit v0.32.1.** Gilt für das gesamte Spiel und alle Mitwirkenden, ob Mensch oder KI. Vor Änderungen zusammen mit [AGENTS.md](AGENTS.md) lesen und die [Arbeitsvorlage](docs/vorlagen/konsistenz-auftrag.md) verwenden. Eine neuere ausdrückliche Nutzervorgabe hat Vorrang; bestätigte Änderungen anschließend hier und in den betroffenen Referenzen nachführen.
 
 ## Bebilderter Einstieg für das gesamte Spiel
 
@@ -122,6 +122,7 @@ Sonderatlanten für Sitzen, Liegen, Gegner oder Menü folgen ihren eigenen Metad
 
 - Verfolger ab v0.41.0 · CodexAI: Zustandsbild, Geschützmündung und Schuss-FX teilen dieselbe Registrierung. Zweiter Schuss startet ebenfalls am Lauf und fächert erst danach auf. Frachtkörper und vier Rotorzentren bleiben während der Rotorphasen fest; Minenabwurf folgt `cargo_drone_art.gd`. Tatsächliche Raster 418/627 verwenden, nicht angeforderte Generatorraster annehmen. [Aktive Quellen und Bilder](docs/verfolger-animationen.md).
 
+- Kapitel 1 ab v0.43.0 · CodexAI: Terminal-Handpunkt und Bodenanker aus `chapter_one_intro.gd`, tatsächliche Atlasgröße 1774×887. Neue Posen gegen normale Heldenhöhe kalibrieren; keine doppelten Körper/Schatten. Dachzwischenschnitt verwendet einen separaten vorhandenen Skyline-Ausschnitt und verändert nicht den Tower-Landeplatz. [Bild-/Ablaufnachweis](docs/kapitel1-auftakt.md).
 - Technische Geräte ab v0.42.0 · CodexAI: `technology_art.gd` registriert feste Gehäuse und Bodenpunkte, bewegte Lüfter/Relais und explizite optionale Statusverbindungen. Beschädigung/Tod behalten vorhandene Schadensquellen; beim Wechsel Sprite-Raster und Basisposition zurücksetzen. Kein beliebiges Dekor zum Pflichtterminal machen, keine kaputten Geräte durch Erfolgseffekte optisch reparieren. [Quellen und Spielbelege](docs/technik-gegenstaende.md).
 
 ## 8. Verbindliche Fertigprüfung

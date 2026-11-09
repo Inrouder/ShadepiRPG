@@ -1,5 +1,14 @@
 # Versionshinweise
 
+## v0.43.0 – CodexAI: Sichtbarer Kapitel-1-Auftakt und Shadepis Dachauftritt · 9. November 2026
+
+- Acht neue transparente HQ-Pixelposen: Raven erreicht und bedient den Monitor, übernimmt Jackals Auftrag, kontrolliert die Pistole und verstaut sie. Anschließend geht sie tatsächlich zur Tür.
+- Shadepi wird in zwei Kauer-/Beobachtungsbildern auf einem regennassen Sims gezeigt; später erkennt er Ravens Notlage. Eigene Kniebeuge- und Aufrichtbilder mit Wasserspritzern ersetzen die bisherige Landung als reine Standpose.
+- Tatsächliche Atlasgröße 1774×887, registrierte Boden-/Handkontakte und vergleichbare Heldenhöhe. Vorhandene Kulissen wiederverwendet, normaler Körper samt Schatten bei Kontaktposen versteckt. Lesbare Monitorbestätigung im vorhandenen Pixel-UI.
+- Jede neue Szene prüft ihr Generationsticket nach Warteoperationen. Der Filmregisseur weckt bei Abbruch wartende Schritte; Laden und Überspringen hinterlassen keine Figur-/Monitor-/Dachreste. Jagd-/Rettungswellen und Speicherformat bleiben erhalten.
+- 1.125 gezielte Prüfungen plus zehn Prüfungen des exportierten Pakets ohne Fehler. Auftakt und Bedrohung/Landung im nativen Spielrenderer aufgenommen; neue Szenen auch direkt aus dem Exportpaket geprüft. Neue Kapitel-1-Regression in GitHub-CI.
+- [Spielbilder und zwei Filme](docs/kapitel1-auftakt.md), [Quellen/Anker](assets/story/chapter-one/README.md), [Arbeits- und Exportnachweis](docs/arbeiten/kapitel1-v043.md). PNG-Vorschauen in Startseite und Doku-Galerie ergänzt, Versionen und Stilregeln fortgeschrieben.
+
 ## v0.42.0 – CodexAI: Betriebsanimationen und Rückmeldung an technischer Umgebung · 9. November 2026
 
 - Je acht HQ-Pixelphasen für die vorhandenen Schaltkästen und Serverschränke: Lüfter/Messwerk, mechanischer Zugriff, Übertragung, grüne Bestätigung und Störung. Gehäuse, Bodenanker und bestehende Kollisionsflächen bleiben fest.

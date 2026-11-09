@@ -126,6 +126,9 @@ func abort() -> void:
 	bars = 0.0
 	bars_target = 0.0
 	_layout_bars()
+	# Wake suspended steps with their invalidated generation, even when there
+	# will be no next active film tick after loading another checkpoint.
+	tick.emit()
 
 func _refresh_actors() -> void:
 	# Health bars and markers hide during scenes; force a redraw of every actor.
