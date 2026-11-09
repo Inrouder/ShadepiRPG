@@ -5,6 +5,7 @@ extends Node2D
 ## Tower-Scanner → Driftkurve → Landung auf dem Landeplatz (Bremsdüsen, Ausrichten).
 
 const VEHICLES = preload("res://assets/world/hq/vehicles.png")
+const DroneArt = preload("res://scripts/cargo_drone_art.gd")
 const Airframe = preload("res://scripts/aerodyne_art.gd")
 const PROPS = preload("res://assets/world/hq/flight-props.png")
 const Painted = preload("res://scripts/painted_world.gd")
@@ -602,9 +603,12 @@ func _reset_xf() -> void:
 	draw_set_transform(_shake_offset())
 
 func _draw_sprite(index: int, center: Vector2, size: Vector2, tilt: float, modulate: Color = Color.WHITE) -> void:
-	var region := Rect2((index % 2) * 627, (index / 2) * 627, 627, 627)
-	draw_set_transform(center + _shake_offset(), tilt)
-	draw_texture_rect_region(VEHICLES, Rect2(-size * 0.5, size), region, modulate)
+	if index==3:
+		DroneArt.draw(self,center+_shake_offset(),size,clock,tilt,modulate)
+	else:
+		var region := Rect2((index%2)*627,(index/2)*627,627,627)
+		draw_set_transform(center+_shake_offset(),tilt)
+		draw_texture_rect_region(VEHICLES,Rect2(-size*0.5,size),region,modulate)
 	_reset_xf()
 
 func visual_bank() -> float:

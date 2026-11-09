@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.40.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.41.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -38,6 +38,12 @@ Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und
 ## Mitarbeit und verbindliche Konsistenz
 
 Für Menschen und KI: **[Bebilderte Stilbibel des gesamten Spiels](docs/stilbibel/README.md)** · [Alle 23 Figuren mit Einzelkarten](docs/stilbibel/figuren.md) · [Konsistenzregeln](KONSISTENZ.md) · [Mitarbeit](CONTRIBUTING.md) · [Kopierbarer Auftrag und Arbeitsnachweis](docs/vorlagen/konsistenz-auftrag.md). Die Projektregeln in [AGENTS.md](AGENTS.md), der Einstieg für [Claude](CLAUDE.md) und die Pull-Request-Vorlage verweisen auf denselben Standard.
+
+## Neu in v0.41.0 · CodexAI · 9. November 2026
+
+- Neun eigene Verfolgerwagen-Bilder für Lenkung, Federung, Rammstoß und Geschützrückstoß; vier echte Rotorphasen für Frachtdrohnen in Verfolgung und Aerodyne-Flug.
+- Geschosse und vorhandenes Pixel-Mündungsfeuer starten am sichtbaren Dachgeschütz. Der beschädigte Wagen fächert seinen zweiten Schuss erst nach dem Austritt auf; Minen fallen aus dem Frachtkontakt.
+- 799 gezielte Prüfungen plus neun Exportprüfungen ohne Fehler. [Spielbilder und Film](docs/verfolger-animationen.md), [Arbeitsnachweis](docs/arbeiten/verfolger-v041.md). Controller-Hack, Pause, Laden und Kapitelwechsel geprüft; Version und Referenzregeln fortgeschrieben.
 
 ## Neu in v0.40.0 · CodexAI · 9. November 2026
 

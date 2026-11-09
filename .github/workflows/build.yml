@@ -92,6 +92,12 @@ jobs:
           set -euo pipefail
           godot --headless --script res://tests/vehicle_motion.gd 2>&1 | tee /tmp/vehicle-motion.log
           if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/vehicle-motion.log; then exit 1; fi
+      - name: Validate pursuit recoil, muzzle origins and cargo rotor registration
+        shell: bash
+        run: |
+          set -euo pipefail
+          godot --headless --script res://tests/pursuit_art.gd 2>&1 | tee /tmp/pursuit-art.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/pursuit-art.log; then exit 1; fi
       - name: Validate ice-bath poses, physical rescue and chapter checkpoints
         shell: bash
         run: |

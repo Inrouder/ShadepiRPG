@@ -1,5 +1,7 @@
 # Fahrzeuge und Requisiten · v0.32.2 · CodexAI
 
+**Verfolgung v0.41.0 · CodexAI:** [Neun Wagenbilder und vier Frachtdrohnen-Rotorphasen](../verfolger-animationen.md). Tatsächliche Zellgrößen 418 beziehungsweise 627; gemeinsame Rumpf-/Mündungs-/Abwurfkontakte in `pursuit_car_art.gd` und `cargo_drone_art.gd`. Schusszustand vor Bestimmen der Mündung setzen; Pixel-Feuer bleibt an der bewegten Mündung. Beschädigter Wagen fächert den zweiten Schuss erst nach Austritt auf. Rotorlauf unabhängig vom Trudeln einer gehackten Drohne; Pause und Kapitelbereinigung erhalten.
+
 **Fahrzeugbewegung v0.40.0 · CodexAI:** [Aerodyne-Kurvenlagen und Motorrad-Fahrposen](../fahrzeugbewegung.md). Separate Banklage von bisherigem Heading unterscheiden. Hinterer Reifenkontakt und Düsenpunkte je Quellbild sind fest registriert; keine transparenten Überblendungen verschiedener Silhouetten. Offene Kabine verwendet sofort wieder mechanischen Rumpf und passende gerade Düsenanker. Motorradquelle besitzt tatsächlich 418×418-Zellen; nur acht der neun Entwurfszellen sind aktiv.
 
 **Aktualisierung v0.39.0 · CodexAI:** [Plattformfahrt und Hangarentdeckung](../hangar-entdeckung.md), vier eigene Shadepi-Schalterposen, sechs Entriegelungsbilder und texturierter Schacht. Fahrt mit den tatsächlichen Figuren; danach identischer Aerodyne in normaler Erkundung und Film. [Aktive Quellen und Kontaktanker](../../assets/story/hangar-discovery/README.md).
@@ -17,9 +19,9 @@ Die Tafel zeigt vorhandene Quellbilder zur Form-/Materialerkennung, **keinen gem
 | Objekt | Identität / Bildmerkmale | Aktive Quelle und Darstellung |
 | --- | --- | --- |
 | **Aerodyne** | Gepanzertes dunkles Fluggerät, sichtbares Cockpit, technische Fugen und Düsen; Lichtakzente passend zum Systemzustand. | [airframe.png](../../assets/vehicles/aerodyne/airframe.png), sechs mechanische Zustände plus [banks.png](../../assets/vehicles/aerodyne/banks.png) für Kurven/Luftbremse über [aerodyne_art.gd](../../scripts/aerodyne_art.gd); ursprüngliche Identität aus Zelle 0 von `vehicles.png`. |
-| **Verfolgerauto** | Dunkler gepanzerter Wagen, klare Dach-/Motorflächen und Rücklichter; eigene breite Silhouette. | Gleicher Atlas, Zelle 1; [Verfolgung](../../scripts/campaign_drive.gd). |
+| **Verfolgerauto** | Dunkler gepanzerter Wagen, klare Dach-/Motorflächen und Rücklichter; eigene breite Silhouette. | [car.png](../../assets/vehicles/pursuit/car.png), neun registrierte Phasen über [pursuit_car_art.gd](../../scripts/pursuit_car_art.gd); ursprüngliche Identität aus Zelle 1 des alten Atlas. |
 | **Motorrad mit Shadepi und Raven** | Rotes/dunkles Motorrad; Fahrer mit Kasa und maskiertem Kopf, Raven mit schwarz-blauem Haar und Cyan-Ausrüstung. Beide gehören sichtbar zum Motorrad, keine beliebigen generischen Fahrer. | [riding.png](../../assets/vehicles/motorcycle/riding.png), acht aktive Fahrposen über [motorcycle_art.gd](../../scripts/motorcycle_art.gd); ursprüngliche Identität aus Zelle 2 des alten Atlas. |
-| **Drohne** | Kompakter technischer Körper mit vier deutlich erkennbaren Rotoren. | Gleicher Atlas, Zelle 3; Größe und Warn-/Angriffsflächen nach Flug-/Fahrmodus. |
+| **Drohne** | Kompakter technischer Körper mit vier deutlich erkennbaren Rotoren. | [drone.png](../../assets/vehicles/pursuit/drone.png), vier Rotorphasen über [cargo_drone_art.gd](../../scripts/cargo_drone_art.gd); gleiche Quelle in Verfolgung und Frachthindernissen. Größe und Warn-/Angriffsflächen nach Flug-/Fahrmodus. |
 | **Geparktes Motorrad** | Eigenständige Variante ohne Fahrer; dieselbe rote/dunkle Materialfamilie. | [bike-parked.png](../../assets/world/hq/bike-parked.png), Garage und Weltobjektdarstellung. |
 
 ### Historischer Aerodyne-Unterschied

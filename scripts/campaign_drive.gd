@@ -3,6 +3,9 @@ extends Node2D
 const VEHICLES = preload("res://assets/world/hq/vehicles.png")
 const Airframe = preload("res://scripts/aerodyne_art.gd")
 const BikeArt = preload("res://scripts/motorcycle_art.gd")
+const PixelFX = preload("res://scripts/pixel_combat_fx.gd")
+const CarArt = preload("res://scripts/pursuit_car_art.gd")
+const DroneArt = preload("res://scripts/cargo_drone_art.gd")
 const Painted = preload("res://scripts/painted_world.gd")
 
 signal completed
@@ -35,6 +38,8 @@ var active: = true
 var rear_shots: Array[Vector2] = []
 var ram_warning: = 0.0
 var ram_recovery: = 0.0
+var car_recoil := 0.0
+var rear_shot_vx: Array[float] = []
 
 # Flight progress freezes during the emergency; the repair has its own deadline.
 const REPAIR_SECONDS := 45.0
@@ -149,6 +154,7 @@ func _smoke(point: Vector2) -> void:
 
 func _update_fx(delta: float) -> void:
 	fx_clock += delta
+	car_recoil = maxf(0,car_recoil-delta)
 	shake = move_toward(shake, 0.0, delta * 9.0)
 	restart_flash = maxf(0.0, restart_flash - delta)
 	for i in range(debris.size() - 1, -1, -1):
@@ -180,6 +186,11 @@ func _draw_vehicle(index: int, center: Vector2, size: Vector2, tilt: float = 0.0
 	draw_set_transform(center, tilt)
 	if index==0:
 		Airframe.draw(self,Rect2(-size*0.5,size),fx_clock,1.0)
+	elif index==1:
+		draw_set_transform(Vector2.ZERO)
+		CarArt.draw(self,center,car_frame())
+	elif index==3:
+		DroneArt.draw(self,center,size,fx_clock,tilt)
 	else:
 		draw_texture_rect_region(VEHICLES, Rect2(-size * 0.5, size), region)
 	draw_set_transform(Vector2.ZERO)
@@ -198,7 +209,13 @@ func _draw_fx() -> void:
 		draw_rect(Rect2(-2, -1, 4, 2), Color(bit.c, minf(1.0, bit.t * 3.0)))
 	draw_set_transform(Vector2.ZERO)
 	for flash in flashes:
-		draw_circle(flash.p, 4.0 + flash.t * 32, Color(1.0, 0.83, 0.52, flash.t * 9.0))
+		var point: Vector2 = flash.p
+		if flash.get("source","")=="pursuer":
+			point = CarArt.muzzle(car_position(),car_frame())
+			PixelFX.packet(self,point,Vector2.UP,0.09-flash.t,false,true,clampf(flash.t/0.09,0,1))
+			continue
+		elif flash.get("source","")=="cargo": point = DroneArt.release_point(flash.drone.p,Vector2(50,50),flash.drone.spin)
+		draw_circle(point,4.0+flash.t*32,Color(1.0,0.83,0.52,flash.t*9.0))
 
 
 func _process(delta: float) -> void :
@@ -282,9 +299,7 @@ func _process(delta: float) -> void :
 				ram_warning = 0.85
 				world.sound("hit")
 			else:
-				rear_shots.append(Vector2(boss_x, REAR_Y - 25))
-				flashes.append({"p": Vector2(boss_x, REAR_Y - 25), "t": 0.09})
-				_sound("shot")
+				_fire_pursuer()
 		pattern += 1
 	for i in range(bullets.size() - 1, -1, -1):
 		bullets[i].y += 490 * delta
@@ -301,12 +316,7 @@ func _process(delta: float) -> void :
 				world.sound("hit")
 			impact(grenade, true)
 			grenade = Vector2.ZERO
-	for i in range(rear_shots.size() - 1, -1, -1):
-		rear_shots[i].y -= 350 * delta
-		if rear_shots[i].y <= BIKE_Y:
-			if absf(rear_shots[i].x - x) < 24:
-				_hit(18)
-			rear_shots.remove_at(i)
+	_advance_rear_shots(delta,BIKE_Y)
 	var player_y: = FLIGHT_Y if flight else BIKE_Y
 	for i in range(hazards.size() - 1, -1, -1):
 		var before: = hazards[i].y
@@ -533,6 +543,38 @@ func _bike_weapons() -> void:
 		grenade = Vector2(x, bike_y + 18.0)
 		grenade_cooldown = 3.4
 
+# v0.41.0 · CodexAI. Rendering and emitted shots use the same actual muzzle.
+func car_position() -> Vector2:
+	return Vector2(boss_x,car_y-(1-ram_warning/0.85)*minf(42,maxf(0,car_y-bike_y-40)) if ram_warning>0 else car_y-ram_recovery*40)
+
+func car_frame() -> int:
+	return CarArt.frame_for(boss_velocity,car_recoil,ram_warning,ram_recovery,fx_clock)
+
+func _append_rear_shot(point: Vector2,spread: float = 0.0):
+	# Existing QA callers may append ordinary shots directly; default them to straight.
+	if rear_shot_vx.size()>rear_shots.size(): rear_shot_vx.resize(rear_shots.size())
+	while rear_shot_vx.size()<rear_shots.size(): rear_shot_vx.append(0.0)
+	rear_shots.append(point)
+	rear_shot_vx.append(spread)
+
+func _fire_pursuer():
+	car_recoil = 0.28
+	var point := CarArt.muzzle(car_position(),car_frame())
+	_append_rear_shot(point)
+	if armour<50:
+		# Both rounds leave the barrel; retain the former 16px spread at the bike's depth.
+		_append_rear_shot(point,16.0/maxf(0.1,(point.y-bike_y)/350.0))
+	flashes.append({"p": point,"t": 0.09,"source": "pursuer"})
+	_sound("shot")
+
+func _advance_rear_shots(delta: float,target_y: float):
+	for i in range(rear_shots.size()-1,-1,-1):
+		rear_shots[i] += Vector2(rear_shot_vx[i] if i<rear_shot_vx.size() else 0.0,-350)*delta
+		if rear_shots[i].y<=target_y:
+			if absf(rear_shots[i].x-x)<24: _hit(18)
+			rear_shots.remove_at(i)
+			if i<rear_shot_vx.size(): rear_shot_vx.remove_at(i)
+
 func _car_ai(delta: float) -> void:
 	# The pursuer keeps its distance behind the bike; riding far ahead buys
 	# safety from rams but takes Raven out of hacking range.
@@ -571,11 +613,7 @@ func _spawn_road_object() -> void:
 			ram_warning = 0.85
 			world.sound("hit")
 		else:
-			rear_shots.append(Vector2(boss_x, car_y - 25))
-			if armour < 50:
-				rear_shots.append(Vector2(boss_x + 16, car_y - 25))
-			flashes.append({"p": Vector2(boss_x, car_y - 25), "t": 0.09})
-			_sound("shot")
+			_fire_pursuer()
 	pattern += 1
 
 func _advance_bike_world(delta: float) -> void:
@@ -595,12 +633,7 @@ func _advance_bike_world(delta: float) -> void:
 				world.sound("hit")
 			impact(grenade, true)
 			grenade = Vector2.ZERO
-	for i in range(rear_shots.size() - 1, -1, -1):
-		rear_shots[i].y -= 350 * delta
-		if rear_shots[i].y <= bike_y:
-			if absf(rear_shots[i].x - x) < 24:
-				_hit(18)
-			rear_shots.remove_at(i)
+	_advance_rear_shots(delta,bike_y)
 	for i in range(hazards.size() - 1, -1, -1):
 		var before: = hazards[i].y
 		hazards[i].y += road
@@ -664,8 +697,9 @@ func _advance_bike_world(delta: float) -> void:
 				if drone.t >= 1.4:
 					drone.t = 0.0
 					drone.drops += 1
-					objects.append({"k": "mine", "p": drone.p + Vector2(0, 22), "done": false, "r": 0.0})
-					flashes.append({"p": drone.p + Vector2(0, 18), "t": 0.08})
+					var release := DroneArt.release_point(drone.p,Vector2(50,50))
+					objects.append({"k": "mine", "p": release, "done": false, "r": 0.0})
+					flashes.append({"p": release,"t": 0.08,"source": "cargo","drone": drone})
 					if drone.drops >= 3:
 						drone.state = "out"
 			"out":
@@ -702,8 +736,8 @@ func _draw_bike_scene(cyan: Color, pink: Color) -> void:
 			var ly := fposmod(i * 71 + scroll * 1.6, 380.0) - 20.0
 			draw_line(Vector2(lx, ly), Vector2(lx, ly + 26.0 + boost * 10.0), Color(0.75, 0.95, 1.0, 0.16 + boost * 0.08), 1.0)
 	draw_set_transform(Vector2.ZERO)
-	var car := Vector2(boss_x, car_y - (1.0 - ram_warning / 0.85) * minf(42.0, maxf(0.0, car_y - bike_y - 40.0)) if ram_warning > 0.0 else car_y - ram_recovery * 40.0)
-	_draw_vehicle(1, car, Vector2(98, 72), -boss_velocity * 0.0006)
+	var car := car_position()
+	CarArt.draw(self,car,car_frame())
 	if ram_warning > 0.0:
 		draw_line(Vector2(car.x, bike_y + 22), car, Color(pink, 0.65), 3.0)
 		draw_arc(Vector2(car.x, bike_y), 29, 0, TAU, 24, pink, 2)
@@ -733,7 +767,7 @@ func _draw_bike_scene(cyan: Color, pink: Color) -> void:
 		draw_set_transform(drone.p + Vector2(10, height), 0.0, Vector2(1.0, 0.45))
 		draw_circle(Vector2.ZERO, 18.0, Color(0, 0, 0, 0.35))
 		draw_set_transform(Vector2.ZERO)
-		_draw_vehicle(3, drone.p, Vector2(50, 50), drone.spin)
+		DroneArt.draw(self,drone.p,Vector2(50,50),fx_clock,drone.spin)
 		if drone.state == "hacked":
 			draw_arc(drone.p, 24, fx_clock * 5, fx_clock * 5 + 4, 24, cyan, 2)
 		elif drone.state == "hover" and drone.t > 1.0:

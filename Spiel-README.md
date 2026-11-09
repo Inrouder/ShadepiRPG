@@ -1,6 +1,8 @@
 # Shadepi · Echos in Neon
 
-**Spieleranleitung für v0.40.0 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+**Spieleranleitung für v0.41.0 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+
+**Verfolger v0.41.0 · CodexAI:** Wagenlenkung, Federung und Geschütz zeigen eigene Bewegungsphasen; Frachtdrohnen haben laufende Rotoren. Feuer kommt aus dem Dachgeschütz, Minen aus dem Frachtkontakt. Q/RB hackt wie bisher den Wagen oder eine Drohne in Reichweite. Pause hält auch diese Animationen an. [Bilder und Film](docs/verfolger-animationen.md).
 
 **Fahrzeugbewegung v0.40.0 · CodexAI:** Motorrad und Aerodyne zeigen jetzt eigene Kurvenbilder; das Motorrad zusätzlich Brems-/Federungsbewegung, der Aerodyne ausgeklappte Luftbremsflächen. A/D oder Stick lenkt, W/S oder Stick längs gibt Schub und bremst. Leertaste/B bleibt im Flug die Ausweichrolle, am Motorrad die Granate. Keine neue Belegung. [Bilder und Filme](docs/fahrzeugbewegung.md).
 

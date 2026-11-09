@@ -6,7 +6,9 @@
 
 **Fortschritt v0.39.0 · CodexAI:** [Kapitel 4 mit Schalterkontakt, Entriegelungsphasen, gemeinsamer Schachtfahrt und Hangarenthüllung](hangar-entdeckung.md) ist fertig. Der normale Erkundungs-Hangar verwendet jetzt ebenfalls denselben separaten Aerodyne wie im Flug; geschlossenes unterirdisches Dach und KOBAN-TEC erhalten. Die Tabellen bleiben als ursprüngliches Briefing erhalten. Der erste Kurven-/Motorradblock wurde mit v0.40.0 ergänzt.
 
-**Fortschritt v0.40.0 · CodexAI:** Der erste Fahrzeugblock ist umgesetzt: [vier Aerodyne-Kurvenlagen, Luftbremse und acht Motorrad-Fahrposen](fahrzeugbewegung.md), mit gemeinsamen Rumpf-/Düsenankern beziehungsweise festem hinterem Reifenkontakt. Flug, Landung, See-Anflug und Tower-Abfangen sind eingebunden. **Nächster Fahrzeugblock:** Verfolgerwagen mit Lenk-/Federungs-/Rückstoßbildern und Frachtdrohne mit Rotorphasen. Vollständige Rollen-/Unterseitenansichten, Fahrwerk und Cockpit-Zwischenbilder bleiben offen.
+**Fortschritt v0.40.0 · CodexAI:** Der erste Fahrzeugblock ist umgesetzt: [vier Aerodyne-Kurvenlagen, Luftbremse und acht Motorrad-Fahrposen](fahrzeugbewegung.md), mit gemeinsamen Rumpf-/Düsenankern beziehungsweise festem hinterem Reifenkontakt. Flug, Landung, See-Anflug und Tower-Abfangen sind eingebunden. Dieser Verfolger-/Drohnenblock wurde mit v0.41.0 ergänzt. Vollständige Rollen-/Unterseitenansichten, Fahrwerk und Cockpit-Zwischenbilder bleiben offen.
+
+**Fortschritt v0.41.0 · CodexAI:** [Verfolgerwagen mit neun Lenk-/Federungs-/Rückstoßbildern und Frachtdrohne mit vier Rotorphasen](verfolger-animationen.md) sind eingebunden. Feste Geschütz-/Abwurfkontakte, Controller und sichere Zustandsbereinigung gehören zum Block. **Nächster Block:** wichtige technische Props mit echten Betriebs-/Zugriffsreaktionen; danach die Kapitel-1-/Kapitel-3-Szenen nach Tabelle. Zusätzliches Aerodyne-Fahrwerk, vollständige Rollen-/Unterseiten und Cockpit-Zwischenbilder bleiben offen.
 
 ## Bereits in dieser Version umgesetzt
 
@@ -63,7 +65,7 @@ Für planbaren Aufwand zuerst **ein Objekt mit allen Phasen** fertigstellen und 
 
 1. **Fertig:** Musikzuordnung und erster Aerodyne-Satz, gemeinsame Anker und Szenenintegration.
 2. **Kapitel 2 fertig in v0.38.0:** zusammenhängender Einstieg–Dive–Rückkehr–Rettung-Moment. **Kapitel 4 fertig in v0.39.0:** Plattform und Hangarenthüllung einschließlich vereinheitlichtem Erkundungsschiff.
-3. **Erster Fahrzeugblock fertig in v0.40.0:** Kurvenlagen, Luftbremse und Motorrad-Fahrposen. **Danach:** Auto/Drohne, zusätzliches Fahrwerk/Cockpit und vollständige Rollenansichten; wichtige technische Props mit Zustandsreaktion.
+3. **Erster Fahrzeugblock fertig in v0.40.0:** Kurvenlagen, Luftbremse und Motorrad-Fahrposen. **Zweiter Fahrzeugblock fertig in v0.41.0:** Auto-/Drohnenphasen. **Danach:** wichtige technische Props mit Zustandsreaktion; zusätzliches Fahrwerk/Cockpit und vollständige Rollenansichten bleiben weiterer Fahrzeugbedarf.
 4. **Anschließend:** Kapitel 1/3 und Kenzō-Zwischenphasen; die bereits starken Erinnerungen und das See-Finale nur gezielt nachpolieren.
 
 Pro Block: Bildbriefing → Quelle und Anker → Start/Kontakt/Ende im echten Renderer → Pause/Skip/Abbruch/Laden → Controller → Export. Neue Bilder brauchen feste Körper-/Objektpunkte. Kamera nur dann bewegen, wenn sie Handlung oder Information zeigt; kein dauerhaftes Wackeln und keine ungewollte Figurenverformung. Neue Details ändern keine bestätigte Story.

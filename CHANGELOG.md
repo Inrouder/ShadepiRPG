@@ -1,5 +1,15 @@
 # Versionshinweise
 
+## v0.41.0 – CodexAI: Verfolgerwagen mit Rückstoß und Frachtdrohnen mit Rotorphasen · 9. November 2026
+
+- Neun neue HQ-Pixelphasen für den dunklen gepanzerten Verfolgerwagen: Geradeausfahrt, zwei Lenkbilder, Federung, Lastverlagerung vor Rammstoß, Geschützrückstoß/-rücklauf und Rammstoß-Erholung. Vier Rotorphasen für die bestehende Frachtdrohne mit festen Ringen und Frachtkörper.
+- Rumpf- und Mündungspunkte pro Wagenpose registriert. Das vorhandene Pixel-Mündungsfeuer folgt dem Dachgeschütz. Beide Geschosse des beschädigten Wagens beginnen dort, der zweite fächert danach zum bisherigen Zielabstand auf. Trefferwerte, Intervalle und Angriffsmuster erhalten.
+- Minenabwurf samt Impuls folgt dem tatsächlichen Frachtkontakt. Verfolgungsdrohnen und Frachthindernisse im Aerodyne-Flug verwenden dieselbe animierte Quelle; gewolltes Trudeln der gehackten Drohne bleibt unabhängig vom Rotorlauf.
+- Controller-RB, Pause, saubere Zustände nach Laden und Kapitelwechsel geprüft. Neue Quellen unverändert kopiert, tatsächliche 418er-/627er-Raster dokumentiert; keine Hochskalierung oder programmgesteuerte Bemalung. Neue Quellen-/Ablaufprüfung in GitHub-CI.
+- 799 gezielte Prüfungen und neun zusätzliche Exportprüfungen ohne Fehler. Alle neun Wagen-/vier Rotorbilder im tatsächlichen Renderer erreicht; Schuss und Luftfrachtquelle direkt aus dem Exportpaket gesichtet.
+- [Spielbilder und Film](docs/verfolger-animationen.md), [Arbeits- und Exportnachweis](docs/arbeiten/verfolger-v041.md). Stilbibel und Cinema-Roadmap aktualisiert; Version und Windows-Felder fortgeschrieben.
+
+
 ## v0.40.0 – CodexAI: Eigene Fahrzeug-Kurvenlagen und Motorrad-Fahrposen · 9. November 2026
 
 - Vier eigene Aerodyne-Bankansichten und Luftbremsbild ergänzen die bestehende mechanische Kabinen-/Triebwerksquelle. Material, Cockpit und Triebwerksidentität erhalten. Bildlagen folgen tatsächlicher Lenkung, Ausweichphase und Bremsen; eigene Cockpit-/Düsenanker pro Ansicht.
