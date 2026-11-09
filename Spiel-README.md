@@ -1,6 +1,8 @@
 # Shadepi · Echos in Neon
 
-**Spieleranleitung für v0.41.1 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+**Spieleranleitung für v0.42.0 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+
+**Technik v0.42.0 · CodexAI:** Lüfter, Relais und Messwerk bewegen sich an intakten Schaltkästen/Servern. Verbundene Statusgeräte bestätigen vorhandene Zugriffe oder zeigen Fehler. Bei beschädigten/zerstörten Geräten gelten die entsprechenden Schadensbilder; kein Storyrätsel wird dadurch blockiert. Bedienung bleibt gleich. [Bilder und Film](docs/technik-gegenstaende.md).
 
 **Bilder und Doku v0.41.1 · CodexAI:** [Zentrale Bildgalerie mit Szenenfilmen](docs/README.md). Die Repository-Startseite enthält wieder direkte Bildvorschauen.
 

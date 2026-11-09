@@ -8,7 +8,9 @@
 
 **Fortschritt v0.40.0 · CodexAI:** Der erste Fahrzeugblock ist umgesetzt: [vier Aerodyne-Kurvenlagen, Luftbremse und acht Motorrad-Fahrposen](fahrzeugbewegung.md), mit gemeinsamen Rumpf-/Düsenankern beziehungsweise festem hinterem Reifenkontakt. Flug, Landung, See-Anflug und Tower-Abfangen sind eingebunden. Dieser Verfolger-/Drohnenblock wurde mit v0.41.0 ergänzt. Vollständige Rollen-/Unterseitenansichten, Fahrwerk und Cockpit-Zwischenbilder bleiben offen.
 
-**Fortschritt v0.41.0 · CodexAI:** [Verfolgerwagen mit neun Lenk-/Federungs-/Rückstoßbildern und Frachtdrohne mit vier Rotorphasen](verfolger-animationen.md) sind eingebunden. Feste Geschütz-/Abwurfkontakte, Controller und sichere Zustandsbereinigung gehören zum Block. **Nächster Block:** wichtige technische Props mit echten Betriebs-/Zugriffsreaktionen; danach die Kapitel-1-/Kapitel-3-Szenen nach Tabelle. Zusätzliches Aerodyne-Fahrwerk, vollständige Rollen-/Unterseiten und Cockpit-Zwischenbilder bleiben offen.
+**Fortschritt v0.41.0 · CodexAI:** [Verfolgerwagen mit neun Lenk-/Federungs-/Rückstoßbildern und Frachtdrohne mit vier Rotorphasen](verfolger-animationen.md) sind eingebunden. Feste Geschütz-/Abwurfkontakte, Controller und sichere Zustandsbereinigung gehören zum Block. Dieser erste Technikblock wurde mit v0.42.0 ergänzt; die Kapitel-1-/Kapitel-3-Szenen folgen nach Tabelle. Zusätzliches Aerodyne-Fahrwerk, vollständige Rollen-/Unterseiten und Cockpit-Zwischenbilder bleiben offen.
+
+**Fortschritt v0.42.0 · CodexAI:** [Schaltkästen und Serverschränke mit je acht Betriebs-/Zugriffsphasen](technik-gegenstaende.md) sind der erste technische Prop-Block. Feste Standpunkte, explizite Rückmeldungen nach bestehenden Terminalaufgaben und erhaltene Schadens-/Speicherzustände. **Nächster Schwerpunkt:** Kapitel 1 mit sichtbarer Auftragsannahme, Ausrüstungsprüfung und motiviertem ersten Shadepi-Auftritt. Automat-/Türphasen sowie weitere Fahrzeug-/Cockpitbilder bleiben spätere gezielte Blöcke.
 
 ## Bereits in dieser Version umgesetzt
 

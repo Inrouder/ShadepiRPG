@@ -2,6 +2,7 @@ class_name WorldProp
 extends StaticBody2D
 
 const Art = preload("res://scripts/prop_art.gd")
+const Technology = preload("res://scripts/technology_art.gd")
 const TYPES: = {
 	"crate": {"column": 0, "hp": 40, "footprint": Vector2(43, 22), "color": "b28d64", "label": "Frachtkiste"}, 
 	"barrel": {"column": 1, "hp": 34, "footprint": Vector2(31, 21), "color": "bd7163", "label": "Brennstofffass"}, 
@@ -23,6 +24,31 @@ var sprite: Sprite2D
 var shape: CollisionShape2D
 var lamp: PointLight2D
 var hurt: = 0.0
+var technology_clock := 0.0
+var operation := "idle"
+var operation_left := 0.0
+var base_sprite_position := Vector2.ZERO
+
+func animated_technology() -> bool:
+	return Technology.supports(kind) and health>max_health/2
+
+func begin_access() -> bool:
+	if not animated_technology(): return false
+	operation = "waiting"
+	operation_left = 0
+	_refresh_technology()
+	return true
+
+func finish_access(result: String):
+	if not animated_technology(): return
+	operation = result if result in ["success","fault"] else "idle"
+	operation_left = 1.1 if operation=="success" else 0.85 if operation=="fault" else 0.0
+	_refresh_technology()
+	set_process(true)
+
+func _refresh_technology():
+	if animated_technology(): sprite.frame = Technology.frame_for(technology_clock,operation,operation_left)
+
 
 func setup(game: Node2D, id: String, type: String, point: Vector2) -> void :
 	world = game
@@ -53,7 +79,7 @@ func setup(game: Node2D, id: String, type: String, point: Vector2) -> void :
 		lamp.energy = 0.74
 		add_child(lamp)
 	_update_art()
-	set_process(false)
+	set_process(animated_technology())
 
 func footprint() -> Rect2:
 	var size: Vector2 = TYPES[kind].footprint
@@ -68,10 +94,13 @@ func restore_health(value: int) -> void :
 	collision_layer = 1 if health > 0 else 0
 	shape.set_deferred("disabled", health == 0)
 	hurt = 0.0
+	operation = "idle"
+	operation_left = 0
+	technology_clock = posmod(prop_id.hash(),4)/8.0
 	sprite.position.x = 0.0
 	sprite.modulate = Color.WHITE
 	_update_art()
-	set_process(false)
+	set_process(animated_technology())
 
 func take_damage(amount: int) -> void :
 	if health <= 0 or amount <= 0:
@@ -83,25 +112,44 @@ func take_damage(amount: int) -> void :
 		shape.set_deferred("disabled", true)
 		sprite.position.x = 0.0
 		sprite.modulate = Color.WHITE
+	if not animated_technology():
+		operation = "idle"
+		operation_left = 0
 	_update_art()
 	set_process(health > 0)
 	world.prop_damaged(self, amount)
 
 func _update_art() -> void :
 	var row: = 2 if health == 0 else 1 if health <= max_health / 2 else 0
-	Art.apply(sprite, TYPES[kind].column, row)
+	if animated_technology():
+		Technology.apply(sprite,kind)
+		_refresh_technology()
+	else:
+		sprite.position.x = 0
+		sprite.frame = 0
+		sprite.hframes = 1
+		sprite.vframes = 1
+		Art.apply(sprite, TYPES[kind].column, row)
+	base_sprite_position = sprite.position
 	if lamp != null:
 		lamp.enabled = health > 0
 		lamp.energy = 0.74 if row == 0 else 0.3
 	queue_redraw()
 
 func _process(delta: float) -> void :
-	if world.is_busy():
-		return
+	# Ambient machinery can run in a scene, but menus and the modal deck freeze it.
+	if world.get("menu_open")==true or world.get("terminal")!=null: return
+	if animated_technology():
+		technology_clock += delta
+		if operation_left>0:
+			operation_left = maxf(0,operation_left-delta)
+			if operation_left==0: operation = "idle"
+		_refresh_technology()
+	if world.is_busy(): return
 	hurt = maxf(0, hurt - delta)
-	sprite.position.x = sin(hurt * 170.0) * hurt * 6.0
+	sprite.position = base_sprite_position+Vector2(sin(hurt*170.0)*hurt*6.0,0)
 	sprite.modulate = Color(1.0 + hurt * 2.0, 1.0 + hurt * 1.3, 1.0 + hurt)
-	if hurt == 0.0:
+	if hurt == 0.0 and not animated_technology():
 		set_process(false)
 	queue_redraw()
 

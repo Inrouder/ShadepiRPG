@@ -59,6 +59,7 @@ var destructibles: Array[WorldProp] = []
 var prop_states: Dictionary = {}
 var dressing_layout: = ""
 var dressing_generation: = 0
+var terminal_devices: Array[WorldProp] = []
 var painted_solids: Array[StaticBody2D] = []
 var painted_masks: Array[Polygon2D] = []
 var painted_layout: = ""
@@ -80,18 +81,39 @@ func open_terminal(context: String, on_success: Callable) -> void:
 	var panel = preload("res://scripts/terminal_ui.gd").new()
 	panel.context = context
 	terminal = panel
+	var device_generation := dressing_generation
+	var devices: Array[WorldProp] = _begin_technology_access(context)
 	add_child(panel)
-	panel.alarm.connect(func(): sound("hit"))
+	panel.alarm.connect(func():
+		sound("hit")
+		if terminal==panel and dressing_generation==device_generation:
+			for device in devices:
+				if is_instance_valid(device): device.finish_access("fault")
+	)
 	panel.finished.connect(func(success: bool):
 		if terminal != panel:
 			return
+		var failed: bool = panel.puzzle.failed
 		cancel_terminal()
+		if dressing_generation==device_generation:
+			for device in devices:
+				if is_instance_valid(device): device.finish_access("success" if success else "fault" if failed else "idle")
 		if success and on_success.is_valid():
 			sound("hack")
 			on_success.call()
 	)
 
+func _begin_technology_access(context: String) -> Array[WorldProp]:
+	terminal_devices.clear()
+	var ids: Array = preload("res://scripts/technology_art.gd").LINKS.get(dressing_layout,{}).get(context,[])
+	for device in destructibles:
+		if device.prop_id in ids and device.begin_access(): terminal_devices.append(device)
+	return terminal_devices.duplicate()
+
 func cancel_terminal() -> void:
+	for device in terminal_devices:
+		if is_instance_valid(device): device.finish_access("idle")
+	terminal_devices.clear()
 	if is_instance_valid(terminal):
 		terminal.closed = true
 		terminal.hide()
@@ -401,6 +423,9 @@ func add_painted_masks(key: String, offset: Vector2 = Vector2.ZERO, size: Vector
 		painted_masks.append(mask)
 
 func set_dressing(layout: String) -> void :
+	for device in terminal_devices:
+		if is_instance_valid(device): device.finish_access("idle")
+	terminal_devices.clear()
 	dressing_generation += 1
 	if is_instance_valid(effects):
 		effects.fragments.clear()

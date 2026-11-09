@@ -1,8 +1,15 @@
 # Shadepi · Bilder, Filme und Dokumentation
 
-**Stand v0.41.1 · CodexAI · 9. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
+**Stand v0.42.0 · CodexAI · 9. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
 
 Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnahmen, animierte Szenenfilme, Bedienung und technische Hinweise. Die PNG-Vorschauen sind direkt in GitHub sichtbar; die Filme bleiben zusätzlich als verlinkte WebP-Dateien erreichbar.
+
+## Belebte Technik · v0.42.0
+
+| Im Betrieb | Rückmeldung nach dem Zugriff |
+| --- | --- |
+| [![Schaltkasten und Serverschrank im Versteck](previews/technik-betrieb-v042.png)](technik-gegenstaende.md) | [![Verbundenes Rack bestätigt Ravens Energiebus-Zugriff](previews/technik-zugriff-v042.png)](technik-gegenstaende.md) |
+| [Mechanische Bildphasen und Schadenszustände](technik-gegenstaende.md) | [Zugriffsfilm öffnen](previews/technik-zugriff-v042.webp) |
 
 ## Verfolgung und Fahrzeugbewegung
 
@@ -23,7 +30,7 @@ Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnah
 | [![Raven und Shadepi vor dem leuchtenden See und dem Drachenschatten](previews/see-drache-v0361.png)](see-finale.md) | [![Hauptmenü mit Figuren, Neonstadt und weißem Drachen](startmenue.png)](live-startmenue.md) |
 | [Anflug, Aufnahme und privater Maskenmoment](see-finale.md) · [Finalfilm](previews/see-finale-v0361.webp) | [Bildaufbau und Menübewegung](live-startmenue.md) · [Animierte Vorschau](previews/startmenue-live.webp) |
 
-Die Versionsangaben bezeichnen den dokumentierten Aufnahmestand. Es sind vorhandene tatsächliche Renderer-Aufnahmen, keine neu gerenderten Bilder der Dokumentationsversion v0.41.1. Auch historische Berichte bleiben mit ihrer ursprünglichen Version erhalten.
+Die Versionsangaben bezeichnen den dokumentierten Aufnahmestand. Es sind tatsächliche Renderer-Aufnahmen; ältere Bilder werden beim Aktualisieren der Übersicht nicht als neu gerenderte Aufnahmen ausgegeben. Auch historische Berichte bleiben mit ihrer ursprünglichen Version erhalten.
 
 ## Weitere Spiel- und Entwicklungsthemen
 

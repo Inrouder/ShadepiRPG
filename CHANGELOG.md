@@ -1,5 +1,15 @@
 # Versionshinweise
 
+## v0.42.0 – CodexAI: Betriebsanimationen und Rückmeldung an technischer Umgebung · 9. November 2026
+
+- Je acht HQ-Pixelphasen für die vorhandenen Schaltkästen und Serverschränke: Lüfter/Messwerk, mechanischer Zugriff, Übertragung, grüne Bestätigung und Störung. Gehäuse, Bodenanker und bestehende Kollisionsflächen bleiben fest.
+- Explizit verbundene Statusgeräte reagieren auf bestehende Garage-/Hangar-/Tower-Terminals; keine zufällige Auswahl des nächstgelegenen Dekors. Rätsel und unmittelbare Erfolgs-Callbacks bleiben erhalten. Intakte Geräte animieren im Raum, während Menü und Terminal ihre Uhren anhalten.
+- Beschädigte und zerstörte Gegenstände verwenden weiter den passenden vorhandenen Atlas und verlieren ihre Betriebsanimation. Sprite-Raster/Basisposition korrekt zurücksetzen; wiederholte Treffer verursachen keinen Gehäusedrift. Gesundheitszustände bleiben kompatibel gespeichert.
+- Abbrechen, Fehler, Laden, Kapitelwechsel und späte Panel-Signale setzen vorübergehende Verbindungen sicher zurück. Zerstörtes optionales Statusgerät blockiert kein Storyrätsel. Neue Prüfung in GitHub-CI.
+- 1.069 gezielte Prüfungen und zehn zusätzliche Exportprüfungen ohne Fehler. Tatsächlicher Energiebus-Zugriff und Decoderfehler im Renderer aufgenommen; neue Ressourcen direkt im Exportpaket gesichtet.
+- [Aktuelle Spielbilder und Film](docs/technik-gegenstaende.md), [Arbeits-/Exportnachweis](docs/arbeiten/technik-v042.md). PNG-Vorschauen in Startseite und Doku-Galerie aktualisiert, Quellen/Referenzregeln und Versionsfelder fortgeschrieben.
+
+
 ## v0.41.1 – CodexAI: Bildvorschauen und zentraler Doku-Einstieg auf GitHub · 9. November 2026
 
 - Repository-Startseite zeigt aktuelle Fahrzeug-, Verfolgungs-, Hangar- und See-Aufnahmen wieder direkt als anklickbare PNG-Vorschauen.
