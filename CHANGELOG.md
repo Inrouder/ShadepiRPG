@@ -6,6 +6,7 @@
 - Verworfene v0.45.0-Helden samt ungenutztem Renderer, frühere Comictafeln und erste GIF-Vorschauen archiviert. Tote Renderer-Verzweigungen entfernt; aktive Originalhelden, Sonderangriffe und Blut-FX erhalten. Keine neue Grafikgenerierung oder Änderung von Original-PNGs.
 - Statuskatalog für aktive Quellen, Vergleichsbilder, Backups, Herstellungsquellen und Versionsbelege. Aktive Erinnerung III heißt „legacy/Vermächtnis“ und bleibt erhalten; das Universumsarchiv bleibt verbindlich. Ordner-READMEs und Werkzeug-/Arbeitskatalog ergänzt.
 - Archiv vom Godot-Import getrennt; historische Vergleichsbilder und Sicherungen ausdrücklich aus Desktop-Exporten ausgeschlossen. Read-only Repository-Audit für Links, feste Laufzeitressourcen, Versionsfelder und Exportgrenzen in CI ergänzt.
+- 1.210 gezielte Regressionen und 31 zusätzliche Exportprüfungen ohne Fehler. Verschobene Quellen und aktive Originalgrafiken bytegleich geprüft; Archiv-/Backup-Ausschluss im tatsächlichen PCK bestätigt.
 - [Repository-Status](docs/repository-status.md), [Archiv](docs/archiv/README.md), [Arbeits-/Prüfnachweis](docs/arbeiten/repository-v0462.md). Vorhandene PNG-Vorschauen mit ihrem tatsächlichen Aufnahmestand erhalten.
 
 ## v0.46.1 – CodexAI: Original-Sprites für Raven und Shadepi wiederhergestellt · 9. November 2026

@@ -1,3 +1,5 @@
+# v0.46.2 · CodexAI: reads PNG pixels but overwrites active JSON metadata. Not a read-only audit.
+# See tools/README.md; do not run during ordinary setup.
 """Read-only atlas measurement for Memory II. Never rewrites PNG pixels."""
 from pathlib import Path
 from PIL import Image

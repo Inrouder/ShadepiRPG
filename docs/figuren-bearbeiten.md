@@ -1,5 +1,7 @@
 # Figuren selbst bearbeiten
 
+**Aktueller Quellenhinweis v0.46.2 · CodexAI:** Aktive Originalatlanten und Custom-Priorität stehen im [Asset-Katalog](../assets/README.md). Neue Grafiken folgen der HQ-Pixelart-Vorgabe in [KONSISTENZ](../KONSISTENZ.md); historische Herstellungsbeschreibungen sind keine Freigabe für eine neue glatte Illustration. Compiler und Vermessungen können Assets/Anker überschreiben und gehören nicht zum normalen Setup. [Werkzeugstatus](../tools/README.md).
+
 Die sichtbaren Figuren sind transparente PNG-Spritesheets. Raven und Shadepi nutzen seit v0.12.0 ausgearbeitete illustrierte Figuren. Du kannst Farben und Formen frei verändern, ohne den GDScript-Code anzufassen.
 
 1. Öffne das Godot-Projekt. Kopiere `assets/sprites/heroes/shadepi.png` oder `raven.png` nach `assets/custom/`. Die HQ-Grafiken für Jackal, Kenzō, Punks und Schützen stehen unter `assets/sprites/npcs/`. Der Dateiname bleibt gleich. Alte Pixel-Zwischendateien wurden entfernt; eigene Pixel-Sprites bleiben als Ersatzgrafiken möglich.
@@ -24,7 +26,7 @@ Die Dateien unter `assets/custom/` werden vom Generator nicht überschrieben. En
 
 | Was du ändern möchtest | Wo du es findest |
 | --- | --- |
-| Zwischensequenzen | Funktionen `_scene_…` in `scripts/chapter_one.gd`, `scripts/chapter_two.gd` und `scripts/campaign.gd`. Anleitung: [Zwischensequenzen](zwischensequenzen.md). Die alten Comicbilder in `assets/comic/` werden seit v0.18.0 nicht mehr eingeblendet. |
+| Zwischensequenzen | Funktionen `_scene_…` in `scripts/chapter_one.gd`, `scripts/chapter_two.gd` und `scripts/campaign.gd`. Anleitung: [Zwischensequenzen](zwischensequenzen.md). Die alten Comicbilder werden seit v0.18.0 nicht mehr eingeblendet und liegen historisch unter `docs/archiv/assets/comic-bis-v017/`. |
 | Dialoge und Abläufe | `scripts/chapter_one.gd`. Gesprochene Zeilen stehen als `["SPRECHER", "Text"]` in den Szenenfunktionen. |
 | Boden, Fassaden und Schilder in Bingo Street | `assets/world/painted/market.png` und `assets/world/painted/alley.png`. Die Bildmaße beibehalten und Hindernisse in `scripts/painted_world.gd` abgleichen. |
 | Wege, Hindernisse und Gegner | `scripts/chapter_one.gd` mit `BARRIERS`, `TRAIL`, `HUNT_GUARDS` und `RESCUE_GUARDS`. Gemeinsame Wände und Requisiten stehen in `scripts/world_data.gd`. |

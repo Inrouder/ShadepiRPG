@@ -1,3 +1,5 @@
+## v0.46.2 · CodexAI: historical source generator; overwrites assets/fx PNGs.
+## Not a gallery or normal setup step. See tools/README.md.
 extends SceneTree
 # Original pixel textures: stepped cores, branched sparks, palette glow; no vectors.
 func _initialize() -> void:

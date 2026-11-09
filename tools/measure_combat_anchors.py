@@ -1,3 +1,5 @@
+# v0.46.2 · CodexAI: reads PNG pixels but overwrites active JSON metadata. Not a read-only audit.
+# See tools/README.md; do not run during ordinary setup.
 """Read PNG alpha/color data; save atlas regions and foot/palm anchors. Does not edit art."""
 from PIL import Image
 from pathlib import Path

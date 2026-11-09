@@ -81,7 +81,7 @@ Ravens frühere 168-cm-Angabe ist überholt. Für Shadepi hier keine unbestätig
 
 ### Technische Ausgangswerte des Helden-Renderers · v0.46.1 · CodexAI
 
-Auf ausdrücklichen Nutzerwunsch wieder die Originale. Die v0.45.0-Variante unter `heroes/gameplay` ist verworfen und darf nicht automatisch erneut aktiviert werden.
+Auf ausdrücklichen Nutzerwunsch wieder die Originale. Die v0.45.0-Variante unter `docs/archiv/assets/helden-v045/` ist verworfen und darf nicht automatisch erneut aktiviert werden.
 
 | Eigenschaft | Aktueller Original-Heldenvertrag |
 | --- | --- |

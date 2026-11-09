@@ -15,8 +15,29 @@ Nutzerziel: Repository ordentlich aufräumen und Altlasten richtig markieren. Au
 
 ## Prüfung
 
-Repository-Audit liest Statusmanifest, reale lokale Links, feste Ressourcenverweise, Versions-/Exportgrenzen und Git-Cachegrenzen. Dynamisch zusammengesetzte Ladepfade werden durch Godot-Regression/Export geprüft; Screenshot-Ausgabeziele sind keine Eingaberessourcen. Vergleich von Original-/verschobenen Quellbytes, Import, Regression und Exportnachweis folgen vor Abschluss.
+Repository-Audit liest Statusmanifest, reale lokale Links, feste Ressourcenverweise, Versions-/Exportgrenzen und Git-Cachegrenzen. Dynamisch zusammengesetzte Ladepfade werden durch Godot-Regression/Export geprüft; Screenshot-Ausgabeziele sind keine Eingaberessourcen. Vergleich von Original-/verschobenen Quellbytes, Import, Regression und Exportnachweis abgeschlossen. 54 Dateipfade archiviert; alle verschobenen Bild-/Code-/Metadatendateien bytegleich, nur README-Verweise angepasst. Aktive Originalhelden, Heiligtum-Pose, Menü-HQ-Bild und Blutquelle bytegleich zum Ausgang.
 
 Nicht betroffen: neue Figurenmerkmale/Posen, Dialoge, Eingaben oder Audioinhalte. Bestehende Controller-/Kampfpfade werden mit gezielten Regressionen geprüft; keine neue manuelle Controller-/Audioabnahme. Spielstände isoliert über `XDG_DATA_HOME`.
 
 Version 0.46.2 / Windows 0.46.2.0, CodexAI. Aktive Standbilder bleiben Aufnahmestand v0.46.1 beziehungsweise der jeweils im Bericht genannten Version. Keine Veröffentlichung der Cloud-Umgebung und kein Release-Tag.
+
+### Ergebnisse dieses Stands
+
+| Prüfung | Ergebnis |
+| --- | --- |
+| Repository-Audit | Alle lokalen Markdown-Ziele, Statuspfade und festen Laufzeitreferenzen gültig; Import-/Exportgrenzen und Versionen konsistent. Lesender Standardbibliothek-Befehl, neu in CI. |
+| Kern | 383 Prüfungen, 0 Fehler |
+| Fehlerbericht / Originalzyklen | 420 Prüfungen, 0 Fehler |
+| Kampfbewegungen | 68 Prüfungen, 0 Fehler |
+| Raven-/Gegnerkampf | 292 Prüfungen, 0 Fehler |
+| Blut-FX | 29 Prüfungen, 0 Fehler |
+| Heiligtumgrafiken | 18 Prüfungen, 0 Fehler |
+| **Regression gesamt** | **1.210 Prüfungen, 0 Fehler** |
+| Exportpaket | **31 zusätzliche Prüfungen, 0 Fehler** |
+| Quellwerkzeuge | Python-Syntax geprüft, `node --check` bestanden; kein Generator/Compiler ausgeführt. |
+
+Godot 4.7.2, isolierte `XDG_DATA_HOME`-Verzeichnisse; Import und Linux-Pack-Export ohne Skriptfehler. `/tmp/shadepi-v0.46.2.pck` aus leerem Arbeitsverzeichnis nativ geöffnet: Originalatlanten, Raster, Anker, Sonderposen-Rückkehr, aktives Blut und aktives Vermächtnis bestätigt. Archiv, entfernte Altpfade, Original-Backups und historische Vergleichs-PNGs im Paket nachweislich nicht vorhanden. `PACKED CLEANUP: 31 checks, 0 failures`. Paket ungefähr 10 MiB kleiner als der v0.46.1-Vergleich; Git-Historie und Archivquellen bleiben erhalten.
+
+Native Sichtprüfung durch CodexAI am 9. November 2026 (Europe/Berlin): unveränderte Originalhelden und Bodenkontakt aus dem Export in `/tmp/shadepi-v0462-packed.png`. Die auf GitHub gezeigten vorhandenen PNGs/Filme behalten ihre tatsächlichen Aufnahmeversionen; keine neuen Grafikassets erzeugt. Protokolle temporär unter `/tmp/shadepi-v0462-*.log`. Keine vollständige manuell erspielte Kampagne oder neue Audio-/Windows-Abnahme.
+
+Zwischenstand lokal als `0d84777` gespeichert; abschließende Prüfnachweise im zweiten Commit ergänzt. Alle Remote-Branches vor Abschluss erneut abgeglichen: main weiterhin `0b0623e`, andere Branches höchstens v0.21.3. Geprüften Stand auf GitHub main gesichert. Kein Löschen fremder Branches, persönlicher Dateien oder gewünschter Backups.

@@ -1,3 +1,5 @@
+# v0.46.2 · CodexAI: reads PNG pixels but overwrites active JSON metadata. Not a read-only audit.
+# See tools/README.md; do not run during ordinary setup.
 """Measure source pixel regions only. No edits to original PNGs."""
 from pathlib import Path
 from PIL import Image

@@ -14,7 +14,7 @@
 | `memories/attack/`, `sacrifice/`, `legacy/` | **Aktiv:** alle drei Kloster-Erinnerungen. `legacy` bedeutet „Vermächtnis“, nicht veralteter Code. |
 | `world/`, `vehicles/`, `fx/` | Aktive Orts-/Fahrzeug-/Effektquellen; Vorlagen einzelner überarbeiteter Räume können als Herstellungsreferenz erhalten sein. Konkrete Ladepfade im jeweiligen Renderer prüfen. |
 | `audio/`, `music/` | **Aktiv:** vorhandene Klänge und zugeordnete MP3s. [Musikzuordnung](music/README.md). |
-| `ui/`, `fonts/` | Spieloberflächen und Schriften, soweit vorhanden im aktiven UI eingebunden. |
+| `ui/`, `fonts/` | Spieloberflächen und Schriften des aktiven UI. |
 
 Die **verworfenen** v0.45.0-Helden liegen jetzt [im Entwicklungsarchiv](../docs/archiv/assets/helden-v045/README.md). Die alten bildschirmfüllenden Comictafeln sind [historisch archiviert](../docs/archiv/assets/comic-bis-v017/README.md), seit v0.18.0 keine Spiel-Zwischenszenen mehr. Beide Gruppen werden nicht importiert oder exportiert.
 

@@ -9,10 +9,17 @@
 | Werkzeug | Zweck |
 | --- | --- |
 | [audit_repository.py](audit_repository.py) | Liest Statusmanifest, Markdown-Links, feste Runtimepfade, Git-/Exportgrenzen und Versionen. Keine externen Pakete, keine Bild-/Spielstandänderung. |
-| [measure_combat_anchors.py](measure_combat_anchors.py) | Analyse-/Ankermessung für die jeweilige bestehende Quelle; Code auf etwaige Ausgabedateien prüfen. |
-| [measure_legacy_art.py](measure_legacy_art.py) | Analyse-/Ankermessung für die jeweilige bestehende Quelle; Code auf etwaige Ausgabedateien prüfen. |
-| [measure_memory_art.py](measure_memory_art.py) | Analyse-/Ankermessung für die jeweilige bestehende Quelle; Code auf etwaige Ausgabedateien prüfen. |
-| [measure_sacrifice_art.py](measure_sacrifice_art.py) | Analyse-/Ankermessung für die jeweilige bestehende Quelle; Code auf etwaige Ausgabedateien prüfen. |
+
+## Metadatenwerkzeuge mit Schreibzugriff
+
+Diese Vermessungen lesen PNG-Pixel, **überschreiben aber aktive JSON-Anker-/Akteurdateien**. Keine lesenden Auditbefehle und keine normalen Setup-Schritte. Bestehende Metadaten vor einer bewussten Neuberechnung sichern und anschließend Kontaktpunkte prüfen.
+
+| Werkzeug | Ausgabe |
+| --- | --- |
+| [measure_combat_anchors.py](measure_combat_anchors.py) | `contact-poses.json` und `raven-hand-cast.json` |
+| [measure_memory_art.py](measure_memory_art.py) | `assets/memories/attack/actors.json` |
+| [measure_sacrifice_art.py](measure_sacrifice_art.py) | `assets/memories/sacrifice/actors.json` |
+| [measure_legacy_art.py](measure_legacy_art.py) | `assets/memories/legacy/actors.json` für die aktive Erinnerung III |
 
 ## Herstellungsquellen mit Schreibzugriff
 
@@ -34,7 +41,7 @@
 
 ## Godot-Aufnahme- und QA-Werkzeuge
 
-Diese Skripte verwenden echte Spielressourcen und bereiten oft Kapitel, Gegner oder Kontrollpunkte automatisch vor. **Versionierte Bild-/Testwerkzeuge, keine normalen Setup-Schritte und keine vollständigen manuell erspielten Durchläufe.** Nach API-Änderungen anhand des zugehörigen Berichts prüfen. Mit isoliertem `XDG_DATA_HOME` und einem nativen Renderer ausführen; nicht mit persönlichen Spielständen. Ein aufgenommenes Bild ersetzt keine Prüfung des gesamten Abschnitts.
+Die Aufnahme-/QA-Skripte verwenden echte Spielressourcen und bereiten oft Kapitel, Gegner oder Kontrollpunkte automatisch vor. **Versionierte Bild-/Testwerkzeuge, keine normalen Setup-Schritte und keine vollständigen manuell erspielten Durchläufe.** Nach API-Änderungen anhand des zugehörigen Berichts prüfen. Mit isoliertem `XDG_DATA_HOME` und einem nativen Renderer ausführen; nicht mit persönlichen Spielständen. Ein aufgenommenes Bild ersetzt keine Prüfung des gesamten Abschnitts.
 
 | Skript | Einordnung |
 | --- | --- |
@@ -53,7 +60,7 @@ Diese Skripte verwenden echte Spielressourcen und bereiten oft Kapitel, Gegner o
 | [display_gallery.gd](display_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
 | [feedback_gallery.gd](feedback_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
 | [flight_gallery.gd](flight_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
-| [generate_combat_fx.gd](generate_combat_fx.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [generate_combat_fx.gd](generate_combat_fx.gd) | **Schreibender historischer FX-Generator:** überschreibt PNGs unter `assets/fx/`; kein Aufnahme-/Setup-Werkzeug und kein allgemeiner HQ-Grafikstandard. |
 | [hangar_discovery_gallery.gd](hangar_discovery_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
 | [ice_bath_gallery.gd](ice_bath_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
 | [lake_gallery.gd](lake_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
