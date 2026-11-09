@@ -1,5 +1,7 @@
 # ShadepiRPG · bebilderte Stilbibel für das gesamte Spiel
 
+**Fahrzeugbewegung v0.40.0 · CodexAI:** [Aerodyne-Kurvenlagen und Motorrad-Fahrposen](../fahrzeugbewegung.md). Separate Banklage von bisherigem Heading unterscheiden. Hinterer Reifenkontakt und Düsenpunkte je Quellbild sind fest registriert; keine transparenten Überblendungen verschiedener Silhouetten. Offene Kabine verwendet sofort wieder mechanischen Rumpf und passende gerade Düsenanker. Motorradquelle besitzt tatsächlich 418×418-Zellen; nur acht der neun Entwurfszellen sind aktiv.
+
 **Aktualisierung v0.39.0 · CodexAI:** [Plattformfahrt und Hangarentdeckung](../hangar-entdeckung.md), vier eigene Shadepi-Schalterposen, sechs Entriegelungsbilder und texturierter Schacht. Fahrt mit den tatsächlichen Figuren; danach identischer Aerodyne in normaler Erkundung und Film. [Aktive Quellen und Kontaktanker](../../assets/story/hangar-discovery/README.md).
 
 **Aktualisierung v0.38.0 · CodexAI:** [Eisbad und Kryospray-Rettung](../eisbad.md) mit acht eigenen HQ-Kontaktposen für Raven/Shadepi. Reale Weltgröße, unterschiedliche Zuschnitte der Paarposen und volle Kopf-/Haar-/Hutsilhouette beachten; normale Figurensätze bleiben gültig.

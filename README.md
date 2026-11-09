@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.39.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.40.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -38,6 +38,12 @@ Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und
 ## Mitarbeit und verbindliche Konsistenz
 
 Für Menschen und KI: **[Bebilderte Stilbibel des gesamten Spiels](docs/stilbibel/README.md)** · [Alle 23 Figuren mit Einzelkarten](docs/stilbibel/figuren.md) · [Konsistenzregeln](KONSISTENZ.md) · [Mitarbeit](CONTRIBUTING.md) · [Kopierbarer Auftrag und Arbeitsnachweis](docs/vorlagen/konsistenz-auftrag.md). Die Projektregeln in [AGENTS.md](AGENTS.md), der Einstieg für [Claude](CLAUDE.md) und die Pull-Request-Vorlage verweisen auf denselben Standard.
+
+## Neu in v0.40.0 · CodexAI · 9. November 2026
+
+- Aerodyne mit eigenen leichten/starken Kurvenlagen und Luftbremsbild; Motorrad mit acht Fahr-, Brems- und Federungsposen. Körper-/Materialmerkmale und Spielsteuerung bleiben erhalten.
+- Feste hintere Reifenkontakte und Düsenanker, passende Darstellung auch beim See-Anflug, Tower-Abfangen und Landen. Offene Kabinen verwenden weiterhin den mechanischen Bildsatz.
+- 856 gezielte Prüfungen plus zehn Exportprüfungen ohne Fehler. [Spielbilder und Bewegungsfilme](docs/fahrzeugbewegung.md), [Arbeitsnachweis](docs/arbeiten/fahrzeugbewegung-v040.md). Nächster abgeschlossener Teil der [Cinema-Roadmap](docs/cinema-roadmap.md).
 
 ## Neu in v0.39.0 · CodexAI · 9. November 2026
 

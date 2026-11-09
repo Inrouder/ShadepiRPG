@@ -2,6 +2,7 @@ extends Node2D
 
 const VEHICLES = preload("res://assets/world/hq/vehicles.png")
 const Airframe = preload("res://scripts/aerodyne_art.gd")
+const BikeArt = preload("res://scripts/motorcycle_art.gd")
 const Painted = preload("res://scripts/painted_world.gd")
 
 signal completed
@@ -715,13 +716,16 @@ func _draw_bike_scene(cyan: Color, pink: Color) -> void:
 	if grenade != Vector2.ZERO:
 		draw_circle(grenade, 5, Color("ffd46b"))
 	var bike := Vector2(x, bike_y)
-	var tilt := clampf(velocity_x * 0.0012, -0.3, 0.3)
+	var lean := clampf(velocity_x/250.0,-1,1)
+	var braking := throttle < -0.35
+	var outlets := BikeArt.exhaust(lean,braking,fx_clock)
 	if boost > 0.0:
-		for side in [-5, 5]:
-			var flame := 14.0 + sin(fx_clock * 40.0 + side) * 4.0
-			draw_line(bike + Vector2(side, 30), bike + Vector2(side, 30 + flame), Color(0.3, 0.9, 1.0, 0.55), 6.0, true)
-			draw_line(bike + Vector2(side, 30), bike + Vector2(side, 30 + flame * 0.6), Color("e9fdff"), 2.0, true)
-	_draw_vehicle(2, bike, Vector2(84, 84), tilt)
+		for i in 2:
+			var outlet: Vector2 = bike+outlets[i]
+			var flame := 14.0 + sin(fx_clock * 40.0 + i) * 4.0
+			draw_line(outlet, outlet+Vector2(0,flame), Color(0.3, 0.9, 1.0, 0.55), 6.0, true)
+			draw_line(outlet, outlet+Vector2(0,flame*0.6), Color("e9fdff"), 2.0, true)
+	BikeArt.draw(self,bike,lean,braking,fx_clock)
 	if slick > 0.0:
 		draw_arc(bike, 28.0, fx_clock * 6.0, fx_clock * 6.0 + 2.2, 16, Color("c17bff"), 2.0)
 	for drone: Dictionary in drones:

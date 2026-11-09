@@ -1,5 +1,7 @@
 # Fahrzeuge und Requisiten · v0.32.2 · CodexAI
 
+**Fahrzeugbewegung v0.40.0 · CodexAI:** [Aerodyne-Kurvenlagen und Motorrad-Fahrposen](../fahrzeugbewegung.md). Separate Banklage von bisherigem Heading unterscheiden. Hinterer Reifenkontakt und Düsenpunkte je Quellbild sind fest registriert; keine transparenten Überblendungen verschiedener Silhouetten. Offene Kabine verwendet sofort wieder mechanischen Rumpf und passende gerade Düsenanker. Motorradquelle besitzt tatsächlich 418×418-Zellen; nur acht der neun Entwurfszellen sind aktiv.
+
 **Aktualisierung v0.39.0 · CodexAI:** [Plattformfahrt und Hangarentdeckung](../hangar-entdeckung.md), vier eigene Shadepi-Schalterposen, sechs Entriegelungsbilder und texturierter Schacht. Fahrt mit den tatsächlichen Figuren; danach identischer Aerodyne in normaler Erkundung und Film. [Aktive Quellen und Kontaktanker](../../assets/story/hangar-discovery/README.md).
 
 [Stilbibel](README.md) · [Art Direction](artdirection.md) · [Welten](welten.md)
@@ -14,9 +16,9 @@ Die Tafel zeigt vorhandene Quellbilder zur Form-/Materialerkennung, **keinen gem
 
 | Objekt | Identität / Bildmerkmale | Aktive Quelle und Darstellung |
 | --- | --- | --- |
-| **Aerodyne** | Gepanzertes dunkles Fluggerät, sichtbares Cockpit, technische Fugen und Düsen; Lichtakzente passend zum Systemzustand. | [airframe.png](../../assets/vehicles/aerodyne/airframe.png), sechs registrierte Zustände über [aerodyne_art.gd](../../scripts/aerodyne_art.gd); ursprüngliche Identität aus Zelle 0 von `vehicles.png`. |
+| **Aerodyne** | Gepanzertes dunkles Fluggerät, sichtbares Cockpit, technische Fugen und Düsen; Lichtakzente passend zum Systemzustand. | [airframe.png](../../assets/vehicles/aerodyne/airframe.png), sechs mechanische Zustände plus [banks.png](../../assets/vehicles/aerodyne/banks.png) für Kurven/Luftbremse über [aerodyne_art.gd](../../scripts/aerodyne_art.gd); ursprüngliche Identität aus Zelle 0 von `vehicles.png`. |
 | **Verfolgerauto** | Dunkler gepanzerter Wagen, klare Dach-/Motorflächen und Rücklichter; eigene breite Silhouette. | Gleicher Atlas, Zelle 1; [Verfolgung](../../scripts/campaign_drive.gd). |
-| **Motorrad mit Shadepi und Raven** | Rotes/dunkles Motorrad; Fahrer mit Kasa und maskiertem Kopf, Raven mit schwarz-blauem Haar und Cyan-Ausrüstung. Beide gehören sichtbar zum Motorrad, keine beliebigen generischen Fahrer. | Gleicher Atlas, Zelle 2. |
+| **Motorrad mit Shadepi und Raven** | Rotes/dunkles Motorrad; Fahrer mit Kasa und maskiertem Kopf, Raven mit schwarz-blauem Haar und Cyan-Ausrüstung. Beide gehören sichtbar zum Motorrad, keine beliebigen generischen Fahrer. | [riding.png](../../assets/vehicles/motorcycle/riding.png), acht aktive Fahrposen über [motorcycle_art.gd](../../scripts/motorcycle_art.gd); ursprüngliche Identität aus Zelle 2 des alten Atlas. |
 | **Drohne** | Kompakter technischer Körper mit vier deutlich erkennbaren Rotoren. | Gleicher Atlas, Zelle 3; Größe und Warn-/Angriffsflächen nach Flug-/Fahrmodus. |
 | **Geparktes Motorrad** | Eigenständige Variante ohne Fahrer; dieselbe rote/dunkle Materialfamilie. | [bike-parked.png](../../assets/world/hq/bike-parked.png), Garage und Weltobjektdarstellung. |
 
@@ -26,7 +28,7 @@ Die Tafel zeigt vorhandene Quellbilder zur Form-/Materialerkennung, **keinen gem
 | --- | --- |
 | ![Aerodyne beim Abflug](../previews/bericht8-abflug.png) | ![Aerodyne nach der Landung](../flug-dach.png) |
 
-Die Bilder in dieser historischen Vergleichstabelle zeigen den früheren Unterschied. Seit v0.35.0 nutzt der filmische Hangar-Abflug denselben Fahrzeugrenderer wie die Tower-Flucht; ab v0.37.0 verwenden diese, Flug, Landung und See den gemeinsamen animierten Atlas. **Seit v0.39.0 ist auch das eingemalte Schiff im Erkundungs-Hangar ersetzt.** Der identische animierte Rumpf steht separat auf dem freien Hallenboden. Zusätzliche Kurven-/Seiten-/Fahrwerksansichten stehen weiterhin in der [Roadmap](../cinema-roadmap.md).
+Die Bilder in dieser historischen Vergleichstabelle zeigen den früheren Unterschied. Seit v0.35.0 nutzt der filmische Hangar-Abflug denselben Fahrzeugrenderer wie die Tower-Flucht; ab v0.37.0 verwenden diese, Flug, Landung und See den gemeinsamen animierten Atlas. **Seit v0.39.0 ist auch das eingemalte Schiff im Erkundungs-Hangar ersetzt.** Der identische animierte Rumpf steht separat auf dem freien Hallenboden. v0.40.0 ergänzt vier Kurvenlagen und eine Luftbremsansicht. Vollständige Seiten-/Unterseiten-/Fahrwerksansichten stehen weiterhin in der [Roadmap](../cinema-roadmap.md).
 
 ## Neun Weltobjekte in allen drei Zuständen
 

@@ -1,5 +1,15 @@
 # Versionshinweise
 
+## v0.40.0 – CodexAI: Eigene Fahrzeug-Kurvenlagen und Motorrad-Fahrposen · 9. November 2026
+
+- Vier eigene Aerodyne-Bankansichten und Luftbremsbild ergänzen die bestehende mechanische Kabinen-/Triebwerksquelle. Material, Cockpit und Triebwerksidentität erhalten. Bildlagen folgen tatsächlicher Lenkung, Ausweichphase und Bremsen; eigene Cockpit-/Düsenanker pro Ansicht.
+- Acht aktive Motorradposen für Geradeausfahrt, leichte/starke Links-/Rechtslage, Bremsen und Federungsbewegung. Shadepi vorne und Raven hinten bleiben konsistent. Hinterer Reifenkontakt bleibt fest auf dem Asphalt; Turbo-FX folgen den jeweiligen Auspuffpunkten.
+- Kurvenlage ist von Heading getrennt und in Flug, Landung, See-Anflug und Tower-Abfangen eingebunden. Kabinenöffnung setzt Rumpf und Düsen sofort zum geraden mechanischen Satz zurück. Pause, Controller und Laden geprüft; keine Umbelegung oder Änderung der Kampf-/Kollisionsregeln.
+- Erste matte Aerodyne-Quelle gezielt freigestellt; die aktive korrigierte PNG unverändert übernommen. Tatsächliche Motorrad-Zellgröße dokumentiert, zusätzlicher Schussentwurf ausdrücklich nicht aktiv. Klare Pixelphasen ersetzen durchsichtige Silhouettenüberblendungen.
+- 856 gezielte Prüfungen und zehn zusätzliche Exportprüfungen ohne Fehler. Motorrad-/Flugbewegung im Renderer aufgenommen, tatsächliche See-Ankunft und Tower-Flucht durchlaufen.
+- [Spielbilder und Filme](docs/fahrzeugbewegung.md), [Prüf- und Exportnachweis](docs/arbeiten/fahrzeugbewegung-v040.md). Neue Prüfung in GitHub-CI; Version, Exportfelder, Stilbibel und Roadmap aktualisiert. Weitere Verfolger-/Drohnen-/Fahrwerkssätze bleiben Folgeblöcke.
+
+
 ## v0.39.0 – CodexAI: Sichtbare Plattformfahrt und Hangar-Enthüllung · 9. November 2026
 
 - Zweiter Cinema-Block: vier HQ-Pixelposen für Shadepis Werkbankschalter, sechs tatsächliche Entriegelungsbilder und eine texturierte Schachtkulisse. Figuren und Motorrad fahren gemeinsam sichtbar nach unten; Andocken und Hallenöffnung ersetzen die beschriebene Schwarzblende.

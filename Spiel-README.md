@@ -1,6 +1,8 @@
 # Shadepi · Echos in Neon
 
-**Spieleranleitung für v0.39.0 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+**Spieleranleitung für v0.40.0 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+
+**Fahrzeugbewegung v0.40.0 · CodexAI:** Motorrad und Aerodyne zeigen jetzt eigene Kurvenbilder; das Motorrad zusätzlich Brems-/Federungsbewegung, der Aerodyne ausgeklappte Luftbremsflächen. A/D oder Stick lenkt, W/S oder Stick längs gibt Schub und bremst. Leertaste/B bleibt im Flug die Ausweichrolle, am Motorrad die Granate. Keine neue Belegung. [Bilder und Filme](docs/fahrzeugbewegung.md).
 
 **Garage und Hangar v0.39.0 · CodexAI:** Nach dem Garagen-Decoder siehst du die Entriegelung und die gemeinsame Plattformfahrt mit dem Motorrad. Die Kamera zeigt den Hangar und den Aerodyne, bevor Raven reagiert. Danach reparierst du als Raven wie bisher das Fahrzeug und überträgst die Kennung. **E / Enter / A**: Dialog weiter; **Leertaste / B**: Szene überspringen; **Esc / Start**: Pause. Laden während der Fahrt beginnt den Übergang erneut; abgeschlossene Szenen werden nicht wiederholt. [Bilder und Film](docs/hangar-entdeckung.md).
 

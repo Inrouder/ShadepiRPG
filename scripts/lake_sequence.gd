@@ -19,6 +19,7 @@ var clock := 0.0
 var craft := PARK
 var grow := 0.9
 var roll := 0.0
+var bank := 0.0
 var power := 0.0
 var altitude := 0.0
 var glow := 0.0
@@ -70,7 +71,7 @@ func _process(delta: float) -> void:
 	queue_redraw()
 
 func _sync() -> void:
-	vehicle.set_pose(craft,grow,roll,power,clock)
+	vehicle.set_pose(craft,grow,roll,power,clock,bank)
 	water.visible = glow>0.001 or dragon_passage>=0
 	water_material.set_shader_parameter("clock",clock)
 	water_material.set_shader_parameter("glow",glow*(0.6 if world.visual_quality==0 else 1.0))
@@ -89,6 +90,7 @@ func _draw() -> void:
 
 func arrival_step(segment: int, p: float) -> void:
 	var k := smoothstep(0,1,p)
+	bank = -0.65*sin(p*PI) if segment==1 else 0.0
 	if segment==0:
 		craft = Motion.hermite(Vector2(1010,120),Vector2(650,220),Vector2(-130,12),Vector2(-120,50),3.2,p)
 		grow = lerpf(0.26,0.4,k)

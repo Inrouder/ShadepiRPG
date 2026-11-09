@@ -29,6 +29,7 @@ var view := "roof"
 var park := PARK
 var craft := PARK
 var tilt := 0.0
+var bank := 0.0
 var grow := 0.90
 var engine := false
 var power := 0.0
@@ -72,7 +73,7 @@ func _process(delta: float) -> void:
 	queue_redraw()
 
 func _sync_vehicle() -> void:
-	vehicle.set_pose(craft,grow,tilt,power,clock)
+	vehicle.set_pose(craft,grow,tilt,power,clock,bank)
 
 func roof_route() -> Array:
 	var route := ROOF_ROUTE.duplicate(true)
@@ -117,6 +118,7 @@ func flight_step(segment: int, p: float) -> void:
 	var sizes := [Vector2(0.55,0.54),Vector2(0.54,0.53),Vector2(0.53,0.51),Vector2(0.51,0.44)]
 	var blend := smoothstep(0,1,p)
 	tilt = lerpf(rolls[segment].x,rolls[segment].y,blend)
+	bank = -0.7*sin(p*PI) if segment==2 else 0.0
 	grow = lerpf(sizes[segment].x,sizes[segment].y,blend)
 	if segment==2: power = smoothstep(0,0.65,p)
 	if segment==3: blast = p
