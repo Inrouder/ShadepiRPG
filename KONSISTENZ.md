@@ -1,6 +1,6 @@
 # Verbindliche Konsistenzvorlage für ShadepiRPG
 
-**Stand v0.43.0 · CodexAI · 9. November 2026; eingeführt mit v0.32.1.** Gilt für das gesamte Spiel und alle Mitwirkenden, ob Mensch oder KI. Vor Änderungen zusammen mit [AGENTS.md](AGENTS.md) lesen und die [Arbeitsvorlage](docs/vorlagen/konsistenz-auftrag.md) verwenden. Eine neuere ausdrückliche Nutzervorgabe hat Vorrang; bestätigte Änderungen anschließend hier und in den betroffenen Referenzen nachführen.
+**Stand v0.44.0 · CodexAI · 9. November 2026; eingeführt mit v0.32.1.** Gilt für das gesamte Spiel und alle Mitwirkenden, ob Mensch oder KI. Vor Änderungen zusammen mit [AGENTS.md](AGENTS.md) lesen und die [Arbeitsvorlage](docs/vorlagen/konsistenz-auftrag.md) verwenden. Eine neuere ausdrückliche Nutzervorgabe hat Vorrang; bestätigte Änderungen anschließend hier und in den betroffenen Referenzen nachführen.
 
 ## Bebilderter Einstieg für das gesamte Spiel
 
@@ -98,6 +98,8 @@ Sonderatlanten für Sitzen, Liegen, Gegner oder Menü folgen ihren eigenen Metad
 4. Haar- und Stoffwind bewegt freie Enden. Kopf, Maske, Hände, Waffen und Standfüße bleiben verankert. Im Hauptmenü verschiebt die Maus die Figuren und Plattform nicht; Raven steht vollständig innerhalb der Plattformkante.
 5. Ravens virtuelle Blitze beginnen an der offenen Hand; ihre Pistolenschüsse an der Mündung. Blickrichtung, Projektilursprung, sichtbarer Treffer und Spielregel passen zusammen. Ladebereitschaft, Auslösen, Treffer und Erholung bleiben unterscheidbar.
 6. Nach Unterbrechung, Überspringen, Kapitelwechsel und Laden alle temporären Zustände zurücksetzen: Atlas, Pose, Rotation, Schatten, Aufhellung, Lichtstrom und FX. Asynchrone Szenenschritte dürfen die folgende Szene nicht mehr verändern.
+
+Menü-Bodenkontakt ab v0.44.0 · CodexAI: feste Sohlenanker einschließlich Ravens separater Transformation aus `boot_contacts()`. Schatten bleiben im reduzierten Stil und vor der vorderen Dachkante sichtbar; keine Figurverschiebung als Kontaktkorrektur. [Neue Bildreferenz](docs/menue-kontrollpunkte.md). Test-Einstiege nur über den geprüften Katalog und separate Admin-Dateien; keine Normalstände durch Testvorbereitung überschreiben.
 
 ## 7. Szene, Bedienung und Ton
 

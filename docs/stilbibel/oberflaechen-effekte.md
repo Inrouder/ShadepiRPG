@@ -10,6 +10,8 @@ Die Skyline mit weißem Drachen, vorderer Dachplattform und beiden Figuren ist d
 
 Das Gameplay-HUD nutzt das 640×360-Spielraster, erkennbare Lebens-/Energiebalken und knappe Interaktionshinweise. Fokus und bestätigbare Aktionen dürfen nicht nur durch eine schwer sichtbare Farbänderung unterscheidbar sein. Quelle: [Menü](../../scripts/start_menu_backdrop.gd), [Menügestaltung](../live-startmenue.md), [Pixel-UI](../pixel-ui.md).
 
+**Menü-Korrektur v0.44.0 · CodexAI:** [Vier feste Sohlen-Kontaktschatten und erweiterte Menüaktionen](../menue-kontrollpunkte.md). Enger dunkler Kern und weicher Auslauf bleiben am Dach; Reduziert entfernt diesen Bodenkontakt nicht. Neue Lade-/Desktop-Aktionen verwenden die bestehende Pixel-UI. Kontrollpunktauswahl im Testmenü mit erhaltenem Controller-Fokus und B-Zurückfolge.
+
 ## Sechs gemeinsame UI-Familien
 
 ![Aktuelle Rahmen-, Knopf- und Zellentexturen](bilder/oberflaechen.png)

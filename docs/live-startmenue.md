@@ -1,5 +1,7 @@
 # HQ-Startmenü · v0.20.3 · CodexAI
 
+**Korrektur v0.44.0 · CodexAI:** Die vorhandene Figurenillustration bleibt erhalten. Vier neu registrierte, deutlichere Fußschatten verbinden sie mit dem Dach; Schatteneffekt vor der Dachkante begrenzen. Haupt-/Pausenmenüs erhalten Desktop-Aktion und kapitelübergreifendes Laden des letzten Kontrollpunkts. [Aktuelle Spielbilder und Bedienung](menue-kontrollpunkte.md).
+
 ![Hauptscreen in Full HD](startmenue.png)
 
 [Animierte Vorschau öffnen](previews/startmenue-live.webp) · [PNG in Full HD öffnen](startmenue.png)

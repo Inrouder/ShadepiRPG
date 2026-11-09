@@ -247,6 +247,14 @@ func admin_jump_to_chapter(chapter: int) -> bool:
 		return false
 	return true
 
+func admin_jump_to_checkpoint(id: String) -> bool:
+	if not admin_enabled("unlock_all"):
+		toast("Im Testmenü zuerst alle Kapitel freischalten.")
+		return false
+	var error := preload("res://scripts/test_checkpoints.gd").request(get_tree(),id)
+	if error!=OK: toast("Test-Kontrollpunkt konnte nicht geöffnet werden (%d)."%error)
+	return error==OK
+
 func begin_admin_test_session() -> void:
 	get_tree().set_meta(Admin.SESSION_KEY, true)
 

@@ -23,7 +23,7 @@ var city: TextureRect
 var city_material: ShaderMaterial
 var heroes: Node2D
 var wind_material: ShaderMaterial
-var ground_contacts: Control
+var ground_contacts: ColorRect
 var weather: Control
 var atmosphere: ColorRect
 var atmosphere_material: ShaderMaterial
@@ -43,9 +43,15 @@ func _ready() -> void:
 	city_material.shader = CITY_FX
 	city.material = city_material
 	add_child(city)
-	ground_contacts = Control.new()
+	ground_contacts = ColorRect.new()
+	ground_contacts.size = VIEW
+	var contact_material := ShaderMaterial.new()
+	contact_material.shader = preload("res://shaders/menu_contacts.gdshader")
+	var contacts := PackedVector4Array()
+	for foot in boot_contacts(): contacts.append(Vector4(foot.x,foot.y,foot.z,foot.w))
+	contact_material.set_shader_parameter("feet",contacts)
+	ground_contacts.material = contact_material
 	ground_contacts.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	ground_contacts.draw.connect(_draw_contacts)
 	add_child(ground_contacts)
 	heroes = Node2D.new()
 	heroes.position = HERO_RECT.position
@@ -142,12 +148,13 @@ static func foot_position(uv: Vector2, is_raven: bool) -> Vector2:
 		point = (point - RAVEN_PIVOT * HERO_RECT.size) * RAVEN_SCALE + RAVEN_PIVOT * HERO_RECT.size + RAVEN_OFFSET
 	return HERO_RECT.position + point
 
-func _draw_contacts() -> void:
-	for foot in [[Vector2(0.31, 0.947), false], [Vector2(0.535, 0.953), false], [Vector2(0.733, 0.95), true], [Vector2(0.855, 0.94), true]]:
-		ground_contacts.draw_set_transform(foot_position(foot[0], foot[1]), 0, Vector2(1, 0.28))
-		for ring in range(5, 0, -1):
-			ground_contacts.draw_circle(Vector2.ZERO, 6.0 + ring * 1.8, Color(0.015, 0.025, 0.045, 0.07))
-	ground_contacts.draw_set_transform(Vector2.ZERO)
+static func boot_contacts() -> Array[Vector4]:
+	# Source sole baselines, including Raven's existing separate scale/offset.
+	var contacts: Array[Vector4] = []
+	for foot in [[Vector2(0.309,0.958),false,15.0,2.3],[Vector2(0.545,0.963),false,11.2,2.1],[Vector2(0.732,0.963),true,9.0,1.8],[Vector2(0.856,0.951),true,10.0,1.8]]:
+		var point := foot_position(foot[0],foot[1])
+		contacts.append(Vector4(point.x,point.y,foot[2],foot[3]))
+	return contacts
 
 func _sync_activity() -> void:
 	var active := is_visible_in_tree()

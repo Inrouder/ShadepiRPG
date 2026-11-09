@@ -104,6 +104,15 @@ jobs:
           set -euo pipefail
           godot --headless --script res://tests/technology_props.gd 2>&1 | tee /tmp/technology-props.log
           if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/technology-props.log; then exit 1; fi
+      - name: Validate latest resume, all authored test checkpoints and menu controller exit
+        shell: bash
+        run: |
+          set -euo pipefail
+          test_data_root="$(mktemp -d /tmp/shadepi-menu-tests.XXXXXX)"
+          XDG_DATA_HOME="$test_data_root" godot --headless --script res://tests/menu_checkpoints.gd 2>&1 | tee /tmp/menu-checkpoints.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/menu-checkpoints.log; then exit 1; fi
+          XDG_DATA_HOME="$test_data_root" godot --headless --script res://tests/menu_navigation.gd 2>&1 | tee /tmp/menu-navigation.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/menu-navigation.log; then exit 1; fi
       - name: Validate Chapter-1 contact poses, visible introduction and checkpoint cancellation
         shell: bash
         run: |

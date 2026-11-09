@@ -1,6 +1,8 @@
 # Shadepi · Echos in Neon
 
-**Spieleranleitung für v0.43.0 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+**Spieleranleitung für v0.44.0 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+
+**Menü v0.44.0 · CodexAI:** „Letzten Kontrollpunkt laden“ öffnet den neuesten gültigen Stand des gewählten Modus über Kapitelgrenzen hinweg. „Zurück zum Desktop“ schließt das Spiel aus Haupt- oder Pausenmenü. Im Testmenü kannst du nach Kapitelwahl einen von 40 Kontrollpunkten direkt starten. Neue Fußschatten verankern die Menüfiguren auf dem Vorsprung. [Bilder, Film und Bedienung](docs/menue-kontrollpunkte.md).
 
 **Kapitel-1-Auftakt v0.43.0 · CodexAI:** Raven bestätigt den Auftrag am Monitor, prüft ihre Pistole und bricht auf. Shadepi ist wirklich auf dem Dach zu sehen; beim späteren Eingreifen besitzt er eine eigene Lande- und Aufrichtbewegung. **E / Enter / A**: weiter; **Leertaste / B**: Szene überspringen; **Esc / Start**: Pause. Danach beginnen dieselben spielbaren Jagd-/Rettungswellen. [Bilder und Filme](docs/kapitel1-auftakt.md).
 
@@ -78,7 +80,7 @@ Seit v0.18.0 laufen alle Zwischenszenen im Spiel selbst – mit Kamerafahrten, F
 
 ## Verstecktes Test-/Admin-Menü
 
-Im Haupt- oder Pausenmenü **Strg + Umschalt + F10** drücken oder fünfmal auf die Überschrift klicken. Alle Kapitel freischalten und Kapitel 1–7 direkt starten; zusätzlich unendlich Leben/Energie, One-Hit-K.O., keine Abklingzeiten und ein Fluchttimer-Stopp. Im Testmenü können aktuelle Gegner besiegt oder Figuren geheilt werden. Das erste Jackal-Duell ist weiterhin ein geskriptetes Storyereignis. Test-Kontrollpunkte bleiben von normalen Spielständen getrennt. [Weitere Details](docs/admin-testmodus.md).
+Im Haupt- oder Pausenmenü **Strg + Umschalt + F10** drücken oder fünfmal auf die Überschrift klicken. **Alle Kapitel freischalten** aktivieren, Kapitel und darunter Kontrollpunkt wählen, dann **Kontrollpunkt starten**. 40 Einstiege überspringen auf Wunsch ganze Levelabschnitte; **Test starten** bleibt der Kapitelanfang. Controller: A öffnet/bestätigt, B schließt zuerst die Liste und dann das Testmenü. Zusätzlich unendlich Leben/Energie, One-Hit-K.O., keine Abklingzeiten und ein Fluchttimer-Stopp. Im Testmenü können aktuelle Gegner besiegt oder Figuren geheilt werden. Das erste Jackal-Duell ist weiterhin ein geskriptetes Storyereignis. Test-Kontrollpunkte bleiben von normalen Spielständen getrennt. [Weitere Details](docs/admin-testmodus.md).
 
 ## Illustrierte Helden in v0.12.0
 

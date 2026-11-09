@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.43.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.44.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -10,10 +10,10 @@ Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben�
 
 **[Bebilderte Dokumentation mit Szenenfilmen öffnen →](docs/README.md)** · Ein Klick auf eine Vorschau öffnet den zugehörigen Bericht.
 
-| Neuer Auftakt in Kapitel 1 | Verfolgung und Frachtdrohnen |
+| Menü mit Bodenkontakt und Test-Kontrollpunkten | Verfolgung und Frachtdrohnen |
 | --- | --- |
-| [![Raven übernimmt Chrome Jackals Auftrag am Monitor](docs/previews/kapitel1-auftrag-v043.png)](docs/kapitel1-auftakt.md) | [![Verfolger mit Dachgeschütz in der tatsächlichen Spielansicht](docs/previews/verfolger-schuss-v041.png)](docs/verfolger-animationen.md) |
-| [Auftrag, Ausrüstung, Shadepis Auftritt und Filme](docs/kapitel1-auftakt.md) | [Neun Wagenphasen, Rotoren und Szenenfilm](docs/verfolger-animationen.md) |
+| [![Hauptmenü mit vier Fußschatten und Desktop-Schaltfläche](docs/previews/menue-hauptscreen-v044.png)](docs/menue-kontrollpunkte.md) | [![Verfolger mit Dachgeschütz in der tatsächlichen Spielansicht](docs/previews/verfolger-schuss-v041.png)](docs/verfolger-animationen.md) |
+| [Menüoptionen, 40 Test-Einstiege und Film](docs/menue-kontrollpunkte.md) | [Neun Wagenphasen, Rotoren und Szenenfilm](docs/verfolger-animationen.md) |
 
 | Fahrt zum geheimen Hangar | Abschluss am See |
 | --- | --- |
@@ -54,6 +54,13 @@ Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und
 ## Mitarbeit und verbindliche Konsistenz
 
 Für Menschen und KI: **[Bebilderte Stilbibel des gesamten Spiels](docs/stilbibel/README.md)** · [Alle 23 Figuren mit Einzelkarten](docs/stilbibel/figuren.md) · [Konsistenzregeln](KONSISTENZ.md) · [Mitarbeit](CONTRIBUTING.md) · [Kopierbarer Auftrag und Arbeitsnachweis](docs/vorlagen/konsistenz-auftrag.md). Die Projektregeln in [AGENTS.md](AGENTS.md), der Einstieg für [Claude](CLAUDE.md) und die Pull-Request-Vorlage verweisen auf denselben Standard.
+
+## Neu in v0.44.0 · CodexAI · 9. November 2026
+
+- Vier feste Kontaktschatten verbinden die Menüfiguren mit der nassen Plattform; keine neue Figurenzeichnung oder Mausverschiebung.
+- „Letzten Kontrollpunkt laden“ funktioniert über Kapitelgrenzen hinweg; „Zurück zum Desktop“ steht im Haupt- und Pausenmenü bereit.
+- 40 direkt wählbare Test-Kontrollpunkte im Cheat-Menü, einschließlich Erinnerungen und Tower-Extraktion. Normale und Test-Spielstände bleiben getrennt; Controller-Auswahl und Desktop-Beenden geprüft.
+- 1.001 gezielte Prüfungen plus zehn Exportprüfungen ohne Fehler. [Spielbilder, Film und Bedienung](docs/menue-kontrollpunkte.md) · [Arbeitsnachweis](docs/arbeiten/menue-v044.md).
 
 ## Neu in v0.43.0 · CodexAI · 9. November 2026
 

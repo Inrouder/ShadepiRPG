@@ -90,6 +90,8 @@ func create_hud() -> CanvasLayer:
 
 func _ready() -> void :
 	super._ready()
+	if preload("res://scripts/test_checkpoints.gd").consume(self): return
+	if preload("res://scripts/checkpoint_resume.gd").consume(self): return
 	var admin_chapter: int = Admin.consume_chapter(get_tree(), "res://scenes/campaign.tscn")
 	if admin_chapter >= 3:
 		restore_dressing_state({})
@@ -853,6 +855,7 @@ func autosave() -> void :
 
 func save_game() -> bool:
 	var config: = ConfigFile.new()
+	config.set_value("resume","solo_time",Time.get_unix_time_from_system())
 	config.set_value("campaign", "beat", beat)
 	config.set_value("campaign", "point", point_index)
 	config.set_value("campaign", "echo_started", beat==Beat.ECHO and (echo_ready or memory_legacy_complete))

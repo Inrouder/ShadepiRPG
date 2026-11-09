@@ -1,5 +1,14 @@
 # Versionshinweise
 
+## v0.44.0 – CodexAI: Menü-Bodenkontakt, Desktop und gezielte Kontrollpunktauswahl · 9. November 2026
+
+- Vier kräftige Sohlen-Kontaktschatten mit weichem Auslauf und Dachkantenbegrenzung ersetzen die zu schwache Menüebene. Ravens separaten Maßstab berücksichtigen; Figuren und Architektur bleiben fest, Schatten auch bei reduziertem Bildstil sichtbar.
+- Haupt- und Pausenmenüs erhalten „Zurück zum Desktop“. „Letzten Kontrollpunkt laden“ findet den neuesten gültigen Stand über Kapitelgrenzen anhand präziser optionaler Speicherzeiten; ältere Dateien über Änderungszeit weiter nutzbar. Einzelspieler-/Koop- und normale/Test-Dateiräume erhalten.
+- 40 vorgegebene Test-Kontrollpunkte nach Kapitelwahl: einzelne Jagd-/Hinterhaltabschnitte, Relais, Hangaraufgaben, Erinnerungsknoten, Tower-Kampf/Extraktion/Flucht und See. Vorbedingungen korrekt setzen; kein Überschreiben normaler Spielstände.
+- Controller öffnet, wählt und startet Kontrollpunkte; B schließt zuerst die Liste, dann das Testmenü. Start kehrt aus dem Testfenster zum pausierten Menü zurück. Neuer isolierter Save-/Navigationstest in GitHub-CI.
+- 1.001 gezielte Prüfungen plus zehn Prüfungen des exportierten Pakets ohne Fehler; Controller-Navigation zusätzlich im nativen Renderer geprüft. Tatsächlicher Desktop-Exit getestet. Native Menü-/Testansichten samt Schattenvergleich und Film in der Doku verlinkt.
+- [Bilder, Film und Bedienung](docs/menue-kontrollpunkte.md), [Arbeits-/Exportnachweis](docs/arbeiten/menue-v044.md). PNG-Vorschauen auf Startseite und Doku-Galerie aktualisiert, Versionsnummer und CodexAI-Vermerk fortgeschrieben.
+
 ## v0.43.0 – CodexAI: Sichtbarer Kapitel-1-Auftakt und Shadepis Dachauftritt · 9. November 2026
 
 - Acht neue transparente HQ-Pixelposen: Raven erreicht und bedient den Monitor, übernimmt Jackals Auftrag, kontrolliert die Pistole und verstaut sie. Anschließend geht sie tatsächlich zur Tür.

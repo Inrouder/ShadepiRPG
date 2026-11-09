@@ -1,5 +1,7 @@
 # DEV // TESTLAB – verstecktes Admin-/Testmenü
 
+**Erweiterung v0.44.0 · CodexAI:** 40 gezielt wählbare [Test-Kontrollpunkte mit Bildern und Film](menue-kontrollpunkte.md). Erst alle Kapitel freischalten, dann Kapitel und darunter den Kontrollpunkt wählen, **Kontrollpunkt starten**. Normale Spielstände bleiben getrennt. Controller: A öffnet/bestätigt; B schließt zunächst eine offene Liste und danach das Testfenster; Start führt zurück ins pausierte Menü.
+
 Ab **ShadepiRPG v0.14.0** gibt es ein lokales Testmenü für Entwicklungs- und Leveltests. Es ist bewusst versteckt, aber **nicht passwortgeschützt**.
 
 ## Öffnen und bedienen
@@ -11,6 +13,7 @@ Ab **ShadepiRPG v0.14.0** gibt es ein lokales Testmenü für Entwicklungs- und L
 | Testwerkzeug | Wirkung |
 | --- | --- |
 | Alle Kapitel freischalten | Schaltet die Levelwahl 1–7 im Testmenü frei. |
+| Kontrollpunkt starten | Startet den gewählten Teilabschnitt mit passenden Story-Vorbedingungen, etwa Erinnerung 3 oder Ravens Verteidigung bei der Extraktion. |
 | Test starten | Lädt den Anfang des ausgewählten Kapitels, auch wenn die Handlung diesen Punkt noch nicht erreicht hat. |
 | Unendlich Leben | Schützt die Spielfiguren gegen normalen Schaden und verhindert Schaden in den Fahrzeugsequenzen. Skriptbedingte Storyereignisse bleiben erhalten. |
 | Ein Treffer = K.O. | Reguläre Treffer besiegen ungeschützte Gegner sofort. Die Story-Panzerung und Mindestgesundheit in geskripteten Kämpfen bleiben wirksam. |

@@ -1,8 +1,15 @@
 # Shadepi · Bilder, Filme und Dokumentation
 
-**Stand v0.43.0 · CodexAI · 9. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
+**Stand v0.44.0 · CodexAI · 9. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
 
 Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnahmen, animierte Szenenfilme, Bedienung und technische Hinweise. Die PNG-Vorschauen sind direkt in GitHub sichtbar; die Filme bleiben zusätzlich als verlinkte WebP-Dateien erreichbar.
+
+## Menü und Test-Kontrollpunkte · v0.44.0
+
+| Fußkontakt und Menüaktionen | Direkt zum gewünschten Testabschnitt |
+| --- | --- |
+| [![Hauptmenü mit Fußschatten und Desktop-Schaltfläche](previews/menue-hauptscreen-v044.png)](menue-kontrollpunkte.md) | [![Kapitel- und Kontrollpunktauswahl im Testmenü](previews/test-kontrollpunkte-v044.png)](menue-kontrollpunkte.md) |
+| [Menü, Vergleich und Speicherverhalten](menue-kontrollpunkte.md) | [Film mit direktem Tower-Einstieg](previews/menue-testpunkte-v044.webp) |
 
 ## Kapitel 1: Der Auftrag · v0.43.0
 

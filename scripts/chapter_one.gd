@@ -58,6 +58,8 @@ func _ready() -> void:
 	intro = preload("res://scripts/chapter_one_intro.gd").new()
 	intro.world = self
 	add_child(intro)
+	if preload("res://scripts/test_checkpoints.gd").consume(self): return
+	if preload("res://scripts/checkpoint_resume.gd").consume(self): return
 	if Admin.consume_chapter(get_tree(), "res://scenes/chapter_one.tscn") == 1:
 		new_game(false)
 
@@ -663,6 +665,7 @@ func save_game() -> bool:
 func _write_checkpoint() -> bool:
 	var config := ConfigFile.new()
 	config.load(Admin.checkpoint_path(CHAPTER_SAVE, get_tree()))
+	config.set_value("resume","coop_time" if chapter_coop else "solo_time",Time.get_unix_time_from_system())
 	config.set_value("chapter_one", "coop" if chapter_coop else "solo", checkpoint)
 	config.set_value("arcade", "coop" if chapter_coop else "solo", encounter.section_index if encounter != null else 0)
 	config.set_value("props", "coop" if chapter_coop else "solo", dressing_state())

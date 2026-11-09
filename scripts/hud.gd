@@ -31,6 +31,7 @@ var menu_description: Label
 var mission_title: Label
 var resume_button: Button
 var load_button: Button
+var quit_button: Button
 var restart_button: Button
 var menu_help: Label
 var start_backdrop: Control
@@ -57,6 +58,8 @@ var admin_panel: Panel
 var admin_close_button: Button
 var admin_chapter_picker: OptionButton
 var admin_chapter_button: Button
+var admin_checkpoint_picker: OptionButton
+var admin_checkpoint_button: Button
 var admin_checks: Dictionary = {}
 var admin_title_clicks := 0
 
@@ -206,7 +209,7 @@ func _ready() -> void :
 	menu_description = label_at("IM SCHATTEN DES RABEN\nEine Cyberpunk-Saga", Vector2(15, 60), Vector2(246, 32), menu)
 	mode_button = button_at("Modus · Einzelspieler", 94, _switch_mode)
 	resume_button = button_at("Testszene starten", 124, start_selected)
-	load_button = button_at("Spielstand laden", 154, func(): world.load_game(requested_coop))
+	load_button = button_at("Letzten Kontrollpunkt laden",154,func(): preload("res://scripts/checkpoint_resume.gd").load_latest(world,requested_coop))
 	restart_button = button_at("Testszene neu starten", 184, _start_new)
 	var audio_button := button_at("Ton An/Aus", 214, func(): world.toggle_audio())
 	audio_button.size.x = 116
@@ -217,7 +220,9 @@ func _ready() -> void :
 	display_button.size.x = 116
 	display_button.tooltip_text = "Vollbild, Fenstergröße und Skalierung · F11 / Alt+Enter"
 	visual_button = button_at("Bildstil: " + world.VISUAL_PRESETS[world.visual_quality], 244, func(): world.cycle_visual_quality())
-	menu_help = label_at("Controller · Stick wählen, A bestätigen\nF11 Vollbild · F5 Speichern · F9 Laden", Vector2(16, 279), Vector2(246, 37), menu)
+	quit_button = button_at("Zurück zum Desktop",304,func(): get_tree().quit())
+	quit_button.size.y = 24
+	menu_help = label_at("Stick / Kreuz · A wählen · F11 Vollbild", Vector2(16,333),Vector2(246,12),menu,8)
 	display_panel = preload("res://scripts/display_panel.gd").new()
 	root.add_child(display_panel)
 	display_panel.closed.connect(func(): display_button.grab_focus())
@@ -267,7 +272,7 @@ func apply_menu_skin(theme: String) -> void:
 	UiSkin.style_label(menu_title, c.text, "title", 32)
 	UiSkin.style_label(menu_tagline, c.primary, "title")
 	UiSkin.style_label(menu_description, c.muted)
-	UiSkin.style_label(menu_help, c.muted)
+	UiSkin.style_label(menu_help,c.muted,"title",8)
 	menu_chrome.primary = c.primary
 	menu_chrome.accent = c.accent
 	for button in menu_buttons:
@@ -298,6 +303,7 @@ func _show_menu_shell(title: String) -> void:
 		for node in game_hud_nodes:
 			node.hide()
 	_update_mode_buttons()
+	_update_checkpoint_button()
 	menu.show()
 	resume_button.grab_focus()
 
@@ -321,7 +327,12 @@ func _update_mode_buttons() -> void :
 	var mode: = "Lokal-Koop" if requested_coop else "Einzelspieler"
 	mode_button.text = "Modus · " + mode
 	resume_button.text = "Fortsetzen" if world.started and world.coop == requested_coop else mode + " starten"
-	load_button.disabled = SaveService.read(SaveService.COOP_PATH if requested_coop else SaveService.PATH).is_empty()
+	_update_checkpoint_button()
+
+func _update_checkpoint_button() -> void:
+	load_button.text = "Letzten Kontrollpunkt laden"
+	load_button.tooltip_text = "Zuletzt gespeicherten gültigen Kontrollpunkt für diesen Modus laden – auch aus einem späteren Kapitel."
+	load_button.disabled = preload("res://scripts/checkpoint_resume.gd").latest(get_tree(),requested_coop).is_empty()
 
 func _start_new() -> void :
 	world.set_coop(requested_coop)
@@ -338,6 +349,16 @@ func start_selected() -> void :
 func _input(event: InputEvent) -> void:
 	if world == null or not world.menu_open:
 		return
+	if admin_panel != null and admin_panel.visible:
+		for picker in [admin_chapter_picker,admin_checkpoint_picker]:
+			if picker != null and picker.get_popup().visible: return
+		var cancel := event.is_action_pressed("ui_cancel") or event.is_action_pressed("pause_game")
+		if event is InputEventJoypadButton:
+			cancel = cancel or (event.pressed and event.button_index==JOY_BUTTON_B)
+		if cancel:
+			_close_admin_panel()
+			get_viewport().set_input_as_handled()
+			return
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.ctrl_pressed and event.shift_pressed and event.keycode == KEY_F10:
 			_toggle_admin_panel()
@@ -396,7 +417,7 @@ func _build_admin_panel() -> void:
 		admin_checks[option] = checkbox
 
 	var chapter_heading := Label.new()
-	chapter_heading.text = "KAPITEL-WAHL · separater Test-Spielstand"
+	chapter_heading.text = "KAPITEL / KONTROLLPUNKT · separater Test-Spielstand"
 	chapter_heading.add_theme_font_size_override("font_size", 11)
 	chapter_heading.add_theme_color_override("font_color", Color("79e7f0"))
 	content.add_child(chapter_heading)
@@ -415,11 +436,24 @@ func _build_admin_panel() -> void:
 		[7, "Kapitel 7 · See / Finale"],
 	]:
 		admin_chapter_picker.add_item(str(entry[1]), int(entry[0]))
+	admin_chapter_picker.item_selected.connect(func(_index): _refresh_checkpoint_choices())
 	row.add_child(admin_chapter_picker)
 	admin_chapter_button = Button.new()
 	admin_chapter_button.text = "Test starten"
 	admin_chapter_button.pressed.connect(_admin_start_chapter)
 	row.add_child(admin_chapter_button)
+	var checkpoint_row := HBoxContainer.new()
+	content.add_child(checkpoint_row)
+	admin_checkpoint_picker = OptionButton.new()
+	admin_checkpoint_picker.custom_minimum_size = Vector2(269,29)
+	admin_checkpoint_picker.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	checkpoint_row.add_child(admin_checkpoint_picker)
+	admin_checkpoint_button = Button.new()
+	admin_checkpoint_button.text = "Kontrollpunkt starten"
+	admin_checkpoint_button.tooltip_text = "Kapitel und Kontrollpunkt wählen. Zuerst alle Kapitel freischalten."
+	admin_checkpoint_button.pressed.connect(_admin_start_checkpoint)
+	checkpoint_row.add_child(admin_checkpoint_button)
+	_refresh_checkpoint_choices()
 	_refresh_admin_controls()
 
 	var actions := HBoxContainer.new()
@@ -449,6 +483,9 @@ func _refresh_admin_controls() -> void:
 	var unlocked: bool = world.admin_enabled("unlock_all")
 	admin_chapter_picker.disabled = not unlocked
 	admin_chapter_button.disabled = not unlocked
+	if admin_checkpoint_picker!=null:
+		admin_checkpoint_picker.disabled = not unlocked
+		admin_checkpoint_button.disabled = not unlocked
 
 func _set_admin_checkbox(checked: bool, option: String) -> void:
 	if not world.set_admin_option(option, checked):
@@ -469,11 +506,24 @@ func _toggle_admin_panel() -> void:
 
 func _close_admin_panel() -> void:
 	admin_panel.hide()
+	_update_mode_buttons()
+	_update_checkpoint_button()
 	resume_button.grab_focus()
 
 func _admin_start_chapter() -> void:
 	if world.admin_enabled("unlock_all"):
 		world.admin_jump_to_chapter(admin_chapter_picker.get_selected_id())
+
+func _refresh_checkpoint_choices() -> void:
+	if admin_checkpoint_picker==null: return
+	admin_checkpoint_picker.clear()
+	for entry in preload("res://scripts/test_checkpoints.gd").entries(admin_chapter_picker.get_selected_id()):
+		admin_checkpoint_picker.add_item(entry.label)
+		admin_checkpoint_picker.set_item_metadata(admin_checkpoint_picker.item_count-1,entry.id)
+
+func _admin_start_checkpoint() -> void:
+	if world.admin_enabled("unlock_all") and admin_checkpoint_picker.selected>=0:
+		world.admin_jump_to_checkpoint(str(admin_checkpoint_picker.get_item_metadata(admin_checkpoint_picker.selected)))
 
 func _admin_defeat_enemies() -> void:
 	_close_admin_panel()

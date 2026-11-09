@@ -31,6 +31,8 @@ func create_hud() -> CanvasLayer:
 
 func _ready() -> void :
 	super._ready()
+	if preload("res://scripts/test_checkpoints.gd").consume(self): return
+	if preload("res://scripts/checkpoint_resume.gd").consume(self): return
 	if Admin.consume_chapter(get_tree(), "res://scenes/chapter_two.tscn") == 2:
 		new_game(false)
 	elif ChapterFlow.consume_entry(get_tree(), "res://scenes/chapter_two.tscn") or not load_game():
@@ -554,6 +556,7 @@ func autosave() -> void :
 
 func save_game() -> bool:
 	var config: = ConfigFile.new()
+	config.set_value("resume","solo_time",Time.get_unix_time_from_system())
 	config.set_value("chapter", "section", section)
 	config.set_value("chapter", "relay", relay_index)
 	config.set_value("chapter", "spray_ready",spray_ready)

@@ -6,7 +6,7 @@ func _ready() -> void :
 	mission_title.text = "KAPITEL 1 / ECHOS IN NEON UND SCHATTEN"
 	menu_description.text = "Kapitel 1 · Ravens Jagd\nLokal-Koop beginnt mit Ravens Rückkehr."
 	next_chapter_button = button_at("Kapitel 2 öffnen", 274, func(): get_tree().change_scene_to_file("res://scenes/chapter_two.tscn"))
-	menu_help.position.y = 302
+	menu_help.position.y = 333
 	menu_help.text = "Stick / Kreuz und A · F11 Vollbild"
 	restart_button.text = "Kapitel 1 neu starten"
 func show_menu(title: String = "KAPITEL 1") -> void :
@@ -21,8 +21,8 @@ func _update_mode_buttons() -> void :
 	var mode: = "Lokal-Koop" if requested_coop else "Einzelspieler"
 	mode_button.text = "Modus · " + mode
 	resume_button.text = "Fortsetzen" if world.started and world.chapter_coop == requested_coop else "Kapitel 1 starten"
-	load_button.text = "Kontrollpunkt laden"
-	load_button.disabled = world.saved_checkpoint(requested_coop) < 0
+	load_button.text = "Letzten Kontrollpunkt laden"
+	_update_checkpoint_button()
 	var later: int = world.ChapterFlow.checkpoint("user://shadepi-chapter-two.cfg", "chapter", "section", range(6))
 	next_chapter_button.visible = world.admin_enabled("unlock_all") or world.saved_checkpoint(requested_coop) == world.Phase.COMPLETE or later >= 0
 	next_chapter_button.text = "Kapitel 2 fortsetzen" if later >= 0 else "Kapitel 2 starten"
