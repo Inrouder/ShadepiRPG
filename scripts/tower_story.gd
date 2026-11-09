@@ -25,8 +25,8 @@ static func opening(w) -> void:
 	cs.face(k,w.raven.position)
 	await cs.walk(w.raven,RAVEN_APPROACH[0],78)
 	if not cs.alive(ticket): return
-	# v0.47.0 · ClaudeHelper: Kenzō erwartet niemanden (Roman: er erschrickt sichtlich);
-	# er weiß nur, dass Jackal nicht mehr meldet.
+	# v0.47.1 · ClaudeHelper: Kenzō erwartet niemanden (Roman: er erschrickt sichtlich).
+	# Er ahnte nur, dass jemand in seinen Daten war, und ließ mögliche Verstecke stürmen.
 	await cs.say("KENZŌ MORIYAMA","Mein Gleiter landet, ohne dass ich ihn gerufen habe … Raven?")
 	if not cs.alive(ticket): return
 	await cs.walk(w.raven,RAVEN_APPROACH[1],72)
@@ -34,7 +34,7 @@ static func opening(w) -> void:
 	cs.face(w.raven,k.position)
 	await cs.say("RAVEN","Lange nicht gesehen.")
 	if not cs.alive(ticket): return
-	await cs.say("KENZŌ MORIYAMA","Jackal meldet sich nicht mehr. Seine Leute auch nicht. Und jetzt kommst du freiwillig zu mir zurück. Wie rührend.")
+	await cs.say("KENZŌ MORIYAMA","Jemand wühlt in meinen Projektdaten, und ich lasse jedes Loch stürmen, in dem du stecken könntest … Und jetzt kommst du freiwillig zu mir zurück. Wie rührend.")
 	if not cs.alive(ticket): return
 	await cs.walk(w.raven,RAVEN_APPROACH[2],64)
 	if not cs.alive(ticket): return
