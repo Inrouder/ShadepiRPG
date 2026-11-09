@@ -1,4 +1,6 @@
-# Aktive Gameplay-Helden · v0.45.0 · CodexAI
+# Verworfene Gameplay-Variante · v0.45.0 · CodexAI
+
+**Seit v0.46.1 · CodexAI auf ausdrücklichen Nutzerwunsch nicht mehr aktiv.** Die Originale `assets/sprites/heroes/raven.png` und `shadepi.png` sind wieder Standard. Diese Dateien bleiben nur zur Nachvollziehbarkeit erhalten; keine automatische Wiederaktivierung.
 
 Die neuen PNGs sind unveränderte Bildwerkzeugquellen vom 9. November 2026. Raven: **1247×1261**, Shadepi: **1263×1245**. Pro Figur 64 Posen: acht Richtungen mit Bereitschaft, vier Gehphasen, Ausholen, Auslösen und Trefferreaktion. Eigene Charge-/Kick-/Handblitzbilder bleiben zusätzlich eingebunden.
 

@@ -1,8 +1,14 @@
 # Shadepi · Bilder, Filme und Dokumentation
 
-**Stand v0.46.0 · CodexAI · 9. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
+**Stand v0.46.1 · CodexAI · 9. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
 
 Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnahmen, animierte Szenenfilme, Bedienung und technische Hinweise. Die PNG-Vorschauen sind direkt in GitHub sichtbar; die Filme bleiben zusätzlich als verlinkte WebP-Dateien erreichbar.
+
+## Originalhelden wieder aktiv · v0.46.1 · CodexAI
+
+[![Originale Raven-/Shadepi-Sprites im aktuellen Spielrenderer](previews/original-helden-v0461.png)](original-helden.md)
+
+[Rückkehr zu den Originalen](original-helden.md) · [Lauf-/Richtungsfilm](previews/original-helden-v0461.webp). Die übrigen Korrekturen und Bluteffekte bleiben erhalten. Ältere Aufnahmen darunter zeigen ihren damaligen Stand.
 
 ## Blutspritzer und Lachen · v0.46.0 · CodexAI
 
@@ -13,9 +19,9 @@ Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnah
 
 ## Fehlerbericht und Heldenqualität · v0.45.0 · CodexAI
 
-| Neue Standardfiguren, Originale gesichert | Figurenreaktionen und korrigierte Szenen |
+| Originalfiguren wieder aktiv · v0.46.1 | Figurenreaktionen und korrigierte Szenen |
 | --- | --- |
-| [![Neue Helden mit registrierten Sohlenkontakten](previews/bericht-heroes-new-v045.png)](fehlerbericht-v045.md) | [![Chrome Jackal nach seinem letzten Treffer](previews/bericht-jackal-ground-v045.png)](fehlerbericht-v045.md) |
+| [![Originalhelden in der aktuellen Spielansicht](previews/original-helden-v0461.png)](original-helden.md) | [![Chrome Jackal nach seinem letzten Treffer](previews/bericht-jackal-ground-v045.png)](fehlerbericht-v045.md) |
 | [Zwölf Berichtspunkte, Größen und Vorher/Nachher](fehlerbericht-v045.md) | [Szenenfilm](previews/fehlerbericht-szenen-v045.webp) · [Prüf-/Exportnachweis](arbeiten/fehlerbericht-v045.md) |
 
 ## Menü und Test-Kontrollpunkte · v0.44.1

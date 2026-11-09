@@ -1,7 +1,7 @@
 {
-  "version": "0.45.0",
+  "version": "0.46.1",
   "author": "CodexAI",
-  "source_commit": "810cce8677e76668c6d500d09ac2e66bf4bd8902",
+  "source_commit": "37fa48e7a2183711eef34eb0bed98b0fb8854b68",
   "note": "Aktive Spielgrafiken als Dokumentationsreferenzen. Kein neuer Figurenentwurf. Koordinaten werden beim Rendern aus den aktiven Metadaten gelesen.",
   "figures": [
     {

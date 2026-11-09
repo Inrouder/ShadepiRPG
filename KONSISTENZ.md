@@ -1,6 +1,6 @@
 # Verbindliche Konsistenzvorlage für ShadepiRPG
 
-**Stand v0.46.0 · CodexAI · 9. November 2026; eingeführt mit v0.32.1.** Gilt für das gesamte Spiel und alle Mitwirkenden, ob Mensch oder KI. Vor Änderungen zusammen mit [AGENTS.md](AGENTS.md) lesen und die [Arbeitsvorlage](docs/vorlagen/konsistenz-auftrag.md) verwenden. Eine neuere ausdrückliche Nutzervorgabe hat Vorrang; bestätigte Änderungen anschließend hier und in den betroffenen Referenzen nachführen.
+**Stand v0.46.1 · CodexAI · 9. November 2026; eingeführt mit v0.32.1.** Gilt für das gesamte Spiel und alle Mitwirkenden, ob Mensch oder KI. Vor Änderungen zusammen mit [AGENTS.md](AGENTS.md) lesen und die [Arbeitsvorlage](docs/vorlagen/konsistenz-auftrag.md) verwenden. Eine neuere ausdrückliche Nutzervorgabe hat Vorrang; bestätigte Änderungen anschließend hier und in den betroffenen Referenzen nachführen.
 
 ## Bebilderter Einstieg für das gesamte Spiel
 
@@ -77,15 +77,17 @@ Ravens frühere 168-cm-Angabe ist überholt. Für Shadepi hier keine unbestätig
 - Kamera, Perspektive, Lichtseite und Detaildichte an die aktive Szene anpassen. Kontaktschatten, Verdeckung und Bodenbezug zusammen mit dem Sprite prüfen.
 - Farbwirkung aus der jeweiligen Referenz ableiten: Cyan/Magenta in der Stadt, warme Ordens-/Wohnräume, eigene virtuelle Farbwelt. Neue exakte Farbwerte nicht nachträglich als angebliche Originalpalette ausgeben.
 
-### Technische Ausgangswerte des Helden-Renderers · v0.45.0 · CodexAI
+### Technische Ausgangswerte des Helden-Renderers · v0.46.1 · CodexAI
 
-| Eigenschaft | Aktueller HQ-Heldenvertrag |
+Auf ausdrücklichen Nutzerwunsch wieder die Originale. Die v0.45.0-Variante unter `heroes/gameplay` ist verworfen und darf nicht automatisch erneut aktiviert werden.
+
+| Eigenschaft | Aktueller Original-Heldenvertrag |
 | --- | --- |
-| Aktive Quellen | `assets/sprites/heroes/gameplay/`: Raven 1247×1261, Shadepi 1263×1245; je 64 Posen. |
-| Regionen | `poses.json` enthält vollständige Ausschnitte, Sohlenanker, Maßstab und Mündung je Pose. Ungleichmäßige Abstände: kein blindes 8×8-Zuschneiden. |
-| Körpermaß | Bereitschaft und vier Gehphasen je Richtung rund 58 sichtbare Weltpixel. Keine allgemeine Umrechnung in Zentimeter. |
-| Darstellung | Pro Actor ein `AtlasTexture`, gemeinsam für Körper und Schatten; Nearest. Kick, Charge und Handblitze behalten bestehende Sonderbilder. |
-| Originale | Alte 1024×5120-Blätter unverändert; zusätzlich unter `backup-v0441` gesichert. NPC-/Custom-Atlanten behalten ihren eigenen Vertrag. |
+| Aktive Quellen | `assets/sprites/heroes/raven.png` und `shadepi.png`, unveränderte 1024×5120-Originale. |
+| Raster | Acht Spalten, 32 Reihen: acht Richtungen, Bereitschaft/Gehen/Angriff/Treffer, acht Phasen pro Reihe. |
+| Maßstab / Fußkontakt | Maßstab 0,5; Quell-Fußbasis Y=152, normaler Spriteversatz Y=-36. Sichtbare frontale Höhe ungefähr 57–59 Weltpixel, keine Zentimeterumrechnung. |
+| Darstellung | Lineare Verkleinerung wie vor v0.45.0, übereinstimmende Körper-/Schattenframes. Bestehende Sonderangriffe und Hand-/Mündungsanker erhalten. |
+| Sicherungen | Bytegleiche Kopien unter `backup-v0441`; Custom-Ersetzungen behalten ihren Vorrang. |
 | Spielbild | Gameplay-Basis 640×360; Menü eigener Renderer in Fensterauflösung. |
 
 Sonderatlanten für Sitzen, Liegen, Gegner oder Menü folgen ihren eigenen Metadaten. **Keinen universellen Maßstabsfaktor auf alle Grafiken anwenden.** Bei Schlafposen die Körperlänge statt der geringen liegenden Höhe vergleichen; bei Sitzposen Beinwinkel und Stuhlhöhe einbeziehen. Ein Atlaswechsel muss Körpergröße, Fußbasis und Schatten erhalten. Benutzerdefinierte Sprite-Ersetzungen gemäß `SpriteAssets.resolve()` respektieren.

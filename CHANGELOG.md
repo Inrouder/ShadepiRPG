@@ -1,5 +1,12 @@
 # Versionshinweise
 
+## v0.46.1 – CodexAI: Original-Sprites für Raven und Shadepi wiederhergestellt · 9. November 2026
+
+- Auf ausdrücklichen Nutzerwunsch automatische Ersetzung der beiden unveränderten Original-Heldenblätter durch `heroes/gameplay` entfernt. Wieder acht Richtungen und acht Phasen je Reihe, Maßstab 0,5 und ursprüngliche lineare Verkleinerung. Nach Sonderposen auch die normale Abtastung zurücksetzen; Heiligtum-Kontaktposen wieder daran angleichen.
+- Übrige Fehlerkorrekturen, neue Szenenreaktionen, Sonderangriffe und Bluteffekte erhalten. Keine Änderung der Spielstände oder Custom-Priorität. Verworfene Variante als historische Quelle gekennzeichnet.
+- Beide Figurenkarten und vollständige Übersicht mit 23 Figuren erneuert, aktive Konsistenzregeln und PNG-Vorschauen korrigiert. Keine neue Grafikgenerierung. 1.210 gezielte Prüfungen ohne Fehler; Originale und Export zusätzlich nativ geprüft.
+- [Aktuelle Originalhelden und Gehfilm](docs/original-helden.md), [Arbeits-/Exportnachweis](docs/arbeiten/original-helden-v0461.md).
+
 ## v0.46.0 – CodexAI: Pixel-Blutspritzer und Bodenlachen bei Gegnertreffern · 9. November 2026
 
 - Neue transparente HQ-Pixelquelle mit vier gerichteten Spritzphasen und vier Bodenformen. Blut beginnt am getroffenen Körper; Tropfen fallen auf den Boden, bei Tod wächst eine größere Lache mit dunkler gesetzter Darstellung. Kurz dem tatsächlichen Leichenrutschen folgen, danach ortsfest unter den Figuren bleiben.

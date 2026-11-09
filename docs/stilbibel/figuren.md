@@ -1,5 +1,7 @@
 # Figurenkatalog · v0.32.2 · CodexAI
 
+**Aktueller Stand v0.46.1 · CodexAI:** Originalhelden wieder aktiv; beide Karten und die vollständige Übersicht zeigen wieder diese Quellen. [Spielansicht und Rückkehr](../original-helden.md). Der folgende v0.45.0-Eintrag dokumentiert die inzwischen verworfene Zwischenfassung.
+
 **Aktualisierung v0.45.0 · CodexAI:** Heldenkarten und vollständige 23-Figuren-Übersicht aus den aktiven Gameplay-Quellen erneuert. [Neue Quellen und Anker](../../assets/sprites/heroes/gameplay/README.md), [Originale als Backup](../../assets/sprites/heroes/backup-v0441/README.md), [Spielvergleich](../fehlerbericht-v045.md).
 
 **Aktualisierung v0.39.0 · CodexAI:** [Plattformfahrt und Hangarentdeckung](../hangar-entdeckung.md), vier eigene Shadepi-Schalterposen, sechs Entriegelungsbilder und texturierter Schacht. Fahrt mit den tatsächlichen Figuren; danach identischer Aerodyne in normaler Erkundung und Film. [Aktive Quellen und Kontaktanker](../../assets/story/hangar-discovery/README.md).

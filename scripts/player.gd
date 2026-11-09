@@ -289,6 +289,9 @@ func animate(state: String, delta: float) -> void:
 	if normal_texture == null:
 		normal_texture = hero_sheet if hero_sheet!=null else visual.texture
 	if special_pose:
+		var normal_filter := CanvasItem.TEXTURE_FILTER_LINEAR if SpriteAssets.display_scale(normal_texture)<1.0 else CanvasItem.TEXTURE_FILTER_NEAREST
+		visual.texture_filter=normal_filter
+		cast_shadow.texture_filter=normal_filter
 		visual.texture = normal_texture
 		visual.hframes = 8
 		visual.vframes = directions * 4

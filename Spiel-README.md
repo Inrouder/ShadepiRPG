@@ -1,6 +1,8 @@
 # Shadepi · Echos in Neon
 
-**Spieleranleitung für v0.46.0 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+**Spieleranleitung für v0.46.1 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+
+**Originalhelden v0.46.1 · CodexAI:** Raven und Shadepi verwenden wieder ihre ursprünglichen Sprites mit achtphasigen Laufanimationen. Die neue v0.45.0-Figurenvariante ist zurückgenommen. Fehlerkorrekturen, Sonderangriffe und Bluteffekte bleiben erhalten. [Aktuelles Spielbild und Film](docs/original-helden.md).
 
 **Kampfeffekte v0.46.0 · CodexAI:** Echte Treffer an menschlichen Gegnern erzeugen gerichtete Pixel-Blutspritzer und fallende Tropfen. Nach dem Tod wächst eine dunkle Lache am Boden. Blockierte Treffer und technische Gegner behalten ihre passenden Effekte. Pause hält die Effekte an; der reduzierte Bildstil verringert die Menge. [Bilder und Film](docs/bluteffekte.md).
 

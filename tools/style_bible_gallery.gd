@@ -45,12 +45,6 @@ func meta_pose(path: String, data: Dictionary, title: String) -> Dictionary:
 	return pose(path, data.region, data.anchor, float(data.scale), title)
 
 func normal_pose(id: String, frame: int, title: String, hero: bool) -> Dictionary:
-	if hero:
-		var source="res://assets/sprites/heroes/gameplay/"+id+".png"
-		var sheet: Texture2D=load(source)
-		var old_row:=0 if title=="Vorne" else 1 if title=="Seite" else 3 if title=="Hinten" else 0
-		var d: Dictionary=preload("res://scripts/hero_art.gd").data(sheet,old_row,2 if title=="Gehphase" else 0)
-		return pose(source,d.region,d.anchor,d.scale,title,false)
 	return pose(NORMAL + ("heroes/" if hero else "npcs/") + id + ".png", [frame % 8 * 128, int(frame / 8) * 160, 128, 160], [64,152], 0.5, title, true)
 
 func figure_poses(entry: Dictionary) -> Array:
@@ -248,7 +242,6 @@ func run() -> void:
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUT))
 	if part=="heroes":
 		only_heroes=true
-		catalog.version="0.45.0"
 	if part in ["all","figures","heroes"]: await figures()
 	if part in ["all","worlds"]: await worlds()
 	if part in ["all","props"]: await props()

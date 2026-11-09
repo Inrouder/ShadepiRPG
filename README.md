@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.46.0 · CodexAI · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.46.1 · CodexAI · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -10,15 +10,15 @@ Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben�
 
 **[Bebilderte Dokumentation mit Szenenfilmen öffnen →](docs/README.md)** · Ein Klick auf eine Vorschau öffnet den zugehörigen Bericht.
 
+| Originalhelden wieder aktiv · v0.46.1 · CodexAI |
+| --- |
+| [![Original-Raven und -Shadepi im aktuellen Spielrenderer](docs/previews/original-helden-v0461.png)](docs/original-helden.md) |
+| [Rückkehr zu den Originalen](docs/original-helden.md) · [Geh-/Richtungsfilm](docs/previews/original-helden-v0461.webp) |
+
 | Blutspritzer · v0.46.0 · CodexAI | Bodenflecken und Lachen |
 | --- | --- |
 | [![Gerichteter Blut-Effekt bei tatsächlichem Gegnertreffer](docs/previews/blut-hit-v046.png)](docs/bluteffekte.md) | [![Blutlache unter besiegtem Gegner](docs/previews/blut-pool-v046.png)](docs/bluteffekte.md) |
 | [Verhalten und Bildvergleich](docs/bluteffekte.md) | [Treffer-/Bodenfilm](docs/previews/blut-v046.webp) |
-
-| Neue Gameplay-Helden · v0.45.0 · CodexAI | Sichtbare Fall- und Todesposen |
-| --- | --- |
-| [![Neue Raven- und Shadepi-Sprites im tatsächlichen Spiel](docs/previews/bericht-heroes-new-v045.png)](docs/fehlerbericht-v045.md) | [![Raven liegt nach ihrem Zusammenbruch](docs/previews/bericht-raven-ground-v045.png)](docs/fehlerbericht-v045.md) |
-| [Alle zwölf Korrekturen und Originalvergleich](docs/fehlerbericht-v045.md) | [Szenenfilm öffnen](docs/previews/fehlerbericht-szenen-v045.webp) |
 
 | Menü mit Bodenkontakt und Test-Kontrollpunkten | Verfolgung und Frachtdrohnen |
 | --- | --- |

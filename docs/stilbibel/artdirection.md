@@ -39,11 +39,11 @@ Das sind Rollen der vorhandenen Bildfarben, keine neu behauptete exakte Original
 
 ![Figuren und Gegenstände im gleichen Weltmaßstab](bilder/requisiten-2.png)
 
-Das Gameplay nutzt 640 × 360 als Basis; das Menü rendert eine eigene größere Komposition. **v0.45.0 · CodexAI:** Normale Helden verwenden die [neuen Gameplay-Quellen](../../assets/sprites/heroes/gameplay/README.md) mit einzeln registrierten vollständigen Regionen statt gleichmäßiger Zellen. Bereitschaft und Gehen haben rund 58 Weltpixel sichtbare Höhe. Die alten 128×160-Zellen bleiben für unveränderte NPC-/Custom-Quellen und die gesicherten Heldenoriginale relevant. Raven ist verbindlich **160 cm** groß; daraus folgt kein allgemeiner Pixel-pro-Zentimeter-Faktor.
+Das Gameplay nutzt 640×360 als Basis; das Menü rendert eine eigene größere Komposition. **v0.46.1 · CodexAI:** Auf ausdrücklichen Nutzerwunsch verwenden Raven und Shadepi wieder die unveränderten Originale unter `assets/sprites/heroes/`: 1024×5120, 128×160-Zellen, Maßstab 0,5, acht Gehphasen je Richtung. Sichtbare frontale Höhe ungefähr 57–59 Weltpixel. Die v0.45.0-Gameplay-Variante ist verworfen; nicht erneut automatisch aktivieren. [Aktuelle Spielansicht](../original-helden.md). Raven ist verbindlich **160 cm** groß; daraus folgt kein allgemeiner Pixel-pro-Zentimeter-Faktor.
 
 Andere Figuren und Objekte haben eigene Maßstäbe. Krieger, Zivilpersonen und Minotaurus verwenden ihre JSON-Anker; Requisiten verwenden `PropArt.SIZES`. Sitzen und Liegen werden nach Körperlänge und Kontaktflächen kalibriert. Höhe eines Kastens, Länge eines Autos und Größe einer Person mit derselben Weltkamera vergleichen. Transparenter Zellrand ist kein Körpermaß.
 
-Neue Gameplay-Helden und die angeglichenen Heiligtum-Kontaktposen nutzen Nearest; ältere NPC-/Sonderquellen behalten ihre eigene Abtastung. Eine neue Pose muss zur tatsächlich benachbarten Figur passen. Eine globale Umstellung aller Filter folgt daraus nicht. Keine scharfen Freistellshader über einen grauen oder weißen Hintergrund legen, um mangelhafte Transparenz zu verdecken.
+Originalhelden und angeglichene Heiligtum-Kontaktposen nutzen wieder lineare Verkleinerung; NPC-/Sonderquellen behalten ihre eigene Abtastung. Eine neue Pose muss zur tatsächlich benachbarten Figur passen. Eine globale Umstellung aller Filter folgt daraus nicht. Keine scharfen Freistellshader über einen grauen oder weißen Hintergrund legen, um mangelhafte Transparenz zu verdecken.
 
 ## Bewegung, Inszenierung und Wirkung
 

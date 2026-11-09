@@ -22,7 +22,7 @@ func _ready() -> void:
 	sprite = Sprite2D.new()
 	# The regular heroes use the same sampling when reduced below native size.
 	# This source has genuine transparency; do not force edge pixels opaque.
-	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	add_child(sprite)
 	flow = Sprite2D.new()
 	flow.texture = FLOW

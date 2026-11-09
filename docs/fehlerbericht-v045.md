@@ -1,5 +1,7 @@
 # Fehlerbericht: Gameplay-Figuren und Szenen
 
+**Hinweis zum aktuellen Stand v0.46.1 · CodexAI:** Die hier gezeigte neue Heldenvariante wurde auf Nutzerwunsch zurückgenommen. [Raven und Shadepi verwenden wieder ihre Original-Sprites](original-helden.md). Die übrigen Fehlerkorrekturen bleiben erhalten. Dieser Bericht und seine Bilder dokumentieren den damaligen Stand v0.45.0.
+
 **v0.45.0 · CodexAI · 9. November 2026.** [Bildgalerie](README.md) · [Arbeits-/Prüfnachweis](arbeiten/fehlerbericht-v045.md) · [Stilbibel](stilbibel/README.md).
 
 Die Punkte aus dem Nutzerbericht sind umgesetzt. Der Schwerpunkt liegt auf stabilen Bildgrößen und Kontaktpunkten sowie nachvollziehbaren Szenenübergängen.

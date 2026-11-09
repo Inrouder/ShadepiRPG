@@ -26,8 +26,6 @@ static func resolve(original: Texture2D) -> Texture2D:
 		if valid_sheet(replacement):
 			return replacement
 		push_warning("Eigene Figur hat falsche Maße (384 × 1024, 384 × 2048 oder 1024 × 5120 erwartet): " + candidate)
-	if original.resource_path=="res://assets/sprites/heroes/raven.png":return load("res://assets/sprites/heroes/gameplay/raven.png")
-	if original.resource_path=="res://assets/sprites/heroes/shadepi.png":return load("res://assets/sprites/heroes/gameplay/shadepi.png")
 	return original
 
 static func is_gameplay(texture: Texture2D) -> bool:

@@ -1,6 +1,5 @@
 extends SceneTree
 ## v0.45.0 · CodexAI. Actual frame registration and reported sequence regressions.
-const Hero=preload("res://scripts/hero_art.gd")
 var checks:=0
 var failures:=0
 func _initialize():run.call_deferred()
@@ -33,19 +32,16 @@ func run():
 	w.set_process(false)
 	for actor in [w.player,w.raven]:
 		actor.set_physics_process(false)
-		check(Hero.supports(actor.visual.texture),"gameplay hero uses the new detailed source")
+		check(actor.hero_frames.is_empty() and actor.visual.texture.resource_path in ["res://assets/sprites/heroes/raven.png","res://assets/sprites/heroes/shadepi.png"],"gameplay hero uses the user-requested original source")
 		for direction in [Vector2.DOWN,Vector2.UP,Vector2.RIGHT,Vector2.LEFT,Vector2(-1,-1),Vector2(1,-1),Vector2(-1,1),Vector2(1,1)]:
 			actor.facing=direction
 			actor.animate("idle",0)
 			actor.reset_visual_pose()
-			for i in 4:
-				actor.animate("walk",0.15)
-				var row: int=Hero.ROWS.find(int(actor.hero_frame/8))
-				var d: Dictionary=actor.hero_frames[int(actor.hero_frame/8)][actor.hero_frame%8]
-				check(absf(d.height*actor.visual.scale.y-58)<0.05,"walking body height remains stable for every facing/frame")
-				var cell: Vector2=actor.visual.texture.get_size()
-				check(absf(actor.visual.position.y+(d.anchor[1]-cell.y*0.5)*actor.visual.scale.y)<0.05,"every walking foot remains at its world anchor")
-				check(actor.cast_shadow.frame==actor.visual.frame and actor.visual.vframes==1,"shadow and real atlas frame stay synchronized")
+			for i in 8:
+				actor.animate("walk",1.0/9.0)
+				check(actor.visual.scale==Vector2.ONE*0.5,"original scale remains stable through every walk direction and phase")
+				check(absf(actor.visual.position.y+(152.0-80.0)*actor.visual.scale.y)<0.05,"original foot baseline stays anchored")
+				check(actor.cast_shadow.frame==actor.visual.frame and actor.visual.hframes==8 and actor.visual.vframes==32,"original eight-phase atlas and shadow stay synchronized")
 	for kind in ["raven","shadepi"]:
 		check(FileAccess.get_sha256("res://assets/sprites/heroes/"+kind+".png")==FileAccess.get_sha256("res://assets/sprites/heroes/backup-v0441/"+kind+".png"),"old original has an exact backup for "+kind)
 	w._enter_checkpoint(w.Phase.RESCUE)
