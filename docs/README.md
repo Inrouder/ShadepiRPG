@@ -1,8 +1,15 @@
 # Shadepi · Bilder, Filme und Dokumentation
 
-**Stand v0.45.0 · CodexAI · 9. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
+**Stand v0.46.0 · CodexAI · 9. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
 
 Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnahmen, animierte Szenenfilme, Bedienung und technische Hinweise. Die PNG-Vorschauen sind direkt in GitHub sichtbar; die Filme bleiben zusätzlich als verlinkte WebP-Dateien erreichbar.
+
+## Blutspritzer und Lachen · v0.46.0 · CodexAI
+
+| Gerichteter Gegnertreffer | Bodenlage unter der Figur |
+| --- | --- |
+| [![Spritzer auf Körperhöhe](previews/blut-hit-v046.png)](bluteffekte.md) | [![Lache mit festem Bodenkontakt](previews/blut-pool-v046.png)](bluteffekte.md) |
+| [Bilder, Regeln und Pixelquelle](bluteffekte.md) | [Film](previews/blut-v046.webp) · [Prüfnachweis](arbeiten/blut-v046.md) |
 
 ## Fehlerbericht und Heldenqualität · v0.45.0 · CodexAI
 

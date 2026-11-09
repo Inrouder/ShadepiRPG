@@ -1,5 +1,13 @@
 # Versionshinweise
 
+## v0.46.0 – CodexAI: Pixel-Blutspritzer und Bodenlachen bei Gegnertreffern · 9. November 2026
+
+- Neue transparente HQ-Pixelquelle mit vier gerichteten Spritzphasen und vier Bodenformen. Blut beginnt am getroffenen Körper; Tropfen fallen auf den Boden, bei Tod wächst eine größere Lache mit dunkler gesetzter Darstellung. Kurz dem tatsächlichen Leichenrutschen folgen, danach ortsfest unter den Figuren bleiben.
+- Nur echter positiver Schaden an menschlichen Gegnern einschließlich Cyberware-Trägern. Kein Blut bei Block, Nullschaden oder erneutem Treffen eines Toten; Datenwesen, Erinnerungsbots und Mechs behalten ihre technische Effektfamilie. Vorhandene Trefferwerte, Klänge, Eingaben und Storyfolgen erhalten.
+- Eigene Boden-/Luftlagen, begrenzte Mengen und Zusammenführen naher Flecken. 90 Sekunden Lebenszeit mit Ausblenden; Reduziert verringert die Menge. Pause/Terminal frieren die Uhren ein; Laden, Neustart und Abschnittswechsel leeren die Effekte ohne neue Spielstandfelder.
+- 992 gezielte Prüfungen und zwölf zusätzliche Prüfungen des exportierten Pakets ohne Fehler. Native Treffer-/Bodenaufnahmen und Film; neue Blut-Regression in GitHub-CI. Versionsfelder und PNG-Vorschauen aktualisiert.
+- [Bilder, Regeln und Film](docs/bluteffekte.md), [Quelle/Anker](assets/fx/blood/README.md), [Arbeits-/Exportnachweis](docs/arbeiten/blut-v046.md).
+
 ## v0.45.0 – CodexAI: Heldenqualität und zwölf Fehlerpunkte aus dem Spielbericht · 9. November 2026
 
 - Zwei neue Gameplay-Heldenbanken mit je 64 detaillierten Pixelposen, acht Richtungen und vier echten Gehphasen. Tatsächliche Regionen, Sohlen- und Pistolenkontakte pro Pose registriert; stabile Körperhöhe und Abtastung. Originale bytegleich erhalten und zusätzlich gesichert; bestehende Sonderangriffe und Custom-Ersetzungen weiter nutzbar.

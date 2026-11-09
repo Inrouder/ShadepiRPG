@@ -58,6 +58,12 @@ Die Tafel zeigt Quellframes zur Form-/Farbreferenz, nicht jede Animation oder ih
 
 Pause, Terminals und Qualitätsstufen nach dem jeweiligen vorhandenen Renderer erhalten. Keine Effekte endlos spawnen oder mit Zufall in der Spiellogik koppeln. Gegner, Gefahrensignale, Kollisionskanten und Text bleiben lesbar. Aufhellungen und Lichtströme nach Abbruch/Laden zurücksetzen.
 
+## Physische Gegnertreffer · v0.46.0 · CodexAI
+
+![Neue Blutlache bei tatsächlicher Spielkamera](../previews/blut-pool-v046.png)
+
+[Blutspritzer und Bodenfilm](../bluteffekte.md): echte positive Treffer an menschlichen `Enemy`-Gegnern einschließlich Cyberware-Trägern. Neue transparente Pixelquelle unter `assets/fx/blood/atlas.png`, tatsächliche 1774×887-Regionen und Körper-/Bodenanker in `blood_fx.gd`. Vier kurze Spritzphasen auf Körperhöhe, fallende Tropfen, getrennte ortsfeste Bodenlage unter den Figuren. Burgundschatten und zurückhaltende nasse Reflexpixel. Keine Blut-Effekte auf digitale Wächter, Erinnerungsbots, Mechs oder Kulissen übertragen. Pause/Terminal, Mengenbegrenzung, reduzierter Bildstil und vollständiges Leeren beim Laden erhalten. Figurenkarten unverändert; kein neues Kostüm oder Schadensmodell.
+
 ## Akustische Konsistenz
 
 | Datei / Familie | Bestehende Zuordnung |

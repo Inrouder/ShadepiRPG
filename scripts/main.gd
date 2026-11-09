@@ -24,6 +24,7 @@ var gamepads: = GamepadBindings.new()
 const COOP_REACH: = Vector2(448, 166)
 var ui
 var effects
+var blood_effects
 var camera: Camera2D
 var actors: Node2D
 var gate_body: StaticBody2D
@@ -372,6 +373,9 @@ func _build_world() -> void :
 	effects.world = self
 	effects.ambient_steam_enabled = false
 	add_child(effects)
+	blood_effects = preload("res://scripts/blood_fx.gd").new()
+	blood_effects.world = self
+	add_child(blood_effects)
 	camera = Camera2D.new()
 	camera.position = player.position
 	camera.limit_left = 0
@@ -431,6 +435,7 @@ func add_painted_masks(key: String, offset: Vector2 = Vector2.ZERO, size: Vector
 		painted_masks.append(mask)
 
 func set_dressing(layout: String) -> void :
+	if is_instance_valid(blood_effects):blood_effects.clear()
 	for device in terminal_devices:
 		if is_instance_valid(device): device.finish_access("idle")
 	terminal_devices.clear()
@@ -457,6 +462,7 @@ func dressing_state() -> Dictionary:
 	return prop_states.duplicate(true)
 
 func restore_dressing_state(value: Variant) -> void :
+	if is_instance_valid(blood_effects):blood_effects.clear()
 	prop_states.clear()
 	if value is Dictionary:
 		for layout: String in Dressing.LAYOUTS:
@@ -1004,6 +1010,8 @@ func impact(point: Vector2, foe: bool) -> void :
 
 ## One place for hit feedback: freeze frame, camera punch, sparks, combo count.
 func register_hit(target: Node2D, amount: int, direction: Vector2, killed: bool) -> void:
+	if amount > 0 and target is EnemyScript and is_instance_valid(blood_effects):
+		blood_effects.hit(target,direction,amount,killed)
 	var heavy: = amount >= 30
 	combo_hits += 1
 	best_combo = maxi(best_combo, combo_hits)
@@ -1075,6 +1083,7 @@ func enemy_defeated(_foe: PixelActor = null) -> void :
 	autosave()
 
 func player_defeated() -> void :
+	if is_instance_valid(blood_effects):blood_effects.clear()
 	menu_open = true
 	ui.show_menu("SYSTEM GESTÖRT")
 	ui.resume_button.text = "Am Kontrollpunkt fortsetzen"

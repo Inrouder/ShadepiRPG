@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.45.0 · CodexAI · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.46.0 · CodexAI · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -9,6 +9,11 @@ Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben�
 ## Bilder aus dem Spiel
 
 **[Bebilderte Dokumentation mit Szenenfilmen öffnen →](docs/README.md)** · Ein Klick auf eine Vorschau öffnet den zugehörigen Bericht.
+
+| Blutspritzer · v0.46.0 · CodexAI | Bodenflecken und Lachen |
+| --- | --- |
+| [![Gerichteter Blut-Effekt bei tatsächlichem Gegnertreffer](docs/previews/blut-hit-v046.png)](docs/bluteffekte.md) | [![Blutlache unter besiegtem Gegner](docs/previews/blut-pool-v046.png)](docs/bluteffekte.md) |
+| [Verhalten und Bildvergleich](docs/bluteffekte.md) | [Treffer-/Bodenfilm](docs/previews/blut-v046.webp) |
 
 | Neue Gameplay-Helden · v0.45.0 · CodexAI | Sichtbare Fall- und Todesposen |
 | --- | --- |

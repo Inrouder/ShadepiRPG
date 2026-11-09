@@ -1,6 +1,6 @@
 # Verbindliche Konsistenzvorlage für ShadepiRPG
 
-**Stand v0.45.0 · CodexAI · 9. November 2026; eingeführt mit v0.32.1.** Gilt für das gesamte Spiel und alle Mitwirkenden, ob Mensch oder KI. Vor Änderungen zusammen mit [AGENTS.md](AGENTS.md) lesen und die [Arbeitsvorlage](docs/vorlagen/konsistenz-auftrag.md) verwenden. Eine neuere ausdrückliche Nutzervorgabe hat Vorrang; bestätigte Änderungen anschließend hier und in den betroffenen Referenzen nachführen.
+**Stand v0.46.0 · CodexAI · 9. November 2026; eingeführt mit v0.32.1.** Gilt für das gesamte Spiel und alle Mitwirkenden, ob Mensch oder KI. Vor Änderungen zusammen mit [AGENTS.md](AGENTS.md) lesen und die [Arbeitsvorlage](docs/vorlagen/konsistenz-auftrag.md) verwenden. Eine neuere ausdrückliche Nutzervorgabe hat Vorrang; bestätigte Änderungen anschließend hier und in den betroffenen Referenzen nachführen.
 
 ## Bebilderter Einstieg für das gesamte Spiel
 
@@ -113,6 +113,7 @@ Menüreflexion ab v0.44.1 · CodexAI: Stadtmaterial und Kontaktshader verwenden 
 - Erinnerung III spielt im Tempelinneren über der getarnten Hightech-Basis. Der Meister ist nach der Übertragung tot; Shadepis späterer Zusammenbruch ist keine bestätigte Todesfestlegung. Weitere Szenen nach den aktuellen Archivquellen behandeln.
 - Dialoge natürlich und sprechbar halten; Aktionen durch vorhandene In-Engine-Szenen, Bewegung und passende Sprechblasen zeigen. Eine neue Bildertafel ersetzt nicht ungefragt eine Spielszenen-Inszenierung.
 - Für neue oder geänderte Interaktionen Tastatur **und Controller** prüfen: Fokus, Navigation, Bestätigen, Zurück, Hilfe und Pause. Hilfetexte erklären Ziel, Eingabe und Erfolgs-/Fehlerreaktion. Belegung ist kontextabhängig; keine globale Umbelegung aus einer einzelnen Szene ableiten.
+- Blut-FX ab v0.46.0 · CodexAI: [Spritzer/Tropfen/Lachen](docs/bluteffekte.md) nur bei echtem positivem Schaden an menschlichen Gegnern. Geschützte Treffer, Datenwesen und Roboter behalten ihre passende Effektfamilie. Spritzer aus Körperkontakt, fallende Tropfen und getrennte Bodenlage unter Figuren; keine unbegrenzten Spuren oder gespeicherten Dekorpflichtfelder. [Aktive Quellen/Anker](assets/fx/blood/README.md).
 - FX kommen aus nachvollziehbaren Quellen: Fensterregen auf Glas, Dampf am Austritt, Glut am Feuer. Figuren, Hindernisse, Hinweise und Angriffssignale bleiben lesbar. Bestehende Qualitätsstufen und Pausenregeln erhalten; keine unbegrenzten Partikelspawner.
 - Musikpfade und Groß-/Kleinschreibung nach der aktiven Zuordnung erhalten. **Musikkorrektur v0.37.0 · CodexAI:** Hauptmenü weiterhin `Level.mp3`, beide Kapitel-7-Abschnitte ausdrücklich `menu.mp3`; normale Kämpfe und Bosse ihre jeweiligen Kampfstücke. Ton-Aus und Pausenverhalten auch für neue Klänge beachten.
 
