@@ -29,6 +29,7 @@ Vom Nutzer festgelegte Arbeitsregeln:
 - Änderungen von Claude werden weiterhin mit Versionsnummer und **ClaudeHelper** gekennzeichnet (Nutzervorgabe vom 6. November 2026). Codex und Claude arbeiten am selben Repository: vor jeder Arbeit den neuesten Stand aller Branches übernehmen, fremde Änderungen erhalten und Versionsnummern fortlaufend weiterzählen.
 - Fertige, geprüfte Änderungen auf GitHub sichern. Der Nutzer hat das Pushen ausdrücklich auch für künftige abgeschlossene Arbeiten erlaubt. Spätere konkrete Einschränkungen des Nutzers haben Vorrang.
 - Falls ein Push scheitert, eine vollständige Projektkopie einschließlich Git-Verlauf und ungesicherter Änderungen außerhalb des Repository-Verzeichnisses sichern und den genauen Speicherort nennen. Kann auch die Sicherung nicht erfolgen, den tatsächlichen Stand und die Blockade offen benennen.
+- Bei sichtbaren Änderungen die PNG-Bildvorschauen in `README.md` und den zentralen Doku-Einstieg `docs/README.md` aktuell halten. Vorschauen direkt einbetten und auf den bebilderten Bericht samt Film verlinken. Vorhandene Spielaufnahmen wiederverwenden, ihren Aufnahmestand nennen; keine neuen Grafiken allein für eine Doku-Aktualisierung erzeugen. Nutzervorgabe, dokumentiert mit v0.41.1 · CodexAI.
 - Eine Veröffentlichung der Cloud-Umgebung ist eine eigene Aktion und gehört nicht automatisch zum Git-Push.
 
 ## Verbindlicher Grafikstil

@@ -1,10 +1,26 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.41.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.41.1 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
-[**Spiel herunterladen (neuestes Release)**](https://github.com/Inrouder/ShadepiRPG/releases/latest) · [**Quellcode als ZIP**](https://github.com/Inrouder/ShadepiRPG/archive/refs/heads/main.zip) · [**Versionen**](CHANGELOG.md) · [**Spieleranleitung**](Spiel-README.md)
+[**Spiel herunterladen (neuestes Release)**](https://github.com/Inrouder/ShadepiRPG/releases/latest) · [**Quellcode als ZIP**](https://github.com/Inrouder/ShadepiRPG/archive/refs/heads/main.zip) · [**Versionen**](CHANGELOG.md) · [**Spieleranleitung**](Spiel-README.md) · [**Bildgalerie & Doku**](docs/README.md)
+
+## Bilder aus dem Spiel
+
+**[Bebilderte Dokumentation mit Szenenfilmen öffnen →](docs/README.md)** · Ein Klick auf eine Vorschau öffnet den zugehörigen Bericht.
+
+| Verfolgung und Frachtdrohnen | Motorrad und Aerodyne |
+| --- | --- |
+| [![Verfolger mit Dachgeschütz in der tatsächlichen Spielansicht](docs/previews/verfolger-schuss-v041.png)](docs/verfolger-animationen.md) | [![Aerodyne beim Abfangen vor Kenzōs Tower](docs/previews/tower-kurve-v040.png)](docs/fahrzeugbewegung.md) |
+| [Neun Wagenphasen, Rotoren und Szenenfilm](docs/verfolger-animationen.md) | [Kurvenlagen, Bremsen und Bewegungsfilme](docs/fahrzeugbewegung.md) |
+
+| Fahrt zum geheimen Hangar | Abschluss am See |
+| --- | --- |
+| [![Shadepi, Raven und Motorrad fahren gemeinsam durch den Schacht](docs/previews/hangar-schacht-v039.png)](docs/hangar-entdeckung.md) | [![Raven und Shadepi am mystisch leuchtenden See](docs/previews/see-drache-v0361.png)](docs/see-finale.md) |
+| [Plattformfahrt und Hangarenthüllung](docs/hangar-entdeckung.md) | [Anflug, Maskenmoment und Drachenschatten](docs/see-finale.md) |
+
+Die Vorschauen sind vorhandene Aufnahmen aus dem Spielrenderer. Die verlinkten Berichte nennen ihren jeweiligen Aufnahmestand und enthalten weitere Bilder und animierte WebP-Clips.
 
 ## Spielen
 
@@ -38,6 +54,11 @@ Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und
 ## Mitarbeit und verbindliche Konsistenz
 
 Für Menschen und KI: **[Bebilderte Stilbibel des gesamten Spiels](docs/stilbibel/README.md)** · [Alle 23 Figuren mit Einzelkarten](docs/stilbibel/figuren.md) · [Konsistenzregeln](KONSISTENZ.md) · [Mitarbeit](CONTRIBUTING.md) · [Kopierbarer Auftrag und Arbeitsnachweis](docs/vorlagen/konsistenz-auftrag.md). Die Projektregeln in [AGENTS.md](AGENTS.md), der Einstieg für [Claude](CLAUDE.md) und die Pull-Request-Vorlage verweisen auf denselben Standard.
+
+## Neu in v0.41.1 · CodexAI · 9. November 2026
+
+- Direkte PNG-Bildvorschauen wieder auf der Repository-Startseite; jede führt zum bebilderten Bericht und den vorhandenen Szenenfilmen.
+- Neuer [zentraler Doku-Einstieg mit Galerie](docs/README.md) für aktuelle Fahrzeug-, Hangar-, Eisbad-, Menü- und See-Dokumentation. Spielmechanik und Grafiken bleiben auf dem bisherigen Stand.
 
 ## Neu in v0.41.0 · CodexAI · 9. November 2026
 

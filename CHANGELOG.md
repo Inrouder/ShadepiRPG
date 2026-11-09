@@ -1,5 +1,12 @@
 # Versionshinweise
 
+## v0.41.1 – CodexAI: Bildvorschauen und zentraler Doku-Einstieg auf GitHub · 9. November 2026
+
+- Repository-Startseite zeigt aktuelle Fahrzeug-, Verfolgungs-, Hangar- und See-Aufnahmen wieder direkt als anklickbare PNG-Vorschauen.
+- Neue [Doku-Galerie](docs/README.md) bündelt bebilderte Berichte, Szenenfilme, Spielanleitung und Stilbibel. Vorhandene Renderer-Aufnahmen mit ihrem Aufnahmestand wiederverwendet; keine neuen Assets oder Gameplay-Änderungen.
+- Projektregeln ergänzen die dauerhafte Pflege dieser Vorschauen. Version, Windows-Felder und aktuelle READMEs konsistent fortgeschrieben. Inhalts-/Link-/Versionsprüfung; kein unnötiger neuer Gameplay-Testlauf für diese Dokumentationsänderung.
+
+
 ## v0.41.0 – CodexAI: Verfolgerwagen mit Rückstoß und Frachtdrohnen mit Rotorphasen · 9. November 2026
 
 - Neun neue HQ-Pixelphasen für den dunklen gepanzerten Verfolgerwagen: Geradeausfahrt, zwei Lenkbilder, Federung, Lastverlagerung vor Rammstoß, Geschützrückstoß/-rücklauf und Rammstoß-Erholung. Vier Rotorphasen für die bestehende Frachtdrohne mit festen Ringen und Frachtkörper.
