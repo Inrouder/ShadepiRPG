@@ -140,7 +140,7 @@ func run() -> void:
 	var events: Array = []
 	departure.tree_exiting.connect(func(): events.assign(departure.events))
 	await finish(w)
-	check(events==["run","board","tip","fall","ignition","blast","clear"],"departure preserves boarding, fall, ignition and explosion order even when skipped")
+	check(events==["run","board","launch","tip","fall","ignition","blast","clear"],"departure preserves pad launch before failure, fall, ignition and explosion even when skipped")
 	check(w.beat==w.Beat.LAKE,"departure reaches the lake only after the escape sequence")
 	w._enter(w.Beat.ESCAPE,0,1)
 	w.escape_guards_cleared = true

@@ -20,3 +20,8 @@ Die konkrete Grenze von **drei Treffern**, die Mindesttransferzeit von **24 akti
 KOBAN-TECs Aussehen folgt [Archiv Teil 3](../teil-3/README.md); die Firmenverbindung zum Orden steht in [Teil 4](../teil-4/README.md). Das Chat-Logo liegt nicht als lokale Originaldatei vor; die neue Textur rekonstruiert die beschriebenen Merkmale.
 
 Die neue Reihenfolge ersetzt den älteren Spielablauf „Kenzō töten, danach sein Deck auslesen“. Originalroman und frühere Archivnotizen bleiben als Quellen erhalten. Die neuen offenen Fragen dürfen durch spätere Dialoge nicht versehentlich als bereits gelöst behandelt werden. [Umsetzung und Nachweise](../../tower-extraktion.md).
+
+
+## Räumliche Korrektur · v0.35.1 · CodexAI · 9. November 2026
+
+Neueste ausdrückliche Nutzervorgabe: Beide starten vom Landeplatz, nicht vom Balkon. Der Aerodyne bekommt nach dem Start Probleme, rauscht von oben nach unten am Balkon vorbei und fängt sich darunter. Die abweichende v0.35.0-Umsetzung war ein räumlicher Fehler und ist ersetzt. Danach bleibt die Penthouse-Explosion Teil der Flucht. [Aktuelle Inszenierung](../../tower-inszenierung.md).

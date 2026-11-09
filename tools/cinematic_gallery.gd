@@ -1,5 +1,5 @@
 extends SceneTree
-## v0.35.0 · CodexAI. Actual engine frames, no compositing or enlarged sprites.
+## v0.35.1 · CodexAI. Roof pad first, then descent past the lower balcony.
 var seen := {}
 var frames := 0
 var film := false
@@ -9,7 +9,7 @@ func _initialize() -> void: run.call_deferred()
 
 func capture(tag: String) -> void:
 	await RenderingServer.frame_post_draw
-	root.get_texture().get_image().save_png("/tmp/shadepi-v035/"+tag+".png")
+	root.get_texture().get_image().save_png("/tmp/shadepi-v0351/"+tag+".png")
 	seen[tag] = true
 
 func run() -> void:
@@ -17,7 +17,7 @@ func run() -> void:
 		push_error("Rendering display required")
 		quit(1)
 		return
-	DirAccess.make_dir_recursive_absolute("/tmp/shadepi-v035/film")
+	DirAccess.make_dir_recursive_absolute("/tmp/shadepi-v0351/film")
 	film = "--film" in OS.get_cmdline_user_args()
 	escape_only = "--escape-only" in OS.get_cmdline_user_args()
 	var w = load("res://scenes/campaign.tscn").instantiate()
@@ -50,10 +50,14 @@ func run() -> void:
 		if not is_instance_valid(w.tower_departure): break
 		var d = w.tower_departure
 		var tag: String = "escape-"+d.stage
-		if not seen.has(tag) and (d.stage!="ignition" or d.power>0.65) and (d.stage!="blast" or d.blast>0.45): await capture(tag)
+		if not seen.has(tag) and (d.stage!="launch" or d.craft.distance_to(d.park)>40) and (d.stage!="ignition" or d.power>0.65) and (d.stage!="blast" or d.blast>0.45): await capture(tag)
+		if d.stage=="fall":
+			if d.craft.y>40 and d.craft.y<100 and not seen.has("facade-above"): await capture("facade-above")
+			if d.craft.y>130 and d.craft.y<180 and not seen.has("facade-passing"): await capture("facade-passing")
+		if d.stage=="ignition" and d.craft.y>230 and d.power>0.65 and not seen.has("facade-below"): await capture("facade-below")
 		if film and i%2==0:
 			await RenderingServer.frame_post_draw
-			root.get_texture().get_image().save_png("/tmp/shadepi-v035/film/frame-%04d.png"%frames)
+			root.get_texture().get_image().save_png("/tmp/shadepi-v0351/film/frame-%04d.png"%frames)
 			frames += 1
 		if w.cutscene.waiting_input:
 			waiting += w.get_process_delta_time()
@@ -83,7 +87,7 @@ func run() -> void:
 				waiting = 0
 		else: waiting = 0
 	var required := ["penthouse-entry","raven-approach","kenzo-grip","shadepi-running","escape-run","escape-board","escape-tip","escape-fall","escape-ignition","escape-blast","hangar-entry","hangar-aisle","hangar-boarding","hangar-takeoff"]
-	if escape_only: required = ["escape-run","escape-board","escape-tip","escape-fall","escape-ignition","escape-blast"]
+	if escape_only: required = ["escape-run","escape-board","escape-launch","escape-tip","facade-above","facade-passing","facade-below","escape-ignition","escape-blast"]
 	print("CINEMATIC GALLERY: ",seen,"; film frames=",frames)
 	var ok := true
 	for tag in required:

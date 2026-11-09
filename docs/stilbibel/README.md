@@ -6,7 +6,7 @@
 
 ## Die fünf Teile
 
-**Aktualisierung v0.35.0 · CodexAI:** [Tower- und Hangar-Inszenierung](../tower-inszenierung.md) mit freien Laufwegen, unveränderten Figurenquellen und einem gemeinsamen filmischen Fahrzeugrenderer. Düsenanker, Perspektive und Körperbewegung gehören zusammen; der Absturz bleibt in einer Ansicht. Die vorhandenen Figuren- und Materialkarten bleiben gültig.
+**Aktualisierung v0.35.1 · CodexAI:** [Tower- und Hangar-Inszenierung](../tower-inszenierung.md) mit freien Laufwegen und unveränderten Figurenquellen. **Start auf dem tatsächlichen Landeplatz**, danach Fall von oben am tieferen Balkon vorbei und Abfangen darunter; die v0.35.0-Balkonfassung ist ersetzt. Düsenanker, Perspektive und Körperbewegung bleiben gekoppelt. Die vorhandenen Figuren- und Materialkarten bleiben gültig.
 
 **Aktualisierung v0.33.0 · CodexAI:** [Neue Tower-Zustände, Extraktion, knappe Flucht und KOBAN-TEC-Hangar](../tower-extraktion.md). Die 23 Grundfigurenkarten bleiben gültig; Spezialposen und die zusätzliche Filmkulisse sind bei Figuren und Welten verzeichnet. Nur die betroffene Weltübersicht wird neu gerendert.
 

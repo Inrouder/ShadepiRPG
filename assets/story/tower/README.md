@@ -1,6 +1,6 @@
 # Tower-Posen, Außenansicht und KOBAN-TEC · v0.33.0 · CodexAI
 
-**Laufzeitkorrektur v0.35.0 · CodexAI:** Die Quellbilder bleiben unverändert. `tower_escape.gd` verwendet `exterior.png` jetzt durchgehend von Rennen und Einsteigen bis Fall und Abfangen. `cinematic_aerodyne.gd` nutzt weiterhin die Fahrzeugzelle `(0,0,627,627)`; die Düsenanker stammen aus deren Quellpixeln `(214,550)` und `(421,550)`. Körper und Abgasstrahlen teilen dieselbe Projektion und Rollbewegung. Der neue Shader isoliert nur Flammenpixel aus dem vorhandenen `props-fx.png`, ohne Holz oder Trümmer. Keine neue Figuren- oder Fahrzeuggrafik. [Aktuelle Aufnahmen](../../../docs/tower-inszenierung.md).
+**Laufzeitkorrektur v0.35.1 · CodexAI:** Unveränderte Quellbilder: `tower_escape.gd` beginnt auf `rooftop.png` am gespeicherten Aufsetzpunkt. Erst nach dem Abheben und Verlassen der Dachkante folgt `exterior.png` als Blick auf die Fassade darunter. Der Aerodyne fällt von oben am Balkon vorbei und fängt sich darunter; kein Start auf dem Balkon. Die unveränderte Fahrzeugzelle und Düsenanker in `cinematic_aerodyne.gd` bleiben erhalten. [Aktuelle Aufnahmen](../../../docs/tower-inszenierung.md).
 
 ## Aktive Quellen
 

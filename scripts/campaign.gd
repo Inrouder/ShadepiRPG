@@ -825,6 +825,7 @@ func save_game() -> bool:
 	config.set_value("campaign", "escape_guards_cleared", escape_guards_cleared)
 	config.set_value("campaign", "tower_stage",tower_stage if beat==Beat.ESCAPE else -1)
 	config.set_value("campaign", "boss_spot",boss_spot)
+	config.set_value("campaign", "aerodyne_spot",aerodyne_spot)
 	config.set_value("props", "state", dressing_state())
 	return config.save(Admin.checkpoint_path(SAVE, get_tree())) == OK
 
@@ -841,6 +842,8 @@ func load_game(_requested_mode: Variant = null) -> bool:
 	var saved_tower: Variant = config.get_value("campaign", "tower_stage",-1)
 	var saved_spot: Variant = config.get_value("campaign", "boss_spot",Vector2(858,340))
 	if saved_spot is Vector2 and saved_spot.is_finite(): boss_spot = saved_spot.clamp(Vector2(100,320),Vector2(930,450))
+	var saved_landing: Variant = config.get_value("campaign", "aerodyne_spot",AerodyneFlight.PAD_WORLD)
+	aerodyne_spot = saved_landing.clamp(Vector2(160,300),Vector2(240,352)) if saved_landing is Vector2 and saved_landing.is_finite() else AerodyneFlight.PAD_WORLD
 	var saved_echo: Variant = config.get_value("campaign", "echo_started", false)
 	var saved_flight_intro: Variant = config.get_value("campaign", "flight_intro_pending", false)
 	var saved_sanctuary_stage: Variant = config.get_value("campaign", "sanctuary_stage", 0)

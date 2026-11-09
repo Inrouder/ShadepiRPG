@@ -1,5 +1,5 @@
 extends SceneTree
-## v0.35.0 · CodexAI. Regressions for furniture contact, entrances and flight continuity.
+## v0.35.1 · CodexAI. Actual roof launch, preserved landing and fall past a lower balcony.
 const Painted = preload("res://scripts/painted_world.gd")
 const Opening = preload("res://scripts/tower_story.gd")
 const Hangar = preload("res://scripts/hangar_departure.gd")
@@ -63,8 +63,31 @@ func run() -> void:
 	w._enter(w.Beat.ESCAPE,0,3)
 	w._complete_point()
 	var d = w.tower_departure
+	check(d.view=="roof" and d.craft==w.aerodyne_spot-Vector2(0,20),"departure starts at the actual parked craft on the rooftop pad")
+	for i in 2:
+		previous = Escape.STARTS[i]
+		for leg in d.roof_route():
+			check(clear_path(previous,leg[i],"rooftop"),"roof route reaches the pad without crossing its console or doorway")
+			previous = leg[i]
+	w.aerodyne_spot = Vector2(198,344)
+	check(w.save_game(),"landing position saves with departure checkpoint")
+	w.aerodyne_spot = Vector2.ZERO
+	check(w.load_game() and w.aerodyne_spot==Vector2(198,344),"landing position survives a complete checkpoint load")
+	d = w.tower_departure
+	check(d.park==Vector2(198,324),"loaded departure boards the same spot used at touchdown")
+	var old_save := ConfigFile.new()
+	var checkpoint: String = w.Admin.checkpoint_path(w.SAVE,self)
+	old_save.load(checkpoint)
+	old_save.erase_section_key("campaign","aerodyne_spot")
+	old_save.save(checkpoint)
+	check(w.load_game() and w.aerodyne_spot==Escape.Flight.PAD_WORLD,"older saves without a landing field use the original pad")
+	old_save.set_value("campaign","aerodyne_spot","broken")
+	old_save.save(checkpoint)
+	check(w.load_game() and w.aerodyne_spot==Escape.Flight.PAD_WORLD,"invalid landing data falls back safely to the original pad")
+	d = w.tower_departure
 	for segment in 3:
-		var epsilon := 0.0001
+		# A millisecond-scale sample avoids Vector2 float rounding at fast descent.
+		var epsilon := 0.001
 		d.flight_step(segment,1-epsilon)
 		var a: Vector2 = d.craft
 		d.flight_step(segment,1)
@@ -93,18 +116,32 @@ func run() -> void:
 	var same_deck: Node = d.deck
 	var same_vehicle: Node = d.vehicle
 	var uninterrupted := true
+	var saw_launch := false
+	var saw_fall := false
+	var passed_balcony := false
+	var recovered_below := false
 	var discontinuity := ""
 	for i in 1600:
 		await process_frame
 		if not is_instance_valid(w.tower_departure): break
+		if d.stage in ["run","board","launch","tip"]:
+			uninterrupted = uninterrupted and d.view=="roof"
+			if d.stage=="launch": saw_launch = true
 		if d.stage in ["tip","fall","ignition","blast"]:
 			uninterrupted = uninterrupted and d.deck==same_deck and d.deck.visible and d.vehicle==same_vehicle
+			if d.stage=="fall":
+				uninterrupted = uninterrupted and saw_launch and d.left_roof and d.view=="facade"
+				if d.craft.y<90: saw_fall = true
+				if saw_fall and d.craft.y>180: passed_balcony = true
+			if d.stage=="ignition" and d.power>0.6 and d.craft.y>220:
+				recovered_below = passed_balcony
 			if d.stage in ["tip","fall","ignition"]:
 				uninterrupted = uninterrupted and w.cutscene.overlay.color.a<0.01
 			if not uninterrupted: discontinuity = d.stage+" overlay="+str(w.cutscene.overlay.color)
 		if w.cutscene.waiting_input: w.cutscene.advance()
 		if w.beat==w.Beat.LAKE: break
-	check(uninterrupted and w.beat==w.Beat.LAKE,"one live exterior shot covers run, boarding, fall and recovery until the lake: "+discontinuity+" beat="+str(w.beat))
+	check(uninterrupted and w.beat==w.Beat.LAKE,"roof launch precedes the motivated facade view, with the same craft and no fade during descent: "+discontinuity)
+	check(saw_launch and saw_fall and passed_balcony and recovered_below,"craft comes from above the balcony and catches itself below, after leaving the pad")
 	w.fresh_entry = true
 	w.flight_intro_pending = true
 	w._enter(w.Beat.FLIGHT)

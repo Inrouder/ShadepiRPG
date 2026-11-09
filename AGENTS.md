@@ -1,6 +1,6 @@
 # Zusammenarbeit an ShadepiRPG
 
-**Szenenkorrektur v0.35.0 · CodexAI:** [Tower-/Hangar-Inszenierung](docs/tower-inszenierung.md): Kenzō wartet sichtbar neben dem Sessel; Raven geht vom Eingang auf ihn zu. Nach dem Griff läuft Shadepi vom Eingang dazu. Keine Spawnpunkte in Einrichtung. Die Flucht bleibt vom Rennen bis zum Abfangen in derselben Außenansicht; Körper und Düsen teilen den Quellanker-/Projektionsvertrag in `cinematic_aerodyne.gd`. Bestehende Extraktions- und Speicherregeln erhalten.
+**Szenenkorrektur v0.35.1 · CodexAI:** [Tower-/Hangar-Inszenierung](docs/tower-inszenierung.md): Kenzō wartet neben dem Sessel; Raven geht auf ihn zu, nach dem Griff läuft Shadepi dazu. Keine Spawnpunkte in Einrichtung. **Die Flucht startet auf dem Dach-Landeplatz am tatsächlichen Abstellpunkt, niemals auf dem Balkon.** Nach dem Abheben und Antriebsproblem kommt der Aerodyne in der Fassadenansicht von oben am Balkon vorbei und fängt sich darunter. Diese ausdrückliche Nutzervorgabe ersetzt die falsche Balkonfassung aus v0.35.0. Körper und Düsen behalten ihren gemeinsamen Projektionsvertrag; Extraktion, Hangar und Kontrollpunkte erhalten.
 
 ## Vor jeder Änderung lesen
 

@@ -1,6 +1,6 @@
 # Tower: Daten, Abrechnung und Flucht · v0.33.0 · CodexAI
 
-**Aktuelle Inszenierung v0.35.0 · CodexAI:** [Ravens Eintritt, Shadepis Lauf zum Eingreifen, freie Hangarwege und durchgehende Flucht](tower-inszenierung.md). Die neue Filmfassung ersetzt den hier gezeigten historischen v0.33-Abflug mit Ansichtswechsel. Extraktion, Trefferregeln, Hintergrund und Kontrollpunkte gelten weiterhin.
+**Aktuelle Inszenierung v0.35.1 · CodexAI:** [Ravens Eintritt, Shadepis Eingreifen, freie Hangarwege und räumlich korrigierte Flucht](tower-inszenierung.md). Start auf dem tatsächlichen Landeplatz; nach dem Abheben fällt der Aerodyne von oben am tieferen Balkon vorbei und fängt sich darunter. Die hier gezeigten v0.33-Abflugbilder sind historisch. Extraktion, Trefferregeln, Hintergrund und Kontrollpunkte gelten weiterhin.
 
 Kenzō packt Raven im Gespräch sichtbar am Oberarm. Erst dann beendet Shadepi seine Tarnung und schlägt dazwischen. Der normale Bosskampf bleibt bei Shadepi; Raven steht abseits und kann über den vorhandenen Implantat-Hack unterstützen.
 

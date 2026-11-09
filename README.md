@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.35.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.35.1 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -39,7 +39,12 @@ Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und
 
 Für Menschen und KI: **[Bebilderte Stilbibel des gesamten Spiels](docs/stilbibel/README.md)** · [Alle 23 Figuren mit Einzelkarten](docs/stilbibel/figuren.md) · [Konsistenzregeln](KONSISTENZ.md) · [Mitarbeit](CONTRIBUTING.md) · [Kopierbarer Auftrag und Arbeitsnachweis](docs/vorlagen/konsistenz-auftrag.md). Die Projektregeln in [AGENTS.md](AGENTS.md), der Einstieg für [Claude](CLAUDE.md) und die Pull-Request-Vorlage verweisen auf denselben Standard.
 
-## Neu in v0.35.0 · 9. November 2026 · CodexAI
+## Neu in v0.35.1 · 9. November 2026 · CodexAI
+
+- **Räumlich korrigierte Tower-Flucht:** Beide laufen auf dem vorhandenen Dach-Landeplatz zum dort geparkten Aerodyne und steigen ein. Nach Abheben und Schubverlust folgt die Fassade darunter: Das Schiff kommt von oben, fällt am Balkon vorbei und fängt sich darunter. Der Start vom Balkon in v0.35.0 ist ersetzt.
+- Der beim Anflug erspielte Abstellpunkt wird jetzt gespeichert und beim Abflug wiederverwendet. [Aktuelle Bilder und Film](docs/tower-inszenierung.md).
+
+## v0.35.0 · 9. November 2026 · CodexAI (Abflugfassung durch v0.35.1 ersetzt)
 
 - **Penthouse:** Kenzō wartet sichtbar neben dem Sessel. Raven läuft vom Eingang durch den Raum auf ihn zu. Nach seinem Griff kommt Shadepi erst sichtbar vom Eingang herangelaufen und greift ein.
 - **Tower-Flucht:** Rennen, Einsteigen, Kippen, Fall und Abfangen bleiben in derselben Außenansicht. Durchgehende Fluggeschwindigkeit, passende Ausrichtung, fest an den Düsen sitzende texturierte Triebwerksstrahlen und eine einmalige Explosion ersetzen den harten Wechsel mitten im Fall.

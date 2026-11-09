@@ -1,5 +1,14 @@
 # Versionshinweise
 
+## v0.35.1 – CodexAI: Tower-Abflug vom Landeplatz, Fall am Balkon vorbei · 9. November 2026
+
+- Räumlichen Fehler der v0.35.0-Flucht ersetzt: Rennen, Einsteigen und Abheben finden auf dem tatsächlichen Dach-Landeplatz statt. Der Aerodyne steht an seinem Aufsetzpunkt aus dem spielbaren Anflug.
+- Erst nach dem Abheben fällt der Antrieb aus. Das Schiff verlässt die Dachkante; danach folgt der Blick auf die Fassade darunter. Es kommt von oberhalb des Bildes, rauscht am Balkon vorbei und fängt sich unterhalb der Balkonebene ab. Erst beim Wegflug explodiert das Penthouse.
+- Derselbe Fahrzeugknoten und Düsenrenderer bleiben erhalten. Der Blickwechsel übernimmt Bildgröße, Orientierung und projizierte Fallgeschwindigkeit. Die anschließenden Kurven bleiben stetig; während des Falls wartet kein Dialog auf Eingabe.
+- Neues optionales Speicherfeld für den tatsächlichen Abstellpunkt; ältere oder ungültige Einträge verwenden sicher den ursprünglichen Landeplatz. Die Penthouse- und Hangarverbesserungen bleiben erhalten.
+- 731 gezielte Prüfungen und sieben zusätzliche Exportprüfungen ohne Fehler; die vollständige Flucht im Renderer gesichtet und als Film aufgenommen.
+- [Aktuelle Spielbilder, Film und gezielte Abnahme](docs/tower-inszenierung.md), [Arbeitsnachweis](docs/arbeiten/tower-landeplatz-v0351.md).
+
 ## v0.35.0 – CodexAI: Glaubhafte Tower-Ankunft, durchgehende Flucht und Hangar-Laufwege · 9. November 2026
 
 - Kenzō wartet sichtbar neben dem Sessel statt in dessen Sitz-/Standfläche. Raven kommt vom Eingang und nähert sich über freie Laufpunkte. Erst nach Griff und Bedrohung wird Shadepi sichtbar und läuft vom Eingang zu ihnen; keine unmittelbare Erscheinung am Gegner.
