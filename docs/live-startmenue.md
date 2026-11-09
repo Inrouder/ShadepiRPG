@@ -1,5 +1,7 @@
 # HQ-Startmenü · v0.20.3 · CodexAI
 
+**Reflexionskorrektur v0.44.1 · CodexAI:** Die helle eingemalte Lichtspur wird in den Standbereichen gedämpft; dieselben Sohlenanker versorgen Stadt- und Kontaktshader, auch bei Reduziert. [Neuer nativer Vorher/Nachher-Vergleich](menue-kontrollpunkte.md).
+
 **Korrektur v0.44.0 · CodexAI:** Die vorhandene Figurenillustration bleibt erhalten. Vier neu registrierte, deutlichere Fußschatten verbinden sie mit dem Dach; Schatteneffekt vor der Dachkante begrenzen. Haupt-/Pausenmenüs erhalten Desktop-Aktion und kapitelübergreifendes Laden des letzten Kontrollpunkts. [Aktuelle Spielbilder und Bedienung](menue-kontrollpunkte.md).
 
 ![Hauptscreen in Full HD](startmenue.png)

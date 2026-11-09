@@ -1,5 +1,12 @@
 # Versionshinweise
 
+## v0.44.1 – CodexAI: Bodenreflexion im Standbereich der Menüfiguren korrigiert · 9. November 2026
+
+- Helle eingemalte Nässe-Lichtspur und zusätzliche Glanzverstärkung im unmittelbaren Standbereich der vier Stiefel gezielt dämpfen. Gleiche Sohlenanker wie die Kontaktschatten; Transformation der vergrößerten Stadttextur berücksichtigen.
+- Quellfarben und dunkle Bodentextur bleiben erhalten, Dachkante begrenzt die Korrektur. Reduzierter Bildstil behält denselben Bodenkontakt. Keine neuen Figurenbilder oder Änderungen der Menüfunktionen.
+- 86 bestehende Menü-/Anzeigeprüfungen ohne Fehler. Nativer Vorher/Nachher-Vergleich und direkt aus dem Exportpaket aufgenommene Bilder; Änderungen auf den Boden begrenzt.
+- [Aktueller Bildvergleich](docs/menue-kontrollpunkte.md), [Arbeitsnachweis](docs/arbeiten/menue-reflexion-v0441.md). PNG-Vorschauen und Versionsfelder konsistent fortgeschrieben.
+
 ## v0.44.0 – CodexAI: Menü-Bodenkontakt, Desktop und gezielte Kontrollpunktauswahl · 9. November 2026
 
 - Vier kräftige Sohlen-Kontaktschatten mit weichem Auslauf und Dachkantenbegrenzung ersetzen die zu schwache Menüebene. Ravens separaten Maßstab berücksichtigen; Figuren und Architektur bleiben fest, Schatten auch bei reduziertem Bildstil sichtbar.

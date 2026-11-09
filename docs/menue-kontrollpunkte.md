@@ -1,8 +1,16 @@
 # Menü: Bodenkontakt und gezielte Test-Kontrollpunkte
 
-**v0.44.0 · CodexAI · 9. November 2026.** [Bildgalerie](README.md) · [Spieleranleitung](../Spiel-README.md) · [Testmenü](admin-testmodus.md).
+**v0.44.1 · CodexAI · 9. November 2026.** [Bildgalerie](README.md) · [Spieleranleitung](../Spiel-README.md) · [Testmenü](admin-testmodus.md).
 
-![Hauptmenü mit Fußschatten und Desktop-Schaltfläche in Full HD](previews/menue-hauptscreen-v044.png)
+![Hauptmenü mit Fußschatten und Desktop-Schaltfläche in Full HD](previews/menue-reflexion-v0441.png)
+
+**Lichtkorrektur v0.44.1 · CodexAI:** Die helle, in die Stadttextur eingemalte Nässe-Spur wird nun in den Standbereichen der vier Stiefel gedämpft. Der Stadtshader verwendet dieselben Sohlenanker wie der Kontaktschatten und rechnet die vergrößerte/versetzte Stadttextur korrekt in Menükoordinaten um. Dunkle Materialdetails bleiben erhalten; die Korrektur bleibt auch bei „Reduziert“ aktiv.
+
+| Lichtspur vor der Korrektur | Lichtspur im Standbereich gedämpft |
+| --- | --- |
+| ![Eingemalte Lichtspur trotz Kontaktschatten](previews/menue-reflexion-vorher-v0441.png) | ![Korrigierte Reflexion bei identischem Szenentakt](previews/menue-reflexion-v0441.png) |
+
+Die neuen Vergleichsbilder sind tatsächliche Aufnahmen aus dem exportierten v0.44.1-Paket. Links ist nur die neue Reflexionskorrektur abgeschaltet, die Kontaktschatten bleiben in beiden Bildern aktiv. [Abnahme und Prüfnachweis](arbeiten/menue-reflexion-v0441.md). Der folgende Bedienfilm und die Testmenübilder stammen weiterhin aus v0.44.0; die Menüfunktionen bleiben erhalten.
 
 Die vier Stiefel erhalten jetzt einen kräftigen engen Kontaktschatten mit weichem Auslauf auf der nassen Plattform. Die Anker liegen an den tatsächlichen Sohlen und berücksichtigen Ravens vorhandenen eigenen Maßstab. Figuren, Füße und Plattform reagieren weiterhin nicht auf die Maus. Der Bodeneffekt bleibt auch im reduzierten Bildstil sichtbar und endet vor der Vorderkante.
 

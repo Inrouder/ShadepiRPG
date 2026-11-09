@@ -50,6 +50,7 @@ func _ready() -> void:
 	var contacts := PackedVector4Array()
 	for foot in boot_contacts(): contacts.append(Vector4(foot.x,foot.y,foot.z,foot.w))
 	contact_material.set_shader_parameter("feet",contacts)
+	city_material.set_shader_parameter("boot_contacts",contacts)
 	ground_contacts.material = contact_material
 	ground_contacts.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(ground_contacts)

@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.44.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.44.1 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -12,7 +12,7 @@ Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben�
 
 | Menü mit Bodenkontakt und Test-Kontrollpunkten | Verfolgung und Frachtdrohnen |
 | --- | --- |
-| [![Hauptmenü mit vier Fußschatten und Desktop-Schaltfläche](docs/previews/menue-hauptscreen-v044.png)](docs/menue-kontrollpunkte.md) | [![Verfolger mit Dachgeschütz in der tatsächlichen Spielansicht](docs/previews/verfolger-schuss-v041.png)](docs/verfolger-animationen.md) |
+| [![Hauptmenü mit vier Fußschatten und Desktop-Schaltfläche](docs/previews/menue-reflexion-v0441.png)](docs/menue-kontrollpunkte.md) | [![Verfolger mit Dachgeschütz in der tatsächlichen Spielansicht](docs/previews/verfolger-schuss-v041.png)](docs/verfolger-animationen.md) |
 | [Menüoptionen, 40 Test-Einstiege und Film](docs/menue-kontrollpunkte.md) | [Neun Wagenphasen, Rotoren und Szenenfilm](docs/verfolger-animationen.md) |
 
 | Fahrt zum geheimen Hangar | Abschluss am See |
@@ -54,6 +54,11 @@ Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und
 ## Mitarbeit und verbindliche Konsistenz
 
 Für Menschen und KI: **[Bebilderte Stilbibel des gesamten Spiels](docs/stilbibel/README.md)** · [Alle 23 Figuren mit Einzelkarten](docs/stilbibel/figuren.md) · [Konsistenzregeln](KONSISTENZ.md) · [Mitarbeit](CONTRIBUTING.md) · [Kopierbarer Auftrag und Arbeitsnachweis](docs/vorlagen/konsistenz-auftrag.md). Die Projektregeln in [AGENTS.md](AGENTS.md), der Einstieg für [Claude](CLAUDE.md) und die Pull-Request-Vorlage verweisen auf denselben Standard.
+
+## Neu in v0.44.1 · CodexAI · 9. November 2026
+
+- Die eingemalte helle Lichtspur wird im Standbereich der Menüfiguren gezielt gedämpft. Feste Sohlenanker und Bodenstruktur bleiben erhalten; die Korrektur wirkt auch bei reduziertem Bildstil.
+- Native Vorher/Nachher- und Exportaufnahmen sowie 86 bestehende Menü-/Anzeigeprüfungen ohne Fehler. [Bilder und Details](docs/menue-kontrollpunkte.md) · [Arbeitsnachweis](docs/arbeiten/menue-reflexion-v0441.md).
 
 ## Neu in v0.44.0 · CodexAI · 9. November 2026
 

@@ -1,5 +1,7 @@
 # Oberflächen, Effekte und Ton · v0.32.2 · CodexAI
 
+**Menüreflexion v0.44.1 · CodexAI:** [Lichtspur im Standbereich korrigiert](../menue-kontrollpunkte.md). Stadtshader erhält dieselben vier Sohlenanker wie der Kontaktshader; Texturversatz/-größe in Menükoordinaten umrechnen. Bereits eingemalte Glanzspur lokal dämpfen, dunkle Bodenstruktur erhalten. Die Korrektur ist unabhängig von der Nässeanimations-Stärke auch bei Reduziert aktiv.
+
 [Stilbibel](README.md) · [Art Direction](artdirection.md) · [Figuren](figuren.md)
 
 ## Hauptmenü und HUD

@@ -1,6 +1,8 @@
 # Shadepi · Echos in Neon
 
-**Spieleranleitung für v0.44.0 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+**Spieleranleitung für v0.44.1 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+
+**Menülicht v0.44.1 · CodexAI:** Die helle Bodenlichtspur unter den Menüfiguren ist jetzt im Standbereich gedämpft, auch im reduzierten Bildstil. [Bildvergleich](docs/menue-kontrollpunkte.md).
 
 **Menü v0.44.0 · CodexAI:** „Letzten Kontrollpunkt laden“ öffnet den neuesten gültigen Stand des gewählten Modus über Kapitelgrenzen hinweg. „Zurück zum Desktop“ schließt das Spiel aus Haupt- oder Pausenmenü. Im Testmenü kannst du nach Kapitelwahl einen von 40 Kontrollpunkten direkt starten. Neue Fußschatten verankern die Menüfiguren auf dem Vorsprung. [Bilder, Film und Bedienung](docs/menue-kontrollpunkte.md).
 
