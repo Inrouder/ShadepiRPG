@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Install pinned Godot and desktop export templates
         shell: bash
         run: |
@@ -255,17 +255,17 @@ jobs:
         run: |
           mkdir -p build/source
           git archive --format=zip --output=build/source/ShadepiRPG-Godot-Projekt.zip HEAD
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: ShadepiRPG-Windows
           path: build/windows/
           retention-days: 30
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: ShadepiRPG-Linux
           path: build/linux/
           retention-days: 30
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: ShadepiRPG-Godot-Projekt
           path: build/source/
@@ -280,7 +280,7 @@ jobs:
     env:
       RELEASE_TAG: ${{ inputs.release_tag || github.ref_name }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Check tag against game version
         shell: bash
         run: |
@@ -289,15 +289,15 @@ jobs:
           if [ "v$version" != "$RELEASE_TAG" ]; then
             echo "Tag $RELEASE_TAG passt nicht zur Spielversion v$version"; exit 1
           fi
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         with:
           name: ShadepiRPG-Windows
           path: windows
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         with:
           name: ShadepiRPG-Linux
           path: linux
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         with:
           name: ShadepiRPG-Godot-Projekt
           path: source
