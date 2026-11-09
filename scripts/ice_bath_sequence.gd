@@ -192,17 +192,20 @@ func play_return() -> void:
 	mark("return")
 	await cs.camera(Vector2(667,348),0.35,2.0)
 	if not cs.alive(ticket): return
+	# v0.47.0 · ClaudeHelper: das Heiligtum reagiert auf Ravens Deep Dive (Roman, Kapitel 2).
+	await cs.say("SHADEPI / HUD","[EINDÄMMUNGSSTATUS · 85 %] Dieses Kribbeln in der Wirbelsäule … Es spürt sie. Ruhig. Nicht jetzt.")
+	if not cs.alive(ticket): return
 	world.sound("hack")
 	await cs.flash(Color(0.7,0.22,0.3,0.35),0.25)
 	if not cs.alive(ticket): return
 	mark("gasp")
 	await transition(cs,4,0.4)
 	if not cs.alive(ticket): return
-	await cs.say("RAVEN","Zu heiß … Ich kriege keine Luft.")
+	await cs.say("RAVEN","Nicht gut … Zu heiß … Ich kriege keine Luft.")
 	if not cs.alive(ticket): return
 	await transition(cs,5,1.0)
 	if not cs.alive(ticket): return
-	await cs.say("SHADEPI","Nicht bewegen. Ich hole das Kryospray.")
+	await cs.say("SHADEPI","Deine Synapsen überhitzen. Nicht bewegen – ich hole das Kryospray.")
 	if not cs.alive(ticket): return
 	cs.end(func():
 		rest_recovery()

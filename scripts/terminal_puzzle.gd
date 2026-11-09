@@ -6,7 +6,7 @@ const CATALOG := {
 	"garage": ["decoder", "GARAGE / ZUGANGSCODE DES ORDENS", false],
 	"power": ["routing", "HANGAR / ENERGIEBUS", false],
 	"transponder": ["matrix", "AERODYNE / PRÜF-ICE", true],
-	"roof_signal": ["signal", "DACHTERMINAL / FUNKKENNUNG", false],
+	"roof_signal": ["signal", "DACHTERMINAL / BIOMETRIE-LOG", false],
 	"penthouse": ["decoder", "PENTHOUSE / SICHERHEITSTÜR", true],
 	"charge": ["signal", "AUFZUG / SPERRLADUNG", true],
 	"repair": ["jumper", "AERODYNE / NOTREPARATUR", false],

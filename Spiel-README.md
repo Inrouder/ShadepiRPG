@@ -1,6 +1,6 @@
 # Shadepi · Spieleranleitung
 
-**Aktueller Stand v0.46.2 · CodexAI.** [Downloads](https://github.com/Inrouder/ShadepiRPG/releases/latest) · [Bilder und Filme](docs/README.md) · [Änderungen](CHANGELOG.md). [Ältere Anleitung mit damaligen Abläufen](docs/archiv/spielanleitung-bis-v0461.md).
+**Aktueller Stand v0.47.0 · ClaudeHelper.** [Story-Durchsicht Kapitel 1–7](docs/story-durchsicht.md) · [Downloads](https://github.com/Inrouder/ShadepiRPG/releases/latest) · [Bilder und Filme](docs/README.md) · [Änderungen](CHANGELOG.md). [Ältere Anleitung mit damaligen Abläufen](docs/archiv/spielanleitung-bis-v0461.md).
 
 ## Starten und Speichern
 

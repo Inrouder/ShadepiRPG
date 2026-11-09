@@ -589,7 +589,7 @@ func chapter_objective() -> String:
 				return "Raven: Prüf-ICE per Matrix umgehen"
 			return Story.OBJECTIVES[beat] %point_index
 		Beat.ROOF:
-			return ["Kennung am Dachterminal prüfen", "Penthouse-Zugang öffnen"][mini(point_index, 1)]
+			return ["Biometrie-Log der Landung fälschen", "Penthouse-Tür öffnen · Tarnung bereit"][mini(point_index, 1)]
 		Beat.PACT:
 			return Story.OBJECTIVES[beat] %point_index
 		Beat.BOSS:
@@ -654,7 +654,7 @@ func interact(_actor: PixelActor = null) -> void :
 		if point_index == 2 and not memory_legacy_complete:
 			_open_memory(2)
 			return
-		toast(["Das Kloster.", "Lys Opfer.", "Das Vermächtnis."][point_index])
+		toast(["Das Kloster brennt noch immer in ihm.", "Lys Opfer.", "Das Vermächtnis."][point_index])
 		if point_index == 2:
 			_scene_echo_end()
 			return
@@ -705,14 +705,16 @@ func _complete_point() -> void:
 	else:
 		autosave()
 
+# v0.47.0 · ClaudeHelper: Wortlaut nach Kapitel 7 des Romans; löst die Prophezeiung aus
+# dem Hangar und den Maskenkodex aus Kapitel 5 auf.
 const RITUAL: = [
-	[["SHADEPI", "Raven … das Heiligtum in mir hat dich erkannt. Schon in der Gasse. Es hat dich erwählt."],
-		["RAVEN", "Und du?"],
-		["SHADEPI", "Ich brauche keinen Schwur, um bei dir zu bleiben."],
-		["RAVEN", "Gut. Das wollte ich hören."],
-		["SHADEPI", "Die Aufnahme in den Orden muss deine Entscheidung sein."],
-		["RAVEN", "Dann ist sie das. Ich will."]],
-	[["SHADEPI", "Orden des Weißen Drachen … ich bitte dich: Nimm Raven in deine Obhut."]],
+	[["SHADEPI", "Raven … das Heiligtum in mir hat dich erkannt. Schon in der Gasse. Es hat dich erwählt. Das meinte ich mit der Prophezeiung."],
+		["RAVEN", "Und du? Bin ich für dich nur eine Prophezeiung?"],
+		["SHADEPI", "Nein. Ich stünde an deiner Seite, auch wenn es das nicht getan hätte. Du hast mich daran erinnert, was es heißt, nicht nur ein Schatten zu sein."],
+		["RAVEN", "Das klingt … irgendwie sehr schön. Ich würde dich ja küssen, aber mit der Maske geht das schwer."],
+		["SHADEPI", "Ich kann dich in den Orden aufnehmen. Nur wenn du es freiwillig willst. Dann darf ich mich dir zeigen."],
+		["RAVEN", "Ich habe nichts mehr zu verlieren. Ich bin bereit, nach vorne zu blicken. Ich will."]],
+	[["SHADEPI", "Ich, Shadepi, Überlebender und einst erster Krieger des Ordens des Weißen Drachen, bitte dich: Nimm diese Seele in deine Obhut."]],
 	[["HEILIGTUM", "Dein Wille ist stark. Ich spüre viel Gutes in dir. Ich akzeptiere dich."]],
 	[["SHADEPI", "Hiermit nehme ich dich, Raven, in den Orden des Weißen Drachen auf. Ich ernenne dich zur Zweiten Kriegerin des Ordens und Behüterin des Heiligtums."]],
 ]
@@ -846,7 +848,8 @@ func _close_memory(done: bool) -> void:
 			_scene_echo_end()
 			return
 		_complete_point()
-		toast(("Der Angriff" if anchor==0 else "Lys Opfer")+" · Erinnerung gesichert")
+		# v0.47.0 · ClaudeHelper: Ravens Reaktion verbindet Rückblende und Gegenwart.
+		toast(("RAVEN: Zwei von ihnen sind gestorben, um ihn zu schützen …" if anchor==0 else "RAVEN: Er hat ihn Bruder genannt … und ihn verloren.")+" · Erinnerung gesichert")
 
 func _exit_tree() -> void:
 	_close_memory(false)
@@ -1123,8 +1126,10 @@ func _scene_plan() -> void:
 	await cs.lines([
 		["RAVEN", "Er hat einen privaten Landeplatz. Entweder wir dringen von oben ein, oder wir marschieren durch den Hauptaufzug direkt in sein Penthouse."],
 		["SHADEPI", "Dieser Sensor scannt jeden Gleiter vor der Landung. Wenn du die Kennung von Kenzōs Flieger auf einen anderen überträgst … ich weiß, wo ich einen herbekomme."],
-		["RAVEN", "Das kann ich. Aber ich komme mit. Morgen Abend schickt er seine Angestellten weg. Seine Wachen sind eine Etage tiefer, und er nutzt keine Kameras."],
-		["RAVEN", "Aber Kenzō selbst ist bis an die Zähne mit Militärtechnologie ausgestattet. Wir werden uns mit ihm einschließen."],
+		["RAVEN", "Das kann ich. Aber ich komme mit. Ich will ihm ins Gesicht sehen, wenn es vorbei ist – nachdem du deine Informationen hast."],
+		["RAVEN", "Wir machen es morgen Abend. Dienstags schickt Kenzō seine Angestellten weg, um seine … Spielsachen zu quälen. Dann ist er allein, seine Wachen sind eine Etage tiefer, und er schaltet die Kameras ab."],
+		["SHADEPI", "Das klingt fast zu einfach."],
+		["RAVEN", "Es ist einfach, wenn es nach Plan läuft. Aber Kenzō selbst ist bis an die Zähne mit Militärtechnologie ausgestattet. Wir werden uns mit ihm einschließen."],
 		["SHADEPI", "Ich habe immer gern einen Plan C. Dann lass uns den Aerodyne holen. Komm mit."],
 	])
 	if not cs.alive(ticket): return
@@ -1180,6 +1185,17 @@ func _scene_ambush() -> void:
 func _scene_chase() -> void:
 	var cs = begin_cutscene()
 	var ticket: int = cs.generation
+	# v0.47.0 · ClaudeHelper: Umsetzungsentscheidung – Jackals Telefon erklärt, warum
+	# der Hinterhalt Ravens Versteck findet; Kenzō erfährt so nur, dass Jackal fiel.
+	await cs.lines([
+		["RAVEN", "Woher wissen die, wo ich wohne? Ich habe jede Spur gelöscht!"],
+		["SHADEPI", "Jackals Telefon. Du trägst es noch bei dir."],
+		["RAVEN", "Verdammt … Sein Blutgeld hatte einen Peilsender."],
+	])
+	if not cs.alive(ticket): return
+	cs.do(func(): sound("prop_metal"))
+	await cs.say("RAVEN", "*zertritt das Telefon* – Jetzt nicht mehr.")
+	if not cs.alive(ticket): return
 	await cs.lines([
 		["SHADEPI", "*pfeift* – Ein mattschwarzes Motorrad rollt wie von Geisterhand aus der Seitenstraße. Kommst du mit?"],
 		["RAVEN", "Ein bisschen eng."],
@@ -1270,7 +1286,7 @@ func _scene_garage() -> void:
 	cs.animate(func(k: float): garage_door = 1.0 - smoothstep(0.0, 1.0, k), 1.4)
 	await cs.lines([
 		["RAVEN", "Und das ist dein Zuhause? Eine rostige Garage?"],
-		["SHADEPI", "Genau das ist es. Sieh dir die Werkbank an."],
+		["SHADEPI", "Genau das ist es. Niemand sucht einen Drachen in einer Garage. Sieh dir die Werkbank an."],
 	])
 	if not cs.alive(ticket): return
 	cs.do(func(): garage_door = 0.0)
@@ -1352,9 +1368,14 @@ func _scene_roof() -> void:
 	)
 	await cs.say("ARASAKA TOWER / LANDEPLATZ", "Heiße Luft peitscht über die Plattform, das Metall knackt. Der Aerodyne steht.")
 	if not cs.alive(ticket): return
+	# v0.47.0 · ClaudeHelper: Die Kennung wurde schon im Anflug akzeptiert; auf dem Dach
+	# bleibt das Biometrie-Log des Scanners (Roman: Identifikation, Fracht, Biometrie).
+	# Die zwanzig Sekunden Tarnung beginnen erst an der Penthouse-Tür.
 	await cs.lines([
-		["SHADEPI", "Hals- und Beinbruch. Ich muss innerhalb von zwanzig Sekunden drin sein, dann fällt meine Tarnung."],
+		["RAVEN", "Der Scanner hat unsere Biometrie mitgelesen. Wenn das Log die Wache erreicht, stehen sie in einer Minute hier oben. Ich fälsche es."],
+		["SHADEPI", "Hals- und Beinbruch. Mein Tarnfeld hält drinnen zwanzig Sekunden. Ich warte im Schatten der Luke, bis du die Tür offen hast."],
 		["RAVEN", "Dann lass mich vorgehen. Ich lenke ihn ab. Keine Angst – er wird sein Lieblingsspielzeug nicht töten wollen."],
+		["SHADEPI", "Wenn er dich anfasst, bin ich da."],
 	])
 	if not cs.alive(ticket): return
 	cs.do(func():
@@ -1364,7 +1385,7 @@ func _scene_roof() -> void:
 	await cs.wait(0.6)
 	if not cs.alive(ticket): return
 	cs.do(func(): player.hide())
-	cs.end(func(): toast("Kennung am Dachterminal prüfen"))
+	cs.end(func(): toast("Biometrie-Log am Dachterminal fälschen"))
 
 ## Kapitel 6: Raven betritt das Penthouse, Shadepi folgt im Tarnfeld.
 func _scene_penthouse() -> void:

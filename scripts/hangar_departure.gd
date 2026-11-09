@@ -102,11 +102,16 @@ func play() -> void:
 	cs.pose(squad[1], "idle")
 	await cs.fade(Color.BLACK, 0)
 	if not cs.alive(ticket): return
-	await cs.title("KAPITEL 6 · DIE RACHE", "Zurück im Hangar", 2.0)
+	# v0.47.0 · ClaudeHelper: der geplante Dienstagabend, nicht dieselbe Nacht.
+	await cs.title("KAPITEL 6 · DIE RACHE", "Am nächsten Abend · Zurück im Hangar", 2.0)
 	if not cs.alive(ticket): return
 	await cs.fade(Color.TRANSPARENT, 0.7)
 	if not cs.alive(ticket): return
-	await cs.say("RAVEN", "Da steht er. Ich habe alles geprüft. Er sollte uns bis zum Tower bringen.")
+	await cs.say("RAVEN", "Da steht er. Ich habe ihn den ganzen Tag geprüft. Kenzōs Angestellte haben den Tower vor einer Stunde verlassen.")
+	if not cs.alive(ticket): return
+	await cs.say("SHADEPI", "Ich kann mich nicht mit irgendjemandem verbinden, Raven. Das Heiligtum hat dich hineingelassen. Du wurdest mir prophezeit.")
+	if not cs.alive(ticket): return
+	await cs.say("RAVEN", "Prophezeit? … Erklär mir das, wenn wir lebend zurück sind.")
 	if not cs.alive(ticket): return
 	for targets in ROUTE:
 		await Motion.walk_pair(cs,squad,targets,90)
@@ -148,6 +153,8 @@ func play() -> void:
 	await cs.say("RAVEN", "Das hat er beim Test nicht gemacht.")
 	if not cs.alive(ticket): return
 	await cs.say("SHADEPI", "Dreckmühle.")
+	if not cs.alive(ticket): return
+	await cs.say("RAVEN", "Dann habt ihr ja was gemeinsam.")
 	if not cs.alive(ticket): return
 	cs.do(func():
 		cockpit_frame = 2

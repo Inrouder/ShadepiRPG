@@ -157,7 +157,8 @@ func play(from_garage: bool):
 	await cs.camera(Vector2(429,418),0.8,1.5)
 	if not cs.alive(ticket): return
 	mark("briefing")
-	for line in [["SHADEPI","Ich muss schon mal hoch in mein Versteck. Zum Kompensator. Das ist alle sechs Tage nötig."],["SHADEPI","Machst du den Aerodyne wieder gangbar? Und spiel die Kennung von Kenzōs Gleiter auf. Komm danach nach oben."],["RAVEN","Kriege ich hin. Geh ruhig vor. Ich komme, sobald er wieder läuft."]]:
+	# v0.47.0 · ClaudeHelper: Ravens Frage aus Kapitel 4 des Romans bereitet den Maskengriff vor.
+	for line in [["RAVEN","Sag mal … steckt unter der Rüstung ein Mensch oder nur Metall?"],["SHADEPI","Tatsächlich ist noch viel Menschliches an mir. Biologisch organisch, neuroelektronisch ergänzt. Mein Kopf und mein Geist sind kein Computer."],["SHADEPI","Ich muss schon mal hoch in mein Versteck. Zum Kompensator. Das ist alle sechs Tage nötig."],["SHADEPI","Machst du den Aerodyne wieder gangbar? Und spiel die Kennung von Kenzōs Gleiter auf. Komm danach nach oben."],["RAVEN","Kriege ich hin. Geh ruhig vor. Ich komme, sobald er wieder läuft."]]:
 		await cs.say(line[0],line[1])
 		if not cs.alive(ticket): return
 	mark("shadepi_leaves")
