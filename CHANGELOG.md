@@ -1,5 +1,14 @@
 # Versionshinweise
 
+## v0.39.0 – CodexAI: Sichtbare Plattformfahrt und Hangar-Enthüllung · 9. November 2026
+
+- Zweiter Cinema-Block: vier HQ-Pixelposen für Shadepis Werkbankschalter, sechs tatsächliche Entriegelungsbilder und eine texturierte Schachtkulisse. Figuren und Motorrad fahren gemeinsam sichtbar nach unten; Andocken und Hallenöffnung ersetzen die beschriebene Schwarzblende.
+- Die Kameraprojektion bleibt beim Andocken erhalten. Erst Halle und Aerodyne zeigen, danach Ravens Reaktion; gemeinsame freie Laufwege und Shadepis Abgang zum Kompensator. Reparatur- und Kennungsrätsel bleiben spielbar.
+- Normaler Erkundungs-Hangar und Enthüllung verwenden nun denselben Aerodyne wie Flug/Flucht/See. Geschlossener unterirdischer Dachbereich, KOBAN-TEC-Marke, dauerhafte Plattform und geparktes Motorrad; Kisten/Fässer außerhalb der Ankunftsfläche, vorhandene Speicher-IDs bleiben gültig.
+- Unterbrochene Entdeckung kompatibel speichern und wiederholen, abgeschlossene oder ältere Hangarstände ohne Wiederholung laden. Tatsächliche Figuren vor Abbruch/Kapitelwechsel aus der Filmansicht lösen; Pause und Controller-Skip geprüft. Neue Ablaufprüfung in GitHub-CI.
+- 841 gezielte Prüfungen und zehn zusätzliche Exportprüfungen ohne Fehler. Schalterkontakt, Fahrt, tatsächliches Andocken und vollständige Übergabe im Renderer aufgenommen; geschlossener Hangar und Reparaturzugang auch aus dem exportierten Paket gesichtet.
+- [Spielbilder und zusammenhängender Film](docs/hangar-entdeckung.md), [Arbeitsnachweis und Exportprüfung](docs/arbeiten/hangar-v039.md). Version und Windows-Datei-/Produktfelder fortgeschrieben; Stilbibel, Konsistenzvorlage und Cinema-Roadmap aktualisiert.
+
 ## v0.38.0 – CodexAI: Ravens Eisbad, sichtbare Rückkehr und Kryospray-Rettung · 9. November 2026
 
 - Erster nächster Cinema-Block in Kapitel 2: acht neue HQ-Pixelposen für Anschluss, Absenken, Ruhe im Wasser, Rückkehr, Erschöpfung und gestützte Kryospray-Behandlung. Vorhandene Wanne und vordere Wasser-/Randfläche verdecken eingetauchte Körperteile; texturiertes Kabel an Pumpen- und Kragenkontakt. Shadepi wartet auf freiem Boden neben dem Becken.

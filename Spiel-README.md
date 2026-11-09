@@ -1,6 +1,8 @@
 # Shadepi · Echos in Neon
 
-**Spieleranleitung für v0.38.0 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+**Spieleranleitung für v0.39.0 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+
+**Garage und Hangar v0.39.0 · CodexAI:** Nach dem Garagen-Decoder siehst du die Entriegelung und die gemeinsame Plattformfahrt mit dem Motorrad. Die Kamera zeigt den Hangar und den Aerodyne, bevor Raven reagiert. Danach reparierst du als Raven wie bisher das Fahrzeug und überträgst die Kennung. **E / Enter / A**: Dialog weiter; **Leertaste / B**: Szene überspringen; **Esc / Start**: Pause. Laden während der Fahrt beginnt den Übergang erneut; abgeschlossene Szenen werden nicht wiederholt. [Bilder und Film](docs/hangar-entdeckung.md).
 
 **Eisbad v0.38.0 · CodexAI:** In Kapitel 2 siehst du Ravens Anschluss und Einstieg ins Wasser sowie ihre Rückkehr aus dem Netz. Danach holst du als Shadepi das Kryospray am Überwachungstisch (**E / Enter / A**) und gehst zu Raven zurück. Dort startet dieselbe Taste das Stützen und die Behandlung. **Leertaste / B** überspringt eine Szene, **Esc / Start** pausiert. Aufgenommenes Spray bleibt beim Laden erhalten; unterbrochene Anschluss-, Rückkehr- und Behandlungsszenen beginnen sicher erneut. [Bilder und Filme](docs/eisbad.md).
 

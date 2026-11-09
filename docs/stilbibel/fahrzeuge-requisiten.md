@@ -1,5 +1,7 @@
 # Fahrzeuge und Requisiten · v0.32.2 · CodexAI
 
+**Aktualisierung v0.39.0 · CodexAI:** [Plattformfahrt und Hangarentdeckung](../hangar-entdeckung.md), vier eigene Shadepi-Schalterposen, sechs Entriegelungsbilder und texturierter Schacht. Fahrt mit den tatsächlichen Figuren; danach identischer Aerodyne in normaler Erkundung und Film. [Aktive Quellen und Kontaktanker](../../assets/story/hangar-discovery/README.md).
+
 [Stilbibel](README.md) · [Art Direction](artdirection.md) · [Welten](welten.md)
 
 ## Fahrzeuge
@@ -18,13 +20,13 @@ Die Tafel zeigt vorhandene Quellbilder zur Form-/Materialerkennung, **keinen gem
 | **Drohne** | Kompakter technischer Körper mit vier deutlich erkennbaren Rotoren. | Gleicher Atlas, Zelle 3; Größe und Warn-/Angriffsflächen nach Flug-/Fahrmodus. |
 | **Geparktes Motorrad** | Eigenständige Variante ohne Fahrer; dieselbe rote/dunkle Materialfamilie. | [bike-parked.png](../../assets/world/hq/bike-parked.png), Garage und Weltobjektdarstellung. |
 
-### Sichtbarer noch offener Aerodyne-Unterschied
+### Historischer Aerodyne-Unterschied
 
 | Hangar-/Abflugdarstellung | Flug-/Dachdarstellung |
 | --- | --- |
 | ![Aerodyne beim Abflug](../previews/bericht8-abflug.png) | ![Aerodyne nach der Landung](../flug-dach.png) |
 
-Die Bilder in dieser historischen Vergleichstabelle zeigen den früheren Unterschied. Seit v0.35.0 nutzt der filmische Hangar-Abflug denselben Fahrzeugrenderer wie die Tower-Flucht; ab v0.37.0 verwenden diese, Flug, Landung und See den gemeinsamen animierten Atlas. **Offen bleibt das in die normale Erkundungs-Hangarkulisse eingemalte Schiff.** Es ist keine neue Fahrzeugidentität; dessen Freistellung sowie zusätzliche Kurven-/Seiten-/Fahrwerksansichten stehen in der [Roadmap](../cinema-roadmap.md).
+Die Bilder in dieser historischen Vergleichstabelle zeigen den früheren Unterschied. Seit v0.35.0 nutzt der filmische Hangar-Abflug denselben Fahrzeugrenderer wie die Tower-Flucht; ab v0.37.0 verwenden diese, Flug, Landung und See den gemeinsamen animierten Atlas. **Seit v0.39.0 ist auch das eingemalte Schiff im Erkundungs-Hangar ersetzt.** Der identische animierte Rumpf steht separat auf dem freien Hallenboden. Zusätzliche Kurven-/Seiten-/Fahrwerksansichten stehen weiterhin in der [Roadmap](../cinema-roadmap.md).
 
 ## Neun Weltobjekte in allen drei Zuständen
 

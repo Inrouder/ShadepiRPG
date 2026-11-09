@@ -1,12 +1,14 @@
 # Welten und Kulissen · v0.32.2 · CodexAI
 
+**Aktualisierung v0.39.0 · CodexAI:** [Plattformfahrt und Hangarentdeckung](../hangar-entdeckung.md), vier eigene Shadepi-Schalterposen, sechs Entriegelungsbilder und texturierter Schacht. Fahrt mit den tatsächlichen Figuren; danach identischer Aerodyne in normaler Erkundung und Film. [Aktive Quellen und Kontaktanker](../../assets/story/hangar-discovery/README.md).
+
 [Stilbibel](README.md) · [Art Direction](artdirection.md) · [Figuren](figuren.md)
 
 ## Gesamtübersicht
 
 ![20 Hintergrundquellen aller Kapitel und Erinnerungen](bilder/welten.png)
 
-Die Tafel zeigt vollständige vorhandene Hintergrundquellen ohne die zusätzlich im Spiel gezeichneten Figuren, Objekte und FX. Die kleinen Ansichten dienen dem Vergleich von Architektur und Licht; die verlinkten Originale enthalten die volle Texturauflösung. Die 16 registrierten `Painted.ART`-Quellen werden um den separaten Kompensator und die drei Erinnerungsschauplätze ergänzt.
+Die Tafel zeigt vorhandene Hintergrundquellen ohne die zusätzlich im Spiel gezeichneten Figuren, Objekte und FX. Den aktuellen Hangar-Verbund mit geschlossenem Dach, Plattform und separatem Aerodyne zeigen die oben verlinkten Spielbilder. Die kleinen Ansichten dienen dem Vergleich von Architektur und Licht; die verlinkten Originale enthalten die volle Texturauflösung. Die 16 registrierten `Painted.ART`-Quellen werden um den separaten Kompensator und die drei Erinnerungsschauplätze ergänzt.
 
 ## Schauplatzfamilien über das ganze Spiel
 
@@ -19,8 +21,8 @@ Die Tafel zeigt vollständige vorhandene Hintergrundquellen ohne die zusätzlich
 | **Deep Dive · Kapitel 2** | [dive.png](../../assets/world/painted/dive.png) | Violett/Cyan, Datenwege und schwebende digitale Gegner; virtuelle Formensprache klar von physischen Industrieanlagen unterscheiden. |
 | **Hinterhalt · Kapitel 3** | [ambush.png](../../assets/world/painted/ambush.png) | Nasse enge Stadtfläche, Deckung und begrenzte Kampfarena; Licht-/Materialfamilie der Stadt bleibt erkennbar. |
 | **Motorradverfolgung · Kapitel 3** | [highway.png](../../assets/world/painted/highway.png) | Bewegte Top-down-Fahrperspektive. Straßenobjekte liegen unter Fahrzeugen; Straßentexturen sauber fortsetzen. Keine unveränderte Sideview-Karte als Fahrbahn einsetzen. |
-| **Garage · Kapitel 4** | [garage.png](../../assets/world/painted/garage.png) | Werkstatt, Tor, warme Arbeitsleuchten und kalte Technik. Geparktes Motorrad liegt auf seiner eigenen Plattform mit passender Kollision. |
-| **Hangar · Kapitel 4 / Abflug nach Heiligtum** | [hangar.png](../../assets/world/painted/hangar.png), [hangar-empty.png](../../assets/story/departure/hangar-empty.png), [Cockpit](../../assets/story/departure/cockpit.png) | Großer technischer Raum; Konsolen stehen auf dem Boden. Der Abflug verwendet die leere Raumvariante mit separat bewegtem Aerodyne. Cockpit, Einsteigen und Abheben sind eigene Szenenphasen. |
+| **Garage · Kapitel 4** | [garage.png](../../assets/world/painted/garage.png) | Werkstatt, Tor, warme Arbeitsleuchten und kalte Technik. Geparktes Motorrad liegt auf seiner eigenen Plattform mit passender Kollision. Nach dem Decoder fahren beide Figuren und Motorrad sichtbar durch den neuen Schacht. |
+| **Hangar · Kapitel 4 / Abflug nach Heiligtum** | [hangar.png](../../assets/world/painted/hangar.png), [hangar-empty.png](../../assets/story/departure/hangar-empty.png), [Cockpit](../../assets/story/departure/cockpit.png) | Großer technischer Raum; Konsolen stehen auf dem Boden. Erkundung und Abflug verwenden die leere Raumvariante mit separat bewegtem Aerodyne; bei der unterirdischen Entdeckung ist das Dach durch die ursprüngliche geschlossene Dachtextur verdeckt. Plattform/Motorrad bleiben zurück. Cockpit, Einsteigen und Abheben sind eigene Szenenphasen. |
 | **Wohnraum · Kapitel 5** | [chamber-connected.png](../../assets/world/painted/chamber-connected.png) | Warmes Holz-/Metallinterieur, Bett, alte Rüstung und in die Wand integrierte Tür. Menschlicher Innenraummaßstab statt voller Kartenbreite. |
 | **Kompensator · Kapitel 5** | [compensator-clear.png](../../assets/world/painted/compensator-clear.png) | Separater Raum mit Diagnostik und Tanks. Stuhl kommt aus den Figurenposen; nicht erneut ins Hintergrundbild malen. |
 | **Erinnerungsanker · Kapitel 5** | [memory.png](../../assets/world/painted/memory.png) | Virtueller Zwischenraum mit drei Ankern, eigene Daten-/Energieästhetik. Die eigentlichen Erinnerungen haben andere Kulissen. |

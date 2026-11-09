@@ -9,6 +9,9 @@ const TowerExtraction = preload("res://scripts/tower_extraction.gd")
 const TowerKenzo = preload("res://scripts/tower_kenzo.gd")
 const TowerEscape = preload("res://scripts/tower_escape.gd")
 const LakeSequence = preload("res://scripts/lake_sequence.gd")
+const HangarArt = preload("res://scripts/hangar_art.gd")
+const HangarDiscovery = preload("res://scripts/hangar_discovery.gd")
+const HangarWorld = preload("res://scripts/hangar_world.gd")
 const Drive = preload("res://scripts/campaign_drive.gd")
 const AerodyneFlight = preload("res://scripts/aerodyne_flight.gd")
 const ParkedAerodyne = preload("res://scripts/parked_aerodyne.gd")
@@ -76,6 +79,9 @@ var departure: Node2D
 var flight_intro_pending := false
 var lake_scene_pending := false
 var lake_sequence: Node2D
+var discovery_pending := false
+var hangar_discovery: Node2D
+var hangar_world: Node2D
 var bike_pos: = BIKE_PARK
 var bike_rot: = 0.0
 
@@ -167,11 +173,21 @@ func new_game(_save_checkpoint: bool = true) -> void :
 	fresh_entry = true
 	_enter(Beat.PACT)
 
-func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo: bool = false, seen_attack: bool = false, seen_sacrifice: bool = false, seen_legacy: bool = false, saved_sanctuary_stage: int = 0, saved_flight_intro: bool = false, saved_tower_stage: int = -1, saved_lake_pending: bool = false) -> void :
+func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo: bool = false, seen_attack: bool = false, seen_sacrifice: bool = false, seen_legacy: bool = false, saved_sanctuary_stage: int = 0, saved_flight_intro: bool = false, saved_tower_stage: int = -1, saved_lake_pending: bool = false, saved_discovery: bool = false) -> void :
 	_close_memory(false)
 	var fresh: = fresh_entry
 	fresh_entry = false
 	cutscene.abort()
+	if is_instance_valid(hangar_discovery):
+		hangar_discovery.restore()
+		hangar_discovery.get_parent().remove_child(hangar_discovery)
+		hangar_discovery.queue_free()
+	hangar_discovery = null
+	if is_instance_valid(hangar_world):
+		hangar_world.get_parent().remove_child(hangar_world)
+		hangar_world.queue_free()
+	hangar_world = null
+	discovery_pending = next in [Beat.GARAGE,Beat.HANGAR] and (saved_discovery or (next==Beat.HANGAR and fresh))
 	if is_instance_valid(lake_sequence):
 		lake_sequence.hide()
 		lake_sequence.get_parent().remove_child(lake_sequence)
@@ -274,6 +290,11 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo:
 	player.visible = not raven_leads()
 	var backgrounds: = ["hideout", "ambush", "", "garage", "hangar", "chamber", "", "rooftop", "suite", "suite", "lakeside", "lakeside"]
 	set_painted_solids(backgrounds[beat])
+	if beat==Beat.HANGAR:
+		hangar_world = HangarWorld.new()
+		hangar_world.world = self
+		actors.add_child(hangar_world)
+		if not discovery_pending and point_index==0: reset_raven(Vector2(438,468))
 	if beat == Beat.ECHO:
 		sanctuary_tableau = SanctuaryTableau.new()
 		actors.add_child(sanctuary_tableau)
@@ -587,7 +608,7 @@ func interaction_prompt() -> String:
 	return "E / A · " + chapter_objective()
 
 func _hangar_prop() -> String:
-	for item in [[Vector2(193, 289), "Klingen ansehen"], [Vector2(476, 293), "Ersatzteile ansehen"], [Vector2(899, 330), "Aerodyne ansehen"]]:
+	for item in [[Vector2(193, 289), "Klingen ansehen"], [Vector2(476, 293), "Ersatzteile ansehen"], [Vector2(895, 380), "Aerodyne ansehen"]]:
 		if raven.position.distance_to(item[0]) <= 24.0:
 			return item[1]
 	return ""
@@ -846,6 +867,7 @@ func save_game() -> bool:
 	config.set_value("campaign", "boss_spot",boss_spot)
 	config.set_value("campaign", "aerodyne_spot",aerodyne_spot)
 	config.set_value("campaign", "lake_scene_pending",lake_scene_pending)
+	config.set_value("campaign", "discovery_pending",discovery_pending)
 	config.set_value("props", "state", dressing_state())
 	return config.save(Admin.checkpoint_path(SAVE, get_tree())) == OK
 
@@ -869,6 +891,7 @@ func load_game(_requested_mode: Variant = null) -> bool:
 	# Older chapter-7 saves receive the new arrival/finale once, preserving ritual progress.
 	var legacy_lake_scene: bool = saved==Beat.END or (saved==Beat.LAKE and saved_point is int and saved_point==0)
 	var saved_lake: Variant = config.get_value("campaign", "lake_scene_pending", legacy_lake_scene)
+	var saved_discovery: Variant = config.get_value("campaign","discovery_pending",false)
 	var saved_sanctuary_stage: Variant = config.get_value("campaign", "sanctuary_stage", 0)
 	var seen_attack: Variant = config.get_value("campaign", "memory_attack_complete", false)
 	var seen_sacrifice: Variant = config.get_value("campaign", "memory_sacrifice_complete", false)
@@ -879,7 +902,7 @@ func load_game(_requested_mode: Variant = null) -> bool:
 	if saved == Beat.ROOF and saved_point is int and saved_point >= 2:
 		saved = Beat.BOSS
 		saved_point = 0
-	_enter(saved, saved_section if saved_section is int else 0, saved_point if saved_point is int else 0, saved_echo is bool and saved_echo, seen_attack is bool and seen_attack, seen_sacrifice is bool and seen_sacrifice, seen_legacy is bool and seen_legacy, saved_sanctuary_stage if saved_sanctuary_stage is int else 0, saved_flight_intro is bool and saved_flight_intro, saved_tower if saved_tower is int and saved_tower>=0 and saved_tower<=3 else -1, saved_lake is bool and saved_lake)
+	_enter(saved, saved_section if saved_section is int else 0, saved_point if saved_point is int else 0, saved_echo is bool and saved_echo, seen_attack is bool and seen_attack, seen_sacrifice is bool and seen_sacrifice, seen_legacy is bool and seen_legacy, saved_sanctuary_stage if saved_sanctuary_stage is int else 0, saved_flight_intro is bool and saved_flight_intro, saved_tower if saved_tower is int and saved_tower>=0 and saved_tower<=3 else -1, saved_lake is bool and saved_lake,saved_discovery is bool and saved_discovery)
 	return true
 
 func _draw() -> void :
@@ -891,10 +914,15 @@ func _draw() -> void :
 		if sanctuary_stage == 2: art = SanctuaryTableau.ROOM
 		draw_texture_rect(art, Painted.CHAMBER_RECT, false)
 	else:
-		draw_texture_rect(art, Rect2(0, 0, 1024, 640), false)
-	if beat==Beat.HANGAR: Painted.draw_hangar_brand(self)
+		if beat==Beat.HANGAR:
+			HangarArt.room(self)
+			HangarArt.floor(self,true,0)
+		else: draw_texture_rect(art, Rect2(0, 0, 1024, 640), false)
 	if beat == Beat.GARAGE:
+		if is_instance_valid(hangar_discovery) and hangar_discovery.view=="garage": HangarArt.floor(self,false,hangar_discovery.deck_frame)
 		_draw_garage()
+		if is_instance_valid(hangar_discovery) and hangar_discovery.stage=="switch":
+			draw_texture_rect_region(HangarArt.SWITCH,Rect2(HangarArt.SWITCH_TARGET-Vector2(3,4),Vector2(6,8)),Rect2(332,137,40,55),Color(0.6,1.0,1.0))
 	if beat == Beat.HANGAR and point_index == 3:
 		for port in PORTS:
 			draw_rect(Rect2(port - Vector2(12, 9), Vector2(24, 18)), Color("253747"))
@@ -984,9 +1012,10 @@ func _beat_scene(fresh: bool) -> void:
 		Beat.CHASE:
 			if fresh: _scene_chase()
 		Beat.GARAGE:
-			if fresh: _scene_garage()
+			if discovery_pending: _scene_descent()
+			elif fresh: _scene_garage()
 		Beat.HANGAR:
-			if fresh: _scene_hangar()
+			if fresh or discovery_pending: _scene_hangar()
 		Beat.ECHO:
 			if echo_ready and memory_legacy_complete: _scene_echo_end()
 			elif not echo_ready and sanctuary_stage == 0: _scene_sanctuary()
@@ -1010,6 +1039,7 @@ func _beat_scene(fresh: bool) -> void:
 		toast(chapter_objective())
 
 func camera_home() -> Vector2:
+	if is_instance_valid(hangar_discovery) and hangar_discovery.view=="hangar": return raven.position+Vector2(0,-52)
 	if beat == Beat.ECHO and not echo_ready:
 		return Painted.CHAMBER_CAMERA
 	if raven_leads():
@@ -1258,54 +1288,17 @@ func _draw_garage() -> void:
 		draw_set_transform(Vector2.ZERO)
 
 func _scene_descent() -> void:
-	var cs = begin_cutscene()
-	var ticket: int = cs.generation
-	await cs.camera(Vector2(760, 320), 0.6, 1.2)
-	if not cs.alive(ticket): return
-	cs.do(func():
-		sound("prop_metal")
-		shake = 6.0
-	)
-	await cs.say("GARAGE", "Ein verstecktes Symbol leuchtet auf. Mit hydraulischem Zischen gleitet der Betonboden unter ihnen in die Tiefe.")
-	if not cs.alive(ticket): return
-	await cs.fade(Color.BLACK, 0.8)
-	if not cs.alive(ticket): return
-	cs.do(func(): _advance())
+	hangar_discovery = HangarDiscovery.new()
+	hangar_discovery.world = self
+	add_child(hangar_discovery)
+	hangar_discovery.play(true)
 
 func _scene_hangar() -> void:
-	player.position = Vector2(300, 420)
-	raven.position = Vector2(270, 436)
-	player.show()
-	var cs = begin_cutscene()
-	var ticket: int = cs.generation
-	cs.pose(player, "idle")
-	cs.pose(raven, "idle")
-	await cs.camera(Vector2(420, 330), 0.0, 1.0)
-	if not cs.alive(ticket): return
-	await cs.fade(Color.BLACK, 0.0)
-	if not cs.alive(ticket): return
-	await cs.fade(Color(0, 0, 0, 0), 1.0)
-	if not cs.alive(ticket): return
-	await cs.say("SANKTUARIUM DES ORDENS", "Unten erstreckt sich eine höhlenartige Halle: exotische Fahrzeuge, Klingen aus einer anderen Zeit, Kisten voller Technologie.")
-	if not cs.alive(ticket): return
-	await cs.walk(raven, Vector2(380, 420), 60)
-	if not cs.alive(ticket): return
-	cs.face(raven, Vector2(560, 260))
-	cs.pose(raven, "idle")
-	await cs.say("RAVEN", "Wow. Beeindruckend.")
-	if not cs.alive(ticket): return
-	cs.face(player, raven.position)
-	await cs.lines([
-		["SHADEPI", "Ich muss schon mal hoch in mein Versteck. Zum Kompensator. Das ist alle sechs Tage nötig."],
-		["SHADEPI", "Machst du den Aerodyne wieder gangbar? Und spiel die Kennung von Kenzōs Gleiter auf. Komm danach nach oben."],
-		["RAVEN", "Kriege ich hin. Geh ruhig vor. Ich komme, sobald er wieder läuft."],
-	])
-	if not cs.alive(ticket): return
-	cs.release(player)
-	await cs.walk(player, Vector2(40, 410), 90)
-	if not cs.alive(ticket): return
-	cs.do(func(): player.hide())
-	cs.end(func(): toast("Aerodyne vorbereiten"))
+	hangar_discovery = HangarDiscovery.new()
+	hangar_discovery.world = self
+	add_child(hangar_discovery)
+	if is_instance_valid(hangar_world): hangar_world.hide()
+	hangar_discovery.play(false)
 
 ## Kapitel 5: Heiligtum.
 func _scene_sanctuary() -> void:

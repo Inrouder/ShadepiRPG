@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.38.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.39.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -38,6 +38,12 @@ Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und
 ## Mitarbeit und verbindliche Konsistenz
 
 Für Menschen und KI: **[Bebilderte Stilbibel des gesamten Spiels](docs/stilbibel/README.md)** · [Alle 23 Figuren mit Einzelkarten](docs/stilbibel/figuren.md) · [Konsistenzregeln](KONSISTENZ.md) · [Mitarbeit](CONTRIBUTING.md) · [Kopierbarer Auftrag und Arbeitsnachweis](docs/vorlagen/konsistenz-auftrag.md). Die Projektregeln in [AGENTS.md](AGENTS.md), der Einstieg für [Claude](CLAUDE.md) und die Pull-Request-Vorlage verweisen auf denselben Standard.
+
+## Neu in v0.39.0 · CodexAI · 9. November 2026
+
+- Kapitel 4 zeigt die Werkbankbetätigung, sechs mechanische Entriegelungsbilder und die sichtbare Fahrt mit beiden Figuren und Motorrad durch den texturierten Schacht. Danach folgen Andocken und Hangarenthüllung vor Ravens Reaktion.
+- Der Erkundungs-Hangar verwendet jetzt denselben Aerodyne wie Flug und Abflug. Plattform und Motorrad bleiben erhalten; Ladefläche und Laufwege sind frei. Reparatur, Kennung und Shadepis Weg zum Kompensator bleiben im Ablauf.
+- 841 gezielte Prüfungen plus zehn zusätzliche Exportprüfungen ohne Fehler. [Spielbilder und Film](docs/hangar-entdeckung.md), [Arbeitsnachweis](docs/arbeiten/hangar-v039.md). Zweiter Block der [Cinema-Roadmap](docs/cinema-roadmap.md).
 
 ## Neu in v0.38.0 · CodexAI · 9. November 2026
 

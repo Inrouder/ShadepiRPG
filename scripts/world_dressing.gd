@@ -44,8 +44,8 @@ const LAYOUTS: = {
 		["parts_bin", "dumpster", Vector2(91, 303)], 
 	], 
 	"hangar": [
-		["spare_crate", "crate", Vector2(268, 478)], ["spare_server", "server", Vector2(98, 299)], 
-		["fuel_drum", "barrel", Vector2(389, 478)], ["spare_fuel", "barrel", Vector2(434, 478)], 
+		["spare_crate", "crate", Vector2(140, 400)], ["spare_server", "server", Vector2(98, 299)],
+		["fuel_drum", "barrel", Vector2(467, 500)], ["spare_fuel", "barrel", Vector2(516, 496)],
 		["parts_case", "crate", Vector2(582, 305)], ["diagnostics", "server", Vector2(948, 434)], 
 	], 
 	"chamber": [

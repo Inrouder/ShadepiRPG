@@ -92,6 +92,12 @@ jobs:
           set -euo pipefail
           godot --headless --script res://tests/ice_bath.gd 2>&1 | tee /tmp/ice-bath.log
           if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/ice-bath.log; then exit 1; fi
+      - name: Validate garage descent, hangar reveal and rider ownership
+        shell: bash
+        run: |
+          set -euo pipefail
+          godot --headless --script res://tests/hangar_discovery.gd 2>&1 | tee /tmp/hangar-discovery.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/hangar-discovery.log; then exit 1; fi
       - name: Validate cinematic entrances, hangar routes and continuous flight
         shell: bash
         run: |
