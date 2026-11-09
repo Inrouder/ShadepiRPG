@@ -42,7 +42,7 @@ func run() -> void:
 	check(t.sprite.texture_filter == hero.visual.texture_filter, "special poses and normal heroes have identical sampling at gameplay scale")
 	check(t.sprite.material == null, "transparent source edges are not forced opaque by the old cutout shader")
 	var original := hero.visual.texture.get_image()
-	var normal_height := opaque_bounds(original, Rect2i(0, 0, 128, 160)).size.y * hero.visual.scale.y
+	var normal_height := opaque_bounds(original, Rect2i(Vector2i.ZERO, original.get_size())).size.y * hero.visual.scale.y
 	var source := t.ART.get_image()
 	check(source.get_pixel(0, 0).a == 0.0 and source.get_pixel(source.get_width() - 1, 0).a == 0.0, "atlas background is truly transparent instead of the former gray alpha matte")
 	var first_plate := Vector2.ZERO

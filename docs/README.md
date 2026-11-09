@@ -1,8 +1,15 @@
 # Shadepi · Bilder, Filme und Dokumentation
 
-**Stand v0.44.1 · CodexAI · 9. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
+**Stand v0.45.0 · CodexAI · 9. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
 
 Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnahmen, animierte Szenenfilme, Bedienung und technische Hinweise. Die PNG-Vorschauen sind direkt in GitHub sichtbar; die Filme bleiben zusätzlich als verlinkte WebP-Dateien erreichbar.
+
+## Fehlerbericht und Heldenqualität · v0.45.0 · CodexAI
+
+| Neue Standardfiguren, Originale gesichert | Figurenreaktionen und korrigierte Szenen |
+| --- | --- |
+| [![Neue Helden mit registrierten Sohlenkontakten](previews/bericht-heroes-new-v045.png)](fehlerbericht-v045.md) | [![Chrome Jackal nach seinem letzten Treffer](previews/bericht-jackal-ground-v045.png)](fehlerbericht-v045.md) |
+| [Zwölf Berichtspunkte, Größen und Vorher/Nachher](fehlerbericht-v045.md) | [Szenenfilm](previews/fehlerbericht-szenen-v045.webp) · [Prüf-/Exportnachweis](arbeiten/fehlerbericht-v045.md) |
 
 ## Menü und Test-Kontrollpunkte · v0.44.1
 

@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.44.1 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.45.0 · CodexAI · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -9,6 +9,11 @@ Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben�
 ## Bilder aus dem Spiel
 
 **[Bebilderte Dokumentation mit Szenenfilmen öffnen →](docs/README.md)** · Ein Klick auf eine Vorschau öffnet den zugehörigen Bericht.
+
+| Neue Gameplay-Helden · v0.45.0 · CodexAI | Sichtbare Fall- und Todesposen |
+| --- | --- |
+| [![Neue Raven- und Shadepi-Sprites im tatsächlichen Spiel](docs/previews/bericht-heroes-new-v045.png)](docs/fehlerbericht-v045.md) | [![Raven liegt nach ihrem Zusammenbruch](docs/previews/bericht-raven-ground-v045.png)](docs/fehlerbericht-v045.md) |
+| [Alle zwölf Korrekturen und Originalvergleich](docs/fehlerbericht-v045.md) | [Szenenfilm öffnen](docs/previews/fehlerbericht-szenen-v045.webp) |
 
 | Menü mit Bodenkontakt und Test-Kontrollpunkten | Verfolgung und Frachtdrohnen |
 | --- | --- |

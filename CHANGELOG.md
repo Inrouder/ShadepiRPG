@@ -1,5 +1,14 @@
 # Versionshinweise
 
+## v0.45.0 – CodexAI: Heldenqualität und zwölf Fehlerpunkte aus dem Spielbericht · 9. November 2026
+
+- Zwei neue Gameplay-Heldenbanken mit je 64 detaillierten Pixelposen, acht Richtungen und vier echten Gehphasen. Tatsächliche Regionen, Sohlen- und Pistolenkontakte pro Pose registriert; stabile Körperhöhe und Abtastung. Originale bytegleich erhalten und zusätzlich gesichert; bestehende Sonderangriffe und Custom-Ersetzungen weiter nutzbar.
+- Raven erhält Fall-/Bodenbilder und eine benommene Rückkehr aus den Erinnerungen; Jackal eine eigene Todesfolge. Ersatzposen pausieren und werden bei Rückkehr/Abbruch bereinigt.
+- Elektroverteiler/Server behalten ihre sichtbare Gehäusehöhe beim Schadenswechsel; blaue/violette Schützen setzen Raster und Maßstab bei jedem Zustandswechsel zurück. Ravens Weg im Versteck umgeht Wagen und Verteiler.
+- Verfolgung endet nur bei gültigem Ausgang der aktuellen Fahrzeuginstanz, mit längerem Siegauslauf oder sichtbarem Ausfall. Garageneinfahrt zeigt Straße; ein Decoder ersetzt die unlogische Hin-/Rücklauf-Aufgabe. See-Gespräch richtet Raven auf Shadepi aus.
+- 1.897 gezielte Prüfungen und 20 Prüfungen des exportierten Pakets ohne Fehler. Native Spielansichten und Szenenfilm, neue Regression in GitHub-CI. Keine vollständige manuelle Kampagnen-/Audioabnahme.
+- [Bilder, Originalvergleich und Film](docs/fehlerbericht-v045.md), [Arbeits-/Exportnachweis](docs/arbeiten/fehlerbericht-v045.md). Figurenkarten, Konsistenzregeln, PNG-Vorschauen und Versionsfelder fortgeschrieben.
+
 ## v0.44.1 – CodexAI: Bodenreflexion im Standbereich der Menüfiguren korrigiert · 9. November 2026
 
 - Helle eingemalte Nässe-Lichtspur und zusätzliche Glanzverstärkung im unmittelbaren Standbereich der vier Stiefel gezielt dämpfen. Gleiche Sohlenanker wie die Kontaktschatten; Transformation der vergrößerten Stadttextur berücksichtigen.

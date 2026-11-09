@@ -1,6 +1,6 @@
 # Verbindliche Konsistenzvorlage für ShadepiRPG
 
-**Stand v0.44.1 · CodexAI · 9. November 2026; eingeführt mit v0.32.1.** Gilt für das gesamte Spiel und alle Mitwirkenden, ob Mensch oder KI. Vor Änderungen zusammen mit [AGENTS.md](AGENTS.md) lesen und die [Arbeitsvorlage](docs/vorlagen/konsistenz-auftrag.md) verwenden. Eine neuere ausdrückliche Nutzervorgabe hat Vorrang; bestätigte Änderungen anschließend hier und in den betroffenen Referenzen nachführen.
+**Stand v0.45.0 · CodexAI · 9. November 2026; eingeführt mit v0.32.1.** Gilt für das gesamte Spiel und alle Mitwirkenden, ob Mensch oder KI. Vor Änderungen zusammen mit [AGENTS.md](AGENTS.md) lesen und die [Arbeitsvorlage](docs/vorlagen/konsistenz-auftrag.md) verwenden. Eine neuere ausdrückliche Nutzervorgabe hat Vorrang; bestätigte Änderungen anschließend hier und in den betroffenen Referenzen nachführen.
 
 ## Bebilderter Einstieg für das gesamte Spiel
 
@@ -77,16 +77,16 @@ Ravens frühere 168-cm-Angabe ist überholt. Für Shadepi hier keine unbestätig
 - Kamera, Perspektive, Lichtseite und Detaildichte an die aktive Szene anpassen. Kontaktschatten, Verdeckung und Bodenbezug zusammen mit dem Sprite prüfen.
 - Farbwirkung aus der jeweiligen Referenz ableiten: Cyan/Magenta in der Stadt, warme Ordens-/Wohnräume, eigene virtuelle Farbwelt. Neue exakte Farbwerte nicht nachträglich als angebliche Originalpalette ausgeben.
 
-### Technische Ausgangswerte des bestehenden Helden-Renderers
+### Technische Ausgangswerte des Helden-Renderers · v0.45.0 · CodexAI
 
 | Eigenschaft | Aktueller HQ-Heldenvertrag |
 | --- | --- |
-| Blatt | 1024 × 5120 Pixel; 8 Spalten, 32 Reihen, Zelle 128 × 160. |
-| Verkleinerung | `SpriteAssets.display_scale()` liefert 0,5 für dieses HQ-Format. |
-| Fußbasis | Quell-Y 152; `PixelActor` berechnet daraus die Sprite-Verschiebung. |
-| Sichtbarer Körper | Frontale Original-Silhouetten etwa 57–59 Weltpixel hoch bei Maßstab 0,5; die 160 Pixel Zellenhöhe sind einschließlich Freiraum. Keine Umrechnung dieser Pixelzahl in Zentimeter. |
-| Abtastung | Normale Helden verwenden bei Verkleinerung lineare Abtastung. Neue benachbarte Posen darauf abstimmen. Weder „immer Nearest“ noch ein globaler Weichzeichner ist eine allgemeine Projektregel. |
-| Spielbild | Gameplay-Basis 640 × 360; das HQ-Menü hat eine eigene Darstellung in Fensterauflösung. |
+| Aktive Quellen | `assets/sprites/heroes/gameplay/`: Raven 1247×1261, Shadepi 1263×1245; je 64 Posen. |
+| Regionen | `poses.json` enthält vollständige Ausschnitte, Sohlenanker, Maßstab und Mündung je Pose. Ungleichmäßige Abstände: kein blindes 8×8-Zuschneiden. |
+| Körpermaß | Bereitschaft und vier Gehphasen je Richtung rund 58 sichtbare Weltpixel. Keine allgemeine Umrechnung in Zentimeter. |
+| Darstellung | Pro Actor ein `AtlasTexture`, gemeinsam für Körper und Schatten; Nearest. Kick, Charge und Handblitze behalten bestehende Sonderbilder. |
+| Originale | Alte 1024×5120-Blätter unverändert; zusätzlich unter `backup-v0441` gesichert. NPC-/Custom-Atlanten behalten ihren eigenen Vertrag. |
+| Spielbild | Gameplay-Basis 640×360; Menü eigener Renderer in Fensterauflösung. |
 
 Sonderatlanten für Sitzen, Liegen, Gegner oder Menü folgen ihren eigenen Metadaten. **Keinen universellen Maßstabsfaktor auf alle Grafiken anwenden.** Bei Schlafposen die Körperlänge statt der geringen liegenden Höhe vergleichen; bei Sitzposen Beinwinkel und Stuhlhöhe einbeziehen. Ein Atlaswechsel muss Körpergröße, Fußbasis und Schatten erhalten. Benutzerdefinierte Sprite-Ersetzungen gemäß `SpriteAssets.resolve()` respektieren.
 

@@ -287,7 +287,7 @@ func reset_transients() -> void :
 
 func animate(state: String, delta: float) -> void:
 	if normal_texture == null:
-		normal_texture = visual.texture
+		normal_texture = hero_sheet if hero_sheet!=null else visual.texture
 	if special_pose:
 		visual.texture = normal_texture
 		visual.hframes = 8
@@ -301,8 +301,7 @@ func animate(state: String, delta: float) -> void:
 		special_pose = false
 	super.animate("idle" if state == "charge" else "attack" if state == "kick" else state, delta)
 	if state=="attack" and attack_kind=="power" and HeroArt.supports(visual.texture):
-		visual.frame=int(visual.frame/8)*8+6
-		cast_shadow.frame=visual.frame
+		HeroArt.apply(self,"attack",_direction_row(false,delta),0.2)
 	if state == "attack" and attack_kind == "power" and not HeroArt.supports(visual.texture):
 		# The charge already supplied the windup; show the cut/discharge on release.
 		var release_frame := (0 if second_player else 2) if attack_time > 0.22 else 6

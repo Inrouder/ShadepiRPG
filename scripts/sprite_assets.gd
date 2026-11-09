@@ -31,4 +31,5 @@ static func resolve(original: Texture2D) -> Texture2D:
 	return original
 
 static func is_gameplay(texture: Texture2D) -> bool:
+	if texture is AtlasTexture:texture=texture.atlas
 	return texture!=null and texture.resource_path in ["res://assets/sprites/heroes/gameplay/raven.png","res://assets/sprites/heroes/gameplay/shadepi.png"]

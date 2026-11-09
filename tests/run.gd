@@ -421,11 +421,11 @@ func check_hero_sprites(scene: Node2D) -> void:
 		var texture: Texture2D = actor.visual.texture
 		if texture.resource_path.begins_with("res://assets/custom/"):
 			continue
-		check(texture.resource_path.begins_with("res://assets/sprites/heroes/"), "hero uses the generated illustrated artwork")
-		check(actor.directions == 8 and actor.visual.hframes == 8 and actor.visual.vframes == 8, "HQ atlas retains all eight directions and animation states")
+		check(actor.hero_sheet.resource_path.begins_with("res://assets/sprites/heroes/"), "hero uses the generated illustrated artwork")
+		check(actor.directions == 8 and actor.visual.hframes == 1 and actor.visual.vframes == 1 and actor.visual.hframes==1, "HQ atlas retains all eight directions and animation states")
 		check(actor.visual.scale.x>0.3 and actor.visual.scale.x<0.5 and actor.visual.texture_filter == CanvasItem.TEXTURE_FILTER_NEAREST, "HQ pixels render smoothly at the intended world size")
-		var d: Dictionary=actor.HeroArt.data(texture,actor._direction_row(false,0),0)
-		var feet: float=actor.visual.position.y+(float(d.anchor[1])-texture.get_height()/16.0)*actor.visual.scale.y
+		var d: Dictionary=actor.hero_frames[int(actor.hero_frame/8)][actor.hero_frame%8]
+		var feet: float=actor.visual.position.y+(float(d.anchor[1])-texture.get_height()/2.0)*actor.visual.scale.y
 		check(is_zero_approx(feet), "HQ feet meet the collision origin")
 		actor.visual.rotation = PI * 0.5
 		actor.visual.position.y = -9
@@ -433,7 +433,7 @@ func check_hero_sprites(scene: Node2D) -> void:
 		check(actor.visual.rotation == 0.0 and actor.visual.position==actor.standing_visual_position, "revival restores the HQ foot alignment")
 		actor.facing = Vector2.DOWN
 		actor.animate("attack", 0.18)
-		check(actor.visual.frame_coords.y == 0 and actor.visual.frame_coords.x==6 and actor.cast_shadow.frame == actor.visual.frame, "attack uses its own pose and matching shadow")
+		check(actor.hero_frame==6 and actor.cast_shadow.frame == actor.visual.frame, "attack uses its own pose and matching shadow")
 		actor.set_cloaked(true)
 		check(not actor.light_occluder.visible, "HQ hero preserves stealth visibility")
 		actor.set_cloaked(false)
@@ -519,20 +519,20 @@ func check_directional_animation(scene: Node2D) -> void:
 		actor.facing = Vector2.UP
 		actor.animate("idle", 0.0)
 		actor.animate("walk", 0.02)
-		check(actor.visual.frame_coords.y == 1, "north uses the rear walk cycle")
+		check(int(actor.hero_frame/8) == 1, "north uses the rear walk cycle")
 		actor.facing = Vector2.RIGHT
 		actor.animate("walk", 0.02)
-		check(actor.visual.frame_coords.y == 7, "north to east turns through the northeast pose")
+		check(int(actor.hero_frame/8) == 7, "north to east turns through the northeast pose")
 		actor.animate("walk", 0.07)
-		check(actor.visual.frame_coords.y == 2, "east uses the side walk cycle")
+		check(int(actor.hero_frame/8) == 2, "east uses the side walk cycle")
 		actor.facing = Vector2.UP
 		actor.animate("idle", 0.0)
 		actor.animate("walk", 0.02)
 		actor.facing = Vector2.LEFT
 		actor.animate("walk", 0.02)
-		check(actor.visual.frame_coords.y == 6, "north to west turns through the northwest pose")
+		check(int(actor.hero_frame/8) == 6, "north to west turns through the northwest pose")
 		actor.animate("walk", 0.07)
-		check(actor.visual.frame_coords.y == 3 and actor.cast_shadow.frame == actor.visual.frame, "west uses its own walk cycle and matching shadow")
+		check(int(actor.hero_frame/8) == 3 and actor.cast_shadow.frame == actor.visual.frame, "west uses its own walk cycle and matching shadow")
 
 func key(code: Key, pressed: bool) -> void:
 	var event := InputEventKey.new()

@@ -39,11 +39,11 @@ Das sind Rollen der vorhandenen Bildfarben, keine neu behauptete exakte Original
 
 ![Figuren und Gegenstände im gleichen Weltmaßstab](bilder/requisiten-2.png)
 
-Das Gameplay nutzt 640 × 360 als Basis; das Menü rendert eine eigene größere Komposition. Die normalen HQ-Figurenblätter enthalten Zellen von 128 × 160 und werden mit Faktor 0,5 dargestellt. Die sichtbare frontale Heldenhöhe liegt dabei ungefähr bei 57–59 Weltpixeln, nicht bei der vollen Zellenhöhe. Raven ist in der Lore verbindlich **160 cm** groß; daraus folgt kein allgemeiner Pixel-pro-Zentimeter-Faktor.
+Das Gameplay nutzt 640 × 360 als Basis; das Menü rendert eine eigene größere Komposition. **v0.45.0 · CodexAI:** Normale Helden verwenden die [neuen Gameplay-Quellen](../../assets/sprites/heroes/gameplay/README.md) mit einzeln registrierten vollständigen Regionen statt gleichmäßiger Zellen. Bereitschaft und Gehen haben rund 58 Weltpixel sichtbare Höhe. Die alten 128×160-Zellen bleiben für unveränderte NPC-/Custom-Quellen und die gesicherten Heldenoriginale relevant. Raven ist verbindlich **160 cm** groß; daraus folgt kein allgemeiner Pixel-pro-Zentimeter-Faktor.
 
 Andere Figuren und Objekte haben eigene Maßstäbe. Krieger, Zivilpersonen und Minotaurus verwenden ihre JSON-Anker; Requisiten verwenden `PropArt.SIZES`. Sitzen und Liegen werden nach Körperlänge und Kontaktflächen kalibriert. Höhe eines Kastens, Länge eines Autos und Größe einer Person mit derselben Weltkamera vergleichen. Transparenter Zellrand ist kein Körpermaß.
 
-Normale verkleinerte Figuren nutzen lineare Abtastung; UI und viele Erinnerungsatlanten nutzen Nearest. Eine neue Pose muss zur tatsächlich benachbarten Figur passen. Eine globale Umstellung aller Filter folgt daraus nicht. Keine scharfen Freistellshader über einen grauen oder weißen Hintergrund legen, um mangelhafte Transparenz zu verdecken.
+Neue Gameplay-Helden und die angeglichenen Heiligtum-Kontaktposen nutzen Nearest; ältere NPC-/Sonderquellen behalten ihre eigene Abtastung. Eine neue Pose muss zur tatsächlich benachbarten Figur passen. Eine globale Umstellung aller Filter folgt daraus nicht. Keine scharfen Freistellshader über einen grauen oder weißen Hintergrund legen, um mangelhafte Transparenz zu verdecken.
 
 ## Bewegung, Inszenierung und Wirkung
 

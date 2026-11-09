@@ -1,6 +1,8 @@
 # Shadepi · Echos in Neon
 
-**Spieleranleitung für v0.44.1 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+**Spieleranleitung für v0.45.0 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+
+**Fehlerkorrekturen v0.45.0 · CodexAI:** Neue detaillierte Standardfiguren mit stabilen Körpergrößen, Raven-Fall und Jackal-Tod, freier Weg im Versteck, maßhaltige Schützen und Geräte. Die Verfolgung zeigt Sieg beziehungsweise Ausfall vor dem Übergang; die Garage benötigt nur einen Decoder an derselben Konsole. Raven sammelt sich nach den Erinnerungen und blickt am See zu Shadepi. Bedienung bleibt gleich; die Originalfiguren sind als Backup erhalten. [Bildvergleich und Szenenfilm](docs/fehlerbericht-v045.md).
 
 **Menülicht v0.44.1 · CodexAI:** Die helle Bodenlichtspur unter den Menüfiguren ist jetzt im Standbereich gedämpft, auch im reduzierten Bildstil. [Bildvergleich](docs/menue-kontrollpunkte.md).
 

@@ -58,7 +58,7 @@ func run() -> void:
 	check(not hero.try_attack() and not hero.try_kick() and not hero.try_cloak(), "other attacks and cloak cannot overlap charging")
 	check(hero.release_charge() and hero.energy == 70, "release spends charge energy once")
 	hero.animate("attack", 0)
-	check(hero.visual.frame % 8 == 6, "charged release shows the actual cut immediately")
+	check(hero.hero_frame % 8 == 6, "charged release shows the actual cut immediately")
 	var wave = last_projectile(scene)
 	check(wave != null and not wave.ranged, "Shadepi emits a travelling crescent")
 	wave.set_physics_process(false)
@@ -131,7 +131,7 @@ func run() -> void:
 		hero.animate("kick", 0)
 		check(hero.visual.frame == 16 + hero.OCTANT_ROWS[direction] and hero.cast_shadow.frame == hero.visual.frame, "kick direction and shadow %d" % direction)
 	hero.reset_transients()
-	check(hero.visual.texture == hero.normal_texture and hero.visual.position == hero.standing_visual_position, "pose resets to original atlas and foot anchor")
+	check(hero.visual.texture is AtlasTexture and hero.visual.texture.atlas==hero.normal_texture and hero.visual.position == hero.standing_visual_position, "pose resets to original atlas and foot anchor")
 	scene.queue_free()
 	await process_frame
 	# Raven uses the primary controls during her hunt and her own inputs in co-op.

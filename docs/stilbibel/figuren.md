@@ -1,5 +1,7 @@
 # Figurenkatalog · v0.32.2 · CodexAI
 
+**Aktualisierung v0.45.0 · CodexAI:** Heldenkarten und vollständige 23-Figuren-Übersicht aus den aktiven Gameplay-Quellen erneuert. [Neue Quellen und Anker](../../assets/sprites/heroes/gameplay/README.md), [Originale als Backup](../../assets/sprites/heroes/backup-v0441/README.md), [Spielvergleich](../fehlerbericht-v045.md).
+
 **Aktualisierung v0.39.0 · CodexAI:** [Plattformfahrt und Hangarentdeckung](../hangar-entdeckung.md), vier eigene Shadepi-Schalterposen, sechs Entriegelungsbilder und texturierter Schacht. Fahrt mit den tatsächlichen Figuren; danach identischer Aerodyne in normaler Erkundung und Film. [Aktive Quellen und Kontaktanker](../../assets/story/hangar-discovery/README.md).
 
 **Aktualisierung v0.38.0 · CodexAI:** [Eisbad und Kryospray-Rettung](../eisbad.md) mit acht eigenen HQ-Kontaktposen für Raven/Shadepi. Reale Weltgröße, unterschiedliche Zuschnitte der Paarposen und volle Kopf-/Haar-/Hutsilhouette beachten; normale Figurensätze bleiben gültig.

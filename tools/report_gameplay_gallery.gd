@@ -77,6 +77,16 @@ func run():
 	w.camera.position=Vector2(475,383)
 	w.camera.zoom=Vector2.ONE*2
 	await shot("shooters")
+	w._enter(w.Beat.GARAGE);w.cutscene.abort()
+	for device in w.destructibles:
+		if device.kind=="electrical":
+			w.raven.position=device.position+Vector2(44,4);w.raven.facing=Vector2.LEFT;w.raven.animate("idle",0)
+			w.camera.position=device.position+Vector2(22,-36);w.camera.zoom=Vector2.ONE*2
+			await shot("electrical-intact")
+			device.take_damage(device.max_health/2+1)
+			for i in 15:await process_frame
+			await shot("electrical-damaged")
+			break
 	w.fresh_entry=true
 	w._enter(w.Beat.GARAGE)
 	for i in 4000:

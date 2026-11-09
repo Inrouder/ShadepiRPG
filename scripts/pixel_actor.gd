@@ -6,6 +6,9 @@ const TURN_STEP_TIME := 0.06
 
 const HeroArt = preload("res://scripts/hero_art.gd")
 var hero_frames: Array = []
+var hero_sheet: Texture2D
+var hero_pose_texture: AtlasTexture
+var hero_frame := 0
 var external_pose := false
 var reaction: Node2D
 var visual: Sprite2D
@@ -39,6 +42,10 @@ func setup(texture: Texture2D, game: Node2D) -> void:
 	directions = int(sheet.get_height() / float(frame_size.y * 4))
 	if HeroArt.supports(sheet):
 		directions=8
+		hero_sheet=sheet
+		hero_pose_texture=AtlasTexture.new()
+		hero_pose_texture.atlas=sheet
+		hero_pose_texture.filter_clip=true
 		hero_frames=HeroArt.catalog_for(sheet)
 	cast_shadow = Sprite2D.new()
 	cast_shadow.texture = sheet
@@ -86,7 +93,7 @@ func animate(state: String, delta: float) -> void:
 	flash_time = maxf(0.0, flash_time - delta)
 	body_material.set_shader_parameter("flash", clampf(flash_time * 6.0, 0.0, 1.0))
 	var direction := _direction_row(continuing_walk, delta)
-	if HeroArt.supports(visual.texture):
+	if not hero_frames.is_empty():
 		HeroArt.apply(self,state,direction,animation_time)
 		queue_redraw()
 		return

@@ -40,12 +40,12 @@ func run():
 			actor.reset_visual_pose()
 			for i in 4:
 				actor.animate("walk",0.15)
-				var row: int=Hero.ROWS.find(actor.visual.frame_coords.y)
-				var d: Dictionary=Hero.data(actor.visual.texture,row,actor.visual.frame_coords.x)
+				var row: int=Hero.ROWS.find(int(actor.hero_frame/8))
+				var d: Dictionary=actor.hero_frames[int(actor.hero_frame/8)][actor.hero_frame%8]
 				check(absf(d.height*actor.visual.scale.y-58)<0.05,"walking body height remains stable for every facing/frame")
-				var cell: Vector2=actor.visual.texture.get_size()/8.0
+				var cell: Vector2=actor.visual.texture.get_size()
 				check(absf(actor.visual.position.y+(d.anchor[1]-cell.y*0.5)*actor.visual.scale.y)<0.05,"every walking foot remains at its world anchor")
-				check(actor.cast_shadow.frame==actor.visual.frame and actor.visual.vframes==8,"shadow and real atlas frame stay synchronized")
+				check(actor.cast_shadow.frame==actor.visual.frame and actor.visual.vframes==1,"shadow and real atlas frame stay synchronized")
 	for kind in ["raven","shadepi"]:
 		check(FileAccess.get_sha256("res://assets/sprites/heroes/"+kind+".png")==FileAccess.get_sha256("res://assets/sprites/heroes/backup-v0441/"+kind+".png"),"old original has an exact backup for "+kind)
 	w._enter_checkpoint(w.Phase.RESCUE)
