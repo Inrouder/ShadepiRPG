@@ -129,7 +129,8 @@ func _update_art() -> void :
 		sprite.frame = 0
 		sprite.hframes = 1
 		sprite.vframes = 1
-		Art.apply(sprite, TYPES[kind].column, row)
+		if Technology.supports(kind) and row==1:Technology.apply_damage(sprite,kind)
+		else:Art.apply(sprite, TYPES[kind].column, row)
 	base_sprite_position = sprite.position
 	if lamp != null:
 		lamp.enabled = health > 0

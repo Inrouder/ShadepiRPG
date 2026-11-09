@@ -29,3 +29,11 @@ static func apply(sprite: Sprite2D,kind: String):
 	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	sprite.scale = SIZES[kind]/CELL
 	sprite.position = (CELL*0.5-FEET[kind])*sprite.scale+Vector2(0,-4)
+
+static func apply_damage(sprite: Sprite2D,kind: String):
+	var art=preload("res://scripts/prop_art.gd").texture(5 if kind=="electrical" else 7,1)
+	var bounds:=Rect2(44,54,154,191) if kind=="electrical" else Rect2(29,59,167,189)
+	var visible_size:=Vector2(286.0*52/384,417.0*74/512) if kind=="electrical" else Vector2(279.0*64/384,464.0*78/512)
+	sprite.texture=art
+	sprite.scale=visible_size/bounds.size
+	sprite.position=(art.get_size()*0.5-Vector2(bounds.get_center().x,bounds.end.y))*sprite.scale+Vector2(0,-4)

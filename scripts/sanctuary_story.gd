@@ -169,7 +169,11 @@ static func aftermath(w) -> void:
 	if not cs.alive(ticket): return
 	await cs.fade(Color.TRANSPARENT, 0.5)
 	if not cs.alive(ticket): return
-	await cs.walk(w.raven, Vector2(581, 359), 95)
+	w.raven.show_reaction(3,"recover")
+	await cs.wait(1.0)
+	if not cs.alive(ticket):return
+	w.raven.clear_reaction()
+	await cs.walk(w.raven, Vector2(581, 359), 40)
 	if not cs.alive(ticket): return
 	cs.face(w.raven, w.SanctuaryTableau.SEAT)
 	cs.pose(w.raven, "hurt")

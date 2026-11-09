@@ -54,6 +54,7 @@ var shake := 0.0
 var fx_clock := 0.0
 var emission_clock := 0.0
 var victory_left := -1.0
+var failure_left := -1.0
 var debris: Array[Dictionary] = []
 var explosions: Array[Dictionary] = []
 var clouds: Array[Dictionary] = []
@@ -230,7 +231,8 @@ func _process(delta: float) -> void :
 		queue_redraw()
 		if victory_left <= 0.0:
 			active = false
-			completed.emit()
+			if flight or (armour<=0 and health>0):completed.emit()
+			else:crashed.emit()
 		return
 	if flight and not engine_failed:
 		elapsed += delta
@@ -339,7 +341,7 @@ func _process(delta: float) -> void :
 		else:
 			crashed.emit()
 	elif not flight and armour <= 0:
-		victory_left = 1.1
+		victory_left = 3.0
 		impact(Vector2(boss_x, REAR_Y), true)
 		world.toast("RAVEN: Verfolger ausgeschaltet! Weiter zur Garage!")
 
@@ -448,6 +450,15 @@ func _callout(text: String) -> void:
 	callout_time = 1.3
 
 func _process_bike(delta: float) -> void:
+	if failure_left>=0:
+		failure_left-=delta
+		scroll+=ROAD_SPEED*0.25*delta
+		queue_redraw()
+		if failure_left<=0:
+			active=false
+			crashed.emit()
+		return
+
 	callout_time = maxf(0.0, callout_time - delta)
 	if victory_left >= 0.0:
 		victory_left -= delta
@@ -456,11 +467,11 @@ func _process_bike(delta: float) -> void:
 		_steer(delta)
 		speed = 1.35
 		scroll += ROAD_SPEED * speed * delta
-		_advance_bike_world(delta)
 		queue_redraw()
 		if victory_left <= 0.0:
 			active = false
-			completed.emit()
+			if flight or (armour<=0 and health>0):completed.emit()
+			else:crashed.emit()
 		return
 	elapsed += delta
 	if world.admin_enabled("no_cooldowns"):
@@ -492,10 +503,15 @@ func _process_bike(delta: float) -> void:
 	_advance_bike_world(delta)
 	queue_redraw()
 	if health <= 0:
-		active = false
-		crashed.emit()
+		failure_left=1.4
+		impact(Vector2(x,bike_y),true)
+		world.toast("MOTORRAD AUSGEFALLEN · Kontrollpunkt wird neu geladen")
 	elif armour <= 0:
-		victory_left = 1.1
+		victory_left = 3.0
+		drones.clear()
+		objects.clear()
+		rear_shots.clear()
+		rear_shot_vx.clear()
 		impact(Vector2(boss_x, car_y), true)
 		impact(Vector2(boss_x - 18, car_y + 10), true)
 		_callout("WEG FREI · ZUR GARAGE")

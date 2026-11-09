@@ -340,10 +340,9 @@ func _start_arcade(saved_section: int = 0) -> void:
 	)
 
 func _down_raven() -> void:
-	raven.health = 0
+	raven.health=0
 	raven.reset_transients()
-	raven.visual.rotation = PI * 0.5
-	raven.visual.position.y = -9
+	raven.show_reaction(2)
 
 func _guards_left() -> int:
 	var living := 0
@@ -425,7 +424,9 @@ func _lose_duel() -> void:
 	effects.hack_arc(enemy.position, raven.position)
 	effects.burst(raven.position, Color("86e8ff"), 36)
 	effects.burst(enemy.position, Color("ff596e"), 24)
-	_down_raven()
+	raven.health=0
+	raven.reset_transients()
+	raven.show_reaction(0,"collapse")
 	phase = Phase.ROOFTOP
 	set_music_section("chapter_1_rooftop")
 	stage = 1
@@ -592,6 +593,11 @@ func _begin_epilogue() -> void:
 func _scene_epilogue() -> void:
 	var cs = begin_cutscene()
 	var body: Vector2 = enemy.position
+	var ticket: int = cs.generation
+	await cs.camera(body+Vector2(0,-42),0.3,1.3)
+	if not cs.alive(ticket):return
+	await cs.wait(0.9)
+	if not cs.alive(ticket):return
 	cs.pose(player, "idle")
 	cs.pose(raven, "idle")
 	await cs.camera(player.position.lerp(raven.position, 0.5) + Vector2(0, -50), 0.8, 1.2)

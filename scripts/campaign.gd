@@ -351,9 +351,11 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo:
 		drive_layer.add_child(drive)
 		var vehicle = drive
 		drive.completed.connect(func():
+			if drive!=vehicle or beat not in [Beat.CHASE,Beat.FLIGHT]:return
+			if beat==Beat.CHASE and (vehicle.armour>0 or vehicle.health<=0):return
 			if beat == Beat.FLIGHT:
 				aerodyne_spot = vehicle.touchdown_world()
-			_advance())
+			_finish_drive(vehicle))
 		drive.crashed.connect( func():
 			if beat == Beat.FLIGHT and vehicle.engine_repaired:
 				flight_engine_repaired = true
@@ -400,6 +402,17 @@ func _update_lighting() -> void :
 			set_scene_lighting(Color("b0c5bf"), [[Vector2(738, 306), "7dc7c4", 3.3, 0.8], [Vector2(336, 339), "799969", 2.8, 0.44]])
 		_:
 			set_scene_lighting(Color.WHITE, [])
+
+func _finish_drive(vehicle) -> void:
+	if drive!=vehicle:return
+	if beat==Beat.FLIGHT:
+		_advance()
+		return
+	var cs=begin_cutscene()
+	var ticket: int=cs.generation
+	await cs.fade(Color.BLACK,0.4)
+	if not cs.alive(ticket) or drive!=vehicle:return
+	_advance()
 
 func _advance() -> void :
 	if beat < Beat.END:
@@ -549,7 +562,7 @@ func _timed_node() -> bool:
 	return (beat == Beat.HANGAR and point_index in [1, 2]) or (beat == Beat.ESCAPE and point_index in [0, 2])
 
 func _terminal_context() -> String:
-	if beat == Beat.GARAGE and point_index == 1: return "garage"
+	if beat == Beat.GARAGE: return "garage"
 	if beat == Beat.HANGAR and point_index == 0: return "power"
 	if beat == Beat.HANGAR and point_index == 3: return "transponder"
 	if beat == Beat.ROOF and point_index == 0: return "roof_signal"
@@ -645,9 +658,6 @@ func interact(_actor: PixelActor = null) -> void :
 		if point_index == 2:
 			_scene_echo_end()
 			return
-	if beat == Beat.GARAGE and point_index == 1 and raven.position.distance_to(_target()) > 35.0:
-		toast("Warte auf Raven.")
-		return
 	if beat == Beat.HANGAR and not _hangar_prop().is_empty():
 		toast(_hangar_prop() + " · Bestände des Ordens.")
 		return
@@ -681,7 +691,7 @@ func _complete_point() -> void:
 		toast(["Stromversorgung aktiv.", "Kennung kopiert.", "Aerodyne gangbar. Noch die Prüf-ICE am Transponder umgehen."][point_index])
 	if beat == Beat.ESCAPE:
 		toast(["Daten gesichert. Spuren gelöscht.", "Raven: Sperrladung scharf. Aufzug blockiert.", "Fernstart bestätigt. Zum Dachausgang!", "Dach erreicht. Der Aerodyne hebt ab."][point_index])
-	point_index += 1
+	point_index = Story.POINTS[beat].size() if beat==Beat.GARAGE else point_index+1
 	if beat == Beat.PACT and point_index == Story.POINTS[beat].size():
 		_scene_plan()
 	elif beat == Beat.GARAGE and point_index == Story.POINTS[beat].size():
@@ -716,7 +726,7 @@ func _ritual_step() -> void :
 	cs.walk(player, spot + Vector2(-30, 6), 64)
 	await cs.walk(raven, spot + Vector2(16, 4), 64)
 	if not cs.alive(ticket): return
-	cs.face(raven, spot + Vector2(60, -30))
+	cs.face(raven,player.position)
 	cs.face(player, raven.position)
 	cs.pose(raven, "idle")
 	cs.pose(player, "idle")
@@ -1252,7 +1262,7 @@ func _scene_garage() -> void:
 	cs.walk(raven, Vector2(760, 440), 70)
 	await cs.walk(player, Vector2(790, 412), 70)
 	if not cs.alive(ticket): return
-	cs.face(raven, Vector2(560, 260))
+	cs.face(raven,player.position)
 	cs.face(player, raven.position)
 	cs.pose(player, "idle")
 	cs.pose(raven, "idle")
@@ -1270,7 +1280,9 @@ func _draw_garage() -> void:
 	if garage_door > 0.0:
 		var h := GARAGE_DOOR.size.y * garage_door
 		var opening := Rect2(GARAGE_DOOR.position.x, GARAGE_DOOR.end.y - h, GARAGE_DOOR.size.x, h)
-		draw_rect(opening, Color("05080f"))
+		var street: Texture2D=Painted.ART.industry
+		var source:=Rect2(Vector2(100,360)/Vector2(1024,640)*street.get_size(),Vector2(220,h)/Vector2(1024,640)*street.get_size())
+		draw_texture_rect_region(street,opening,source)
 		# Night street outside: wet asphalt glow and rain behind the door.
 		draw_rect(Rect2(opening.position.x, GARAGE_DOOR.end.y - minf(h, 30.0), opening.size.x, minf(h, 30.0)), Color(0.85, 0.2, 0.5, 0.18))
 		for i in 12:

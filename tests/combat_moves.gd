@@ -58,7 +58,7 @@ func run() -> void:
 	check(not hero.try_attack() and not hero.try_kick() and not hero.try_cloak(), "other attacks and cloak cannot overlap charging")
 	check(hero.release_charge() and hero.energy == 70, "release spends charge energy once")
 	hero.animate("attack", 0)
-	check(hero.visual.frame % 8 == 2, "charged release shows the actual cut immediately")
+	check(hero.visual.frame % 8 == 6, "charged release shows the actual cut immediately")
 	var wave = last_projectile(scene)
 	check(wave != null and not wave.ranged, "Shadepi emits a travelling crescent")
 	wave.set_physics_process(false)

@@ -422,17 +422,18 @@ func check_hero_sprites(scene: Node2D) -> void:
 		if texture.resource_path.begins_with("res://assets/custom/"):
 			continue
 		check(texture.resource_path.begins_with("res://assets/sprites/heroes/"), "hero uses the generated illustrated artwork")
-		check(actor.directions == 8 and actor.visual.hframes == 8 and actor.visual.vframes == 32, "HQ atlas retains all eight directions and animation states")
-		check(actor.visual.scale == Vector2(0.5, 0.5) and actor.visual.texture_filter == CanvasItem.TEXTURE_FILTER_LINEAR, "HQ pixels render smoothly at the intended world size")
-		var feet: float = actor.visual.position.y + (152.0 - 80.0) * actor.visual.scale.y
+		check(actor.directions == 8 and actor.visual.hframes == 8 and actor.visual.vframes == 8, "HQ atlas retains all eight directions and animation states")
+		check(actor.visual.scale.x>0.3 and actor.visual.scale.x<0.5 and actor.visual.texture_filter == CanvasItem.TEXTURE_FILTER_NEAREST, "HQ pixels render smoothly at the intended world size")
+		var d: Dictionary=actor.HeroArt.data(texture,actor._direction_row(false,0),0)
+		var feet: float=actor.visual.position.y+(float(d.anchor[1])-texture.get_height()/16.0)*actor.visual.scale.y
 		check(is_zero_approx(feet), "HQ feet meet the collision origin")
 		actor.visual.rotation = PI * 0.5
 		actor.visual.position.y = -9
 		actor.reset_visual_pose()
-		check(actor.visual.rotation == 0.0 and actor.visual.position.y == -36.0, "revival restores the HQ foot alignment")
+		check(actor.visual.rotation == 0.0 and actor.visual.position==actor.standing_visual_position, "revival restores the HQ foot alignment")
 		actor.facing = Vector2.DOWN
 		actor.animate("attack", 0.18)
-		check(actor.visual.frame_coords.y == 16 and actor.cast_shadow.frame == actor.visual.frame, "attack uses its own pose and matching shadow")
+		check(actor.visual.frame_coords.y == 0 and actor.visual.frame_coords.x==6 and actor.cast_shadow.frame == actor.visual.frame, "attack uses its own pose and matching shadow")
 		actor.set_cloaked(true)
 		check(not actor.light_occluder.visible, "HQ hero preserves stealth visibility")
 		actor.set_cloaked(false)
@@ -518,20 +519,20 @@ func check_directional_animation(scene: Node2D) -> void:
 		actor.facing = Vector2.UP
 		actor.animate("idle", 0.0)
 		actor.animate("walk", 0.02)
-		check(actor.visual.frame_coords.y == 11, "north uses the rear walk cycle")
+		check(actor.visual.frame_coords.y == 1, "north uses the rear walk cycle")
 		actor.facing = Vector2.RIGHT
 		actor.animate("walk", 0.02)
-		check(actor.visual.frame_coords.y == 13, "north to east turns through the northeast pose")
+		check(actor.visual.frame_coords.y == 7, "north to east turns through the northeast pose")
 		actor.animate("walk", 0.07)
-		check(actor.visual.frame_coords.y == 10, "east uses the side walk cycle")
+		check(actor.visual.frame_coords.y == 2, "east uses the side walk cycle")
 		actor.facing = Vector2.UP
 		actor.animate("idle", 0.0)
 		actor.animate("walk", 0.02)
 		actor.facing = Vector2.LEFT
 		actor.animate("walk", 0.02)
-		check(actor.visual.frame_coords.y == 12, "north to west turns through the northwest pose")
+		check(actor.visual.frame_coords.y == 6, "north to west turns through the northwest pose")
 		actor.animate("walk", 0.07)
-		check(actor.visual.frame_coords.y == 9 and actor.cast_shadow.frame == actor.visual.frame, "west uses its own walk cycle and matching shadow")
+		check(actor.visual.frame_coords.y == 3 and actor.cast_shadow.frame == actor.visual.frame, "west uses its own walk cycle and matching shadow")
 
 func key(code: Key, pressed: bool) -> void:
 	var event := InputEventKey.new()
@@ -802,24 +803,22 @@ func check_campaign() -> void:
 	check(drive.armour < 100, "aligned shots and grenade damage the pursuing car")
 	drive.health = 0
 	drive._process(0.01)
+	drive._process(1.5)
 	check(scene.beat == scene.Beat.CHASE and scene.menu_open and scene.drive.health == 100, "crashing restarts the chase checkpoint")
 	scene.close_menu()
 	finish_dialogue(scene)
 	scene.drive.armour = 0
 	scene.drive._process(0.01)
-	scene.drive._process(1.2)
+	scene.drive._process(3.1)
+	finish_dialogue(scene)
 	check(scene.beat == scene.Beat.GARAGE, "defeating the car opens chapter four")
 	finish_dialogue(scene)
 	check(scene.bike_mode == "parked" and scene.bike_pos == scene.BIKE_PARK and scene.garage_door == 0.0, "the bike rides in, stays parked on the platform and the door closes again")
 	check(scene.player.visible and scene.raven.visible and not scene.player.position.distance_to(scene.BIKE_PARK) < 20.0, "both heroes dismount beside the bike")
 	check(scene.Painted.SOLIDS["garage"][0].has_point(scene.BIKE_PARK) and scene.Story.POINTS[scene.Beat.GARAGE][1].distance_to(scene.BIKE_PARK) > 50.0, "the parked bike is solid and leaves the lift terminal free")
-	scene.player.position = scene._target()
+	scene.player.position=scene._target()
 	scene.interact()
-	scene.player.position = scene._target()
-	scene.interact()
-	check(scene.beat == scene.Beat.GARAGE, "lift waits for Raven")
-	scene.raven.position = scene._target()
-	scene.interact()
+	check(scene.terminal!=null,"single workbench interaction opens the garage decoder without a platform detour")
 	check(preload("res://tests/terminal_solver.gd").complete(scene), "garage decoder opens the lift")
 	finish_dialogue(scene)
 	for i in 3:

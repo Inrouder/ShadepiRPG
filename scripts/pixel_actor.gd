@@ -4,6 +4,10 @@ extends CharacterBody2D
 const OCTANT_ROWS := [2, 7, 0, 6, 1, 4, 3, 5]
 const TURN_STEP_TIME := 0.06
 
+const HeroArt = preload("res://scripts/hero_art.gd")
+var hero_frames: Array = []
+var external_pose := false
+var reaction: Node2D
 var visual: Sprite2D
 var facing := Vector2.DOWN
 var animation_time := 0.0
@@ -33,6 +37,9 @@ func setup(texture: Texture2D, game: Node2D) -> void:
 	var frame_size := SpriteAssets.frame_size(sheet)
 	var display_scale := SpriteAssets.display_scale(sheet)
 	directions = int(sheet.get_height() / float(frame_size.y * 4))
+	if HeroArt.supports(sheet):
+		directions=8
+		hero_frames=HeroArt.catalog_for(sheet)
 	cast_shadow = Sprite2D.new()
 	cast_shadow.texture = sheet
 	cast_shadow.hframes = 8
@@ -63,8 +70,10 @@ func setup(texture: Texture2D, game: Node2D) -> void:
 	body_material.shader = preload("res://shaders/cloak.gdshader")
 	visual.material = body_material
 	add_child(visual)
+	if HeroArt.supports(sheet):HeroArt.apply(self,"idle",0,0)
 
 func reset_visual_pose() -> void:
+	clear_reaction()
 	visual.rotation = 0.0
 	visual.position = standing_visual_position
 
@@ -77,6 +86,10 @@ func animate(state: String, delta: float) -> void:
 	flash_time = maxf(0.0, flash_time - delta)
 	body_material.set_shader_parameter("flash", clampf(flash_time * 6.0, 0.0, 1.0))
 	var direction := _direction_row(continuing_walk, delta)
+	if HeroArt.supports(visual.texture):
+		HeroArt.apply(self,state,direction,animation_time)
+		queue_redraw()
+		return
 	var row: int = {"idle": 0, "walk": 1, "attack": 2, "hurt": 3}.get(state, 0)
 	var speed := 18.0 if state == "attack" else 9.0
 	var frame := mini(7, int(animation_time * speed)) if state == "attack" else int(animation_time * speed) % 8
@@ -110,8 +123,23 @@ func set_cloaked(value: bool) -> void:
 	shadow_material.set_shader_parameter("opacity", 0.08 if cloaked else 0.45)
 	light_occluder.visible = not cloaked
 
+func show_reaction(index: int, mode: String = "") -> void:
+	clear_reaction()
+	reaction=preload("res://scripts/actor_reaction.gd").new()
+	reaction.actor=self
+	reaction.frame=index
+	reaction.mode=mode
+	add_child(reaction)
+
+func clear_reaction() -> void:
+	if is_instance_valid(reaction):
+		reaction.release()
+		reaction.queue_free()
+	reaction=null
+	external_pose=false
+
 func _draw() -> void:
-	draw_ellipse_shadow()
+	if not external_pose: draw_ellipse_shadow()
 
 func draw_ellipse_shadow() -> void:
 	var opacity := 0.2 if cloaked else 1.0

@@ -176,7 +176,11 @@ func take_damage(base: int, source: Vector2 = Vector2.INF) -> void:
 		visual.modulate = Color(0.45, 0.5, 0.6, 0.7)
 		visual.rotation = PI * 0.5
 		visual.position.y = -10
-		_fall(direction)
+		if base_texture.resource_path.get_file()=="jackal.png":
+			visual.rotation=0
+			visual.modulate=Color.WHITE
+			show_reaction(4,"death")
+		else:_fall(direction)
 		world.enemy_defeated(self)
 
 ## Death reaction: thrown back a little, a hop and a dimming fade-in of the KO pose.
@@ -232,7 +236,7 @@ func reset_fight(hp: int = 180) -> void:
 
 func animate(state: String, delta: float) -> void:
 	# Restore the normal atlas before selecting its frame, including on interrupt.
-	if base_texture != null and visual.texture != base_texture:
+	if base_texture != null:
 		visual.texture = base_texture
 		visual.hframes = 8
 		visual.vframes = directions * 4
@@ -276,16 +280,18 @@ func animate(state: String, delta: float) -> void:
 	visual.hframes = 1
 	visual.vframes = 1
 	visual.frame = 0
-	visual.scale = Vector2.ONE * float(pose.scale)
+	var contact_scale: float=float(pose.scale)
+	if base_texture.resource_path.get_file().begins_with("shooter-"):contact_scale*=0.82
+	visual.scale = Vector2.ONE * contact_scale
 	visual.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	var anchor: Array = pose.anchor
-	visual.position = (Vector2(rect[2],rect[3])*0.5 - Vector2(anchor[0],anchor[1])) * float(pose.scale)
+	visual.position = (Vector2(rect[2],rect[3])*0.5 - Vector2(anchor[0],anchor[1])) * contact_scale
 	visual.position += attack_direction * sin(progress*PI) * (1.0 if shot_range > 0 else 3.0)
 	cast_shadow.texture = contact_texture
 	cast_shadow.hframes = 1
 	cast_shadow.vframes = 1
 	cast_shadow.frame = 0
-	cast_shadow.scale = Vector2(1.05,0.3) * float(pose.scale)
+	cast_shadow.scale = Vector2(1.05,0.3) * contact_scale
 
 func _draw() -> void:
 	super._draw()

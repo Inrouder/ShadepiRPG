@@ -468,7 +468,9 @@ func _scene_hideout() -> void:
 	if not cs.alive(ticket): return
 	await cs.say("RAVENS VERSTECK", "Ein Nervenzentrum, ein Altar für den digitalen Gott. Kabel schlängeln sich über den Boden, in der Mitte steht eine Wanne mit trübem Eiswasser.")
 	if not cs.alive(ticket): return
-	await cs.walk(raven, player.position + Vector2(56, -18), 70)
+	for point in [Vector2(640,452),Vector2(490,452),player.position+Vector2(56,-18)]:
+		await cs.walk(raven,point,70)
+		if not cs.alive(ticket):return
 	if not cs.alive(ticket): return
 	cs.face(raven, player.position)
 	cs.face(player, raven.position)
