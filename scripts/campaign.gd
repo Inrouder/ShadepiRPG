@@ -8,6 +8,7 @@ const TowerStory = preload("res://scripts/tower_story.gd")
 const TowerExtraction = preload("res://scripts/tower_extraction.gd")
 const TowerKenzo = preload("res://scripts/tower_kenzo.gd")
 const TowerEscape = preload("res://scripts/tower_escape.gd")
+const LakeSequence = preload("res://scripts/lake_sequence.gd")
 const Drive = preload("res://scripts/campaign_drive.gd")
 const AerodyneFlight = preload("res://scripts/aerodyne_flight.gd")
 const ParkedAerodyne = preload("res://scripts/parked_aerodyne.gd")
@@ -73,6 +74,8 @@ var parked_aerodyne: Node2D
 var flight_engine_repaired := false
 var departure: Node2D
 var flight_intro_pending := false
+var lake_scene_pending := false
+var lake_sequence: Node2D
 var bike_pos: = BIKE_PARK
 var bike_rot: = 0.0
 
@@ -164,11 +167,17 @@ func new_game(_save_checkpoint: bool = true) -> void :
 	fresh_entry = true
 	_enter(Beat.PACT)
 
-func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo: bool = false, seen_attack: bool = false, seen_sacrifice: bool = false, seen_legacy: bool = false, saved_sanctuary_stage: int = 0, saved_flight_intro: bool = false, saved_tower_stage: int = -1) -> void :
+func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo: bool = false, seen_attack: bool = false, seen_sacrifice: bool = false, seen_legacy: bool = false, saved_sanctuary_stage: int = 0, saved_flight_intro: bool = false, saved_tower_stage: int = -1, saved_lake_pending: bool = false) -> void :
 	_close_memory(false)
 	var fresh: = fresh_entry
 	fresh_entry = false
 	cutscene.abort()
+	if is_instance_valid(lake_sequence):
+		lake_sequence.hide()
+		lake_sequence.get_parent().remove_child(lake_sequence)
+		lake_sequence.queue_free()
+	lake_sequence = null
+	lake_scene_pending = next in [Beat.LAKE,Beat.END] and (fresh or saved_lake_pending)
 	for node in [tower,tower_grip,tower_departure]:
 		if is_instance_valid(node):
 			if node==tower:
@@ -258,6 +267,8 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo:
 	reset_raven(player.position + Vector2(-27, 14))
 	raven.visible = true
 	for actor in [player,raven]:
+		actor.modulate = Color.WHITE
+		actor.z_index = 0
 		actor.visual.show()
 		actor.cast_shadow.show()
 	player.visible = not raven_leads()
@@ -298,6 +309,13 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo:
 		raven.position = Story.POINTS[Beat.LAKE].back() + Vector2(12, 0)
 		player.facing = Vector2.RIGHT
 		raven.facing = Vector2.LEFT
+	if beat in [Beat.LAKE,Beat.END]:
+		lake_sequence = LakeSequence.new()
+		lake_sequence.world = self
+		actors.add_child(lake_sequence)
+		if beat==Beat.LAKE and not lake_scene_pending and point_index==0:
+			player.position = LakeSequence.SHORE[0]
+			raven.position = LakeSequence.SHORE[1]
 	_update_lighting()
 	ui.clear_dialogue()
 	close_menu()
@@ -656,12 +674,12 @@ func _complete_point() -> void:
 
 const RITUAL: = [
 	[["SHADEPI", "Raven … das Heiligtum in mir hat dich erkannt. Schon in der Gasse. Es hat dich erwählt."],
-		["SHADEPI", "Aber ich würde an deiner Seite stehen, selbst wenn es das nicht getan hätte. Nicht als Werkzeug einer Prophezeiung – sondern weil du mich daran erinnert hast, was es heißt, nicht nur ein Schatten zu sein."],
-		["RAVEN", "Das klingt … irgendwie sehr schön. Ich würde dich ja küssen, aber mit der Maske geht das schwer."],
-		["SHADEPI", "Ich kann dich im Orden aufnehmen. Wenn du es freiwillig willst. Dann kann ich mich dir auch zeigen."],
-		["RAVEN", "Ich habe nichts mehr zu verlieren. Ich bin bereit, nach vorne zu blicken."]],
-	[["SEE", "Sobald ihre Füße das Wasser berühren, vibriert der Boden. Ein neonblaues Leuchten steigt aus der Tiefe, Tropfen schweben in der Luft."],
-		["SHADEPI", "Ich, Shadepi, Überlebender und ehemals Erster Krieger des Ordens des Weißen Drachen, erbitte dich: Nimm diese Seele in deine Obhut."]],
+		["RAVEN", "Und du?"],
+		["SHADEPI", "Ich brauche keinen Schwur, um bei dir zu bleiben."],
+		["RAVEN", "Gut. Das wollte ich hören."],
+		["SHADEPI", "Die Aufnahme in den Orden muss deine Entscheidung sein."],
+		["RAVEN", "Dann ist sie das. Ich will."]],
+	[["SHADEPI", "Orden des Weißen Drachen … ich bitte dich: Nimm Raven in deine Obhut."]],
 	[["HEILIGTUM", "Dein Wille ist stark. Ich spüre viel Gutes in dir. Ich akzeptiere dich."]],
 	[["SHADEPI", "Hiermit nehme ich dich, Raven, in den Orden des Weißen Drachen auf. Ich ernenne dich zur Zweiten Kriegerin des Ordens und Behüterin des Heiligtums."]],
 ]
@@ -679,6 +697,7 @@ func _ritual_step() -> void :
 	cs.face(player, raven.position)
 	cs.pose(raven, "idle")
 	cs.pose(player, "idle")
+	if is_instance_valid(lake_sequence): lake_sequence.ritual_step(step)
 	if step > 0:
 		cs.do(func():
 			ritual_flash = 1.4
@@ -826,6 +845,7 @@ func save_game() -> bool:
 	config.set_value("campaign", "tower_stage",tower_stage if beat==Beat.ESCAPE else -1)
 	config.set_value("campaign", "boss_spot",boss_spot)
 	config.set_value("campaign", "aerodyne_spot",aerodyne_spot)
+	config.set_value("campaign", "lake_scene_pending",lake_scene_pending)
 	config.set_value("props", "state", dressing_state())
 	return config.save(Admin.checkpoint_path(SAVE, get_tree())) == OK
 
@@ -846,6 +866,9 @@ func load_game(_requested_mode: Variant = null) -> bool:
 	aerodyne_spot = saved_landing.clamp(Vector2(160,300),Vector2(240,352)) if saved_landing is Vector2 and saved_landing.is_finite() else AerodyneFlight.PAD_WORLD
 	var saved_echo: Variant = config.get_value("campaign", "echo_started", false)
 	var saved_flight_intro: Variant = config.get_value("campaign", "flight_intro_pending", false)
+	# Older chapter-7 saves receive the new arrival/finale once, preserving ritual progress.
+	var legacy_lake_scene: bool = saved==Beat.END or (saved==Beat.LAKE and saved_point is int and saved_point==0)
+	var saved_lake: Variant = config.get_value("campaign", "lake_scene_pending", legacy_lake_scene)
 	var saved_sanctuary_stage: Variant = config.get_value("campaign", "sanctuary_stage", 0)
 	var seen_attack: Variant = config.get_value("campaign", "memory_attack_complete", false)
 	var seen_sacrifice: Variant = config.get_value("campaign", "memory_sacrifice_complete", false)
@@ -856,7 +879,7 @@ func load_game(_requested_mode: Variant = null) -> bool:
 	if saved == Beat.ROOF and saved_point is int and saved_point >= 2:
 		saved = Beat.BOSS
 		saved_point = 0
-	_enter(saved, saved_section if saved_section is int else 0, saved_point if saved_point is int else 0, saved_echo is bool and saved_echo, seen_attack is bool and seen_attack, seen_sacrifice is bool and seen_sacrifice, seen_legacy is bool and seen_legacy, saved_sanctuary_stage if saved_sanctuary_stage is int else 0, saved_flight_intro is bool and saved_flight_intro, saved_tower if saved_tower is int and saved_tower>=0 and saved_tower<=3 else -1)
+	_enter(saved, saved_section if saved_section is int else 0, saved_point if saved_point is int else 0, saved_echo is bool and saved_echo, seen_attack is bool and seen_attack, seen_sacrifice is bool and seen_sacrifice, seen_legacy is bool and seen_legacy, saved_sanctuary_stage if saved_sanctuary_stage is int else 0, saved_flight_intro is bool and saved_flight_intro, saved_tower if saved_tower is int and saved_tower>=0 and saved_tower<=3 else -1, saved_lake is bool and saved_lake)
 	return true
 
 func _draw() -> void :
@@ -908,7 +931,7 @@ func _draw() -> void :
 			p += Vector2(sin(clock * 0.7 + i) * 3.0, cos(clock * 0.9 + i) * 4.0)
 			var alpha: = 0.3 + sin(clock * 1.6 + i * 2.0) * 0.22
 			draw_circle(p, 1.0 if i % 4 else 1.65, Color(0.62, 0.92, 0.65, alpha))
-		if beat == Beat.END or (ritual_flash > 0.0 and point_index == 3):
+		if ritual_flash > 0.0 and point_index == 3:
 			var center: Vector2 = player.position.lerp(raven.position, 0.5) - Vector2(0, 23) if beat == Beat.END else ritual_origin - Vector2(0, 21)
 			draw_arc(center, 26, 0.06, PI - 0.2, 30, Color("6adddf"), 1.7)
 			draw_arc(center + Vector2(0, 5), 28, PI + 0.15, TAU - 0.1, 30, Color("df5b76"), 1.7)
@@ -979,9 +1002,10 @@ func _beat_scene(fresh: bool) -> void:
 			elif tower_stage!=2: tower.resume()
 			else: toast("Daten gesichert · Aufzug sperren · Fernstart · zum Dach")
 		Beat.LAKE:
-			if fresh: _scene_lake()
+			if fresh or lake_scene_pending: _scene_lake()
 		Beat.END:
-			if fresh: _scene_finale()
+			if fresh or lake_scene_pending: _scene_finale()
+			else: lake_sequence.rest()
 	if not fresh and not in_cinematic() and beat not in [Beat.AMBUSH, Beat.BOSS, Beat.ESCAPE]:
 		toast(chapter_objective())
 
@@ -1351,67 +1375,9 @@ func _scene_tower_departure() -> void:
 	drive_layer.add_child(tower_departure)
 	tower_departure.run()
 
-## Kapitel 7: Flucht, Explosion und der See.
+## Kapitel 7 · v0.36.0 · CodexAI: real arrival, disembarkation and private kiss.
 func _scene_lake() -> void:
-	player.position = Vector2(150, 430)
-	raven.position = Vector2(118, 446)
-	player.facing = Vector2.RIGHT
-	raven.facing = Vector2.RIGHT
-	var cs = begin_cutscene()
-	var ticket: int = cs.generation
-	cs.pose(player, "idle")
-	cs.pose(raven, "idle")
-	await cs.fade(Color.BLACK, 0.0)
-	if not cs.alive(ticket): return
-	await cs.camera(Vector2(330, 380), 0.0, 1.1)
-	if not cs.alive(ticket): return
-	await cs.fade(Color(0, 0, 0, 0), 1.4)
-	if not cs.alive(ticket): return
-	await cs.title("KAPITEL 7", "Der neue Orden", 2.4)
-	if not cs.alive(ticket): return
-	await cs.say("AUSSERHALB DER STADT", "Ein kleiner Wald aus uralten Bäumen. In seiner Mitte ein kristallklarer See, der im Mondlicht schimmert wie ein gefallener Stern.")
-	if not cs.alive(ticket): return
-	cs.walk(player, Vector2(300, 420), 60)
-	await cs.walk(raven, Vector2(330, 440), 60)
-	if not cs.alive(ticket): return
-	cs.face(raven, Vector2(620, 330))
-	cs.face(player, raven.position)
-	await cs.lines([
-		["RAVEN", "Was ist das hier?"],
-		["SHADEPI", "Ein Ort, den der Orden nie vergessen hat. Komm mit ans Wasser."],
-	])
-	if not cs.alive(ticket): return
-	cs.end(func(): toast("Raven zum Wasser folgen"))
+	lake_sequence.play_arrival()
 
-## Kapitel 7: Maskenkodex und Kuss – der Orden ist wiedergeboren.
 func _scene_finale() -> void:
-	var center: Vector2 = player.position.lerp(raven.position, 0.5)
-	var cs = begin_cutscene()
-	var ticket: int = cs.generation
-	cs.pose(player, "idle")
-	cs.pose(raven, "idle")
-	await cs.camera(center + Vector2(0, -30), 1.6, 1.6)
-	if not cs.alive(ticket): return
-	await cs.say("SEE", "Langsam, fast zögerlich, greift er zu seiner Maske. Sein Kodex verbietet es, sein Gesicht jemandem außerhalb des Ordens zu zeigen. Raven gehört jetzt dazu.")
-	if not cs.alive(ticket): return
-	await cs.fade(Color(1, 1, 1, 0.55), 1.1)
-	if not cs.alive(ticket): return
-	await cs.lines([
-		["SEE", "Darunter: das Gesicht eines Mannes, gezeichnet von Kampf und Verlust. Ein dunkles, menschliches Auge – und ein leuchtend rotes."],
-		["RAVEN", "Oh."],
-		["SEE", "Sie stellt sich auf die Zehenspitzen und küsst ihn. Ein Teil des Heiligtums geht endgültig und willentlich auf sie über."],
-	])
-	if not cs.alive(ticket): return
-	await cs.fade(Color(0, 0, 0, 0.82), 1.0)
-	if not cs.alive(ticket): return
-	await cs.title("DER ORDEN DES WEISSEN DRACHEN", "ist in der Stille der Nacht wiedergeboren", 3.4)
-	if not cs.alive(ticket): return
-	await cs.fade(Color(0, 0, 0, 0), 1.0)
-	if not cs.alive(ticket): return
-	await cs.lines([
-		["RAVEN", "Kenzō ist weg. Aber wer hat ihm den Auftrag gegeben?"],
-		["SHADEPI", "Das finden wir heraus."],
-		["RAVEN", "Diesmal bist du nicht allein."],
-	])
-	if not cs.alive(ticket): return
-	cs.end(func(): toast("Der neue Orden · Die gemeinsame Suche beginnt"))
+	lake_sequence.play_finale()

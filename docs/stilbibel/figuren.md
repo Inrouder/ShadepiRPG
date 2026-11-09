@@ -337,3 +337,6 @@ Die Identität bleibt bei Menü, normalem Spiel, Spezialangriffen und Szenenpose
 - Der **weiße Drache** erscheint als mystisches Motiv der Stadt-/Menükulisse und in Ordenszeichen. Die vorhandenen Motive nicht mit einem bereits vorhandenen frei spielbaren Drachen-Sprite verwechseln.
 - Hintergründe enthalten weitere gemalte Menschen-/Silhouettenmotive. Diese sind keine zusätzlichen einzeln animierbaren Charaktere im Katalog.
 - Die zwölf ursprünglichen Chat-Figurenblätter bleiben im [Universumsarchiv](../universum/README.md) beschrieben; lokale Originalbilder fehlen. Diese Referenzkarten sichern den tatsächlich vorhandenen Spielbestand und ersetzen die Originaldossiers nicht.
+
+
+**Kontaktposen v0.36.0 · CodexAI:** [Raven und Shadepi am See](../see-finale.md), [aktive Quelle](../../assets/story/lake/README.md). Händehalten, Maskenabnahme mit verdeckender Hand, privater Kuss und maskierte Umarmung sind Zustände der vorhandenen erwachsenen Figuren, keine neuen Identitäten. Normalen Weltmaßstab und Kontaktanker aus `lake_tableau.gd` beachten. In beiden maskenlosen Zellen bleibt Shadepis Gesicht verdeckt.

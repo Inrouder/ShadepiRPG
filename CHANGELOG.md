@@ -1,5 +1,15 @@
 # Versionshinweise
 
+## v0.36.0 – CodexAI: See-Anflug, Aussteigen und romantisches Finale · 9. November 2026
+
+- Neuer tatsächlicher Aerodyne-Anflug über den Mondscheinsee: weite Ansicht, stetige Annäherung, Kamerafahrt zur freien Uferfläche und weiches Aufsetzen auf trockenem Gras. Derselbe HQ-Fahrzeug-/Düsenrenderer bleibt erhalten. Raven und Shadepi steigen nacheinander aus dem seitlichen Kabinenbereich und gehen sichtbar zum Wasser; das geparkte Schiff bleibt dort mit Bodenkollision stehen.
+- Neues kontaktgebundenes HQ-Pixelblatt mit Händehalten, Ravens Maskenabnahme, Kuss und anschließender maskierter Umarmung. Kasa-Breite und Ravens Proportionen gegen normale Spielfiguren geprüft. Ravens Hand, der Kasa und der abgewandte Kopf verdecken Shadepis Gesicht in allen maskenlosen Posen; kein vollständig sichtbares Porträt. Die konkrete Nutzerbeschreibung ersetzt die frühere erzählte Gesichtsenthüllung.
+- Kurzer texturierter Drachenschatten auf dem See und bewegtes mystisches Leuchten. Beide bleiben auf die tatsächliche Wasserfläche beschnitten und verwenden eine anhaltbare Szenenuhr. Keine Comic-Einblendung oder neue Behauptung über die Identität des Drachen.
+- Natürlichere Dialoge mit freiwilliger Ordensaufnahme vor dem Maskenmoment; die offene Suche nach Kenzōs Auftraggeber bleibt erhalten. Die Musikzuordnung bleibt unverändert.
+- Ein kompatibles Speicherfeld unterscheidet laufende und abgeschlossene Seeszenen. Laden einer unterbrochenen Szene beginnt diese erneut; ältere Anfangs-/Endspielstände erhalten die neue Szene einmal. Pause, Controller-B, Abbruch und Wiederherstellung von Sichtbarkeit/Deckkraft/Tiefenreihenfolge geprüft.
+- 920 gezielte Prüfungen und acht zusätzliche Exportprüfungen ohne Fehler. Ankunft und Finale im tatsächlichen Godot-Renderer durchlaufen und gefilmt; Kontaktgrafik auch aus dem exportierten Spielpaket gesichtet.
+- [Spielaufnahmen](docs/see-finale.md), [Assetquellen](assets/story/lake/README.md) und [Konsistenznachweis](docs/arbeiten/see-finale-v036.md).
+
 ## v0.35.1 – CodexAI: Tower-Abflug vom Landeplatz, Fall am Balkon vorbei · 9. November 2026
 
 - Räumlichen Fehler der v0.35.0-Flucht ersetzt: Rennen, Einsteigen und Abheben finden auf dem tatsächlichen Dach-Landeplatz statt. Der Aerodyne steht an seinem Aufsetzpunkt aus dem spielbaren Anflug.

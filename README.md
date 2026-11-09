@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.35.1 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.36.0 · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -39,7 +39,13 @@ Die Musik wechselt passend zwischen Hauptmenü, Erkundung, normalen Kämpfen und
 
 Für Menschen und KI: **[Bebilderte Stilbibel des gesamten Spiels](docs/stilbibel/README.md)** · [Alle 23 Figuren mit Einzelkarten](docs/stilbibel/figuren.md) · [Konsistenzregeln](KONSISTENZ.md) · [Mitarbeit](CONTRIBUTING.md) · [Kopierbarer Auftrag und Arbeitsnachweis](docs/vorlagen/konsistenz-auftrag.md). Die Projektregeln in [AGENTS.md](AGENTS.md), der Einstieg für [Claude](CLAUDE.md) und die Pull-Request-Vorlage verweisen auf denselben Standard.
 
-## Neu in v0.35.1 · 9. November 2026 · CodexAI
+## Neu in v0.36.0 · 9. November 2026 · CodexAI
+
+- **Landeanflug zum See:** Weite Mondlichtaufnahme, sichtbarer Anflug, Abfangen über der freien Uferfläche und weiches Aufsetzen. Raven und Shadepi steigen nacheinander seitlich aus der Kabine und gehen ans Wasser.
+- **Romantisches Finale:** Nach der freiwilligen Ordensaufnahme nimmt Raven Shadepis Maske ab und küsst ihn. Neue HQ-Pixelposen zeigen Handkontakt und Umarmung; Hand und Kasa verdecken sein Gesicht. Ein kurzer Drachenschatten gleitet über den mystisch leuchtenden See.
+- Neue Szenen lassen sich pausieren, überspringen und nach unterbrochenem Speichern/Laden erneut beginnen. Ältere Kapitel-7-Anfangs-/Endspielstände erhalten die neue Szene einmalig. [Spielaufnahmen und technische Hinweise](docs/see-finale.md).
+
+## v0.35.1 · 9. November 2026 · CodexAI
 
 - **Räumlich korrigierte Tower-Flucht:** Beide laufen auf dem vorhandenen Dach-Landeplatz zum dort geparkten Aerodyne und steigen ein. Nach Abheben und Schubverlust folgt die Fassade darunter: Das Schiff kommt von oben, fällt am Balkon vorbei und fängt sich darunter. Der Start vom Balkon in v0.35.0 ist ersetzt.
 - Der beim Anflug erspielte Abstellpunkt wird jetzt gespeichert und beim Abflug wiederverwendet. [Aktuelle Bilder und Film](docs/tower-inszenierung.md).

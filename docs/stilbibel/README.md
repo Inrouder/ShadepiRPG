@@ -6,6 +6,8 @@
 
 ## Die fünf Teile
 
+**Aktualisierung v0.36.0 · CodexAI:** [See-Finale](../see-finale.md) mit vier eigenen HQ-Kontaktposen nach den normalen Heldenquellen. Hand-/Fußanker, breite Kasa-Silhouette und Verdeckung des Gesichts sind Teil des Grafikvertrags; kein unmaskiertes Porträt. Landung auf trockenem Uferboden, neue Drachenquelle nur als kurzzeitiger Wasserschatten.
+
 **Aktualisierung v0.35.1 · CodexAI:** [Tower- und Hangar-Inszenierung](../tower-inszenierung.md) mit freien Laufwegen und unveränderten Figurenquellen. **Start auf dem tatsächlichen Landeplatz**, danach Fall von oben am tieferen Balkon vorbei und Abfangen darunter; die v0.35.0-Balkonfassung ist ersetzt. Düsenanker, Perspektive und Körperbewegung bleiben gekoppelt. Die vorhandenen Figuren- und Materialkarten bleiben gültig.
 
 **Aktualisierung v0.33.0 · CodexAI:** [Neue Tower-Zustände, Extraktion, knappe Flucht und KOBAN-TEC-Hangar](../tower-extraktion.md). Die 23 Grundfigurenkarten bleiben gültig; Spezialposen und die zusätzliche Filmkulisse sind bei Figuren und Welten verzeichnet. Nur die betroffene Weltübersicht wird neu gerendert.
