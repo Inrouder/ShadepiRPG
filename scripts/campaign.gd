@@ -15,12 +15,16 @@ const HangarWorld = preload("res://scripts/hangar_world.gd")
 const Drive = preload("res://scripts/campaign_drive.gd")
 const AerodyneFlight = preload("res://scripts/aerodyne_flight.gd")
 const ParkedAerodyne = preload("res://scripts/parked_aerodyne.gd")
+const TowerPlan = preload("res://scripts/tower_plan_hologram.gd")
+const TowerAlarm = preload("res://scripts/tower_alarm.gd")
 const ChapterHud = preload("res://scripts/campaign_hud.gd")
 const Arcade = preload("res://scripts/arcade_encounter.gd")
 const Waves = preload("res://scripts/arcade_waves.gd")
 const SAVE: = "user://shadepi-campaign.cfg"
 const SPAWN: = Vector2(134, 421)
 const PACT_SPAWN: = Vector2(437, 427)
+## v0.48.0 · ClaudeHelper: Projektorpunkt des Towerplans auf Ravens Hauptkonsole.
+const PLAN_EMITTER: = Vector2(486, 282)
 const SHOOTERS: = [preload("res://assets/sprites/npcs/shooter-visor.png"), preload("res://assets/sprites/npcs/shooter-violet.png")]
 const GUARDS: = [
 	preload("res://assets/sprites/npcs/punk-1.png"), preload("res://assets/sprites/npcs/punk-2.png"), 
@@ -73,6 +77,8 @@ var bike_mode: = ""
 ## Aerodyne on the tower pad (ROOF): touchdown point from the landing.
 var aerodyne_spot := AerodyneFlight.PAD_WORLD
 var parked_aerodyne: Node2D
+var tower_plan: Node2D
+var tower_alarm: Node2D
 ## After a crash the repaired engine is not failing a second time.
 var flight_engine_repaired := false
 var departure: Node2D
@@ -246,6 +252,12 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo:
 	if is_instance_valid(parked_aerodyne):
 		parked_aerodyne.queue_free()
 	parked_aerodyne = null
+	if is_instance_valid(tower_plan):
+		tower_plan.queue_free()
+	tower_plan = null
+	if is_instance_valid(tower_alarm):
+		tower_alarm.queue_free()
+	tower_alarm = null
 	for foe in foes:
 		foe.hide()
 		foe.set_physics_process(false)
@@ -317,6 +329,19 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo:
 		set_painted_solids("memory")
 		set_dressing("")
 		set_music_section("chapter_5_echo")
+	if beat == Beat.PACT:
+		# v0.48.0 · ClaudeHelper: Ravens projizierter Towerplan über dem Terminal.
+		tower_plan = TowerPlan.new()
+		tower_plan.world = self
+		tower_plan.position = PLAN_EMITTER
+		add_child(tower_plan)
+		if not fresh: tower_plan.show_plan(true)
+	if beat == Beat.ESCAPE:
+		# v0.48.0 · ClaudeHelper: Alarm aus Wandbeacons, Boden-LEDs und Aufzuglicht.
+		tower_alarm = TowerAlarm.new()
+		tower_alarm.world = self
+		add_child(tower_alarm)
+		move_child(tower_alarm, actors.get_index())
 	if beat == Beat.ROOF:
 		# The Aerodyne stays where it touched down on Kenzō's pad.
 		parked_aerodyne = ParkedAerodyne.new()
@@ -620,7 +645,14 @@ func interaction_prompt() -> String:
 		return "E / A · Ravens Terminal öffnen"
 	if _timed_node():
 		return "E / A · Daten abgreifen" if _signal_open() else "ICE scannt · auf Cyan warten"
-	return "E / A · " + chapter_objective()
+	return "E / A · " + _short_action(chapter_objective())
+
+## v0.48.0 · ClaudeHelper: die Aktionszeile nennt nur die Handlung; Zähler und
+## Figurenpräfix stehen bereits im Missionsfeld.
+static func _short_action(objective: String) -> String:
+	var text := objective.trim_prefix("Raven: ")
+	var counter := RegEx.create_from_string(" · \\d+ ?/ ?\\d+.*$")
+	return counter.sub(text, "").strip_edges()
 
 func _hangar_prop() -> String:
 	for item in [[Vector2(193, 289), "Klingen ansehen"], [Vector2(476, 293), "Ersatzteile ansehen"], [Vector2(895, 380), "Aerodyne ansehen"]]:
@@ -686,6 +718,7 @@ func _complete_point() -> void:
 	if beat==Beat.ESCAPE and tower_stage!=2: return
 	if beat == Beat.PACT:
 		toast(["Aufzug: Sicherheitskräfte eine Etage tiefer.", "Dachzugang: privater Landeplatz.", "Scanner: Kennung von Kenzōs Gleiter erforderlich."][point_index])
+		if is_instance_valid(tower_plan): tower_plan.focus([TowerPlan.ELEVATOR, TowerPlan.PAD, TowerPlan.SCANNER][point_index])
 	if beat == Beat.HANGAR:
 		effects.hack_arc(_target(), Vector2(884, 328))
 		toast(["Stromversorgung aktiv.", "Kennung kopiert.", "Aerodyne gangbar. Noch die Prüf-ICE am Transponder umgehen."][point_index])
@@ -950,21 +983,11 @@ func _draw() -> void :
 		var decoy: = Vector2(551, 426)
 		draw_arc(decoy, 15, clock * 2.0, clock * 2.0 + PI, 24, Color("a35b7a"), 2)
 		draw_line(decoy + Vector2(-7, -2), decoy + Vector2(12, -2), Color("bf6d91"))
-	if beat == Beat.ESCAPE:
-		var pulse: = 0.06 + 0.08 * (1.0 + sin(clock * 6.0))
-		draw_rect(Rect2(0, 216, 1024, 280), Color(0.82, 0.06, 0.14, pulse))
-		for x in range(85, 1000, 115):
-			draw_polyline(PackedVector2Array([Vector2(x, 466), Vector2(x + 7, 471), Vector2(x, 476)]), Color("df7778"), 2)
 	if beat == Beat.ESCAPE and lift_glow > 0.0:
-		# Light spilling from the opening lift doors onto the marble floor.
-		var glow: = minf(1.0, lift_glow)
-		draw_set_transform(LIFT_DOOR + Vector2(0, -8), 0.0, Vector2(1.0, 0.38))
-		for ring in 5:
-			draw_circle(Vector2.ZERO, 26.0 + ring * 15.0, Color(0.5, 0.9, 1.0, 0.07 * glow))
-		draw_set_transform(Vector2.ZERO)
-		var gap: = 14.0 * glow
-		draw_line(LIFT_DOOR + Vector2(-gap, -18), LIFT_DOOR + Vector2(-gap, 6), Color(0.75, 0.97, 1.0, 0.8 * glow), 2.0)
-		draw_line(LIFT_DOOR + Vector2(gap, -18), LIFT_DOOR + Vector2(gap, 6), Color(0.75, 0.97, 1.0, 0.8 * glow), 2.0)
+		# Die Aufzugtüren gleiten auf; das Licht selbst kommt aus TowerAlarm.lift_light.
+		var gap: = roundf(14.0 * minf(1.0, lift_glow))
+		for side in [-1.0, 1.0]:
+			draw_rect(Rect2(LIFT_DOOR + Vector2(side * gap - 1.0, -18), Vector2(2, 24)), Color(0.75, 0.97, 1.0, 0.8 * minf(1.0, lift_glow)))
 	if beat in [Beat.LAKE, Beat.END] and ritual_flash > 0.0:
 		draw_set_transform(ritual_origin, 0.0, Vector2(1.0, 0.52))
 		draw_arc(Vector2.ZERO, 14.0 + (1.4 - ritual_flash) * 49.0, 0, TAU, 48, Color(0.46, 0.93, 1.0, ritual_flash / 1.4), 2)
@@ -984,11 +1007,8 @@ func _draw() -> void :
 		if boss.health > 0 and boss.health <= 180 and fposmod(clock, 3.0) <= 1.45:
 			draw_circle(boss.position + Vector2(8, -34), 4.0, Color("72eff4"))
 	var point: = Vector2.ZERO if in_cinematic() else _target()
-	if point != Vector2.ZERO:
-		var signal_color: = Color("f45d79") if _timed_node() and not _signal_open() else Color("72eff4")
-		draw_circle(point, 12.0, signal_color, false, 2)
-		var tip: = point + Vector2(0, -31.0 + sin(clock * 5.0) * 3.0)
-		draw_polyline(PackedVector2Array([tip + Vector2(-6, -5), tip, tip + Vector2(6, -5)]), signal_color, 2)
+	var marker_actor: PixelActor = raven if raven_leads() else player
+	PixelMarker.show(self, [] if point == Vector2.ZERO else [[point, marker_actor.position.distance_to(point) <= 43.0, _timed_node() and not _signal_open(), 36.0]])
 
 # --- Scripted scenes ---------------------------------------------------------
 
@@ -1066,6 +1086,8 @@ func _two_shot(zoom: float = 1.25) -> void:
 	cutscene.camera(player.position.lerp(raven.position, 0.5) + Vector2(0, -42), 0.0, zoom)
 
 ## Kapitel 3: Der Pakt.
+## v0.48.0 · ClaudeHelper: drei Gesprächsschritte mit Reaktion und Abstand
+## (Ravens Grenze, gemeinsames Ziel, Plan am Terminal) statt eines langen Blocks.
 func _scene_pact() -> void:
 	var cs = begin_cutscene()
 	var ticket: int = cs.generation
@@ -1080,58 +1102,103 @@ func _scene_pact() -> void:
 	if not cs.alive(ticket): return
 	await cs.title("KAPITEL 3", "Der Pakt", 2.2)
 	if not cs.alive(ticket): return
+	# 1 · Ravens Grenze: Spott, dann wendet sie sich ab.
+	await cs.say("RAVEN", "Du hörst dich an wie aus einem billigen Theaterstück. Es ist lieb von dir, aber diese Typen sind Monster. Ich brauche keinen Schutz.")
+	if not cs.alive(ticket): return
+	var away: Vector2 = player.position + Vector2(62, 6)
+	await cs.walk(raven, away, 42)
+	if not cs.alive(ticket): return
+	cs.face(raven, PLAN_EMITTER)
+	cs.pose(raven, "idle")
+	await cs.wait(0.5)
+	if not cs.alive(ticket): return
+	await cs.say("RAVENS VERSTECK", "Seine unerschütterliche Entschlossenheit bricht etwas in ihr auf. Die Dämme um ihre Vergangenheit bekommen Risse.")
+	if not cs.alive(ticket): return
 	await cs.lines([
-		["RAVEN", "Du hörst dich an wie aus einem billigen Theaterstück. Es ist lieb von dir, aber diese Typen sind Monster. Ich brauche keinen Schutz."],
-		["RAVENS VERSTECK", "Doch seine unerschütterliche Entschlossenheit bricht etwas in ihr auf. Die Dämme um ihre Vergangenheit bekommen Risse – und sie erzählt ihm alles."],
-		["RAVEN", "Mein Vater war Programmierer bei Arasaka. Kenzō Moriyama ließ meine Eltern ermorden und hielt mich jahrelang gefangen – ein Spielzeug, das er nach Belieben quälte."],
-		["RAVEN", "Ich bin geflohen, habe meine Identität gelöscht. Chrome Jackal war kein zufälliges Kopfgeld. Er war einer von Kenzōs Bluthunden. Ich habe ihn gejagt, bevor er mich jagen konnte."],
+		["RAVEN", "Mein Vater war Programmierer bei Arasaka. Brillant. Kenzō Moriyama hat ihn beneidet – und meine Eltern ermorden lassen."],
+		["RAVEN", "Danach hat er mich jahrelang gefangen gehalten. Ein Spielzeug, das er nach Belieben quälte und brach."],
+		["RAVEN", "Ich bin geflohen und habe meine Identität gelöscht. Chrome Jackal war kein zufälliges Kopfgeld. Er war einer von Kenzōs Bluthunden. Ich habe ihn gejagt, bevor er mich jagen konnte."],
 	])
 	if not cs.alive(ticket): return
+	# Shadepis Reaktion: die Fäuste ballen sich, die Servos surren.
 	cs.pose(player, "attack")
-	cs.do(func(): sound("prop_metal"))
-	await cs.wait(0.35)
+	cs.do(func():
+		sound("prop_metal")
+		shake = 1.5
+	)
+	await cs.say("RAVENS VERSTECK", "Shadepis Fäuste ballen sich so fest, dass die Servos in seinen Händen leise surren.")
 	if not cs.alive(ticket): return
 	cs.pose(player, "idle")
+	# 2 · Gemeinsames Ziel.
 	await cs.lines([
-		["SHADEPI", "Das tut mir leid, was du erleben musstest. Ich kann es nicht ungeschehen machen. Aber ich biete dir meine Dienste an."],
-		["RAVEN", "Ich würde Kenzō gerne tot sehen. Ich kann nicht mein Leben lang fliehen. Ich helfe dir. Aber wir sind keine Freunde."],
-		["SHADEPI", "Perfekt. Damit komme ich klar. Wie finden wir Kenzō?"],
+		["SHADEPI", "Das tut mir leid. Ich kann es nicht ungeschehen machen. Aber ich biete dir meine Dienste an."],
+		["SHADEPI", "Oder du gibst mir die Informationen und siehst mich nie wieder. Wobei ich auf eine Netrunnerin wie dich ungern verzichten würde."],
 	])
 	if not cs.alive(ticket): return
+	cs.face(raven, player.position)
+	await cs.walk(raven, player.position + Vector2(24, -4), 50)
+	if not cs.alive(ticket): return
+	cs.face(raven, player.position)
+	cs.pose(raven, "idle")
+	await cs.say("RAVEN", "Ich würde Kenzō gerne tot sehen. Ich kann nicht mein Leben lang fliehen.")
+	if not cs.alive(ticket): return
+	cs.do(func():
+		effects.burst(player.position + Vector2(0, -56), Color("c9d6e4"), 5)
+		sound("prop_metal", 0.4)
+	)
+	await cs.say("RAVEN / STUPST GEGEN SEINEN KASA", "Ich helfe dir. Aber wir sind keine Freunde.")
+	if not cs.alive(ticket): return
+	await cs.say("SHADEPI", "Perfekt. Damit komme ich klar. Wie finden wir Kenzō?")
+	if not cs.alive(ticket): return
+	# 3 · Der Plan: Raven projiziert den Tower über ihre Hauptkonsole.
 	var terminal: Vector2 = Story.POINTS[Beat.PACT][0]
-	cs.camera(terminal + Vector2(0, -30), 1.0, 1.3)
+	cs.camera(PLAN_EMITTER + Vector2(0, -30), 1.0, 1.7)
 	await cs.walk(raven, terminal + Vector2(26, 12), 70)
 	if not cs.alive(ticket): return
-	cs.face(raven, terminal)
+	cs.face(raven, PLAN_EMITTER)
 	cs.pose(raven, "attack")
 	cs.do(func():
-		effects.burst(terminal, Color("6fdcf0"), 18)
+		effects.hack_arc(raven.position + Vector2(0, -24), PLAN_EMITTER)
 		sound("hack")
+		if is_instance_valid(tower_plan): tower_plan.show_plan()
 	)
-	await cs.wait(0.4)
+	await cs.wait(0.8)
 	if not cs.alive(ticket): return
 	cs.pose(raven, "idle")
-	await cs.say("RAVEN", "Ich weiß, wo er wohnt. Immerhin war ich jahrelang sein Spielzeug. Hier – die Baupläne des Arasaka-Towers.")
+	await cs.say("RAVEN", "Ich weiß, wo er wohnt. Immerhin war ich jahrelang sein Spielzeug. Der Arasaka-Tower – die Elite wohnt natürlich ganz oben.")
 	if not cs.alive(ticket): return
-	cs.end(func(): toast("Towerplan am Terminal prüfen"))
+	cs.end(func(): toast("Towerplan am Terminal prüfen · Aufzug, Dach, Scanner"))
 
 func _scene_plan() -> void:
 	var cs = begin_cutscene()
 	var ticket: int = cs.generation
 	cs.pose(player, "idle")
 	cs.pose(raven, "idle")
-	cs.face(player, raven.position)
-	await cs.camera(player.position.lerp(raven.position, 0.5) + Vector2(0, -42), 0.6, 1.3)
+	cs.face(player, PLAN_EMITTER)
+	cs.face(raven, PLAN_EMITTER)
+	await cs.camera(PLAN_EMITTER + Vector2(0, -34), 0.6, 1.95)
 	if not cs.alive(ticket): return
+	cs.do(func(): if is_instance_valid(tower_plan): tower_plan.focus(TowerPlan.PAD))
+	await cs.say("RAVEN", "Er hat einen privaten Landeplatz. Entweder wir dringen von oben ein, oder wir marschieren durch den Hauptaufzug direkt in sein Penthouse.")
+	if not cs.alive(ticket): return
+	cs.do(func(): if is_instance_valid(tower_plan): tower_plan.focus(TowerPlan.SCANNER))
+	await cs.say("SHADEPI", "Dieser Sensor scannt jeden Gleiter vor der Landung – Identifikation, Fracht, Biometrie. Wenn du die Kennung von Kenzōs Flieger auf einen anderen überträgst … ich weiß, wo ich einen herbekomme.")
+	if not cs.alive(ticket): return
+	await cs.say("RAVEN", "Das kann ich. Aber ich komme mit. Ich will ihm ins Gesicht sehen, wenn es vorbei ist – nachdem du deine Informationen hast.")
+	if not cs.alive(ticket): return
+	cs.do(func(): if is_instance_valid(tower_plan): tower_plan.focus(TowerPlan.ELEVATOR))
 	await cs.lines([
-		["RAVEN", "Er hat einen privaten Landeplatz. Entweder wir dringen von oben ein, oder wir marschieren durch den Hauptaufzug direkt in sein Penthouse."],
-		["SHADEPI", "Dieser Sensor scannt jeden Gleiter vor der Landung. Wenn du die Kennung von Kenzōs Flieger auf einen anderen überträgst … ich weiß, wo ich einen herbekomme."],
-		["RAVEN", "Das kann ich. Aber ich komme mit. Ich will ihm ins Gesicht sehen, wenn es vorbei ist – nachdem du deine Informationen hast."],
 		["RAVEN", "Wir machen es morgen Abend. Dienstags schickt Kenzō seine Angestellten weg, um seine … Spielsachen zu quälen. Dann ist er allein, seine Wachen sind eine Etage tiefer, und er schaltet die Kameras ab."],
 		["SHADEPI", "Das klingt fast zu einfach."],
 		["RAVEN", "Es ist einfach, wenn es nach Plan läuft. Aber Kenzō selbst ist bis an die Zähne mit Militärtechnologie ausgestattet. Wir werden uns mit ihm einschließen."],
-		["SHADEPI", "Ich habe immer gern einen Plan C. Dann lass uns den Aerodyne holen. Komm mit."],
 	])
+	if not cs.alive(ticket): return
+	cs.do(func(): if is_instance_valid(tower_plan): tower_plan.focus(TowerPlan.NONE))
+	cs.face(player, raven.position)
+	await cs.say("SHADEPI", "Ich habe immer gern einen Plan C. Dann lass uns den Aerodyne holen. Komm mit.")
+	if not cs.alive(ticket): return
+	cs.do(func(): if is_instance_valid(tower_plan): tower_plan.hide_plan())
+	await cs.wait(0.5)
 	if not cs.alive(ticket): return
 	await cs.fade(Color.BLACK, 0.6)
 	if not cs.alive(ticket): return

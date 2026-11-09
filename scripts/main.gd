@@ -3,6 +3,7 @@ extends Node2D
 const GamepadBindings = preload("res://scripts/gamepad_bindings.gd")
 const Admin = preload("res://scripts/admin_tools.gd")
 const ChapterFlow = preload("res://scripts/chapter_flow.gd")
+const PixelMarker = preload("res://scripts/pixel_marker.gd")
 const PlayerScript = preload("res://scripts/player.gd")
 const EnemyScript = preload("res://scripts/enemy.gd")
 const HudScript = preload("res://scripts/hud.gd")
@@ -41,6 +42,7 @@ var audio_on: = true
 var sfx: Array[AudioStreamPlayer] = []
 var combat_audio: Node
 var music: AudioStreamPlayer
+var ambience: Node
 var music_section := ""
 var music_fade: Tween
 var light_texture: = preload("res://assets/world/light.png")
@@ -679,15 +681,33 @@ func set_visual_quality(level: int) -> void :
 func cycle_visual_quality() -> void :
 	set_visual_quality((visual_quality + 1) % VISUAL_PRESETS.size())
 	var config: = ConfigFile.new()
+	config.load(VISUAL_SETTINGS)   # andere Einträge (z. B. Umgebungsgeräusche) erhalten
 	config.set_value("video", "preset", visual_quality)
 	if config.save(VISUAL_SETTINGS) != OK:
 		toast("Bildstil geändert · Einstellung konnte nicht gespeichert werden")
 	else:
 		toast("Bildstil: " + VISUAL_PRESETS[visual_quality])
 
+## v0.48.0 · ClaudeHelper: Umgebungsgeräusche Aus / Leise / Normal, gespeichert neben dem Bildstil.
+func cycle_ambient_level() -> void:
+	ambience.set_level((ambience.level + 1) % ambience.LEVELS.size())
+	var config: = ConfigFile.new()
+	config.load(VISUAL_SETTINGS)
+	config.set_value("audio", "ambient", ambience.level)
+	var saved := config.save(VISUAL_SETTINGS) == OK
+	if ui != null: ui.ambient_button.text = "Umgebung: " + ambience.LEVELS[ambience.level]
+	toast("Umgebungsgeräusche: " + ambience.LEVELS[ambience.level] + ("" if saved else " · nicht gespeichert"))
+
 func _build_audio() -> void :
 	combat_audio = preload("res://scripts/combat_audio.gd").new()
 	add_child(combat_audio)
+	ambience = preload("res://scripts/ambient_audio.gd").new()
+	ambience.world = self
+	var stored := ConfigFile.new()
+	if stored.load(VISUAL_SETTINGS) == OK:
+		var value: Variant = stored.get_value("audio", "ambient", 2)
+		ambience.level = clampi(int(value) if value is int else 2, 0, 2)
+	add_child(ambience)
 	music = AudioStreamPlayer.new()
 	music.volume_db = -12
 	add_child(music)
@@ -1200,6 +1220,7 @@ func toggle_audio() -> void :
 	for channel in sfx:
 		if not audio_on:
 			channel.stop()
+	if ui != null and ui.audio_button != null: ui.audio_button.text = "Ton: An" if audio_on else "Ton: Aus"
 	toast("Ton an" if audio_on else "Ton aus")
 
 func _exit_tree() -> void :
@@ -1223,11 +1244,12 @@ func _draw() -> void :
 			draw_rect(Rect2(499, y, 21, 12), Color("2e4355"))
 			draw_rect(Rect2(504, y + 3, 11, 3), Color("76dfec"))
 	var marker: Vector2 = WorldData.RAVEN if stage == 0 else WorldData.TERMINAL if stage == 1 else enemy.position if stage == 2 else WorldData.EXIT
+	var markers: Array = []
 	if stage < 4:
-		var bounce: = sin(Time.get_ticks_msec() * 0.004) * 2
-		draw_polyline(PackedVector2Array([marker + Vector2(-5, -72 + bounce), marker + Vector2(0, -67 + bounce), marker + Vector2(5, -72 + bounce)]), Color("8aebf0"), 2)
+		markers.append([marker, player.position.distance_to(marker) <= 40.0, false, 72.0])
 	if stage >= 3:
-		draw_arc(WorldData.EXIT, 18, 0.0, TAU, 24, Color(0.4, 0.9, 0.85, 0.6), 1)
+		markers.append([WorldData.EXIT, true, false, 34.0])
+	PixelMarker.show(self, markers)
 
 func _capture(path: String) -> void :
 	await get_tree().process_frame

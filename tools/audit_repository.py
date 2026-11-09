@@ -77,6 +77,16 @@ def audit():
             check((ROOT / name).exists(), str(p.relative_to(ROOT)) + ": fehlende Laufzeitressource " + name)
             for filters in export_filters:
                 check(not any(fnmatch.fnmatchcase(name, f) for f in filters), str(p.relative_to(ROOT)) + ": aktive Referenz auf ausgeschlossene Ressource " + name)
+    # v0.48.0 · ClaudeHelper: Größenbremse für Vorschaufilme. Bestehende große Filme bleiben
+    # als Bestand erlaubt; neue Dateien über 5 MB sollen gekürzt oder als Release-Anhang
+    # veröffentlicht werden, damit der Git-Verlauf nicht weiter anwächst.
+    legacy_large = {
+        "fehlerbericht-szenen-v045.webp", "menue-testpunkte-v044.webp", "verfolger-bewegung-v041.webp",
+        "motorrad-bewegung-v040.webp", "tower-flucht-v033.webp",
+    }
+    for p in (ROOT / "docs/previews").glob("*"):
+        if p.is_file() and p.name not in legacy_large:
+            check(p.stat().st_size <= 5 * 1024 * 1024, "docs/previews/" + p.name + ": Vorschau über 5 MB – kürzen oder als Release-Anhang veröffentlichen")
     for file in ["README.md", "docs/README.md"]:
         check(bool(re.search(r'!\[[^]]*\]\([^)]*\.png\)', (ROOT / file).read_text())), file + ": eingebettete PNG-Vorschau fehlt")
     print(f"REPOSITORY AUDIT: {checks} checks, {len(errors)} failures; {markdown} Markdown files; {len(runtime)} runtime files")

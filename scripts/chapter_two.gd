@@ -610,7 +610,5 @@ func _draw() -> void :
 		if section == Section.RECOVERY:
 			draw_rect(Rect2(SPRAY + Vector2(-4, -11), Vector2(8, 11)), tint if spray_ready else Color("a5e3e8"))
 	var marker: = Vector2.ZERO if in_cinematic() else _target()
-	if marker != Vector2.ZERO:
-		draw_arc(marker, 14.0, 0, TAU, 24, accent, 1.5)
-		var tip: = marker + Vector2(0, -40 + sin(Time.get_ticks_msec() * 0.006) * 3)
-		draw_polyline(PackedVector2Array([tip + Vector2(-5, -5), tip, tip + Vector2(5, -5)]), accent, 2)
+	var marker_actor: PixelActor = raven if raven_leads() else player
+	PixelMarker.show(self, [[marker, marker_actor.position.distance_to(marker) <= 43.0, net and not _ice_open(), 40.0]] if marker != Vector2.ZERO else [])

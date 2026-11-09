@@ -707,7 +707,5 @@ func _draw() -> void:
 		point = TRAIL[trail_index] if trail_index < TRAIL.size() else (ARENA_ENTRY if gate_open else (TRAIL.back() if _hunt_terminal_ready() else Vector2.ZERO))
 	elif phase == Phase.RESCUE and gate_open:
 		point = DOWNED_SPOT
-	if point != Vector2.ZERO and not in_cinematic():
-		draw_arc(point, 13.0, 0.0, TAU, 24, Color(0.35, 0.88, 0.95, 0.7), 1.0)
-		var tip := point + Vector2(0, -62.0 + sin(Time.get_ticks_msec() * 0.006) * 4.0)
-		draw_polyline(PackedVector2Array([tip + Vector2(-6, -6), tip, tip + Vector2(6, -6)]), Color("a5eff6"), 2.0)
+	var marker_actor: PixelActor = raven if raven_leads() else player
+	PixelMarker.show(self, [[point, marker_actor.position.distance_to(point) <= 47.0, false, 62.0]] if point != Vector2.ZERO and not in_cinematic() else [])

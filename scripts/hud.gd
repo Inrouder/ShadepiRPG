@@ -45,6 +45,8 @@ var display_panel: Control
 var game_hud_nodes: Array[CanvasItem] = []
 var menu_button_tweens: Dictionary = {}
 var visual_button: Button
+var ambient_button: Button
+var audio_button: Button
 var mode_button: Button
 var requested_coop: = false
 var controls: Label
@@ -149,6 +151,7 @@ func _ready() -> void :
 	game_hud_nodes.append(prompt)
 	prompt.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	prompt.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	prompt.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	var shadow: = StyleBoxFlat.new()
 	shadow.bg_color = Color(0.03, 0.05, 0.09, 0.9)
 	prompt.add_theme_stylebox_override("normal", shadow)
@@ -211,15 +214,22 @@ func _ready() -> void :
 	resume_button = button_at("Testszene starten", 124, start_selected)
 	load_button = button_at("Letzten Kontrollpunkt laden",154,func(): preload("res://scripts/checkpoint_resume.gd").load_latest(world,requested_coop))
 	restart_button = button_at("Testszene neu starten", 184, _start_new)
-	var audio_button := button_at("Ton An/Aus", 214, func(): world.toggle_audio())
-	audio_button.size.x = 116
+	# v0.48.0 · ClaudeHelper: Ton und Umgebung teilen sich eine Zeile, Bildstil und Anzeige die nächste.
+	audio_button = button_at("Ton: An" if world.audio_on else "Ton: Aus", 214, func(): world.toggle_audio())
+	audio_button.size.x = 70
 	audio_button.tooltip_text = "Musik und Spielgeräusche ein- oder ausschalten."
-	display_button = button_at("Anzeige", 214, _open_display_panel)
-	display_button.position.x = 144
-	display_button.set_meta("home_x", 144.0)
-	display_button.size.x = 116
-	display_button.tooltip_text = "Vollbild, Fenstergröße und Skalierung · F11 / Alt+Enter"
+	ambient_button = button_at("Umgebung: " + world.ambience.LEVELS[world.ambience.level], 214, func(): world.cycle_ambient_level())
+	ambient_button.position.x = 90
+	ambient_button.set_meta("home_x", 90.0)
+	ambient_button.size.x = 170
+	ambient_button.tooltip_text = "Leise Ortsgeräusche wie Regen, Lüftung, Stadt und See: Aus, Leise oder Normal."
 	visual_button = button_at("Bildstil: " + world.VISUAL_PRESETS[world.visual_quality], 244, func(): world.cycle_visual_quality())
+	visual_button.size.x = 168
+	display_button = button_at("Anzeige", 244, _open_display_panel)
+	display_button.position.x = 188
+	display_button.set_meta("home_x", 188.0)
+	display_button.size.x = 72
+	display_button.tooltip_text = "Vollbild, Fenstergröße und Skalierung · F11 / Alt+Enter"
 	quit_button = button_at("Zurück zum Desktop",304,func(): get_tree().quit())
 	quit_button.size.y = 24
 	menu_help = label_at("Stick / Kreuz · A wählen · F11 Vollbild", Vector2(16,333),Vector2(246,12),menu,8)
@@ -259,6 +269,24 @@ func _animate_menu_button(button: Button) -> void:
 	menu_button_tweens[button] = tween
 	if active and start_backdrop.visible:
 		start_backdrop.pulse_at(button.global_position + button.size * 0.5)
+
+## v0.48.0 · ClaudeHelper: compact pixel chip sized to its text instead of a
+## screen-wide flat bar; the full objective stays in the mission panel.
+var _prompt_text := ""
+var _prompt_theme := ""
+func _fit_prompt() -> void:
+	var theme := menu_theme()
+	if prompt.text == _prompt_text and theme == _prompt_theme:
+		return
+	_prompt_text = prompt.text
+	if theme != _prompt_theme:
+		_prompt_theme = theme
+		prompt.add_theme_stylebox_override("normal", UiSkin.panel(theme, true))
+	var font := prompt.get_theme_font("font")
+	var width := font.get_string_size(prompt.text, HORIZONTAL_ALIGNMENT_LEFT, -1, prompt.get_theme_font_size("font_size")).x
+	width = clampf(roundf(width) + 34.0, 120.0, 600.0)
+	prompt.size = Vector2(width, 26)
+	prompt.position = Vector2(roundf(320.0 - width * 0.5), 275)
 
 ## Scene look of the pause menu; chapter scripts override it.
 func menu_theme() -> String:
@@ -712,6 +740,7 @@ func _process(delta: float) -> void :
 	if prompt.text.is_empty() and not world.is_busy():
 		prompt.text = world.prop_prompt()
 	prompt.visible = not prompt.text.is_empty() and not world.is_busy()
+	if prompt.visible: _fit_prompt()
 	abilities.visible = not dialogue_open and not world.menu_open
 	boss.text = "CHROME JACKAL\n" + ("IMPLANTATE GESTÖRT" if world.enemy.exposed > 0 else "Panzerung aktiv") if world.stage == 2 else ""
 	boss_panel.visible = world.stage == 2

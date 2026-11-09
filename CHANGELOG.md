@@ -1,5 +1,15 @@
 # Versionshinweise
 
+## v0.48.0 – ClaudeHelper: Towerplan, Pixelmarker, Alarmlicht, Umgebungsgeräusche · 9. November 2026
+
+- **Kapitel 3:** Der Pakt läuft in drei Gesprächsschritten mit Reaktionen ab, nach dem Roman. Raven projiziert einen HQ-Pixel-Towerplan über ihre Konsole. Jeder Prüfschritt und die Planbesprechung heben farbtreu Aufzug und Wachetage, Landeplatz und Scanner hervor.
+- **Interaktion:** Pixel-Bodenring und Pixelpfeil ersetzen die Vektorkreise und -pfeile in allen Kapiteln; der Pfeil erscheint nur außerhalb der Reichweite. Die Aktionszeile ist ein kompakter Pixel-Chip mit der reinen Handlung.
+- **Tower-Flucht:** Die rote Vollfläche ist ersetzt durch Wandbeacons mit rotierendem Reflektor, wanderndem Lichtreflex auf dem Boden und Lauflicht-LEDs zum Ausgang. Der Aufzug wirft beim Öffnen echtes Licht.
+- **Ton:** Leise synthetisierte Umgebungsgeräusche pro Ort (Regen, Stadt, Lüftung, See, Netz) mit eigener Stufe „Umgebung: Aus / Leise / Normal“ im Menü.
+- **Aerodyne:** Alle Ansichten nutzen denselben Rumpf. Die Düsen in Flug und Landung sind Pixelflammen statt Vektorkreisen.
+- **Technik:** Actions laufen auf Node 24. Schnell-Klonanleitung und 5-MB-Bremse für neue Vorschaufilme; der Verlauf wird nicht umgeschrieben.
+- Zwei neue CI-Suiten (`story_plan`, `ambient_audio`); alle 35 Suiten und das Repository-Audit ohne Fehler. [Bilder und Details](docs/verbesserungen-v048.md).
+
 ## v0.47.1 – ClaudeHelper: Hinterhalt durch Kenzōs Verdacht statt Jackals Telefon · 9. November 2026
 
 - Nutzerkorrektur: Raven würde als guter Hackerin nie ein fremdes Telefon mitnehmen. Die Peilsender-Erklärung aus v0.47.0 ist entfernt.
