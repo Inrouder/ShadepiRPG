@@ -10,6 +10,19 @@ Vor neuen Grafiken die tatsächlich geladenen Assets und normale Gameplay-Figure
 
 Die [Pull-Request-Vorlage](.github/pull_request_template.md) erinnert an die Prüfung. Auch bei direktem Push gelten dieselben Anforderungen. Vorhandene Nutzerautorisierung gilt weiter; diese Dokumente führen keine zusätzliche Freigaberunde ein.
 
+## Schnell klonen · v0.48.0 · ClaudeHelper
+
+Der Git-Verlauf ist durch frühere Vorschaufilme groß (rund 400 MB). Für die Arbeit genügt meist ein Teil davon:
+
+```sh
+# Aktueller Stand, Verlauf wird bei Bedarf nachgeladen (empfohlen):
+git clone --filter=blob:none https://github.com/Inrouder/ShadepiRPG.git
+# Nur der neueste Stand ohne Verlauf:
+git clone --depth 1 https://github.com/Inrouder/ShadepiRPG.git
+```
+
+Der Verlauf wird nicht umgeschrieben, damit bestehende Klone und Zweige gültig bleiben. Neue Vorschaufilme bleiben unter 5 MB (kürzer, kleinere Auflösung) oder werden als Release-Anhang veröffentlicht; `tools/audit_repository.py` prüft das.
+
 ## Repository-Ordnung
 
 Vor Änderungen [Statuskatalog](docs/repository-status.md), [aktive Assetquellen](assets/README.md) und [Werkzeugkatalog](tools/README.md) ansehen. Entwicklungsarchiv und Sicherungen nicht als aktive Quellen verwenden; das Universumsarchiv bleibt verbindlich. Die alte README-Chronik und überholte Spieleranleitung stehen im [Archiv](docs/archiv/README.md).
