@@ -1,5 +1,12 @@
 # Versionshinweise
 
+## v0.36.1 – CodexAI: Ravens rechte Hand an der Maske, linke am Gesicht · 9. November 2026
+
+- Handführung der beiden See-Kontaktposen korrigiert: Raven hebt die abgenommene Maske mit ihrer eigenen rechten Hand; ihre eigene linke Hand berührt und verdeckt Shadepis Gesicht. Dieselbe anatomische Zuordnung gilt im Kuss. Gesicht, Kasa und Kostüme bleiben konsistent.
+- Bestehenden HQ-Atlas gezielt nachbearbeitet; Zellformat, Fußanker und Szenenablauf bleiben erhalten. Figurenvertrag und Archivpräzisierung dokumentiert. Galerie kann das Finale für gezielte Sichtprüfungen separat durchlaufen.
+- 32 gezielte Seeprüfungen und acht zusätzliche Exportprüfungen ohne Fehler. Gesamtes Finale mit korrigierter Handführung im tatsächlichen Renderer durchlaufen und gefilmt; Kontaktpose auch aus dem exportierten Paket gesichtet.
+- [Aktuelle Bilder und Film](docs/see-finale.md), [Arbeitsnachweis](docs/arbeiten/see-haende-v0361.md).
+
 ## v0.36.0 – CodexAI: See-Anflug, Aussteigen und romantisches Finale · 9. November 2026
 
 - Neuer tatsächlicher Aerodyne-Anflug über den Mondscheinsee: weite Ansicht, stetige Annäherung, Kamerafahrt zur freien Uferfläche und weiches Aufsetzen auf trockenem Gras. Derselbe HQ-Fahrzeug-/Düsenrenderer bleibt erhalten. Raven und Shadepi steigen nacheinander aus dem seitlichen Kabinenbereich und gehen sichtbar zum Wasser; das geparkte Schiff bleibt dort mit Bodenkollision stehen.

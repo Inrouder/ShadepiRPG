@@ -1,4 +1,6 @@
-# See-Ankunft und Kontaktposen · v0.36.0 · CodexAI
+# See-Ankunft und Kontaktposen · v0.36.1 · CodexAI
+
+**Handkorrektur v0.36.1 · CodexAI:** Die aktive Quelle wurde gezielt nachbearbeitet: Raven hebt die Maske mit ihrer eigenen **rechten** Hand; ihre **linke** berührt und verdeckt Shadepis Gesicht. Diese anatomische Zuordnung gilt in Zelle 1 (Maskenabnahme) und Zelle 2 (Kuss). Die rechte Hand hält die Maske angehoben statt an Ravens linker Außenseite am Bein.
 
 `poses.png` ist ein unverändert generierter transparenter 1536×1024-Atlas mit vier 768×512-Zellen: Händehalten mit Maske, Ravens Maskenabnahme mit verdeckender Hand, Kuss mit weiterhin verdecktem Gesicht und Umarmung mit wieder aufgesetzter Maske. Referenzen waren die tatsächlichen Raven-/Shadepi-Bildkarten aus den normalen Gameplay-Atlanten. Eine erste Studie wurde vor der Verwendung anhand der sichtbaren Spritebreite korrigiert: breiter Kasa und passende Raven-Größe. Die aktive Datei ist die überarbeitete Quelle, keine programmatisch bemalte Montage.
 

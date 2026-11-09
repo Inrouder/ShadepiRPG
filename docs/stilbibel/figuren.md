@@ -1,5 +1,7 @@
 # Figurenkatalog · v0.32.2 · CodexAI
 
+**Handkorrektur v0.36.1 · CodexAI:** Im [See-Finale](../see-finale.md) hebt Raven die Maske mit ihrer **rechten** Hand; ihre **linke** berührt und verdeckt Shadepis Gesicht. Diese Zuordnung gilt für Maskenabnahme und Kuss, jeweils aus Ravens eigener Sicht.
+
 [Stilbibel](README.md) · [Art Direction](artdirection.md) · [Welt und Kulissen](welten.md)
 
 **23 aktive Figuren beziehungsweise visuell eigenständige Typen.** Jede Karte zeigt vorhandene Quellpixel, keine neu generierten Ansichten. Körper-/Masken-/Kleidungsmerkmale erhalten; Stil und Darstellungsmaßstab zusätzlich nach der [Art Direction](artdirection.md) abgleichen. Storyangaben dienen Mitwirkenden als Kontinuitätsreferenz.

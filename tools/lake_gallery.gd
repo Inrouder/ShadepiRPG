@@ -1,21 +1,22 @@
 extends SceneTree
-## v0.36.0 · CodexAI. Actual arrival, four ritual steps and privacy-preserving kiss.
+## v0.36.1 · CodexAI. Actual arrival, four ritual steps and privacy-preserving kiss.
 var seen := {}
 var frames := 0
 var film := false
 var wait_time := 0.0
+var output_dir := "/tmp/shadepi-lake"
 
 func _initialize() -> void: run.call_deferred()
 
 func capture(tag: String) -> void:
 	await RenderingServer.frame_post_draw
-	root.get_texture().get_image().save_png("/tmp/shadepi-lake/"+tag+".png")
+	root.get_texture().get_image().save_png(output_dir+"/"+tag+".png")
 	seen[tag] = true
 
 func frame(w, i: int) -> void:
 	if film and i%3==0:
 		await RenderingServer.frame_post_draw
-		root.get_texture().get_image().save_png("/tmp/shadepi-lake/film/frame-%04d.png"%frames)
+		root.get_texture().get_image().save_png(output_dir+"/film/frame-%04d.png"%frames)
 		frames += 1
 	if w.cutscene.waiting_input:
 		wait_time += w.get_process_delta_time()
@@ -29,7 +30,10 @@ func run() -> void:
 		push_error("Lake gallery needs a real renderer")
 		quit(1)
 		return
-	DirAccess.make_dir_recursive_absolute("/tmp/shadepi-lake/film")
+	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--out="): output_dir = argument.trim_prefix("--out=")
+	DirAccess.make_dir_recursive_absolute(output_dir+"/film")
+	var finale_only := "--finale-only" in OS.get_cmdline_user_args()
 	film = "--film" in OS.get_cmdline_user_args()
 	var w = load("res://scenes/campaign.tscn").instantiate()
 	root.add_child(w)
@@ -37,28 +41,31 @@ func run() -> void:
 	Engine.time_scale = 1
 	Engine.max_fps = 60
 	w.fresh_entry = true
-	w._enter(w.Beat.LAKE)
-	for i in 3200:
-		await process_frame
-		var d = w.lake_sequence
-		var tag: String = "arrival-"+d.stage
-		if not seen.has(tag) and w.cutscene.overlay.color.a<0.01:
-			var ready: bool = d.stage!="approach" or d.craft.x<850
-			if d.stage=="exit_raven": ready = w.raven.modulate.a>0.99 and w.raven.position.distance_to(d.PARK+Vector2(58,0))>35
-			if d.stage=="exit_shadepi": ready = w.player.modulate.a>0.99 and w.player.position.distance_to(d.PARK+Vector2(58,0))>45
-			if ready: await capture(tag)
-		await frame(w,i)
-		if not w.cutscene.running: break
-	for step in 4:
-		w.player.position = w._target()
-		w.interact()
-		for i in 1600:
+	if finale_only:
+		w._enter(w.Beat.END)
+	else:
+		w._enter(w.Beat.LAKE)
+		for i in 3200:
 			await process_frame
-			if w.beat==w.Beat.END: break
-			if w.cutscene.waiting_input and not seen.has("ritual-"+str(step)): await capture("ritual-"+str(step))
+			var d = w.lake_sequence
+			var tag: String = "arrival-"+d.stage
+			if not seen.has(tag) and w.cutscene.overlay.color.a<0.01:
+				var ready: bool = d.stage!="approach" or d.craft.x<850
+				if d.stage=="exit_raven": ready = w.raven.modulate.a>0.99 and w.raven.position.distance_to(d.PARK+Vector2(58,0))>35
+				if d.stage=="exit_shadepi": ready = w.player.modulate.a>0.99 and w.player.position.distance_to(d.PARK+Vector2(58,0))>45
+				if ready: await capture(tag)
 			await frame(w,i)
 			if not w.cutscene.running: break
-		if w.beat==w.Beat.END: break
+		for step in 4:
+			w.player.position = w._target()
+			w.interact()
+			for i in 1600:
+				await process_frame
+				if w.beat==w.Beat.END: break
+				if w.cutscene.waiting_input and not seen.has("ritual-"+str(step)): await capture("ritual-"+str(step))
+				await frame(w,i)
+				if not w.cutscene.running: break
+			if w.beat==w.Beat.END: break
 	for i in 2400:
 		await process_frame
 		var d = w.lake_sequence
@@ -79,7 +86,9 @@ func run() -> void:
 	await capture("pose-neighbors")
 	print("LAKE GALLERY: ",seen,"; film frames=",frames)
 	var ok := true
-	for tag in ["arrival-approach","arrival-touchdown","arrival-exit_raven","arrival-exit_shadepi","arrival-shore","finale-mask","finale-kiss","finale-dragon","finale-embrace"]:
+	var expected := ["finale-mask","finale-kiss","finale-dragon","finale-embrace"]
+	if not finale_only: expected.append_array(["arrival-approach","arrival-touchdown","arrival-exit_raven","arrival-exit_shadepi","arrival-shore"])
+	for tag in expected:
 		if not seen.has(tag):
 			push_error("Missing scene view: "+tag)
 			ok = false

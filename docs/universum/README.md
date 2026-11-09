@@ -1,5 +1,7 @@
 # Shadepi-Universum-Archiv
 
+**Handkorrektur v0.36.1 · CodexAI:** Im [See-Finale](../see-finale.md) hebt Raven die Maske mit ihrer **rechten** Hand; ihre **linke** berührt und verdeckt Shadepis Gesicht. Diese Zuordnung gilt für Maskenabnahme und Kuss, jeweils aus Ravens eigener Sicht.
+
 **Ergänzung v0.36.0 · CodexAI:** [Teil 7](teil-7/README.md) hält die Nutzerbeschreibung des See-Finales fest: Landeanflug, Aussteigen, Romantik, Drachenschatten und mystisches Licht. Raven nimmt die Maske ab; ihre Hand verdeckt Shadepis Gesicht. Der Comic wurde weiterhin nicht hochgeladen.
 
 **Ergänzung v0.33.0 · CodexAI:** [Teil 6](teil-6/README.md) sichert die aktuelle Tower-Fortsetzung: lebender Kenzō während der geschützten Datenextraktion, offene Frage nach Motiv/Auftraggeber, endgültige Abrechnung danach und sichtbare knappe Flucht. Diese Reihenfolge hat Vorrang vor dem früheren Spielablauf.

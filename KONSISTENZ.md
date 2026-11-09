@@ -1,6 +1,6 @@
 # Verbindliche Konsistenzvorlage für ShadepiRPG
 
-**Stand v0.36.0 · CodexAI · 9. November 2026; eingeführt mit v0.32.1.** Gilt für das gesamte Spiel und alle Mitwirkenden, ob Mensch oder KI. Vor Änderungen zusammen mit [AGENTS.md](AGENTS.md) lesen und die [Arbeitsvorlage](docs/vorlagen/konsistenz-auftrag.md) verwenden. Eine neuere ausdrückliche Nutzervorgabe hat Vorrang; bestätigte Änderungen anschließend hier und in den betroffenen Referenzen nachführen.
+**Stand v0.36.1 · CodexAI · 9. November 2026; eingeführt mit v0.32.1.** Gilt für das gesamte Spiel und alle Mitwirkenden, ob Mensch oder KI. Vor Änderungen zusammen mit [AGENTS.md](AGENTS.md) lesen und die [Arbeitsvorlage](docs/vorlagen/konsistenz-auftrag.md) verwenden. Eine neuere ausdrückliche Nutzervorgabe hat Vorrang; bestätigte Änderungen anschließend hier und in den betroffenen Referenzen nachführen.
 
 ## Bebilderter Einstieg für das gesamte Spiel
 
@@ -112,7 +112,7 @@ Sonderatlanten für Sitzen, Liegen, Gegner oder Menü folgen ihren eigenen Metad
 - FX kommen aus nachvollziehbaren Quellen: Fensterregen auf Glas, Dampf am Austritt, Glut am Feuer. Figuren, Hindernisse, Hinweise und Angriffssignale bleiben lesbar. Bestehende Qualitätsstufen und Pausenregeln erhalten; keine unbegrenzten Partikelspawner.
 - Musikpfade und Groß-/Kleinschreibung nach der aktiven Zuordnung erhalten. Hauptmenü und See teilen aktuell `Level.mp3`; normale Kämpfe und Bosse ihre jeweiligen Kampfstücke. Ton-Aus und Pausenverhalten auch für neue Klänge beachten.
 
-- See-Finale ab v0.36.0 · CodexAI: Der Aerodyne landet auf trockenem Uferboden; beide steigen aus der seitlichen Kabine aus. Nach Ravens freiwilliger Ordensaufnahme nimmt **sie** Shadepis Maske ab. **Sein Gesicht bleibt durch Ravens Hand, Kasa und Kopfhaltung verdeckt; kein vollständiges Porträt.** Ein kurzer Drachenschatten und mystisches Leuchten bleiben auf die Wasserfläche beschnitten. Der Comic liegt nicht lokal vor; maßgeblich ist die Nutzerbeschreibung. [Aktive Quellen und Belege](docs/see-finale.md).
+- See-Finale ab v0.36.0 · CodexAI: Der Aerodyne landet auf trockenem Uferboden; beide steigen aus der seitlichen Kabine aus. Nach Ravens freiwilliger Ordensaufnahme nimmt **sie** Shadepis Maske ab. **Handkorrektur v0.36.1 · CodexAI: Ravens eigene rechte Hand hebt die Maske, ihre eigene linke berührt und verdeckt sein Gesicht; auch im Kuss.** **Sein Gesicht bleibt durch Ravens Hand, Kasa und Kopfhaltung verdeckt; kein vollständiges Porträt.** Ein kurzer Drachenschatten und mystisches Leuchten bleiben auf die Wasserfläche beschnitten. Der Comic liegt nicht lokal vor; maßgeblich ist die Nutzerbeschreibung. [Aktive Quellen und Belege](docs/see-finale.md).
 
 ## 8. Verbindliche Fertigprüfung
 

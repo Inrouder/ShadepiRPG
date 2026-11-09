@@ -1,5 +1,7 @@
 # ShadepiRPG · bebilderte Stilbibel für das gesamte Spiel
 
+**Handkorrektur v0.36.1 · CodexAI:** Im [See-Finale](../see-finale.md) hebt Raven die Maske mit ihrer **rechten** Hand; ihre **linke** berührt und verdeckt Shadepis Gesicht. Diese Zuordnung gilt für Maskenabnahme und Kuss, jeweils aus Ravens eigener Sicht.
+
 **v0.32.2 · CodexAI · 8. November 2026.** Gemeinsame Bild- und Gestaltungsreferenz für Menschen und KI: Figuren, Gegner, Schauplätze, Fahrzeuge, Requisiten, Menü, HUD, Hacks, Animationen, Effekte und Ton. Ergänzt die verbindlichen [Projektregeln](../../KONSISTENZ.md) und das [Universumsarchiv](../universum/README.md).
 
 ![Alle 23 vorhandenen Figuren und Typen](bilder/figuren-uebersicht.png)

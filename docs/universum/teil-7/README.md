@@ -1,4 +1,4 @@
-# Teil 7 · See-Finale · v0.36.0 · CodexAI
+# Teil 7 · See-Finale · v0.36.1 · CodexAI
 
 Quelle: ausdrücklicher Nutzerauftrag vom 9. November 2026 im Chat. Keine neue Comicdatei oder Originalbildvorlage wurde hochgeladen.
 
@@ -10,6 +10,8 @@ Quelle: ausdrücklicher Nutzerauftrag vom 9. November 2026 im Chat. Keine neue C
 4. Shadepis Gesicht darf nicht vollständig sichtbar werden. Ravens Hand verdeckt es, wie vom Nutzer für den nicht lokal vorliegenden Comic beschrieben.
 
 Die konkrete Handverdeckung und Ravens Maskenabnahme haben Vorrang vor dem älteren Romantext, in dem Shadepi die Maske selbst abnahm und seine Augen ausdrücklich beschrieben wurden. Die freiwillige Ordensaufnahme bleibt davor erhalten. Keine neue vollständige Gesichtsgestaltung oder Identität des Drachen wird als bestätigter Kanon ergänzt.
+
+**Präzisierung durch den Nutzer, v0.36.1 · CodexAI:** Raven hebt die Maske mit ihrer eigenen **rechten** Hand; ihre eigene **linke** Hand berührt Shadepis Gesicht. Das gilt durch Maskenabnahme und Kuss hindurch, unabhängig von der Bildschirmrichtung.
 
 ## Umsetzung
 

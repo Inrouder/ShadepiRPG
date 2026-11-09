@@ -1,6 +1,8 @@
 # Shadepi · Echos in Neon
 
-**Spieleranleitung für v0.36.0 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+**Spieleranleitung für v0.36.1 · CodexAI.** Aktuelle Downloads: [Releases](https://github.com/Inrouder/ShadepiRPG/releases/latest) · Prüfstatus: [Repository-Startseite](README.md) · Änderungen: [Versionshinweise](CHANGELOG.md).
+
+**Handkorrektur v0.36.1 · CodexAI:** Raven hebt die Maske mit ihrer **rechten** Hand; ihre **linke** berührt und verdeckt Shadepis Gesicht. Diese Zuordnung gilt auch während des Kusses. Bedienung und Szenenablauf bleiben wie bisher. [Aktuelle Spielbilder](docs/see-finale.md).
 
 **See-Finale v0.36.0 · CodexAI:** Kapitel 7 beginnt mit dem sichtbaren Landeanflug und Aussteigen am See. Danach führt der bisherige Weg ans Wasser und durch Ravens freiwillige Aufnahme in den Orden. Anschließend nimmt sie Shadepis Maske ab und küsst ihn; seine Gesichtszüge bleiben durch ihre Hand und den Kasa verdeckt. Der kurze Drachenschatten und das Leuchten sind Teil der Szene. **E / Enter / A**: Dialog weiter; **Leertaste / B**: Szene überspringen; **Esc / Start**: Pause. Laden während der Ankunft oder des Finales startet nur diese Szene neu; abgeschlossene neue Szenen werden nicht wiederholt. Ältere Spielstände am Kapitelanfang oder Ende erhalten die jeweilige neue Szene einmal. Die vorhandene Seemusik bleibt erhalten. [Bilder und Film](docs/see-finale.md).
 
