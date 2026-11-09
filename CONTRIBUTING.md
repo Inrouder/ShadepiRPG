@@ -1,6 +1,6 @@
 # An ShadepiRPG mitarbeiten
 
-**v0.46.2 · CodexAI.** Diese Einstiegspunkte gelten für menschliche Mitwirkende und KI-Werkzeuge gleichermaßen:
+**v0.46.2 · CodexAI, ergänzt v0.48.0 · ClaudeHelper.** Diese Einstiegspunkte gelten für menschliche Mitwirkende und KI-Werkzeuge gleichermaßen:
 
 1. [AGENTS.md](AGENTS.md): aktuellen Repository-Stand übernehmen, Arbeit erhalten, Versions- und Sicherungsregeln beachten.
 2. [KONSISTENZ.md](KONSISTENZ.md) und die [bebilderte Stilbibel des gesamten Spiels](docs/stilbibel/README.md): Art Direction, alle 23 Figuren mit Bildkarten, Welten, Fahrzeuge, Objekte, UI und FX sowie Fertigprüfung.

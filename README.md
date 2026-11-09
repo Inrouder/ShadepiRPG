@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.47.1 · ClaudeHelper · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.48.0 · ClaudeHelper · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -9,6 +9,11 @@ Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben�
 ## Bilder aus dem Spiel
 
 **[Bebilderte Dokumentation mit Szenenfilmen öffnen →](docs/README.md)** · Ein Klick auf eine Vorschau öffnet den zugehörigen Bericht.
+
+| Towerplan in Kapitel 3 · v0.48.0 · ClaudeHelper | Alarmlicht und Umgebungsmenü |
+| --- | --- |
+| [![Ravens projizierter Pixel-Towerplan](docs/previews/towerplan-v048.png)](docs/verbesserungen-v048.md) | [![Rotes Alarmlicht an Wandbeacons und das neue Menü](docs/previews/alarm-menue-v048.png)](docs/verbesserungen-v048.md) |
+| [Alle Verbesserungen v0.48.0](docs/verbesserungen-v048.md) · [Story-Durchsicht](docs/story-durchsicht.md) | Pixelmarker, Umgebungsgeräusche, Aerodyne-Düsen |
 
 | Originalhelden wieder aktiv · v0.46.1 · CodexAI |
 | --- |

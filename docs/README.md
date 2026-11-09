@@ -1,8 +1,17 @@
 # Shadepi · Bilder, Filme und Dokumentation
 
-**Stand v0.47.1 · ClaudeHelper · 9. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
+**Stand v0.48.0 · ClaudeHelper · 9. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
 
 Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnahmen, animierte Szenenfilme, Bedienung und technische Hinweise. Die PNG-Vorschauen sind direkt in GitHub sichtbar; die Filme bleiben zusätzlich als verlinkte WebP-Dateien erreichbar.
+
+## Verbesserungen · v0.48.0 · ClaudeHelper
+
+| Ravens Towerplan in Kapitel 3 | Pixelmarker und kompakte Aktionszeile |
+| --- | --- |
+| [![Projizierter Towerplan](previews/towerplan-v048.png)](verbesserungen-v048.md) | [![Pixelmarker und Aktions-Chip](previews/marker-v048.png)](verbesserungen-v048.md) |
+| [![Alarmlicht und neues Ton-/Umgebungsmenü](previews/alarm-menue-v048.png)](verbesserungen-v048.md) | [![Einheitlicher Aerodyne](previews/aerodyne-einheit-v048.png)](verbesserungen-v048.md) |
+
+[Alle Änderungen und Bildbelege](verbesserungen-v048.md) · Aufnahmestand v0.48.0.
 
 ## Story-Durchsicht · v0.47.0 · ClaudeHelper
 

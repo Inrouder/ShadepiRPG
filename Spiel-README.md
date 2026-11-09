@@ -1,6 +1,6 @@
 # Shadepi · Spieleranleitung
 
-**Aktueller Stand v0.47.1 · ClaudeHelper.** [Story-Durchsicht Kapitel 1–7](docs/story-durchsicht.md) · [Downloads](https://github.com/Inrouder/ShadepiRPG/releases/latest) · [Bilder und Filme](docs/README.md) · [Änderungen](CHANGELOG.md). [Ältere Anleitung mit damaligen Abläufen](docs/archiv/spielanleitung-bis-v0461.md).
+**Aktueller Stand v0.48.0 · ClaudeHelper.** [Neu: Towerplan, Pixelmarker, Alarmlicht, Umgebungsgeräusche](docs/verbesserungen-v048.md) · [Story-Durchsicht Kapitel 1–7](docs/story-durchsicht.md) · [Downloads](https://github.com/Inrouder/ShadepiRPG/releases/latest) · [Bilder und Filme](docs/README.md) · [Änderungen](CHANGELOG.md). [Ältere Anleitung mit damaligen Abläufen](docs/archiv/spielanleitung-bis-v0461.md).
 
 ## Starten und Speichern
 
