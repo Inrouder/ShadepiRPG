@@ -36,6 +36,8 @@ Diese Vermessungen lesen PNG-Pixel, **überschreiben aber aktive JSON-Anker-/Akt
 | [generate_legacy_audio.py](generate_legacy_audio.py) | Schreibendes Herstellungswerkzeug für Erinnerung III; „legacy“ ist aktiv. |
 | [build_pixel_font.py](ui_pixel/build_pixel_font.py) | Schreibendes Herstellungswerkzeug für bestehende Pixelschrift. |
 | [build_ui_pixel.py](ui_pixel/build_ui_pixel.py) | Schreibendes Herstellungswerkzeug für bestehende Pixel-UI. |
+| [audit_atlases.py](sprites/audit_atlases.py) | v0.52.0 · ClaudeHelper: **nur lesend.** Findet Posen, die ein Stück der Nachbarpose zeigen oder abgeschnitten sind. Braucht Pillow, numpy, scipy. |
+| [calibrate_atlases.py](sprites/calibrate_atlases.py) | v0.52.0 · ClaudeHelper: schreibend. Gibt jeder Pose eine eigene Zelle mit Rand und passt die JSON-Kataloge an; zeichnet nichts neu. Ausschnitte stehen in [atlas_regions.py](sprites/atlas_regions.py). |
 | [build_marker.py](ui_pixel/build_marker.py) | v0.48.0 · ClaudeHelper: schreibt `assets/ui/marker.png` (Pixel-Bodenring und Pfeil). |
 | [build_tower_plan.py](story/build_tower_plan.py) | v0.48.0 · ClaudeHelper: schreibt den Towerplan `assets/story/tower-plan.png`. |
 | [build_alarm_props.py](story/build_alarm_props.py) | v0.48.0 · ClaudeHelper: schreibt Alarmbeacon und Boden-LED `assets/story/tower/alarm-lights.png`. |
@@ -64,6 +66,7 @@ Die Aufnahme-/QA-Skripte verwenden echte Spielressourcen und bereiten oft Kapite
 | [display_gallery.gd](display_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
 | [feedback_gallery.gd](feedback_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
 | [flight_gallery.gd](flight_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
+| [story/scene_overview.gd](story/scene_overview.gd), [story/chapter_overview.gd](story/chapter_overview.gd), [story/light_gallery.gd](story/light_gallery.gd), [story/walk_audit.gd](story/walk_audit.gd) | v0.52.0 · ClaudeHelper: Gesamtansichten, Licht-/Spiegelungsaufnahmen und Laufweg-Prüfung für die [Szenenpolitur](../docs/szenenpolitur-v052.md); schreiben nur nach `/tmp`. |
 | [story/pact_plan_gallery.gd](story/pact_plan_gallery.gd), [story/marker_gallery.gd](story/marker_gallery.gd), [story/alarm_gallery.gd](story/alarm_gallery.gd), [story/aerodyne_views.gd](story/aerodyne_views.gd) | v0.48.0 · ClaudeHelper: Aufnahmen für [Verbesserungen v0.48.0](../docs/verbesserungen-v048.md); schreiben nur nach `/tmp`. |
 | [generate_combat_fx.gd](generate_combat_fx.gd) | **Schreibender historischer FX-Generator:** überschreibt PNGs unter `assets/fx/`; kein Aufnahme-/Setup-Werkzeug und kein allgemeiner HQ-Grafikstandard. |
 | [hangar_discovery_gallery.gd](hangar_discovery_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |

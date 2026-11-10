@@ -1,4 +1,6 @@
 extends RefCounted
+## v0.52.0 · ClaudeHelper: Keine Requisite steht vor einer Tür oder einem Tor. Die Laterne am
+## Versteck steht neben dem Türrahmen, Werkzeugkasten und Container der Garage neben den Rolltoren.
 
 
 const LAYOUTS: = {
@@ -33,15 +35,15 @@ const LAYOUTS: = {
 		["cache_5", "data_cache", Vector2(911, 471)], 
 	], 
 	"ambush": [
-		["door_lamp", "lamp", Vector2(181, 285)], ["entry_crate", "crate", Vector2(237, 474)], 
+		["door_lamp", "lamp", Vector2(258, 285)], ["entry_crate", "crate", Vector2(237, 474)], 
 		["cover_barrel", "barrel", Vector2(279, 475)], ["far_car", "car", Vector2(681, 477)], 
 		["lookout_lamp", "lamp", Vector2(706, 288)], ["far_bin", "dumpster", Vector2(918, 472)], 
 		["fuse_box", "electrical", Vector2(969, 306)], 
 	], 
 	"garage": [
-		["spares", "crate", Vector2(210, 470)], ["tool_case", "electrical", Vector2(534, 299)],
+		["spares", "crate", Vector2(210, 470)], ["tool_case", "electrical", Vector2(604, 299)],
 		["oil_drum", "barrel", Vector2(628, 476)], ["retired_car", "car", Vector2(299, 466)], 
-		["parts_bin", "dumpster", Vector2(91, 303)], 
+		["parts_bin", "dumpster", Vector2(96, 476)], 
 	], 
 	"hangar": [
 		["spare_crate", "crate", Vector2(140, 400)], ["spare_server", "server", Vector2(98, 299)],

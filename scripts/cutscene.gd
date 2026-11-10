@@ -42,6 +42,7 @@ var camera_time := 0.0
 var camera_duration := 0.0
 var camera_moving := false
 var bars := 0.0
+var vignette: ColorRect
 var bars_target := 0.0
 var hud_hidden := false
 var home_zoom := 1.0
@@ -51,6 +52,10 @@ func _init() -> void:
 	process_priority = 100
 
 func _ready() -> void:
+	# v0.52.0 · ClaudeHelper: weiche Kino-Vignette unter Blenden, Balken und Text.
+	vignette = _rect(Rect2(0, 0, 640, 360), Color.WHITE)
+	vignette.material = ShaderMaterial.new()
+	vignette.material.shader = preload("res://shaders/cinema_vignette.gdshader")
 	overlay = _rect(Rect2(0, 0, 640, 360), Color(0, 0, 0, 0))
 	top_bar = _rect(Rect2(0, -BAR_TOP, 640, BAR_TOP), Color("03060b"))
 	bottom_bar = _rect(Rect2(0, 360, 640, BAR_BOTTOM), Color("03060b"))
@@ -447,6 +452,7 @@ func _layout_bars() -> void:
 	var k := smoothstep(0.0, 1.0, bars)
 	top_bar.position.y = -BAR_TOP + BAR_TOP * k
 	bottom_bar.position.y = 360.0 - BAR_BOTTOM * k
+	if vignette != null: vignette.material.set_shader_parameter("amount", k)
 	if bars <= 0.0 and not running:
 		visible = false
 

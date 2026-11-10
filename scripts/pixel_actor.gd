@@ -14,6 +14,7 @@ var flash_time := 0.0
 var body_material: ShaderMaterial
 var world: Node2D
 var cast_shadow: Sprite2D
+var floor_reflection: Sprite2D
 var shadow_material: ShaderMaterial
 var light_occluder: LightOccluder2D
 var cloaked := false
@@ -35,6 +36,11 @@ func setup(texture: Texture2D, game: Node2D) -> void:
 	var frame_size := SpriteAssets.frame_size(sheet)
 	var display_scale := SpriteAssets.display_scale(sheet)
 	directions = int(sheet.get_height() / float(frame_size.y * 4))
+	# v0.52.0 · ClaudeHelper: Spiegelbild auf nassem oder poliertem Boden. Direkt nach dem
+	# Kollisionskörper (Kind 0 bleibt der Collider), also unter Schatten und Körper.
+	floor_reflection = preload("res://scripts/floor_reflection.gd").new()
+	floor_reflection.actor = self
+	add_child(floor_reflection)
 	cast_shadow = Sprite2D.new()
 	cast_shadow.texture = sheet
 	cast_shadow.hframes = 8

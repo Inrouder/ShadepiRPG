@@ -1,8 +1,16 @@
 # Shadepi · Bilder, Filme und Dokumentation
 
-**Stand v0.51.1 · CodexAI · 10. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
+**Stand v0.52.0 · ClaudeHelper · 10. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
 
 Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnahmen, animierte Szenenfilme, Bedienung und technische Hinweise. Die PNG-Vorschauen sind direkt in GitHub sichtbar; die Filme bleiben zusätzlich als verlinkte WebP-Dateien erreichbar.
+
+## Szenenpolitur · v0.52.0 · ClaudeHelper
+
+| Bodenspiegelungen | Türen frei und Laternenlicht |
+| --- | --- |
+| [![Spiegelbilder auf Dach und Marmor](previews/spiegelung-v052.png)](szenenpolitur-v052.md) | [![Laterne neben der Tür](previews/tueren-frei-v052.png)](szenenpolitur-v052.md) |
+
+[Kalibrierte Sprites, Ringe unter den Figuren, Spiegelungen und Kinolicht](szenenpolitur-v052.md) · Aufnahmestand v0.52.0.
 
 ## Dropdowns wieder sichtbar · v0.51.1 · CodexAI
 

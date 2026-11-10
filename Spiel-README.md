@@ -1,6 +1,6 @@
 # Shadepi · Spieleranleitung
 
-**Aktueller Stand v0.51.1 · CodexAI.** [Neu: Towerplan, Pixelmarker, Alarmlicht, Umgebungsgeräusche](docs/verbesserungen-v048.md) · [Story-Durchsicht Kapitel 1–7](docs/story-durchsicht.md) · [Downloads](https://github.com/Inrouder/ShadepiRPG/releases/latest) · [Bilder und Filme](docs/README.md) · [Änderungen](CHANGELOG.md). [Ältere Anleitung mit damaligen Abläufen](docs/archiv/spielanleitung-bis-v0461.md).
+**Aktueller Stand v0.52.0 · ClaudeHelper.** [Neu: kalibrierte Sprites, Spiegelungen, Kinolicht](docs/szenenpolitur-v052.md) · [Neu: Towerplan, Pixelmarker, Alarmlicht, Umgebungsgeräusche](docs/verbesserungen-v048.md) · [Story-Durchsicht Kapitel 1–7](docs/story-durchsicht.md) · [Downloads](https://github.com/Inrouder/ShadepiRPG/releases/latest) · [Bilder und Filme](docs/README.md) · [Änderungen](CHANGELOG.md). [Ältere Anleitung mit damaligen Abläufen](docs/archiv/spielanleitung-bis-v0461.md).
 
 **Kapitel 7 / Menü v0.49.0 · CodexAI:** Bewegte Mondspiegelung, sechs Drachenphasen und acht Kontaktbilder am See; kompakte Menüs mit innenliegender Hilfe und passenden Kapitelaktionen. [Bilder und Film](docs/mondsee-v049.md).
 

@@ -23,6 +23,7 @@ var max_health: = 40
 var sprite: Sprite2D
 var shape: CollisionShape2D
 var lamp: PointLight2D
+var lamp_glows: Array[Sprite2D] = []
 var hurt: = 0.0
 var technology_clock := 0.0
 var operation := "idle"
@@ -78,6 +79,22 @@ func setup(game: Node2D, id: String, type: String, point: Vector2) -> void :
 		lamp.texture_scale = 2.7
 		lamp.energy = 0.74
 		add_child(lamp)
+		# v0.52.0 · ClaudeHelper: sichtbarer Lichtkegel im Regen/Dunst und warmer Schein auf dem
+		# Boden; beide werden mit beschädigter Lampe schwächer und erlöschen, wenn sie zerstört ist.
+		for entry in [[Vector2(28, -40), Vector2(0.7, 1.15), 0.6], [Vector2(28, 6), Vector2(1.7, 0.5), 0.9]]:
+			var glow := Sprite2D.new()
+			glow.texture = lamp.texture
+			glow.position = entry[0]
+			glow.scale = entry[1]
+			glow.modulate = Color(1.0, 0.74, 0.46, entry[2])
+			glow.set_meta("alpha", entry[2])
+			var additive := CanvasItemMaterial.new()
+			additive.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+			additive.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+			glow.material = additive
+			add_child(glow)
+			if not lamp_glows.is_empty(): move_child(glow, 0)   # Bodenschein liegt unter dem Mast
+			lamp_glows.append(glow)
 	_update_art()
 	set_process(animated_technology())
 
@@ -135,6 +152,9 @@ func _update_art() -> void :
 	if lamp != null:
 		lamp.enabled = health > 0
 		lamp.energy = 0.74 if row == 0 else 0.3
+		for glow in lamp_glows:
+			glow.visible = health > 0
+			glow.modulate.a = float(glow.get_meta("alpha")) * (1.0 if row == 0 else 0.4)
 	queue_redraw()
 
 func _process(delta: float) -> void :
