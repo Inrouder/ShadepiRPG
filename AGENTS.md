@@ -1,5 +1,7 @@
 # Zusammenarbeit an ShadepiRPG
 
+**Anzeigeanalyse v0.50.2 · CodexAI:** [Befund und native Vergleiche](docs/anzeigequalitaet-v0502.md). Nutzer beauftragte Analyse, daher keine Produktionsdarstellung umgestellt. Logische Basis bleibt 640×360. `tools/display_quality_probe.gd` vergleicht nur im isolierten Testprozess VIEWPORT und CANVAS_ITEMS anhand physischer Fensteraufnahmen. Renderziel aus `get_texture().get_image().get_size()` messen; `get_texture().get_size()` meldet bei Canvas-Scaling hier eine irreführende Größe. HQ-Modus ist Empfehlung, kein bereits verfügbares Menüfeature.
+
 **Netzavatar v0.50.1 · CodexAI:** [Ravens Gittersilhouette](docs/netzavatar-v0501.md) nutzt ausschließlich die Alphaform aktiver Original-/Handposen. Raster in Weltpixeln am Fußanker, kein freischwebendes Overlay. `net_avatar.gdshader` nur während Kapitel-2-Deep-Dive, Clock bei Pause stoppen; bei Rückkehr Standardshader und physische Schatten/Lichtzustände herstellen.
 
 **ICE-Kampf v0.50.0 · CodexAI:** [Bossarena](docs/ice-kampf-v050.md). Dritter Deep-Dive-Knoten skaliert Kulisse, Kollisionen, Masken und Relais gemeinsam auf 1536×960. Wächter besitzt echte Kugelsalven, acht Grafikphasen und einen Nahkampf-Kern mit acht Integritätspunkten; höchstens zwei Punkte je Öffnung. Normalhelden unverändert. Bei Raumwechsel/Re-Load alle Geschosse löschen und Kamera-/Raummaße zurücksetzen. Bossanimation in `ice_guardian.gd`, Viren weiterhin `dive_threat.gd`.

@@ -1,0 +1,230 @@
+{
+	"checks": 40,
+	"failures": 0,
+	"records": [
+		{
+			"actor_screen": [
+				680.0,
+				486.0
+			],
+			"advertised_texture_size": [
+				640.0,
+				360.0
+			],
+			"camera_zoom": 1.0,
+			"capture": "hideout-720-pixel.png",
+			"crop": [
+				360,
+				246,
+				640,
+				360
+			],
+			"mode": "viewport",
+			"output": [
+				1280,
+				720
+			],
+			"render_target": [
+				640.0,
+				360.0
+			],
+			"scene": "hideout"
+		},
+		{
+			"actor_screen": [
+				680.0,
+				486.0
+			],
+			"advertised_texture_size": [
+				2560.0,
+				1440.0
+			],
+			"camera_zoom": 1.0,
+			"capture": "hideout-720-native.png",
+			"crop": [
+				360,
+				246,
+				640,
+				360
+			],
+			"mode": "canvas_items",
+			"output": [
+				1280,
+				720
+			],
+			"render_target": [
+				1280.0,
+				720.0
+			],
+			"scene": "hideout"
+		},
+		{
+			"actor_screen": [
+				1020.0,
+				729.0
+			],
+			"advertised_texture_size": [
+				640.0,
+				360.0
+			],
+			"camera_zoom": 1.0,
+			"capture": "hideout-1080-pixel.png",
+			"crop": [
+				700,
+				489,
+				640,
+				360
+			],
+			"mode": "viewport",
+			"output": [
+				1920,
+				1080
+			],
+			"render_target": [
+				640.0,
+				360.0
+			],
+			"scene": "hideout"
+		},
+		{
+			"actor_screen": [
+				1020.0,
+				729.0
+			],
+			"advertised_texture_size": [
+				5760.0,
+				3240.0
+			],
+			"camera_zoom": 1.0,
+			"capture": "hideout-1080-native.png",
+			"crop": [
+				700,
+				489,
+				640,
+				360
+			],
+			"mode": "canvas_items",
+			"output": [
+				1920,
+				1080
+			],
+			"render_target": [
+				1920.0,
+				1080.0
+			],
+			"scene": "hideout"
+		},
+		{
+			"actor_screen": [
+				910.912353515625,
+				629.25
+			],
+			"advertised_texture_size": [
+				640.0,
+				360.0
+			],
+			"camera_zoom": 0.850000023841858,
+			"capture": "ice-1080-pixel.png",
+			"crop": [
+				590,
+				389,
+				640,
+				360
+			],
+			"mode": "viewport",
+			"output": [
+				1920,
+				1080
+			],
+			"render_target": [
+				640.0,
+				360.0
+			],
+			"scene": "ice"
+		},
+		{
+			"actor_screen": [
+				910.912353515625,
+				629.25
+			],
+			"advertised_texture_size": [
+				5760.0,
+				3240.0
+			],
+			"camera_zoom": 0.850000023841858,
+			"capture": "ice-1080-native.png",
+			"crop": [
+				590,
+				389,
+				640,
+				360
+			],
+			"mode": "canvas_items",
+			"output": [
+				1920,
+				1080
+			],
+			"render_target": [
+				1920.0,
+				1080.0
+			],
+			"scene": "ice"
+		},
+		{
+			"actor_screen": [
+				1095.0,
+				720.0
+			],
+			"advertised_texture_size": [
+				640.0,
+				360.0
+			],
+			"camera_zoom": 1.0,
+			"capture": "lake-1080-pixel.png",
+			"crop": [
+				775,
+				480,
+				640,
+				360
+			],
+			"mode": "viewport",
+			"output": [
+				1920,
+				1080
+			],
+			"render_target": [
+				640.0,
+				360.0
+			],
+			"scene": "lake"
+		},
+		{
+			"actor_screen": [
+				1095.0,
+				720.0
+			],
+			"advertised_texture_size": [
+				5760.0,
+				3240.0
+			],
+			"camera_zoom": 1.0,
+			"capture": "lake-1080-native.png",
+			"crop": [
+				775,
+				480,
+				640,
+				360
+			],
+			"mode": "canvas_items",
+			"output": [
+				1920,
+				1080
+			],
+			"render_target": [
+				1920.0,
+				1080.0
+			],
+			"scene": "lake"
+		}
+	]
+}

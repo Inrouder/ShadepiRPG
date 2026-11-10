@@ -1,5 +1,7 @@
 # Bildschirm und Vollbild · v0.34.0 · CodexAI
 
+**Anzeigeanalyse v0.50.2 · CodexAI:** [Aktueller Renderpfad, echte Full-HD-Vergleiche und HQ-Empfehlung](anzeigequalitaet-v0502.md). Das hier beschriebene 640×360-Gameplay ist weiterhin die Produktionsdarstellung; der native Vergleich ist ein Analyseprototyp.
+
 Das Spiel startet beim ersten Mal im **Fenstervollbild** und merkt sich danach deine Wahl. **Anzeige** im Haupt- oder Pausenmenü öffnet die Optionen. **F11** oder **Alt+Enter** wechselt jederzeit zwischen Fenster und zuletzt gewähltem Vollbildmodus.
 
 | Option | Verhalten |

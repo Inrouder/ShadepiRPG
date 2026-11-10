@@ -1,12 +1,17 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.50.1 · CodexAI · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.50.2 · CodexAI · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
 [**Spiel herunterladen (neuestes Release)**](https://github.com/Inrouder/ShadepiRPG/releases/latest) · [**Quellcode als ZIP**](https://github.com/Inrouder/ShadepiRPG/archive/refs/heads/main.zip) · [**Versionen**](CHANGELOG.md) · [**Spieleranleitung**](Spiel-README.md) · [**Bildgalerie & Doku**](docs/README.md)
 
 ## Bilder aus dem Spiel
+
+| Anzeigeanalyse · v0.50.2 · CodexAI: aktuelle 640×360-Darstellung | Vergleichsprototyp direkt in Full HD |
+| --- | --- |
+| [![Aktuelle interne Auflösung, unvergrößerter Ausschnitt des Full-HD-Fensters](docs/previews/anzeige-aktuell-v0502.png)](docs/anzeigequalitaet-v0502.md) | [![Dieselben Originale direkt in Full HD gerendert](docs/previews/anzeige-hq-test-v0502.png)](docs/anzeigequalitaet-v0502.md) |
+| [Befund und Messungen](docs/anzeigequalitaet-v0502.md) | [Wechselvergleich](docs/previews/anzeige-vergleich-v0502.webp) · Testdarstellung, noch kein neuer Spielmodus |
 
 | Raven als Netz-Gittersilhouette · v0.50.1 · CodexAI | Lauf- und Handposen bleiben erkennbar |
 | --- | --- |

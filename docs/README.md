@@ -1,8 +1,16 @@
 # Shadepi · Bilder, Filme und Dokumentation
 
-**Stand v0.50.1 · CodexAI · 10. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
+**Stand v0.50.2 · CodexAI · 10. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
 
 Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnahmen, animierte Szenenfilme, Bedienung und technische Hinweise. Die PNG-Vorschauen sind direkt in GitHub sichtbar; die Filme bleiben zusätzlich als verlinkte WebP-Dateien erreichbar.
+
+## Anzeigequalität: Analyse und Vergleich · v0.50.2 · CodexAI
+
+| Aktuelles Gameplay: intern 640×360 | Prototyp: direkt in Full HD |
+| --- | --- |
+| [![Ausschnitt der bisherigen Full-HD-Ausgabe](previews/anzeige-aktuell-v0502.png)](anzeigequalitaet-v0502.md) | [![Unveränderte Texturen mit nativer Darstellung](previews/anzeige-hq-test-v0502.png)](anzeigequalitaet-v0502.md) |
+
+[Analyse, Originalauflösungen und Empfehlung](anzeigequalitaet-v0502.md) · [Wechselvergleich](previews/anzeige-vergleich-v0502.webp). Vergleichsprototyp; Produktionsdarstellung unverändert.
 
 ## Ravens Netzavatar · v0.50.1 · CodexAI
 

@@ -1,5 +1,13 @@
 # Versionshinweise
 
+## v0.50.2 – CodexAI: Anzeigequalität analysiert und native Full-HD-Vergleiche dokumentiert · 10. November 2026
+
+- Nutzerauftrag zur Anzeigeanalyse: Grafikpfad, Quellmaße, Importparameter, Abtastung und tatsächliche Renderziele untersucht. Gameplay rendert intern 640×360; das Menü nutzt bereits Canvas-Rendering in Ausgabeauflösung.
+- Physische Fensteraufnahmen bei 720p und 1080p, Versteck mit Originalhelden, ICE und See. Gleiche Kamera, Figurenpositionen und logische Komposition; direkter nativer Vergleich erhält sichtbar mehr Quelldetails. Keine neuen Texturen und kein hochgerechneter 640er-Screenshot als HQ-Nachweis.
+- Empfehlung: zusätzlicher wählbarer HQ-Modus mit Prüfung von Bloom, Schatten, Bewegung und Leistungsbedarf. Keine Produktions-Renderoption geändert; Versionssprung dokumentiert Analyse und reproduzierbares Vergleichswerkzeug.
+- 40 native Vergleichspunkte, 73 Anzeigeprüfungen und Startprüfung ohne Fehler.
+- [Bilder, Messungen und Empfehlung](docs/anzeigequalitaet-v0502.md) · [Arbeitsnachweis](docs/arbeiten/anzeigeanalyse-v0502.md).
+
 ## v0.50.1 – CodexAI: Raven als animierte Gittersilhouette im Netz · 10. November 2026
 
 - Cyanfarbenes Pixelgitter und Körperkontur aus der tatsächlichen Transparenz der unveränderten Raven-Sprites. Haare, Körperbau und Handposen bleiben die Vorlage; keine neue Ersatzfigur.
