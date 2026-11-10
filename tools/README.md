@@ -98,3 +98,5 @@ Die Aufnahme-/QA-Skripte verwenden echte Spielressourcen und bereiten oft Kapite
 | [vehicle_pose_gallery.gd](vehicle_pose_gallery.gd) | Versionsbezogener Aufnahme-/QA-Aufbau; aktuellen Aufruf im Skript/zugehörigen Bericht prüfen. |
 
 Der entfernte v0.45.0-Heldenrenderer liegt als [historische Quelle](../docs/archiv/code-v045/README.md) im ignorierten Archiv. Keine aktive Laufzeit lädt ihn.
+
+**v0.49.0 · CodexAI:** [moon_lake_gallery.gd](moon_lake_gallery.gd) nimmt native Menügrößen, alle acht Kontaktbilder und das tatsächlich laufende Finale auf. Isoliertes XDG_DATA_HOME und nativer Renderer; kein Grafikgenerator. Neue Vorschaufilme unter 5 MB halten.
