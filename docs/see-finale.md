@@ -1,5 +1,7 @@
 # Der See · v0.36.1 · CodexAI
 
+**Aktualisierung v0.49.0 · CodexAI:** [Neue Kontaktanimation, Mondspiegelung und sechs Drachenphasen](mondsee-v049.md). Ablauf und Hand-/Gesichtskontinuität bleiben erhalten. Die Bilder/Filme dieses älteren Berichts zeigen weiterhin ihren angegebenen Aufnahmestand.
+
 **Handkorrektur v0.36.1 · CodexAI:** Raven hebt die abgenommene Maske mit ihrer **eigenen rechten Hand**. Ihre **eigene linke Hand** berührt und verdeckt Shadepis Gesicht. Die Zuordnung bleibt beim Kuss erhalten; rechts/links beziehen sich auf Raven, nicht auf die Bildschirmrichtung.
 
 ## Ankunft im Mondlicht

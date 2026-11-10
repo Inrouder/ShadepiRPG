@@ -121,6 +121,12 @@ jobs:
           set -euo pipefail
           XDG_DATA_HOME="$(mktemp -d /tmp/shadepi-blood-tests.XXXXXX)" godot --headless --script res://tests/blood_fx.gd 2>&1 | tee /tmp/blood-fx.log
           if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/blood-fx.log; then exit 1; fi
+      - name: Validate moonlit lake frames, pause, cleanup and chapter menu containment
+        shell: bash
+        run: |
+          set -euo pipefail
+          XDG_DATA_HOME="$(mktemp -d /tmp/shadepi-moon-tests.XXXXXX)" godot --headless --script res://tests/moon_lake_menu.gd 2>&1 | tee /tmp/moon-menu.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/moon-menu.log; then exit 1; fi
       - name: Validate reported sprite sizes, reactions, routes and chapter transitions
         shell: bash
         run: |

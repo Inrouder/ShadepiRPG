@@ -1,8 +1,15 @@
 # Shadepi · Bilder, Filme und Dokumentation
 
-**Stand v0.48.0 · ClaudeHelper · 9. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
+**Stand v0.49.0 · ClaudeHelper · 9. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
 
 Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnahmen, animierte Szenenfilme, Bedienung und technische Hinweise. Die PNG-Vorschauen sind direkt in GitHub sichtbar; die Filme bleiben zusätzlich als verlinkte WebP-Dateien erreichbar.
+
+## Mondsee und Menüs · v0.49.0 · CodexAI
+
+| Vollständiger Mond über dem bewegten See | Menüs mit innenliegender Hilfe |
+| --- | --- |
+| [![Drachenflugphasen im Wasser und Mondlicht](previews/mondsee-v049.png)](mondsee-v049.md) | [![Aktueller Menürahmen und Kapitelaktionen](previews/menue-nachher-v049.png)](mondsee-v049.md) |
+| [Kussanimation und Quellenvergleich](mondsee-v049.md) · [Finalefilm](previews/mondsee-v049.webp) | [Auflösungen und Prüfung](mondsee-v049.md) · [Arbeitsnachweis](arbeiten/mondsee-v049.md) |
 
 ## Verbesserungen · v0.48.0 · ClaudeHelper
 

@@ -4,7 +4,7 @@ const Aerodyne = preload("res://scripts/cinematic_aerodyne.gd")
 const Motion = preload("res://scripts/cinematic_motion.gd")
 const Tableau = preload("res://scripts/lake_tableau.gd")
 const Painted = preload("res://scripts/painted_world.gd")
-const DRAGON = preload("res://assets/story/lake/dragon.png")
+const DRAGON = preload("res://assets/story/lake/dragon-flight.png")
 const WATER = preload("res://shaders/lake_mystic.gdshader")
 const PARK := Vector2(225,430)
 const FOOTPRINT := Rect2(177,442,96,44)
@@ -15,6 +15,7 @@ var tableau: Node2D
 var water: Node2D
 var water_material: ShaderMaterial
 var stage := "parked"
+var moon_halo: Sprite2D
 var clock := 0.0
 var craft := PARK
 var grow := 0.9
@@ -29,6 +30,13 @@ var events: Array[String] = []
 
 func _ready() -> void:
 	y_sort_enabled = true
+	moon_halo = Sprite2D.new()
+	moon_halo.texture = preload("res://assets/world/light.png")
+	moon_halo.position = Vector2(727,97)
+	moon_halo.scale = Vector2(176,176)/moon_halo.texture.get_size()
+	moon_halo.z_index = -1
+	moon_halo.modulate = Color(0.50,0.65,1.0,0.14)
+	add_child(moon_halo)
 	water = Node2D.new()
 	add_child(water)
 	water_material = ShaderMaterial.new()
@@ -76,6 +84,8 @@ func _sync() -> void:
 	water_material.set_shader_parameter("clock",clock)
 	water_material.set_shader_parameter("glow",glow*(0.6 if world.visual_quality==0 else 1.0))
 	water_material.set_shader_parameter("passage",dragon_passage)
+	water_material.set_shader_parameter("detail",0.0 if world.visual_quality==0 else 1.0)
+	moon_halo.modulate.a = 0.12+0.025*sin(clock*0.35)
 	tableau.material_pose.set_shader_parameter("warmth",glow)
 
 func set_stage(value: String) -> void:
@@ -128,6 +138,8 @@ func _exit(cs, actor: PixelActor, target: Vector2) -> void:
 
 func play_arrival() -> void:
 	var cs = world.begin_cutscene()
+	world.ui.set_lake_cinema(true)
+	cs.ended.connect(func(): world.ui.set_lake_cinema(false),CONNECT_ONE_SHOT)
 	var ticket: int = cs.generation
 	world.player.hide()
 	world.raven.hide()
@@ -184,6 +196,7 @@ func play_arrival() -> void:
 	if not cs.alive(ticket): return
 	set_stage("parked")
 	cs.end(func():
+		world.ui.set_lake_cinema(false)
 		world.lake_scene_pending = false
 		world.autosave()
 		world.toast("Gemeinsam ans Wasser · E / A")
@@ -192,18 +205,37 @@ func play_arrival() -> void:
 func ritual_step(index: int) -> void:
 	glow_target = [0.05,0.4,0.65,0.85][clampi(index,0,3)]
 
+func _hide_actors() -> void:
+	for actor in [world.player,world.raven]:
+		actor.external_pose = true
+		actor.visual.hide()
+		actor.cast_shadow.hide()
+		actor.light_occluder.hide()
+		actor.queue_redraw()
+
+func _exit_tree() -> void:
+	if not is_instance_valid(world):return
+	if is_instance_valid(world.ui):world.ui.set_lake_cinema(false)
+	for actor in [world.player,world.raven]:
+		if not is_instance_valid(actor):continue
+		actor.external_pose = false
+		if is_instance_valid(actor.visual):actor.visual.show()
+		if is_instance_valid(actor.cast_shadow):actor.cast_shadow.show()
+		if is_instance_valid(actor.light_occluder):actor.light_occluder.visible=not actor.cloaked
+		actor.queue_redraw()
+
 func rest() -> void:
 	set_stage("rest")
 	tableau.position = world.player.position
 	tableau.set_pose(3)
 	tableau.show()
-	for actor in [world.player,world.raven]:
-		actor.visual.hide()
-		actor.cast_shadow.hide()
+	_hide_actors()
 	glow_target = 0.25
 
 func play_finale() -> void:
 	var cs = world.begin_cutscene()
+	world.ui.set_lake_cinema(true)
+	cs.ended.connect(func(): world.ui.set_lake_cinema(false),CONNECT_ONE_SHOT)
 	var ticket: int = cs.generation
 	cs.pose(world.player,"idle")
 	cs.pose(world.raven,"idle")
@@ -212,9 +244,7 @@ func play_finale() -> void:
 	tableau.position = world.player.position
 	tableau.set_pose(0)
 	tableau.show()
-	for actor in [world.player,world.raven]:
-		actor.visual.hide()
-		actor.cast_shadow.hide()
+	_hide_actors()
 	set_stage("hands")
 	glow_target = 0.65
 	await cs.camera(tableau.position+Vector2(10,-32),1.4,2.1)
@@ -233,11 +263,11 @@ func play_finale() -> void:
 	await cs.wait(2.2)
 	if not cs.alive(ticket): return
 	set_stage("dragon")
-	cs.camera(Vector2(720,360),1.8,1.1)
+	cs.camera(Vector2(540,277),1.8,0.65)
 	await cs.animate(func(p: float):
 		dragon_passage = p
 		_sync()
-	,3.6)
+	,5.6)
 	if not cs.alive(ticket): return
 	dragon_passage = -1
 	set_stage("embrace")
@@ -253,6 +283,7 @@ func play_finale() -> void:
 	if not cs.alive(ticket): return
 	cs.end(func():
 		rest()
+		world.ui.set_lake_cinema(false)
 		world.lake_scene_pending = false
 		world.autosave()
 		world.toast("Der neue Orden · Die gemeinsame Suche beginnt")

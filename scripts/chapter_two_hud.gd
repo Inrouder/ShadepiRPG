@@ -11,7 +11,6 @@ func _ready() -> void :
 	button_at("Zurück zu Kapitel 1", 274, func(): get_tree().change_scene_to_file("res://scenes/chapter_one.tscn"))
 	campaign_button = button_at("Kapitel 3–7 fortsetzen", 93, func(): get_tree().change_scene_to_file("res://scenes/campaign.tscn"))
 	campaign_button.hide()
-	menu_help.position.y = 333
 	menu_help.text = "E / A Zugriff · F11 Vollbild"
 func show_menu(title: String = "KAPITEL 2") -> void :
 	super.show_menu(title)

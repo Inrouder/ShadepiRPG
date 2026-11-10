@@ -31,7 +31,7 @@ static func get_profile(key: String) -> Dictionary:
 		"suite":
 			return {"dust":[Rect2(340,285,550,180)],"motes":12,"windows":[Rect2(260,20,450,125)],"glows":[[Vector2(625,262),Vector2(150,80),Color("b493d5"),0.025]],"bloom":0.62}
 		"lakeside":
-			return {"fireflies":24,"mist":[[Vector2(510,238),Vector2(250,45),Color("9ac8ce"),0.11],[Vector2(849,338),Vector2(220,45),Color("9ac8ce"),0.09]],"water":true,"bloom":0.63}
+			return {"moonlight":true,"fireflies":32,"mist":[[Vector2(510,238),Vector2(250,45),Color("9ac8ce"),0.11],[Vector2(849,338),Vector2(220,45),Color("9ac8ce"),0.09]],"water":true,"bloom":0.63}
 		"memory_attack", "memory_sacrifice":
 			return {"dust":[Rect2(180,210,820,320)],"motes":18 if key=="memory_attack" else 28,"ash":true,"embers":[Vector2(827,280),Vector2(970,289),Vector2(899,480),Vector2(490,110)],"mist":[[Vector2(850,230),Vector2(240,145),Color("8d7971"),0.09]],"bloom":0.7}
 		"memory_temple":

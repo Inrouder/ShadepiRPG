@@ -38,11 +38,11 @@ func pad_b() -> void:
 
 func run() -> void:
 	var image: Image = Tableau.ART.get_image()
-	check(image.get_size()==Vector2i(1536,1024),"contact source has four complete equal cells")
-	for cell in 4:
-		var origin := Vector2i((cell%2)*768,(cell/2)*512)
-		check(image.get_pixelv(origin+Vector2i(5,5)).a<0.01 and image.get_pixelv(origin+Vector2i(760,505)).a<0.01,"contact source has transparent exterior in every cell")
-		check(image.get_pixelv(origin+Vector2i(300,240)).a>0.5,"contact source retains opaque dark armor, without alpha forcing")
+	check(image.get_size()==Vector2i(1774,887),"new contact source has eight complete registered frames")
+	for frame in 8:
+		var rect: Rect2=Tableau.region(frame)
+		check(rect.end.x<=1774 and rect.end.y<=887,"registered contact frame remains inside the real source")
+		check(image.get_pixelv(Vector2i(rect.position)+Vector2i(4,4)).a<0.01,"contact frame has clean transparent exterior")
 	for corner in [Lake.FOOTPRINT.position,Lake.FOOTPRINT.end,Lake.FOOTPRINT.get_center()]:
 		check(not Geometry2D.is_point_in_polygon(corner,PackedVector2Array(Painted.WATER_EDGE)) and corner.y<540,"the complete landing/contact area is dry shore")
 	var w = load("res://scenes/campaign.tscn").instantiate()
@@ -102,7 +102,7 @@ func run() -> void:
 		if w.cutscene.waiting_input: w.cutscene.advance()
 		if not w.cutscene.running: break
 	check(seen.has("mask") and seen.has("kiss") and seen.has("dragon") and seen.has("embrace"),"mask, kiss, passing shadow and embrace really play")
-	check(source_hidden and pause_checked,"only the four approved contact poses are visible during the private moment")
+	check(source_hidden and pause_checked,"only the registered contact sequence are visible during the private moment")
 	check(d.tableau.pose==3 and d.dragon_passage==-1 and not w.lake_scene_pending,"final rest restores the masked embrace and clears the brief dragon")
 	check(w.save_game() and w.load_game() and not w.cutscene.running and w.lake_sequence.tableau.pose==3,"completed finale loads the peaceful masked end pose")
 	w.fresh_entry = true

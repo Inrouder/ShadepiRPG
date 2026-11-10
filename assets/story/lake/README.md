@@ -1,4 +1,18 @@
-# See-Ankunft und Kontaktposen · v0.36.1 · CodexAI
+# See-Ankunft, Mondlicht und Kontaktposen · v0.49.0 · CodexAI
+
+## Aktive Quellen v0.49.0 · CodexAI
+
+- `poses-moon.png`: unveränderte Bildwerkzeugquelle, tatsächlich 1774×887, vier Spalten / zwei Reihen. Acht echte Schritte: Hände, Griff, Maske heben, Annäherung, Kuss, gehaltener Kuss, Maske wieder aufsetzen, Umarmung. `lake_tableau.gd` registriert gerundete Einzelregionen, Fußanker lokal `(200,423)` und Maßstab `58/408`. Quellenkörper bleiben auf dem Boden; keine durchsichtigen Silhouetten-Überblendungen. Bestehende logische Posen 0–3 bleiben kompatibel und wählen die passenden Bildfolgen.
+- `dragon-flight.png`: unveränderte Bildwerkzeugquelle, 2172×724, sechs 724×362-Zellen. Eigenständige Körper-/Schweif-/Mähnenphasen. `lake_mystic.gdshader` liest nur die belastbare Alpha-Silhouette; schwache Generierungsränder und blaue Außenfransen werden bei der Schattenabtastung verworfen. Ausgabe bleibt auf Wasser beschnitten.
+- `lake_contact.gdshader`: Farbtemperatur der echten Atlasbilder. Keine zusätzliche Texturverdoppelung oder Gesichtstextur. Der ursprüngliche normale Heldenbestand bleibt unverändert.
+
+Herkunft außerhalb des Repos: `/workspace/generated_images/exec-111e3487-a426-4f26-8833-11789da7ba3a.png` (Kontaktbilder, nach Hand-/Maskenkorrektur), `exec-2940582a-3496-4f76-bd30-c81cb7efac67.png` (Drachenphasen mit Zellabständen). Referenzen tatsächlich gesichtet: aktive Original-Figurenkarten und vorherige See-/Drachenquelle. Keine Python-Bemalung oder Vektor-Ersatzgrafik. [Aktuelle Aufnahme und Film](../../../docs/mondsee-v049.md).
+
+Raven bleibt 160 cm, Shadepis Körpergröße nicht neu festgelegt. Ravens eigene rechte Hand hebt/hält die Maske; ihre linke berührt und verdeckt sein Gesicht. Kein lesbares unmaskiertes Gesicht. In der Umarmung ist die Maske wieder aufgesetzt. Körper-, Schatten- und Lichtverdeckungen der normalen Figuren während Ersatzposen unterdrücken und bei Szenenwechsel wiederherstellen.
+
+## Historische Quellen v0.36.0 / v0.36.1
+
+`poses.png`, `dragon.png` und `lake_pose_blend.gdshader` bleiben als Vergleichsquellen erhalten, sind nicht mehr aktive Laufzeit und werden nicht exportiert. Die folgenden ursprünglichen Angaben dokumentieren ihre damalige Verwendung.
 
 **Handkorrektur v0.36.1 · CodexAI:** Die aktive Quelle wurde gezielt nachbearbeitet: Raven hebt die Maske mit ihrer eigenen **rechten** Hand; ihre **linke** berührt und verdeckt Shadepis Gesicht. Diese anatomische Zuordnung gilt in Zelle 1 (Maskenabnahme) und Zelle 2 (Kuss). Die rechte Hand hält die Maske angehoben statt an Ravens linker Außenseite am Bein.
 

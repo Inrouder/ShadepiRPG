@@ -1,5 +1,7 @@
 # Oberflächen, Effekte und Ton · v0.32.2 · CodexAI
 
+**See / Menü v0.49.0 · CodexAI:** [Mondsee und Menüs](../mondsee-v049.md) mit bewegter Mondachse, sechs Drachenphasen, acht verankerten Kontaktbildern und in den Rahmen passender Hilfe. [Aktive Quellen](../../assets/story/lake/README.md); frühere Seequellen nur noch Vergleich. Gesicht bleibt verdeckt, Originalhelden bleiben normaler Standard.
+
 **Menüreflexion v0.44.1 · CodexAI:** [Lichtspur im Standbereich korrigiert](../menue-kontrollpunkte.md). Stadtshader erhält dieselben vier Sohlenanker wie der Kontaktshader; Texturversatz/-größe in Menükoordinaten umrechnen. Bereits eingemalte Glanzspur lokal dämpfen, dunkle Bodenstruktur erhalten. Die Korrektur ist unabhängig von der Nässeanimations-Stärke auch bei Reduziert aktiv.
 
 [Stilbibel](README.md) · [Art Direction](artdirection.md) · [Figuren](figuren.md)

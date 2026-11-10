@@ -6,7 +6,6 @@ func _ready() -> void :
 	mission_title.text = "KAPITEL 1 / ECHOS IN NEON UND SCHATTEN"
 	menu_description.text = "Kapitel 1 · Ravens Jagd\nLokal-Koop beginnt mit Ravens Rückkehr."
 	next_chapter_button = button_at("Kapitel 2 öffnen", 274, func(): get_tree().change_scene_to_file("res://scenes/chapter_two.tscn"))
-	menu_help.position.y = 333
 	menu_help.text = "Stick / Kreuz und A · F11 Vollbild"
 	restart_button.text = "Kapitel 1 neu starten"
 func show_menu(title: String = "KAPITEL 1") -> void :

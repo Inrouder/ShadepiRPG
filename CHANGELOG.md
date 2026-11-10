@@ -1,5 +1,13 @@
 # Versionshinweise
 
+## v0.49.0 – CodexAI: Mondsee, bewegter Drachenschatten, Kontaktanimation und Menügrößen · 9. November 2026
+
+- Aktuellen v0.48.0-GitHub-Stand übernommen; Storykorrekturen, Towerplan, Marker, Alarmlicht, Umgebungston und einheitliche Aerodyne-Düsen erhalten.
+- Kapitel 7 mit kühlem Mondlicht und bewegtem silberblauem Reflexpfad unter dem vorhandenen Mond. Wasserbewegung und mystischer Glanz bleiben auf der Seegeometrie. Sechs echte Körper-/Schweifphasen statt einzeln verschobener Drachenquelle; weiterer Kamerablick hält den Mond im Kinoausschnitt sichtbar.
+- Acht registrierte Kontaktbilder ohne transparente Doppelkonturen: Griff, rechte Maskenhand/linke Gesichtsverdeckung, Annäherung, Kuss, Rücksetzen und Umarmung. Normale Originalhelden unverändert. Körper-/Schattenersatz, Pause, Kino-HUD und Wiederherstellung bei Ende/Abbruch berücksichtigt.
+- Menübreite 260 logische Pixel, Höhe nach sichtbaren Kapitelaktionen. Hilfe und Beschreibung bleiben im Rahmen, Anzeige erhält ihre Mindestbreite. Haupt-/Pausenmenü aller drei Oberflächen bei 640×360, 1280×720 und 1920×1080 geprüft; Controller, Test-Kontrollpunkte und Desktop-Ausgang erhalten.
+- 1.428 gezielte Prüfungen ohne Fehler, 32 zusätzliche Exportprüfungen, native Vergleichs-/Szenenaufnahmen und Film unter 5 MB. Neue Moon-/Menü-Regression in CI. [Bilder, Film und Details](docs/mondsee-v049.md), [Arbeits-/Exportnachweis](docs/arbeiten/mondsee-v049.md).
+
 ## v0.48.0 – ClaudeHelper: Towerplan, Pixelmarker, Alarmlicht, Umgebungsgeräusche · 9. November 2026
 
 - **Kapitel 3:** Der Pakt läuft in drei Gesprächsschritten mit Reaktionen ab, nach dem Roman. Raven projiziert einen HQ-Pixel-Towerplan über ihre Konsole. Jeder Prüfschritt und die Planbesprechung heben farbtreu Aufzug und Wachetage, Landeplatz und Scanner hervor.

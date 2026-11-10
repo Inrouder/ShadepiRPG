@@ -1,5 +1,7 @@
 # Figurenkatalog · v0.32.2 · CodexAI
 
+**Kontaktbilder v0.49.0 · CodexAI:** Normale Originalhelden und ihre Karten bleiben unverändert. Die [acht See-Kontaktbilder](../../assets/story/lake/README.md) sind eine eigene registrierte Szenenquelle mit denselben Merkmalen; [aktuelle Spielansichten](../mondsee-v049.md).
+
 **Aktueller Stand v0.46.1 · CodexAI:** Originalhelden wieder aktiv; beide Karten und die vollständige Übersicht zeigen wieder diese Quellen. [Spielansicht und Rückkehr](../original-helden.md). Der folgende v0.45.0-Eintrag dokumentiert die inzwischen verworfene Zwischenfassung.
 
 **Aktualisierung v0.45.0 · CodexAI:** Heldenkarten und vollständige 23-Figuren-Übersicht aus den aktiven Gameplay-Quellen erneuert. [Neue Quellen und Anker](../archiv/assets/helden-v045/README.md), [Originale als Backup](../../assets/sprites/heroes/backup-v0441/README.md), [Spielvergleich](../fehlerbericht-v045.md).

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "0.48.0",
+  "version": "0.49.0",
   "author": "ClaudeHelper",
   "entries": [
     {
@@ -110,6 +110,24 @@
         "docs/previews"
       ],
       "note": "Versionsbezogene Arbeits-/Originalberichte und Bildbelege. Frühere Prüfzahlen sind keine aktuelle Abnahme."
+    },
+    {
+      "status": "active",
+      "paths": [
+        "assets/story/lake/poses-moon.png",
+        "assets/story/lake/dragon-flight.png",
+        "shaders/lake_contact.gdshader"
+      ],
+      "note": "Kapitel 7: acht registrierte Kontaktbilder und sechs tatsächliche Drachenflugphasen; normale Originalhelden unverändert."
+    },
+    {
+      "status": "reference",
+      "paths": [
+        "assets/story/lake/poses.png",
+        "assets/story/lake/dragon.png",
+        "shaders/lake_pose_blend.gdshader"
+      ],
+      "note": "Vorherige See-Quellen und Vierbild-Überblendung; historisch erhalten, seit v0.49.0 nicht mehr Laufzeit und nicht exportiert."
     }
   ]
 }

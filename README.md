@@ -1,12 +1,17 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.48.0 · ClaudeHelper · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.49.0 · CodexAI · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
 [**Spiel herunterladen (neuestes Release)**](https://github.com/Inrouder/ShadepiRPG/releases/latest) · [**Quellcode als ZIP**](https://github.com/Inrouder/ShadepiRPG/archive/refs/heads/main.zip) · [**Versionen**](CHANGELOG.md) · [**Spieleranleitung**](Spiel-README.md) · [**Bildgalerie & Doku**](docs/README.md)
 
 ## Bilder aus dem Spiel
+
+| Mondsee und animierter Drachenschatten · v0.49.0 · CodexAI | Kompakte Menüs mit passenden Kapitelaktionen |
+| --- | --- |
+| [![Mondschein, Wasserreflexe und sechs Drachenphasen](docs/previews/mondsee-v049.png)](docs/mondsee-v049.md) | [![Aktuelle Menügröße ohne überstehenden Hilfetext](docs/previews/menue-nachher-v049.png)](docs/mondsee-v049.md) |
+| [Kussanimation, Quellen und Vorher/Nachher](docs/mondsee-v049.md) · [Szenenfilm](docs/previews/mondsee-v049.webp) | [640p-Basis und Full-HD-Ansichten](docs/mondsee-v049.md#menüs-innerhalb-ihres-rahmens) |
 
 **[Bebilderte Dokumentation mit Szenenfilmen öffnen →](docs/README.md)** · Ein Klick auf eine Vorschau öffnet den zugehörigen Bericht.
 

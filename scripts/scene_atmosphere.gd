@@ -57,6 +57,7 @@ func _apply_grade() -> void:
 	var filter = world.get("filter_material") if world != null else null
 	if filter == null or not profile_override.is_empty(): return
 	filter.set_shader_parameter("grade_tint",Vector3(1.025,1.0,0.985) if settings.get("warm",false) else Vector3(0.98,1.01,1.045))
+	if settings.get("moonlight",false):filter.set_shader_parameter("grade_tint",Vector3(0.93,1.0,1.09))
 	filter.set_shader_parameter("bloom",(0.28 if quality==2 else 0.15)*float(settings.get("bloom",1.0)))
 
 func paused() -> bool:

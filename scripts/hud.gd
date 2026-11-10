@@ -40,6 +40,8 @@ var menu_emblem: TextureRect
 var menu_tagline: Label
 var menu_skin := "raven"
 var menu_buttons: Array[Button] = []
+var lake_cinema := false
+var lake_hud_visibility: Array[bool] = []
 var display_button: Button
 var display_panel: Control
 var game_hud_nodes: Array[CanvasItem] = []
@@ -197,7 +199,7 @@ func _ready() -> void :
 	dialogue_panel.hide()
 	# Pixel-art menu: steel frame, title plate and buttons from assets/ui/<theme>
 	# (tools/ui_pixel), Silkscreen / Shadepi Pixel fonts at whole-pixel sizes.
-	menu = panel(Rect2(350, 14, 276, 332))
+	menu = panel(Rect2(366, 25, 260, 310))
 	menu.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	menu_chrome = preload("res://scripts/menu_chrome.gd").new()
 	menu_chrome.size = menu.size
@@ -237,10 +239,60 @@ func _ready() -> void :
 	root.add_child(display_panel)
 	display_panel.closed.connect(func(): display_button.grab_focus())
 
+	root.resized.connect(_layout_menu)
+	_layout_menu.call_deferred()
 	_build_admin_panel()
 	_build_feedback()
 	menu_title.mouse_filter = Control.MOUSE_FILTER_STOP
 	menu_title.gui_input.connect(_secret_title_click)
+
+func set_lake_cinema(value: bool) -> void:
+	if lake_cinema==value:return
+	lake_cinema=value
+	if value:
+		lake_hud_visibility.clear()
+		for node in game_hud_nodes:lake_hud_visibility.append(node.visible)
+	else:
+		for i in mini(game_hud_nodes.size(),lake_hud_visibility.size()):
+			game_hud_nodes[i].visible=lake_hud_visibility[i]
+		lake_hud_visibility.clear()
+
+func _layout_menu() -> void:
+	if not is_inside_tree() or menu==null or menu_help==null:return
+	var area := get_viewport().get_visible_rect().size
+	var opening: bool=not world.started
+	var groups=[[mode_button],[resume_button],[load_button],[restart_button],[audio_button,ambient_button],[visual_button,display_button]]
+	var primary=[mode_button,resume_button,load_button,restart_button,audio_button,ambient_button,visual_button,display_button,quit_button]
+	for button in menu_buttons:
+		if button not in primary:groups.append([button])
+	groups.append([quit_button])
+	var row:=0
+	var navigation: Array[Button]=[]
+	for group in groups:
+		var shown:=false
+		for button in group:
+			if not button.visible:continue
+			shown=true
+			button.position=Vector2(12,82+row*26);button.size=Vector2(236,24)
+			button.set_meta("home_x",12.0)
+			if not button.disabled:navigation.append(button)
+		if shown:row+=1
+	menu.size=Vector2(260,82+row*26+24)
+	menu.position=Vector2(roundf(area.x-274.0) if opening else roundf((area.x-260.0)*0.5),roundf((area.y-menu.size.y)*0.5))
+	menu.clip_contents=true
+	menu_chrome.size=menu.size
+	menu_emblem.position=Vector2(224,12)
+	menu_title.position=Vector2(12,6);menu_title.size=Vector2(210,34)
+	menu_tagline.position=Vector2(13,38);menu_tagline.size=Vector2(232,18)
+	menu_description.position=Vector2(13,55);menu_description.size=Vector2(234,27)
+	audio_button.size.x=70
+	ambient_button.position.x=88;ambient_button.size.x=160;ambient_button.set_meta("home_x",88.0)
+	visual_button.size.x=158
+	display_button.position.x=176;display_button.size.x=72;display_button.set_meta("home_x",176.0)
+	menu_help.position=Vector2(12,82+row*26+4);menu_help.size=Vector2(236,12)
+	for i in navigation.size():
+		navigation[i].focus_next=navigation[i].get_path_to(navigation[(i+1)%navigation.size()])
+		navigation[i].focus_previous=navigation[i].get_path_to(navigation[posmod(i-1,navigation.size())])
 
 func button_at(text: String, y: float, callback: Callable) -> Button:
 	var button: = Button.new()
@@ -253,6 +305,7 @@ func button_at(text: String, y: float, callback: Callable) -> Button:
 	button.pressed.connect(callback)
 	menu.add_child(button)
 	button.set_meta("home_x", button.position.x)
+	button.visibility_changed.connect(_layout_menu)
 	button.mouse_entered.connect(_animate_menu_button.bind(button))
 	button.mouse_exited.connect(_animate_menu_button.bind(button))
 	button.focus_entered.connect(_animate_menu_button.bind(button))
@@ -299,7 +352,7 @@ func apply_menu_skin(theme: String) -> void:
 	menu_emblem.texture = UiSkin.emblem(theme)
 	UiSkin.style_label(menu_title, c.text, "title", 32)
 	UiSkin.style_label(menu_tagline, c.primary, "title")
-	UiSkin.style_label(menu_description, c.muted)
+	UiSkin.style_label(menu_description, c.muted,"ui",16)
 	UiSkin.style_label(menu_help,c.muted,"title",8)
 	menu_chrome.primary = c.primary
 	menu_chrome.accent = c.accent
@@ -321,10 +374,9 @@ func _show_menu_shell(title: String) -> void:
 	start_backdrop.visible = opening
 	start_backdrop.set_quality(world.visual_quality)
 	menu_chrome.strength = [0.0, 0.55, 1.0][world.visual_quality]
-	menu.position = Vector2(350, 14) if opening else Vector2(182, 14)
 	apply_menu_skin("raven" if opening else menu_theme())
 	menu_title.text = "SHADEPI" if opening else title
-	menu_title.add_theme_font_size_override("font_size", 32 if opening else (16 if title.length() <= 18 else 8))
+	menu_title.add_theme_font_size_override("font_size", 28 if opening else (16 if title.length() <= 18 else 8))
 	menu_description.text = "IM SCHATTEN DES RABEN\nEine Cyberpunk-Saga" if opening else "Pause · Einsatzstatus und Optionen"
 	if opening:
 		world.set_music_section("menu")
@@ -332,6 +384,7 @@ func _show_menu_shell(title: String) -> void:
 			node.hide()
 	_update_mode_buttons()
 	_update_checkpoint_button()
+	_layout_menu()
 	menu.show()
 	resume_button.grab_focus()
 
@@ -745,6 +798,6 @@ func _process(delta: float) -> void :
 	boss.text = "CHROME JACKAL\n" + ("IMPLANTATE GESTÖRT" if world.enemy.exposed > 0 else "Panzerung aktiv") if world.stage == 2 else ""
 	boss_panel.visible = world.stage == 2
 	_update_feedback(delta)
-	if start_backdrop.visible:
+	if start_backdrop.visible or lake_cinema:
 		for node in game_hud_nodes:
 			node.hide()
