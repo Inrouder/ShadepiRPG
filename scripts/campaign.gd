@@ -125,13 +125,28 @@ func raven_leads() -> bool:
 	return (beat == Beat.HANGAR or (beat == Beat.ROOF and point_index < 2)) or beat == Beat.ECHO
 
 func actor_is_playable(actor: PixelActor) -> bool:
+	if actor == raven and coop_raven_playable(): return true
 	return drive == null and timing == null and beat != Beat.END and actor == (raven if raven_leads() else player)
+
+## v0.54.0 · ClaudeHelper: Im Koop steuert Spieler 2 Raven selbst, sobald Shadepi führt und Raven
+## frei in der Szene steht: im Versteck, im Hinterhalt, bei der Symbolsuche in der Garage und im
+## Kampf gegen die Aufzugwachen. Wo die Geschichte Raven festlegt (Datenextraktion im Tower,
+## Gang zur Hebebühne, See), bleibt sie geführt und Spieler 2 spielt den Begleiter.
+func coop_raven_playable() -> bool:
+	if not coop or raven_leads() or not is_instance_valid(raven) or not raven.visible: return false
+	if drive != null or timing != null or memory_scene != null: return false
+	if is_instance_valid(tower) and tower.active: return false
+	match beat:
+		Beat.PACT, Beat.AMBUSH: return true
+		Beat.GARAGE: return point_index == 0
+		Beat.ESCAPE: return not escape_guards_cleared
+	return false
 
 func companion_allowed() -> bool:
 	return drive == null and timing == null and memory_scene == null and beat not in [Beat.CHASE, Beat.FLIGHT, Beat.END]
 
-func actor_input_prefix(_actor: PixelActor) -> String:
-	return ""
+func actor_input_prefix(actor: PixelActor) -> String:
+	return "raven_" if actor == raven and coop_raven_playable() else ""
 
 func atmosphere_profile() -> String:
 	if beat in [Beat.CHASE, Beat.FLIGHT]: return ""
@@ -157,6 +172,10 @@ func _process(delta: float) -> void :
 	lift_glow = maxf(0.0, lift_glow - delta * 0.6)
 	if is_busy():
 		return
+	# Im Koop überspringt die Basis den Begleiter-Lauf; wo Raven nicht von Spieler 2 gesteuert
+	# wird, muss sie weiter von selbst folgen bzw. ihre Position einnehmen.
+	if coop and not coop_raven_playable():
+		_update_raven_follower(delta)
 	clock += delta
 	if beat == Beat.ESCAPE and tower_stage==2 and escape_guards_cleared and not admin_enabled("freeze_timer"):
 		countdown = maxf(0, countdown - delta)

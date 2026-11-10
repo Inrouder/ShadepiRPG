@@ -43,9 +43,12 @@ func run() -> void:
 	w.set_coop(true)
 	w._enter(w.Beat.AMBUSH)
 	await settle(w, 60)
+	check(w.companion_lead() == null and not pet.visible, "co-op ambush: player two plays Raven herself, so no companion")
+	w._enter(w.Beat.BOSS)
+	await settle(w, 90)
 	check(w.companion_lead() == w.player and pet.kind == "nanites" and pet.visible, "in co-op Shadepi's nanite swarm joins when only he is playable")
 	var foes: Array = w.special_targets()
-	check(not foes.is_empty(), "ambush has enemies for the companion")
+	check(not foes.is_empty(), "the tower fight has an enemy for the companion")
 	if not foes.is_empty():
 		var foe = foes[0]
 		var before: int = foe.health

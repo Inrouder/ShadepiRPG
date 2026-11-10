@@ -13,7 +13,8 @@
 
 ## Wann der Begleiter erscheint
 
-- **Koop:** immer, wenn nur ein Held spielbar ist. Das betrifft fast alle Szenen von Kapitel 3 bis 7, zum Beispiel Hinterhalt, Garage, Hangar, Tower-Dach, Penthouse und Flucht. Spielen beide Spieler ihre Helden selbst (Kapitel 1 und 2 im Team), gibt es keinen Begleiter.
+- **Koop:** immer, wenn nur ein Held spielbar ist, zum Beispiel im Hangar, auf dem Tower-Dach, im Penthouse-Kampf und am See. Spielen beide Spieler ihre Helden selbst, gibt es keinen Begleiter.
+- **Seit v0.54.0** steuert Spieler 2 in Kapitel 3 bis 7 Raven selbst, wo sie frei in der Szene steht: im Versteck, im Hinterhalt, bei der Symbolsuche in der Garage und im Kampf gegen die Aufzugwachen. Dort erscheint kein Begleiter.
 - **Solo:** nur wenn der Held wirklich allein in der Szene ist, etwa Raven auf dem Tower-Dach. Der Begleiter folgt dann von selbst und greift nicht ein. Ein zweiter Spieler kann jederzeit mit Angriffs- oder Spezialtaste einsteigen; nach 25 Sekunden ohne Eingabe folgt der Begleiter wieder allein.
 - **Nie** bei Motorradfahrt, Aerodyne-Flug, den Kloster-Erinnerungen, in Filmszenen und im Abspann.
 
