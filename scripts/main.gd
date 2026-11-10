@@ -390,6 +390,21 @@ func _build_world() -> void :
 func atmosphere_profile() -> String:
 	return painted_layout if not painted_layout.is_empty() else "alley"
 
+## v0.52.0 · ClaudeHelper: Wie stark spiegelt der Boden an dieser Stelle? Regennasse Straßen und
+## Dächer am stärksten, Marmor und Hallenboden schwächer; Teppiche, Erde und Netz gar nicht.
+const FLOOR_REFLECTION := {"alley": 0.78, "street": 0.78, "ambush": 0.82, "rooftop": 0.85, "industry": 0.6,
+	"suite": 0.68, "garage": 0.42, "hangar": 0.36}
+## Matte Flächen innerhalb spiegelnder Orte (Weltkoordinaten), z. B. der Teppich im Penthouse.
+const MATTE_FLOORS := {"suite": [Rect2(532, 270, 445, 168)]}
+func floor_reflection(point: Vector2) -> float:
+	if visual_quality == 0: return 0.0
+	var profile := atmosphere_profile()
+	var value: float = FLOOR_REFLECTION.get(profile, 0.0)
+	if value <= 0.0: return 0.0
+	for matte: Rect2 in MATTE_FLOORS.get(profile, []):
+		if matte.has_point(point): return 0.0
+	return value
+
 func atmosphere_rect() -> Rect2:
 	return Rect2(0,0,1024,640)
 

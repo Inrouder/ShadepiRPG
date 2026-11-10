@@ -1,5 +1,13 @@
 # Versionshinweise
 
+## v0.52.0 – ClaudeHelper: Sprites kalibriert, Ringe unter den Figuren, freie Türen, Spiegelungen und Kinolicht · 10. November 2026
+
+- **Sprites:** Neues Prüfwerkzeug fand 214 sichtbare Fehler in zehn Posenblättern (Nachbarpose im Bild, abgeschnittene Glieder und Waffen), darunter Shadepis Tritt, Ravens Ladepose und alle Gegner-Angriffsposen. Jede Pose hat jetzt eine eigene Zelle mit leerem Rand; Bildschirmposition unverändert, keine Figur neu gezeichnet. Prüfung danach: 0 Fehler.
+- **Aktionsringe** liegen als Bodenmarkierung unter den Figuren; nur der Pfeil schwebt darüber.
+- **Türen frei:** Laterne neben statt vor der Verstecktür (Kapitel 3), Werkzeugkasten und Container neben den Garagen-Rolltoren. Laufweg-Prüfwerkzeug für die Kinoszenen der Kampagne.
+- **Licht:** Bodenspiegelung aller Figuren auf nassem Asphalt, Dach, Marmor und Hallenboden; Kino-Vignette in Filmszenen; Lichtkegel und Bodenschein an Straßenlaternen.
+- Neue CI-Suite `scene_polish` (54 Prüfungen); alle 41 Suiten und das Repository-Audit ohne Fehler. [Bilder und Details](docs/szenenpolitur-v052.md).
+
 ## v0.51.1 – CodexAI: sichtbare HQ-Dropdowns in Menüs, Kontrollpunkten und Hacks · 10. November 2026
 
 - Zentraler Renderfehler behoben: eingebettete Godot-Listen verwenden die reservierte Canvas-Ebene 1024. Der HQ-Präsentationspass lag auf derselben Ebene und verdeckte sie trotz intern geöffnetem Zustand.
