@@ -85,7 +85,7 @@ func run() -> void:
 	menu_backdrop.pulse_at(Vector2(120, 240))
 	check(menu_backdrop.pulse > 0.0 and menu_backdrop.pulse_position == Vector2(120, 240), "menu interaction produces feedback at the input point")
 	scene.close_menu()
-	check(root.content_scale_mode == Window.CONTENT_SCALE_MODE_VIEWPORT, "closing HQ menu restores original gameplay viewport")
+	check(root.content_scale_mode == Window.CONTENT_SCALE_MODE_CANVAS_ITEMS and root.get_visible_rect().size==Vector2(640,360), "closing menu retains HQ with original logical gameplay size")
 	check(not scene.ui.start_backdrop.visible, "live start backdrop closes with the menu")
 	check(not scene.ui.start_backdrop.is_processing() and not scene.ui.start_backdrop.is_processing_input(), "hidden menu stops animation and input work")
 	check_npc_attack_animation(scene)

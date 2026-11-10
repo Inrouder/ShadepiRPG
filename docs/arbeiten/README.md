@@ -6,6 +6,7 @@ Jeder Nachweis gehört zu der im Titel genannten Version. Prüfzähler, Bildschi
 
 | Nachweis | Versionsbezogenes Thema |
 | --- | --- |
+| [hq-anzeige-v051.md](hq-anzeige-v051.md) | Nativer HQ-Modus mit Full-HD-Grenze und 4K-Präsentation · v0.51.0 · CodexAI |
 | [anzeigeanalyse-v0502.md](anzeigeanalyse-v0502.md) | Renderpfad und native Full-HD-Vergleiche · v0.50.2 · CodexAI |
 | [netzavatar-v0501.md](netzavatar-v0501.md) | Ravens Gittersilhouette und Rücksetzung · v0.50.1 · CodexAI |
 | [ice-v050.md](ice-v050.md) | ICE-Wächter, Kugelsalven, Deckung und vergrößerte Arena · v0.50.0 · CodexAI |

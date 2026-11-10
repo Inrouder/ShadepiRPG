@@ -52,6 +52,12 @@ jobs:
           set -euo pipefail
           timeout 25s godot --headless --quit-after 5 2>&1 | tee /tmp/startup.log
           if grep -Eq 'SCRIPT ERROR|^ERROR:|Parse Error' /tmp/startup.log; then exit 1; fi
+      - name: Validate capped HQ rendering and display/input lifecycle
+        shell: bash
+        run: |
+          set -euo pipefail
+          XDG_DATA_HOME=/tmp/shadepi-hq-ci godot --headless --script res://tests/hq_display.gd 2>&1 | tee /tmp/hq-display.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/hq-display.log; then exit 1; fi
       - name: Validate Raven net silhouette, poses and cleanup
         shell: bash
         run: |

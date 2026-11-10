@@ -1,0 +1,86 @@
+[
+	{
+		"hq": false,
+		"internal": [
+			640,
+			360
+		],
+		"output": [
+			1920,
+			1080
+		],
+		"tag": "classic-1080"
+	},
+	{
+		"hq": true,
+		"internal": [
+			1920,
+			1080
+		],
+		"output": [
+			1920,
+			1080
+		],
+		"tag": "hq-1080"
+	},
+	{
+		"hq": false,
+		"internal": [
+			640,
+			360
+		],
+		"output": [
+			3840,
+			2160
+		],
+		"tag": "classic-2160"
+	},
+	{
+		"hq": true,
+		"internal": [
+			1920,
+			1080
+		],
+		"output": [
+			3840,
+			2160
+		],
+		"tag": "hq-2160"
+	},
+	{
+		"hq": true,
+		"internal": [
+			1920,
+			1080
+		],
+		"output": [
+			1920,
+			1080
+		],
+		"tag": "options"
+	},
+	{
+		"hq": true,
+		"internal": [
+			1920,
+			1080
+		],
+		"output": [
+			1920,
+			1080
+		],
+		"tag": "quality-list"
+	},
+	{
+		"hq": true,
+		"internal": [
+			1920,
+			1080
+		],
+		"output": [
+			1920,
+			1080
+		],
+		"tag": "ice"
+	}
+]

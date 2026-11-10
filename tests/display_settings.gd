@@ -47,6 +47,7 @@ func run() -> void:
 	settings.preferences_path = "user://display-validation.cfg"
 	DirAccess.remove_absolute(settings.preferences_path)
 	settings.load_preferences()
+	check(settings.hq_enabled,"new installs enable capped HQ")
 	check(settings.mode == Settings.Mode.BORDERLESS and not settings.integer_scaling, "new install defaults to desktop fullscreen and filling scale")
 	var invalid := ConfigFile.new()
 	invalid.set_value("display", "mode", "broken")
@@ -56,6 +57,7 @@ func run() -> void:
 	invalid.save(settings.preferences_path)
 	settings.load_preferences()
 	check(settings.mode == Settings.Mode.BORDERLESS and settings.resolution_index == 0 and not settings.integer_scaling, "bad preference types/values fall back safely")
+	settings.set_hq(false) # Existing pixel-mode/input coverage; HQ has its own native suite.
 	settings.set_mode(Settings.Mode.WINDOWED)
 	settings.set_resolution(4)
 	settings.set_integer_scaling(true)

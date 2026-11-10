@@ -1,6 +1,6 @@
 # Shadepi · Spieleranleitung
 
-**Aktueller Stand v0.50.2 · CodexAI.** [Neu: Towerplan, Pixelmarker, Alarmlicht, Umgebungsgeräusche](docs/verbesserungen-v048.md) · [Story-Durchsicht Kapitel 1–7](docs/story-durchsicht.md) · [Downloads](https://github.com/Inrouder/ShadepiRPG/releases/latest) · [Bilder und Filme](docs/README.md) · [Änderungen](CHANGELOG.md). [Ältere Anleitung mit damaligen Abläufen](docs/archiv/spielanleitung-bis-v0461.md).
+**Aktueller Stand v0.51.0 · CodexAI.** [Neu: Towerplan, Pixelmarker, Alarmlicht, Umgebungsgeräusche](docs/verbesserungen-v048.md) · [Story-Durchsicht Kapitel 1–7](docs/story-durchsicht.md) · [Downloads](https://github.com/Inrouder/ShadepiRPG/releases/latest) · [Bilder und Filme](docs/README.md) · [Änderungen](CHANGELOG.md). [Ältere Anleitung mit damaligen Abläufen](docs/archiv/spielanleitung-bis-v0461.md).
 
 **Kapitel 7 / Menü v0.49.0 · CodexAI:** Bewegte Mondspiegelung, sechs Drachenphasen und acht Kontaktbilder am See; kompakte Menüs mit innenliegender Hilfe und passenden Kapitelaktionen. [Bilder und Film](docs/mondsee-v049.md).
 
@@ -14,7 +14,15 @@ Der dritte Deep-Dive-Knoten öffnet eine größere Bossarena. Warte die angekün
 
 [Bilder, Kampffilm und Einzelheiten](docs/ice-kampf-v050.md).
 
-**Anzeigeanalyse v0.50.2 · CodexAI:** Die vorhandenen Grafiken enthalten mehr Details als die aktuelle interne 640×360-Darstellung zeigt. [Echte Full-HD-Vergleiche und Empfehlung](docs/anzeigequalitaet-v0502.md). Der HQ-Vergleich ist ein Analyseprototyp; die Anzeigeoptionen im Spiel bleiben in diesem Stand unverändert.
+**Anzeigeanalyse v0.50.2 · CodexAI:** Die vorhandenen Grafiken enthalten mehr Details als die aktuelle interne 640×360-Darstellung zeigt. [Echte Full-HD-Vergleiche und Empfehlung](docs/anzeigequalitaet-v0502.md). Dieser frühere Vergleich führte zum oben beschriebenen wählbaren HQ-Modus.
+
+## HQ-Anzeige · v0.51.0 · CodexAI
+
+**Haupt- oder Pausenmenü → Anzeige → Darstellung → „HQ · bis 1920 × 1080 nativ“.** HQ ist standardmäßig aktiv; „Klassisch · 640 × 360“ bleibt als sparsamere Alternative wählbar. Deine Wahl wird gespeichert.
+
+Bei Full HD wird das Spielbild in 1920×1080 gezeichnet. 1440p und 4K vergrößern dieses Full-HD-Bild; die interne Spielauflösung steigt dabei nicht weiter. Kleinere Ausgaben erhalten ein passendes kleineres HQ-Bild. Die Anzeige nennt interne Auflösung und Ausgabe getrennt. Bildausschnitt, Figurenmaßstab und Bedienung bleiben gleich.
+
+[Bilder, 4K-Nachweis und Bedienung](docs/hq-anzeige-v051.md).
 
 ## Starten und Speichern
 

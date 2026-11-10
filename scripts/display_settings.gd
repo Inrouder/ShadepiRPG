@@ -1,10 +1,11 @@
 extends Node
-## v0.34.0 · CodexAI. One display policy for every chapter; no gameplay/save changes.
+## v0.51.0 · CodexAI. Full-HD-capped HQ, classic fallback, shared chapter/input policy.
 
 signal changed
 
 enum Mode { WINDOWED, BORDERLESS, FULLSCREEN }
 const SETTINGS_PATH := "user://shadepi-display.cfg"
+const HQRenderer = preload("res://scripts/hq_renderer.gd")
 const BASE_SIZE := Vector2i(640, 360)
 const RESOLUTIONS: Array[Vector2i] = [Vector2i(1280, 720), Vector2i(1600, 900), Vector2i(1920, 1080), Vector2i(2560, 1440), Vector2i(3840, 2160)]
 const MODE_NAMES := ["Fenster", "Fenstervollbild", "Vollbild"]
@@ -12,12 +13,17 @@ var mode: int = Mode.BORDERLESS
 var last_fullscreen: int = Mode.BORDERLESS
 var resolution_index := 0
 var integer_scaling := false
+var hq_enabled := true
+var menu_context := false
+var renderer: Node
 var save_error: Error = OK
 var preferences_path := SETTINGS_PATH
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	load_preferences()
+	renderer = HQRenderer.new()
+	add_child(renderer)
 	set_menu_context(false)
 	get_window().size_changed.connect(func(): changed.emit())
 	_bootstrap.call_deferred()
@@ -32,6 +38,7 @@ func load_preferences(path: String = "") -> void:
 	last_fullscreen = Mode.BORDERLESS
 	resolution_index = 0
 	integer_scaling = false
+	hq_enabled = true
 	var config := ConfigFile.new()
 	if config.load(preferences_path if path.is_empty() else path) != OK:
 		return
@@ -47,6 +54,8 @@ func load_preferences(path: String = "") -> void:
 	var stored_scaling: Variant = config.get_value("display", "integer_scaling", false)
 	if stored_scaling is bool:
 		integer_scaling = stored_scaling
+	var stored_hq: Variant = config.get_value("display", "hq_enabled", true)
+	if stored_hq is bool: hq_enabled = stored_hq
 
 func save_preferences(path: String = "") -> Error:
 	var config := ConfigFile.new()
@@ -54,16 +63,31 @@ func save_preferences(path: String = "") -> Error:
 	config.set_value("display", "last_fullscreen", last_fullscreen)
 	config.set_value("display", "resolution", resolution_index)
 	config.set_value("display", "integer_scaling", integer_scaling)
+	config.set_value("display", "hq_enabled", hq_enabled)
 	save_error = config.save(preferences_path if path.is_empty() else path)
 	return save_error
 
 func set_menu_context(opening: bool) -> void:
+	menu_context = opening
 	var window := get_window()
 	window.content_scale_size = BASE_SIZE
 	window.content_scale_factor = 1.0
 	window.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_KEEP
-	window.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS if opening else Window.CONTENT_SCALE_MODE_VIEWPORT
+	window.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS if opening or hq_enabled else Window.CONTENT_SCALE_MODE_VIEWPORT
 	window.content_scale_stretch = Window.CONTENT_SCALE_STRETCH_INTEGER if integer_scaling else Window.CONTENT_SCALE_STRETCH_FRACTIONAL
+	if renderer != null: renderer.set_enabled(hq_enabled)
+
+func set_hq(enabled: bool) -> void:
+	hq_enabled = enabled
+	set_menu_context(menu_context)
+	save_preferences()
+	changed.emit()
+
+func game_render_size() -> Vector2i:
+	return HQRenderer.target_size(get_window().size,integer_scaling) if hq_enabled else BASE_SIZE
+
+func game_render_scale() -> float:
+	return float(game_render_size().y)/BASE_SIZE.y
 
 func set_mode(value: int) -> void:
 	if value < Mode.WINDOWED or value > Mode.FULLSCREEN:

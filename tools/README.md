@@ -106,3 +106,5 @@ Der entfernte v0.45.0-Heldenrenderer liegt als [historische Quelle](../docs/arch
 **v0.50.1 · CodexAI:** `net_avatar_gallery.gd` nimmt Netz-/Körperdarstellung und 64 Animationsphasen nach `/tmp/shadepi-v0501-gallery` auf. Native Godot-Aufnahmen mit isoliertem Benutzerdatenordner; keine Bearbeitung der Quellgrafiken.
 
 **v0.50.2 · CodexAI:** `display_quality_probe.gd` analysiert reale Renderziele und erfasst physische 720p-/1080p-Fenster mit ImageMagick `import` als X11-Fallback. Nur isoliert mit `XDG_DATA_HOME=/tmp/shadepi-display-quality` und eigenem nativem Display starten. Schreibt nach `/tmp/shadepi-display-quality`, keine Anzeigepräferenzen oder Quellgrafiken; die Spieloptionen werden dadurch nicht verändert. [Befund](../docs/anzeigequalitaet-v0502.md).
+
+**v0.51.0 · CodexAI:** `hq_display_gallery.gd` erfasst echte 1080p-/4K-Fenster, das dazugehörige auf 1080p begrenzte Spielbild und 48 HQ-Animationsframes nach `/tmp/shadepi-hq-gallery`. Isolierter Benutzerdatenordner, eigener 4K-Desktop, physische Aufnahmemaße werden geprüft. `-- --stills-only` nimmt nur die Standvergleiche/Optionen auf. [Nachweis](../docs/hq-anzeige-v051.md).

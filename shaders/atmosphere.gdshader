@@ -1,6 +1,7 @@
 shader_type canvas_item;
 render_mode unshaded;
 uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_nearest;
+uniform float pixel_scale = 1.0;
 uniform float strength = 1.0;
 uniform float bloom = 0.3;
 uniform bool detailed = true;
@@ -16,7 +17,7 @@ void fragment() {
 	vec3 source = texture(screen_texture, uv).rgb;
 	vec3 color = source;
 	if (strength > 0.0) {
-		vec2 step_uv = SCREEN_PIXEL_SIZE * 2.0;
+		vec2 step_uv = SCREEN_PIXEL_SIZE * 2.0 * pixel_scale;
 		vec3 glow = bright(uv + vec2(step_uv.x, 0.0));
 		glow += bright(uv - vec2(step_uv.x, 0.0));
 		glow += bright(uv + vec2(0.0, step_uv.y));

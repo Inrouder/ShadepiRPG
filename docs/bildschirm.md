@@ -1,6 +1,9 @@
-# Bildschirm und Vollbild · v0.34.0 · CodexAI
+# Bildschirm, Vollbild und HQ · v0.51.0 · CodexAI
 
-**Anzeigeanalyse v0.50.2 · CodexAI:** [Aktueller Renderpfad, echte Full-HD-Vergleiche und HQ-Empfehlung](anzeigequalitaet-v0502.md). Das hier beschriebene 640×360-Gameplay ist weiterhin die Produktionsdarstellung; der native Vergleich ist ein Analyseprototyp.
+**Neu: [HQ-Anzeige mit echter Full-HD-Rasterung und 4K-Hochskalierung](hq-anzeige-v051.md).** Im Anzeige-Menü lässt sich HQ oder der klassische Pixelmodus auswählen. Die Wahl ist gespeichert, HQ standardmäßig aktiv. Die logische Welt-/HUD-Größe bleibt 640×360; das HQ-Spielbild hat bis zu 1920×1080 Renderpixel.
+
+
+**Anzeigeanalyse v0.50.2 · CodexAI:** [Aktueller Renderpfad, echte Full-HD-Vergleiche und HQ-Empfehlung](anzeigequalitaet-v0502.md). Die ältere 640×360-Darstellung ist weiterhin als klassischer Modus verfügbar; HQ ist seit v0.51.0 ein regulärer Anzeigemodus.
 
 Das Spiel startet beim ersten Mal im **Fenstervollbild** und merkt sich danach deine Wahl. **Anzeige** im Haupt- oder Pausenmenü öffnet die Optionen. **F11** oder **Alt+Enter** wechselt jederzeit zwischen Fenster und zuletzt gewähltem Vollbildmodus.
 
@@ -16,7 +19,7 @@ Das Spiel startet beim ersten Mal im **Fenstervollbild** und merkt sich danach d
 
 ## Ausgabe und Grafikauflösung
 
-**1080p, 1440p und 4K werden bildschirmfüllend ausgegeben.** Die Gameplay-Basis von 640×360 wird dabei 3-, 4- beziehungsweise 6-fach vergrößert. Kamerabereich, Spielmechanik und HUD bleiben in derselben 16:9-Komposition. Das HQ-Hauptmenü zeichnet seine vorhandenen größeren PNGs in Fensterauflösung. Die Ausgabegröße erzeugt keine zusätzlichen Details in vorhandenen Gameplay-Pixelgrafiken.
+**1080p, 1440p und 4K werden bildschirmfüllend ausgegeben.** Im HQ-Modus wird bis Full HD direkt mit den vorhandenen Originaltexturen gerendert; oberhalb von 1920×1080 wird dieses fertige Full-HD-Bild vergrößert. Im klassischen Modus bleibt die interne Gameplay-Auflösung 640×360. Kamerabereich, Spielmechanik und HUD behalten dieselbe logische 16:9-Komposition. [Aktuelle Messungen](hq-anzeige-v051.md).
 
 Bisher erzwang das Projekt ganzzahlige Skalierung: Ein 1920×1000-Fenster zeigte nur 1280×720 mit 320 Pixeln Rand links und rechts sowie 140 oben und unten. Jetzt nutzt das Spiel die ganze Höhe und rund 1778 Pixel Breite mit nur dem erforderlichen 16:9-Seitenrand. Rundung auf physische Pixel kann eine Abweichung von einem Pixel erzeugen.
 
@@ -26,7 +29,7 @@ Bisher erzwang das Projekt ganzzahlige Skalierung: Ein 1920×1000-Fenster zeigte
 
 ## Umsetzung und Prüfung
 
-- [`display_settings.gd`](../scripts/display_settings.gd) ist ein Autoload für alle Kapitel. Es setzt explizit 640×360, konstantes 16:9 und die gewählte Skalierung. Hauptmenü bleibt `CANVAS_ITEMS`, Gameplay und Pause bleiben `VIEWPORT`. Analyse-/Galeriewerkzeuge mit eigenem SceneTree behalten ihre Fenstersteuerung.
+- [`display_settings.gd`](../scripts/display_settings.gd) ist ein Autoload für alle Kapitel. Es setzt explizit 640×360, konstantes 16:9 und die gewählte Skalierung. Klassisch: Hauptmenü `CANVAS_ITEMS`, Gameplay/Pause `VIEWPORT`. HQ: begrenztes Spielbild mit Root-Präsentation; alle Szenen/Eingaben bleiben am ursprünglichen Viewport. Analyse-/Galeriewerkzeuge mit eigenem SceneTree behalten ihre Fenstersteuerung.
 - [`display_panel.gd`](../scripts/display_panel.gd) verwendet die vorhandenen Pixelrahmen, Fonts und Kapitelthemen. Der Ton-/Anzeige-Bereich berücksichtigt die zusätzlichen Kapitelknöpfe. Keine neuen Figuren-, Welt- oder Effektgrafiken.
 - [`tests/display_settings.gd`](../tests/display_settings.gd) prüft Einstellungen, fehlerhafte Dateien, Monitoranpassung, Pixelstufen, tatsächliche Fenstertransformationen einschließlich 1080p/1440p/4K/Ultrawide/4:3, rohe Tastatur-/Controller-/Mausereignisse, modale Listen, Fokus und Szenenwechsel. Bestandteil des GitHub-Builds.
 - [`tools/display_gallery.gd`](../tools/display_gallery.gd) prüft beide Vollbildmodi auf einem echten Desktop und fotografiert die tatsächlichen Clientfenster. Auf X11 ohne Godot-Screen-Capture benötigt es ImageMagick `import`. Aufnahmen liegen unter `/tmp/shadepi-display/`; es werden keine kleinen Gameplay-Screenshots nachträglich vergrößert.

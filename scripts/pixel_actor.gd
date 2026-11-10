@@ -133,5 +133,4 @@ func _draw() -> void:
 
 func draw_ellipse_shadow() -> void:
 	var opacity := 0.2 if cloaked else 1.0
-	draw_circle(Vector2(0, 1), 9, Color(0.01, 0.02, 0.04, 0.12 * opacity))
-	draw_rect(Rect2(-8, -1, 16, 4), Color(0.01, 0.02, 0.04, 0.4 * opacity))
+	draw_texture_rect(preload("res://assets/world/light.png"),Rect2(-11,-2,22,7),false,Color(0.01,0.02,0.04,0.50*opacity))

@@ -2,6 +2,8 @@
 
 **Analyse v0.50.2 · CodexAI · 10. November 2026.** [Galerie](README.md) · [Aktuelle Anzeigeoptionen](bildschirm.md) · [Arbeitsnachweis](arbeiten/anzeigeanalyse-v0502.md).
 
+**Fortsetzung v0.51.0 · CodexAI:** Der hier untersuchte Vorschlag ist inzwischen als [wählbarer HQ-Modus mit Full-HD-Grenze](hq-anzeige-v051.md) umgesetzt. Der folgende Bericht dokumentiert weiterhin die damalige Analyse.
+
 **Der Eindruck stimmt:** Die vorhandenen Grafiken enthalten deutlich mehr Details, als das aktuelle Gameplay zeigt. Der wichtigste Engpass ist das interne **640×360-Renderbild**, das anschließend auf die Fenster-/Monitorgröße vergrößert wird. Ein direkter Full-HD-Vergleich zeigt sichtbar mehr Rüstungs-, Kleidungs- und Metallstruktur. Diese Arbeit ist eine Analyse mit Vergleichsprototyp; ein neuer HQ-Modus wurde noch nicht in die Spieloptionen eingebaut.
 
 ## Direkter Vergleich bei derselben Spielgröße

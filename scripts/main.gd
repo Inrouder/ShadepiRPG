@@ -736,6 +736,7 @@ func set_music_section(section: String, restart: bool = false) -> void:
 		music.volume_db = -12.0
 
 func _process(delta: float) -> void :
+	filter_material.set_shader_parameter("pixel_scale", get_node("/root/DisplaySettings").game_render_scale())
 	if admin_enabled("no_cooldowns"):
 		hack_cooldown = 0.0
 	if not is_busy():

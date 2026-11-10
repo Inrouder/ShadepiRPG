@@ -30,6 +30,7 @@ func run():
 	if DisplayServer.get_name()=="headless":push_error("Run on native desktop");quit(1);return
 	if not OS.get_user_data_dir().begins_with("/tmp/shadepi-"):push_error("Isolated test data directory required");quit(1);return
 	DirAccess.make_dir_recursive_absolute(OUT);set_meta("shadepi_admin_testing",true)
+	var settings=root.get_node("DisplaySettings");settings.hq_enabled=false;settings.set_menu_context(false) # Historical direct-path comparison, no preference write.
 	root.position=Vector2i.ZERO;root.mode=Window.MODE_WINDOWED;root.borderless=true
 	var w=load("res://scenes/chapter_two.tscn").instantiate();root.add_child(w)
 	for scene in ["hideout","ice","lake"]:

@@ -1,8 +1,16 @@
 # Shadepi · Bilder, Filme und Dokumentation
 
-**Stand v0.50.2 · CodexAI · 10. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
+**Stand v0.51.0 · CodexAI · 10. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
 
 Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnahmen, animierte Szenenfilme, Bedienung und technische Hinweise. Die PNG-Vorschauen sind direkt in GitHub sichtbar; die Filme bleiben zusätzlich als verlinkte WebP-Dateien erreichbar.
+
+## HQ-Anzeige bis Full HD · v0.51.0 · CodexAI
+
+| Originalgrafiken in nativer Full-HD-Darstellung | HQ oder klassisch direkt auswählen |
+| --- | --- |
+| [![HQ-Detailansicht](previews/hq-detail-v051.png)](hq-anzeige-v051.md) | [![Anzeigeoptionen mit HQ-Auswahl](previews/hq-optionen-v051.png)](hq-anzeige-v051.md) |
+
+[Bilder, Full-HD-/4K-Messung und Bedienung](hq-anzeige-v051.md) · [Animationsfilm](previews/hq-netz-v051.webp).
 
 ## Anzeigequalität: Analyse und Vergleich · v0.50.2 · CodexAI
 

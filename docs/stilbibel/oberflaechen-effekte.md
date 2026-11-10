@@ -1,5 +1,7 @@
 # Oberflächen, Effekte und Ton · v0.32.2 · CodexAI
 
+**HQ v0.51.0 · CodexAI:** [Wählbarer Full-HD-Modus](../hq-anzeige-v051.md) mit unveränderter logischer Bildkomposition, begrenztem Spielbild und vergrößerter Ausgabe oberhalb Full HD. Bloom-Radius in Weltgröße, bestehende Textur für weichen Fußkontakt, keine neuen Grafikquellen.
+
 **See / Menü v0.49.0 · CodexAI:** [Mondsee und Menüs](../mondsee-v049.md) mit bewegter Mondachse, sechs Drachenphasen, acht verankerten Kontaktbildern und in den Rahmen passender Hilfe. [Aktive Quellen](../../assets/story/lake/README.md); frühere Seequellen nur noch Vergleich. Gesicht bleibt verdeckt, Originalhelden bleiben normaler Standard.
 
 **Menüreflexion v0.44.1 · CodexAI:** [Lichtspur im Standbereich korrigiert](../menue-kontrollpunkte.md). Stadtshader erhält dieselben vier Sohlenanker wie der Kontaktshader; Texturversatz/-größe in Menükoordinaten umrechnen. Bereits eingemalte Glanzspur lokal dämpfen, dunkle Bodenstruktur erhalten. Die Korrektur ist unabhängig von der Nässeanimations-Stärke auch bei Reduziert aktiv.

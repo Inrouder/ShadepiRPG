@@ -1,12 +1,17 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.50.2 · CodexAI · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.51.0 · CodexAI · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
 [**Spiel herunterladen (neuestes Release)**](https://github.com/Inrouder/ShadepiRPG/releases/latest) · [**Quellcode als ZIP**](https://github.com/Inrouder/ShadepiRPG/archive/refs/heads/main.zip) · [**Versionen**](CHANGELOG.md) · [**Spieleranleitung**](Spiel-README.md) · [**Bildgalerie & Doku**](docs/README.md)
 
 ## Bilder aus dem Spiel
+
+| HQ-Anzeige · v0.51.0 · CodexAI | Darstellung im Haupt- und Pausenmenü wählen |
+| --- | --- |
+| [![Originalgrafiken mit echter Full-HD-Rasterung](docs/previews/hq-detail-v051.png)](docs/hq-anzeige-v051.md) | [![Wählbarer HQ-Modus mit interner und ausgegebener Auflösung](docs/previews/hq-optionen-v051.png)](docs/hq-anzeige-v051.md) |
+| [Full-HD- und 4K-Nachweis](docs/hq-anzeige-v051.md) | [HQ-Animationsfilm](docs/previews/hq-netz-v051.webp) |
 
 | Anzeigeanalyse · v0.50.2 · CodexAI: aktuelle 640×360-Darstellung | Vergleichsprototyp direkt in Full HD |
 | --- | --- |

@@ -1,5 +1,13 @@
 # Versionshinweise
 
+## v0.51.0 – CodexAI: wählbare native HQ-Anzeige bis 1920×1080, Full-HD-Bild für größere Ausgaben · 10. November 2026
+
+- HQ-Modus im Anzeige-Menü, standardmäßig aktiv und getrennt von Spielständen gespeichert; klassischer 640×360-Modus bleibt wählbar. Anzeige zeigt interne und physische Ausgabeauflösung.
+- Vorhandene Welt-/UI-Canvases werden einmal in ein auf 1920×1080 begrenztes Spielbild gezeichnet. Größere Ausgaben skalieren dieses fertige Bild; 4K-Pixelvergleich bestätigt die zweifache Vergrößerung. Unterhalb Full HD passt sich das HQ-Spielbild an die Ausgabe an.
+- Logische 640×360-Komposition, Szenen, Kameras, GUI-Fokus, Maus-/Controller-Eingabe und Originalhelden bleiben erhalten. Kein zweiter Spiellauf, kein neuer Heldenatlas und keine künstlich vergrößerten Quelldateien.
+- Bloom behält über Auflösungsskalierung seinen Radius in der Welt. Weicher texturbasierter Fußkontakt ersetzt harte rechteckige Schattenanteile. Menü, Terminals, Kino und Kapitelwechsel behalten ihre Ebenen und Modalität.
+- [Bilder, Steuerung und Messungen](docs/hq-anzeige-v051.md) · [Arbeits-/Exportnachweis](docs/arbeiten/hq-anzeige-v051.md).
+
 ## v0.50.2 – CodexAI: Anzeigequalität analysiert und native Full-HD-Vergleiche dokumentiert · 10. November 2026
 
 - Nutzerauftrag zur Anzeigeanalyse: Grafikpfad, Quellmaße, Importparameter, Abtastung und tatsächliche Renderziele untersucht. Gameplay rendert intern 640×360; das Menü nutzt bereits Canvas-Rendering in Ausgabeauflösung.

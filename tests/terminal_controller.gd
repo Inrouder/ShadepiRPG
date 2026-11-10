@@ -59,7 +59,7 @@ func run() -> void:
 		check(not overlap, context + " footer buttons do not overlap")
 		check(panel.skin == preload("res://scripts/ui_skin.gd").terminal_theme(context), context + " uses its target system's skin")
 		check(panel.root.texture_filter == CanvasItem.TEXTURE_FILTER_NEAREST, context + " deck uses nearest filtering")
-		check(get_root().content_scale_mode != Window.CONTENT_SCALE_MODE_CANVAS_ITEMS, context + " deck stays in the pixel viewport")
+		check(get_root().content_scale_mode == Window.CONTENT_SCALE_MODE_CANVAS_ITEMS and get_root().get_visible_rect().size==Vector2(640,360), context + " deck keeps HQ and logical pixel coordinates")
 		# Every available control, including footer actions, is reachable both ways.
 		for control in panel._enabled_controls():
 			await seek(control)
