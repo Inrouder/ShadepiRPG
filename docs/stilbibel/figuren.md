@@ -324,9 +324,9 @@ Die Übersicht passt die Vergrößerung zur Erkennbarkeit an. Auf jeder Einzelka
 ![ICE-Wächter · vorhandene Ansichten und Weltgröße](bilder/figur-ice-guardian.png)
 
 - Größere schwere digitale Wächterkugel mit dunklen gepanzerten Segmenten, violettem Kern und Cyan-Schaltlinien.
-- Klar vom kleineren Virus unterscheiden; im Renderer größer, mit eigenem Strahl-/Verwundbarkeitsfenster.
+- Klar vom kleineren Virus unterscheiden; im Renderer größer, mit angekündigten Kugelsalven und cyanfarbenem Nahkampf-Kernfenster (v0.50.0 · CodexAI).
 
-**Aktive Quellen und Darstellung:** [ice-guardian.png](../../assets/sprites/npcs/ice-guardian.png) · [dive_threat.gd](../../scripts/dive_threat.gd).
+**Aktive Darstellung v0.50.0 · CodexAI:** [acht Kampfphasen](../../assets/sprites/npcs/ice-guardian-combat.png) · [Boss](../../scripts/ice_guardian.gd) · [Spielbild und Film](../ice-kampf-v050.md). Die Karte oben zeigt die unveränderte Identitätsquelle [ice-guardian.png](../../assets/sprites/npcs/ice-guardian.png); deren Iris wird für Geschossgrafik wiederverwendet.
 
 ## Zusätzliche Darstellungszustände der Hauptfiguren
 

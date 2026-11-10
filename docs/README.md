@@ -1,8 +1,16 @@
 # Shadepi · Bilder, Filme und Dokumentation
 
-**Stand v0.49.0 · ClaudeHelper · 9. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
+**Stand v0.50.0 · CodexAI · 10. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
 
 Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnahmen, animierte Szenenfilme, Bedienung und technische Hinweise. Die PNG-Vorschauen sind direkt in GitHub sichtbar; die Filme bleiben zusätzlich als verlinkte WebP-Dateien erreichbar.
+
+## ICE-Wächter · v0.50.0 · CodexAI
+
+| Kugelsalven und Deckung | Vorstoß zum cyanfarbenen Kern |
+| --- | --- |
+| [![Wächter-Salve in der vergrößerten Arena](previews/ice-salve-v050.png)](ice-kampf-v050.md) | [![Ravens Handimpuls am offenen Kern](previews/ice-kern-v050.png)](ice-kampf-v050.md) |
+
+[**Ablauf, Steuerung und Quellen**](ice-kampf-v050.md) · [Kampffilm](previews/ice-kampf-v050.webp) · [Arbeitsnachweis](arbeiten/ice-v050.md).
 
 ## Mondsee und Menüs · v0.49.0 · CodexAI
 

@@ -10,6 +10,10 @@ const DOOR: = Vector2(876, 295)
 const WORKBENCH: = Vector2(498, 311)
 const SPRAY: = Vector2(530, 405)
 const Threat = preload("res://scripts/dive_threat.gd")
+const Guardian = preload("res://scripts/ice_guardian.gd")
+const ICE_SCALE := 1.5
+const ICE_BOSS := Vector2(1150, 530)
+const ICE_START := Vector2(750, 520)
 const BATH: = Vector2(670, 361)
 const SCANS: Array[Vector2] = [Vector2(289, 311), Vector2(504, 442), Vector2(744, 316)]
 const RELAYS: Array[Vector2] = [Vector2(350, 430), Vector2(552, 300), Vector2(812, 414)]
@@ -42,7 +46,7 @@ func world_props() -> Array[Dictionary]:
 	return []
 
 func world_walls() -> Array[Rect2]:
-	return [Rect2(-20, 0, 20, 640), Rect2(1024, 0, 20, 640)]
+	return [] # Side boundaries belong to the active painted room / expanded ICE arena.
 
 func _build_world() -> void :
 	super._build_world()
@@ -57,7 +61,7 @@ func combat_ready() -> bool:
 
 func camera_home() -> Vector2:
 	if raven_leads():
-		return raven.position + Vector2(0, -45)
+		return ice_camera_home()
 	return super.camera_home()
 
 func raven_leads() -> bool:
@@ -77,7 +81,7 @@ func _update_raven_follower(_delta: float) -> void :
 func _process(delta: float) -> void :
 	super._process(delta)
 	if raven_leads() and not in_cinematic():
-		camera.position = raven.position + Vector2(0, -45)
+		camera.position = ice_camera_home()
 		if not is_busy():
 			ice_cycle = fposmod(ice_cycle + delta, 2.4)
 			if _ice_open() != previous_ice_open and raven.position.distance_to(_target()) < 75.0:
@@ -114,16 +118,16 @@ func _enter(next: Section, saved_relay: int = 0, keep_positions: bool = false, s
 		Section.YARD:
 			set_music_section("chapter_2_industry")
 		Section.DIVE:
-			set_music_section("chapter_2_dive")
+			set_music_section("chapter_2_ice_boss" if saved_relay == 2 else "chapter_2_dive")
 		Section.RECOVERY, Section.COOLING, Section.END:
 			set_music_section("chapter_2_recovery")
 		_:
 			set_music_section("chapter_2_hideout")
 	set_dressing("industry" if next == Section.YARD else "dive" if next == Section.DIVE else "hideout")
-	set_painted_solids("industry" if next == Section.YARD else "dive" if next == Section.DIVE else "hideout")
 	stage = 0
 	scan_index = 0
 	relay_index = clampi(saved_relay, 0, RELAYS.size() - 1) if next == Section.DIVE else 0
+	_configure_ice_space()
 	for threat in threats:
 		threat.hide()
 		threat.set_process(false)
@@ -143,12 +147,12 @@ func _enter(next: Section, saved_relay: int = 0, keep_positions: bool = false, s
 	hack_cooldown = 0.0
 	player.reset_transients()
 	if raven_leads():
-		reset_raven(Vector2(145, 436) if relay_index == 0 else RELAYS[relay_index - 1])
+		reset_raven(ICE_START if relay_index == 2 else Vector2(145, 436) if relay_index == 0 else RELAYS[relay_index - 1])
 	elif not keep_positions or section == Section.RECOVERY:
 		reset_raven(IceBath.APPROACH if section==Section.COOLING else IceBath.EXIT if section==Section.END else BATH)
 	else:
 		reset_raven(raven.position)
-	raven.modulate = Color(0.57, 0.92, 1.0, 0.56) if raven_leads() else Color.WHITE
+	raven.modulate = Color(0.85, 1.0, 1.0, 0.95) if raven_leads() else Color.WHITE
 	if raven_leads():
 		_spawn_ice()
 	player.visible = not raven_leads()
@@ -176,7 +180,7 @@ func _target() -> Vector2:
 		Section.HIDEOUT:
 			return WORKBENCH
 		Section.DIVE:
-			return RELAYS[relay_index]
+			return RELAYS[relay_index] * (ICE_SCALE if relay_index == 2 else 1.0)
 		Section.RECOVERY:
 			return BATH if spray_ready else SPRAY
 		Section.COOLING:
@@ -190,7 +194,7 @@ func chapter_objective() -> String:
 		Section.HIDEOUT:
 			return "Raven das Metallfragment zeigen"
 		Section.DIVE:
-			return "Datenspur verfolgen · %d / 3" % relay_index
+			return "ICE-Wächter · Salven ausweichen, offenen Kern treffen" if ice_guardian() != null else "Datenspur verfolgen · %d / 3" % relay_index
 		Section.RECOVERY:
 			return "Raven mit Kryospray stabilisieren" if spray_ready else "Kryospray am Überwachungstisch holen"
 		Section.COOLING:
@@ -209,7 +213,7 @@ func interaction_prompt() -> String:
 		return ""
 	if raven_leads():
 		if not threats.is_empty():
-			return "ICE-Abwehr · J / X  |  Pfosten hacken · Q / RB" if relay_index == 2 else "ICE-Abwehr ausschalten · J / X"
+			return "ICE-Wächter · Abkühlphase abwarten, nah ran: J / X" if relay_index == 2 else "ICE-Abwehr ausschalten · J / X"
 		if dive_hold > 0.0:
 			return "Verbindung halten"
 		return "E / A · ICE treffen" if _ice_open() else "ICE scannt · auf Cyan warten"
@@ -247,17 +251,64 @@ func _spawn_ice() -> void :
 	if relay_index == 1:
 		positions.assign([Vector2(500, 320)] if not next_wave else [Vector2(478, 330), Vector2(550, 367)])
 	elif relay_index == 2:
-		positions.assign([Vector2(805, 372), Vector2(830, 435)])
+		positions.assign([ICE_BOSS])
 	for i in positions.size():
-		var threat: = Threat.new()
+		var threat: Node2D = Guardian.new() if relay_index == 2 else Threat.new()
 		threat.world = self
 		threat.guardian = relay_index == 2 and i == 0
 		threat.position = positions[i]
 		actors.add_child(threat)
 		threats.append(threat)
 
+
+func ice_guardian() -> Node2D:
+	for threat in threats:
+		if is_instance_valid(threat) and threat.guardian: return threat
+	return null
+
+func ice_map_size() -> Vector2:
+	return Vector2(1024, 640) * (ICE_SCALE if section == Section.DIVE and relay_index == 2 else 1.0)
+
+func ice_cover() -> Array[Rect2]:
+	var result: Array[Rect2] = []
+	var factor := ICE_SCALE if relay_index == 2 else 1.0
+	for box: Rect2 in Painted.SOLIDS["dive"]: result.append(Rect2(box.position * factor, box.size * factor))
+	return result
+
+func ice_camera_home() -> Vector2:
+	var boss = ice_guardian()
+	return raven.position.lerp(boss.position, 0.35) + Vector2(0, -35) if boss != null else raven.position + Vector2(0, -45)
+
+func atmosphere_rect() -> Rect2:
+	return Rect2(Vector2.ZERO, ice_map_size())
+
+func _configure_ice_space() -> void:
+	var expanded := section == Section.DIVE and relay_index == 2
+	var factor := ICE_SCALE if expanded else 1.0
+	var size := Vector2(1024, 640) * factor
+	# Rebuild room collisions AND occluding pixel pieces at identical transforms.
+	set_painted_solids("dive" if section == Section.DIVE else "industry" if section == Section.YARD else "hideout")
+	if expanded:
+		for body in painted_solids:
+			body.position *= factor
+			for child in body.get_children():
+				if child is CollisionShape2D:
+					child.shape = child.shape.duplicate()
+					child.shape.size *= factor
+		for mask in painted_masks:
+			mask.position *= factor
+			mask.scale *= factor
+		for prop in destructibles: prop.position *= factor
+	painted_solids.append(_collider(Rect2(-20, 0, 20, size.y), false))
+	painted_solids.append(_collider(Rect2(size.x, 0, 20, size.y), false))
+	camera.limit_right = int(size.x)
+	camera.limit_bottom = int(size.y)
+	camera.zoom = Vector2.ONE * (0.85 if expanded else 1.0)
+	if expanded:
+		toast("Hinter Datenwänden in Deckung! Cyan = Kern offen. Nah heran: J / X. Ausweichen: Leertaste / B.")
+
 func dive_blocked(point: Vector2, radius: float) -> bool:
-	for box: Rect2 in Painted.SOLIDS["dive"]:
+	for box: Rect2 in ice_cover():
 		if box.grow(radius).has_point(point):
 			return true
 	return false
@@ -296,7 +347,9 @@ func raven_shot() -> void :
 	var hit_threat: = _dive_aim(origin)
 	if hit_threat != null:
 		endpoint = hit_threat.position
-		if hit_threat.vulnerable():
+		if hit_threat.guardian:
+			hit_threat.receive_strike(raven, 1)
+		elif hit_threat.vulnerable():
 			_destroy_threat(hit_threat)
 		else:
 			hit_threat.crack(origin)
@@ -326,13 +379,13 @@ func _destroy_threat(target: Node2D) -> void:
 func raven_hack() -> bool:
 	if not raven_leads() or is_busy() or hack_cooldown > 0.0:
 		return false
-	for threat in threats:
-		if threat.guardian and minf(raven.position.distance_to(threat.position + Vector2(-115, 0)), raven.position.distance_to(threat.position + Vector2(115, 0))) < 110.0:
-			threat.elapsed = 1.4
-			hack_cooldown = 4.0
-			effects.hack_arc(raven.position, threat.position)
-			sound("hack")
-			return true
+	var boss = ice_guardian()
+	if boss != null and boss.vulnerable() and raven.position.distance_to(boss.position) < 180.0 and _line_clear(raven.position, boss.position):
+		boss.extend_cooling()
+		hack_cooldown = 7.0
+		effects.hack_arc(raven.position, boss.position)
+		sound("hack")
+		return true
 	return false
 
 func special_targets() -> Array[Node2D]:
@@ -344,6 +397,9 @@ func special_targets() -> Array[Node2D]:
 func special_hit(target: Node2D, amount: int, source: PixelActor, kick: bool) -> void:
 	if target not in threats:
 		super.special_hit(target, amount, source, kick)
+		return
+	if target.guardian:
+		target.receive_strike(source, 2 if amount >= 60 else 1)
 		return
 	if not target.vulnerable():
 		target.crack(source.position)
@@ -377,9 +433,13 @@ func _trace_relay() -> void :
 		dive_hold = 0.55
 		return
 	relay_index += 1
+	if relay_index == 2:
+		_configure_ice_space()
+		reset_raven(ICE_START)
+		set_music_section("chapter_2_ice_boss")
 	autosave()
 	_spawn_ice()
-	toast(["Seriennummer bestätigt. Zahlungsweg suchen.", "Zahlungsweg gesichert. Verdecktes Projekt gefunden."][relay_index - 1])
+	toast(["Seriennummer bestätigt. Zahlungsweg suchen.", "Wächter: Salven ausweichen · Leertaste / B. Beim cyanfarbenen Kern nah ran und J / X!"][relay_index - 1])
 
 func _finish_download() -> void :
 	effects.burst(raven.position, Color("b992ff"), 55)
@@ -589,12 +649,14 @@ func _draw() -> void :
 	if section == Section.YARD:
 		draw_texture_rect(Painted.ART.industry, Rect2(0, 0, 1024, 640), false)
 	elif net:
-		draw_texture_rect(Painted.ART.dive, Rect2(0, 0, 1024, 640), false)
-		if not _ice_open():
+		draw_texture_rect(Painted.ART.dive, Rect2(Vector2.ZERO, ice_map_size()), false)
+		if not _ice_open() and relay_index != 2:
 			var scan_y: = 271.0 + fposmod(ice_cycle * 114.0, 211.0)
 			draw_rect(Rect2(0, scan_y, 1024, 2), Color(0.76, 0.16, 0.33, 0.45))
 			draw_rect(Rect2(0, scan_y - 5, 1024, 5), Color(0.62, 0.1, 0.24, 0.18))
-		draw_polyline(PackedVector2Array(RELAYS), accent.darkened(0.64), 1.0)
+		var points := PackedVector2Array()
+		for point in RELAYS: points.append(point * (ICE_SCALE if relay_index == 2 else 1.0))
+		draw_polyline(points, accent.darkened(0.64), 1.0)
 		var avatar: Vector2 = raven.position - Vector2(0, 24)
 		for y in range(-17, 16, 5):
 			draw_line(avatar + Vector2(-8, y), avatar + Vector2(8, y), Color(0.3, 0.84, 1.0, 0.38))
@@ -604,7 +666,7 @@ func _draw() -> void :
 			draw_rect(Rect2(gauge + Vector2(40, 0), Vector2(16, 8)), Color("45cad8"))
 			draw_rect(Rect2(gauge + Vector2(ice_cycle * 40.0, -2), Vector2(2, 12)), Color.WHITE)
 		for i in RELAYS.size():
-			draw_circle(RELAYS[i], 15, accent.darkened(0.65) if i < relay_index else tint, false, 2)
+			draw_circle(RELAYS[i] * (ICE_SCALE if relay_index == 2 else 1.0), 15, accent.darkened(0.65) if i < relay_index else tint, false, 2)
 	else:
 		draw_texture_rect(Painted.ART.hideout, Rect2(0, 0, 1024, 640), false)
 		if section == Section.RECOVERY:

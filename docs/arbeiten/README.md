@@ -6,6 +6,7 @@ Jeder Nachweis gehört zu der im Titel genannten Version. Prüfzähler, Bildschi
 
 | Nachweis | Versionsbezogenes Thema |
 | --- | --- |
+| [ice-v050.md](ice-v050.md) | ICE-Wächter, Kugelsalven, Deckung und vergrößerte Arena · v0.50.0 · CodexAI |
 | [bildschirm-v034.md](bildschirm-v034.md) | Konsistenzauftrag und Arbeitsnachweis · v0.34.0 · CodexAI |
 | [blut-v046.md](blut-v046.md) | Blutspritzer und Bodenlachen · v0.46.0 · CodexAI |
 | [cinema-v037.md](cinema-v037.md) | Musik, Objektanimation und Filmpotenzial · v0.37.0 · CodexAI |

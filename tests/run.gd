@@ -16,7 +16,7 @@ func check(condition: bool, message: String) -> void:
 
 func run() -> void:
 	check_admin_core()
-	check(MusicLibrary.SLOTS.size() == 27, "every menu, combat and story section has an assigned music slot")
+	check(MusicLibrary.SLOTS.size() == 28, "every menu, combat and story section has an assigned music slot")
 	check(MusicLibrary.candidates("chapter_2_dive")[0] == "res://assets/music/Fight.mp3", "regular fights use the shared Fight track")
 	check(MusicLibrary.path_for("boss") == "res://assets/music/Boss.mp3", "boss encounters use the supplied boss track")
 	check(MusicLibrary.path_for("menu") == "res://assets/music/Level.mp3" and MusicLibrary.path_for("chapter_7_lake") == "res://assets/music/menu.mp3" and MusicLibrary.path_for("chapter_7_finale") == "res://assets/music/menu.mp3", "main menu keeps Level; all of chapter 7 uses menu.mp3")
@@ -746,7 +746,7 @@ func check_chapter_two() -> void:
 	chapter.interact()
 	check(chapter.relay_index == 1 and chapter.threats.size() == 1, "first hack opens the virus encounter")
 	check(chapter.load_game() and chapter.relay_index == 1 and chapter.threats.size() == 1, "the saved data node reloads its encounter")
-	for expected in [1, 2, 1, 2, 1]:
+	for expected in [1, 2, 1]:
 		check(chapter.threats.size() == expected, "ICE encounter spawns the expected group")
 		var target: Node2D = chapter.threats[0]
 		target.elapsed = 1.6
@@ -757,7 +757,18 @@ func check_chapter_two() -> void:
 			chapter.raven.position = chapter.RELAYS[1]
 			chapter.ice_cycle = 0.0
 			chapter.interact()
-	chapter.raven.position = chapter.RELAYS[2]
+	var guardian = chapter.ice_guardian()
+	check(guardian != null and chapter.threats.size() == 1, "final relay opens the standalone guardian arena")
+	chapter.raven.position = guardian.position - Vector2(25,0)
+	chapter.raven.facing = Vector2.RIGHT
+	for cycle in 4:
+		guardian.phase = guardian.Phase.COOL
+		guardian.cycle_damage = 0
+		for strike in 2:
+			guardian.hit_cooldown = 0
+			chapter.raven_shot()
+	guardian._process(0.86)
+	chapter.raven.position = chapter._target()
 	chapter.ice_cycle = 0.0
 	chapter.interact()
 	check(chapter.dive_hold > 0.0 and chapter.raven_leads(), "countertrace waits for the final download")

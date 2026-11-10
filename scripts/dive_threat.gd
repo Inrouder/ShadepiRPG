@@ -22,7 +22,7 @@ func _ready() -> void:
 	visual = Sprite2D.new()
 	visual.texture = GUARDIAN_ART if guardian else VIRUS_ART
 	visual.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
-	# Keep danger rings, direction cues and the guardian beam above the artwork.
+	# Keep virus warning rings above the artwork; guardian overrides its phases.
 	visual.show_behind_parent = true
 	var diameter := 72.0 if guardian else 48.0
 	visual_scale = diameter / float(maxi(visual.texture.get_width(), visual.texture.get_height()))
@@ -46,32 +46,20 @@ func _process(delta: float) -> void :
 	if knock.length() > 1.0:
 		_move(knock * delta)
 		knock = knock.move_toward(Vector2.ZERO, 520.0 * delta)
-	var previous: = elapsed
 	elapsed += delta
 	var target: Vector2 = world.raven.position
-	if guardian:
-		if age == 0.0:
-			patrol_y = position.y
-		age += delta
-		if elapsed < 0.65:
-			position.y = patrol_y + sin(age * 1.3) * 23.0
-		if previous < 1.2 and elapsed >= 1.2 and absf(target.y - position.y) < 16.0 and absf(target.x - position.x) < 115.0:
-			world.raven.take_damage(26, position)
-		if elapsed >= 2.8:
-			elapsed = 0.0
-	else:
-		if elapsed < 0.85:
-			direction = position.direction_to(target)
-			_move(position.direction_to(target) * minf(delta * 45.0, position.distance_to(target)))
-		elif elapsed < 1.18:
-			if not _move(direction * delta * 195.0):
-				elapsed = 1.18
-			if not hit and position.distance_to(target) < 18.0:
-				hit = true
-				world.raven.take_damage(22, position)
-		elif elapsed >= 2.15:
-			elapsed = 0.0
-			hit = false
+	if elapsed < 0.85:
+		direction = position.direction_to(target)
+		_move(position.direction_to(target) * minf(delta * 45.0, position.distance_to(target)))
+	elif elapsed < 1.18:
+		if not _move(direction * delta * 195.0):
+			elapsed = 1.18
+		if not hit and position.distance_to(target) < 18.0:
+			hit = true
+			world.raven.take_damage(22, position)
+	elif elapsed >= 2.15:
+		elapsed = 0.0
+		hit = false
 	_update_visual()
 	queue_redraw()
 
@@ -99,7 +87,7 @@ func crack(from: Vector2) -> void:
 		hit = true
 
 func vulnerable() -> bool:
-	return cracked > 0.0 or elapsed >= (1.35 if guardian else 1.18)
+	return cracked > 0.0 or elapsed >= 1.18
 
 func _draw() -> void :
 	var radius: = 17.0 if guardian else 10.0
@@ -110,10 +98,5 @@ func _draw() -> void :
 			var a := i * PI * 0.5 + 0.4
 			draw_line(Vector2.from_angle(a) * 4.0, Vector2.from_angle(a + 0.3) * (radius + 3.0), Color("e6fbff"), 1.5)
 	draw_arc(Vector2.ZERO, radius, 0.0, TAU, 22, glow, 2.0)
-	if guardian:
-		for x in [-115, 115]:
-			draw_rect(Rect2(x - 3, -12, 6, 24), glow)
-		if elapsed < 1.34:
-			draw_line(Vector2(-115, 0), Vector2(115, 0), Color("ff507c"), 4.0 if elapsed >= 1.2 else 1.0)
-	elif elapsed < 0.85:
+	if elapsed < 0.85:
 		draw_line(Vector2.ZERO, direction * 28.0, Color(glow, 0.5))

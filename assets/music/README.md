@@ -5,8 +5,8 @@ Das Spiel lädt die zugeordneten MP3-Dateien in diesem Ordner direkt. Eine Datei
 | Datei | Verwendung |
 | --- | --- |
 | `menu.mp3` | ganz Kapitel 7: See-Anflug, Ordensaufnahme und romantisches Finale |
-| `Boss.mp3` | alle Bosskämpfe: Chrome Jackal und Kenzō |
-| `Fight.mp3` | normale Kämpfe, Deep Dive, Hinterhalt und Fahrzeugverfolgung |
+| `Boss.mp3` | alle Bosskämpfe: Chrome Jackal, ICE-Wächter (v0.50.0 · CodexAI) und Kenzō |
+| `Fight.mp3` | normale Kämpfe, Deep-Dive-Viren, Hinterhalt und Fahrzeugverfolgung |
 | `Level.mp3` | Hauptmenü, Kapitel 1 und Garage |
 | `Level2.mp3` | Industriegebiet, Ravens Versteck, Hangar und Tower-Erkundung |
 | `Level3.mp3` | Pakt, Heiligtum, Echo, Flug und Flucht |

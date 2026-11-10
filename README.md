@@ -1,12 +1,17 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.49.0 · CodexAI · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.50.0 · CodexAI · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
 [**Spiel herunterladen (neuestes Release)**](https://github.com/Inrouder/ShadepiRPG/releases/latest) · [**Quellcode als ZIP**](https://github.com/Inrouder/ShadepiRPG/archive/refs/heads/main.zip) · [**Versionen**](CHANGELOG.md) · [**Spieleranleitung**](Spiel-README.md) · [**Bildgalerie & Doku**](docs/README.md)
 
 ## Bilder aus dem Spiel
+
+| ICE-Bosskampf · v0.50.0 · CodexAI | Offener Kern: vorstoßen und treffen |
+| --- | --- |
+| [![Ausweichbare Kugelsalven und Datenwand-Deckung](docs/previews/ice-salve-v050.png)](docs/ice-kampf-v050.md) | [![Raven trifft den Kern aus kurzer Distanz](docs/previews/ice-kern-v050.png)](docs/ice-kampf-v050.md) |
+| [Größere Arena, Ablauf und Bedienung](docs/ice-kampf-v050.md) | [Kampffilm](docs/previews/ice-kampf-v050.webp) |
 
 | Mondsee und animierter Drachenschatten · v0.49.0 · CodexAI | Kompakte Menüs mit passenden Kapitelaktionen |
 | --- | --- |

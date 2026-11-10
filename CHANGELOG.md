@@ -1,5 +1,13 @@
 # Versionshinweise
 
+## v0.50.0 – CodexAI: ICE-Bosskampf mit Kugelsalven, Deckung und Kernfenstern · 10. November 2026
+
+- Kapitel 2, dritter Deep-Dive-Knoten: eigene Wächterarena mit 2,25-facher Bodenfläche. Hintergrund, feste Wände, Verdeckung, Requisiten, Relais und Kamera zusammen angepasst.
+- Acht neue HQ-Pixelart-Bossphasen: Aufladen, Schuss, Rückstoß, offener Kühlkern, Treffer und Zerstörung. Fünf ausweichbare Dreier-Kugelsalven je Angriff, feste Deckung stoppt die Geschosse. Kein sofortiger Querstrahl mehr.
+- Nah heran während des cyanfarbenen Kernfensters, höchstens zwei Integritätspunkte je Runde, dann Rückzug. Vier erfolgreiche Öffnungen gewinnen den Kampf; optionaler Hack verlängert eine offene Phase. Raven ist im Netz besser lesbar, Originalhelden und bestehende Handanker bleiben erhalten.
+- Boss.mp3 am Wächter, klare Tastatur-/Controllerhinweise, benannter Test-Kontrollpunkt. Pause, Laden, Wiederholung und Raumwechsel räumen Geschosse und Raumzustände auf.
+- [Bilder, Kampffilm und Steuerung](docs/ice-kampf-v050.md) · [Prüf- und Quellnachweis](docs/arbeiten/ice-v050.md).
+
 ## v0.49.0 – CodexAI: Mondsee, bewegter Drachenschatten, Kontaktanimation und Menügrößen · 9. November 2026
 
 - Aktuellen v0.48.0-GitHub-Stand übernommen; Storykorrekturen, Towerplan, Marker, Alarmlicht, Umgebungston und einheitliche Aerodyne-Düsen erhalten.

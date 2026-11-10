@@ -17,6 +17,7 @@ const SLOTS: Dictionary = {
 	"chapter_2_industry": "Level2",
 	"chapter_2_hideout": "Level2",
 	"chapter_2_dive": "Fight",
+	"chapter_2_ice_boss": "Boss",
 	"chapter_2_recovery": "Level2",
 	"chapter_3_pact": "Level3",
 	"chapter_3_ambush": "Fight",

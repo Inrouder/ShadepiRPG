@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "version": "0.49.0",
-  "author": "ClaudeHelper",
+  "version": "0.50.0",
+  "author": "CodexAI",
   "entries": [
     {
       "status": "active",
@@ -128,6 +128,13 @@
         "shaders/lake_pose_blend.gdshader"
       ],
       "note": "Vorherige See-Quellen und Vierbild-Überblendung; historisch erhalten, seit v0.49.0 nicht mehr Laufzeit und nicht exportiert."
+    },
+    {
+      "status": "active",
+      "paths": [
+        "assets/sprites/npcs/ice-guardian-combat.png"
+      ],
+      "note": "v0.50.0 CodexAI: acht tatsächliche Kampfphasen des ICE-Wächters. Unveränderte Einzelquelle ice-guardian.png bleibt Identitäts- und Geschossquelle."
     }
   ]
 }

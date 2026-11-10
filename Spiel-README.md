@@ -1,8 +1,16 @@
 # Shadepi · Spieleranleitung
 
-**Aktueller Stand v0.49.0 · CodexAI.** [Neu: Towerplan, Pixelmarker, Alarmlicht, Umgebungsgeräusche](docs/verbesserungen-v048.md) · [Story-Durchsicht Kapitel 1–7](docs/story-durchsicht.md) · [Downloads](https://github.com/Inrouder/ShadepiRPG/releases/latest) · [Bilder und Filme](docs/README.md) · [Änderungen](CHANGELOG.md). [Ältere Anleitung mit damaligen Abläufen](docs/archiv/spielanleitung-bis-v0461.md).
+**Aktueller Stand v0.50.0 · CodexAI.** [Neu: Towerplan, Pixelmarker, Alarmlicht, Umgebungsgeräusche](docs/verbesserungen-v048.md) · [Story-Durchsicht Kapitel 1–7](docs/story-durchsicht.md) · [Downloads](https://github.com/Inrouder/ShadepiRPG/releases/latest) · [Bilder und Filme](docs/README.md) · [Änderungen](CHANGELOG.md). [Ältere Anleitung mit damaligen Abläufen](docs/archiv/spielanleitung-bis-v0461.md).
 
 **Kapitel 7 / Menü v0.49.0 · CodexAI:** Bewegte Mondspiegelung, sechs Drachenphasen und acht Kontaktbilder am See; kompakte Menüs mit innenliegender Hilfe und passenden Kapitelaktionen. [Bilder und Film](docs/mondsee-v049.md).
+
+## ICE-Wächter in Kapitel 2 · v0.50.0 · CodexAI
+
+Der dritte Deep-Dive-Knoten öffnet eine größere Bossarena. Warte die angekündigten Kugelsalven hinter den festen Datenwänden ab oder weiche seitlich aus. Bei **cyanfarbenem Kern** gehst du nah heran: **J / X** trifft mit Ravens Handimpuls. Pro Öffnung zählen zwei Treffer; danach zurück in Deckung! Vier erfolgreiche Runden besiegen den Wächter. Ein aufgeladener Impuls zählt aus kurzer Distanz doppelt.
+
+**WASD / linker Stick** bewegen, **Leertaste / Umschalt / B** ausweichen, **K / RT halten und loslassen** aufladen. **Q / RB** verlängert eine offene Kühlphase einmal, wenn Raven nahe genug ist. Nach dem Sieg am markierten Relais **E / A** drücken und die Verbindung kurz halten. Im Test-Kontrollpunktmenü direkt **„Deep Dive · ICE-Bossarena“** wählen.
+
+[Bilder, Kampffilm und Einzelheiten](docs/ice-kampf-v050.md).
 
 ## Starten und Speichern
 

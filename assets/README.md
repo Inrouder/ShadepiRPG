@@ -6,6 +6,7 @@
 | --- | --- |
 | `sprites/heroes/raven.png`, `shadepi.png` | **Aktiv:** unveränderte Originalhelden; keine automatische Ersatzvariante. |
 | `sprites/heroes/combat-poses.png`, `raven-hand-cast.png` / `.json` | **Aktiv:** Ladung, Kick, Ravens Handblitze und Anker. |
+| `sprites/npcs/ice-guardian-combat.png` | **Aktiv v0.50.0 · CodexAI:** acht ICE-Bossphasen; ursprüngliche Einzelquelle bleibt Identitäts-/Geschossquelle. [Belege](../docs/ice-kampf-v050.md). |
 | `sprites/npcs/` | **Aktiv:** Gegner, Kontaktposen und Datenwesen; individuell registrierte Raster/Größen beachten. |
 | `sprites/heroes/backup-v0441/` | **Backup:** bytegleiche gewünschte Helden-Sicherungen; im Git, nicht im Spieleexport. |
 | `custom/` | **Eigene aktive Ersetzungen:** haben bei gültigem Raster Vorrang. [Regeln](custom/README.md). |

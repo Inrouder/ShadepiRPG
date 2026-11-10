@@ -16,7 +16,7 @@ const ENTRIES := [
 	["ice-bath",2,"Eisbad · Anschluss",5,0,0],
 	["relay1",2,"Deep Dive · Relais 1",2,0,0],
 	["relay2",2,"Deep Dive · Relais 2",2,0,1],
-	["relay3",2,"Deep Dive · Relais 3",2,0,2],
+	["relay3",2,"Deep Dive · ICE-Bossarena",2,0,2],
 	["recovery",2,"Rückkehr aus dem Netz",3,0,0],
 	["chapter2-end",2,"Versteck · Nach dem Eisbad",4,0,0],
 	["pact",3,"Der Pakt · Gespräch",0,0,0],
