@@ -39,6 +39,10 @@ func create_hud() -> CanvasLayer:
 
 func _ready() -> void :
 	super._ready()
+	# v0.54.1 · ClaudeHelper: Koop-Sitzung aus dem vorigen Kapitel übernehmen (vor und nach dem Laden,
+	# weil ein Kontrollpunkt den Modus sonst auf Einzelspieler zurücksetzt).
+	restore_coop_session()
+	restore_coop_session.call_deferred()
 	if preload("res://scripts/test_checkpoints.gd").consume(self): return
 	if preload("res://scripts/checkpoint_resume.gd").consume(self): return
 	if Admin.consume_chapter(get_tree(), "res://scenes/chapter_two.tscn") == 2:

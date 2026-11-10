@@ -23,8 +23,10 @@
 | Aktion | Tastatur | Gamepad (zweites Pad) |
 | --- | --- | --- |
 | Bewegen | Pfeiltasten | linker Stick oder Steuerkreuz |
-| Angriff (halten) | **U** | **X** oder **RB** |
-| Spezial | **O** | **Y** |
+| Angriff (halten) | **U** | **X**, **A** oder **RB** |
+| Spezial | **O** | **Y** oder **LB** |
+
+Im Koop hat Spieler 2 den Begleiter sofort, ohne Übernahmetaste, und der im Menü gewählte Modus gilt über Kapitelwechsel hinweg (seit v0.54.1). Mit nur einem Gamepad gehört es Spieler 2; Spieler 1 spielt dann an der Tastatur.
 
 Solange Spieler 2 den Begleiter steuert, gehören die Pfeiltasten ihm; Spieler 1 bewegt sich mit WASD oder seinem Gamepad.
 

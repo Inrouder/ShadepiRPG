@@ -416,6 +416,7 @@ func _update_checkpoint_button() -> void:
 	load_button.disabled = preload("res://scripts/checkpoint_resume.gd").latest(get_tree(),requested_coop).is_empty()
 
 func _start_new() -> void :
+	world.remember_coop_session(requested_coop)
 	world.set_coop(requested_coop)
 	world.new_game()
 
@@ -423,6 +424,7 @@ func start_selected() -> void :
 	if world.started and world.coop == requested_coop:
 		world.close_menu()
 	else:
+		world.remember_coop_session(requested_coop)
 		world.set_coop(requested_coop)
 		world.new_game(false)
 
