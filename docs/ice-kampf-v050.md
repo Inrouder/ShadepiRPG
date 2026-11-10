@@ -45,4 +45,4 @@ Die bestehende HQ-Netzkulisse wird für diesen Kampf gemeinsam mit ihren Masken,
 
 ## Prüfung
 
-Gezielte Regressionen und Exportnachweis stehen im [Arbeitsnachweis](arbeiten/ice-v050.md). Geprüft werden unter anderem Deckung bis an die Rückkante, Ausweichschutz, reale B-/X-Controllerereignisse, geschlossene Panzerung, Nahdistanz, Trefferbegrenzung, vier Runden, Pause, Neustart/Laden, Geschossbereinigung und die Rückkehr zur ursprünglichen Raumgeometrie.
+1.725 gezielte Checks und 16 zusätzliche Paketprüfungen ohne Fehler. Regressionen und Exportnachweis stehen im [Arbeitsnachweis](arbeiten/ice-v050.md). Geprüft werden unter anderem Deckung bis an die Rückkante, Ausweichschutz, reale B-/X-Controllerereignisse, geschlossene Panzerung, Nahdistanz, Trefferbegrenzung, vier Runden, Pause, Neustart/Laden, Geschossbereinigung und die Rückkehr zur ursprünglichen Raumgeometrie.

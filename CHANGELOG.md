@@ -6,6 +6,7 @@
 - Acht neue HQ-Pixelart-Bossphasen: Aufladen, Schuss, Rückstoß, offener Kühlkern, Treffer und Zerstörung. Fünf ausweichbare Dreier-Kugelsalven je Angriff, feste Deckung stoppt die Geschosse. Kein sofortiger Querstrahl mehr.
 - Nah heran während des cyanfarbenen Kernfensters, höchstens zwei Integritätspunkte je Runde, dann Rückzug. Vier erfolgreiche Öffnungen gewinnen den Kampf; optionaler Hack verlängert eine offene Phase. Raven ist im Netz besser lesbar, Originalhelden und bestehende Handanker bleiben erhalten.
 - Boss.mp3 am Wächter, klare Tastatur-/Controllerhinweise, benannter Test-Kontrollpunkt. Pause, Laden, Wiederholung und Raumwechsel räumen Geschosse und Raumzustände auf.
+- 1.725 gezielte Checks und 16 zusätzliche Paketprüfungen ohne Fehler; nativer vollständiger Boss-Sieg aufgenommen, Film unter 5 MB.
 - [Bilder, Kampffilm und Steuerung](docs/ice-kampf-v050.md) · [Prüf- und Quellnachweis](docs/arbeiten/ice-v050.md).
 
 ## v0.49.0 – CodexAI: Mondsee, bewegter Drachenschatten, Kontaktanimation und Menügrößen · 9. November 2026

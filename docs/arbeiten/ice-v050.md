@@ -5,7 +5,7 @@
 ## Auftrag und Ausgangslage
 
 - **Nutzerziel:** größere ICE-Arena, animierter Boss, ausweichbare Kugelsalven, Deckung und wiederholte Vorstöße mit nahen Treffern.
-- **Ausgang:** `43c30ea`, v0.49.0. Arbeitsbaum sauber. Alle Remote-Branches vor Arbeit abgerufen, `origin/main` identisch; Entwicklungsbranches bis ClaudeHelper v0.48.0 enthalten keinen neueren Spielstand. Vor Sicherung erneut vergleichen.
+- **Ausgang:** `43c30ea`, v0.49.0. Arbeitsbaum sauber. Alle Remote-Branches vor Arbeit abgerufen, `origin/main` identisch; Entwicklungsbranches bis ClaudeHelper v0.48.0 enthalten keinen neueren Spielstand. Vor Sicherung erneut alle Branches abgerufen: unverändert `origin/main=43c30ea`; kein neuerer Entwicklungsstand.
 - **Erhalten:** normale Originalhelden, bisherige Virenwellen, vollständige Eisbad-/Storyabfolge, fremde Tower-/Menü-/Seeänderungen und alte kompatible Relais-Spielstände.
 - **Betroffen:** Kapitel 2, Datenknoten 3; `chapter_two.gd`, Kapitel-HUD, eigener Wächter/Kugeln und Musikslot. Keine neue Lore.
 
@@ -38,8 +38,21 @@ Verworfene v0.45-Helden sind keine Referenz und bleiben archiviert. Kein Comic u
 | Controller/Tastatur | Bestehende Hauptsteuerung für Raven; eigene Regression mit echten B-/X-Gamepadereignissen. |
 | Pause/Ton/Bildstil | Phasen und Geschosse pausieren mit `is_busy`; vorhandene Ton-/Grafikeinstellungen weiterverwendet. |
 | Abbruch/Laden | Sibling-Geschosse beim Bossausstieg entfernt; freier Start mit vollen Werten; Relais-Saveformat erhalten; Kamera/Masken/Kollisionen zurückgesetzt. |
-| Automatische Prüfungen | Laufende Ergebnisse werden vor Abschluss ergänzt. |
-| Export | Paketprüfung wird vor Abschluss ergänzt. |
-| Version/Sicherung | Alle aktuellen Versionsfelder v0.50.0 · CodexAI; Git-Sicherung nach Prüfung. |
+| Automatische Prüfungen | 1.725 Checks ohne Fehler: ICE 41, Core 382, digitale Grafik 18, Kampfaktionen 68, Raven/Gegner 292, Atmosphäre 134, Fehlerbericht 21, Eisbad 49, Kontrollpunkte 205, Story 206, See/Menü 253, Umgebungston 56. |
+| Export | Godot `--headless --export-pack Linux /tmp/shadepi-v0.50.0.pck`: 148 MiB. 16 zusätzliche Prüfungen im nativen gepackten Spiel ohne Fehler; Version, Atlas, acht Phasen, benötigte Skripte/JSON, Bossmusik, geschlossene/offene Panzerung, Kugeln und Raumrücksetzung. Entwicklungsdateien und Heldenbackup ausgeschlossen. |
+| Version/Sicherung | Alle aktuellen Versionsfelder v0.50.0 · CodexAI; Implementierung als `33de7e6` zwischengesichert; Abschlussnachweis folgt als eigener Commit auf `main`. |
 
 **Sichtprüfung:** CodexAI, 10. November 2026, Godot 4.7.2 mit nativer OpenGL-Kompatibilitätsdarstellung. Film zeitlich verdichtet, unter 5 MB. Die Balance wurde durch einen gesteuerten vollständigen Sieg und gezielte Regressionen geprüft; individuelles Spielgefühl bleibt eine Spieltestfrage.
+
+
+## Reproduzierbare Prüfungen
+
+```sh
+XDG_DATA_HOME=/tmp/shadepi-ice-tests godot --headless --script res://tests/ice_boss.gd
+python3 tools/audit_repository.py
+godot --headless --export-pack Linux /tmp/shadepi-v0.50.0.pck
+```
+
+Die weiteren oben gezählten Suiten jeweils mit einem eigenen `/tmp/shadepi-…`-Benutzerdatenverzeichnis ausführen. Die native Sichtprüfung lief über `tools/ice_boss_gallery.gd` auf einem eigenen Xorg-Dummy-Display. 204 aufgenommene Frames bilden den kompletten erfolgreichen Kampf ab; der WebP-Film ist 4.536.966 Bytes groß. PNGs im Bericht stammen direkt aus Godot. Der Exportprüfer lag außerhalb des Pakets (`/tmp/shadepi50-pack.gd`); seine 16 Checks sind zusätzlich zu den 1.725 Quellenprüfungen gezählt.
+
+**Ergebnis:** Auftragsumfang fertig. Kein Cloud-Publish und kein Release-Tag angelegt. Kein manueller Durchlauf sämtlicher Kapitel behauptet; Balancewerte sind im [Boss-Skript](../../scripts/ice_guardian.gd) zentral auffindbar.
