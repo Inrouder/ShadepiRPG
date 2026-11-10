@@ -1,9 +1,11 @@
 extends Node
-## v0.51.0 · CodexAI. One capped game image; original nodes retain viewport/input ownership.
+## v0.51.1 · CodexAI. One capped game image; original nodes retain viewport/input ownership.
 ## The root only presents this texture at larger outputs. No second simulation or scene routing.
 const BASE := Vector2i(640,360)
 const CAP := Vector2i(1920,1080)
 const PRESENTATION_BIT := 1 << 20
+# Godot reserves layer 1024 for embedded windows. Keep the output beneath it.
+const PRESENTATION_LAYER := 512
 var enabled := false
 var target: SubViewport
 var presentation: CanvasLayer
@@ -41,7 +43,7 @@ func _ready() -> void:
 	add_child(target)
 	presentation = CanvasLayer.new()
 	presentation.name = "FullHDPresentation"
-	presentation.layer = 1024
+	presentation.layer = PRESENTATION_LAYER
 	add_child(presentation)
 	image = TextureRect.new()
 	image.texture = target.get_texture()

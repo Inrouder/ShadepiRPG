@@ -1,5 +1,12 @@
 # Versionshinweise
 
+## v0.51.1 – CodexAI: sichtbare HQ-Dropdowns in Menüs, Kontrollpunkten und Hacks · 10. November 2026
+
+- Zentraler Renderfehler behoben: eingebettete Godot-Listen verwenden die reservierte Canvas-Ebene 1024. Der HQ-Präsentationspass lag auf derselben Ebene und verdeckte sie trotz intern geöffnetem Zustand.
+- Präsentation liegt jetzt auf Ebene 512 unter den eingebetteten Fenstern. Sichtbarkeitsmasken und bestehende HQ-Isolation bleiben erhalten. Keine doppelte native Rasterung der Spielszene; Full-HD-Grenze bleibt erhalten.
+- Anzeige-, Kapitel-, Kontrollpunkt- sowie sämtliche Energie-/Reparatur-Auswahlen sichtbar und bedienbar. Im Hack öffnet A / Enter eine echte Liste; B / Esc schließt diese zuerst. Bestehende Links-/Rechts-Schnellwahl bleibt erhalten; Popup-Stil folgt dem Hack-Deck.
+- Neue native Pixelbildprüfung statt alleiniger Prüfung von `PopupMenu.visible`, zusätzlich Headless-/4K-/Eingabe-Regressionen. [Bilder und Details](docs/dropdowns-v0511.md).
+
 ## v0.51.0 – CodexAI: wählbare native HQ-Anzeige bis 1920×1080, Full-HD-Bild für größere Ausgaben · 10. November 2026
 
 - HQ-Modus im Anzeige-Menü, standardmäßig aktiv und getrennt von Spielständen gespeichert; klassischer 640×360-Modus bleibt wählbar. Anzeige zeigt interne und physische Ausgabeauflösung.

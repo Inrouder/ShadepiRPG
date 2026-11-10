@@ -1,6 +1,6 @@
 # Shadepi · Spieleranleitung
 
-**Aktueller Stand v0.51.0 · CodexAI.** [Neu: Towerplan, Pixelmarker, Alarmlicht, Umgebungsgeräusche](docs/verbesserungen-v048.md) · [Story-Durchsicht Kapitel 1–7](docs/story-durchsicht.md) · [Downloads](https://github.com/Inrouder/ShadepiRPG/releases/latest) · [Bilder und Filme](docs/README.md) · [Änderungen](CHANGELOG.md). [Ältere Anleitung mit damaligen Abläufen](docs/archiv/spielanleitung-bis-v0461.md).
+**Aktueller Stand v0.51.1 · CodexAI.** [Neu: Towerplan, Pixelmarker, Alarmlicht, Umgebungsgeräusche](docs/verbesserungen-v048.md) · [Story-Durchsicht Kapitel 1–7](docs/story-durchsicht.md) · [Downloads](https://github.com/Inrouder/ShadepiRPG/releases/latest) · [Bilder und Filme](docs/README.md) · [Änderungen](CHANGELOG.md). [Ältere Anleitung mit damaligen Abläufen](docs/archiv/spielanleitung-bis-v0461.md).
 
 **Kapitel 7 / Menü v0.49.0 · CodexAI:** Bewegte Mondspiegelung, sechs Drachenphasen und acht Kontaktbilder am See; kompakte Menüs mit innenliegender Hilfe und passenden Kapitelaktionen. [Bilder und Film](docs/mondsee-v049.md).
 
@@ -15,6 +15,8 @@ Der dritte Deep-Dive-Knoten öffnet eine größere Bossarena. Warte die angekün
 [Bilder, Kampffilm und Einzelheiten](docs/ice-kampf-v050.md).
 
 **Anzeigeanalyse v0.50.2 · CodexAI:** Die vorhandenen Grafiken enthalten mehr Details als die aktuelle interne 640×360-Darstellung zeigt. [Echte Full-HD-Vergleiche und Empfehlung](docs/anzeigequalitaet-v0502.md). Dieser frühere Vergleich führte zum oben beschriebenen wählbaren HQ-Modus.
+
+**Dropdown-Korrektur v0.51.1 · CodexAI:** Anzeige-, Kapitel-, Kontrollpunkt- und Hack-Auswahllisten sind im HQ-Modus wieder sichtbar. Im Hack öffnet **A / Enter** die Liste; Auswahl mit Oben/Unten, A / Enter bestätigt, B / Esc schließt nur die Liste. Links/Rechts bleibt als schnelle Wertwahl erhalten. [Bilder und Details](docs/dropdowns-v0511.md).
 
 ## HQ-Anzeige · v0.51.0 · CodexAI
 

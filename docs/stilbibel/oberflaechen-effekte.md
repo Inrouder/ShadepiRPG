@@ -1,5 +1,7 @@
 # Oberflächen, Effekte und Ton · v0.32.2 · CodexAI
 
+**HQ-Dropdowns v0.51.1 · CodexAI:** [Listen sichtbar über dem Spielbild](../dropdowns-v0511.md); Hack-Auswahlen übernehmen Rahmen, Schrift und Farben ihres Decks. Controller A öffnet die Liste, B schließt diese zuerst.
+
 **HQ v0.51.0 · CodexAI:** [Wählbarer Full-HD-Modus](../hq-anzeige-v051.md) mit unveränderter logischer Bildkomposition, begrenztem Spielbild und vergrößerter Ausgabe oberhalb Full HD. Bloom-Radius in Weltgröße, bestehende Textur für weichen Fußkontakt, keine neuen Grafikquellen.
 
 **See / Menü v0.49.0 · CodexAI:** [Mondsee und Menüs](../mondsee-v049.md) mit bewegter Mondachse, sechs Drachenphasen, acht verankerten Kontaktbildern und in den Rahmen passender Hilfe. [Aktive Quellen](../../assets/story/lake/README.md); frühere Seequellen nur noch Vergleich. Gesicht bleibt verdeckt, Originalhelden bleiben normaler Standard.

@@ -1,12 +1,17 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.51.0 · CodexAI · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.51.1 · CodexAI · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
 [**Spiel herunterladen (neuestes Release)**](https://github.com/Inrouder/ShadepiRPG/releases/latest) · [**Quellcode als ZIP**](https://github.com/Inrouder/ShadepiRPG/archive/refs/heads/main.zip) · [**Versionen**](CHANGELOG.md) · [**Spieleranleitung**](Spiel-README.md) · [**Bildgalerie & Doku**](docs/README.md)
 
 ## Bilder aus dem Spiel
+
+| Dropdown-Korrektur · v0.51.1 · CodexAI | Auswahllisten auch in Ravens Hacks |
+| --- | --- |
+| [![Sichtbare Kapitel- und Kontrollpunktauswahl im HQ-Modus](docs/previews/dropdown-kontrollpunkte-v0511.png)](docs/dropdowns-v0511.md) | [![Sichtbare Reparatur-Auswahl im Hack](docs/previews/dropdown-reparatur-v0511.png)](docs/dropdowns-v0511.md) |
+| [Korrektur und Bildprüfung](docs/dropdowns-v0511.md) | [Dropdown-Film](docs/previews/dropdowns-v0511.webp) |
 
 | HQ-Anzeige · v0.51.0 · CodexAI | Darstellung im Haupt- und Pausenmenü wählen |
 | --- | --- |

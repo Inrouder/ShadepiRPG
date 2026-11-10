@@ -1,8 +1,16 @@
 # Shadepi · Bilder, Filme und Dokumentation
 
-**Stand v0.51.0 · CodexAI · 10. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
+**Stand v0.51.1 · CodexAI · 10. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
 
 Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnahmen, animierte Szenenfilme, Bedienung und technische Hinweise. Die PNG-Vorschauen sind direkt in GitHub sichtbar; die Filme bleiben zusätzlich als verlinkte WebP-Dateien erreichbar.
+
+## Dropdowns wieder sichtbar · v0.51.1 · CodexAI
+
+| Kapitel / Kontrollpunkte im HQ-Modus | Energie- und Reparatur-Hacks |
+| --- | --- |
+| [![Geöffnete Kontrollpunktliste](previews/dropdown-kontrollpunkte-v0511.png)](dropdowns-v0511.md) | [![Geöffnete Pin-Liste in Ravens Reparatur-Hack](previews/dropdown-reparatur-v0511.png)](dropdowns-v0511.md) |
+
+[Bilder, Ursache und Prüfung](dropdowns-v0511.md) · [Film](previews/dropdowns-v0511.webp).
 
 ## HQ-Anzeige bis Full HD · v0.51.0 · CodexAI
 

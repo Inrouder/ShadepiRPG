@@ -2,6 +2,8 @@
 
 **v0.51.0 · CodexAI · 10. November 2026.** [Spieleranleitung](../Spiel-README.md) · [Anzeigeoptionen](bildschirm.md) · [Arbeitsnachweis](arbeiten/hq-anzeige-v051.md).
 
+**Dropdown-Korrektur v0.51.1 · CodexAI:** [Listen in Anzeige, Kapitel-/Kontrollpunktauswahl und Hacks wieder sichtbar](dropdowns-v0511.md). Die Full-HD-Grenze bleibt erhalten.
+
 **Der HQ-Modus ist eingebaut und standardmäßig aktiv.** Das Spielbild wird bis zu **1920×1080** direkt mit den vorhandenen Originaltexturen gezeichnet. Bei größeren Ausgaben bleibt das interne Spielbild auf Full HD begrenzt und wird nur vergrößert. Der bisherige klassische Modus bleibt auswählbar.
 
 ## Einschalten und wechseln

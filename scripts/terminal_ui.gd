@@ -80,8 +80,7 @@ func _ready() -> void:
 	palette = UiSkin.colors(skin)
 	_build()
 
-## The deck stays in the game's 640x360 pixel viewport: pixel-art frames,
-## buttons and fonts at 1:1, like the rest of Shadepi.
+## Logical 640×360 deck; HQ presentation preserves the original control coordinates.
 func _label(text: String, rect: Rect2, color: Color = Color.TRANSPARENT, kind: String = "ui", font_size: int = -1) -> Label:
 	if color == Color.TRANSPARENT:
 		color = palette.primary
@@ -131,11 +130,19 @@ func _option(items: Array, rect: Rect2, callback: Callable) -> OptionButton:
 	option.position = rect.position
 	option.size = rect.size
 	option.focus_mode = Control.FOCUS_ALL
+	option.tooltip_text = "A / Enter · Liste öffnen und bestätigen. B / Esc · Liste schließen."
 	UiSkin.apply_button(option, skin)
 	option.add_theme_icon_override("arrow", UiSkin.chevron(skin))
 	for item in items:
 		option.add_item(str(item))
 	option.item_selected.connect(callback)
+	option.get_popup().about_to_popup.connect(func(): held_direction = Vector2.ZERO; stick = Vector2.ZERO)
+	var popup := option.get_popup()
+	popup.add_theme_stylebox_override("panel", UiSkin.panel(skin))
+	popup.add_theme_stylebox_override("hover", UiSkin.button(skin, "hover"))
+	popup.add_theme_font_override("font", option.get_theme_font("font"))
+	popup.add_theme_font_size_override("font_size", option.get_theme_font_size("font_size"))
+	popup.add_theme_color_override("font_color", option.get_theme_color("font_color"))
 	root.add_child(option)
 	controls.append(option)
 	return option
@@ -406,6 +413,10 @@ func _toggle_pause() -> void:
 	_focus_available()
 
 func _input(event: InputEvent) -> void:
+	# An open dropdown owns A/B, arrows and mouse, just like other game menus.
+	# Do not abort the hack or cycle its underlying controls while choosing an item.
+	for control in controls:
+		if control is OptionButton and control.get_popup().visible: return
 	if closed:
 		return
 	# Consume raw pad events here: gameplay bindings use these same buttons.
@@ -502,7 +513,8 @@ func _activate() -> void:
 		return
 	var focus := get_viewport().gui_get_focus_owner()
 	if focus is OptionButton and not focus.disabled:
-		_navigate(Vector2.RIGHT)
+		held_direction = Vector2.ZERO
+		focus.show_popup()
 	elif focus is Button and not focus.disabled:
 		focus.pressed.emit()
 	_refresh()
