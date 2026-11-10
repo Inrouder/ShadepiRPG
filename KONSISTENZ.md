@@ -1,6 +1,6 @@
 # Verbindliche Konsistenzvorlage für ShadepiRPG
 
-**Stand v0.50.0 · CodexAI · 10. November 2026; eingeführt mit v0.32.1.** Gilt für das gesamte Spiel und alle Mitwirkenden, ob Mensch oder KI. Vor Änderungen zusammen mit [AGENTS.md](AGENTS.md) lesen und die [Arbeitsvorlage](docs/vorlagen/konsistenz-auftrag.md) verwenden. Eine neuere ausdrückliche Nutzervorgabe hat Vorrang; bestätigte Änderungen anschließend hier und in den betroffenen Referenzen nachführen.
+**Stand v0.50.1 · CodexAI · 10. November 2026; eingeführt mit v0.32.1.** Gilt für das gesamte Spiel und alle Mitwirkenden, ob Mensch oder KI. Vor Änderungen zusammen mit [AGENTS.md](AGENTS.md) lesen und die [Arbeitsvorlage](docs/vorlagen/konsistenz-auftrag.md) verwenden. Eine neuere ausdrückliche Nutzervorgabe hat Vorrang; bestätigte Änderungen anschließend hier und in den betroffenen Referenzen nachführen.
 
 **Repository-Ordnung v0.46.2 · CodexAI:** [Statuskatalog](docs/repository-status.md) unterscheidet aktive Quellen, Vergleichsbilder, Sicherungen und verworfene Varianten. Entwicklungsarchiv unter `docs/archiv/` nicht als Laufzeit-/Grafikstandard verwenden. `legacy` in Erinnerung III bleibt aktiv; Nutzer-/Storyquellen unter `docs/universum/` bleiben verbindlich.
 
@@ -97,6 +97,8 @@ Sonderatlanten für Sitzen, Liegen, Gegner oder Menü folgen ihren eigenen Metad
 **See v0.49.0 · CodexAI:** Aktive Kontakt-/Drachenquellen und feste Anker stehen im [See-Quellstatus](assets/story/lake/README.md). Echte Bildphasen statt transparenter Körper-Überblendung, Gesichtsschutz und anatomische Handzuordnung erhalten. Normale Originalhelden nicht ersetzen. Kapitel 7 nutzt vorhandenen Mond als Lichtursprung; Glanz und Schatten bleiben auf dem Wasser. Zentrales Menülayout enthält alle sichtbaren Kapitelaktionen und Hilfe im Rahmen. [Aktuelle Bilder](docs/mondsee-v049.md).
 
 **ICE v0.50.0 · CodexAI:** Wächter nutzt acht reale Phasen aus `ice-guardian-combat.png`, Identitätsquelle bleibt `ice-guardian.png`. Cyaner offener Kern und violette Salve müssen unterscheidbar bleiben; Projektilursprung ist der Kern. Arena-Grafik, physische Deckung, Verdeckung und Zielpunkte gemeinsam transformieren. [Quellen und Spielansicht](docs/ice-kampf-v050.md).
+
+**Netzavatar v0.50.1 · CodexAI:** Gewünschte Gittersilhouette aus Ravens aktiver Sprite-Transparenz, einschließlich Gehen und Handposen. Keine Rechteckmaske über die Figur legen oder Originalhelden ersetzen. [Darstellung und Rücksetzung](docs/netzavatar-v0501.md).
 
 ## 6. Animation und räumlicher Kontakt
 

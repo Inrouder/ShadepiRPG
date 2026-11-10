@@ -52,6 +52,12 @@ jobs:
           set -euo pipefail
           timeout 25s godot --headless --quit-after 5 2>&1 | tee /tmp/startup.log
           if grep -Eq 'SCRIPT ERROR|^ERROR:|Parse Error' /tmp/startup.log; then exit 1; fi
+      - name: Validate Raven net silhouette, poses and cleanup
+        shell: bash
+        run: |
+          set -euo pipefail
+          XDG_DATA_HOME=/tmp/shadepi-net-ci godot --headless --script res://tests/net_avatar.gd 2>&1 | tee /tmp/net-avatar.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/net-avatar.log; then exit 1; fi
       - name: Validate ICE boss, moving orbs, cover and controller
         shell: bash
         run: |

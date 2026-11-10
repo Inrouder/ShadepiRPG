@@ -9,6 +9,10 @@ const YARD_START: = Vector2(145, 420)
 const DOOR: = Vector2(876, 295)
 const WORKBENCH: = Vector2(498, 311)
 const SPRAY: = Vector2(530, 405)
+const NET_AVATAR = preload("res://shaders/net_avatar.gdshader")
+const NORMAL_AVATAR = preload("res://shaders/cloak.gdshader")
+var net_avatar_clock := 0.0
+
 const Threat = preload("res://scripts/dive_threat.gd")
 const Guardian = preload("res://scripts/ice_guardian.gd")
 const ICE_SCALE := 1.5
@@ -80,6 +84,7 @@ func _update_raven_follower(_delta: float) -> void :
 
 func _process(delta: float) -> void :
 	super._process(delta)
+	_sync_net_avatar(delta)
 	if raven_leads() and not in_cinematic():
 		camera.position = ice_camera_home()
 		if not is_busy():
@@ -152,7 +157,12 @@ func _enter(next: Section, saved_relay: int = 0, keep_positions: bool = false, s
 		reset_raven(IceBath.APPROACH if section==Section.COOLING else IceBath.EXIT if section==Section.END else BATH)
 	else:
 		reset_raven(raven.position)
-	raven.modulate = Color(0.85, 1.0, 1.0, 0.95) if raven_leads() else Color.WHITE
+	raven.modulate = Color.WHITE
+	raven.body_material.shader = NET_AVATAR if raven_leads() else NORMAL_AVATAR
+	raven.cast_shadow.visible = not raven_leads()
+	raven.light_occluder.visible = not raven_leads()
+	net_avatar_clock = 0.0
+	_sync_net_avatar(0.0)
 	if raven_leads():
 		_spawn_ice()
 	player.visible = not raven_leads()
@@ -260,6 +270,19 @@ func _spawn_ice() -> void :
 		actors.add_child(threat)
 		threats.append(threat)
 
+
+func _sync_net_avatar(delta: float) -> void:
+	if not raven_leads(): return
+	if not is_busy(): net_avatar_clock += delta
+	var sprite: Sprite2D = raven.visual
+	var frames := Vector2(sprite.hframes, sprite.vframes)
+	var cell := Vector2(sprite.frame_coords)
+	var texel := Vector2.ONE / sprite.texture.get_size()
+	raven.body_material.set_shader_parameter("clock", net_avatar_clock)
+	raven.body_material.set_shader_parameter("actor_origin", raven.global_position)
+	raven.body_material.set_shader_parameter("cell_min", cell / frames + texel * 0.5)
+	raven.body_material.set_shader_parameter("cell_max", (cell + Vector2.ONE) / frames - texel * 0.5)
+	raven.body_material.set_shader_parameter("source_step", Vector2.ONE / sprite.scale.abs())
 
 func ice_guardian() -> Node2D:
 	for threat in threats:
@@ -657,9 +680,7 @@ func _draw() -> void :
 		var points := PackedVector2Array()
 		for point in RELAYS: points.append(point * (ICE_SCALE if relay_index == 2 else 1.0))
 		draw_polyline(points, accent.darkened(0.64), 1.0)
-		var avatar: Vector2 = raven.position - Vector2(0, 24)
-		for y in range(-17, 16, 5):
-			draw_line(avatar + Vector2(-8, y), avatar + Vector2(8, y), Color(0.3, 0.84, 1.0, 0.38))
+
 		if relay_index == 0 and raven.position.distance_to(RELAYS[0]) < 75.0:
 			var gauge: = RELAYS[0] + Vector2(-48, -66)
 			draw_rect(Rect2(gauge, Vector2(96, 8)), Color("221b37"))

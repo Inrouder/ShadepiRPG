@@ -1,5 +1,7 @@
 # Zusammenarbeit an ShadepiRPG
 
+**Netzavatar v0.50.1 · CodexAI:** [Ravens Gittersilhouette](docs/netzavatar-v0501.md) nutzt ausschließlich die Alphaform aktiver Original-/Handposen. Raster in Weltpixeln am Fußanker, kein freischwebendes Overlay. `net_avatar.gdshader` nur während Kapitel-2-Deep-Dive, Clock bei Pause stoppen; bei Rückkehr Standardshader und physische Schatten/Lichtzustände herstellen.
+
 **ICE-Kampf v0.50.0 · CodexAI:** [Bossarena](docs/ice-kampf-v050.md). Dritter Deep-Dive-Knoten skaliert Kulisse, Kollisionen, Masken und Relais gemeinsam auf 1536×960. Wächter besitzt echte Kugelsalven, acht Grafikphasen und einen Nahkampf-Kern mit acht Integritätspunkten; höchstens zwei Punkte je Öffnung. Normalhelden unverändert. Bei Raumwechsel/Re-Load alle Geschosse löschen und Kamera-/Raummaße zurücksetzen. Bossanimation in `ice_guardian.gd`, Viren weiterhin `dive_threat.gd`.
 
 **Mondsee / Menüs v0.49.0 · CodexAI:** [Aktuelle See- und Menügestaltung](docs/mondsee-v049.md). Aktive Kontaktquelle `assets/story/lake/poses-moon.png`: acht echte Phasen, keine Silhouetten-Überblendung. Normale Originalhelden unverändert; Ravens eigene rechte Hand führt die Maske, linke verdeckt sein Gesicht. Sechs Drachenphasen aus `dragon-flight.png` nur über echte Wasserpolygone; Mondreflexachse unter dem vorhandenen Mond. Kino-HUD und externe Körper-/Schattenzustände bei Ende/Abbruch zurücksetzen. Zentrales `_layout_menu` berücksichtigt sichtbare Kapitelaktionen und Mindestbreiten, keine neuen festen Zeilenpositionen in Unterklassen.

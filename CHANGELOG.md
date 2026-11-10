@@ -1,5 +1,13 @@
 # Versionshinweise
 
+## v0.50.1 – CodexAI: Raven als animierte Gittersilhouette im Netz · 10. November 2026
+
+- Cyanfarbenes Pixelgitter und Körperkontur aus der tatsächlichen Transparenz der unveränderten Raven-Sprites. Haare, Körperbau und Handposen bleiben die Vorlage; keine neue Ersatzfigur.
+- Effekt begleitet alle Deep-Dive-Relais, Gehen, Aufladen und Handangriffe. Gitter am Fußanker, Datenimpuls pausiert im Menü. Bisherige frei über dem Avatar liegende Querstreifen entfernt.
+- Netzavatar ohne körperlichen Schatten; bei Rückkehr normaler Shader und normale Licht-/Schattenzustände. Bossmechanik, Quellen, Anker und Spielstandformat erhalten.
+- 905 Headless-Checks, 56 native Checks einschließlich Pixelkonturprüfung und 18 Paketprüfungen ohne Fehler.
+- [Bilder und Animationsfilm](docs/netzavatar-v0501.md) · [Arbeitsnachweis](docs/arbeiten/netzavatar-v0501.md).
+
 ## v0.50.0 – CodexAI: ICE-Bosskampf mit Kugelsalven, Deckung und Kernfenstern · 10. November 2026
 
 - Kapitel 2, dritter Deep-Dive-Knoten: eigene Wächterarena mit 2,25-facher Bodenfläche. Hintergrund, feste Wände, Verdeckung, Requisiten, Relais und Kamera zusammen angepasst.

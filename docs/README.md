@@ -1,8 +1,16 @@
 # Shadepi · Bilder, Filme und Dokumentation
 
-**Stand v0.50.0 · CodexAI · 10. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
+**Stand v0.50.1 · CodexAI · 10. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
 
 Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnahmen, animierte Szenenfilme, Bedienung und technische Hinweise. Die PNG-Vorschauen sind direkt in GitHub sichtbar; die Filme bleiben zusätzlich als verlinkte WebP-Dateien erreichbar.
+
+## Ravens Netzavatar · v0.50.1 · CodexAI
+
+| Gitter folgt der Originalsilhouette | Auch der Handangriff wird projiziert |
+| --- | --- |
+| [![Netzsilhouette im Detail](previews/netzavatar-detail-v0501.png)](netzavatar-v0501.md) | [![Gitter der Handpose](previews/netzavatar-hand-v0501.png)](netzavatar-v0501.md) |
+
+[Bilder und Umsetzung](netzavatar-v0501.md) · [Animationsfilm](previews/netzavatar-v0501.webp).
 
 ## ICE-Wächter · v0.50.0 · CodexAI
 

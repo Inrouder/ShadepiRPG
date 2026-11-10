@@ -102,3 +102,5 @@ Der entfernte v0.45.0-Heldenrenderer liegt als [historische Quelle](../docs/arch
 **v0.49.0 · CodexAI:** [moon_lake_gallery.gd](moon_lake_gallery.gd) nimmt native Menügrößen, alle acht Kontaktbilder und das tatsächlich laufende Finale auf. Isoliertes XDG_DATA_HOME und nativer Renderer; kein Grafikgenerator. Neue Vorschaufilme unter 5 MB halten.
 
 **v0.50.0 · CodexAI:** `ice_boss_gallery.gd` nimmt den echten Bosskampf mit gesteuerten Bewegungs-/Angriffsaktionen in Godot auf. Schreibt ausschließlich Aufnahmen nach `/tmp/shadepi-v050-gallery`; keine Quellgrafik wird bearbeitet. Aufruf mit isoliertem `XDG_DATA_HOME=/tmp/shadepi-v050-gallery` und nativem Display; Film aus diesen Frames bleibt unter 5 MB.
+
+**v0.50.1 · CodexAI:** `net_avatar_gallery.gd` nimmt Netz-/Körperdarstellung und 64 Animationsphasen nach `/tmp/shadepi-v0501-gallery` auf. Native Godot-Aufnahmen mit isoliertem Benutzerdatenordner; keine Bearbeitung der Quellgrafiken.

@@ -330,6 +330,8 @@ Die Übersicht passt die Vergrößerung zur Erkennbarkeit an. Auf jeder Einzelka
 
 ## Zusätzliche Darstellungszustände der Hauptfiguren
 
+**Netzavatar v0.50.1 · CodexAI:** [Raven als cyanfarbene Gittersilhouette](../netzavatar-v0501.md), aus den unveränderten Original-/Handposen im gesamten Kapitel-2-Deep-Dive. Physische Raven bleibt unverändert.
+
 **Nachtrag v0.33.0 · CodexAI:** [Neue Tower-Szenenposen](../../assets/story/tower/README.md) zeigen Kenzōs Griff nach Raven, den stark verletzten knienden Gefangenen, Raven am Extraktionsdeck und Kenzōs endgültigen Zusammenbruch. [Tatsächliche Spielansichten und Ablauf](../tower-extraktion.md). Dies sind Zustände der vorhandenen Figuren, keine neuen Identitäten; Kenzō lebt bis zur gesicherten Datenextraktion.
 
 Die Identität bleibt bei Menü, normalem Spiel, Spezialangriffen und Szenenposen dieselbe. Die Formate und Abtastungen unterscheiden sich je Einsatz; nicht ungeprüft austauschen.

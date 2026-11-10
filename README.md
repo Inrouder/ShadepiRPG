@@ -1,12 +1,17 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.50.0 · CodexAI · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
+**2D-Action-RPG · v0.50.1 · CodexAI · Godot 4.7.2 · Windows / Linux · Einzelspieler und Lokal-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
 [**Spiel herunterladen (neuestes Release)**](https://github.com/Inrouder/ShadepiRPG/releases/latest) · [**Quellcode als ZIP**](https://github.com/Inrouder/ShadepiRPG/archive/refs/heads/main.zip) · [**Versionen**](CHANGELOG.md) · [**Spieleranleitung**](Spiel-README.md) · [**Bildgalerie & Doku**](docs/README.md)
 
 ## Bilder aus dem Spiel
+
+| Raven als Netz-Gittersilhouette · v0.50.1 · CodexAI | Lauf- und Handposen bleiben erkennbar |
+| --- | --- |
+| [![Cyanes Gitter innerhalb von Ravens Originalsilhouette](docs/previews/netzavatar-detail-v0501.png)](docs/netzavatar-v0501.md) | [![Handzauber als Gitterprojektion](docs/previews/netzavatar-hand-v0501.png)](docs/netzavatar-v0501.md) |
+| [Spielansicht und Quellen](docs/netzavatar-v0501.md) | [Animationsfilm](docs/previews/netzavatar-v0501.webp) |
 
 | ICE-Bosskampf · v0.50.0 · CodexAI | Offener Kern: vorstoßen und treffen |
 | --- | --- |
