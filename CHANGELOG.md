@@ -1,5 +1,11 @@
 # Versionshinweise
 
+## v0.54.0 – ClaudeHelper: Koop mit Raven in Kapitel 3–7, freie Tonaufnahmen · 11. November 2026
+
+- **Koop:** In Kapitel 3 bis 7 steuert Spieler 2 Raven jetzt selbst, wo sie frei in der Szene steht: im Versteck, im Hinterhalt, bei der Symbolsuche in der Garage und im Kampf gegen die Aufzugwachen. Wo die Geschichte Raven festlegt oder nur ein Held da ist, spielt Spieler 2 weiter den Begleiter. Behoben: Im Koop blieb Raven in diesen Kapiteln bisher einfach stehen.
+- **Ton:** Schüsse, Explosionen, Schwerthiebe, Treffer, Requisiten und alle Gegnerstimmen sind jetzt freie CC0-Aufnahmen (Superpowers Asset Packs, Kenney, qubodup) statt synthetischer Rauschstöße. Dateinamen unverändert; Quellen und Lizenz in `assets/audio/CREDITS.md`.
+- Neue CI-Suite `coop_campaign` (23 Prüfungen); alle 43 Suiten und das Repository-Audit ohne Fehler.
+
 ## v0.53.0 – ClaudeHelper: Begleiter für Spieler 2 – Ravens Drohne und Shadepis Nanitenschwarm · 10. November 2026
 
 - Nutzeridee: Ist ein Held allein spielbar, steuert Spieler 2 dessen Begleiter. **Raven → Aufklärungsdrohne** (Schuss, Störimpuls), **Shadepi → Nanitenschwarm** des Heiligtums, weiß leuchtend und rot beim Angriff (Biss, Schutzschwarm).

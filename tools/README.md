@@ -38,6 +38,7 @@ Diese Vermessungen lesen PNG-Pixel, **überschreiben aber aktive JSON-Anker-/Akt
 | [build_ui_pixel.py](ui_pixel/build_ui_pixel.py) | Schreibendes Herstellungswerkzeug für bestehende Pixel-UI. |
 | [audit_atlases.py](sprites/audit_atlases.py) | v0.52.0 · ClaudeHelper: **nur lesend.** Findet Posen, die ein Stück der Nachbarpose zeigen oder abgeschnitten sind. Braucht Pillow, numpy, scipy. |
 | [calibrate_atlases.py](sprites/calibrate_atlases.py) | v0.52.0 · ClaudeHelper: schreibend. Gibt jeder Pose eine eigene Zelle mit Rand und passt die JSON-Kataloge an; zeichnet nichts neu. Ausschnitte stehen in [atlas_regions.py](sprites/atlas_regions.py). |
+| [import_free_sfx.py](audio/import_free_sfx.py) | v0.54.0 · ClaudeHelper: wandelt die freien CC0-Aufnahmen in die Spieldateien um; Quellen in `assets/audio/CREDITS.md`. Braucht ffmpeg und die Quell-Klone. |
 | [build_companions.py](companions/build_companions.py) | v0.53.0 · ClaudeHelper: schreibt Drohne und Naniten nach `assets/sprites/companions/`. |
 | [build_marker.py](ui_pixel/build_marker.py) | v0.48.0 · ClaudeHelper: schreibt `assets/ui/marker.png` (Pixel-Bodenring und Pfeil). |
 | [build_tower_plan.py](story/build_tower_plan.py) | v0.48.0 · ClaudeHelper: schreibt den Towerplan `assets/story/tower-plan.png`. |
