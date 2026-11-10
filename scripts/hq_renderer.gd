@@ -30,6 +30,13 @@ func _ready() -> void:
 	target.size_2d_override = BASE
 	target.size_2d_override_stretch = true
 	target.gui_disable_input = true
+	# A new SubViewport defaults to linear filtering and disabled pixel snapping.
+	# Preserve the project's sampling contract rather than silently smoothing it.
+	target.canvas_item_default_texture_filter = window.canvas_item_default_texture_filter
+	target.canvas_item_default_texture_repeat = window.canvas_item_default_texture_repeat
+	target.snap_2d_transforms_to_pixel = window.snap_2d_transforms_to_pixel
+	target.snap_2d_vertices_to_pixel = window.snap_2d_vertices_to_pixel
+	target.use_hdr_2d = window.use_hdr_2d
 	target.render_target_update_mode = SubViewport.UPDATE_DISABLED
 	add_child(target)
 	presentation = CanvasLayer.new()

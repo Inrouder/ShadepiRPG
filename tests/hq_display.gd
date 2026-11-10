@@ -40,6 +40,7 @@ func run():
 		root.size=output;settings.set_hq(true);await settle();settings.renderer.sync_frame()
 		var target=settings.renderer.target
 		check(target.size==Renderer.target_size(output) and target.size.x<=1920 and target.size.y<=1080,"game target is capped independently of physical output")
+		check(target.canvas_item_default_texture_filter==root.canvas_item_default_texture_filter and target.snap_2d_transforms_to_pixel==root.snap_2d_transforms_to_pixel,"HQ retains project pixel snapping and default sampling")
 		check(target.get_visible_rect().size==Vector2(640,360) and w.get_viewport()==root,"logical view and simulation ownership remain unchanged")
 		check(root.canvas_cull_mask==Renderer.PRESENTATION_BIT and target.canvas_cull_mask & Renderer.PRESENTATION_BIT==0,"presentation cannot render into its own source texture")
 		var aim=w.raven.global_position+Vector2(45,0)

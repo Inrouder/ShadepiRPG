@@ -57,4 +57,6 @@ Der 4K-Nachweis stammt von einem tatsächlich auf **3840×2160** eingestellten X
 
 [Anzeigeverwaltung](../scripts/display_settings.gd), [HQ-Renderer](../scripts/hq_renderer.gd), [Optionenfenster](../scripts/display_panel.gd). Derselbe Weltcanvas und die sichtbaren UI-Canvases werden in ein in der Größe begrenztes Spielbild gezeichnet. Ein unbeleuchteter Präsentationspass zeigt dieses Bild auf der Ausgabe; er wird niemals in sein eigenes Quellbild aufgenommen. Die Gameplay-Nodes behalten ihren ursprünglichen Viewport für Kameras, Physik und GUI.
 
+2.255 Headless-Prüfungen, 73 native HQ-Prüfungen und 23 zusätzliche Exportprüfungen bestanden.
+
 Die Original-PNGs, ihre Atlasmaße und individuellen Filter bleiben erhalten. Die weicheren Stellen innerhalb einer Quelldatei werden dadurch nicht neu gezeichnet. [Ursprüngliche Analyse](anzeigequalitaet-v0502.md) und [aktueller Arbeits-/Prüfnachweis](arbeiten/hq-anzeige-v051.md).

@@ -28,7 +28,7 @@ Bei Full HD wird das Spielbild in 1920×1080 gezeichnet. 1440p und 4K vergröße
 
 Windows-/Linux-ZIP aus dem neuesten Release vollständig entpacken und das Spiel starten. Zwischenstände findest du unter [Actions](https://github.com/Inrouder/ShadepiRPG/actions/workflows/build.yml). Godot ist nur zum Entwickeln nötig. Im Hauptmenü Einzelspieler oder Lokal-Koop wählen. „Letzten Kontrollpunkt laden“ setzt den neuesten gültigen Stand des Modus fort. Solo und Koop sowie normale und Test-Spielstände sind getrennt. „Zurück zum Desktop“ beendet das Spiel.
 
-Bildschirmmodus und Auflösung lassen sich einstellen: [Vollbild/Fenstervollbild und 16:9](docs/bildschirm.md). Die Grafikbasis bleibt 640×360; höhere Ausgabeauflösungen erzeugen keine neuen Quellpixel.
+Bildschirmmodus und Auflösung lassen sich einstellen: [Vollbild/Fenstervollbild und 16:9](docs/bildschirm.md). Die logische Spielbasis bleibt 640×360; der HQ-Modus nutzt beim Zeichnen mehr vorhandene Quellpixel, bis zur Full-HD-Grenze.
 
 ## Lokal-Koop
 
