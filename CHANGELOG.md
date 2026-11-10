@@ -1,5 +1,12 @@
 # Versionshinweise
 
+## v0.53.0 – ClaudeHelper: Begleiter für Spieler 2 – Ravens Drohne und Shadepis Nanitenschwarm · 10. November 2026
+
+- Nutzeridee: Ist ein Held allein spielbar, steuert Spieler 2 dessen Begleiter. **Raven → Aufklärungsdrohne** (Schuss, Störimpuls), **Shadepi → Nanitenschwarm** des Heiligtums, weiß leuchtend und rot beim Angriff (Biss, Schutzschwarm).
+- Im Koop erscheint der Begleiter immer, wenn nur ein Held spielbar ist, also in fast allen Szenen von Kapitel 3 bis 7. Im Solospiel begleitet er einen Helden, der wirklich allein in der Szene ist, und folgt nur; ein zweiter Spieler kann jederzeit mit Angriffs- oder Spezialtaste einsteigen.
+- Steuerung Spieler 2: Pfeiltasten oder zweites Gamepad bewegen, **U / X** Angriff, **O / Y** Spezialfähigkeit. Der Begleiter fliegt, bleibt an einer Leine beim Helden und kann nicht sterben. Kein Begleiter bei Motorradfahrt, Flug, Erinnerungen und Abspann.
+- Neue Pixelgrafiken aus einzeln gesetzten Pixeln; neue CI-Suite `companion` (22 Prüfungen). [Steuerung und Regeln](docs/begleiter.md).
+
 ## v0.52.0 – ClaudeHelper: Sprites kalibriert, Ringe unter den Figuren, freie Türen, Spiegelungen und Kinolicht · 10. November 2026
 
 - **Sprites:** Neues Prüfwerkzeug fand 214 sichtbare Fehler in zehn Posenblättern (Nachbarpose im Bild, abgeschnittene Glieder und Waffen), darunter Shadepis Tritt, Ravens Ladepose und alle Gegner-Angriffsposen. Jede Pose hat jetzt eine eigene Zelle mit leerem Rand; Bildschirmposition unverändert, keine Figur neu gezeichnet. Prüfung danach: 0 Fehler.

@@ -283,6 +283,8 @@ jobs:
           if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/ambient-audio.log; then exit 1; fi
           XDG_DATA_HOME="$(mktemp -d /tmp/shadepi-polish-tests.XXXXXX)" godot --headless --script res://tests/scene_polish.gd 2>&1 | tee /tmp/scene-polish.log
           if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/scene-polish.log; then exit 1; fi
+          XDG_DATA_HOME="$(mktemp -d /tmp/shadepi-companion-tests.XXXXXX)" godot --headless --script res://tests/companion.gd 2>&1 | tee /tmp/companion.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/companion.log; then exit 1; fi
       - name: Export Windows and Linux
         shell: bash
         run: |

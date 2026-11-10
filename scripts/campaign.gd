@@ -127,6 +127,9 @@ func raven_leads() -> bool:
 func actor_is_playable(actor: PixelActor) -> bool:
 	return drive == null and timing == null and beat != Beat.END and actor == (raven if raven_leads() else player)
 
+func companion_allowed() -> bool:
+	return drive == null and timing == null and memory_scene == null and beat not in [Beat.CHASE, Beat.FLIGHT, Beat.END]
+
 func actor_input_prefix(_actor: PixelActor) -> String:
 	return ""
 

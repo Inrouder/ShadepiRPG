@@ -21,6 +21,7 @@ var player
 var enemy
 var raven
 var coop: = false
+var companion: Node2D
 var gamepads: = GamepadBindings.new()
 const COOP_REACH: = Vector2(448, 166)
 var ui
@@ -162,6 +163,24 @@ func create_hud() -> CanvasLayer:
 
 func actor_is_playable(actor: PixelActor) -> bool:
 	return actor == player or (coop and actor == raven)
+
+## v0.53.0 · ClaudeHelper: Ist ein Held allein, bekommt Spieler 2 dessen Begleiter: Ravens Drohne
+## oder Shadepis Nanitenschwarm. Im Koop zählt, dass nur EIN Held spielbar ist; im Solospiel
+## muss der Held wirklich allein in der Szene sein (kein zweiter Held an seiner Seite).
+func companion_lead() -> PixelActor:
+	if not started or not companion_allowed(): return null
+	var playable: Array[PixelActor] = []
+	var present := 0
+	for actor: PixelActor in [player, raven]:
+		if not is_instance_valid(actor) or not actor.visible: continue
+		present += 1
+		if actor_is_playable(actor): playable.append(actor)
+	if playable.size() != 1 or (not coop and present > 1): return null
+	return playable[0]
+
+## Szenen ohne freies Laufen (Fahrt, Flug, Erinnerungen, Abspann) schalten den Begleiter ab.
+func companion_allowed() -> bool:
+	return true
 
 func actor_input_prefix(actor: PixelActor) -> String:
 	return "raven_" if actor == raven else ""
@@ -330,6 +349,10 @@ func _build_world() -> void :
 	actors = Node2D.new()
 	actors.y_sort_enabled = true
 	add_child(actors)
+	# v0.53.0 · ClaudeHelper: Begleiter für Spieler 2 (Drohne bzw. Nanitenschwarm).
+	companion = preload("res://scripts/companion.gd").new()
+	companion.world = self
+	add_child(companion)
 	for prop in world_props():
 		_collider(prop.collision)
 		var sprite: = Sprite2D.new()
