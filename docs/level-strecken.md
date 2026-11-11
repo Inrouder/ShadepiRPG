@@ -10,9 +10,9 @@ Nutzerauftrag vom 11. November 2026: Das Spiel soll länger werden, die Story bl
 
 | Etappe | Kulisse | Verfolger | Besonderheit |
 | --- | --- | --- | --- |
-| 1 · Stadt | `highway.png` (unverändert) | 100 % | wie bisher |
-| 2 · Tunnel | `tunnel.png` | 80 % | keine Drohnen, Hindernisse dichter |
-| 3 · Hochstraße | `skyway.png` über `airspace.png` | 100 % | zwei Drohnen von Anfang an, Seitenwind |
+| 1 · Stadt | `highway.png`, `highway-b.webp`, `highway-c.webp` im Wechsel; ab und zu die Fußgängerbrücke `overpass.webp` | 100 % | wie bisher |
+| 2 · Tunnel | `tunnel.webp` | 80 % | keine Drohnen, Hindernisse dichter |
+| 3 · Hochstraße | `skyway.webp` | 100 % | zwei Drohnen von Anfang an, Seitenwind |
 
 - Ist ein Wagen der Etappen 1 und 2 besiegt, fällt er qualmend zurück; das Bild taucht kurz ins Dunkel einer Einfahrt, dann schließt der nächste von hinten auf.
 - Beim Wechsel repariert sich das Motorrad um 25 %. Nach einem Sturz beginnt die Fahrt an der erreichten Etappe.
@@ -24,9 +24,12 @@ Beide Abschnitte haben eine vierte Welle. Die letzte bringt einen Truppführer: 
 
 ## Kulissen
 
-Die beiden neuen Kulissen sind aus den vorhandenen gemalten Bildern gebaut, nicht neu erzeugt: Fahrbahn und Gehwegplatten stammen aus `highway.png`, die Lüfter der Tunnelwand aus dessen Dachtechnik, die Stadt unter der Hochstraße ist `airspace.png` aus dem Flug. Dadurch stimmen Pinselstrich, Körnung und Farbwelt überein. Ein externer Bildgenerator war aus dieser Arbeitsumgebung nicht erreichbar.
+Seit v0.58.1 stammen die Kulissen der Verfolgung vom Nutzer (fünf Bilder vom 11. November 2026, im Stil von `highway.png` erzeugt): zwei weitere Straßenzüge der Stadt, der Tunnel, die Hochstraße und eine Fußgängerbrücke. Die Behelfskulissen aus v0.58.0 und ihr Werkzeug sind entfernt.
 
-`python3 tools/drive/build_chase_stages.py` erzeugt beide Dateien wiederholbar. Sie kacheln senkrecht ohne Naht.
+- Fahrbahn, Spuren und Gehwege liegen in allen Bildern an derselben Stelle wie in `highway.png`; Hindernisse und Fahrzeuge passen ohne Anpassung.
+- Tunnel und Hochstraße kacheln senkrecht mit sich selbst. In der Stadt folgen die Straßenzüge in der Reihe A · B · A · C.
+- Die Brücke ist aus dem fünften Bild freigestellt und zieht in der Stadt alle 13 bis 19 Sekunden über die Fahrbahn; Fahrzeuge fahren darunter hindurch.
+- Abgelegt als WebP (Qualität 92), zusammen rund 2,3 MB.
 
 ## So lässt sich ein weiteres Level strecken
 

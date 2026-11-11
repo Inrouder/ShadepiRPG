@@ -1,5 +1,14 @@
 # Versionshinweise
 
+## v0.58.1 – ClaudeHelper: gelieferte Kulissen für die Verfolgung · 11. November 2026
+
+Der Nutzer hat fünf Kulissenbilder für die Fahrt geliefert.
+
+- **Tunnel und Hochstraße** nutzen jetzt die gelieferten Bilder statt der Behelfskulissen aus v0.58.0; deren Werkzeug `tools/drive/build_chase_stages.py` ist entfernt.
+- **Stadt:** zwei weitere Straßenzüge wechseln sich mit dem bisherigen ab.
+- **Fußgängerbrücke:** aus dem fünften Bild freigestellt; sie zieht in der Stadt-Etappe gelegentlich über die Fahrbahn, Motorrad und Wagen fahren darunter hindurch.
+- Regeln und Länge der Etappen sind unverändert. [Übersicht](docs/level-strecken.md).
+
 ## v0.58.0 – ClaudeHelper: Verfolgung in drei Etappen, längerer Hinterhalt · 11. November 2026
 
 Nutzerauftrag: Level strecken, Story unverändert; als Muster Hinterhalt und Verfolgung. Neue Kulissen im Stil der vorhandenen.

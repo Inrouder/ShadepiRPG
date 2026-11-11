@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cp2fdjn4ruipo"
-path="res://.godot/imported/skyway.png-882f02e3834ba9f467904b743823f0ee.ctex"
+uid="uid://dlol0atfy783l"
+path="res://.godot/imported/tunnel.webp-7949e30d1fe0864b35e2e4e73e0a30ee.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/world/painted/skyway.png"
-dest_files=["res://.godot/imported/skyway.png-882f02e3834ba9f467904b743823f0ee.ctex"]
+source_file="res://assets/world/painted/tunnel.webp"
+dest_files=["res://.godot/imported/tunnel.webp-7949e30d1fe0864b35e2e4e73e0a30ee.ctex"]
 
 [params]
 

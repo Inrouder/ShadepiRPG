@@ -114,11 +114,19 @@ var wind := 0.0
 var wind_dir := 1.0
 var next_wind := 6.0
 var stage_start := 0.0
+var over_layer: Node2D
+var overpass_y := 400.0
+var next_overpass := 7.0
 
 func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	rng.seed = 2534
 	# Pixel-FX liegen auf einer eigenen Ebene mit harter Abtastung über Straße und Fahrzeugen.
+	over_layer = Node2D.new()
+	over_layer.name = "Overpass"
+	over_layer.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	over_layer.draw.connect(_draw_overpass)
+	add_child(over_layer)
 	fx_layer = Node2D.new()
 	fx_layer.name = "DriveFX"
 	fx_layer.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
@@ -221,6 +229,7 @@ func _update_fx(delta: float) -> void:
 	shake = move_toward(shake, 0.0, delta * 9.0)
 	restart_flash = maxf(0.0, restart_flash - delta)
 	white_flash = maxf(0.0, white_flash - delta)
+	if not flight: _advance_overpass(delta)
 	if is_instance_valid(fx_layer):
 		fx_layer.queue_redraw()
 	for i in range(debris.size() - 1, -1, -1):
@@ -505,21 +514,44 @@ func _draw_scrolling_city(texture: Texture2D, speed: float) -> void :
 	draw_texture_rect(texture, Rect2(0, shift, 640, 360), false)
 
 func _draw_highway() -> void :
+	# v0.58.1 · ClaudeHelper: In der Stadt wechseln drei Straßenzüge, Tunnel und Hochstraße
+	# kacheln mit sich selbst. Welche Kachel wo liegt, hängt nur an der gefahrenen Strecke.
+	var tile := int(floor(scroll / 360.0))
 	var shift: = fposmod(scroll, 360.0)
-	if stage == 2:
-		# Hochstraße: die Stadt liegt tief unten und zieht langsamer vorbei als das Deck.
-		var far := fposmod(scroll * 0.3, 360.0)
-		draw_texture_rect(Painted.ART.airspace, Rect2(0, far - 360.0, 640, 360), false, Color(0.5, 0.52, 0.62))
-		draw_texture_rect(Painted.ART.airspace, Rect2(0, far, 640, 360), false, Color(0.5, 0.52, 0.62))
-	var art: Texture2D = [Painted.ART.highway, Painted.ART.tunnel, Painted.ART.skyway][stage]
-	draw_texture_rect(art, Rect2(0, shift - 360.0, 640, 360), false)
-	draw_texture_rect(art, Rect2(0, shift, 640, 360), false)
+	draw_texture_rect(_road_art(tile + 1), Rect2(0, shift - 360.0, 640, 360), false)
+	draw_texture_rect(_road_art(tile), Rect2(0, shift, 640, 360), false)
 	if stage == 1:
 		return                      # im Tunnel regnet es nicht
 	var slant := -2.0 - wind * wind_dir * 9.0 if stage == 2 else -2.0
 	for i in 44:
 		var rain: = Vector2(i * 157 % 640, fposmod(i * 37 + elapsed * 335, 360))
 		draw_line(rain, rain + Vector2(slant, 8), Color(0.67, 0.71, 0.9, 0.18))
+
+func _road_art(tile: int) -> Texture2D:
+	match stage:
+		1: return Painted.ART.tunnel
+		2: return Painted.ART.skyway
+	return [Painted.ART.highway, Painted.ART.highway_b, Painted.ART.highway, Painted.ART.highway_c][posmod(tile, 4)]
+
+## Fußgängerbrücke über der Stadtstraße: zieht mit der Fahrbahn durchs Bild, Fahrzeuge fahren
+## darunter hindurch.
+const OVERPASS_SIZE := Vector2(640.0, 139.0)
+func _advance_overpass(delta: float) -> void:
+	if overpass_y < 400.0:
+		overpass_y += ROAD_SPEED * speed * delta
+	elif stage == 0 and stage_shift < 0.0 and victory_left < 0.0 and elapsed >= next_overpass:
+		overpass_y = -OVERPASS_SIZE.y - 20.0
+		next_overpass = elapsed + rng.randf_range(13.0, 19.0)
+		next_hazard = maxf(next_hazard, elapsed + 0.7)      # nichts Neues im Sichtschatten
+	if is_instance_valid(over_layer):
+		over_layer.queue_redraw()
+
+func _draw_overpass() -> void:
+	if overpass_y >= 400.0:
+		return
+	var offset := Vector2(sin(fx_clock * 57) * shake, cos(fx_clock * 43) * shake * 0.6)
+	over_layer.draw_rect(Rect2(Vector2(48, overpass_y + 16.0) + offset, Vector2(544, OVERPASS_SIZE.y - 14.0)), Color(0, 0, 0, 0.34))
+	over_layer.draw_texture_rect(Painted.ART.overpass, Rect2(Vector2(0, overpass_y) + offset, OVERPASS_SIZE), false)
 
 func _draw_airspace(cyan: Color) -> void :
 	_draw_scrolling_city(Painted.ART.airspace, 84.0)
