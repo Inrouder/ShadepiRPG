@@ -50,6 +50,8 @@ var visual_button: Button
 var ambient_button: Button
 var audio_button: Button
 var mode_button: Button
+var main_menu_button: Button
+const MAIN_MENU_SCENE := "res://scenes/chapter_one.tscn"
 var requested_coop: = false
 var controls: Label
 var raven_vitals: Label
@@ -232,6 +234,9 @@ func _ready() -> void :
 	display_button.set_meta("home_x", 188.0)
 	display_button.size.x = 72
 	display_button.tooltip_text = "Vollbild, Fenstergröße und Skalierung · F11 / Alt+Enter"
+	# v0.55.0 · ClaudeHelper: Aus jedem Kapitel zurück ins Hauptmenü (statt „Zurück zu Kapitel 1“).
+	main_menu_button = button_at("Zurück ins Hauptmenü", 274, return_to_main_menu)
+	main_menu_button.tooltip_text = "Spielstand bleibt am letzten Kontrollpunkt. Modus und Kapitel wählst du im Hauptmenü."
 	quit_button = button_at("Zurück zum Desktop",304,func(): get_tree().quit())
 	quit_button.size.y = 24
 	menu_help = label_at("Stick / Kreuz · A wählen · F11 Vollbild", Vector2(16,333),Vector2(246,12),menu,8)
@@ -262,9 +267,10 @@ func _layout_menu() -> void:
 	var area := get_viewport().get_visible_rect().size
 	var opening: bool=not world.started
 	var groups=[[mode_button],[resume_button],[load_button],[restart_button],[audio_button,ambient_button],[visual_button,display_button]]
-	var primary=[mode_button,resume_button,load_button,restart_button,audio_button,ambient_button,visual_button,display_button,quit_button]
+	var primary=[mode_button,resume_button,load_button,restart_button,audio_button,ambient_button,visual_button,display_button,main_menu_button,quit_button]
 	for button in menu_buttons:
 		if button not in primary:groups.append([button])
+	groups.append([main_menu_button])
 	groups.append([quit_button])
 	var row:=0
 	var navigation: Array[Button]=[]
@@ -384,9 +390,36 @@ func _show_menu_shell(title: String) -> void:
 			node.hide()
 	_update_mode_buttons()
 	_update_checkpoint_button()
+	_apply_menu_scope()
 	_layout_menu()
 	menu.show()
 	resume_button.grab_focus()
+
+## v0.55.0 · ClaudeHelper: Das Hauptmenü wählt Modus und Kapitel, die Pause im Spiel nur noch
+## Fortsetzen, Laden, Neustart, Optionen und den Weg zurück ins Hauptmenü.
+func is_main_menu() -> bool:
+	return not world.started and world.scene_file_path == MAIN_MENU_SCENE
+
+func _apply_menu_scope() -> void:
+	var opening: bool = not world.started
+	mode_button.visible = opening and not mode_button.has_meta("scope_locked")
+	restart_button.visible = not opening
+	main_menu_button.visible = not is_main_menu()
+
+func return_to_main_menu() -> void:
+	var tree := get_tree()
+	world.remember_coop_session(world.coop_session())
+	get_node("/root/DisplaySettings").set_menu_context(false)
+	tree.paused = false
+	Engine.time_scale = 1.0
+	var error := tree.change_scene_to_file(MAIN_MENU_SCENE)
+	if error != OK:
+		world.toast("Hauptmenü konnte nicht geöffnet werden (%d)." % error)
+
+## Kapitel aus dem Hauptmenü öffnen: gewählter Modus gilt weiter, das Kapitel startet direkt.
+func open_chapter(scene: String) -> void:
+	world.remember_coop_session(requested_coop)
+	get_tree().change_scene_to_file(scene)
 
 func hide_menu() -> void:
 	get_node("/root/DisplaySettings").set_menu_context(false)

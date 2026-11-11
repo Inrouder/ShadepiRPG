@@ -243,7 +243,7 @@ func _process(delta: float) -> void :
 		elapsed += delta
 	if engine_failed:
 		repair_left = maxf(0.0, repair_left - delta)
-		if Input.is_action_just_pressed("attack"):
+		if _crew("attack"):
 			request_repair()
 			if world.is_busy():
 				return
@@ -262,24 +262,24 @@ func _process(delta: float) -> void :
 	hurt = maxf(0, hurt - delta)
 	lane = clampi(lane + int(Input.is_action_just_pressed("move_right")) - int(Input.is_action_just_pressed("move_left")), 0, 2)
 	_steer(delta)
-	if flight and elapsed >= 9.0 and elapsed < 15.0 and Input.is_action_just_pressed("hack") and not transponder_sent and engine_repaired:
+	if flight and elapsed >= 9.0 and elapsed < 15.0 and _crew("hack") and not transponder_sent and engine_repaired:
 		transponder_sent = true
 		world.sound("hack")
 	if not flight:
-		if Input.is_action_just_pressed("hack") and hack_cooldown == 0:
+		if _crew("hack") and hack_cooldown == 0:
 			if absf(x - boss_x) < 35.0:
 				hack = 3.3
 				hack_cooldown = 7.0
 				world.sound("hack")
 			else:
 				world.toast("Für den Hack auf die Spur des Wagens wechseln.")
-		if Input.is_action_pressed("attack") and shot_cooldown == 0:
+		if _crew("attack", true) and shot_cooldown == 0:
 			bullets.append(Vector2(x, BIKE_Y + 14.0))
 			shot_cooldown = 0.23
 			_sound("shot")
 			flashes.append({"p": Vector2(x, BIKE_Y + 14), "t": 0.09})
 			velocity_x -= 8.0
-		if Input.is_action_just_pressed("dash") and grenade_cooldown == 0:
+		if _crew("dash") and grenade_cooldown == 0:
 			grenade = Vector2(x, BIKE_Y + 18.0)
 			grenade_cooldown = 3.4
 	if not flight:
@@ -440,6 +440,16 @@ func _draw_airspace(cyan: Color) -> void :
 
 # --- Motorrad-Verfolgung --------------------------------------------------------
 
+## v0.55.0 · ClaudeHelper: Im Koop fährt Spieler 2 als Raven mit – Hack, Schuss, Granate und
+## das Wartungsdeck reagieren auch auf seine Tasten (U / O / rechte Umschalttaste bzw. zweites Pad).
+func _crew(action: String, held: bool = false) -> bool:
+	var names: Array[String] = [action]
+	if world != null and world.get("coop") == true: names.append("raven_" + action)
+	for name in names:
+		if InputMap.has_action(name) and (Input.is_action_pressed(name) if held else Input.is_action_just_pressed(name)):
+			return true
+	return false
+
 func _axis(negative: String, positive: String) -> float:
 	if not InputMap.has_action(negative) or not InputMap.has_action(positive):
 		return 0.0
@@ -534,7 +544,7 @@ func _hack_drone() -> Dictionary:
 	return best
 
 func _bike_weapons() -> void:
-	if Input.is_action_just_pressed("hack") and hack_cooldown == 0:
+	if _crew("hack") and hack_cooldown == 0:
 		var drone := _hack_drone()
 		if not drone.is_empty():
 			drone.state = "hacked"
@@ -549,13 +559,13 @@ func _bike_weapons() -> void:
 			_callout("LENKUNG GEHACKT")
 		else:
 			world.toast("Für den Hack hinter den Wagen oder unter eine Drohne fahren.")
-	if Input.is_action_pressed("attack") and shot_cooldown == 0:
+	if _crew("attack", true) and shot_cooldown == 0:
 		bullets.append(Vector2(x, bike_y + 14.0))
 		shot_cooldown = 0.2
 		_sound("shot")
 		flashes.append({"p": Vector2(x, bike_y + 14), "t": 0.09})
 		velocity_x -= 8.0
-	if Input.is_action_just_pressed("dash") and grenade_cooldown == 0:
+	if _crew("dash") and grenade_cooldown == 0:
 		grenade = Vector2(x, bike_y + 18.0)
 		grenade_cooldown = 3.4
 

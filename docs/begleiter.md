@@ -40,3 +40,19 @@ Solange Spieler 2 den Begleiter steuert, gehören die Pfeiltasten ihm; Spieler 1
 ## Technik
 
 `scripts/companion.gd` · Pixelquellen `assets/sprites/companions/` aus `tools/companions/build_companions.py` · Test `tests/companion.gd` (22 Prüfungen, in CI).
+
+## Koop-Prüfung aller Abschnitte · v0.55.0 · ClaudeHelper
+
+`tests/coop_chapters.gd` startet jeden der 21 Abschnitte in einer Koop-Sitzung und drückt echte Tasten für beide Spieler.
+
+| Abschnitt | Spieler 2 |
+| --- | --- |
+| Kapitel 1 · Wohnung, Jagd | Drohne |
+| Kapitel 1 · Rettung, Bosskampf bis Ravens Rückkehr | Naniten, danach Raven |
+| Kapitel 2 · Hof, Versteck, Kühlung, Erholung | Naniten |
+| Kapitel 2 · Deep Dive | Drohne |
+| Kapitel 3–4 · Pakt, Hinterhalt, Garage | Raven |
+| Kapitel 4 · Verfolgung | Raven auf dem Sozius: U Feuer, O Hack, P Granate |
+| Kapitel 5–6 · Hangar, Echo, Dach | Drohne |
+| Kapitel 6 · Flug | Raven als Kopilotin: Pfeile für den Kalibriercode, U für das Wartungsdeck |
+| Kapitel 7 · Boss, Flucht, See | Naniten |

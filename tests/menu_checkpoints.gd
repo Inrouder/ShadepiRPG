@@ -41,7 +41,9 @@ func run():
 	check(Resume.latest(self).state==2,"out-of-range latest state is excluded")
 	fixture(0,6,-1)
 	check(Resume.latest(self).scene.ends_with("chapter_one.tscn"),"old checkpoints without metadata use their file modification time")
-	check(Resume.latest(self,true).is_empty(),"solo checkpoints never masquerade as a co-op slot")
+	# v0.55.0 · ClaudeHelper: Kapitel 2–7 teilen einen Spielstand, den auch eine Koop-Runde fortsetzt.
+	var shared: Dictionary = Resume.latest(self,true)
+	check(not shared.is_empty() and shared.scene.ends_with("chapter_two.tscn"),"co-op resumes the shared later-chapter slot, never the chapter-one solo slot")
 	fixture(0,4,60,false,true)
 	check(Resume.latest(self,true).state==4,"co-op selection uses the co-op checkpoint")
 	fixture(2,10,999,true)

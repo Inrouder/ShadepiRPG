@@ -7,7 +7,8 @@ const FILES := ["user://shadepi-chapter-one.cfg","user://shadepi-chapter-two.cfg
 static func latest(tree: SceneTree, coop: bool = false) -> Dictionary:
 	var winner := {}
 	for i in FILES.size():
-		if coop and i>0: continue # Chapters 2–7 currently use their single-player slot.
+		# v0.55.0 · ClaudeHelper: Kapitel 2–7 haben einen gemeinsamen Spielstand; der Koop-Modus
+		# kommt aus der Sitzung, deshalb darf auch eine Koop-Runde dort weiterspielen.
 		var path: String = Admin.checkpoint_path(FILES[i],tree)
 		var cfg := ConfigFile.new()
 		if cfg.load(path)!=OK: continue

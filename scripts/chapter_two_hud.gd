@@ -6,10 +6,11 @@ func _ready() -> void :
 	super._ready()
 	mission_title.text = "KAPITEL 2 / OFFENBARUNGEN"
 	menu_description.text = "Industriegebiet · Ravens Versteck"
+	mode_button.set_meta("scope_locked", true)
 	mode_button.hide()
 	restart_button.text = "Kapitel 2 neu starten"
-	button_at("Zurück zu Kapitel 1", 274, func(): get_tree().change_scene_to_file("res://scenes/chapter_one.tscn"))
-	campaign_button = button_at("Kapitel 3–7 fortsetzen", 93, func(): get_tree().change_scene_to_file("res://scenes/campaign.tscn"))
+	# v0.55.0 · ClaudeHelper: Kapitelsprünge liegen im Hauptmenü; hier nur noch der Weg dorthin.
+	campaign_button = button_at("Kapitel 3–7 fortsetzen", 93, func(): open_chapter("res://scenes/campaign.tscn"))
 	campaign_button.hide()
 	menu_help.text = "E / A Zugriff · F11 Vollbild"
 func show_menu(title: String = "KAPITEL 2") -> void :
@@ -20,7 +21,7 @@ func _update_mode_buttons() -> void :
 	load_button.text = "Letzten Kontrollpunkt laden"
 	_update_checkpoint_button()
 	var later: int = world.ChapterFlow.checkpoint("user://shadepi-campaign.cfg", "campaign", "beat", range(12))
-	campaign_button.visible = world.admin_enabled("unlock_all") or world.section == world.Section.END or world.saved_checkpoint() == world.Section.END or later >= 0
+	campaign_button.visible = world.section == world.Section.END
 	campaign_button.text = "Kapitel 3–7 fortsetzen" if later >= 0 else "Kapitel 3 starten"
 
 func comic_texture(_key: String) -> Texture2D:

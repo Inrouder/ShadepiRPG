@@ -1,15 +1,21 @@
 extends "res://scripts/hud.gd"
 
 var next_chapter_button: Button
+var campaign_button: Button
 func _ready() -> void :
 	super._ready()
 	mission_title.text = "KAPITEL 1 / ECHOS IN NEON UND SCHATTEN"
 	menu_description.text = "Kapitel 1 · Ravens Jagd\nLokal-Koop beginnt mit Ravens Rückkehr."
-	next_chapter_button = button_at("Kapitel 2 öffnen", 274, func(): get_tree().change_scene_to_file("res://scenes/chapter_two.tscn"))
+	next_chapter_button = button_at("Kapitel 2 öffnen", 274, func(): open_chapter("res://scenes/chapter_two.tscn"))
+	# v0.55.0 · ClaudeHelper: auch die späteren Kapitel direkt aus dem Hauptmenü.
+	campaign_button = button_at("Kapitel 3–7 öffnen", 274, func(): open_chapter("res://scenes/campaign.tscn"))
 	menu_help.text = "Stick / Kreuz und A · F11 Vollbild"
 	restart_button.text = "Kapitel 1 neu starten"
 func show_menu(title: String = "KAPITEL 1") -> void :
 	requested_coop = world.chapter_coop
+	# v0.55.0 · ClaudeHelper: Rückkehr aus einem späteren Kapitel behält den gewählten Modus.
+	if not world.started and world.is_inside_tree() and world.get_tree().get_meta(world.COOP_SESSION, false):
+		requested_coop = true
 	_show_menu_shell(title)
 
 ## Chapter 1 is Raven's hunt for the Chrome Jackals.
@@ -23,8 +29,13 @@ func _update_mode_buttons() -> void :
 	load_button.text = "Letzten Kontrollpunkt laden"
 	_update_checkpoint_button()
 	var later: int = world.ChapterFlow.checkpoint("user://shadepi-chapter-two.cfg", "chapter", "section", range(6))
-	next_chapter_button.visible = world.admin_enabled("unlock_all") or world.saved_checkpoint(requested_coop) == world.Phase.COMPLETE or later >= 0
+	var opening: bool = not world.started
+	var unlocked: bool = world.admin_enabled("unlock_all")
+	next_chapter_button.visible = opening and (unlocked or world.saved_checkpoint(false) == world.Phase.COMPLETE or world.saved_checkpoint(true) == world.Phase.COMPLETE or later >= 0)
 	next_chapter_button.text = "Kapitel 2 fortsetzen" if later >= 0 else "Kapitel 2 starten"
+	var campaign: int = world.ChapterFlow.checkpoint("user://shadepi-campaign.cfg", "campaign", "beat", range(12))
+	campaign_button.visible = opening and (unlocked or campaign >= 0 or later == 4)
+	campaign_button.text = "Kapitel 3–7 fortsetzen" if campaign >= 0 else "Kapitel 3 starten"
 
 func _start_new() -> void :
 	world.chapter_coop = requested_coop
