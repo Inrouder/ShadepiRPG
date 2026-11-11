@@ -39,6 +39,7 @@ Diese Vermessungen lesen PNG-Pixel, **überschreiben aber aktive JSON-Anker-/Akt
 | [audit_atlases.py](sprites/audit_atlases.py) | v0.52.0 · ClaudeHelper: **nur lesend.** Findet Posen, die ein Stück der Nachbarpose zeigen oder abgeschnitten sind. Braucht Pillow, numpy, scipy. |
 | [calibrate_atlases.py](sprites/calibrate_atlases.py) | v0.52.0 · ClaudeHelper: schreibend. Gibt jeder Pose eine eigene Zelle mit Rand und passt die JSON-Kataloge an; zeichnet nichts neu. Ausschnitte stehen in [atlas_regions.py](sprites/atlas_regions.py). |
 | [import_free_sfx.py](audio/import_free_sfx.py) | v0.54.0 · ClaudeHelper: wandelt die freien CC0-Aufnahmen in die Spieldateien um; Quellen in `assets/audio/CREDITS.md`. Braucht ffmpeg und die Quell-Klone. |
+| [repair_parked_bike.py](vehicles/repair_parked_bike.py) | v0.57.1 · ClaudeHelper: ersetzt den lückenhaften Mittelteil von `assets/world/hq/bike-parked.png` durch Rahmen, Lenker, Tank und Sitzbank; Quelle ist die gesicherte Altfassung `vehicles/bike-parked-source.png`. |
 | [build_arcade.py](arcade/build_arcade.py) | v0.57.0 · ClaudeHelper: schreibt Bühne, Automat und Trefferfunken für NEON KOMBAT nach `assets/arcade/`. Braucht Pillow und numpy. |
 | [build_drive_fx.py](fx/build_drive_fx.py) | v0.56.0 · ClaudeHelper: schreibt die Pixel-FX der Verfolgung nach `assets/fx/drive/` und das Wagenwrack `assets/vehicles/pursuit/wreck.png`. Braucht Pillow und numpy. |
 | [build_companions.py](companions/build_companions.py) | v0.53.0 · ClaudeHelper: schreibt Drohne und Naniten nach `assets/sprites/companions/`. |

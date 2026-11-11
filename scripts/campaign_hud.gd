@@ -34,6 +34,8 @@ func _process(delta: float) -> void :
 		boss.text = "KENZŌ MORIYAMA / %d HP\n%s" % [maxi(0, kenzo.health), "SCHULTERSERVO OFFEN · Q / RB" if window else ("Leitung gesperrt" if kenzo.health <= 180 else "Implantate aktiv")]
 	if world.raven_leads():
 		vitals.text = "RAVEN / NETRUNNERIN"
+		health_bar.size.x = 164.0 * world.raven.health / 100.0
+		energy_bar.size.x = 164.0 * world.raven.energy / 100.0
 	if world.drive != null:
 		vitals.text = "INTEGRITÄT / %d %%" % maxi(0, world.drive.health)
 		health_bar.size.x = 164.0 * maxf(0.0, world.drive.health) / 100.0

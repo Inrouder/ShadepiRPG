@@ -112,6 +112,62 @@ func run() -> void:
 	for row in rows: print("COOP ", row)
 	check(rows.size() == 21 and faults == 0, "alle 21 Abschnitte geprüft, Spieler 2 hat überall eine Rolle")
 
+	# v0.57.1 · ClaudeHelper (Nutzerbericht): Ravens Schüsse treffen die Gegner der Kampagne.
+	w.fresh_entry = false
+	w._enter(w.Beat.AMBUSH)
+	for i in 80:
+		await create_timer(0.05).timeout
+		if w.cutscene.running: w.cutscene.skip()
+		elif w.ui.dialogue_open: w.ui.advance_dialogue()
+		elif not w.foes.is_empty() and w.coop_raven_playable() and not w.is_busy(): break
+	check(not w.foes.is_empty() and w.coop_raven_playable(), "Hinterhalt: Spieler 2 spielt Raven gegen echte Gegner")
+	if not w.foes.is_empty():
+		var foe = w.foes[0]
+		for side in [Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]:
+			w.raven.position = foe.position + side * 70.0
+			w.raven.facing = -side
+			if w._line_clear(w.raven.position, foe.position): break
+		var life: int = foe.health
+		w.raven.attack_cooldown = 0.0
+		w.raven.energy = 100.0
+		var aim: Vector2 = w.raven.facing
+		key(KEY_U, true)
+		for i in 4: await physics_frame
+		key(KEY_U, false)
+		for i in 2: await physics_frame
+		check(foe.health < life, "Ravens Schuss (U) trifft den Gegner im Hinterhalt")
+		w.raven.facing = -aim
+		w.raven.position = foe.position + aim * -70.0
+		life = foe.health
+		w.raven_shot()
+		check(foe.health == life, "ein Schuss in die Gegenrichtung trifft nicht")
+		# Zwei gespielte Helden bleiben zusammen im Bild …
+		w.raven.position = w.player.position + Vector2(w.COOP_REACH.x, 0)
+		check(is_zero_approx(w.limit_coop_motion(w.raven, Vector2(110, 0), 0.016).x), "zwei gespielte Helden hält die Koop-Leine zusammen")
+	# … aber eine allein geführte Figur hängt nicht am unsichtbaren Partner (Halle: unsichtbare Wand).
+	w.fresh_entry = false
+	w._enter(w.Beat.HANGAR)
+	for i in 60:
+		await create_timer(0.05).timeout
+		if w.cutscene.running: w.cutscene.skip()
+		elif w.ui.dialogue_open: w.ui.advance_dialogue()
+		elif i > 12 and not w.is_busy(): break
+	w.raven.position = Vector2(566, 343)
+	w.player.position = w.raven.position - Vector2(w.COOP_REACH.x, 0)
+	check(w.coop and w.raven_leads() and w.limit_coop_motion(w.raven, Vector2(110, 0), 0.016) == Vector2(110, 0), "Halle: Raven läuft frei, obwohl Shadepi weit links wartet")
+	var before_x: float = w.raven.position.x
+	key(KEY_D, true)
+	await create_timer(0.5).timeout
+	key(KEY_D, false)
+	check(w.raven.position.x > before_x + 30.0, "Halle: D bewegt Raven über die frühere Grenze nach rechts")
+	await process_frame
+	check(not w.ui.raven_vitals.visible, "führt Raven allein, zeigt die Anzeige keine zweite Raven-Zeile")
+	var bike: Image = load("res://assets/world/hq/bike-parked.png").get_image()
+	var holes := 0
+	for y in range(100, 240):
+		if bike.get_pixel(113, y).a < 0.99 or bike.get_pixel(70, y).a < 0.5 or bike.get_pixel(156, y).a < 0.5: holes += 1
+	check(holes == 0, "das geparkte Motorrad hat in der Mitte keine Lücke")
+
 	# Verfolgung: Raven (Spieler 2) schießt und hackt vom Sozius – U und O sind ihre Tasten.
 	w.fresh_entry = false
 	w._enter(w.Beat.CHASE)

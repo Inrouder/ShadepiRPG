@@ -1,5 +1,14 @@
 # Versionshinweise
 
+## v0.57.1 – ClaudeHelper: Ravens Schüsse, unsichtbare Wand, Motorrad · 11. November 2026
+
+Nutzerbericht mit Bild aus der Halle (Kapitel 4, Koop).
+
+- **Ravens Schüsse treffen wieder:** In Kapitel 3–7 kannte die Schussprüfung nur den Gegner der Testszene; Ravens normale Schüsse gingen deshalb durch alle Kampagnengegner hindurch. Jetzt trifft sie den nächsten Gegner im Schusskegel.
+- **Unsichtbare Wand im Koop:** Die Koop-Leine hielt eine allein geführte Figur am unsichtbar wartenden Partner fest (in der Halle: Raven kam nicht weiter nach rechts). Die Leine gilt nur noch zwischen zwei gespielten, sichtbaren Helden.
+- **Geparktes Motorrad:** Der Mittelteil bestand aus einer flachen Ersatzfläche mit zwei durchsichtigen Streifen. Er ist durch Rahmen, Lenker, Tank und Sitzbank ersetzt (`tools/vehicles/repair_parked_bike.py`); Verkleidung, Motor und Heck sind unverändert.
+- **Anzeige:** Führt Raven allein, erscheint keine doppelte Raven-Zeile mehr; die Balken zeigen ihre Werte.
+
 ## v0.57.0 – ClaudeHelper: Arcade-Automat „NEON KOMBAT“ · 11. November 2026
 
 Nutzerauftrag: ein Automat in Shadepis Versteck mit einem Kampfspiel für alle Figuren, auch zu zweit.
