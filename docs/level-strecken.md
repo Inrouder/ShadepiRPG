@@ -31,6 +31,18 @@ Seit v0.58.1 stammen die Kulissen der Verfolgung vom Nutzer (fünf Bilder vom 11
 - Die Brücke ist aus dem fünften Bild freigestellt und zieht in der Stadt alle 13 bis 19 Sekunden über die Fahrbahn; Fahrzeuge fahren darunter hindurch.
 - Abgelegt als WebP (Qualität 92), zusammen rund 2,3 MB.
 
+## Weitere gestreckte Level · v0.59.0 · ClaudeHelper
+
+| Stelle | vorher | jetzt |
+| --- | --- | --- |
+| Kapitel 1 · Jagd | 3 Abschnitte × 2 Wellen, 12 Gegner | 3 × 3 Wellen, 21 Gegner |
+| Kapitel 1 · Rettung | 3 Wellen, 8 Gegner | 4 Wellen, 11 Gegner |
+| Kapitel 6 · Flug, Häuserschlucht | 23 s | 34 s |
+| Kapitel 6 · Flug, Turmabwehr | 7 s, zwei Laser-Drohnen | 20 s, dritte Drohne nach der Hälfte |
+| Kapitel 7 · Aufzugwachen | 3 Wellen, 8 Gegner | 4 Wellen, 11 Gegner, zwei Schildträger |
+
+Noch nicht gestreckt: Deep Dive (Kapitel 2), Tower-Etagen zwischen Dach und Kenzō, Wege zwischen den Schauplätzen. Dafür werden neue Kulissen im Stil der vorhandenen gebraucht.
+
 ## So lässt sich ein weiteres Level strecken
 
 - Fahrszenen: `drive.stages` setzen, Kulisse je Etappe in `_draw_highway()` ergänzen, Regeln in `_spawn_road_object()` und den Etappenfunktionen von `scripts/campaign_drive.gd`.

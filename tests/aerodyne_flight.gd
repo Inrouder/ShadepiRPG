@@ -175,6 +175,15 @@ func run() -> void:
 	f._process(1.0 / 60.0)
 	check(f.health == 100, "rolling through a laser avoids the hit")
 
+	# v0.59.0 · ClaudeHelper: längere Turmabwehr mit Verstärkung vor dem Scanner.
+	check(f.DEFENCE_AT < f.REINFORCE_AT and f.REINFORCE_AT < f.SCAN_AT and f.SCAN_AT - f.DEFENCE_AT >= 18.0, "the tower defence lasts long enough for a second wave")
+	f.lasers.clear()
+	f.elapsed = f.REINFORCE_AT
+	f._process(1.0 / 60.0)
+	check(f.phase == "defence" and f.reinforced and f.sentries.size() == 3, "a third laser drone reinforces the tower defence")
+	f._process(1.0 / 60.0)
+	check(f.sentries.size() == 3, "reinforcements arrive only once")
+
 	# --- Sequenzkalibrierung at the scanner.
 	await process_frame   # clear the "just pressed" state of earlier inputs
 	f.elapsed = f.SCAN_AT
