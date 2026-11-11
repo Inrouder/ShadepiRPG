@@ -129,6 +129,36 @@ func run() -> void:
 	smash.hazards.append(Vector2(232.0, smash.car_y - 40.0))
 	smash._advance_bike_world(0.05)
 	check(smash.hazards.size() == 1 and smash.smashed == 2, "barriers in another lane stay intact")
+	# v0.58.0 · ClaudeHelper: Etappen – Tunnel ohne Drohnen, Hochstraße mit Seitenwind.
+	var staged = make_drive(world, false)
+	check(staged.stages == 1, "a plain drive keeps the single-stage rules")
+	staged.stages = 3
+	staged.hazards.clear(); staged.objects.clear(); staged.drones.clear()
+	staged.armour = 0
+	staged._process(0.01)
+	check(staged.stage_shift >= 0.0 and staged.car_dead < 0.0 and staged.active, "an early pursuer falls back instead of ending the chase")
+	var integrity: float = staged.health
+	staged.health = 50.0
+	for i in 20: staged._process(0.1)
+	check(staged.stage == 1 and staged.health == 75.0 and staged.car_y > 380.0, "the stage change repairs the bike and brings the next car in from behind")
+	for i in 20: staged._process(0.1)
+	check(staged.stage_shift < 0.0 and staged.car_y < 340.0 and staged.armour == 80, "the tunnel pursuer closes in with its own plating")
+	staged.next_drone = 0.0
+	for i in 30: staged._process(0.1)
+	check(staged.drones.is_empty(), "no cargo drones fly inside the tunnel")
+	staged.armour = 0
+	staged._process(0.01)
+	for i in 40: staged._process(0.1)
+	check(staged.stage == 2 and Drive.STAGE_NAMES[2] == "HOCHSTRASSE", "the third stage is the skyway")
+	staged.hazards.clear(); staged.objects.clear()
+	staged.next_wind = 0.0; staged.x = 320.0; staged.velocity_x = 0.0
+	staged._process(0.05)
+	var gust_x: float = staged.x
+	for i in 6: staged._process(0.1)
+	check(staged.wind > 0.0 and absf(staged.x - gust_x) > 8.0, "crosswind pushes the bike sideways on the skyway")
+	staged.armour = 0
+	staged._process(0.01)
+	check(staged.car_dead >= 0.0 and staged.victory_left > 0.0, "only the last pursuer is destroyed")
 	check(is_instance_valid(smash.fx_layer) and smash.fx_layer.texture_filter == CanvasItem.TEXTURE_FILTER_NEAREST, "pixel effects are sampled without smoothing")
 	for column in 9:
 		for row in 3:

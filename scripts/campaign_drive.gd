@@ -100,6 +100,20 @@ var car_fall := 0.0
 var car_next_blast := 0.0
 var white_flash := 0.0
 var smashed := 0
+## v0.58.0 · ClaudeHelper (Nutzerauftrag „Level strecken“): Die Verfolgung läuft in der Kampagne
+## über drei Etappen – Stadt, Tunnel, Hochstraße – mit je einem eigenen Verfolgerwagen.
+signal stage_changed(index: int)
+const STAGE_NAMES := ["STADT", "TUNNEL", "HOCHSTRASSE"]
+const STAGE_ARMOUR := [100, 80, 100]
+const STAGE_SHIFT_SECONDS := 3.2
+var stages := 1
+var stage := 0
+var stage_shift := -1.0
+var stage_swapped := false
+var wind := 0.0
+var wind_dir := 1.0
+var next_wind := 6.0
+var stage_start := 0.0
 
 func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
@@ -283,6 +297,10 @@ func _draw_fx() -> void:
 			continue
 		elif flash.get("source","")=="cargo": point = DroneArt.release_point(flash.drone.p,Vector2(50,50),flash.drone.spin)
 		c.draw_rect(Rect2(point - Vector2(3, 3) - Vector2.ONE * flash.t * 24.0, Vector2(6, 6) + Vector2.ONE * flash.t * 48.0), Color(1.0, 0.83, 0.52, flash.t * 9.0))
+	if stage_shift >= 0.0:
+		# Einfahrt in die nächste Etappe: das Bild taucht kurz ins Dunkel.
+		var dark := 1.0 - absf(stage_shift / STAGE_SHIFT_SECONDS * 2.0 - 1.0)
+		c.draw_rect(Rect2(-20, -20, 680, 400), Color(0.01, 0.01, 0.03, clampf((dark - 0.55) * 3.2, 0.0, 0.96)))
 	if white_flash > 0.0:
 		c.draw_rect(Rect2(-20, -20, 680, 400), Color(1.0, 0.95, 0.85, minf(0.75, white_flash * 3.0)))
 
@@ -488,11 +506,20 @@ func _draw_scrolling_city(texture: Texture2D, speed: float) -> void :
 
 func _draw_highway() -> void :
 	var shift: = fposmod(scroll, 360.0)
-	draw_texture_rect(Painted.ART.highway, Rect2(0, shift - 360.0, 640, 360), false)
-	draw_texture_rect(Painted.ART.highway, Rect2(0, shift, 640, 360), false)
+	if stage == 2:
+		# Hochstraße: die Stadt liegt tief unten und zieht langsamer vorbei als das Deck.
+		var far := fposmod(scroll * 0.3, 360.0)
+		draw_texture_rect(Painted.ART.airspace, Rect2(0, far - 360.0, 640, 360), false, Color(0.5, 0.52, 0.62))
+		draw_texture_rect(Painted.ART.airspace, Rect2(0, far, 640, 360), false, Color(0.5, 0.52, 0.62))
+	var art: Texture2D = [Painted.ART.highway, Painted.ART.tunnel, Painted.ART.skyway][stage]
+	draw_texture_rect(art, Rect2(0, shift - 360.0, 640, 360), false)
+	draw_texture_rect(art, Rect2(0, shift, 640, 360), false)
+	if stage == 1:
+		return                      # im Tunnel regnet es nicht
+	var slant := -2.0 - wind * wind_dir * 9.0 if stage == 2 else -2.0
 	for i in 44:
 		var rain: = Vector2(i * 157 % 640, fposmod(i * 37 + elapsed * 335, 360))
-		draw_line(rain, rain + Vector2(-2, 8), Color(0.67, 0.71, 0.9, 0.18))
+		draw_line(rain, rain + Vector2(slant, 8), Color(0.67, 0.71, 0.9, 0.18))
 
 func _draw_airspace(cyan: Color) -> void :
 	_draw_scrolling_city(Painted.ART.airspace, 84.0)
@@ -554,6 +581,9 @@ func _process_bike(delta: float) -> void:
 			if flight or (armour<=0 and health>0):completed.emit()
 			else:crashed.emit()
 		return
+	if stage_shift >= 0.0:
+		_advance_stage_shift(delta)
+		return
 	elapsed += delta
 	if world.admin_enabled("no_cooldowns"):
 		hack_cooldown = 0.0
@@ -577,10 +607,13 @@ func _process_bike(delta: float) -> void:
 	_car_ai(delta)
 	if elapsed >= next_hazard:
 		_spawn_road_object()
-	if elapsed >= next_drone and drones.size() < (2 if armour < 50 else 1):
+	# Im Tunnel fliegen keine Drohnen; über der Hochstraße kommen sie von Anfang an zu zweit.
+	var swarm := stage == 2 or armour < 50
+	if stage != 1 and elapsed >= next_drone and drones.size() < (2 if swarm else 1):
 		drones.append({"p": Vector2(rng.randf_range(240.0, 400.0), -40.0), "state": "in", "t": 0.0, "drops": 0, "spin": 0.0})
-		next_drone = elapsed + (4.6 if armour < 50 else 7.0)
+		next_drone = elapsed + (4.6 if swarm else 7.0)
 		_callout("DROHNE ÜBER DER STRASSE")
+	_crosswind(delta)
 	_advance_bike_world(delta)
 	queue_redraw()
 	if health <= 0:
@@ -588,7 +621,83 @@ func _process_bike(delta: float) -> void:
 		impact(Vector2(x,bike_y),true)
 		world.toast("MOTORRAD AUSGEFALLEN · Kontrollpunkt wird neu geladen")
 	elif armour <= 0:
-		_destroy_car()
+		if stage < stages - 1: _stage_cleared()
+		else: _destroy_car()
+
+## Etappenwechsel: Der abgehängte Wagen fällt zurück, die Kulisse wechselt im Dunkel einer
+## Einfahrt, dann schließt der nächste Verfolger von hinten auf.
+func _stage_cleared() -> void:
+	stage_shift = 0.0
+	stage_swapped = false
+	ram_warning = 0.0
+	ram_recovery = 0.0
+	hack = 0.0
+	wind = 0.0
+	for drone: Dictionary in drones:
+		impact(drone.p, true, Color("ffba68"), 0.7)
+	for item: Dictionary in objects:
+		if item.k == "mine": impact(item.p, true, Color("ffba68"), 0.6)
+	drones.clear()
+	objects.clear()
+	rear_shots.clear()
+	rear_shot_vx.clear()
+	impact(Vector2(boss_x, car_y - 10), true, Color("ffba68"), 1.2)
+	chunks(Vector2(boss_x, car_y), [6, 7, 8, 9], 10, 1.1, Vector2(0, 70))
+	_callout("VERFOLGER ABGEHÄNGT")
+	world.toast(["RAVEN: Einer weniger – aber da kommt schon der nächste. In den Tunnel!", "RAVEN: Raus auf die Hochstraße! Achte auf den Wind – und auf die Drohnen."][stage])
+
+func _advance_stage_shift(delta: float) -> void:
+	stage_shift += delta
+	throttle = 0.0
+	steer_axis = _axis("move_left", "move_right")
+	_steer(delta)
+	speed = 1.3
+	scroll += ROAD_SPEED * speed * delta
+	hurt = maxf(0.0, hurt - delta)
+	for i in range(hazards.size() - 1, -1, -1):
+		hazards[i].y += ROAD_SPEED * speed * delta
+		if hazards[i].y > 380: hazards.remove_at(i)
+	if not stage_swapped:
+		# Der getroffene Wagen qualmt und verliert den Anschluss.
+		car_y += 150.0 * delta
+		boss_x = clampf(boss_x + sin(stage_shift * 17.0) * 70.0 * delta, ROAD.x + 10.0, ROAD.y - 10.0)
+		if int(stage_shift * 20.0) % 3 == 0: _smoke(Vector2(boss_x, minf(car_y, 372.0)))
+		if stage_shift >= STAGE_SHIFT_SECONDS * 0.5:
+			stage_swapped = true
+			stage += 1
+			armour = STAGE_ARMOUR[stage]
+			health = minf(100.0, health + 25.0)
+			hazards.clear()
+			car_y = 452.0
+			boss_lane = 1
+			boss_x = LANES[1]
+			boss_velocity = 0.0
+			next_hazard = elapsed + 1.6
+			stage_start = elapsed
+			next_drone = elapsed + 3.0
+			next_wind = elapsed + 4.0
+			_callout("ETAPPE %d · %s" % [stage + 1, STAGE_NAMES[stage]])
+			_sound("engine_restart")
+			stage_changed.emit(stage)
+	else:
+		car_y = move_toward(car_y, clampf(bike_y + 86.0, 250.0, 332.0), 120.0 * delta)
+	queue_redraw()
+	if stage_shift >= STAGE_SHIFT_SECONDS:
+		stage_shift = -1.0
+		world.toast(["", "RAVEN: Der Neue hat dickere Reifen als Verstand. Mach ihn fertig!", "RAVEN: Letzter Wagen. Danach ist der Weg zur Garage frei!"][stage])
+
+## Hochstraße: Böen drücken das Motorrad zur Seite.
+func _crosswind(delta: float) -> void:
+	if stage != 2:
+		return
+	if wind > 0.0:
+		wind = maxf(0.0, wind - delta)
+		x = clampf(x + wind_dir * 46.0 * minf(1.0, wind * 2.0) * delta, ROAD.x, ROAD.y)
+	elif elapsed >= next_wind:
+		wind = 1.5
+		wind_dir = 1.0 if rng.randf() < 0.5 else -1.0
+		next_wind = elapsed + rng.randf_range(5.5, 8.0)
+		_callout("SEITENWIND %s" % ("→" if wind_dir > 0.0 else "←"))
 
 ## v0.56.0 · ClaudeHelper (Nutzerbericht): Der besiegte Wagen fuhr einfach weiter. Jetzt fängt er
 ## Feuer, schlingert, explodiert und bleibt als brennendes Wrack hinter dem Motorrad zurück.
@@ -741,7 +850,8 @@ func _car_ai(delta: float) -> void:
 	ram_recovery = maxf(0.0, ram_recovery - delta)
 
 func _spawn_road_object() -> void:
-	next_hazard = elapsed + maxf(0.7, 1.35 - elapsed * 0.012)
+	# Jede Etappe beginnt wieder locker und zieht dann an; im Tunnel stehen die Hindernisse dichter.
+	next_hazard = elapsed + maxf(0.7, 1.35 - (elapsed - stage_start) * 0.012) * (0.85 if stage == 1 else 1.0)
 	var lanes := [236.0, 320.0, 404.0]
 	var lane_x: float = lanes[(int(x > 278.0) + int(x > 362.0) + 1 + pattern % 2) % 3]
 	match pattern % 8:

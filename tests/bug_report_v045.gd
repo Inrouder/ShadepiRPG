@@ -80,6 +80,15 @@ func run():
 	var drive=w.drive
 	drive.completed.emit()
 	check(w.beat==w.Beat.CHASE and w.drive==drive,"premature vehicle completion cannot skip an undefeated pursuer")
+	# v0.58.0 · ClaudeHelper: drei Etappen – erst der dritte Wagen beendet die Fahrt.
+	check(drive.stages==3 and drive.stage==0,"the campaign chase runs over three stages")
+	drive.armour=0;drive._process(0.01)
+	check(drive.stage_shift>=0.0 and drive.victory_left<0.0 and drive.car_dead<0.0,"the first pursuer is shaken off, not the end of the ride")
+	for i in 40: drive._process(0.1)
+	check(drive.stage==1 and drive.stage_shift<0.0 and drive.armour==drive.STAGE_ARMOUR[1] and w.chase_stage==1,"the tunnel stage starts with a fresh pursuer and is remembered for retries")
+	drive.armour=0;drive._process(0.01)
+	for i in 40: drive._process(0.1)
+	check(drive.stage==2 and drive.armour==100 and w.beat==w.Beat.CHASE,"the skyway is the last stage")
 	drive.armour=0;drive._process(0.01);drive._process(0.8)
 	check(w.beat==w.Beat.CHASE,"victory keeps the vehicle visible for the actual exit")
 	drive._process(2.0);drive._process(2.0);w.cutscene.skip();await finish(w)

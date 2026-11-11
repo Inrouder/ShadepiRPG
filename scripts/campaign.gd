@@ -87,6 +87,7 @@ var lake_scene_pending := false
 var lake_sequence: Node2D
 var discovery_pending := false
 var hangar_discovery: Node2D
+var chase_stage := 0
 var hangar_world: Node2D
 ## v0.57.0 · ClaudeHelper: Arcade-Automat an der Rückwand der Halle.
 const ArcadeCabinet = preload("res://scripts/arcade/arcade_cabinet.gd")
@@ -409,6 +410,13 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo:
 		drive = AerodyneFlight.new() if beat == Beat.FLIGHT else Drive.new()
 		drive.world = self
 		drive.flight = beat == Beat.FLIGHT
+		if beat == Beat.CHASE:
+			# v0.58.0 · ClaudeHelper: drei Etappen; ein Sturz setzt an der erreichten Etappe neu an.
+			if fresh: chase_stage = 0
+			drive.stages = 3
+			drive.stage = chase_stage
+			drive.armour = drive.STAGE_ARMOUR[chase_stage]
+			drive.stage_changed.connect(func(index: int): chase_stage = index)
 		if beat == Beat.FLIGHT:
 			drive.engine_repaired = flight_engine_repaired
 		drive_layer.add_child(drive)
@@ -509,6 +517,14 @@ func _spawn_wave(saved_section: int = 0) -> void :
 	)
 
 func _spawn_arcade_foe(point: Vector2, variant: int) -> PixelActor:
+	if variant == 4:
+		# v0.58.0 · ClaudeHelper: Truppführer des Hinterhalts – Schild nach vorn, mehr Leben.
+		var leader := _spawn_foe(point, 150, 3)
+		leader.front_shield = true
+		leader.hit_damage = 20
+		leader.move_speed = 54
+		toast("TRUPPFÜHRER · Schild vorn – von hinten treffen oder Ravens Hack nutzen")
+		return leader
 	return _spawn_foe(point, 64 if beat == Beat.AMBUSH else 72, variant)
 
 func _spawn_foe(point: Vector2, hp: int, variant: int) -> PixelActor:
