@@ -2,6 +2,7 @@ extends "res://scripts/hud.gd"
 
 var next_chapter_button: Button
 var campaign_button: Button
+var arcade_button: Button
 func _ready() -> void :
 	super._ready()
 	mission_title.text = "KAPITEL 1 / ECHOS IN NEON UND SCHATTEN"
@@ -9,6 +10,9 @@ func _ready() -> void :
 	next_chapter_button = button_at("Kapitel 2 öffnen", 274, func(): open_chapter("res://scenes/chapter_two.tscn"))
 	# v0.55.0 · ClaudeHelper: auch die späteren Kapitel direkt aus dem Hauptmenü.
 	campaign_button = button_at("Kapitel 3–7 öffnen", 274, func(): open_chapter("res://scenes/campaign.tscn"))
+	# v0.57.0 · ClaudeHelper: Der Automat aus Shadepis Halle, sobald er einmal gefunden wurde.
+	arcade_button = button_at("Arcade · NEON KOMBAT", 274, func(): world.open_arcade(true))
+	arcade_button.tooltip_text = "Kampfspiel für 1 oder 2 Spieler mit den Figuren des Spiels."
 	menu_help.text = "Stick / Kreuz und A · F11 Vollbild"
 	restart_button.text = "Kapitel 1 neu starten"
 func show_menu(title: String = "KAPITEL 1") -> void :
@@ -36,6 +40,7 @@ func _update_mode_buttons() -> void :
 	var campaign: int = world.ChapterFlow.checkpoint("user://shadepi-campaign.cfg", "campaign", "beat", range(12))
 	campaign_button.visible = opening and (unlocked or campaign >= 0 or later == 4)
 	campaign_button.text = "Kapitel 3–7 fortsetzen" if campaign >= 0 else "Kapitel 3 starten"
+	arcade_button.visible = opening and (unlocked or preload("res://scripts/arcade/neon_kombat.gd").unlocked())
 
 func _start_new() -> void :
 	world.chapter_coop = requested_coop
