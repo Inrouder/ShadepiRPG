@@ -44,6 +44,8 @@ func _process(delta: float) -> void :
 			_flight_hud(world.drive)
 		else:
 			objective.text = "Verfolger · %d %% Panzerung" % maxi(0, world.drive.armour)
+			if world.drive.stages > 1:   # v0.58.0 · ClaudeHelper
+				objective.text = "Etappe %d/%d · %s · Wagen %d %%" % [world.drive.stage + 1, world.drive.stages, world.drive.STAGE_NAMES[world.drive.stage].capitalize(), maxi(0, world.drive.armour)]
 			controls.text = "A/D · Lenken   W/S · Gas/Bremse   J / X · Feuer   Q / RB · Hack (Wagen/Drohne)   Leertaste / B · Granate"
 			if world.coop:   # v0.55.0 · ClaudeHelper: Raven schießt und hackt vom Sozius
 				controls.text = "S1 · A/D Lenken · W/S Gas · J Feuer      S2 Raven · U Feuer · O Hack · P Granate (Pad 2: X / Y / B)"

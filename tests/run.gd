@@ -822,6 +822,7 @@ func check_campaign() -> void:
 	check(scene.beat == scene.Beat.CHASE and scene.menu_open and scene.drive.health == 100, "crashing restarts the chase checkpoint")
 	scene.close_menu()
 	finish_dialogue(scene)
+	scene.drive.stage = 2   # v0.58.0 · ClaudeHelper: letzte Etappe – erst dieser Wagen explodiert
 	scene.drive.armour = 0
 	scene.drive._process(0.01)
 	# v0.56.0 · ClaudeHelper: Der Wagen brennt, explodiert und bleibt als Wrack zurück.

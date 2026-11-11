@@ -16,6 +16,9 @@ static func chamber_point(point: Vector2) -> Vector2:
 
 const ART: = {
 	"alley": preload("res://assets/world/painted/alley.png"), 
+	# v0.58.0 · ClaudeHelper: Etappen 2 und 3 der Verfolgung (tools/drive/build_chase_stages.py).
+	"tunnel": preload("res://assets/world/painted/tunnel.png"),
+	"skyway": preload("res://assets/world/painted/skyway.png"),
 	"market": preload("res://assets/world/painted/market.png"), 
 	"apartment": preload("res://assets/world/painted/apartment.png"), 
 	"industry": preload("res://assets/world/painted/industry.png"), 

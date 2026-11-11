@@ -184,7 +184,7 @@ func run() -> void:
 	root.add_child(campaign)
 	campaign._enter(campaign.Beat.AMBUSH)
 	finish_dialogue(campaign)
-	await verify_encounter(campaign, 13)
+	await verify_encounter(campaign, 19)   # v0.58.0 · ClaudeHelper: zwei zusätzliche Wellen samt Truppführer
 	check(campaign._target() != Vector2.ZERO, "motorcycle unlocks after last ambush section")
 	campaign._enter(campaign.Beat.AMBUSH, 1)
 	finish_dialogue(campaign)

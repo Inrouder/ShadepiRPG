@@ -26,11 +26,15 @@ const AMBUSH := [
 		[[Vector2(450, 355), 0], [Vector2(445, 445), 1]],
 		[[Vector2(190, 345), 2], [Vector2(455, 420), 1]],
 		[[Vector2(200, 425), 3], [Vector2(455, 350), 0]],
+		# v0.58.0 · ClaudeHelper: vierte Welle – Kenzōs Leute rücken von beiden Seiten nach.
+		[[Vector2(190, 345), 2], [Vector2(450, 355), 0], [Vector2(445, 445), 1]],
 	]},
 	{"bounds": Vector2(510, 1000), "floor": Vector2(268, 522), "start": Vector2(550, 410), "waves": [
 		[[Vector2(717, 364), 0], [Vector2(860, 395), 1]],
 		[[Vector2(680, 365), 2], [Vector2(925, 370), 1]],
 		[[Vector2(700, 390), 3], [Vector2(865, 360), 0], [Vector2(930, 415), 2]],
+		# Truppführer (Variante 4): Schild nach vorn, mehr Leben; zwei Schützen decken ihn.
+		[[Vector2(900, 390), 4], [Vector2(690, 360), 0], [Vector2(935, 430), 1]],
 	]},
 ]
 # Kenzō's guards storm the penthouse from the lift (bottom centre) only after

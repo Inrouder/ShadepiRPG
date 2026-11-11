@@ -1,5 +1,15 @@
 # Versionshinweise
 
+## v0.58.0 – ClaudeHelper: Verfolgung in drei Etappen, längerer Hinterhalt · 11. November 2026
+
+Nutzerauftrag: Level strecken, Story unverändert; als Muster Hinterhalt und Verfolgung. Neue Kulissen im Stil der vorhandenen.
+
+- **Verfolgung in drei Etappen:** Stadt → Tunnel → Hochstraße, je ein eigener Verfolgerwagen (100 / 80 / 100 % Panzerung). Die ersten beiden fallen qualmend zurück, erst der dritte explodiert wie bisher. Beim Etappenwechsel repariert sich das Motorrad um 25 %; nach einem Sturz geht es an der erreichten Etappe weiter.
+- **Tunnel:** keine Drohnen, Hindernisse stehen dichter. **Hochstraße:** Drohnen von Anfang an zu zweit, Seitenwind drückt das Motorrad zur Seite.
+- **Zwei neue Kulissen** (`tunnel.png`, `skyway.png`), gebaut aus den vorhandenen gemalten Kulissen (`tools/drive/build_chase_stages.py`). Unter der Hochstraße zieht die Stadt aus dem Flug langsamer vorbei.
+- **Hinterhalt:** je Abschnitt eine vierte Welle; am Ende ein Truppführer mit Schild nach vorn und 150 Leben. 19 statt 13 Gegner.
+- Story, Dialoge und Kapitelfolge sind unverändert. [Übersicht](docs/level-strecken.md).
+
 ## v0.57.1 – ClaudeHelper: Ravens Schüsse, unsichtbare Wand, Motorrad · 11. November 2026
 
 Nutzerbericht mit Bild aus der Halle (Kapitel 4, Koop).
