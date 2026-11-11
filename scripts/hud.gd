@@ -788,7 +788,9 @@ func _process(delta: float) -> void :
 	message_time = maxf(0.0, message_time - delta)
 	notice.visible = message_time > 0.0
 	vitals.text = "SHADEPI / %03d   EN %03d" % [world.player.health, roundi(world.player.energy)]
-	var coop: bool = world.coop
+	# v0.57.1 · ClaudeHelper: Die zweite Zeile gehört Raven nur, solange beide Helden gespielt
+	# werden. Führt eine Figur allein (Spieler 2 steuert dann Drohne oder Naniten), bleibt eine Zeile.
+	var coop: bool = world.coop and world.actor_is_playable(world.player) and world.actor_is_playable(world.raven)
 	var lead = world.raven if world.raven_leads() else world.player
 	combat_hint.visible = not world.is_busy() and world.actor_is_playable(lead) and world.combat_ready()
 	combat_hint.text = "K / RT halten · Kraftschuss" if lead.second_player else "K / RT halten · Kraftschlag    L / LT · Kick"

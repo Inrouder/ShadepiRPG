@@ -548,6 +548,19 @@ func player_strike(amount: int) -> void :
 		if foe.health > 0 and CombatRules.can_strike(player.position, player.facing, foe.position) and _line_clear(player.position, foe.position):
 			foe.take_damage(amount, player.position)
 
+## v0.57.1 · ClaudeHelper (Nutzerbericht): Ravens Schüsse trafen in Kapitel 3–7 niemanden, weil
+## die Basis nur den Gegner der Testszene kennt. Ziel ist der nächste lebende Gegner im Schusskegel.
+func raven_shot_target(origin: Vector2) -> PixelActor:
+	if not is_combat():
+		return null
+	var nearest: PixelActor
+	for foe in foes:
+		if not is_instance_valid(foe) or foe.health <= 0 or not foe.visible or not raven_can_hit(foe, origin):
+			continue
+		if nearest == null or origin.distance_squared_to(foe.position) < origin.distance_squared_to(nearest.position):
+			nearest = foe
+	return nearest
+
 func raven_hack() -> bool:
 	if is_instance_valid(tower) and tower.active:
 		toast("Raven extrahiert Daten · Shadepi muss die Wachen abfangen")

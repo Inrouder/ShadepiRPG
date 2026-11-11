@@ -337,6 +337,10 @@ func limit_coop_motion(actor: PixelActor, motion: Vector2, delta: float) -> Vect
 	if not coop:
 		return motion
 	var partner: PixelActor = raven if actor == player else player
+	# v0.57.1 · ClaudeHelper (Nutzerbericht): Die Leine gilt nur zwischen zwei gespielten Helden.
+	# Führt eine Figur allein, stand der unsichtbare Partner sonst als unsichtbare Wand im Raum.
+	if not actor_is_playable(partner) or not partner.visible:
+		return motion
 	var offset: = actor.position - partner.position
 	var step: = motion * delta
 
