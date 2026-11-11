@@ -1,5 +1,10 @@
 # Versionshinweise
 
+## v0.54.2 – ClaudeHelper: Koop bleibt ab Kapitel 2 erhalten · 11. November 2026
+
+- Nutzerbericht: Ab Kapitel 2 konnte Spieler 2 nicht mehr steuern. Ursache: Kapitel 1 hat ein eigenes Startmenü, das den gewählten Modus nicht für die Sitzung vermerkte; v0.54.1 hatte das nur für die Menüs der späteren Kapitel getan. Kapitel 1 vermerkt den Modus jetzt bei jedem Start und Laden, ebenso „Letzten Kontrollpunkt laden“.
+- Der Test `companion_input` spielt jetzt den echten Weg nach: Koop-Start im Menü von Kapitel 1, Übergang in Kapitel 2, Begleiter mit echten Tasten steuern (41 Prüfungen). Alle 44 Suiten ohne Fehler.
+
 ## v0.54.1 – ClaudeHelper: Begleiter im Koop wirklich steuerbar · 11. November 2026
 
 Nutzerbericht: Im Koop ließ sich die Drohne in Kapitel 1 nicht steuern, nach einem Kapitelwechsel auch Drohne und Naniten nicht. Drei Ursachen behoben:

@@ -61,9 +61,21 @@ func run() -> void:
 	check(one.companion_lead() == one.raven, "chapter one: Raven's drone belongs to player two")
 	await drive(one, "chapter one", one.raven)
 	check(not InputMap.action_has_event("move_left", one.companion._arrow(KEY_LEFT)), "chapter one: arrows are taken from player one while the drone is flown")
+	check(get_meta("shadepi_coop_session", false), "chapter one's own start menu remembers co-op for the session")
 	one.queue_free()
 	await process_frame
 	await process_frame
+	# Der echte Übergang: Kapitel 1 endet, Kapitel 2 beginnt frisch – Spieler 2 muss weiterspielen können.
+	set_meta("shadepi_fresh_chapter", "res://scenes/chapter_two.tscn")
+	var next = load("res://scenes/chapter_two.tscn").instantiate()
+	root.add_child(next)
+	await create_timer(0.3).timeout
+	check(next.coop, "chapter two continues the co-op session started in chapter one")
+	await play_until_free(next)
+	await drive(next, "chapter two", next.raven if next.raven_leads() else next.player)
+	next.queue_free()
+	await process_frame
+	remove_meta("shadepi_coop_session")
 	check(InputMap.action_has_event("move_left", one.companion._arrow(KEY_LEFT)) if is_instance_valid(one) else true, "leaving the chapter gives the arrow keys back")
 	# Kapitel 3–7: Start über das Menü im Koop, dann ein Sprung in eine Szene mit nur einem Helden.
 	var w = load("res://scenes/campaign.tscn").instantiate()
