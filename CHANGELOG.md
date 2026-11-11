@@ -1,5 +1,15 @@
 # Versionshinweise
 
+## v0.59.0 – ClaudeHelper: Jagd, Rettung, Flug und Aufzugkampf gestreckt · 12. November 2026
+
+Fortsetzung des Auftrags „Level strecken“; Story und Dialoge unverändert, keine neuen Kulissen nötig.
+
+- **Kapitel 1 · Jagd:** jeder der drei Abschnitte hat eine dritte Welle zu dritt (21 statt 12 Gegner).
+- **Kapitel 1 · Rettung:** vierte Welle vor Jackal (11 statt 8 Gegner).
+- **Kapitel 6 · Flug:** die Häuserschlucht dauert 34 statt 23 Sekunden, die Turmabwehr 20 statt 7; nach der Hälfte kommt eine dritte Laser-Drohne als Verstärkung.
+- **Kapitel 7 · Aufzugwachen:** vierte Welle mit zwei Schildträgern (11 statt 8 Gegner).
+- Eine wackelige Prüfung der Bodenspiegelung (`scene_polish`) verglich Bildnummern auf den Frame genau; sie lässt jetzt ein Bild Versatz zu.
+
 ## v0.58.1 – ClaudeHelper: gelieferte Kulissen für die Verfolgung · 11. November 2026
 
 Der Nutzer hat fünf Kulissenbilder für die Fahrt geliefert.

@@ -19,8 +19,10 @@ const REPAIR_SECONDS := 45.0
 const X_RANGE := Vector2(176.0, 464.0)
 const Y_RANGE := Vector2(196.0, 300.0)
 const FAILURE_AT := 6.0
-const DEFENCE_AT := 23.0
-const SCAN_AT := 30.0
+## v0.59.0 · ClaudeHelper (Level strecken): längere Schlucht, Turmabwehr in zwei Wellen.
+const DEFENCE_AT := 34.0
+const REINFORCE_AT := 44.0
+const SCAN_AT := 54.0
 const SCROLL := 185.0
 const ROLL_TIME := 0.5
 const ROLL_COOLDOWN := 1.05
@@ -77,6 +79,7 @@ var pattern := 0
 
 var calibration: RefCounted
 var scan_attempts := 0
+var reinforced := false
 var alarm_left := 0.0
 var approach_left := 0.0
 var drift_window := 0.0
@@ -264,6 +267,11 @@ func _phase_logic(delta: float) -> void:
 				_call_sentries(2)
 				world.toast("RAVEN: Turmabwehr! Laser-Drohnen – die roten Linien zeigen, wo sie feuern.")
 		"defence":
+			if not reinforced and elapsed >= REINFORCE_AT:
+				reinforced = true
+				_call_sentries(1)
+				say("VERSTÄRKUNG · DRITTE DROHNE", 1.4)
+				world.toast("RAVEN: Sie schicken eine dritte. Bleib in Bewegung, gleich sind wir am Scanner!")
 			if elapsed >= SCAN_AT:
 				_start_scan()
 		"alarm":

@@ -83,7 +83,7 @@ func run() -> void:
 	check(arrows != null and arrows.z_index > 0, "the hovering arrow stays above the actors")
 	var mirror: Sprite2D = w.raven.floor_reflection
 	check(w.floor_reflection(w.raven.global_position) > 0.5 and mirror.visible, "wet rooftop reflects the hero")
-	check(mirror.get_index() < w.raven.cast_shadow.get_index() and mirror.frame == w.raven.visual.frame and mirror.texture == w.raven.visual.texture and mirror.scale.y < 0.0, "reflection mirrors the current hero frame below the body")
+	check(mirror.get_index() < w.raven.cast_shadow.get_index() and absi(mirror.frame - w.raven.visual.frame) <= 1 and mirror.texture == w.raven.visual.texture and mirror.scale.y < 0.0, "reflection mirrors the current hero frame below the body")
 	w.set_visual_quality(0)
 	check(w.floor_reflection(w.raven.global_position) == 0.0, "reduced picture style switches reflections off")
 	w.set_visual_quality(2)

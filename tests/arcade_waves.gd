@@ -135,7 +135,7 @@ func run() -> void:
 	var chapter = load("res://scenes/chapter_one.tscn").instantiate()
 	root.add_child(chapter)
 	chapter._enter_checkpoint(chapter.Phase.HUNT)
-	await verify_encounter(chapter, 12)
+	await verify_encounter(chapter, 21)   # v0.59.0 · ClaudeHelper: zusätzliche Welle
 	check(not chapter.gate_open, "hunt still requires its story trail after all waves")
 	chapter.trail_index = chapter.TRAIL.size()
 	chapter._check_hunt_gate()
@@ -144,15 +144,15 @@ func run() -> void:
 	chapter.interact()
 	check(preload("res://tests/terminal_solver.gd").complete(chapter) and chapter.gate_open, "matrix hack opens Jackal's gate")
 	chapter._enter_checkpoint(chapter.Phase.RESCUE)
-	await verify_encounter(chapter, 8)
+	await verify_encounter(chapter, 11)   # v0.59.0 · ClaudeHelper: zusätzliche Welle
 	check(chapter.gate_open and chapter.raven.health == 0, "rescue opens only after all waves without reviving Raven early")
 	# Check automatic saving at section boundaries, death and mid-wave reload.
 	chapter._enter_checkpoint(chapter.Phase.HUNT)
-	for wave in 2:
+	for wave in 3:   # v0.59.0 · ClaudeHelper: drei Wellen je Abschnitt
 		for foe in chapter.encounter.fighters:
 			foe.take_damage(1000)
 		chapter.encounter._process(0)
-		if wave == 0:
+		if wave < 2:
 			chapter.encounter._process(2)
 	check(chapter.encounter.section_index == 1 and chapter.encounter.waiting, "next section waits for the player")
 	chapter.load_game(false)
@@ -209,7 +209,7 @@ func run() -> void:
 	finish_dialogue(campaign)
 	check(campaign.beat == campaign.Beat.ESCAPE, "Kenzō's defeat opens the escape")
 	campaign.tower.elapsed = campaign.tower.TRANSFER_SECONDS
-	await verify_encounter(campaign, 8)
+	await verify_encounter(campaign, 11)   # v0.59.0 · ClaudeHelper: zusätzliche Welle
 	await process_frame
 	finish_dialogue(campaign)
 	check(campaign.escape_guards_cleared and campaign.beat == campaign.Beat.ESCAPE, "all lift waves after Kenzō release the escape timer")
