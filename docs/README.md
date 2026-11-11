@@ -1,6 +1,6 @@
 # Shadepi · Bilder, Filme und Dokumentation
 
-**Stand v0.58.0 · ClaudeHelper · 11. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
+**Stand v0.58.1 · ClaudeHelper · 11. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
 
 Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnahmen, animierte Szenenfilme, Bedienung und technische Hinweise. Die PNG-Vorschauen sind direkt in GitHub sichtbar; die Filme bleiben zusätzlich als verlinkte WebP-Dateien erreichbar.
 
@@ -12,15 +12,15 @@ In Kapitel 3 bis 7 steuert Spieler 2 Raven selbst, wo sie frei in der Szene steh
 
 [![Etappe 2 im Tunnel, Etappe 3 auf der Hochstraße](previews/verfolgung-etappen-v058.webp)](level-strecken.md)
 
-[Level strecken: Verfolgung in drei Etappen, längerer Hinterhalt](level-strecken.md) · Aufnahmestand v0.58.0.
+[Level strecken: Verfolgung in drei Etappen, längerer Hinterhalt](level-strecken.md) · Aufnahmestand v0.58.1.
 
 [![Automat in der Halle, Kämpferwahl und Kampf](previews/arcade-v057.webp)](arcade.md)
 
-[Arcade-Automat NEON KOMBAT](arcade.md) · Aufnahmestand v0.58.0.
+[Arcade-Automat NEON KOMBAT](arcade.md) · Aufnahmestand v0.58.1.
 
 [![Bake zerbirst, Wagen brennt, Wrack bleibt zurück](previews/verfolgung-wrack-v056.webp)](verfolgung-finale-v056.md)
 
-[Verfolgungsfinale: Explosion und zerberstende Hindernisse](verfolgung-finale-v056.md) · Aufnahmestand v0.58.0.
+[Verfolgungsfinale: Explosion und zerberstende Hindernisse](verfolgung-finale-v056.md) · Aufnahmestand v0.58.1.
 
 [![Drohne und Nanitenschwarm im Spiel](previews/begleiter-v053.png)](begleiter.md)
 

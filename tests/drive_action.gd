@@ -132,6 +132,18 @@ func run() -> void:
 	# v0.58.0 · ClaudeHelper: Etappen – Tunnel ohne Drohnen, Hochstraße mit Seitenwind.
 	var staged = make_drive(world, false)
 	check(staged.stages == 1, "a plain drive keeps the single-stage rules")
+	# v0.58.1 · ClaudeHelper: gelieferte Kulissen – drei Straßenzüge, Brücke nur in der Stadt.
+	var streets := {}
+	for tile in 8: streets[staged._road_art(tile)] = true
+	check(streets.size() == 3 and staged._road_art(0) == staged._road_art(2), "the city alternates three street backdrops")
+	staged.hazards.clear(); staged.objects.clear()
+	staged.next_overpass = 0.0
+	staged._process(0.05)
+	check(staged.overpass_y < 0.0 and staged.next_overpass > staged.elapsed + 12.0, "a footbridge enters above the city road")
+	var bridge_y: float = staged.overpass_y
+	staged._process(0.2)
+	check(staged.overpass_y > bridge_y + 30.0 and is_instance_valid(staged.over_layer) and staged.over_layer.get_index() < staged.fx_layer.get_index(), "the bridge scrolls with the road, above the vehicles and below the effects")
+	staged.overpass_y = 400.0
 	staged.stages = 3
 	staged.hazards.clear(); staged.objects.clear(); staged.drones.clear()
 	staged.armour = 0
@@ -146,6 +158,9 @@ func run() -> void:
 	staged.next_drone = 0.0
 	for i in 30: staged._process(0.1)
 	check(staged.drones.is_empty(), "no cargo drones fly inside the tunnel")
+	staged.next_overpass = 0.0
+	staged._process(0.05)
+	check(staged.overpass_y >= 400.0 and staged._road_art(0) == staged._road_art(1), "the tunnel tiles with itself and has no footbridge")
 	staged.armour = 0
 	staged._process(0.01)
 	for i in 40: staged._process(0.1)
