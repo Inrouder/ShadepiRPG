@@ -26,6 +26,7 @@ static func latest(tree: SceneTree, coop: bool = false) -> Dictionary:
 
 static func load_latest(world: Node2D, coop: bool = false) -> bool:
 	var tree := world.get_tree()
+	world.remember_coop_session(coop)   # v0.54.2 · ClaudeHelper: gewählter Modus gilt auch nach dem Laden
 	var entry := latest(tree,coop)
 	if entry.is_empty():
 		world.toast("Kein gültiger Kontrollpunkt für diesen Modus vorhanden.")

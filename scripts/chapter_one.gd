@@ -213,6 +213,9 @@ func new_game(save_checkpoint: bool = true) -> void:
 		autosave()
 
 func _enter_checkpoint(next_phase: Phase, saved_section: int = 0) -> void:
+	# v0.54.2 · ClaudeHelper: Kapitel 1 hat ein eigenes Startmenü; der dort gewählte Modus muss
+	# für die ganze Sitzung gelten, damit Kapitel 2–7 im Koop weiterlaufen.
+	if is_inside_tree(): remember_coop_session(chapter_coop)
 	cutscene.abort()
 	ui.clear_toast()
 	cancel_terminal()
