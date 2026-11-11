@@ -1,5 +1,13 @@
 # Versionshinweise
 
+## v0.55.0 – ClaudeHelper: Koop in jedem Kapitel geprüft, Menü mit „Zurück ins Hauptmenü“ · 11. November 2026
+
+- **Menü umgebaut:** Die Pause in allen Kapiteln zeigt Fortsetzen, Kontrollpunkt laden, Kapitel neu starten, Ton/Bild und **Zurück ins Hauptmenü**. Die fehlerhafte Schaltfläche „Zurück zu Kapitel 1“ entfällt. Moduswechsel und Kapitelwahl (Kapitel 2, Kapitel 3–7) liegen nur noch im Hauptmenü; ein dort geöffnetes Kapitel startet direkt und im gewählten Modus. Das Hauptmenü merkt sich den Modus der laufenden Sitzung.
+- **Koop in jedem Abschnitt:** Neuer Test `coop_chapters` startet alle 21 Abschnitte der sieben Kapitel in einer Koop-Sitzung und drückt echte Tasten für beide Spieler. Spieler 2 steuert überall Raven, die Drohne oder die Naniten.
+- **Verfolgung und Flug:** Dort hatte Spieler 2 bisher nichts zu tun. Jetzt schießt, hackt und wirft Raven vom Sozius (U / O / P bzw. zweites Pad), im Flug gibt sie den Kalibriercode ein (Pfeile) und öffnet das Wartungsdeck (U).
+- **Kontrollpunkt laden im Koop:** berücksichtigt jetzt auch Kapitel 2–7 (bisher nur Kapitel 1).
+- 45 Suiten ohne Fehler; `coop_chapters` mit 68 Prüfungen.
+
 ## v0.54.2 – ClaudeHelper: Koop bleibt ab Kapitel 2 erhalten · 11. November 2026
 
 - Nutzerbericht: Ab Kapitel 2 konnte Spieler 2 nicht mehr steuern. Ursache: Kapitel 1 hat ein eigenes Startmenü, das den gewählten Modus nicht für die Sitzung vermerkte; v0.54.1 hatte das nur für die Menüs der späteren Kapitel getan. Kapitel 1 vermerkt den Modus jetzt bei jedem Start und Laden, ebenso „Letzten Kontrollpunkt laden“.

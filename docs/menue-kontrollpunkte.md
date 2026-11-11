@@ -18,6 +18,17 @@ Die vier Stiefel erhalten jetzt einen kräftigen engen Kontaktschatten mit weich
 
 ![Menü, Test-Kontrollpunktauswahl und direkter Einstieg in Ravens Verteidigung](previews/menue-testpunkte-v044.webp)
 
+## Hauptmenü und Pause seit v0.55.0 · ClaudeHelper
+
+| Hauptmenü: Modus und Kapitelwahl | Pause in jedem Kapitel |
+| --- | --- |
+| ![Hauptmenü mit Modus, Kapitel 2 und Kapitel 3–7](previews/menue-haupt-v055.webp) | ![Pausenmenü mit „Zurück ins Hauptmenü“](previews/menue-pause-v055.webp) |
+
+- **Hauptmenü** (Spielstart): Modus wählen (Einzelspieler / Lokal-Koop), Kapitel 1 starten, letzten Kontrollpunkt laden, freigeschaltete Kapitel direkt öffnen (Kapitel 2, Kapitel 3–7). Ein geöffnetes Kapitel startet sofort im gewählten Modus.
+- **Pause** (Esc / Start, in allen Kapiteln gleich): Fortsetzen, letzten Kontrollpunkt laden, Kapitel neu starten, Ton und Bild, **Zurück ins Hauptmenü**, Zurück zum Desktop. „Zurück zu Kapitel 1“ gibt es nicht mehr.
+- Der Modus wird nur im Hauptmenü gewechselt. Wer mitten im Spiel einen zweiten Spieler dazuholen will: Zurück ins Hauptmenü, Modus umschalten, Kapitel fortsetzen. Der Spielstand bleibt am letzten Kontrollpunkt.
+- Im Koop lädt „Letzten Kontrollpunkt laden“ jetzt auch Stände aus Kapitel 2–7.
+
 ## Die beiden Menüaktionen
 
 **Letzten Kontrollpunkt laden** lädt den zuletzt gespeicherten gültigen Stand des gewählten Modus, auch aus einem anderen Kapitel. Neue Dateien speichern dafür eine genaue Speicherzeit. Alte Dateien funktionieren über ihr Änderungsdatum weiter. Ungültige Zustände werden übergangen; ohne passenden Stand ist die Schaltfläche deaktiviert. Kapitel 1 unterscheidet Einzelspieler und Lokal-Koop, Kapitel 2–7 verwenden wie bisher ihren Einzelspielerstand.

@@ -114,6 +114,11 @@ func _axis(negative: String, positive: String) -> float:
 func _pressed(action: String) -> bool:
 	return InputMap.has_action(action) and Input.is_action_just_pressed(action)
 
+## v0.55.0 · ClaudeHelper: Raven ist Kopilotin – im Koop gibt Spieler 2 den Kalibriercode ein
+## und öffnet das Wartungsdeck; gesteuert wird weiter von Spieler 1.
+func _crew_pressed(action: String) -> bool:
+	return _pressed(action) or (world != null and world.get("coop") == true and _pressed("raven_" + action))
+
 func _held(action: String) -> bool:
 	return InputMap.has_action(action) and Input.is_action_pressed(action)
 
@@ -172,7 +177,7 @@ func _process(delta: float) -> void:
 	callout_time = maxf(0.0, callout_time - delta)
 	if engine_failed:
 		repair_left = maxf(0.0, repair_left - delta)
-		if _pressed("attack"):
+		if _crew_pressed("attack"):
 			request_repair()
 			if world.is_busy():
 				return
@@ -419,7 +424,7 @@ func _process_scan(delta: float) -> void:
 	for i in Calibration.DIRS.size():
 		if scan_grace > 0.0:
 			break
-		if _pressed("move_" + Calibration.DIRS[i]):
+		if _crew_pressed("move_" + Calibration.DIRS[i]):
 			calibration_input(i)
 			if phase != "scan":
 				return

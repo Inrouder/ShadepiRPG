@@ -43,6 +43,8 @@ func _process(delta: float) -> void :
 		else:
 			objective.text = "Verfolger · %d %% Panzerung" % maxi(0, world.drive.armour)
 			controls.text = "A/D · Lenken   W/S · Gas/Bremse   J / X · Feuer   Q / RB · Hack (Wagen/Drohne)   Leertaste / B · Granate"
+			if world.coop:   # v0.55.0 · ClaudeHelper: Raven schießt und hackt vom Sozius
+				controls.text = "S1 · A/D Lenken · W/S Gas · J Feuer      S2 Raven · U Feuer · O Hack · P Granate (Pad 2: X / Y / B)"
 			abilities.visible = not dialogue_open and not world.menu_open
 			abilities.text = "Hack %.0f s    Granate %.0f s" % [world.drive.hack_cooldown, world.drive.grenade_cooldown]
 	elif world.timing != null:
@@ -73,6 +75,7 @@ func _flight_hud(flight) -> void:
 		"scan":
 			objective.text = "Sequenzkalibrierung · Scanner %.0f s" % flight.calibration.time_left
 			controls.text = "Pfeile / WASD / Steuerkreuz · Richtung, wenn der Strahl auf dem Aerodyne liegt"
+			if world.coop: controls.text = "S1 · WASD      S2 Raven · Pfeile / Steuerkreuz Pad 2 · Richtung, wenn der Strahl auf dem Aerodyne liegt"
 			abilities.text = "Code %d / %d    Abweichungen %d / 3" % [flight.calibration.index, flight.calibration.steps.size(), flight.calibration.errors]
 		"alarm":
 			objective.text = "ALARM · Neuer Scan in %.0f s" % maxf(0.0, flight.alarm_left)

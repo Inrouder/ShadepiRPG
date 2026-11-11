@@ -278,15 +278,19 @@ func check_gamepads(scene: Node2D) -> void:
 	await process_frame
 	check(scene.menu_open, "Raven controller opens pause menu")
 	var mode_before: bool = scene.ui.requested_coop
-	scene.ui.mode_button.grab_focus()
+	# v0.55.0 · ClaudeHelper: Der Moduswechsel liegt nur noch im Hauptmenü; die Pause prüft Ton.
+	check(not scene.ui.mode_button.visible and scene.ui.main_menu_button.visible and scene.ui.requested_coop == mode_before, "pause offers the main menu instead of a mode switch")
+	scene.ui.resume_button.grab_focus()
 	stick(0, 1.0, JOY_AXIS_LEFT_Y)
 	await process_frame
-	check(root.gui_get_focus_owner() == scene.ui.resume_button, "left stick moves menu focus")
+	check(root.gui_get_focus_owner() == scene.ui.load_button or root.gui_get_focus_owner() == scene.ui.restart_button, "left stick moves menu focus")
 	stick(0, 0.0, JOY_AXIS_LEFT_Y)
-	scene.ui.mode_button.grab_focus()
+	var audio_before: bool = scene.audio_on
+	scene.ui.audio_button.grab_focus()
 	pad_button(0, JOY_BUTTON_A)
 	await process_frame
-	check(scene.ui.requested_coop != mode_before, "controller A activates the focused menu button")
+	check(scene.audio_on != audio_before, "controller A activates the focused menu button")
+	if scene.audio_on != audio_before: scene.toggle_audio()
 	scene.close_menu()
 	scene.player.position = WorldData.RAVEN + Vector2(0, 28)
 	scene.raven.position = WorldData.RAVEN
@@ -563,6 +567,7 @@ func reachable(from: Vector2, to: Vector2, gate: bool) -> bool:
 	return false
 
 func check_chapter() -> void:
+	if has_meta("shadepi_coop_session"): remove_meta("shadepi_coop_session")
 	var chapter = load("res://scenes/chapter_one.tscn").instantiate()
 	root.add_child(chapter)
 	await process_frame
