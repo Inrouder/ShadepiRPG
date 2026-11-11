@@ -82,7 +82,7 @@ func run():
 	check(w.beat==w.Beat.CHASE and w.drive==drive,"premature vehicle completion cannot skip an undefeated pursuer")
 	drive.armour=0;drive._process(0.01);drive._process(0.8)
 	check(w.beat==w.Beat.CHASE,"victory keeps the vehicle visible for the actual exit")
-	drive._process(3.1);w.cutscene.skip();await finish(w)
+	drive._process(2.0);drive._process(2.0);w.cutscene.skip();await finish(w)
 	check(w.beat==w.Beat.GARAGE,"confirmed victory reaches garage after cinematic transition")
 	w.cutscene.skip();await finish(w)
 	w.player.position=w._target();w.interact()
