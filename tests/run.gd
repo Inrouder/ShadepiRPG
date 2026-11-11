@@ -824,7 +824,15 @@ func check_campaign() -> void:
 	finish_dialogue(scene)
 	scene.drive.armour = 0
 	scene.drive._process(0.01)
-	scene.drive._process(3.1)
+	# v0.56.0 · ClaudeHelper: Der Wagen brennt, explodiert und bleibt als Wrack zurück.
+	check(scene.drive.car_dead >= 0.0 and scene.drive.victory_left > 3.5, "the beaten car starts burning instead of driving on")
+	var car_row: float = scene.drive.car_y
+	scene.drive._process(1.0)
+	check(scene.drive.car_dead >= scene.drive.CAR_BLAST_AT and scene.drive.white_flash > 0.0 and scene.drive.explosions.size() >= 3, "the pursuer blows up in a large explosion")
+	scene.drive._process(1.2)
+	scene.drive._process(1.2)
+	check(scene.drive.car_y > car_row + 120.0 and scene.beat == scene.Beat.CHASE, "the wreck falls behind the bike before the ride ends")
+	scene.drive._process(1.3)
 	finish_dialogue(scene)
 	check(scene.beat == scene.Beat.GARAGE, "defeating the car opens chapter four")
 	finish_dialogue(scene)

@@ -112,6 +112,24 @@ func run() -> void:
 	check(chase.victory_left > 0 and chase.active, "final explosion remains visible before transition")
 	for i in 100: chase.impact(Vector2.ZERO, true)
 	check(chase.debris.size() <= 150 and chase.clouds.size() <= 45 and chase.explosions.size() <= 8, "effects have strict allocation caps")
+	# v0.56.0 · ClaudeHelper: Der Verfolger zerlegt Hindernisse, statt durch sie hindurchzugleiten.
+	var smash = make_drive(world, false)
+	smash.hazards.clear(); smash.objects.clear(); smash.debris.clear()
+	smash.boss_x = 320.0; smash.x = 230.0
+	smash.hazards.append(Vector2(320.0, smash.car_y - 40.0))
+	smash._advance_bike_world(0.05)
+	var concrete := 0
+	for bit in smash.debris:
+		if int(bit.k) >= 0 and int(bit.k) <= 5: concrete += 1
+	check(smash.hazards.is_empty() and smash.smashed == 1 and concrete >= 8, "the pursuer bursts a barrier into concrete chunks")
+	var plating: int = smash.armour
+	smash.objects.append({"k": "wreck", "p": Vector2(320.0, smash.car_y - 34.0), "done": false, "r": 0.0})
+	smash._advance_bike_world(0.02)
+	check(smash.objects.is_empty() and smash.smashed == 2 and smash.armour == plating - 6 and not smash.explosions.is_empty(), "ramming a wreck explodes it and dents the pursuer")
+	smash.hazards.append(Vector2(232.0, smash.car_y - 40.0))
+	smash._advance_bike_world(0.05)
+	check(smash.hazards.size() == 1 and smash.smashed == 2, "barriers in another lane stay intact")
+	check(is_instance_valid(smash.fx_layer) and smash.fx_layer.texture_filter == CanvasItem.TEXTURE_FILTER_NEAREST, "pixel effects are sampled without smoothing")
 	for column in 9:
 		for row in 3:
 			var texture := Art.texture(column, row)

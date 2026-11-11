@@ -7,6 +7,14 @@ const PixelFX = preload("res://scripts/pixel_combat_fx.gd")
 const CarArt = preload("res://scripts/pursuit_car_art.gd")
 const DroneArt = preload("res://scripts/cargo_drone_art.gd")
 const Painted = preload("res://scripts/painted_world.gd")
+# v0.56.0 · ClaudeHelper: Pixel-FX der Verfolgung (tools/fx/build_drive_fx.py).
+const FX_EXPLOSION = preload("res://assets/fx/drive/explosion.png")
+const FX_SMOKE = preload("res://assets/fx/drive/smoke.png")
+const FX_FLAME = preload("res://assets/fx/drive/flame.png")
+const FX_CHUNKS = preload("res://assets/fx/drive/chunks.png")
+const CAR_WRECK = preload("res://assets/vehicles/pursuit/wreck.png")
+const CAR_BLAST_AT := 0.9      # Sekunden vom letzten Treffer bis zur großen Explosion
+const VICTORY_SECONDS := 4.6
 
 signal completed
 signal crashed
@@ -82,10 +90,26 @@ var next_drone := 4.0
 var edge_spark := 0.0
 var callout := ""
 var callout_time := 0.0
+var fx_layer: Node2D
+## v0.56.0 · ClaudeHelper: Der besiegte Wagen brennt, explodiert und bleibt als Wrack zurück.
+var car_dead := -1.0
+var car_rot := 0.0
+var car_spin := 0.0
+var car_drift := 0.0
+var car_fall := 0.0
+var car_next_blast := 0.0
+var white_flash := 0.0
+var smashed := 0
 
 func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	rng.seed = 2534
+	# Pixel-FX liegen auf einer eigenen Ebene mit harter Abtastung über Straße und Fahrzeugen.
+	fx_layer = Node2D.new()
+	fx_layer.name = "DriveFX"
+	fx_layer.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	fx_layer.draw.connect(_draw_fx)
+	add_child(fx_layer)
 
 func _sound(key: String) -> void:
 	# Share the world's bounded mixer and its mute/headless rules.
@@ -136,28 +160,55 @@ func _steer(delta: float) -> void:
 		boss_x = clampf(boss_x + boss_velocity * step, 190.0, 450.0)
 		remaining -= step
 
-func impact(point: Vector2, explosive: bool = false, color: Color = Color("ffba68")) -> void:
+func impact(point: Vector2, explosive: bool = false, color: Color = Color("ffba68"), size: float = 1.0) -> void:
 	var limit := 50 if world.visual_quality == 0 else 150
 	for i in mini(28 if explosive else 7, maxi(0, limit - debris.size())):
 		var v := Vector2.from_angle(rng.randf() * TAU) * rng.randf_range(35, 150)
-		debris.append({"p": point, "v": v, "t": rng.randf_range(0.3, 0.9), "a": rng.randf() * TAU, "spin": rng.randf_range(-9, 9), "c": color})
+		debris.append({"p": point, "v": v, "t": rng.randf_range(0.3, 0.9), "a": rng.randf() * TAU, "spin": rng.randf_range(-9, 9), "c": color, "k": -1})
 	if explosive:
 		if explosions.size() < 8:
-			explosions.append({"p": point, "t": 0.65})
+			explosions.append({"p": point, "t": 0.65, "d": 0.65, "s": size, "flip": rng.randf() < 0.5})
 		for i in 7:
 			_smoke(point + Vector2(rng.randf_range(-12, 12), rng.randf_range(-8, 8)))
-		shake = maxf(shake, 4.0)
+		shake = maxf(shake, 4.0 * size)
 		_sound("explosion")
 
 func _smoke(point: Vector2) -> void:
 	if clouds.size() < (14 if world.visual_quality == 0 else 45):
 		clouds.append({"p": point, "t": 1.4, "r": rng.randf_range(4, 10)})
 
+## Bruchstücke aus dem Pixelblatt: 0–5 Beton (1 und 4 mit Warnstreifen), 6–9 Blech, 10–11 Bakenlampe.
+func chunks(point: Vector2, kinds: Array, count: int, force: float = 1.0, push: Vector2 = Vector2.ZERO) -> void:
+	var limit := 50 if world.visual_quality == 0 else 150
+	for i in mini(count, maxi(0, limit - debris.size())):
+		var v := Vector2.from_angle(rng.randf() * TAU) * rng.randf_range(40, 170) * force + push
+		debris.append({"p": point + Vector2(rng.randf_range(-14, 14), rng.randf_range(-5, 5)), "v": v, "t": rng.randf_range(0.55, 1.2), "a": rng.randf() * TAU, "spin": rng.randf_range(-11, 11), "c": Color.WHITE, "k": kinds[rng.randi() % kinds.size()]})
+
+## Der Verfolger pflügt durch ein Hindernis: Bake zerbirst, Wrack fliegt auseinander.
+func car_smash(point: Vector2, kind: String) -> void:
+	smashed += 1
+	var push := Vector2(signf(point.x - boss_x) * 45.0, 70.0)
+	if kind == "barrier":
+		chunks(point, [0, 1, 2, 3, 4, 5], 12, 0.9, push)
+		chunks(point, [10, 11], 2, 1.2, push)
+		impact(point, false, Color("ffe9a8"))
+		for i in 4:
+			_smoke(point + Vector2(rng.randf_range(-22, 22), rng.randf_range(-6, 6)))
+		shake = maxf(shake, 2.6)
+		world.sound("prop_metal")
+	else:
+		chunks(point, [6, 7, 8, 9], 12, 1.1, push)
+		impact(point, true, Color("ffba68"), 1.15)
+	car_recoil = maxf(car_recoil, 0.12)
+
 func _update_fx(delta: float) -> void:
 	fx_clock += delta
 	car_recoil = maxf(0,car_recoil-delta)
 	shake = move_toward(shake, 0.0, delta * 9.0)
 	restart_flash = maxf(0.0, restart_flash - delta)
+	white_flash = maxf(0.0, white_flash - delta)
+	if is_instance_valid(fx_layer):
+		fx_layer.queue_redraw()
 	for i in range(debris.size() - 1, -1, -1):
 		var bit: Dictionary = debris[i]
 		bit.v.y += 115.0 * delta
@@ -179,8 +230,8 @@ func _update_fx(delta: float) -> void:
 		emission_clock = 0.09
 		if engine_failed:
 			_smoke(Vector2(x + 19, FLIGHT_Y + 26))
-		elif not flight and armour < 45:
-			_smoke(Vector2(boss_x, car_y + 15))
+		elif not flight and armour < 45 and car_y < 400.0:
+			_smoke(Vector2(boss_x, car_y + (0.0 if car_dead >= 0.0 else 15.0)))
 
 func _draw_vehicle(index: int, center: Vector2, size: Vector2, tilt: float = 0.0) -> void:
 	var region := Rect2((index % 2) * 627, (index / 2) * 627, 627, 627)
@@ -197,26 +248,43 @@ func _draw_vehicle(index: int, center: Vector2, size: Vector2, tilt: float = 0.0
 	draw_set_transform(Vector2.ZERO)
 
 func _draw_fx() -> void:
+	var c: Node2D = fx_layer
+	c.draw_set_transform(Vector2(sin(fx_clock * 57) * shake, cos(fx_clock * 43) * shake * 0.6))
 	for cloud in clouds:
 		var age: float = 1.0 - cloud.t / 1.4
-		draw_circle(cloud.p, cloud.r * (1.0 + age * 2.5), Color(0.18, 0.22, 0.28, (1.0 - age) * 0.6))
+		var side: float = cloud.r * 6.0
+		c.draw_texture_rect_region(FX_SMOKE, Rect2(cloud.p - Vector2(side, side) * 0.5, Vector2(side, side)), Rect2(mini(5, int(age * 6.0)) * 144, 0, 144, 144), Color(1, 1, 1, minf(1.0, (1.0 - age) * 1.6) * 0.85))
+	# Brennender Verfolger: Flammen sitzen auf Haube, Dach und Heck.
+	if car_dead >= 0.0 and not flight and car_y < 420.0:
+		var car := car_position()
+		var fires := 2 if car_dead < CAR_BLAST_AT else 4
+		for i in fires:
+			var offset: Vector2 = [Vector2(-9, -14), Vector2(11, 6), Vector2(-4, 16), Vector2(8, -22)][i].rotated(car_rot)
+			var frame := int(fx_clock * 12.0 + i * 2) % 6
+			var size := Vector2(32, 48) * (0.75 + 0.25 * (i % 2))
+			c.draw_texture_rect_region(FX_FLAME, Rect2(car + offset - Vector2(size.x * 0.5, size.y - 4.0), size), Rect2(frame * 96, 0, 96, 144))
 	for blast in explosions:
-		var age: float = 1.0 - blast.t / 0.65
-		draw_circle(blast.p, 7.0 + age * 32.0, Color(1.0, 0.25 + age * 0.3, 0.06, (1.0 - age) * 0.8))
-		draw_circle(blast.p, 4.0 + age * 16.0, Color(1.0, 0.92, 0.65, 1.0 - age))
-		draw_arc(blast.p, 4.0 + age * 65.0, 0, TAU, 40, Color(1.0, 0.7, 0.3, 1.0 - age), 2.0, true)
+		var age: float = 1.0 - blast.t / float(blast.get("d", 0.65))
+		var side: float = 96.0 * float(blast.get("s", 1.0))
+		var area := Rect2(blast.p - Vector2(side, side) * 0.5, Vector2(side * (-1.0 if blast.get("flip", false) else 1.0), side))
+		c.draw_texture_rect_region(FX_EXPLOSION, area, Rect2(mini(9, int(age * 10.0)) * 288, 0, 288, 288))
 	for bit in debris:
-		draw_set_transform(bit.p, bit.a)
-		draw_rect(Rect2(-2, -1, 4, 2), Color(bit.c, minf(1.0, bit.t * 3.0)))
-	draw_set_transform(Vector2.ZERO)
+		c.draw_set_transform(bit.p + Vector2(sin(fx_clock * 57) * shake, cos(fx_clock * 43) * shake * 0.6), bit.a)
+		if int(bit.get("k", -1)) >= 0:
+			c.draw_texture_rect_region(FX_CHUNKS, Rect2(-5.33, -5.33, 10.67, 10.67), Rect2(int(bit.k) * 32, 0, 32, 32), Color(1, 1, 1, minf(1.0, bit.t * 4.0)))
+		else:
+			c.draw_rect(Rect2(-2, -1, 4, 2), Color(bit.c, minf(1.0, bit.t * 3.0)))
+	c.draw_set_transform(Vector2.ZERO)
 	for flash in flashes:
 		var point: Vector2 = flash.p
 		if flash.get("source","")=="pursuer":
 			point = CarArt.muzzle(car_position(),car_frame())
-			PixelFX.packet(self,point,Vector2.UP,0.09-flash.t,false,true,clampf(flash.t/0.09,0,1))
+			PixelFX.packet(c,point,Vector2.UP,0.09-flash.t,false,true,clampf(flash.t/0.09,0,1))
 			continue
 		elif flash.get("source","")=="cargo": point = DroneArt.release_point(flash.drone.p,Vector2(50,50),flash.drone.spin)
-		draw_circle(point,4.0+flash.t*32,Color(1.0,0.83,0.52,flash.t*9.0))
+		c.draw_rect(Rect2(point - Vector2(3, 3) - Vector2.ONE * flash.t * 24.0, Vector2(6, 6) + Vector2.ONE * flash.t * 48.0), Color(1.0, 0.83, 0.52, flash.t * 9.0))
+	if white_flash > 0.0:
+		c.draw_rect(Rect2(-20, -20, 680, 400), Color(1.0, 0.95, 0.85, minf(0.75, white_flash * 3.0)))
 
 
 func _process(delta: float) -> void :
@@ -405,7 +473,6 @@ func _draw() -> void :
 				var length := (5.0 if failing else 15.0 + restart_flash * 10.0) + sin(fx_clock * 37) * 3
 				draw_line(nozzle, nozzle + Vector2(0, length), Color(1.0, 0.4, 0.12, 0.35) if failing else Color(0.1, 0.8, 1, 0.4), 9, true)
 				draw_line(nozzle, nozzle + Vector2(0, length * 0.8), Color("fff1bb") if failing else Color("b8f6ff"), 3, true)
-	_draw_fx()
 	if engine_failed:
 		draw_rect(Rect2(210, 118, 220, 18), Color(0.04, 0.07, 0.12, 0.92))
 		draw_rect(Rect2(218, 124, 204, 6), Color("4d2431"))
@@ -477,6 +544,10 @@ func _process_bike(delta: float) -> void:
 		_steer(delta)
 		speed = 1.35
 		scroll += ROAD_SPEED * speed * delta
+		_advance_car_wreck(delta)
+		for i in range(hazards.size() - 1, -1, -1):
+			hazards[i].y += ROAD_SPEED * speed * delta
+			if hazards[i].y > 380: hazards.remove_at(i)
 		queue_redraw()
 		if victory_left <= 0.0:
 			active = false
@@ -517,15 +588,67 @@ func _process_bike(delta: float) -> void:
 		impact(Vector2(x,bike_y),true)
 		world.toast("MOTORRAD AUSGEFALLEN · Kontrollpunkt wird neu geladen")
 	elif armour <= 0:
-		victory_left = 3.0
-		drones.clear()
-		objects.clear()
-		rear_shots.clear()
-		rear_shot_vx.clear()
-		impact(Vector2(boss_x, car_y), true)
-		impact(Vector2(boss_x - 18, car_y + 10), true)
+		_destroy_car()
+
+## v0.56.0 · ClaudeHelper (Nutzerbericht): Der besiegte Wagen fuhr einfach weiter. Jetzt fängt er
+## Feuer, schlingert, explodiert und bleibt als brennendes Wrack hinter dem Motorrad zurück.
+func _destroy_car() -> void:
+	victory_left = VICTORY_SECONDS
+	car_y = car_position().y
+	ram_warning = 0.0
+	ram_recovery = 0.0
+	hack = 0.0
+	car_dead = 0.0
+	car_rot = 0.0
+	car_spin = 0.0
+	car_fall = 0.0
+	car_drift = (1.0 if boss_x < 320.0 else -1.0) * 34.0
+	car_next_blast = 0.22
+	for drone: Dictionary in drones:
+		impact(drone.p, true, Color("ffba68"), 0.7)
+	for item: Dictionary in objects:
+		if item.k == "mine": impact(item.p, true, Color("ffba68"), 0.6)
+	drones.clear()
+	objects.clear()
+	rear_shots.clear()
+	rear_shot_vx.clear()
+	impact(Vector2(boss_x, car_y - 12), true)
+	chunks(Vector2(boss_x, car_y), [6, 7, 8, 9], 8, 1.0, Vector2(0, 60))
+	_callout("VOLLTREFFER!")
+	world.toast("RAVEN: Der Wagen brennt – gleich fliegt er auseinander!")
+
+func _advance_car_wreck(delta: float) -> void:
+	if car_dead < 0.0:
+		return
+	var before := car_dead
+	car_dead += delta
+	if car_dead < CAR_BLAST_AT:
+		# Brennend und führerlos: schlingert, kleine Folgeexplosionen laufen über die Karosserie.
+		boss_x = clampf(boss_x + (car_drift + sin(car_dead * 19.0) * 60.0) * delta, ROAD.x + 10.0, ROAD.y - 10.0)
+		car_rot = sin(car_dead * 13.0) * 0.12
+		if car_dead >= car_next_blast:
+			car_next_blast += 0.24
+			impact(Vector2(boss_x, car_y) + Vector2(rng.randf_range(-18, 18), rng.randf_range(-26, 22)), true, Color("ffba68"), 0.6)
+		return
+	if before < CAR_BLAST_AT:
+		# Tank und Munition gehen hoch.
+		var at := Vector2(boss_x, car_y)
+		impact(at, true, Color("ffe9a8"), 2.1)
+		impact(at + Vector2(-22, -18), true, Color("ffba68"), 1.2)
+		impact(at + Vector2(20, 12), true, Color("ffba68"), 1.3)
+		chunks(at, [6, 7, 8, 9], 26, 1.6)
+		white_flash = 0.3
+		shake = 10.0
+		car_spin = (1.0 if car_drift > 0.0 else -1.0) * 5.5
+		world.sound("prop_metal")
 		_callout("WEG FREI · ZUR GARAGE")
 		world.toast("RAVEN: Verfolger ausgeschaltet! Weiter zur Garage!")
+	# Das Wrack dreht sich aus, verliert Fahrt und fällt hinter dem Motorrad aus dem Bild.
+	car_spin *= exp(-delta * 2.4)
+	car_rot += car_spin * delta
+	car_fall = minf(ROAD_SPEED * speed, car_fall + 62.0 * delta)
+	car_y += (12.0 + car_fall) * delta
+	boss_x = clampf(boss_x + car_drift * 0.5 * exp(-(car_dead - CAR_BLAST_AT) * 2.0) * delta, ROAD.x, ROAD.y)
 
 func _edge_sparks(delta: float) -> void:
 	edge_spark = maxf(0.0, edge_spark - delta)
@@ -668,6 +791,11 @@ func _advance_bike_world(delta: float) -> void:
 			impact(hazards[i], true)
 			hazards.remove_at(i)
 			continue
+		# v0.56.0 · ClaudeHelper: Der Wagen bremst für nichts – Baken zerbersten an seinem Bug.
+		if before < car_y - 34.0 and hazards[i].y >= car_y - 34.0 and absf(hazards[i].x - boss_x) < 50.0:
+			car_smash(hazards[i], "barrier")
+			hazards.remove_at(i)
+			continue
 		if hazards[i].y > 380:
 			hazards.remove_at(i)
 	for i in range(objects.size() - 1, -1, -1):
@@ -682,6 +810,12 @@ func _advance_bike_world(delta: float) -> void:
 					impact(Vector2(x, bike_y), true)
 				if emission_clock > 0.08 and world.visual_quality > 0:
 					_smoke(item.p + Vector2(rng.randf_range(-8, 8), -4))
+				if absf(item.p.x - boss_x) < 46.0 and absf(item.p.y - (car_y - 30.0)) < 14.0:
+					car_smash(item.p, "wreck")
+					armour -= 6
+					_callout("WAGEN RAMMT WRACK")
+					objects.remove_at(i)
+					continue
 			"slick":
 				if not item.done and absf(offset.x) < 36.0 and absf(offset.y) < 16.0:
 					item.done = true
@@ -763,7 +897,17 @@ func _draw_bike_scene(cyan: Color, pink: Color) -> void:
 			draw_line(Vector2(lx, ly), Vector2(lx, ly + 26.0 + boost * 10.0), Color(0.75, 0.95, 1.0, 0.16 + boost * 0.08), 1.0)
 	draw_set_transform(Vector2.ZERO)
 	var car := car_position()
-	CarArt.draw(self,car,car_frame())
+	if car_dead >= CAR_BLAST_AT:
+		if car.y < 440.0:
+			draw_set_transform(car, car_rot)
+			draw_texture_rect_region(CAR_WRECK, Rect2(-CarArt.ANCHORS[0] * CarArt.SCALE, CarArt.SIZE), Rect2(Vector2.ZERO, CarArt.CELL))
+			draw_set_transform(Vector2.ZERO)
+	elif car_dead >= 0.0:
+		draw_set_transform(car, car_rot)
+		draw_texture_rect_region(CarArt.ATLAS, Rect2(-CarArt.ANCHORS[0] * CarArt.SCALE, CarArt.SIZE), CarArt.region(0), Color(1.0, 0.72, 0.6).lerp(Color(0.5, 0.42, 0.42), car_dead / CAR_BLAST_AT))
+		draw_set_transform(Vector2.ZERO)
+	else:
+		CarArt.draw(self,car,car_frame())
 	if ram_warning > 0.0:
 		draw_line(Vector2(car.x, bike_y + 22), car, Color(pink, 0.65), 3.0)
 		draw_arc(Vector2(car.x, bike_y), 29, 0, TAU, 24, pink, 2)
@@ -798,7 +942,6 @@ func _draw_bike_scene(cyan: Color, pink: Color) -> void:
 			draw_arc(drone.p, 24, fx_clock * 5, fx_clock * 5 + 4, 24, cyan, 2)
 		elif drone.state == "hover" and drone.t > 1.0:
 			draw_arc(drone.p + Vector2(0, 22), 7.0, 0, TAU, 12, Color(pink, 0.8), 2.0)
-	_draw_fx()
 	if hurt > 0.0:
 		draw_arc(bike, 25.0, 0.0, TAU, 24, Color(pink, hurt), 2.0)
 	if callout_time > 0.0:

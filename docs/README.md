@@ -1,6 +1,6 @@
 # Shadepi · Bilder, Filme und Dokumentation
 
-**Stand v0.55.0 · ClaudeHelper · 11. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
+**Stand v0.56.0 · ClaudeHelper · 11. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
 
 Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnahmen, animierte Szenenfilme, Bedienung und technische Hinweise. Die PNG-Vorschauen sind direkt in GitHub sichtbar; die Filme bleiben zusätzlich als verlinkte WebP-Dateien erreichbar.
 
@@ -9,6 +9,10 @@ Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnah
 In Kapitel 3 bis 7 steuert Spieler 2 Raven selbst, wo sie frei in der Szene steht; sonst den [Begleiter](begleiter.md). Schüsse, Explosionen, Treffer und Gegnerstimmen sind jetzt freie CC0-Aufnahmen: [Tonquellen](../assets/audio/CREDITS.md).
 
 ## Begleiter für Spieler 2 · v0.53.0 · ClaudeHelper
+
+[![Bake zerbirst, Wagen brennt, Wrack bleibt zurück](previews/verfolgung-wrack-v056.webp)](verfolgung-finale-v056.md)
+
+[Verfolgungsfinale: Explosion und zerberstende Hindernisse](verfolgung-finale-v056.md) · Aufnahmestand v0.56.0.
 
 [![Drohne und Nanitenschwarm im Spiel](previews/begleiter-v053.png)](begleiter.md)
 

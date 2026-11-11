@@ -1,5 +1,13 @@
 # Versionshinweise
 
+## v0.56.0 – ClaudeHelper: Verfolger explodiert, Hindernisse zerbersten · 11. November 2026
+
+Nutzerbericht: Nach dem Sieg fuhr der Verfolgerwagen unversehrt weiter, dann stand man plötzlich in der Garage.
+
+- **Ende der Verfolgung:** Der besiegte Wagen fängt Feuer, schlingert führerlos, geht nach knapp einer Sekunde in einer großen Explosion hoch und bleibt als brennendes, sich drehendes Wrack hinter dem Motorrad zurück. Erst danach geht es zur Garage. Drohnen und Minen, die noch im Bild sind, explodieren mit.
+- **Der Wagen zerlegt Hindernisse:** Baken zerbersten an seinem Bug in Betonbrocken und Lampensplitter; rammt er ein Wrack, explodiert es und kostet ihn 6 % Panzerung.
+- **Neue Pixel-FX:** Explosion, Rauch, Flammen und Bruchstücke sind jetzt gezeichnete Pixelblätter statt Kreisflächen ([Übersicht](docs/verfolgung-finale-v056.md)); erzeugt mit `tools/fx/build_drive_fx.py`.
+
 ## v0.55.0 – ClaudeHelper: Koop in jedem Kapitel geprüft, Menü mit „Zurück ins Hauptmenü“ · 11. November 2026
 
 - **Menü umgebaut:** Die Pause in allen Kapiteln zeigt Fortsetzen, Kontrollpunkt laden, Kapitel neu starten, Ton/Bild und **Zurück ins Hauptmenü**. Die fehlerhafte Schaltfläche „Zurück zu Kapitel 1“ entfällt. Moduswechsel und Kapitelwahl (Kapitel 2, Kapitel 3–7) liegen nur noch im Hauptmenü; ein dort geöffnetes Kapitel startet direkt und im gewählten Modus. Das Hauptmenü merkt sich den Modus der laufenden Sitzung.
