@@ -175,8 +175,24 @@ func companion_lead() -> PixelActor:
 		if not is_instance_valid(actor) or not actor.visible: continue
 		present += 1
 		if actor_is_playable(actor): playable.append(actor)
-	if playable.size() != 1 or (not coop and present > 1): return null
+	if playable.size() != 1 or (not coop_session() and present > 1): return null
 	return playable[0]
+
+## v0.54.1 · ClaudeHelper: Sitzt ein zweiter Spieler mit am Spiel? Kapitel 1 schaltet `coop` in
+## Ravens Solo-Abschnitten vorübergehend ab; die Sitzung bleibt trotzdem eine Koop-Sitzung.
+func coop_session() -> bool:
+	return coop
+
+## Der im Menü gewählte Modus gilt für die ganze Sitzung, auch über Kapitelwechsel hinweg.
+## Vorher startete jedes neue Kapitel still im Einzelspieler, und Spieler 2 hatte keine Steuerung.
+const COOP_SESSION := "shadepi_coop_session"
+func remember_coop_session(enabled: bool) -> void:
+	get_tree().set_meta(COOP_SESSION, enabled)
+
+func restore_coop_session() -> void:
+	if not is_inside_tree() or not get_tree().get_meta(COOP_SESSION, false) or coop: return
+	set_coop(true)
+	if ui != null: ui.requested_coop = true
 
 ## Szenen ohne freies Laufen (Fahrt, Flug, Erinnerungen, Abspann) schalten den Begleiter ab.
 func companion_allowed() -> bool:

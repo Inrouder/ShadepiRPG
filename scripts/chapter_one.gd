@@ -127,6 +127,9 @@ func combat_ready() -> bool:
 func raven_leads() -> bool:
 	return phase in [Phase.APARTMENT, Phase.HUNT, Phase.DUEL]
 
+func coop_session() -> bool:
+	return coop or chapter_coop
+
 func actor_is_playable(actor: PixelActor) -> bool:
 	if raven_leads():
 		return actor == raven

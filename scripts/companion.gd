@@ -83,11 +83,25 @@ func _clear_pad() -> void:
 	pad_events.clear()
 	pad_device = -1
 
-## Spieler 2 nutzt im Koop sein eigenes Gamepad, sonst das zweite angeschlossene.
+## Spieler 2 nutzt sein eigenes Gamepad: im Koop das Raven-Pad, sonst das zweite angeschlossene.
+## In einer Koop-Sitzung mit nur EINEM Gamepad gehört dieses Pad Spieler 2 (Spieler 1 spielt an der
+## Tastatur) – auch in Abschnitten, in denen das Kapitel `coop` vorübergehend abschaltet.
+func _wanted_pad() -> int:
+	var connected := Input.get_connected_joypads()
+	# Kein Begleiter mehr und kein echter Koop: das einzige Pad geht zurück an Spieler 1.
+	if kind == "" and not world.coop and connected.size() == 1 and world.gamepads.shadepi_device < 0:
+		world.gamepads.assign(connected, false)
+	if world.gamepads.raven_device >= 0: return world.gamepads.raven_device
+	var pads := Input.get_connected_joypads()
+	if pads.size() > 1: return pads[1]
+	if pads.size() == 1 and world.coop_session() and kind != "":
+		world.gamepads.assign(pads, true)      # Pad von Spieler 1 lösen; es steuert jetzt den Begleiter
+		return world.gamepads.raven_device
+	return -1
+
 func _bind_pad() -> void:
 	if world == null or not is_inside_tree(): return
-	var pads := Input.get_connected_joypads()
-	var wanted: int = world.gamepads.raven_device if world.gamepads.raven_device >= 0 else (pads[1] if pads.size() > 1 else -1)
+	var wanted := _wanted_pad()
 	if wanted == pad_device: return
 	_clear_pad()
 	pad_device = wanted
@@ -99,7 +113,7 @@ func _bind_pad() -> void:
 		axis.axis_value = entry[2]
 		InputMap.action_add_event(entry[0], axis)
 		pad_events.append([entry[0], axis])
-	for entry in [["pet_attack", JOY_BUTTON_X], ["pet_attack", JOY_BUTTON_RIGHT_SHOULDER], ["pet_hack", JOY_BUTTON_Y], ["pet_move_left", JOY_BUTTON_DPAD_LEFT], ["pet_move_right", JOY_BUTTON_DPAD_RIGHT], ["pet_move_up", JOY_BUTTON_DPAD_UP], ["pet_move_down", JOY_BUTTON_DPAD_DOWN]]:
+	for entry in [["pet_attack", JOY_BUTTON_X], ["pet_attack", JOY_BUTTON_RIGHT_SHOULDER], ["pet_attack", JOY_BUTTON_A], ["pet_hack", JOY_BUTTON_Y], ["pet_hack", JOY_BUTTON_LEFT_SHOULDER], ["pet_move_left", JOY_BUTTON_DPAD_LEFT], ["pet_move_right", JOY_BUTTON_DPAD_RIGHT], ["pet_move_up", JOY_BUTTON_DPAD_UP], ["pet_move_down", JOY_BUTTON_DPAD_DOWN]]:
 		var button := InputEventJoypadButton.new()
 		button.device = wanted
 		button.button_index = entry[1]
@@ -107,31 +121,39 @@ func _bind_pad() -> void:
 		pad_events.append([entry[0], button])
 
 ## Solange Spieler 2 den Begleiter steuert, gehören die Pfeiltasten ihm – wie im Koop-Modus.
-func _take_arrows(take: bool) -> void:
-	if take == arrows_taken or world.coop:
-		arrows_taken = take and not world.coop
+## Wird bei jedem Bild abgeglichen, weil Kapitel den Koop-Modus zwischendurch umschalten und
+## dabei die Pfeiltasten wieder Spieler 1 zuweisen.
+func _sync_arrows() -> void:
+	if world.coop:
+		arrows_taken = false      # im echten Koop gehören die Pfeile ohnehin Spieler 2
 		return
-	arrows_taken = take
+	if claimed == arrows_taken and (not claimed or not InputMap.action_has_event("move_left", _arrow(KEY_LEFT))):
+		return
+	arrows_taken = claimed
 	var arrows := [KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN]
 	var actions := ["move_left", "move_right", "move_up", "move_down"]
 	for i in arrows.size():
-		var event := InputEventKey.new()
-		event.physical_keycode = arrows[i]
+		var event := _arrow(arrows[i])
 		Input.action_release(actions[i])
-		if take: InputMap.action_erase_event(actions[i], event)
+		if claimed: InputMap.action_erase_event(actions[i], event)
 		elif not InputMap.action_has_event(actions[i], event): InputMap.action_add_event(actions[i], event)
+
+func _arrow(code: int) -> InputEventKey:
+	var event := InputEventKey.new()
+	event.physical_keycode = code
+	return event
 
 func claim() -> void:
 	if claimed or kind == "": return
 	claimed = true
 	idle = 0.0
-	_take_arrows(true)
+	_sync_arrows()
 	world.toast(hint())
 
 func _release() -> void:
 	if not claimed: return
 	claimed = false
-	if world != null and is_instance_valid(world): _take_arrows(false)
+	if world != null and is_instance_valid(world): _sync_arrows()
 
 func hint() -> String:
 	var pad := pad_device >= 0
@@ -145,14 +167,19 @@ func _paused() -> bool:
 	return world.menu_open or world.terminal != null
 
 func _process(delta: float) -> void:
+	_bind_pad()   # folgt Moduswechseln und neu angeschlossenen Pads
+	_sync_arrows()
 	var next: PixelActor = world.companion_lead()
 	var next_kind := "" if next == null else ("drone" if next == world.raven else "nanites")
 	if next_kind != kind and presence <= 0.0:
 		kind = next_kind
 		lead = next
 		if lead != null: position = lead.position + Vector2(-22, -40)
+		# Solo: einmal pro Sitzung zeigen, wie ein zweiter Spieler einsteigt.
+		if lead != null and not world.coop_session() and not get_tree().get_meta("shadepi_pet_hint", false):
+			get_tree().set_meta("shadepi_pet_hint", true)
+			world.toast("Zweiter Spieler? U oder O drücken (Gamepad 2: X / Y) – übernimmt %s" % ("die Drohne" if kind == "drone" else "die Naniten"))
 		# Im Koop erfährt Spieler 2 sofort, womit er jetzt spielt.
-		if lead != null and world.coop and not claimed: world.toast(hint())
 		attack_flash = 0.0
 		shield_time = 0.0
 	var wanted := 1.0 if next_kind == kind and kind != "" and not world.in_cinematic() else 0.0
@@ -160,7 +187,7 @@ func _process(delta: float) -> void:
 	visible = presence > 0.01
 	modulate.a = presence
 	if kind == "" or wanted <= 0.0:
-		if wanted <= 0.0 and kind == "" : _release()
+		if next == null and not world.in_cinematic(): _release()   # kein Begleiter mehr: Pfeiltasten zurück
 		queue_redraw()
 		return
 	if _paused():
@@ -178,9 +205,12 @@ func _process(delta: float) -> void:
 	var move := Input.get_vector("pet_move_left", "pet_move_right", "pet_move_up", "pet_move_down")
 	var wants_attack := Input.is_action_pressed("pet_attack")
 	var wants_hack := Input.is_action_just_pressed("pet_hack")
-	if not claimed and (wants_attack or wants_hack or (world.coop and move != Vector2.ZERO)):
+	# Koop-Sitzung: Spieler 2 hat den Begleiter sofort und dauerhaft. Solo: Einstieg per Taste,
+	# Rückgabe nach längerer Pause.
+	var session: bool = world.coop_session()
+	if not claimed and (session or wants_attack or wants_hack):
 		claim()
-	if claimed:
+	if claimed and not session:
 		idle = 0.0 if (move != Vector2.ZERO or wants_attack or wants_hack) else idle + delta
 		if idle >= IDLE_RELEASE:
 			_release()

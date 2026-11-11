@@ -1,5 +1,15 @@
 # Versionshinweise
 
+## v0.54.1 – ClaudeHelper: Begleiter im Koop wirklich steuerbar · 11. November 2026
+
+Nutzerbericht: Im Koop ließ sich die Drohne in Kapitel 1 nicht steuern, nach einem Kapitelwechsel auch Drohne und Naniten nicht. Drei Ursachen behoben:
+
+- **Kapitel 1:** Das Kapitel schaltet den Koop-Modus in Ravens Solo-Abschnitten intern ab. Der Begleiter hielt das für ein Solospiel und wartete auf eine Übernahmetaste. Jetzt zählt die Koop-Sitzung; Spieler 2 hat die Drohne sofort und dauerhaft.
+- **Kapitelwechsel:** Jedes neue Kapitel startete still im Einzelspieler. Der im Menü gewählte Modus gilt jetzt für die ganze Sitzung, auch in Kapitel 2 und 3–7.
+- **Gamepad:** Die Bindung wurde nur einmal beim Start gesetzt, bevor der Modus feststand; mit nur einem Gamepad blieb der Begleiter ohne Pad. Sie folgt jetzt laufend dem Pad von Spieler 2. Zusätzlich: **A** greift an, **LB** löst die Spezialfähigkeit aus.
+- Pfeiltasten gehören Spieler 2, solange er den Begleiter fliegt, auch wenn ein Kapitel den Modus zwischendurch umschaltet. Im Solospiel zeigt ein einmaliger Hinweis, wie ein zweiter Spieler einsteigt.
+- Neue CI-Suite `companion_input` (33 Prüfungen) bedient den Begleiter über echte Tastenereignisse und den Menüstart; alle 44 Suiten ohne Fehler.
+
 ## v0.54.0 – ClaudeHelper: Koop mit Raven in Kapitel 3–7, freie Tonaufnahmen · 11. November 2026
 
 - **Koop:** In Kapitel 3 bis 7 steuert Spieler 2 Raven jetzt selbst, wo sie frei in der Szene steht: im Versteck, im Hinterhalt, bei der Symbolsuche in der Garage und im Kampf gegen die Aufzugwachen. Wo die Geschichte Raven festlegt oder nur ein Held da ist, spielt Spieler 2 weiter den Begleiter. Behoben: Im Koop blieb Raven in diesen Kapiteln bisher einfach stehen.
