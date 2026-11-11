@@ -88,6 +88,10 @@ var lake_sequence: Node2D
 var discovery_pending := false
 var hangar_discovery: Node2D
 var hangar_world: Node2D
+## v0.57.0 · ClaudeHelper: Arcade-Automat an der Rückwand der Halle.
+const ArcadeCabinet = preload("res://scripts/arcade/arcade_cabinet.gd")
+const ARCADE_SPOT := Vector2(642, 272)
+var arcade_cabinet: Node2D
 var bike_pos: = BIKE_PARK
 var bike_rot: = 0.0
 
@@ -221,6 +225,10 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo:
 		hangar_world.get_parent().remove_child(hangar_world)
 		hangar_world.queue_free()
 	hangar_world = null
+	if is_instance_valid(arcade_cabinet):
+		arcade_cabinet.get_parent().remove_child(arcade_cabinet)
+		arcade_cabinet.queue_free()
+	arcade_cabinet = null
 	discovery_pending = next in [Beat.GARAGE,Beat.HANGAR] and (saved_discovery or (next==Beat.HANGAR and fresh))
 	if is_instance_valid(lake_sequence):
 		lake_sequence.hide()
@@ -334,6 +342,10 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo:
 		hangar_world = HangarWorld.new()
 		hangar_world.world = self
 		actors.add_child(hangar_world)
+		arcade_cabinet = ArcadeCabinet.new()
+		arcade_cabinet.position = ARCADE_SPOT
+		arcade_cabinet.world = self
+		actors.add_child(arcade_cabinet)
 		if not discovery_pending and point_index==0: reset_raven(Vector2(438,468))
 	if beat == Beat.ECHO:
 		sanctuary_tableau = SanctuaryTableau.new()
@@ -681,6 +693,8 @@ static func _short_action(objective: String) -> String:
 	return counter.sub(text, "").strip_edges()
 
 func _hangar_prop() -> String:
+	if raven.position.distance_to(ARCADE_SPOT + ArcadeCabinet.USE_POINT) <= 26.0:
+		return "NEON KOMBAT spielen"
 	for item in [[Vector2(193, 289), "Klingen ansehen"], [Vector2(476, 293), "Ersatzteile ansehen"], [Vector2(895, 380), "Aerodyne ansehen"]]:
 		if raven.position.distance_to(item[0]) <= 24.0:
 			return item[1]
@@ -716,6 +730,9 @@ func interact(_actor: PixelActor = null) -> void :
 		if point_index == 2:
 			_scene_echo_end()
 			return
+	if beat == Beat.HANGAR and _hangar_prop() == "NEON KOMBAT spielen":
+		open_arcade()
+		return
 	if beat == Beat.HANGAR and not _hangar_prop().is_empty():
 		toast(_hangar_prop() + " · Bestände des Ordens.")
 		return

@@ -1,5 +1,16 @@
 # Versionshinweise
 
+## v0.57.0 – ClaudeHelper: Arcade-Automat „NEON KOMBAT“ · 11. November 2026
+
+Nutzerauftrag: ein Automat in Shadepis Versteck mit einem Kampfspiel für alle Figuren, auch zu zweit.
+
+- **Automat in der Halle des Ordens (Kapitel 4):** an der Rückwand rechts neben dem grünen Tank. Mit E / A öffnet Raven das Spiel; die Mission bleibt unberührt.
+- **NEON KOMBAT:** seitliches Kampfspiel mit zehn Figuren (Shadepi, Raven, Jackal, Kenzō, vier Straßenkämpfer, zwei Schützen). Leichter Schlag, schwerer Hieb, Sprung, Block, Spezialleiste mit vier Spezialarten, Trefferzähler, 60 Sekunden je Runde, zwei Gewinnrunden.
+- **1 Spieler gegen CPU oder 2 Spieler im Duell** an einer Tastatur oder mit Gamepads.
+- **Hauptmenü:** Nach dem ersten Fund steht „Arcade · NEON KOMBAT“ auch im Hauptmenü.
+- Figuren nutzen unverändert ihre vorhandenen Seitenansichten; neu sind Bühne, Automat und Trefferfunken (`tools/arcade/build_arcade.py`). [Anleitung](docs/arcade.md).
+- Neuer Test `arcade` (56 Prüfungen), 46 Suiten.
+
 ## v0.56.0 – ClaudeHelper: Verfolger explodiert, Hindernisse zerbersten · 11. November 2026
 
 Nutzerbericht: Nach dem Sieg fuhr der Verfolgerwagen unversehrt weiter, dann stand man plötzlich in der Garage.

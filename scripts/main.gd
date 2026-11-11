@@ -114,6 +114,22 @@ func _begin_technology_access(context: String) -> Array[WorldProp]:
 		if device.prop_id in ids and device.begin_access(): terminal_devices.append(device)
 	return terminal_devices.duplicate()
 
+## v0.57.0 · ClaudeHelper: Arcade-Automat „NEON KOMBAT“ als eigenes Bild über dem Spiel.
+var arcade: CanvasLayer
+func open_arcade(from_menu: bool = false) -> void:
+	if is_instance_valid(arcade) or (is_busy() and not from_menu):
+		return
+	player.cancel_charge()
+	raven.cancel_charge()
+	player.velocity = Vector2.ZERO
+	raven.velocity = Vector2.ZERO
+	arcade = preload("res://scripts/arcade/neon_kombat.gd").new()
+	arcade.world = self
+	arcade.closed.connect(func():
+		arcade = null
+		if menu_open and ui != null and is_instance_valid(ui.resume_button): ui.resume_button.grab_focus.call_deferred())
+	add_child(arcade)
+
 func cancel_terminal() -> void:
 	for device in terminal_devices:
 		if is_instance_valid(device): device.finish_access("idle")
@@ -832,7 +848,7 @@ func _update_raven_follower(delta: float) -> void :
 			raven.animate("walk", delta)
 
 func _unhandled_input(event: InputEvent) -> void :
-	if terminal != null:
+	if terminal != null or is_instance_valid(arcade):
 		return
 	if event is InputEventKey and event.echo:
 		return
@@ -880,7 +896,7 @@ func _unhandled_input(event: InputEvent) -> void :
 		toggle_audio()
 
 func is_busy() -> bool:
-	return terminal != null or menu_open or (ui != null and ui.dialogue_open) or player.health <= 0 or in_cinematic()
+	return terminal != null or is_instance_valid(arcade) or menu_open or (ui != null and ui.dialogue_open) or player.health <= 0 or in_cinematic()
 
 ## Where the gameplay camera rests; cutscenes blend back to it when they end.
 func camera_home() -> Vector2:
