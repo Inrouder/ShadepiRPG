@@ -144,7 +144,9 @@ func _build_world() -> void :
 	add_child(drive_layer)
 
 func raven_leads() -> bool:
-	return (beat == Beat.HANGAR or (beat == Beat.ROOF and point_index < 2)) or beat == Beat.ECHO
+	# v0.60.3 · ClaudeHelper: Auf dem Hinweg durch Flur und Lobby führt weiter Raven; Shadepi
+	# bleibt getarnt, bis er sich in der Suite zeigt.
+	return (beat == Beat.HANGAR or (beat == Beat.ROOF and (point_index < 2 or passages_active()))) or beat == Beat.ECHO
 
 func actor_is_playable(actor: PixelActor) -> bool:
 	if actor == raven and coop_raven_playable(): return true
@@ -191,44 +193,61 @@ func _start_passages(rooms: Array, after: Callable) -> void:
 	passage_return = [player.position, raven.position]
 	_passage_transition()
 
+## Läuft gerade eine Folge von Durchgangsräumen (auch während der Blende dazwischen)?
+func passages_active() -> bool:
+	return in_passage() or not passage_queue.is_empty() or passage_after.is_valid()
+
 func _passage_transition() -> void:
 	var cs = begin_cutscene()
 	var ticket: int = cs.generation
 	await cs.fade(Color.BLACK, 0.3)
 	if not cs.alive(ticket): return
-	var more := _open_next_passage()
-	if not more:
-		cs.end()
+	if passage_queue.is_empty():
+		# Letzter Raum verlassen: erst die eigene Blende sauber beenden, dann die Folgeszene
+		# starten – sonst würde dieses Ende deren Film abbrechen.
+		_finish_passages()
 		return
-	await cs.camera(_passage_lead().position + Vector2(0, -34), 0.0, float(passage.config.zoom))
+	_open_next_passage()
+	cs.home_zoom = float(passage.config.zoom)
+	await cs.camera(camera_home(), 0.0, float(passage.config.zoom))
 	if not cs.alive(ticket): return
 	await cs.fade(Color(0, 0, 0, 0), 0.35)
 	if not cs.alive(ticket): return
 	cs.end()
 
-func _open_next_passage() -> bool:
+func _finish_passages() -> void:
 	_close_passage()
-	if passage_queue.is_empty():
-		if passage_return.size() == 2:
-			player.position = passage_return[0]
-			raven.position = passage_return[1]
-		passage_return = []
-		var after := passage_after
-		passage_after = Callable()
-		if after.is_valid(): after.call()
-		return false
+	if passage_return.size() == 2:
+		player.position = passage_return[0]
+		raven.position = passage_return[1]
+	passage_return = []
+	passage_queue.clear()
+	var after := passage_after
+	passage_after = Callable()
+	cutscene.abort()
+	player.visible = not raven_leads()
+	if after.is_valid(): after.call()
+
+func _open_next_passage() -> void:
+	_close_passage()
 	var spec: Array = passage_queue.pop_front()
 	passage = PassageRoom.new()
 	passage.open(self, spec[0], spec[1], _passage_lead)
 	passage.exit_reached.connect(_passage_transition)
 	var toward := signf(passage.exit().x - passage.entry().x)
-	player.position = passage.entry()
-	raven.position = passage.entry() + (Vector2(-toward * 24.0, 10.0) if player.visible else Vector2.ZERO)
+	# Wer führt, steht am Eingang; der Begleiter einen Schritt dahinter. Shadepi bleibt auf dem
+	# Hinweg unsichtbar, wie auf dem Dach.
+	player.visible = not raven_leads()
+	var lead := _passage_lead()
+	var other: PixelActor = player if lead == raven else raven
+	lead.position = passage.entry()
+	other.position = passage.entry() + Vector2(-toward * 24.0, 10.0)
+	if not passage.contains(other.position): other.position = passage.entry()
 	for actor in [player, raven]:
 		actor.velocity = Vector2.ZERO
 		actor.facing = Vector2(toward if toward != 0.0 else 1.0, 0)
 		actor.reset_transients()
-	if is_instance_valid(companion): companion.position = _passage_lead().position + Vector2(-18, -30)
+	if is_instance_valid(companion): companion.position = lead.position + Vector2(-18, -30)
 	if spec.size() > 2:
 		for entry: Array in spec[2]:
 			passage_foes.append(_spawn_foe(passage.point(entry[0]), 72, entry[1]))
@@ -236,7 +255,6 @@ func _open_next_passage() -> bool:
 		toast("WACHEN IM WEG · alle ausschalten")
 	else:
 		toast("Weiter zu Kenzōs Penthouse →" if beat == Beat.ROOF else "Zum Landeplatz ←")
-	return true
 
 ## Tests und Admin-Sprünge: alle offenen Durchgangsräume sofort abschließen.
 func skip_passages() -> void:
@@ -244,7 +262,7 @@ func skip_passages() -> void:
 		return
 	if in_cinematic(): cutscene.skip()
 	passage_queue.clear()
-	_open_next_passage()
+	_finish_passages()
 
 func _close_passage() -> void:
 	for foe in passage_foes:
@@ -1255,6 +1273,7 @@ func _beat_scene(fresh: bool) -> void:
 		toast(chapter_objective())
 
 func camera_home() -> Vector2:
+	if in_passage(): return _passage_lead().position + Vector2(0, -34)
 	if is_instance_valid(hangar_discovery) and hangar_discovery.view=="hangar": return raven.position+Vector2(0,-52)
 	if beat == Beat.ECHO and not echo_ready:
 		return Painted.CHAMBER_CAMERA
