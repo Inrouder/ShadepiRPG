@@ -201,6 +201,7 @@ func run() -> void:
 		campaign.raven.position = campaign._target()
 		campaign.interact()
 		check(preload("res://tests/terminal_solver.gd").complete(campaign), "Raven solves roof access terminal")
+	campaign.skip_passages()   # v0.60.0 · ClaudeHelper: Flur und Lobby prüft tests/passages.gd
 	finish_dialogue(campaign)
 	check(campaign.beat == campaign.Beat.BOSS and campaign._living() == 1, "roof terminals lead straight to the single Kenzō boss")
 	campaign.foes.back().take_damage(1000)

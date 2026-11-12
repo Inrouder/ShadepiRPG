@@ -39,6 +39,12 @@ const TRAIL: Array[Vector2] = [
 ]
 
 var phase := Phase.APARTMENT
+## v0.60.0 · ClaudeHelper: Gasse zwischen Ravens Wohnung und der Bingo Street (Kulisse vom Nutzer).
+const PassageRoom = preload("res://scripts/passage_room.gd")
+const BACKALLEY_PUNK := Vector2(498, 284)
+var backalley: Node2D
+var backalley_punk: PixelActor
+var backalley_met := false
 var checkpoint := Phase.APARTMENT
 var chapter_coop := false
 var trail_index := 0
@@ -170,6 +176,9 @@ func _process(delta: float) -> void:
 		camera.position = raven.position + Vector2(0, -57) + raven.facing * 8
 	if is_busy():
 		return
+	if in_backalley() and not backalley_met and is_instance_valid(backalley_punk) and raven.position.distance_to(backalley_punk.position) < 84.0:
+		_scene_backalley_punk()
+		return
 	match phase:
 		Phase.HUNT:
 			if trail_index < TRAIL.size() and raven.position.distance_to(TRAIL[trail_index]) < 39.0:
@@ -220,6 +229,7 @@ func _enter_checkpoint(next_phase: Phase, saved_section: int = 0) -> void:
 	ui.clear_toast()
 	cancel_terminal()
 	_clear_encounter()
+	_clear_backalley()
 	ui.clear_dialogue()
 	for foe in patrol:
 		foe.hide()
@@ -306,7 +316,84 @@ func _update_apartment_lighting() -> void:
 func _scene_apartment() -> void:
 	intro.play_apartment()
 
+func in_backalley() -> bool:
+	return is_instance_valid(backalley)
+
+func enter_backalley() -> void:
+	_clear_backalley()
+	backalley = PassageRoom.new()
+	backalley.open(self, "backalley", "in", func(): return raven)
+	backalley.locked = true
+	backalley.exit_reached.connect(func(): intro.play_street())
+	backalley_met = false
+	raven.position = backalley.entry()
+	raven.facing = Vector2.RIGHT
+	raven.reset_visual_pose()
+	if is_instance_valid(companion): companion.position = raven.position + Vector2(-18, -30)
+	var punk := EnemyScript.new()
+	punk.setup(PUNKS[0], self)
+	punk.position = backalley.point(BACKALLEY_PUNK)
+	actors.add_child(punk)
+	punk.reset_fight(punk.max_health)
+	punk.active = false
+	punk.facing = Vector2.LEFT
+	punk.set_physics_process(false)
+	backalley_punk = punk
+
+## Tests und Admin-Sprünge: die Gasse sofort abschließen und auf die Straße wechseln.
+func skip_backalley() -> void:
+	if not in_backalley():
+		return
+	if in_cinematic(): cutscene.skip()
+	backalley_met = true
+	intro.play_street()
+	cutscene.skip()
+
+func _clear_backalley() -> void:
+	if is_instance_valid(backalley_punk):
+		backalley_punk.hide()
+		backalley_punk.queue_free()
+	backalley_punk = null
+	if is_instance_valid(backalley):
+		backalley.close()
+	backalley = null
+
+## Ein Punk quatscht Raven an; ein kurzer Hack über seinen offenen Neuralport legt ihn schlafen.
+func _scene_backalley_punk() -> void:
+	backalley_met = true
+	var cs = begin_cutscene()
+	var ticket: int = cs.generation
+	var punk := backalley_punk
+	cs.face(raven, punk.position)
+	cs.pose(raven, "idle")
+	await cs.say("PUNK", "Na, Püppchen. Wie wär's mit uns beiden?")
+	if not cs.alive(ticket): return
+	await cs.say("RAVEN", "Dein Neuralport hängt offen im Netz. Ganz schlechte Idee.")
+	if not cs.alive(ticket): return
+	cs.do(func():
+		sound("hack")
+		effects.hack_arc(raven.position + Vector2(0, -30), punk.position + Vector2(0, -30))
+		effects.burst(punk.position + Vector2(0, -30), Color("5fe8fa"), 22))
+	await cs.wait(0.45)
+	if not cs.alive(ticket): return
+	cs.do(func():
+		sound("enemy_death_0")
+		punk.health = 0
+		punk.visual.modulate = Color(0.55, 0.6, 0.7, 0.9)
+		punk.visual.rotation = PI * 0.5
+		punk.visual.position.y = -10
+		punk.queue_redraw())
+	await cs.wait(0.6)
+	if not cs.alive(ticket): return
+	await cs.say("RAVEN", "Schlaf dich aus. In zehn Minuten weißt du wieder, wie du heißt.")
+	if not cs.alive(ticket): return
+	cs.do(func():
+		if is_instance_valid(backalley): backalley.locked = false
+		toast("Weiter zur Straße →"))
+	cs.end()
+
 func _leave_apartment() -> void:
+	_clear_backalley()
 	phase = Phase.HUNT
 	set_music_section("chapter_1_hunt")
 	set_dressing("street")
@@ -702,6 +789,10 @@ func _draw() -> void:
 	if phase == Phase.APARTMENT:
 		draw_rect(Rect2(WEST_EDGE - 200, -100, 1100, 840), Color("07090f"))
 		draw_texture_rect(Painted.ART.apartment, APARTMENT_RECT, false)
+		var way: Array = []
+		if in_backalley() and backalley_met and not in_cinematic():
+			way = [[backalley.exit(), raven.position.distance_to(backalley.exit()) <= 47.0, false, 62.0]]
+		PixelMarker.show(self, way)
 		return
 	if phase == Phase.EPILOGUE and raven.visible and raven.position.distance_to(EXIT_DOOR) < 53.0:
 		draw_rect(Rect2(947, 186, 39, 79), Color("090e19"))

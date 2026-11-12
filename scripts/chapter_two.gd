@@ -27,6 +27,18 @@ var scan_index: = 0
 var relay_index: = 0
 var ice_cycle: = 0.0
 var dive_hold: = 0.0
+## v0.60.0 · ClaudeHelper: zwei weitere Netz-Ebenen zwischen den Relais (Kulissen vom Nutzer).
+## Nach Relais 1 das violette Datenarchiv, nach Relais 2 der rote Kern vor dem Wächter.
+const PassageRoom = preload("res://scripts/passage_room.gd")
+const NET_LAYERS := {
+	"dive_archive": [[Vector2(420, 200), Vector2(560, 170)], [Vector2(820, 190), Vector2(900, 222), Vector2(480, 195)]],
+	"dive_core": [[Vector2(330, 240), Vector2(520, 200), Vector2(600, 252)], [Vector2(900, 210), Vector2(960, 250), Vector2(700, 200), Vector2(430, 232)]],
+}
+var net_layer: Node2D
+var net_waves: Array = []
+var net_after: Callable
+var net_return := Vector2.ZERO
+var net_pending := false
 var spray_ready: = false
 var bath_pending := 0 # 1 entry, 2 return, 3 spray rescue; 0 completed/idle
 var ice_bath: Node2D
@@ -133,6 +145,7 @@ func _enter(next: Section, saved_relay: int = 0, keep_positions: bool = false, s
 		_:
 			set_music_section("chapter_2_hideout")
 	set_dressing("industry" if next == Section.YARD else "dive" if next == Section.DIVE else "hideout")
+	_close_net_layer()
 	stage = 0
 	scan_index = 0
 	relay_index = clampi(saved_relay, 0, RELAYS.size() - 1) if next == Section.DIVE else 0
@@ -194,6 +207,7 @@ func _target() -> Vector2:
 		Section.HIDEOUT:
 			return WORKBENCH
 		Section.DIVE:
+			if in_net_layer(): return Vector2.ZERO if net_layer.locked else net_layer.exit()
 			return RELAYS[relay_index] * (ICE_SCALE if relay_index == 2 else 1.0)
 		Section.RECOVERY:
 			return BATH if spray_ready else SPRAY
@@ -208,6 +222,8 @@ func chapter_objective() -> String:
 		Section.HIDEOUT:
 			return "Raven das Metallfragment zeigen"
 		Section.DIVE:
+			if in_net_layer():
+				return "Netz-Ebene %d · ICE löschen · %d aktiv" % [2 if net_layer.key == "dive_archive" else 3, threats.size()] if net_layer.locked else "Durch das Portal zurück auf die Datenspur"
 			return "ICE-Wächter · Salven ausweichen, offenen Kern treffen" if ice_guardian() != null else "Datenspur verfolgen · %d / 3" % relay_index
 		Section.RECOVERY:
 			return "Raven mit Kryospray stabilisieren" if spray_ready else "Kryospray am Überwachungstisch holen"
@@ -221,6 +237,8 @@ func _ice_open() -> bool:
 func interaction_prompt() -> String:
 	if section == Section.END:
 		return "E / A · Weiter zu Kapitel 3"
+	if in_net_layer():
+		return ""
 	var target: = _target()
 	var actor: PixelActor = raven if raven_leads() else player
 	if target == Vector2.ZERO or actor.position.distance_to(target) >= 48.0:
@@ -399,6 +417,9 @@ func _destroy_threat(target: Node2D) -> void:
 	threats.erase(target)
 	target.set_process(false)
 	target.queue_free()
+	if in_net_layer():
+		_net_threat_deleted()
+		return
 	if threats.is_empty() and relay_index == 1 and not next_wave:
 		next_wave = true
 		_spawn_ice()
@@ -448,6 +469,98 @@ func admin_defeat_enemies() -> int:
 func player_defeated() -> void :
 	_enter.call_deferred(section, relay_index)
 
+func in_net_layer() -> bool:
+	return is_instance_valid(net_layer)
+
+func _enter_net_layer(key: String, after: Callable) -> void:
+	net_pending = true
+	var cs = begin_cutscene()
+	var ticket: int = cs.generation
+	await cs.fade(Color.BLACK, 0.3)
+	if not cs.alive(ticket): return
+	_open_net_layer(key, after)
+	await cs.camera(raven.position + Vector2(0, -34), 0.0, 1.0)
+	if not cs.alive(ticket): return
+	await cs.fade(Color(0, 0, 0, 0), 0.4)
+	if not cs.alive(ticket): return
+	await cs.say("RAVEN", "Die Spur führt tiefer. Datenarchiv – hier lagern sie, was niemand finden soll." if key == "dive_archive" else "Roter Kern. Ab hier beißt das ICE richtig zu.")
+	if not cs.alive(ticket): return
+	cs.end()
+
+func _open_net_layer(key: String, after: Callable) -> void:
+	_close_net_layer()
+	net_after = after
+	net_return = raven.position
+	net_layer = PassageRoom.new()
+	net_layer.open(self, key, "in", func(): return raven)
+	net_layer.locked = true
+	net_layer.exit_reached.connect(_leave_net_layer)
+	raven.position = net_layer.entry()
+	raven.velocity = Vector2.ZERO
+	raven.facing = Vector2.RIGHT
+	raven.reset_transients()
+	if is_instance_valid(companion): companion.position = raven.position + Vector2(-18, -30)
+	net_waves = NET_LAYERS[key].duplicate(true)
+	_spawn_net_wave()
+
+func _spawn_net_wave() -> void:
+	var wave: Array = net_waves.pop_front()
+	for local: Vector2 in wave:
+		var threat: Node2D = Threat.new()
+		threat.world = self
+		threat.position = net_layer.point(local)
+		actors.add_child(threat)
+		threats.append(threat)
+
+func _net_threat_deleted() -> void:
+	if not threats.is_empty():
+		return
+	if net_waves.is_empty():
+		net_layer.locked = false
+		toast("Ebene frei · durch das Portal →")
+	else:
+		_spawn_net_wave()
+		toast("Zweite ICE-Welle · sie kommen von beiden Seiten")
+
+func _leave_net_layer() -> void:
+	var cs = begin_cutscene()
+	var ticket: int = cs.generation
+	await cs.fade(Color.BLACK, 0.3)
+	if not cs.alive(ticket): return
+	_finish_net_layer()
+	await cs.camera(ice_camera_home(), 0.0, camera.zoom.x)
+	if not cs.alive(ticket): return
+	await cs.fade(Color(0, 0, 0, 0), 0.4)
+	if not cs.alive(ticket): return
+	cs.end()
+
+func _finish_net_layer() -> void:
+	var after := net_after
+	var back := net_return
+	_close_net_layer()
+	raven.position = back
+	if after.is_valid(): after.call()
+
+## Tests und Admin-Sprünge: die offene Netz-Ebene sofort abschließen.
+func skip_net_layer() -> void:
+	if not net_pending:
+		return
+	if in_cinematic(): cutscene.skip()
+	if in_net_layer(): _finish_net_layer()
+
+func _close_net_layer() -> void:
+	if is_instance_valid(net_layer):
+		for threat in threats:
+			threat.hide()
+			threat.set_process(false)
+			threat.queue_free()
+		threats.clear()
+		net_layer.close()
+	net_layer = null
+	net_pending = false
+	net_waves = []
+	net_after = Callable()
+
 func _trace_relay() -> void :
 	if not threats.is_empty() or dive_hold > 0.0:
 		return
@@ -459,6 +572,9 @@ func _trace_relay() -> void :
 	if relay_index == 2:
 		dive_hold = 0.55
 		return
+	_enter_net_layer(["dive_archive", "dive_core"][relay_index], _relay_traced)
+
+func _relay_traced() -> void:
 	relay_index += 1
 	if relay_index == 2:
 		_configure_ice_space()

@@ -1,5 +1,15 @@
 # Versionshinweise
 
+## v0.60.0 – ClaudeHelper: Gasse, Tower-Flur und Lobby, zwei Netz-Ebenen · 12. November 2026
+
+Der Nutzer hat fünf Level-Bilder geliefert und beschrieben, wo sie hingehören.
+
+- **Kapitel 1 · Gasse:** Raven tritt aus der Hintertür ihrer Wohnung in eine Gasse, kommentiert das Drachen-Graffiti und kann frei laufen. Ein Punk quatscht sie an („Na, Püppchen. Wie wär's mit uns beiden?“), sie hackt seinen Neuralport, er fällt um. Danach geht es wie bisher auf die Bingo Street.
+- **Kapitel 6 · Tower:** Zwischen Landeplatz und Kenzōs Suite liegen jetzt ein Flur und die Lobby. Auf dem Hinweg sind sie leer; auf dem Rückweg stehen in beiden je drei Wachen, eine davon mit Schild. Der Flucht-Countdown ruht in dieser Zeit.
+- **Kapitel 2 · Deep Dive:** Nach dem ersten Relais führt die Spur ins violette Datenarchiv, nach dem zweiten in den roten Kern, je mit zwei Wellen ICE; danach folgt der Wächter wie bisher.
+- Gemeinsame Technik: `scripts/passage_room.gd`. Story, Dialoge der bestehenden Szenen und Spielstände bleiben unverändert. [Übersicht](docs/durchgangsraeume.md).
+- Neuer Test `passages` (61 Prüfungen), 47 Suiten.
+
 ## v0.59.0 – ClaudeHelper: Jagd, Rettung, Flug und Aufzugkampf gestreckt · 12. November 2026
 
 Fortsetzung des Auftrags „Level strecken“; Story und Dialoge unverändert, keine neuen Kulissen nötig.

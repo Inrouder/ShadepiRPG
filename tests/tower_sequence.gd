@@ -129,6 +129,7 @@ func run() -> void:
 	check(w.point_index==1 and w.countdown>58 and w.raven.visual.visible,"escape starts at the charge console with Raven released")
 	w.point_index = 3
 	w._complete_point()
+	w.skip_passages()   # v0.60.0 · ClaudeHelper: Rückweg durch Lobby und Flur prüft tests/passages.gd
 	check(w.tower_stage==3 and is_instance_valid(w.tower_departure),"roof exit starts visible departure instead of jumping to lake")
 	check(w.load_game() and w.tower_stage==3 and is_instance_valid(w.tower_departure),"loading departure restarts the cinematic without replaying extraction")
 	var departure = w.tower_departure
