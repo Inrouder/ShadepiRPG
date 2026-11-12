@@ -51,6 +51,12 @@ func run() -> void:
 			for route: Array in config.routes.values():
 				check(not box.grow(8.0).has_point(route[0]) and not box.grow(8.0).has_point(route[1]), "%s: kein Hindernis auf Ein- oder Ausgang" % key)
 
+	# v0.60.1 · ClaudeHelper: Die Hintertür der Gasse hat Figurenmaß (Bild: 250 px samt Rahmen).
+	var alley: Dictionary = Room.ROOMS.backalley
+	var door_height: float = 250.0 * alley.size.y / alley.art.get_height()
+	check(door_height > 58.0 * 1.3 and door_height < 58.0 * 1.8, "die Tür der Gasse ist höchstens knapp zwei Figuren hoch")
+	check(absf(alley.routes["in"][0].x - 152.0 * alley.size.x / alley.art.get_width()) < 4.0, "Raven tritt genau vor der Tür in die Gasse")
+
 	# --- Kapitel 1: Gasse zwischen Wohnung und Straße -----------------------------------------
 	var one = load("res://scenes/chapter_one.tscn").instantiate()
 	root.add_child(one)

@@ -11,7 +11,7 @@ const ROOMS := {
 		"art": preload("res://assets/world/painted/backalley.webp"), "size": Vector2(640, 360), "zoom": 1.0,
 		"floor": [Vector2(186, 240), Vector2(455, 240), Vector2(636, 300), Vector2(636, 354), Vector2(4, 354), Vector2(4, 290), Vector2(58, 270), Vector2(118, 254)],
 		"solids": [],
-		"routes": {"in": [Vector2(62, 276), Vector2(596, 334)]},
+		"routes": {"in": [Vector2(58, 278), Vector2(596, 334)]},   # Tür nach v0.60.1 auf Figurenmaß
 		# Neonröhren links (pink) und rechts (cyan) beleuchten die Figuren.
 		"lights": [[Vector2(140, 250), "ff4fa8", 2.6, 0.75], [Vector2(505, 250), "4fe6e0", 2.6, 0.75], [Vector2(320, 300), "c8b8e8", 3.0, 0.4]],
 	},
