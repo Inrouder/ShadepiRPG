@@ -4,7 +4,7 @@
 
 ![Gasse, Punk, Tower-Flur, Lobby mit Wachen, Datenarchiv, roter Kern](previews/durchgangsraeume-v060.webp)
 
-Nutzerauftrag vom 12. November 2026: fünf gelieferte Level-Bilder einbauen. Alle fünf ließen sich ohne Nacharbeit am Bild verwenden; die beiden Tower-Bilder sind nur um ihre weißen Ränder beschnitten.
+Nutzerauftrag vom 12. November 2026: fünf gelieferte Level-Bilder einbauen. Die beiden Tower-Bilder sind um ihre weißen Ränder beschnitten. In der Gasse ist seit v0.60.1 die Hintertür auf Figurenmaß verkleinert (`tools/passages/fit_backalley_door.py`); die übrigen Bilder sind unverändert.
 
 ## Wo die Räume liegen
 

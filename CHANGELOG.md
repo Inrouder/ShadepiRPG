@@ -1,5 +1,12 @@
 # Versionshinweise
 
+## v0.60.1 – ClaudeHelper: Hintertür der Gasse auf Figurenmaß · 12. November 2026
+
+Nutzerbericht: Die Tür in der Gasse war viel größer als Raven.
+
+- Die Türeinheit (Rahmen, Lampe, Schloss) ist auf etwa 1,3 Figurenhöhen verkleinert und steht weiter auf dem Gehweg; vorher war sie rund 2,4 Figuren hoch. Die frei gewordene Wand ist mit dem Blech der Nachbarwand gefüllt.
+- Werkzeug `tools/passages/fit_backalley_door.py` wiederholt den Schritt aus dem gelieferten Bild.
+
 ## v0.60.0 – ClaudeHelper: Gasse, Tower-Flur und Lobby, zwei Netz-Ebenen · 12. November 2026
 
 Der Nutzer hat fünf Level-Bilder geliefert und beschrieben, wo sie hingehören.
