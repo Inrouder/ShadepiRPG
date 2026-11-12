@@ -26,7 +26,7 @@ Nutzerauftrag vom 12. November 2026: fünf gelieferte Level-Bilder einbauen. Die
 
 - Die Bilder zeigen die Räume von vorn mit einem Bodenstreifen, nicht schräg von oben wie die übrigen Karten. Der begehbare Boden ist deshalb schmal: im Tower etwa eine Figurenhöhe tief.
 - Die Gasse läuft perspektivisch nach hinten zu. Figuren behalten überall dieselbe Größe; am hinteren Rand wirken sie dadurch etwas groß.
-- Säulen und Datenwände in den Netz-Ebenen sind Teil des Bildes. Figuren können nicht hinter ihnen verschwinden; sie sind als Hindernisse gesperrt.
+- Säulen und Datenwände in den Netz-Ebenen: Seit v0.60.2 ist nur der Sockel gesperrt. Wer dahinter steht, wird von einem Ausschnitt des Bildes verdeckt (`occluders` in `ROOMS`).
 
 ## Technik
 

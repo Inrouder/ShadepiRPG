@@ -353,6 +353,8 @@ func _configure_ice_space() -> void:
 		toast("Hinter Datenwänden in Deckung! Cyan = Kern offen. Nah heran: J / X. Ausweichen: Leertaste / B.")
 
 func dive_blocked(point: Vector2, radius: float) -> bool:
+	if in_net_layer():
+		return net_layer.blocked(point, radius)
 	for box: Rect2 in ice_cover():
 		if box.grow(radius).has_point(point):
 			return true
@@ -509,6 +511,7 @@ func _spawn_net_wave() -> void:
 		var threat: Node2D = Threat.new()
 		threat.world = self
 		threat.position = net_layer.point(local)
+		threat.bounds = net_layer.floor_bounds().grow(-10.0)
 		actors.add_child(threat)
 		threats.append(threat)
 
