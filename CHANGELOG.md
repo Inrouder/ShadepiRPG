@@ -1,5 +1,14 @@
 # Versionshinweise
 
+## v0.60.2 – ClaudeHelper: Netz-Ebenen spielbar · 12. November 2026
+
+Nutzerbericht: In Netz-Ebene 2 kein Durchgang an der Kristallsäule; Netz-Ebene 3 nicht abschließbar, Gegner fehlten.
+
+- **Fehlende Gegner:** Die ICE-Programme waren auf den Bewegungsraum der Hauptebene begrenzt und sprangen beim ersten Schritt dorthin zurück – in beiden neuen Ebenen. Sie bleiben jetzt in der Ebene, in der sie erscheinen, und weichen deren Hindernissen aus.
+- **Durchgang:** An Kristallspeichern und Datenwänden ist nur noch der Sockel gesperrt. Man läuft dahinter durch und wird vom Bildteil verdeckt.
+- Einstieg in den roten Kern liegt jetzt rechts neben der ersten Datenwand.
+- `passages` prüft beides mit echter Bewegung (69 Prüfungen).
+
 ## v0.60.1 – ClaudeHelper: Hintertür der Gasse auf Figurenmaß · 12. November 2026
 
 Nutzerbericht: Die Tür in der Gasse war viel größer als Raven.

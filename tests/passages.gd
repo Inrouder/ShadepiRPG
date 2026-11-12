@@ -193,6 +193,27 @@ func run() -> void:
 	await settle(two)
 	check(two.in_net_layer() and two.net_layer.key == "dive_archive" and two.relay_index == 0, "nach dem ersten Relais öffnet sich das Datenarchiv")
 	check(two.threats.size() == 2 and two.net_layer.locked and two.chapter_objective().contains("Netz-Ebene 2"), "zwei ICE-Programme bewachen die Ebene")
+	# v0.60.2 · ClaudeHelper (Nutzerbericht): ICE blieb nicht in der Ebene, Säulen sperrten den Weg.
+	two.raven.position = two.net_layer.point(Vector2(200, 200))
+	for i in 90: await process_frame
+	var stay := true
+	for threat in two.threats:
+		if not two.net_layer.floor_bounds().grow(4.0).has_point(threat.position): stay = false
+	check(stay and two.threats.size() == 2, "das ICE bleibt in der Netz-Ebene und jagt Raven dort")
+	two.raven.health = 100
+	for lane: float in [158.0, 244.0]:
+		var clear_lane := false
+		for pillar: Rect2 in two.net_layer.config.solids:
+			if absf(pillar.get_center().x - 397.0) < 4.0: clear_lane = not pillar.grow(8.0).has_point(Vector2(397.0, lane)) or clear_lane
+		check(clear_lane or lane < 200.0, "an der zweiten Säule bleibt ein Weg frei")
+	two.raven.position = two.net_layer.point(Vector2(340, 190))
+	two.raven.health_floor = 100
+	Input.action_press("move_right")
+	for i in 150: await physics_frame
+	Input.action_release("move_right")
+	two.raven.health_floor = 0
+	check(two.raven.position.x > two.net_layer.point(Vector2(440, 0)).x, "Raven läuft hinter dem Kristallspeicher durch")
+	check(two.net_layer.covers.size() == 4 and two.net_layer.covers[1].get_parent() == two.actors and two.net_layer.covers[1].position.y > two.net_layer.point(Vector2(0, 220)).y, "Kristalle verdecken, wer dahinter steht")
 	two.raven.position = two.net_layer.exit()
 	await frames(4)
 	check(two.in_net_layer() and not two.in_cinematic(), "das Portal bleibt zu, solange ICE aktiv ist")
@@ -212,6 +233,11 @@ func run() -> void:
 	two.interact()
 	await settle(two)
 	check(two.in_net_layer() and two.net_layer.key == "dive_core" and two.threats.size() == 3, "nach dem zweiten Relais folgt der rote Kern")
+	for i in 60: await process_frame
+	var core_ok := true
+	for threat in two.threats:
+		if not two.net_layer.floor_bounds().grow(4.0).has_point(threat.position): core_ok = false
+	check(core_ok and two.threats.size() == 3 and two.net_layer.contains(two.raven.position), "auch im Kern bleibt das ICE erreichbar")
 	two.raven.take_damage(1000, two.raven.position)
 	await frames(6)
 	await settle(two)

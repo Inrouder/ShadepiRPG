@@ -32,16 +32,20 @@ const ROOMS := {
 	# Netz-Ebene 2: violettes Datenarchiv; Kristallspeicher stehen als Deckung im Weg.
 	"dive_archive": {
 		"art": preload("res://assets/world/painted/dive-archive.webp"), "size": Vector2(1086, 362), "zoom": 1.0,
-		"floor": [Vector2(6, 150), Vector2(1080, 150), Vector2(1080, 238), Vector2(6, 238)],
-		"solids": [Rect2(50, 172, 55, 80), Rect2(374, 162, 47, 62), Rect2(641, 182, 54, 60), Rect2(951, 172, 54, 80)],
-		"routes": {"in": [Vector2(28, 196), Vector2(930, 162)]},
+		"floor": [Vector2(6, 150), Vector2(1080, 150), Vector2(1080, 252), Vector2(6, 252)],
+		# v0.60.2 · ClaudeHelper: gesperrt ist nur der Sockel; dahinter läuft man durch und wird
+		# vom Kristall verdeckt.
+		"solids": [Rect2(50, 240, 55, 12), Rect2(374, 214, 47, 12), Rect2(641, 240, 54, 12), Rect2(951, 240, 54, 12)],
+		"occluders": [Rect2(50, 172, 55, 80), Rect2(374, 162, 47, 64), Rect2(641, 182, 54, 83), Rect2(951, 172, 54, 80)],
+		"routes": {"in": [Vector2(28, 200), Vector2(930, 166)]},
 	},
 	# Netz-Ebene 3: roter Kern vor dem Wächter.
 	"dive_core": {
 		"art": preload("res://assets/world/painted/dive-core.webp"), "size": Vector2(1086, 362), "zoom": 1.0,
 		"floor": [Vector2(6, 178), Vector2(1080, 178), Vector2(1080, 266), Vector2(6, 266)],
-		"solids": [Rect2(15, 178, 70, 50), Rect2(398, 178, 70, 48), Rect2(762, 178, 68, 50)],
-		"routes": {"in": [Vector2(40, 248), Vector2(980, 196)]},
+		"solids": [Rect2(15, 254, 70, 12), Rect2(398, 240, 70, 12), Rect2(762, 248, 68, 12)],
+		"occluders": [Rect2(15, 178, 70, 88), Rect2(398, 172, 70, 80), Rect2(762, 175, 68, 85)],
+		"routes": {"in": [Vector2(122, 226), Vector2(980, 200)]},
 	},
 }
 ## Lage aller Räume: weit unter der Stammkarte (0…1024 × 0…640), damit nichts überlappt.
@@ -57,6 +61,7 @@ var done := false
 var exit_radius := 24.0
 var body: StaticBody2D
 var saved := {}
+var covers: Array[Sprite2D] = []
 var clock := 0.0
 
 func open(owner_world: Node2D, room_key: String, route_key: String, lead_actor: Callable) -> void:
@@ -107,6 +112,23 @@ func open(owner_world: Node2D, room_key: String, route_key: String, lead_actor: 
 	cam.limit_bottom = int(ceilf(position.y + size.y + pad.y))
 	cam.zoom = Vector2.ONE * float(config.zoom)
 	world.effects.rain = false
+	# Verdecker: Bildausschnitte, die nach ihrem Sockel einsortiert werden – wer dahinter steht,
+	# verschwindet hinter Säule oder Datenwand.
+	var art: Texture2D = config.art
+	var ratio: Vector2 = art.get_size() / size
+	for box: Rect2 in config.get("occluders", []):
+		var cover := Sprite2D.new()
+		cover.texture = art
+		cover.centered = false
+		cover.region_enabled = true
+		cover.region_rect = Rect2(box.position * ratio, box.size * ratio)
+		cover.scale = Vector2.ONE / ratio
+		cover.offset = Vector2(0, -box.size.y * ratio.y)
+		cover.position = ORIGIN + Vector2(box.position.x, box.end.y)
+		cover.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+		cover.material = material
+		world.actors.add_child(cover)
+		covers.append(cover)
 	for lamp: Array in config.get("lights", []):
 		world._light(lamp[0], Color(lamp[1]), lamp[2], lamp[3], self)
 	_follow()
@@ -123,6 +145,11 @@ func close() -> void:
 		cam.zoom = saved.zoom
 		world.effects.rain = saved.rain
 		saved = {}
+	for cover in covers:
+		if is_instance_valid(cover):
+			cover.get_parent().remove_child(cover)
+			cover.queue_free()
+	covers.clear()
 	if is_instance_valid(body): body.collision_layer = 0
 	if get_parent() != null: get_parent().remove_child(self)
 	queue_free()
@@ -140,6 +167,19 @@ func floor_centre() -> Vector2:
 	var sum := Vector2.ZERO
 	for p: Vector2 in config.floor: sum += p
 	return sum / float(config.floor.size())
+
+## Umschließendes Rechteck des Bodens in Weltkoordinaten.
+func floor_bounds() -> Rect2:
+	var box := Rect2(config.floor[0], Vector2.ZERO)
+	for p: Vector2 in config.floor: box = box.expand(p)
+	return Rect2(box.position + ORIGIN, box.size)
+
+## Liegt der Punkt (mit Abstand) in einem Hindernis oder außerhalb des Bodens?
+func blocked(global_point: Vector2, radius: float) -> bool:
+	var local := global_point - ORIGIN
+	for box: Rect2 in config.solids:
+		if box.grow(radius).has_point(local): return true
+	return not Geometry2D.is_point_in_polygon(local, PackedVector2Array(config.floor))
 
 func contains(global_point: Vector2) -> bool:
 	return Geometry2D.is_point_in_polygon(global_point - ORIGIN, PackedVector2Array(config.floor))

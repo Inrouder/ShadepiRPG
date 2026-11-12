@@ -5,6 +5,8 @@ const GUARDIAN_ART: Texture2D = preload("res://assets/sprites/npcs/ice-guardian.
 
 var world: Node2D
 var guardian: = false
+## v0.60.2 · ClaudeHelper: Bewegungsraum; Netz-Ebenen abseits der Hauptkarte setzen ihren eigenen.
+var bounds := Rect2(25, 265, 973, 212)
 var elapsed: = 0.0
 var direction: = Vector2.ZERO
 var hit: = false
@@ -66,13 +68,13 @@ func _process(delta: float) -> void :
 ## Moves while respecting the data-space walls; returns false when blocked.
 func _move(step: Vector2) -> bool:
 	var wanted := position + step
-	var next := wanted.clamp(Vector2(25, 265), Vector2(998, 477))
+	var next := wanted.clamp(bounds.position, bounds.end)
 	if not world.has_method("dive_blocked") or not world.dive_blocked(next, 12.0):
 		position = next
 		return next == wanted
 	# Slide along the wall on the free axis instead of passing through it.
 	for slide: Vector2 in [Vector2(step.x, 0), Vector2(0, step.y)]:
-		var alt: Vector2 = (position + slide).clamp(Vector2(25, 265), Vector2(998, 477))
+		var alt: Vector2 = (position + slide).clamp(bounds.position, bounds.end)
 		if slide.length() > 0.01 and not world.dive_blocked(alt, 12.0):
 			position = alt
 			return false
