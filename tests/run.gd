@@ -698,6 +698,15 @@ func finish_dialogue(chapter: Node2D) -> void:
 		_finish_dialogue_once(chapter)
 	if chapter.in_cinematic():
 		chapter.cutscene.skip()
+	# v0.60.0 · ClaudeHelper: Die Gasse hinter Ravens Wohnung hat eigene Prüfungen (tests/passages.gd).
+	if chapter.has_method("skip_backalley") and chapter.in_backalley():
+		chapter.skip_backalley()
+	if chapter.has_method("skip_passages") and (chapter.in_passage() or not chapter.passage_queue.is_empty()):
+		chapter.skip_passages()
+		for _round in 4:
+			if chapter.in_cinematic():
+				chapter.cutscene.skip()
+			_finish_dialogue_once(chapter)
 
 func _finish_dialogue_once(chapter: Node2D) -> void:
 	for _line in 16:
@@ -729,26 +738,32 @@ func check_chapter_two() -> void:
 	for scan in chapter.SCANS:
 		chapter.player.position = scan
 		chapter.interact()
+		chapter.skip_net_layer()   # v0.60.0 · ClaudeHelper: Netz-Ebenen prüft tests/passages.gd
 	check(chapter.scan_index == 3, "chapter two scans all approaches before entry")
 	chapter.player.position = chapter.DOOR
 	chapter.interact()
+	chapter.skip_net_layer()   # v0.60.0 · ClaudeHelper: Netz-Ebenen prüft tests/passages.gd
 	finish_dialogue(chapter)
 	check(chapter.section == chapter.Section.HIDEOUT, "steel door leads to Raven")
 	chapter.player.position = chapter.WORKBENCH
 	chapter.interact()
+	chapter.skip_net_layer()   # v0.60.0 · ClaudeHelper: Netz-Ebenen prüft tests/passages.gd
 	finish_dialogue(chapter)
 	check(chapter.section == chapter.Section.COOLING, "Raven must be connected to the cooling system before diving")
 	chapter.player.position = chapter.BATH
 	chapter.interact()
+	chapter.skip_net_layer()   # v0.60.0 · ClaudeHelper: Netz-Ebenen prüft tests/passages.gd
 	finish_dialogue(chapter)
 	check(chapter.raven_leads() and chapter.actor_is_playable(chapter.raven), "deep dive switches control to Raven")
 	check(MusicLibrary.path_for(chapter.music_section).ends_with("Fight.mp3"), "Deep Dive combat uses the fight track")
 	chapter.raven.position = chapter.RELAYS[0]
 	chapter.ice_cycle = 1.5
 	chapter.interact()
+	chapter.skip_net_layer()   # v0.60.0 · ClaudeHelper: Netz-Ebenen prüft tests/passages.gd
 	check(chapter.relay_index == 0, "red ICE window blocks access")
 	chapter.ice_cycle = 1.2
 	chapter.interact()
+	chapter.skip_net_layer()   # v0.60.0 · ClaudeHelper: Netz-Ebenen prüft tests/passages.gd
 	check(chapter.relay_index == 1 and chapter.threats.size() == 1, "first hack opens the virus encounter")
 	check(chapter.load_game() and chapter.relay_index == 1 and chapter.threats.size() == 1, "the saved data node reloads its encounter")
 	for expected in [1, 2, 1]:
@@ -762,6 +777,7 @@ func check_chapter_two() -> void:
 			chapter.raven.position = chapter.RELAYS[1]
 			chapter.ice_cycle = 0.0
 			chapter.interact()
+			chapter.skip_net_layer()   # v0.60.0 · ClaudeHelper: Netz-Ebenen prüft tests/passages.gd
 	var guardian = chapter.ice_guardian()
 	check(guardian != null and chapter.threats.size() == 1, "final relay opens the standalone guardian arena")
 	chapter.raven.position = guardian.position - Vector2(25,0)
@@ -776,14 +792,17 @@ func check_chapter_two() -> void:
 	chapter.raven.position = chapter._target()
 	chapter.ice_cycle = 0.0
 	chapter.interact()
+	chapter.skip_net_layer()   # v0.60.0 · ClaudeHelper: Netz-Ebenen prüft tests/passages.gd
 	check(chapter.dive_hold > 0.0 and chapter.raven_leads(), "countertrace waits for the final download")
 	chapter._process(0.6)
 	finish_dialogue(chapter)
 	check(chapter.section == chapter.Section.RECOVERY and chapter.actor_is_playable(chapter.player), "countertrace returns control to Shadepi")
 	chapter.player.position = chapter.SPRAY
 	chapter.interact()
+	chapter.skip_net_layer()   # v0.60.0 · ClaudeHelper: Netz-Ebenen prüft tests/passages.gd
 	chapter.player.position = chapter.BATH
 	chapter.interact()
+	chapter.skip_net_layer()   # v0.60.0 · ClaudeHelper: Netz-Ebenen prüft tests/passages.gd
 	finish_dialogue(chapter)
 	check(chapter.section == chapter.Section.END and chapter.saved_checkpoint() == chapter.Section.END, "the vow closes and saves chapter two")
 	chapter.queue_free()

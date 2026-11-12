@@ -88,6 +88,19 @@ var lake_sequence: Node2D
 var discovery_pending := false
 var hangar_discovery: Node2D
 var chase_stage := 0
+## v0.60.0 · ClaudeHelper: Tower-Flur und Lobby als Durchgangsräume (Kulissen vom Nutzer).
+## Hinweg ohne Gegner vom Landeplatz zu Kenzōs Tür, Rückweg nach dem Kampf mit Wachen.
+const PassageRoom = preload("res://scripts/passage_room.gd")
+const WAY_IN := [["tower_corridor", "in"], ["tower_lobby", "in"]]
+const WAY_OUT := [
+	["tower_lobby", "out", [[Vector2(300, 206), 0], [Vector2(760, 200), 1], [Vector2(900, 212), 3]]],
+	["tower_corridor", "out", [[Vector2(700, 178), 2], [Vector2(430, 192), 0], [Vector2(250, 180), 1]]],
+]
+var passage: Node2D
+var passage_queue: Array = []
+var passage_after: Callable
+var passage_foes: Array[PixelActor] = []
+var passage_return: Array[Vector2] = []
 var hangar_world: Node2D
 ## v0.57.0 · ClaudeHelper: Arcade-Automat an der Rückwand der Halle.
 const ArcadeCabinet = preload("res://scripts/arcade/arcade_cabinet.gd")
@@ -165,11 +178,91 @@ func atmosphere_profile() -> String:
 func atmosphere_rect() -> Rect2:
 	return Painted.CHAMBER_RECT if beat == Beat.ECHO and not echo_ready else Rect2(0,0,1024,640)
 
+func in_passage() -> bool:
+	return is_instance_valid(passage)
+
+func _passage_lead() -> PixelActor:
+	return raven if raven_leads() else player
+
+## Startet eine Folge von Durchgangsräumen; `after` läuft, wenn der letzte verlassen ist.
+func _start_passages(rooms: Array, after: Callable) -> void:
+	passage_queue = rooms.duplicate(true)
+	passage_after = after
+	passage_return = [player.position, raven.position]
+	_passage_transition()
+
+func _passage_transition() -> void:
+	var cs = begin_cutscene()
+	var ticket: int = cs.generation
+	await cs.fade(Color.BLACK, 0.3)
+	if not cs.alive(ticket): return
+	var more := _open_next_passage()
+	if not more:
+		cs.end()
+		return
+	await cs.camera(_passage_lead().position + Vector2(0, -34), 0.0, float(passage.config.zoom))
+	if not cs.alive(ticket): return
+	await cs.fade(Color(0, 0, 0, 0), 0.35)
+	if not cs.alive(ticket): return
+	cs.end()
+
+func _open_next_passage() -> bool:
+	_close_passage()
+	if passage_queue.is_empty():
+		if passage_return.size() == 2:
+			player.position = passage_return[0]
+			raven.position = passage_return[1]
+		passage_return = []
+		var after := passage_after
+		passage_after = Callable()
+		if after.is_valid(): after.call()
+		return false
+	var spec: Array = passage_queue.pop_front()
+	passage = PassageRoom.new()
+	passage.open(self, spec[0], spec[1], _passage_lead)
+	passage.exit_reached.connect(_passage_transition)
+	var toward := signf(passage.exit().x - passage.entry().x)
+	player.position = passage.entry()
+	raven.position = passage.entry() + (Vector2(-toward * 24.0, 10.0) if player.visible else Vector2.ZERO)
+	for actor in [player, raven]:
+		actor.velocity = Vector2.ZERO
+		actor.facing = Vector2(toward if toward != 0.0 else 1.0, 0)
+		actor.reset_transients()
+	if is_instance_valid(companion): companion.position = _passage_lead().position + Vector2(-18, -30)
+	if spec.size() > 2:
+		for entry: Array in spec[2]:
+			passage_foes.append(_spawn_foe(passage.point(entry[0]), 72, entry[1]))
+		passage.locked = true
+		toast("WACHEN IM WEG · alle ausschalten")
+	else:
+		toast("Weiter zu Kenzōs Penthouse →" if beat == Beat.ROOF else "Zum Landeplatz ←")
+	return true
+
+## Tests und Admin-Sprünge: alle offenen Durchgangsräume sofort abschließen.
+func skip_passages() -> void:
+	if not in_passage() and passage_queue.is_empty():
+		return
+	if in_cinematic(): cutscene.skip()
+	passage_queue.clear()
+	_open_next_passage()
+
+func _close_passage() -> void:
+	for foe in passage_foes:
+		if is_instance_valid(foe):
+			foes.erase(foe)
+			foe.hide()
+			foe.set_physics_process(false)
+			foe.queue_free()
+	passage_foes.clear()
+	if is_instance_valid(passage):
+		passage.close()
+	passage = null
+
 func combat_ready() -> bool:
 	return is_combat()
 
 func is_combat() -> bool:
-	return beat in [Beat.AMBUSH, Beat.BOSS] or (beat == Beat.ESCAPE and not escape_guards_cleared)
+	return beat in [Beat.AMBUSH, Beat.BOSS] or (beat == Beat.ESCAPE and not escape_guards_cleared) or (in_passage() and passage.locked)
 
 func _process(delta: float) -> void :
 	super._process(delta)
@@ -186,7 +279,10 @@ func _process(delta: float) -> void :
 	if coop and not coop_raven_playable():
 		_update_raven_follower(delta)
 	clock += delta
-	if beat == Beat.ESCAPE and tower_stage==2 and escape_guards_cleared and not admin_enabled("freeze_timer"):
+	if in_passage() and passage.locked and _living() == 0 and not is_busy():
+		passage.locked = false
+		toast("Weg frei · zum Landeplatz ←" if passage_queue.is_empty() else "Lobby frei · weiter in den Flur ←")
+	if beat == Beat.ESCAPE and tower_stage==2 and escape_guards_cleared and not in_passage() and not admin_enabled("freeze_timer"):
 		countdown = maxf(0, countdown - delta)
 		if countdown == 0:
 			_retry("Zeit abgelaufen · Kontrollpunkt")
@@ -217,6 +313,10 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo:
 	var fresh: = fresh_entry
 	fresh_entry = false
 	cutscene.abort()
+	_close_passage()
+	passage_queue.clear()
+	passage_after = Callable()
+	passage_return = []
 	if is_instance_valid(hangar_discovery):
 		hangar_discovery.restore()
 		hangar_discovery.get_parent().remove_child(hangar_discovery)
@@ -639,6 +739,7 @@ func chapter_label() -> String:
 	return "KAPITEL %d / %s" % [chapter, Story.TITLES[chapter - 3]]
 
 func _target() -> Vector2:
+	if in_passage(): return Vector2.ZERO if passage.locked else passage.exit()
 	if beat==Beat.ESCAPE and tower_stage!=2: return Vector2.ZERO
 	if beat == Beat.HANGAR and point_index == 3:
 		return PORTS[1]
@@ -666,6 +767,9 @@ func _signal_open() -> bool:
 	return fposmod(clock, 2.1) < 1.0
 
 func chapter_objective() -> String:
+	if in_passage():
+		if passage.locked: return "Wachen ausschalten · %d übrig" % _living()
+		return "Durch den Flur zu Kenzōs Penthouse" if beat == Beat.ROOF else "Zurück zum Landeplatz"
 	if is_instance_valid(tower) and tower.active: return tower.status_text()
 	if encounter != null and not encounter.finished:
 		return encounter.status_text()
@@ -696,7 +800,7 @@ func chapter_objective() -> String:
 	return Story.OBJECTIVES[beat]
 
 func interaction_prompt() -> String:
-	if timing != null:
+	if timing != null or in_passage():
 		return ""
 	if beat == Beat.ECHO and echo_ready and raven.position.distance_to(Vector2(551, 426)) < 28.0:
 		return "E / A · Flimmerndes Echo prüfen"
@@ -795,16 +899,20 @@ func _complete_point() -> void:
 		effects.hack_arc(_target(), Vector2(884, 328))
 		toast(["Stromversorgung aktiv.", "Kennung kopiert.", "Aerodyne gangbar. Noch die Prüf-ICE am Transponder umgehen."][point_index])
 	if beat == Beat.ESCAPE:
-		toast(["Daten gesichert. Spuren gelöscht.", "Raven: Sperrladung scharf. Aufzug blockiert.", "Fernstart bestätigt. Zum Dachausgang!", "Dach erreicht. Der Aerodyne hebt ab."][point_index])
+		toast(["Daten gesichert. Spuren gelöscht.", "Raven: Sperrladung scharf. Aufzug blockiert.", "Fernstart bestätigt. Zum Dachausgang!", "Raven: Raus hier! Durch die Lobby zum Landeplatz – da stehen noch Wachen."][point_index])
 	point_index = Story.POINTS[beat].size() if beat==Beat.GARAGE else point_index+1
 	if beat == Beat.PACT and point_index == Story.POINTS[beat].size():
 		_scene_plan()
 	elif beat == Beat.GARAGE and point_index == Story.POINTS[beat].size():
 		_scene_descent()
 	elif beat == Beat.ESCAPE and point_index == Story.POINTS[beat].size():
-		tower_stage = 3
-		autosave()
-		_scene_tower_departure()
+		# v0.60.0 · ClaudeHelper: Der Rückweg führt durch Lobby und Flur – dort stehen Wachen.
+		_start_passages(WAY_OUT, func():
+			tower_stage = 3
+			autosave()
+			_scene_tower_departure())
+	elif beat == Beat.ROOF and point_index == Story.POINTS[beat].size():
+		_start_passages(WAY_IN, _advance)
 	elif beat != Beat.HANGAR and point_index == Story.POINTS[beat].size():
 		_advance()
 	else:

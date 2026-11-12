@@ -41,7 +41,7 @@ Seit v0.58.1 stammen die Kulissen der Verfolgung vom Nutzer (fünf Bilder vom 11
 | Kapitel 6 · Flug, Turmabwehr | 7 s, zwei Laser-Drohnen | 20 s, dritte Drohne nach der Hälfte |
 | Kapitel 7 · Aufzugwachen | 3 Wellen, 8 Gegner | 4 Wellen, 11 Gegner, zwei Schildträger |
 
-Noch nicht gestreckt: Deep Dive (Kapitel 2), Tower-Etagen zwischen Dach und Kenzō, Wege zwischen den Schauplätzen. Dafür werden neue Kulissen im Stil der vorhandenen gebraucht.
+Seit v0.60.0 gibt es dafür [Durchgangsräume](durchgangsraeume.md): die Gasse hinter Ravens Wohnung, Tower-Flur und Lobby, zwei Netz-Ebenen im Deep Dive.
 
 ## So lässt sich ein weiteres Level strecken
 

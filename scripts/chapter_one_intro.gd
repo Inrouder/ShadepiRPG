@@ -192,6 +192,29 @@ func play_apartment():
 	if not cs.alive(ticket): return
 	await cs.fade(Color.BLACK,0.45)
 	if not cs.alive(ticket): return
+	# v0.60.0 · ClaudeHelper: Raven tritt aus der Hintertür in die Gasse; die Straße folgt danach.
+	mark("backalley")
+	world.enter_backalley()
+	await cs.camera(world.backalley.point(Vector2(320,180)),0,1.0)
+	if not cs.alive(ticket): return
+	await cs.fade(Color(0,0,0,0),0.6)
+	if not cs.alive(ticket): return
+	await cs.walk(world.raven,world.backalley.point(Vector2(150,296)),70)
+	if not cs.alive(ticket): return
+	cs.face(world.raven,world.backalley.point(Vector2(300,150)))
+	cs.pose(world.raven,"idle")
+	await cs.say("RAVEN","Der Drache ist neu. »Where are you?« … Irgendwer in dieser Stadt sucht jemanden.")
+	if not cs.alive(ticket): return
+	await cs.say("RAVEN","Viel Glück damit. Hier findet man höchstens Ärger.")
+	if not cs.alive(ticket): return
+	cs.end()
+
+## Von der Gasse auf die Bingo Street: Shadepi beobachtet vom Dach, dann beginnt die Jagd.
+func play_street():
+	var cs = world.begin_cutscene()
+	var ticket: int = cs.generation
+	await cs.fade(Color.BLACK,0.4)
+	if not cs.alive(ticket): return
 	await observe(cs,false)
 	if not cs.alive(ticket): return
 	mark("street")

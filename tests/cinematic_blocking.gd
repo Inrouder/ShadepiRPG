@@ -62,6 +62,7 @@ func run() -> void:
 	check(w.player.visible and not w.player.cloaked and w.raven.visual.visible,"opening restores playable figures after intervention")
 	w._enter(w.Beat.ESCAPE,0,3)
 	w._complete_point()
+	w.skip_passages()
 	var d = w.tower_departure
 	check(d.view=="roof" and d.craft==w.aerodyne_spot-Vector2(0,20),"departure starts at the actual parked craft on the rooftop pad")
 	for i in 2:
@@ -112,6 +113,7 @@ func run() -> void:
 	w.cutscene.abort()
 	w._enter(w.Beat.ESCAPE,0,3)
 	w._complete_point()
+	w.skip_passages()
 	d = w.tower_departure
 	var same_deck: Node = d.deck
 	var same_vehicle: Node = d.vehicle
