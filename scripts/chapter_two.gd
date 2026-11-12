@@ -531,6 +531,7 @@ func _leave_net_layer() -> void:
 	await cs.fade(Color.BLACK, 0.3)
 	if not cs.alive(ticket): return
 	_finish_net_layer()
+	cs.home_zoom = camera.zoom.x      # v0.60.3 · ClaudeHelper: Zoom der Zielebene behalten (Wächter-Arena)
 	await cs.camera(ice_camera_home(), 0.0, camera.zoom.x)
 	if not cs.alive(ticket): return
 	await cs.fade(Color(0, 0, 0, 0), 0.4)

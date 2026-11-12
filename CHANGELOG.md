@@ -1,5 +1,14 @@
 # Versionshinweise
 
+## v0.60.3 – ClaudeHelper: Tower-Durchgänge und Kenzō-Szene repariert · 12. November 2026
+
+Nutzerbericht: Ab dem Eingang in den Tower war die Spielfigur unsichtbar und nicht steuerbar; die Kenzō-Szene lief nicht mehr richtig.
+
+- **Unsichtbare Figur:** Nach dem zweiten Dachterminal galt Raven nicht mehr als Führende. In Flur und Lobby wurde deshalb der getarnte Shadepi gesteuert, den man nicht sieht. Raven führt jetzt durch beide Räume, sichtbar und steuerbar; Kamera und Zoom folgen ihr.
+- **Kenzō-Szene:** Die Blende am Ende der Lobby hat den Film in der Suite gleich wieder beendet. Sie schließt jetzt zuerst ab und startet dann die Szene – alle zehn Zeilen laufen, danach steht Kenzō zum Kampf bereit.
+- **Zoom:** Das Ende einer Raumblende setzte die Kamera auf den Zoom vor dem Raum zurück (Tower und Wächter-Arena im Deep Dive).
+- Neuer Test `tower_walkthrough` (42 Prüfungen): Dach → Flur → Lobby → Kenzō-Szene → Kampf → Rückweg mit Wachen → Abflug, mit echten Tasten und ohne übersprungene Filme, auch im Koop. Er schlägt auf v0.60.2 fehl.
+
 ## v0.60.2 – ClaudeHelper: Netz-Ebenen spielbar · 12. November 2026
 
 Nutzerbericht: In Netz-Ebene 2 kein Durchgang an der Kristallsäule; Netz-Ebene 3 nicht abschließbar, Gegner fehlten.

@@ -36,3 +36,9 @@ Nutzerauftrag vom 12. November 2026: fünf gelieferte Level-Bilder einbauen. Die
 - Kapitel 2: `_enter_net_layer()` und `NET_LAYERS` in `scripts/chapter_two.gd`.
 - Für Tests und Admin-Sprünge: `skip_backalley()`, `skip_passages()`, `skip_net_layer()`.
 - Prüfungen: `tests/passages.gd`.
+
+## v0.60.3 · ClaudeHelper – Führung im Tower
+
+- Auf dem Hinweg führt Raven (Shadepi bleibt getarnt), auf dem Rückweg Shadepi. `raven_leads()` gilt für die ganze Raumfolge (`passages_active()`).
+- `_passage_transition()` startet die Folgeszene erst über `_finish_passages()`, nachdem die eigene Blende beendet ist. Nie `cs.end()` nach `after.call()` aufrufen.
+- `tests/tower_walkthrough.gd` spielt den Weg mit echten Tasten und vollständigen Filmen.

@@ -295,6 +295,8 @@ jobs:
           if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/arcade.log; then exit 1; fi
           XDG_DATA_HOME="$(mktemp -d /tmp/shadepi-passages-tests.XXXXXX)" godot --headless --script res://tests/passages.gd 2>&1 | tee /tmp/passages.log
           if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/passages.log; then exit 1; fi
+          XDG_DATA_HOME="$(mktemp -d /tmp/shadepi-towerwalk-tests.XXXXXX)" godot --headless --script res://tests/tower_walkthrough.gd 2>&1 | tee /tmp/tower-walkthrough.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/tower-walkthrough.log; then exit 1; fi
       - name: Export Windows and Linux
         shell: bash
         run: |

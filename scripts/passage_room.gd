@@ -188,6 +188,7 @@ func _follow() -> void:
 	var actor: Node2D = lead.call() if lead.is_valid() else null
 	if is_instance_valid(actor) and not world.in_cinematic():
 		world.camera.position = actor.position + Vector2(0, -34)
+		world.camera.zoom = Vector2.ONE * float(config.zoom)
 
 func _process(delta: float) -> void:
 	clock += delta
