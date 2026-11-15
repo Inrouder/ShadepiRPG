@@ -98,7 +98,7 @@ func set_enabled(value: bool) -> void:
 func sync_frame() -> void:
 	if not enabled or not is_inside_tree(): return
 	var settings = get_parent()
-	var desired := target_size(window.size,settings.integer_scaling)
+	var desired: Vector2i = settings.game_render_size()
 	if target.size != desired: target.size = desired
 	target.canvas_transform = window.canvas_transform
 	target.global_canvas_transform = window.global_canvas_transform

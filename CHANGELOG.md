@@ -1,5 +1,12 @@
 # Versionshinweise
 
+## v0.62.0 – CodexAI: Android-Testversion und gemeinsamer WLAN-Remote-Koop · 15. November 2026
+
+- Android-Export als signierte Test-APK für ARM64 und x86_64, Querformat, eigene App-Kennung und Netzwerkberechtigung; Desktop-Exporte bleiben erhalten. HQ auf Android bis 1280×720, klassischer Modus weiterhin wählbar.
+- Multitouch-Steuerung als virtuelles Gamepad: Bewegen und Angreifen gleichzeitig, gehaltenes Aufladen, Kick, Interaktion, Ausweichen, Hack und Pause. Einheitlicher Controllerpfad auch für Hacks, Timing und Arcade; Freigabe bei Hintergrund oder Fokusverlust.
+- Gemeinsame WLAN-Partie mit Host-IP und sechsstelliger Sitzungsnummer. Ein Host simuliert die Story und speichert; ein nativer Client zeigt dessen Bild/Ton und steuert die vorhandene Spieler-2-Rolle, einschließlich Drohne/Naniten. Zwei Bildprofile, direkte Verbindung ohne zentralen Dienst. Dies ist zunächst Remote-Koop mit gemeinsamem Bild, keine unabhängige Client-Simulation.
+- ENet-Kanäle für Eingaben, Bilder und Ton; Eingabesequenzen und Heartbeats, Versions-/Codeprüfung, Trennung fremder lokaler Spielstände, Pause/Freigabe bei Verbindungsverlust. Bestehende Grafikquellen und Helden unverändert.
+
 ## v0.61.0 – CodexAI: eigene Arcade-Kampfposen und generierte HQ-Begleiter · 15. November 2026
 
 - Aktuellen Stand v0.60.3 samt längeren Etappen, Durchgangsräumen und Tower-Korrekturen übernommen; Kampagnenhelden unverändert.

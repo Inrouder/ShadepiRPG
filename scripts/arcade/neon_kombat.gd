@@ -127,7 +127,7 @@ func _sound(key: String, variance: float = 0.06) -> void:
 ## Tastatur: Spieler 1 WASD + J/K/L, Spieler 2 Pfeile + U/I/O. Gamepads: erstes Pad Spieler 1,
 ## zweites Spieler 2; im Duell mit nur einem Pad gehört es Spieler 2 (wie im Koop).
 func _pad_for(index: int) -> int:
-	var pads := Input.get_connected_joypads()
+	var pads := preload("res://scripts/gamepad_bindings.gd").devices()
 	pads.sort()
 	if pads.is_empty(): return -1
 	if not versus: return pads[0] if index == 0 else -1

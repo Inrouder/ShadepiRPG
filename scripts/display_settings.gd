@@ -84,7 +84,8 @@ func set_hq(enabled: bool) -> void:
 	changed.emit()
 
 func game_render_size() -> Vector2i:
-	return HQRenderer.target_size(get_window().size,integer_scaling) if hq_enabled else BASE_SIZE
+	var extent := HQRenderer.target_size(get_window().size,integer_scaling) if hq_enabled else BASE_SIZE
+	return extent.min(Vector2i(1280,720)) if OS.has_feature("android") else extent
 
 func game_render_scale() -> float:
 	return float(game_render_size().y)/BASE_SIZE.y
@@ -124,6 +125,9 @@ func apply_window_mode() -> void:
 	if DisplayServer.get_name() == "headless":
 		return
 	var window := get_window()
+	if OS.has_feature("android"):
+		window.mode = Window.MODE_FULLSCREEN
+		return
 	window.min_size = BASE_SIZE
 	match mode:
 		Mode.BORDERLESS:

@@ -16,7 +16,7 @@ func _process(delta: float) -> void :
 			mode = 1
 		elif Input.is_action_just_pressed("dash"):
 			mode = 2
-			world.gamepads.assign(Input.get_connected_joypads(), true)
+			world.gamepads.assign(preload("res://scripts/gamepad_bindings.gd").devices(), true)
 		return
 	elapsed += delta
 	var wave: = mini(2, int(elapsed / 4.0))

@@ -90,12 +90,12 @@ func _clear_pad() -> void:
 ## In einer Koop-Sitzung mit nur EINEM Gamepad gehört dieses Pad Spieler 2 (Spieler 1 spielt an der
 ## Tastatur) – auch in Abschnitten, in denen das Kapitel `coop` vorübergehend abschaltet.
 func _wanted_pad() -> int:
-	var connected := Input.get_connected_joypads()
+	var connected := preload("res://scripts/gamepad_bindings.gd").devices()
 	# Kein Begleiter mehr und kein echter Koop: das einzige Pad geht zurück an Spieler 1.
 	if kind == "" and not world.coop and connected.size() == 1 and world.gamepads.shadepi_device < 0:
 		world.gamepads.assign(connected, false)
 	if world.gamepads.raven_device >= 0: return world.gamepads.raven_device
-	var pads := Input.get_connected_joypads()
+	var pads := preload("res://scripts/gamepad_bindings.gd").devices()
 	if pads.size() > 1: return pads[1]
 	if pads.size() == 1 and world.coop_session() and kind != "":
 		world.gamepads.assign(pads, true)      # Pad von Spieler 1 lösen; es steuert jetzt den Begleiter

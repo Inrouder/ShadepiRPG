@@ -10,6 +10,21 @@ const MOVEMENT: = {
 var shadepi_device: = -1
 var raven_device: = -1
 var bindings: Array[Array] = []
+var mobile_pad_signature := ""
+
+static func devices() -> Array[int]:
+	var pads := Input.get_connected_joypads()
+	var tree := Engine.get_main_loop() as SceneTree
+	if tree == null: return pads
+	var mobile := tree.root.get_node_or_null("MobileControls")
+	var net := tree.root.get_node_or_null("NetworkSession")
+	var result: Array[int] = []
+	if mobile != null and mobile.enabled: result.append(100)
+	if net != null and net.is_host() and net.connected():
+		if result.is_empty() and not pads.is_empty(): result.append(pads[0])
+		result.append(101); return result
+	result.append_array(pads)
+	return result
 
 func assign(devices: Array[int], coop: bool) -> void :
 	var first: = -1
@@ -21,17 +36,22 @@ func assign(devices: Array[int], coop: bool) -> void :
 			first = devices[0]
 			if coop:
 				second = devices[1]
-	if first == shadepi_device and second == raven_device:
+	var signature := str(Input.get_connected_joypads()) if first == 100 else ""
+	if first == shadepi_device and second == raven_device and signature == mobile_pad_signature:
 		return
 	clear()
 	shadepi_device = first
 	raven_device = second
+	mobile_pad_signature = signature
 	if first >= 0:
 		_bind_player(first, "", "cloak")
 		if not coop:
 			_button("hack", first, JOY_BUTTON_RIGHT_SHOULDER)
 	if second >= 0:
 		_bind_player(second, "raven_", "raven_hack")
+	# A Bluetooth controller can operate player one alongside the touch pad.
+	if first == 100 and not Input.get_connected_joypads().is_empty():
+		_bind_player(Input.get_connected_joypads()[0], "", "cloak")
 
 func clear() -> void :
 	for entry in bindings:

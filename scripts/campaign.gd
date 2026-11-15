@@ -387,7 +387,7 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo:
 		timing.hide()
 		timing.queue_free()
 		timing = null
-		gamepads.assign(Input.get_connected_joypads(), false)
+		gamepads.assign(preload("res://scripts/gamepad_bindings.gd").devices(), false)
 	echo_ready = false
 	sanctuary_stage = clampi(saved_sanctuary_stage, 0, 2)
 	if is_instance_valid(sanctuary_tableau):
@@ -998,7 +998,7 @@ func _start_echo() -> void:
 
 func _enter_echo() -> void:
 	if echo_ready: return
-	gamepads.assign(Input.get_connected_joypads(), false)
+	gamepads.assign(preload("res://scripts/gamepad_bindings.gd").devices(), false)
 	echo_ready = true
 	if is_instance_valid(sanctuary_tableau): sanctuary_tableau.hide()
 	camera.zoom = Vector2.ONE

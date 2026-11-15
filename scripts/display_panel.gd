@@ -105,6 +105,8 @@ func _sync() -> void:
 	resolution_select.select(settings.resolution_index)
 	var resolution_had_focus := resolution_select.has_focus()
 	resolution_select.disabled = settings.mode != Settings.Mode.WINDOWED
+	if OS.has_feature("android"):
+		mode_select.disabled = true; resolution_select.disabled = true
 	if resolution_had_focus and resolution_select.disabled:
 		mode_select.grab_focus()
 	scaling_select.select(1 if settings.integer_scaling else 0)
@@ -116,6 +118,8 @@ func _sync() -> void:
 		status_label.text = "Pixelstufen können breite Ränder erzeugen.\nF11 / Alt+Enter · Vollbild umschalten"
 	if settings.save_error != OK:
 		status_label.text = "Aktiv; Einstellungen konnten nicht gespeichert werden."
+	if OS.has_feature("android"):
+		status_label.text = "Android · Querformat. HQ bis 1280 × 720.\nKlassisch spart Akku und Grafikleistung."
 	var controls: Array[Control] = [quality_select, mode_select, scaling_select, close_button]
 	if not resolution_select.disabled:
 		controls.insert(2, resolution_select)

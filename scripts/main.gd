@@ -145,7 +145,7 @@ func _ready() -> void :
 	admin_flags = Admin.read_flags()
 	_bind_inputs()
 	Input.joy_connection_changed.connect(_on_joy_connection_changed)
-	gamepads.assign(Input.get_connected_joypads(), coop)
+	gamepads.assign(preload("res://scripts/gamepad_bindings.gd").devices(), coop)
 	_build_world()
 	ground_atmosphere.hide()
 	for halo in neon_halos:
@@ -253,7 +253,7 @@ func _bind_inputs() -> void :
 
 func set_coop(enabled: bool) -> void :
 	coop = enabled
-	gamepads.assign(Input.get_connected_joypads(), coop)
+	gamepads.assign(preload("res://scripts/gamepad_bindings.gd").devices(), coop)
 	camera.limit_left = -18 if coop else 0
 	camera.limit_right = 1042 if coop else 1024
 
@@ -272,7 +272,7 @@ func set_coop(enabled: bool) -> void :
 func _on_joy_connection_changed(_device: int, _connected: bool) -> void :
 	player.cancel_charge()
 	raven.cancel_charge()
-	gamepads.assign(Input.get_connected_joypads(), coop)
+	gamepads.assign(preload("res://scripts/gamepad_bindings.gd").devices(), coop)
 
 func hack_input_hint() -> String:
 	if coop:

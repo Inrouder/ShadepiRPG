@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "0.61.0",
+  "version": "0.62.0",
   "author": "CodexAI",
   "entries": [
     {
@@ -145,14 +145,14 @@
         "assets/sprites/companions/drone-hq.png",
         "assets/sprites/companions/nanites-hq.png"
       ],
-      "note": "v0.61.0 CodexAI: generierte separate Arcade-Posen, Begleiter und Material-/FX-Quellen. Originalhelden unverändert."
+      "note": "v0.62.0 CodexAI: generierte separate Arcade-Posen, Begleiter und Material-/FX-Quellen. Originalhelden unverändert."
     },
     {
       "status": "source",
       "paths": [
         "tools/art-v061"
       ],
-      "note": "v0.61.0 CodexAI: unveränderte Bildgenerator-Ausgaben und registrierender Atlaspacker; nicht beim Setup ausführen und nicht exportieren."
+      "note": "v0.62.0 CodexAI: unveränderte Bildgenerator-Ausgaben und registrierender Atlaspacker; nicht beim Setup ausführen und nicht exportieren."
     },
     {
       "status": "reference",
@@ -162,7 +162,7 @@
         "assets/sprites/companions/drone.png",
         "assets/sprites/companions/nanites.png"
       ],
-      "note": "v0.53/v0.57 ClaudeHelper: frühere kleine Quellen, seit v0.61.0 nicht mehr Laufzeit. Erhalten für historischen Vergleich, vom Spieleexport ausgeschlossen."
+      "note": "v0.53/v0.57 ClaudeHelper: frühere kleine Quellen, seit v0.62.0 nicht mehr Laufzeit. Erhalten für historischen Vergleich, vom Spieleexport ausgeschlossen."
     }
   ]
 }

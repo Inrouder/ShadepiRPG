@@ -238,6 +238,7 @@ func _ready() -> void :
 	main_menu_button = button_at("Zurück ins Hauptmenü", 274, return_to_main_menu)
 	main_menu_button.tooltip_text = "Spielstand bleibt am letzten Kontrollpunkt. Modus und Kapitel wählst du im Hauptmenü."
 	quit_button = button_at("Zurück zum Desktop",304,func(): get_tree().quit())
+	if OS.has_feature("android"): quit_button.text = "Spiel schließen"
 	quit_button.size.y = 24
 	menu_help = label_at("Stick / Kreuz · A wählen · F11 Vollbild", Vector2(16,333),Vector2(246,12),menu,8)
 	display_panel = preload("res://scripts/display_panel.gd").new()
