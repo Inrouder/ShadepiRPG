@@ -29,7 +29,7 @@ Links bewegt der virtuelle Stick, rechts liegen die Aktionen. Mehrere Finger fun
 | LT | Kick, soweit die Figur ihn besitzt |
 | Pause | Pausenmenü |
 
-Lokale Menüs und Hacks lassen sich direkt berühren; bei einem entfernten Host bedient man dessen Oberfläche mit Stick und A/B. Dort steuert der Client keine Maus. In lokalen Menüs verdecken die Spieltasten keine Einträge. Ein Bluetooth-Controller nutzt weiterhin den vorhandenen Controllerpfad. Das Android-System-Zurück öffnet die Pause.
+Lokale Menüs und Hacks lassen sich direkt berühren; bei einem entfernten Host bedient man dessen Oberfläche mit Stick und A/B. Dort steuert der Client keine Maus. In lokalen Menüs und Hackfenstern verdecken die Spieltasten keine Einträge. Touch-Maus-Emulation bleibt für die Oberfläche aktiv; die mobilen Waffenbindungen verwenden ausschließlich die Spieltasten, damit Stickberührungen keine Schüsse auslösen. Ein Bluetooth-Controller nutzt weiterhin den vorhandenen Controllerpfad. Das Android-System-Zurück öffnet die Pause.
 
 ![Zweite native Spielinstanz empfängt die gemeinsame Partie und steuert Raven per Touch](previews/wlan-touch-v062.png)
 

@@ -47,9 +47,18 @@ func _tag(node: Node):
 func _process(_delta: float):
 	var modal: bool = is_instance_valid(net.lobby) and net.lobby.visible
 	var world := get_tree().current_scene
+	var terminal = world.get("terminal") if world != null else null
+	var local_terminal: bool = not net.is_client() and is_instance_valid(terminal) and terminal.visible
 	var local_menu: bool = not net.is_client() and world != null and world.get("menu_open") == true
-	controls.visible = enabled and not modal and not local_menu
-	if world != last_world: release_all(); last_world = world
+	controls.visible = enabled and not modal and not local_menu and not local_terminal
+	if world != last_world:
+		release_all(); last_world = world
+		if enabled:
+			# Keep touch-to-mouse for GUI, but a stick touch must never also fire a weapon.
+			for action in ["attack","mouse_attack","raven_mouse_attack"]:
+				if not InputMap.has_action(action): continue
+				for event in InputMap.action_get_events(action):
+					if event is InputEventMouseButton: InputMap.action_erase_event(action,event)
 	var compact: bool = enabled or (net.is_host() and net.connected())
 	if compact and world != null and world.get("ui") != null:
 		for key in ["controls","abilities","combat_hint"]:
