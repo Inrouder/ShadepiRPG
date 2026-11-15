@@ -184,12 +184,15 @@ func _receive(sender: int, data: Dictionary):
 		if playback.get_frames_available() >= frames.size(): playback.push_buffer(frames)
 
 func _configure_coop():
+	var saved_buttons := last_buttons; var saved_axes := last_axes; var saved_triggers := remote_triggers
+	_apply_input(0,Vector2.ZERO,Vector2(-1,-1))
 	get_tree().set_meta("shadepi_coop_session", true)
 	if is_instance_valid(world) and world.has_method("set_coop"):
 		if world.get("chapter_coop") != null: world.chapter_coop = true
 		world.restore_coop_session()
 		if world.ui != null: world.ui.requested_coop = true
 	Input.joy_connection_changed.emit(REMOTE_DEVICE, true)
+	_apply_input(saved_buttons,saved_axes,saved_triggers)
 
 func _apply_input(buttons: int, axes: Vector2, triggers: Vector2):
 	for button in ALLOWED_BUTTONS:

@@ -34,6 +34,11 @@ func run():
 		print("LAN movement: ",before," → ",w.raven.position," P1 ",p1," → ",w.player.position," pad ",w.gamepads.raven_device," coop ",w.coop)
 		check(w.raven.position.x > before.x+5 and w.player.position.distance_to(p1)<2,"peer input moves only player two in actual scene")
 		check(w.gamepads.raven_device == net.REMOTE_DEVICE,"remote input has its own gamepad binding")
+		var next_world = load("res://scenes/chapter_two.tscn").instantiate()
+		root.add_child(next_world); current_scene=next_world; w.free(); w=next_world
+		for i in 6: await process_frame
+		check(net.connected() and net.world==w and w.coop,"chapter transition keeps one connected cooperative story")
+		check(w.gamepads.raven_device==net.REMOTE_DEVICE,"player-two device follows the new chapter")
 		await wait_for(func():return not net.connected())
 		check(w.menu_open,"disconnect pauses host story")
 		check(not Input.is_action_pressed("raven_move_right"),"disconnect releases remote movement")
@@ -51,9 +56,9 @@ func run():
 		check(net.received_frames>=3 and net.picture.texture!=null,"encoded host image arrives and becomes a real texture")
 		check(Vector2i(net.picture.texture.get_size())==Vector2i(64,36),"image dimensions preserved")
 		check(net.playback!=null,"client audio playback is ready")
-		await create_timer(1.2).timeout
+		await create_timer(2.0).timeout
 		net.pending_axes=Vector2.ZERO
 		net.close(); check(w.process_mode!=Node.PROCESS_MODE_DISABLED and w.visible,"local story restored without reloading save")
 	await process_frame; await process_frame
-	w.free(); current_scene=null; await process_frame
+	w.free(); current_scene=null; await create_timer(0.2).timeout
 	print("LAN %s: %d checks, %d failures" % ["HOST" if hosting else "CLIENT",checks,failures]); quit(1 if failures else 0)
