@@ -1,5 +1,7 @@
 # Entwicklerwerkzeuge · v0.46.2 · CodexAI
 
+**v0.63.0 · CodexAI:** [Touch-UI-Quellen und Packer](mobile-ui-v063/README.md) registrieren eine generierte Pixelquelle; schreibend, nicht beim Setup ausführen. `gallery.gd` liefert echte native UI-Aufnahmen mit isolierten Datenverzeichnissen. [Aktuelle Bilder und Bedienung](../docs/touch-hud-v063.md).
+
 **v0.62.0 · CodexAI:** [Android-Build](android/build.sh) schreibt eine lokal signierte Test-APK nach `build/android/`; Java-/SDK-Pfade über Umgebungsvariablen. [Zwei-Prozess-WLAN-Prüfung](test_lan.py) verwendet isolierte Spielstände; `--native` benötigt einen X11-Desktop, `--capture` speichert zusätzlich reale Filmframes unter `/tmp`. [Bedienung und Voraussetzungen](../docs/android-wlan-v062.md). Keine Asset-Generatoren erforderlich.
 
 **v0.61.0 · CodexAI:** [Generierte Quellen, Atlaspacker und native Aufnahmen](art-v061/README.md). `art-v061/pack.py` registriert die neuen Pixelquellen und ist bewusst schreibend; nicht beim Setup ausführen. Frühere `arcade/build_arcade.py` und `companions/build_companions.py` erzeugen historische kleine Varianten, nicht den neuen HQ-Stand. Neue Prüfung: `tests/arcade_art.gd` mit isoliertem `XDG_DATA_HOME=/tmp/shadepi-…`; `-- --gallery` zeichnet alle zehn Figuren auf.

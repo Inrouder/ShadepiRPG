@@ -37,6 +37,7 @@ func _ready():
 	for entry in [[JOY_BUTTON_X,Vector2(596,260),27.0,"pistol",""], [JOY_BUTTON_A,Vector2(604,202),20.0,"interact",""], [JOY_BUTTON_B,Vector2(601,320),22.0,"dodge",""], ["lt",Vector2(540,317),21.0,"kick",""], ["rt",Vector2(543,258),21.0,"charge","Halten"], [JOY_BUTTON_Y,Vector2(604,145),18.0,"charge","Spezial"], [JOY_BUTTON_RIGHT_SHOULDER,Vector2(554,192),18.0,"hack","Hack"], [JOY_BUTTON_START,Vector2(22,94),13.0,"","Ⅱ"]]:
 		_surface(entry[0],entry[1],entry[2],entry[3],entry[4])
 	_tag(self)
+	get_tree().quit_on_go_back=false
 	get_window().go_back_requested.connect(_back)
 	controls.visible = enabled
 	_refresh_art()
