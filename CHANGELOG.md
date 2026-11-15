@@ -2,6 +2,8 @@
 
 ## v0.63.0 – CodexAI: integrierter WLAN-Eintrag und transparentes Android-HUD · 15. November 2026
 
+- CodexAI-Analyse-Nachtrag: [Gesamtprojektprüfung](docs/projektanalyse-v063.md) mit 50 aktuellen Prüfreihen, nachgestellten WLAN-/Touch-/Pausefehlern und priorisierter Optimierungsfolge; Spielcode und Binärversion unverändert.
+
 - WLAN-Koop als regulärer Eintrag in Haupt- und Pausenmenüs, inklusive Verbindungshinweis und Rückkehr zum bisherigen Menüfokus. Der schwebende WLAN-Knopf entfällt. Volle Kapitel-/Arcadefreischaltung bleibt innerhalb des Menürahmens.
 - Sehr transparenter analoger Kreisstick mit beweglichem Knopf; kleinere Bildtasten am rechten Rand ersetzen die großen Textfelder. Neue generierte Pixel-PNGs für Pistole, Katana, Kick, Ausweichen, Interaktion, Laden und Hack; aktive Eingaben werden kurz deutlicher.
 - Multitouch, gehaltenes Aufladen und sichere Freigabe bleiben erhalten. Lokale Menüs und Hacks erhalten freie Touchflächen; als WLAN-Client öffnet Android-Zurück die lokale Verbindungsverwaltung. Ein weiteres Zurück schließt das Fenster, statt die App automatisch zu beenden. Der dunkle untere Tastaturbalken wird auf Mobilgeräten ausgeblendet.

@@ -1,0 +1,6 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ARCADE_MAINMENU {"menu_open":true,"screen":0,"touch_visible":false}
+ARCADE_DISCONNECT {"arcade_screen":2,"host_menu_open":true,"timer_after":59.5923663554594,"timer_before":60.0,"touch_visible":false}
+ARCADE_KICK {"expected":"heavy","move":"idle","touch_label":"kick"}
+ARCADE_SPECIAL {"move":"heavy","touch_label":"special"}

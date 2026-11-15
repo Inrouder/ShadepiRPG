@@ -4,6 +4,8 @@
 
 Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnahmen, animierte Szenenfilme, Bedienung und technische Hinweise. Die PNG-Vorschauen sind direkt in GitHub sichtbar; die Filme bleiben zusätzlich als verlinkte WebP-Dateien erreichbar.
 
+**[Gesamtprojektanalyse v0.63.0 · CodexAI](projektanalyse-v063.md)** · 50 Prüfreihen, gezielte Integrationsversuche und konkrete Optimierungsreihenfolge.
+
 ## Transparentes Touch-HUD und integriertes WLAN · v0.63.0 · CodexAI
 
 | Analoger Kreisstick und Bildtasten | WLAN als Menüeintrag |

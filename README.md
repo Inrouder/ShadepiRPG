@@ -6,6 +6,8 @@ Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben�
 
 [**Spiel herunterladen (neuestes Release)**](https://github.com/Inrouder/ShadepiRPG/releases/latest) · [**Quellcode als ZIP**](https://github.com/Inrouder/ShadepiRPG/archive/refs/heads/main.zip) · [**Versionen**](CHANGELOG.md) · [**Spieleranleitung**](Spiel-README.md) · [**Bildgalerie & Doku**](docs/README.md)
 
+**[Gesamtprojektanalyse v0.63.0 · CodexAI: bestätigte Fehler, Messungen und Prioritäten](docs/projektanalyse-v063.md)**
+
 ## Bilder aus dem Spiel
 
 | Neues Touch-HUD · v0.63.0 · CodexAI | WLAN im normalen Menü |

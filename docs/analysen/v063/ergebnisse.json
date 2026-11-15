@@ -1,0 +1,728 @@
+{
+  "analyzed_commit": "7fb76252878843e4f79c5ebb79b51c9a3a874b63",
+  "game_version": "0.63.0",
+  "author": "CodexAI",
+  "date": "2026-11-15",
+  "runtime_changed": false,
+  "baseline": {
+    "suite_count": 50,
+    "assertions": 4858,
+    "suites": [
+      {
+        "test": "aerodyne_art",
+        "code": 0,
+        "seconds": 6.04,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "AERODYNE ART: 30 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "aerodyne_flight",
+        "code": 0,
+        "seconds": 1.22,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "AERODYNE FLIGHT: 53 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "ambient_audio",
+        "code": 0,
+        "seconds": 3.84,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "AMBIENT AUDIO: 56 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "arcade",
+        "code": 0,
+        "seconds": 30.97,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "ARCADE: 56 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "arcade_art",
+        "code": 0,
+        "seconds": 1.47,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "ARCADE ART: 266 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "arcade_waves",
+        "code": 0,
+        "seconds": 4.59,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "ARCADE WAVES: 354 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "blood_fx",
+        "code": 0,
+        "seconds": 1.77,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "BLOOD FX: 29 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "bug_report_v045",
+        "code": 0,
+        "seconds": 15.54,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "BUG REPORT v045: 424 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "chapter_one_intro",
+        "code": 0,
+        "seconds": 7.75,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "CHAPTER ONE INTRO: 58 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "cinematic_blocking",
+        "code": 0,
+        "seconds": 13.17,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "CINEMATIC BLOCKING: 50 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "combat_moves",
+        "code": 0,
+        "seconds": 4.48,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "COMBAT MOVES: 68 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "companion",
+        "code": 0,
+        "seconds": 5.89,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "COMPANION: 24 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "companion_input",
+        "code": 0,
+        "seconds": 9.05,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "COMPANION INPUT: 41 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "coop_campaign",
+        "code": 0,
+        "seconds": 6.8,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "COOP CAMPAIGN: 23 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "coop_chapters",
+        "code": 0,
+        "seconds": 25.7,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "COOP CHAPTERS: 76 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "display_settings",
+        "code": 0,
+        "seconds": 4.33,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "Display settings: 74 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "drive_action",
+        "code": 0,
+        "seconds": 1.32,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "Drive action: 76 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "hangar_discovery",
+        "code": 0,
+        "seconds": 8.7,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "HANGAR DISCOVERY: 38 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "hq_display",
+        "code": 0,
+        "seconds": 3.84,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "HQ DISPLAY: 66 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "hq_popups",
+        "code": 0,
+        "seconds": 5.59,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "HQ POPUPS: 64 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "ice_bath",
+        "code": 0,
+        "seconds": 4.51,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "ICE BATH: 49 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "ice_boss",
+        "code": 0,
+        "seconds": 2.19,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "ICE BOSS: 41 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "lake_sequence",
+        "code": 0,
+        "seconds": 9.16,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "LAKE SEQUENCE: 40 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "legacy_memory",
+        "code": 0,
+        "seconds": 18.27,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "LEGACY MEMORY: 79 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "menu_checkpoints",
+        "code": 0,
+        "seconds": 6.34,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "MENU CHECKPOINTS: 205 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "menu_navigation",
+        "code": 0,
+        "seconds": 2.78,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "MENU NAVIGATION: 16 checks, 0 failures; testing real desktop exit"
+        ]
+      },
+      {
+        "test": "mobile_input",
+        "code": 0,
+        "seconds": 3.53,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "MOBILE INPUT: 18 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "monastery_battle",
+        "code": 0,
+        "seconds": 9.91,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "MONASTERY BATTLE: 226 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "monastery_memory",
+        "code": 0,
+        "seconds": 4.23,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "MONASTERY MEMORY: 143 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "moon_lake_menu",
+        "code": 0,
+        "seconds": 4.7,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "MOON LAKE / MENU: 262 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "net_avatar",
+        "code": 0,
+        "seconds": 2.18,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "NET AVATAR: 52 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "npc_dive_visuals",
+        "code": 0,
+        "seconds": 0.42,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "NPC DIVE VISUAL TESTS: 18 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "passages",
+        "code": 0,
+        "seconds": 10.66,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "PASSAGES: 69 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "pursuit_art",
+        "code": 0,
+        "seconds": 3.38,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "PURSUIT ART: 55 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "raven_enemy_combat",
+        "code": 0,
+        "seconds": 2.43,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "RAVEN / ENEMY COMBAT: 292 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "report8",
+        "code": 0,
+        "seconds": 8.6,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "REPORT 8: 21 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "run",
+        "code": 0,
+        "seconds": 26.54,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "SHADEPI TESTS: 386 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "sacrifice_memory",
+        "code": 0,
+        "seconds": 18.15,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "SACRIFICE MEMORY: 69 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "sanctuary_art",
+        "code": 0,
+        "seconds": 0.58,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "SANCTUARY ART: 18 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "sanctuary_story",
+        "code": 0,
+        "seconds": 5.01,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "SANCTUARY STORY: 27 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "scene_atmosphere",
+        "code": 0,
+        "seconds": 4.6,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "SCENE ATMOSPHERE: 134 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "scene_polish",
+        "code": 0,
+        "seconds": 5.05,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "SCENE POLISH: 54 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "story_audit",
+        "code": 0,
+        "seconds": 4.88,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "STORY AUDIT: 206 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "story_plan",
+        "code": 0,
+        "seconds": 4.88,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "STORY PLAN: 15 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "technology_props",
+        "code": 0,
+        "seconds": 3.53,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "TECHNOLOGY PROPS: 55 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "terminal_controller",
+        "code": 0,
+        "seconds": 6.6,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "Terminal controller: 186 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "terminal_puzzles",
+        "code": 0,
+        "seconds": 3.64,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "Terminal puzzles: 67 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "tower_sequence",
+        "code": 0,
+        "seconds": 4.7,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "TOWER SEQUENCE: 42 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "tower_walkthrough",
+        "code": 0,
+        "seconds": 104.29,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "TOWER WALKTHROUGH: 42 checks, 0 failures"
+        ]
+      },
+      {
+        "test": "vehicle_motion",
+        "code": 0,
+        "seconds": 3.79,
+        "errors": [],
+        "warnings": 0,
+        "summary": [
+          "VEHICLE MOTION: 45 checks, 0 failures"
+        ]
+      }
+    ]
+  },
+  "disconnect_trials": [
+    {
+      "trial": 0,
+      "role": "host",
+      "exit": 0,
+      "crash": false,
+      "values": [
+        "AIM_HOST {\"left_x\":0.75,\"right_x\":0.0}"
+      ]
+    },
+    {
+      "trial": 0,
+      "role": "client",
+      "exit": -6,
+      "crash": true,
+      "values": [
+        "AIM_CLIENT {\"right_x\":0.75}"
+      ]
+    },
+    {
+      "trial": 1,
+      "role": "host",
+      "exit": 0,
+      "crash": false,
+      "values": [
+        "AIM_HOST {\"left_x\":0.75,\"right_x\":0.0}"
+      ]
+    },
+    {
+      "trial": 1,
+      "role": "client",
+      "exit": -6,
+      "crash": true,
+      "values": [
+        "AIM_CLIENT {\"right_x\":0.75}"
+      ]
+    },
+    {
+      "trial": 2,
+      "role": "host",
+      "exit": 0,
+      "crash": false,
+      "values": [
+        "AIM_HOST {\"left_x\":0.75,\"right_x\":0.0}"
+      ]
+    },
+    {
+      "trial": 2,
+      "role": "client",
+      "exit": -6,
+      "crash": true,
+      "values": [
+        "AIM_CLIENT {\"right_x\":0.75}"
+      ]
+    }
+  ],
+  "deferred_callback_controls": [
+    {
+      "trial": 0,
+      "role": "host",
+      "exit": 0
+    },
+    {
+      "trial": 0,
+      "role": "client",
+      "exit": 0
+    },
+    {
+      "trial": 1,
+      "role": "host",
+      "exit": 0
+    },
+    {
+      "trial": 1,
+      "role": "client",
+      "exit": 0
+    }
+  ],
+  "native_environment": "Linux Xorg/Mesa llvmpipe software rendering, Godot 4.7.2, Dummy audio; no phone FPS benchmark",
+  "native_measurements": [
+    {
+      "draw_calls": 192.0,
+      "nodes": 400,
+      "static_mib": 52.2133302688599,
+      "tag": "main-menu",
+      "texture_mib": 481.394448280334,
+      "process_time_ms_median": 79.587
+    },
+    {
+      "draw_calls": 222.0,
+      "nodes": 404,
+      "static_mib": 57.3831357955933,
+      "tag": "arcade-menu",
+      "texture_mib": 619.311024665833,
+      "process_time_ms_median": 81.183
+    },
+    {
+      "draw_calls": 73.0,
+      "nodes": 349,
+      "static_mib": 56.7997350692749,
+      "tag": "world-hq",
+      "texture_mib": 490.227780342102,
+      "process_time_ms_median": 422.951
+    },
+    {
+      "media": "(1280, 720)",
+      "samples": [
+        {
+          "bytes": 105560,
+          "jpeg_ms": 8.853,
+          "read_ms": 4.125,
+          "resize_ms": 10.431
+        },
+        {
+          "bytes": 105539,
+          "jpeg_ms": 8.276,
+          "read_ms": 4.149,
+          "resize_ms": 10.261
+        },
+        {
+          "bytes": 105579,
+          "jpeg_ms": 8.03,
+          "read_ms": 3.884,
+          "resize_ms": 10.177
+        },
+        {
+          "bytes": 105604,
+          "jpeg_ms": 7.917,
+          "read_ms": 3.846,
+          "resize_ms": 10.492
+        }
+      ]
+    },
+    {
+      "media": "(3840, 2160)",
+      "samples": [
+        {
+          "bytes": 107745,
+          "jpeg_ms": 7.914,
+          "read_ms": 116.674,
+          "resize_ms": 10.96
+        },
+        {
+          "bytes": 107737,
+          "jpeg_ms": 9.26,
+          "read_ms": 44.522,
+          "resize_ms": 11.319
+        },
+        {
+          "bytes": 107709,
+          "jpeg_ms": 8.994,
+          "read_ms": 42.32,
+          "resize_ms": 11.188
+        },
+        {
+          "bytes": 107743,
+          "jpeg_ms": 8.183,
+          "read_ms": 41.533,
+          "resize_ms": 10.918
+        }
+      ]
+    },
+    {
+      "draw_calls": 72.0,
+      "nodes": 349,
+      "static_mib": 50.2737150192261,
+      "tag": "world-classic",
+      "texture_mib": 468.240832328796,
+      "process_time_ms_median": 228.943
+    },
+    {
+      "draw_calls": 55.0,
+      "nodes": 327,
+      "static_mib": 54.2818937301636,
+      "tag": "ice-arena",
+      "texture_mib": 521.758982658386,
+      "process_time_ms_median": 303.15
+    },
+    {
+      "draw_calls": 67.0,
+      "nodes": 357,
+      "static_mib": 61.6047010421753,
+      "tag": "hangar",
+      "texture_mib": 891.519905090332,
+      "process_time_ms_median": 32.381
+    },
+    {
+      "draw_calls": 51.0,
+      "nodes": 328,
+      "static_mib": 58.8410015106201,
+      "tag": "boss",
+      "texture_mib": 891.644905090332,
+      "process_time_ms_median": 515.026
+    },
+    {
+      "draw_calls": 129.0,
+      "nodes": 326,
+      "static_mib": 61.8559503555298,
+      "tag": "lake",
+      "texture_mib": 891.644905090332,
+      "process_time_ms_median": 545.453
+    }
+  ],
+  "atlas_summary": {
+    "files": 49,
+    "rectangles": 3272,
+    "visible_faults_detected": 0
+  },
+  "notes": [
+    "Native texture memory is a renderer counter, not total app RSS or a physical Android memory measurement.",
+    "Warm media medians exclude the first sample; CPU/render timing depends on the software renderer.",
+    "Targeted probe failures concern integration paths absent from the 50 baseline suites.",
+    "Original probe setup errors were corrected and are not product findings.",
+    "process_time_ms_median is Godot Performance.TIME_PROCESS, not an isolated GDScript CPU measurement; renderer/driver work affects it."
+  ]
+}

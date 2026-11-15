@@ -1,0 +1,6 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+AUDIO_CHAPTER {"next_audio_on":true,"old_audio_on":false}
+AUDIO_STREAM {"local_audio_on":false,"player_playing":true,"stream_paused":false}
+WARNING: 1 ObjectDB instance was leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

@@ -1,0 +1,52 @@
+Audit dir: /tmp/shadepi-audit-v063-x8q97c8i suites: 50
+arcade_art 0 1.47 ['ARCADE ART: 266 checks, 0 failures'] ERRORS:0
+mobile_input 0 3.53 ['MOBILE INPUT: 18 checks, 0 failures'] ERRORS:0
+hq_popups 0 5.59 ['HQ POPUPS: 64 checks, 0 failures'] ERRORS:0
+hq_display 0 3.84 ['HQ DISPLAY: 66 checks, 0 failures'] ERRORS:0
+net_avatar 0 2.18 ['NET AVATAR: 52 checks, 0 failures'] ERRORS:0
+ice_boss 0 2.19 ['ICE BOSS: 41 checks, 0 failures'] ERRORS:0
+scene_atmosphere 0 4.6 ['SCENE ATMOSPHERE: 134 checks, 0 failures'] ERRORS:0
+report8 0 8.6 ['REPORT 8: 21 checks, 0 failures'] ERRORS:0
+sanctuary_art 0 0.58 ['SANCTUARY ART: 18 checks, 0 failures'] ERRORS:0
+sanctuary_story 0 5.01 ['SANCTUARY STORY: 27 checks, 0 failures'] ERRORS:0
+aerodyne_art 0 6.04 ['AERODYNE ART: 30 checks, 0 failures'] ERRORS:0
+run 0 26.54 ['SHADEPI TESTS: 386 checks, 0 failures'] ERRORS:0
+lake_sequence 0 9.16 ['LAKE SEQUENCE: 40 checks, 0 failures'] ERRORS:0
+vehicle_motion 0 3.79 ['VEHICLE MOTION: 45 checks, 0 failures'] ERRORS:0
+pursuit_art 0 3.38 ['PURSUIT ART: 55 checks, 0 failures'] ERRORS:0
+technology_props 0 3.53 ['TECHNOLOGY PROPS: 55 checks, 0 failures'] ERRORS:0
+menu_navigation 0 2.78 ['MENU NAVIGATION: 16 checks, 0 failures; testing real desktop exit'] ERRORS:0
+blood_fx 0 1.77 ['BLOOD FX: 29 checks, 0 failures'] ERRORS:0
+menu_checkpoints 0 6.34 ['MENU CHECKPOINTS: 205 checks, 0 failures'] ERRORS:0
+moon_lake_menu 0 4.7 ['MOON LAKE / MENU: 262 checks, 0 failures'] ERRORS:0
+ice_bath 0 4.51 ['ICE BATH: 49 checks, 0 failures'] ERRORS:0
+chapter_one_intro 0 7.75 ['CHAPTER ONE INTRO: 58 checks, 0 failures'] ERRORS:0
+bug_report_v045 0 15.54 ['BUG REPORT v045: 424 checks, 0 failures'] ERRORS:0
+hangar_discovery 0 8.7 ['HANGAR DISCOVERY: 38 checks, 0 failures'] ERRORS:0
+tower_sequence 0 4.7 ['TOWER SEQUENCE: 42 checks, 0 failures'] ERRORS:0
+drive_action 0 1.32 ['Drive action: 76 checks, 0 failures'] ERRORS:0
+display_settings 0 4.33 ['Display settings: 74 checks, 0 failures'] ERRORS:0
+cinematic_blocking 0 13.17 ['CINEMATIC BLOCKING: 50 checks, 0 failures'] ERRORS:0
+terminal_puzzles 0 3.64 ['Terminal puzzles: 67 checks, 0 failures'] ERRORS:0
+arcade_waves 0 4.59 ['ARCADE WAVES: 354 checks, 0 failures'] ERRORS:0
+terminal_controller 0 6.6 ['Terminal controller: 186 checks, 0 failures'] ERRORS:0
+aerodyne_flight 0 1.22 ['AERODYNE FLIGHT: 53 checks, 0 failures'] ERRORS:0
+combat_moves 0 4.48 ['COMBAT MOVES: 68 checks, 0 failures'] ERRORS:0
+raven_enemy_combat 0 2.43 ['RAVEN / ENEMY COMBAT: 292 checks, 0 failures'] ERRORS:0
+monastery_memory 0 4.23 ['MONASTERY MEMORY: 143 checks, 0 failures'] ERRORS:0
+monastery_battle 0 9.91 ['MONASTERY BATTLE: 226 checks, 0 failures'] ERRORS:0
+npc_dive_visuals 0 0.42 ['NPC DIVE VISUAL TESTS: 18 checks, 0 failures'] ERRORS:0
+story_audit 0 4.88 ['STORY AUDIT: 206 checks, 0 failures'] ERRORS:0
+sacrifice_memory 0 18.15 ['SACRIFICE MEMORY: 69 checks, 0 failures'] ERRORS:0
+story_plan 0 4.88 ['STORY PLAN: 15 checks, 0 failures'] ERRORS:0
+legacy_memory 0 18.27 ['LEGACY MEMORY: 79 checks, 0 failures'] ERRORS:0
+ambient_audio 0 3.84 ['AMBIENT AUDIO: 56 checks, 0 failures'] ERRORS:0
+scene_polish 0 5.05 ['SCENE POLISH: 54 checks, 0 failures'] ERRORS:0
+companion 0 5.89 ['COMPANION: 24 checks, 0 failures'] ERRORS:0
+coop_campaign 0 6.8 ['COOP CAMPAIGN: 23 checks, 0 failures'] ERRORS:0
+companion_input 0 9.05 ['COMPANION INPUT: 41 checks, 0 failures'] ERRORS:0
+passages 0 10.66 ['PASSAGES: 69 checks, 0 failures'] ERRORS:0
+coop_chapters 0 25.7 ['COOP CHAPTERS: 76 checks, 0 failures'] ERRORS:0
+arcade 0 30.97 ['ARCADE: 56 checks, 0 failures'] ERRORS:0
+tower_walkthrough 0 104.29 ['TOWER WALKTHROUGH: 42 checks, 0 failures'] ERRORS:0
+COMPLETE 50 bad 0
