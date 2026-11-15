@@ -20,7 +20,8 @@ static func devices() -> Array[int]:
 	var net := tree.root.get_node_or_null("NetworkSession")
 	var result: Array[int] = []
 	if mobile != null and mobile.enabled: result.append(100)
-	if net != null and net.is_host() and net.connected():
+	if net != null and net.is_host():
+		# Reserve player two while hosting, including reconnects; the host pad stays player one.
 		if result.is_empty() and not pads.is_empty(): result.append(pads[0])
 		result.append(101); return result
 	result.append_array(pads)

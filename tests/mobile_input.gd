@@ -38,5 +38,9 @@ func run():
 	root.get_node("NetworkSession").show_lobby(); await process_frame
 	check(not mobile.controls.visible and w.menu_open,"WLAN panel pauses story and hides touch controls")
 	root.get_node("NetworkSession").lobby.hide(); await process_frame
+	var net = root.get_node("NetworkSession")
+	net.host(0); net.world=w; w.set_coop(true)
+	check(w.gamepads.shadepi_device==mobile.DEVICE and w.gamepads.raven_device==net.REMOTE_DEVICE,"waiting WLAN host keeps touch on player one through peer loss")
+	net.close()
 	w.free(); current_scene = null; await process_frame
 	print("MOBILE INPUT: %d checks, %d failures" % [checks,failures]); quit(1 if failures else 0)

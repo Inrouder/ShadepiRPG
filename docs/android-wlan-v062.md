@@ -62,6 +62,6 @@ Das Werkzeug erzeugt eine temporäre Editor-Konfiguration, importiert Ressourcen
 
 ## Prüfung und Grenzen
 
-**Android-Abnahme noch offen:** Die APK wurde exportiert, signaturgeprüft und im API-35-Emulator installiert. Der Software-Emulator scheiterte zunächst an einem Shader-/Treiberlimit und später an System-ANRs; eine erfolgreich bediente Android-Spielansicht ist deshalb noch nicht belegt. Die gezeigten Bilder sind Desktop-Tests.
+**Android-Abnahme noch offen:** Die finale APK ist exportiert und signaturgeprüft. Ein früher Build dieser Version wurde im API-35-Emulator installiert und bis zur nativen Engine gestartet. Der Software-Emulator scheiterte zunächst an einem Shader-/Treiberlimit und später an System-ANRs; eine erfolgreich bediente Android-Spielansicht ist deshalb noch nicht belegt. Die gezeigten Bilder sind Desktop-Tests.
 
 [Arbeits- und Prüfnachweis](arbeiten/android-wlan-v062.md). Zwei echte gerenderte Desktopprozesse prüfen Bildempfang und Fernsteuerung über Touch; getrennte headless Prozesse prüfen Codeprüfung, Rollenbindung und Trennung. Multitouch-, HQ-, Controller-, Kapitel- und Arcade-Regressionen ergänzen diese Prüfung. Das ersetzt keinen Durchlauf auf echten Android-Telefonen und unterschiedlichen WLAN-Routern. Physische Handy-Leistung, Akkulaufzeit und hörbare Tonqualität auf einem Telefon sind noch offen.
