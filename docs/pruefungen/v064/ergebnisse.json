@@ -552,5 +552,29 @@
     "Android signed test APK; no in-place physical-phone upgrade test.",
     "CI secret setup was not available through the current GitHub API authentication."
   ],
-  "method": "51-suites baseline plus affected final reruns. Three old Arcade escape-contract assertions were updated for the new explicit pause menu and passed the final rerun."
+  "method": "51-suites baseline plus affected final reruns. Three old Arcade escape-contract assertions were updated for the new explicit pause menu and passed the final rerun.",
+  "build_source_commit": "b3a9a22af7ffef62fc9659bd17fa62106c2d817b",
+  "builds": {
+    "android": {
+      "file": "Shadepi-Echos-in-Neon.apk",
+      "bytes": 236713299,
+      "sha256": "7dfdf22be247908a5beca83d6d8467f8c1b1fd2d468a33df350f02d4d4f4f7b9",
+      "export_errors": 0,
+      "signature_verified": true,
+      "certificate_sha256": "963073b0b932c655c668158b9a5e2d250fba7407eef753e99e86c28c769127e0"
+    },
+    "linux": {
+      "file": "Shadepi-Echos-in-Neon.x86_64",
+      "bytes": 253462880,
+      "sha256": "b42a917db76ff407419b0f7ef063275896e1d4e25a43394822881656d619262b",
+      "export_errors": 0,
+      "headless_start_exit": 0
+    },
+    "windows": {
+      "file": "Shadepi-Echos-in-Neon.exe",
+      "bytes": 289211952,
+      "sha256": "2df63cc0ed062c961275945bab4855eba42dd9c828b878d29e7ef8207df9a349",
+      "export_errors": 0
+    }
+  }
 }
