@@ -1,5 +1,12 @@
 # Versionshinweise
 
+## v0.63.0 – CodexAI: integrierter WLAN-Eintrag und transparentes Android-HUD · 15. November 2026
+
+- WLAN-Koop als regulärer Eintrag in Haupt- und Pausenmenüs, inklusive Verbindungshinweis und Rückkehr zum bisherigen Menüfokus. Der schwebende WLAN-Knopf entfällt. Volle Kapitel-/Arcadefreischaltung bleibt innerhalb des Menürahmens.
+- Sehr transparenter analoger Kreisstick mit beweglichem Knopf; kleinere Bildtasten am rechten Rand ersetzen die großen Textfelder. Neue generierte Pixel-PNGs für Pistole, Katana, Kick, Ausweichen, Interaktion, Laden und Hack; aktive Eingaben werden kurz deutlicher.
+- Multitouch, gehaltenes Aufladen und sichere Freigabe bleiben erhalten. Lokale Menüs und Hacks erhalten freie Touchflächen; als WLAN-Client öffnet Android-Zurück die lokale Verbindungsverwaltung. Der dunkle untere Tastaturbalken wird auf Mobilgeräten ausgeblendet.
+- Nutzer bestätigt Android-Start und rudimentären WLAN-Koop von v0.62.0. Neuer Stand wird separat geprüft; die Rückmeldung ersetzt keinen umfassenden Gerätetest.
+
 ## v0.62.0 – CodexAI: Android-Testversion und gemeinsamer WLAN-Remote-Koop · 15. November 2026
 
 - Android-Export als signierte Test-APK für ARM64 und x86_64, Querformat, eigene App-Kennung und Netzwerkberechtigung; Desktop-Exporte bleiben erhalten. HQ auf Android bis 1280×720, klassischer Modus weiterhin wählbar.

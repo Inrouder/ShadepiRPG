@@ -1,12 +1,17 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.62.0 · CodexAI · Godot 4.7.2 · Windows / Linux / Android-Testfassung · Einzelspieler, Lokal- und WLAN-Remote-Koop**
+**2D-Action-RPG · v0.63.0 · CodexAI · Godot 4.7.2 · Windows / Linux / Android-Testfassung · Einzelspieler, Lokal- und WLAN-Remote-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
 [**Spiel herunterladen (neuestes Release)**](https://github.com/Inrouder/ShadepiRPG/releases/latest) · [**Quellcode als ZIP**](https://github.com/Inrouder/ShadepiRPG/archive/refs/heads/main.zip) · [**Versionen**](CHANGELOG.md) · [**Spieleranleitung**](Spiel-README.md) · [**Bildgalerie & Doku**](docs/README.md)
 
 ## Bilder aus dem Spiel
+
+| Neues Touch-HUD · v0.63.0 · CodexAI | WLAN im normalen Menü |
+| --- | --- |
+| [![Transparenter Analogstick und Bildtasten am Rand](docs/previews/touch-idle-v063.png)](docs/touch-hud-v063.md) | [![WLAN-Koop in der normalen Menüliste](docs/previews/touch-menu-v063.png)](docs/touch-hud-v063.md) |
+| [Bedienung, Quellen und APK](docs/touch-hud-v063.md) | [Stick- und Ladefilm](docs/previews/touch-stick-v063.webp) |
 
 | Android-Steuerung / gemeinsamer WLAN-Koop · v0.62.0 · CodexAI | Verbindung im Pixel-Menü |
 | --- | --- |

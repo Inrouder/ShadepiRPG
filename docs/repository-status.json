@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "0.62.0",
+  "version": "0.63.0",
   "author": "CodexAI",
   "entries": [
     {
@@ -163,6 +163,13 @@
         "assets/sprites/companions/nanites.png"
       ],
       "note": "v0.53/v0.57 ClaudeHelper: frühere kleine Quellen, seit v0.62.0 nicht mehr Laufzeit. Erhalten für historischen Vergleich, vom Spieleexport ausgeschlossen."
+    },
+    {
+      "status": "source",
+      "paths": [
+        "tools/mobile-ui-v063"
+      ],
+      "note": "v0.63.0 CodexAI: unveränderte Generatorquelle und Registrierung der mobilen Pixel-UI; Packer nicht beim Setup ausführen."
     }
   ]
 }

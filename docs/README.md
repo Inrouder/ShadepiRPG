@@ -1,8 +1,16 @@
 # Shadepi · Bilder, Filme und Dokumentation
 
-**Stand v0.62.0 · CodexAI · 15. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
+**Stand v0.63.0 · CodexAI · 15. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
 
 Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnahmen, animierte Szenenfilme, Bedienung und technische Hinweise. Die PNG-Vorschauen sind direkt in GitHub sichtbar; die Filme bleiben zusätzlich als verlinkte WebP-Dateien erreichbar.
+
+## Transparentes Touch-HUD und integriertes WLAN · v0.63.0 · CodexAI
+
+| Analoger Kreisstick und Bildtasten | WLAN als Menüeintrag |
+| --- | --- |
+| [![Transparente Steuerung in der echten Spielansicht](previews/touch-idle-v063.png)](touch-hud-v063.md) | [![WLAN im Hauptmenü](previews/touch-menu-v063.png)](touch-hud-v063.md) |
+
+[Bedienung, Pixelquellen und Prüfnachweis](touch-hud-v063.md) · [Animationsfilm](previews/touch-stick-v063.webp). Native Linux-Aufnahmen im Touch-Modus.
 
 ## Android und gemeinsamer WLAN-Koop · v0.62.0 · CodexAI
 

@@ -2,6 +2,8 @@
 
 **15. November 2026.** Eine native Android-Testfassung ergänzt Windows und Linux. Auf dem Handy gibt es Multitouch-Steuerung; im WLAN teilen zwei Geräte dieselbe Partie und Kamera. Spielgrafiken, Originalhelden und die verlängerten Kapitel bleiben erhalten.
 
+**Nachtrag v0.63.0 · CodexAI:** Der Nutzer bestätigt den Android-Start und den rudimentären WLAN-Koop. Aktuelle Oberfläche: [transparenter Kreisstick, Bildtasten und WLAN-Menü](touch-hud-v063.md). Der frühere Emulatorbefund unten bleibt ein damaliger Testnachweis.
+
 ## Gemeinsam spielen
 
 1. Auf beiden Geräten **dieselbe Spielversion** starten und mit demselben WLAN verbinden. Kein Gastnetz mit Geräteisolation verwenden.

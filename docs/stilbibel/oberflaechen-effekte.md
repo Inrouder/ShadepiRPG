@@ -1,5 +1,7 @@
 # Oberflächen, Effekte und Ton · v0.32.2 · CodexAI
 
+**Mobiles HUD v0.63.0 · CodexAI:** [Aktuelle Kreis-/Bildsteuerung](../touch-hud-v063.md) mit eigenen transparenten [Pixel-PNGs](../../assets/ui/touch/README.md). Sehr transparenter Analogstick, Aktionstasten am rechten Rand, Kontrastzuwachs beim Drücken; WLAN gehört zur normalen Menüliste. Alte v0.62-Textfelder bleiben historische Aufnahmen.
+
 **Arcade/Begleiter v0.61.0 · CodexAI:** [Material-/FX-Atlas](../../assets/arcade/README.md) liefert separate Blitz-/Patronen-/Plasma-, Treffer-, EMP- und Kontaktschattenpixel. Keine einfachen Geschossrechtecke oder geometrischen Requisiten als Ersatz für diese Quellen. [Spielbilder](../arcade-begleiter-v061.md).
 
 **HQ-Dropdowns v0.51.1 · CodexAI:** [Listen sichtbar über dem Spielbild](../dropdowns-v0511.md); Hack-Auswahlen übernehmen Rahmen, Schrift und Farben ihres Decks. Controller A öffnet die Liste, B schließt diese zuerst.

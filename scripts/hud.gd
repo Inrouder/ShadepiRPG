@@ -53,6 +53,8 @@ var mode_button: Button
 var main_menu_button: Button
 const MAIN_MENU_SCENE := "res://scenes/chapter_one.tscn"
 var requested_coop: = false
+var controls_bar: Panel
+var network_button: Button
 var controls: Label
 var raven_vitals: Label
 var raven_health: ColorRect
@@ -146,9 +148,9 @@ func _ready() -> void :
 	game_hud_nodes.append(boss_panel)
 	boss = label_at("", Vector2(5, 7), Vector2(172, 35), boss_panel, 10, Color("f18aaa"))
 	boss.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	var bar: = panel(Rect2(0, 334, 640, 26))
-	game_hud_nodes.append(bar)
-	controls = label_at("WASD  Bewegen     J / Maus  Katana     Leertaste  Ausweichen     Esc  Menü", Vector2(12, 5), Vector2(616, 18), bar, 10)
+	controls_bar = panel(Rect2(0, 334, 640, 26))
+	game_hud_nodes.append(controls_bar)
+	controls = label_at("WASD  Bewegen     J / Maus  Katana     Leertaste  Ausweichen     Esc  Menü", Vector2(12, 5), Vector2(616, 18), controls_bar, 10)
 	abilities = label_at("", Vector2(12, 307), Vector2(615, 22), root, 10, Color("91c5d9"))
 	prompt = label_at("", Vector2(30, 270), Vector2(580, 34), root, 12, Color("e1f5ff"))
 	game_hud_nodes.append(abilities)
@@ -215,6 +217,9 @@ func _ready() -> void :
 	menu_tagline = label_at("ECHOS IN NEON", Vector2(15, 40), Vector2(244, 20), menu)
 	menu_description = label_at("IM SCHATTEN DES RABEN\nEine Cyberpunk-Saga", Vector2(15, 60), Vector2(246, 32), menu)
 	mode_button = button_at("Modus · Einzelspieler", 94, _switch_mode)
+	network_button = button_at("WLAN-Koop", 110, func(): get_node("/root/NetworkSession").show_lobby())
+	network_button.tooltip_text = "Gemeinsame Partie über WLAN eröffnen oder per IP und Code beitreten."
+	get_node("/root/NetworkSession").changed.connect(_update_network_button)
 	resume_button = button_at("Testszene starten", 124, start_selected)
 	load_button = button_at("Letzten Kontrollpunkt laden",154,func(): preload("res://scripts/checkpoint_resume.gd").load_latest(world,requested_coop))
 	restart_button = button_at("Testszene neu starten", 184, _start_new)
@@ -267,12 +272,17 @@ func _layout_menu() -> void:
 	if not is_inside_tree() or menu==null or menu_help==null:return
 	var area := get_viewport().get_visible_rect().size
 	var opening: bool=not world.started
-	var groups=[[mode_button],[resume_button],[load_button],[restart_button],[audio_button,ambient_button],[visual_button,display_button]]
-	var primary=[mode_button,resume_button,load_button,restart_button,audio_button,ambient_button,visual_button,display_button,main_menu_button,quit_button]
+	var groups=[[mode_button],[network_button],[resume_button],[load_button],[restart_button],[audio_button,ambient_button],[visual_button,display_button]]
+	var primary=[mode_button,network_button,resume_button,load_button,restart_button,audio_button,ambient_button,visual_button,display_button,main_menu_button,quit_button]
 	for button in menu_buttons:
 		if button not in primary:groups.append([button])
 	groups.append([main_menu_button])
 	groups.append([quit_button])
+	var rows:=0
+	for group in groups:
+		for button in group:
+			if button.visible: rows+=1; break
+	var step:=clampi(floori((area.y-122)/maxi(rows,1)),20,26)
 	var row:=0
 	var navigation: Array[Button]=[]
 	for group in groups:
@@ -280,11 +290,11 @@ func _layout_menu() -> void:
 		for button in group:
 			if not button.visible:continue
 			shown=true
-			button.position=Vector2(12,82+row*26);button.size=Vector2(236,24)
+			button.position=Vector2(12,82+row*step);button.size=Vector2(236,step-2)
 			button.set_meta("home_x",12.0)
 			if not button.disabled:navigation.append(button)
 		if shown:row+=1
-	menu.size=Vector2(260,82+row*26+24)
+	menu.size=Vector2(260,82+row*step+24)
 	menu.position=Vector2(roundf(area.x-274.0) if opening else roundf((area.x-260.0)*0.5),roundf((area.y-menu.size.y)*0.5))
 	menu.clip_contents=true
 	menu_chrome.size=menu.size
@@ -296,7 +306,8 @@ func _layout_menu() -> void:
 	ambient_button.position.x=88;ambient_button.size.x=160;ambient_button.set_meta("home_x",88.0)
 	visual_button.size.x=158
 	display_button.position.x=176;display_button.size.x=72;display_button.set_meta("home_x",176.0)
-	menu_help.position=Vector2(12,82+row*26+4);menu_help.size=Vector2(236,12)
+	if get_node("/root/MobileControls").enabled: menu_help.text="Touch · Kreis bewegen · Blitz halten"
+	menu_help.position=Vector2(12,82+row*step+4);menu_help.size=Vector2(236,12)
 	for i in navigation.size():
 		navigation[i].focus_next=navigation[i].get_path_to(navigation[(i+1)%navigation.size()])
 		navigation[i].focus_previous=navigation[i].get_path_to(navigation[posmod(i-1,navigation.size())])
@@ -390,6 +401,7 @@ func _show_menu_shell(title: String) -> void:
 		for node in game_hud_nodes:
 			node.hide()
 	_update_mode_buttons()
+	_update_network_button()
 	_update_checkpoint_button()
 	_apply_menu_scope()
 	_layout_menu()
@@ -433,6 +445,13 @@ func hide_menu() -> void:
 
 func _open_display_panel() -> void:
 	display_panel.present("raven" if not world.started else menu_theme())
+
+func _update_network_button() -> void:
+	if not is_instance_valid(network_button): return
+	var net:=get_node("/root/NetworkSession")
+	network_button.text="WLAN-Koop · Verbunden" if net.connected() else ("WLAN-Koop · Host bereit" if net.is_host() else "WLAN-Koop")
+	mode_button.disabled=net.is_host() and net.connected()
+	mode_button.text="Modus · WLAN-Koop" if mode_button.disabled else "Modus · " + ("Lokal-Koop" if requested_coop else "Einzelspieler")
 
 func _switch_mode() -> void :
 	requested_coop = not requested_coop

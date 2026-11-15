@@ -375,7 +375,9 @@ func _build_display():
 func show_lobby():
 	pending_buttons = 0; pending_axes = Vector2.ZERO; pending_triggers = Vector2(-1,-1)
 	var scene := get_tree().current_scene
-	if not is_client() and scene != null and scene.get("ui") != null: scene.menu_open = true; scene.ui.show_menu()
+	if not is_client() and scene != null and scene.get("ui") != null:
+		scene.menu_open = true
+		if not scene.ui.menu.visible: scene.ui.show_menu()
 	if not is_instance_valid(lobby): lobby = load("res://scripts/network_lobby.gd").new(); add_child(lobby)
 	lobby.show()
 

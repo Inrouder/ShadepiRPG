@@ -32,6 +32,11 @@ func run():
 	check(w.ui.menu.position.y+w.ui.quit_button.position.y+w.ui.quit_button.size.y<355,"desktop button remains inside the viewport")
 	check(not w.ui.restart_button.visible and not w.ui.main_menu_button.visible and w.ui.mode_button.visible,"main menu shows the mode switch, no restart and no way back to itself")
 	check(w.ui.resume_button.get_global_rect().end.y<=w.ui.load_button.get_global_rect().position.y+1,"start and load rows share at most their one-pixel frame border")
+	w.ui.network_button.grab_focus()
+	await pad(JOY_BUTTON_A)
+	check(root.get_node("NetworkSession").lobby.visible,"controller opens integrated WLAN entry")
+	await pad(JOY_BUTTON_B)
+	check(not root.get_node("NetworkSession").lobby.visible and root.gui_get_focus_owner()==w.ui.network_button,"closing WLAN restores integrated menu focus")
 	w.ui._toggle_admin_panel()
 	w.admin_flags["unlock_all"]=true
 	w.ui._refresh_admin_controls()

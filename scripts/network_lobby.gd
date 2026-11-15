@@ -6,6 +6,9 @@ var status_label: Label
 var address: LineEdit
 var code: LineEdit
 var quality: OptionButton
+var focus_items: Array[Control]=[]
+var previous_focus: Control
+var host_button: Button
 func _ready():
 	set_meta("root_only",true)
 	layer = 970; session = get_node("/root/NetworkSession")
@@ -16,7 +19,7 @@ func _ready():
 	_text(panel,"Gleiches WLAN. Ein Gerät eröffnet die Partie.\nSpieler 2 gibt dessen IP-Adresse und Code ein.",Vector2(18,44),Vector2(404,40),16)
 	address = LineEdit.new(); address.position = Vector2(18,94); address.size = Vector2(242,32); address.placeholder_text = "Host-IP · z. B. 192.168.1.23"; address.max_length = 45; panel.add_child(address)
 	code = LineEdit.new(); code.position = Vector2(272,94); code.size = Vector2(148,32); code.placeholder_text = "6-stelliger Code"; code.max_length = 6; code.virtual_keyboard_type = LineEdit.KEYBOARD_TYPE_NUMBER; panel.add_child(code)
-	_button(panel,"Partie eröffnen",Vector2(18,140),Vector2(202,32),func(): session.host())
+	host_button = _button(panel,"Partie eröffnen",Vector2(18,140),Vector2(202,32),func(): session.host())
 	_button(panel,"Beitreten",Vector2(232,140),Vector2(188,32),func(): session.join(address.text.strip_edges(),code.text.strip_edges()))
 	status_label = _text(panel,"",Vector2(18,183),Vector2(404,46),14); status_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART; status_label.max_lines_visible = 3
 	_button(panel,"WLAN beenden",Vector2(18,266),Vector2(202,32),func(): session.close())
@@ -34,19 +37,33 @@ func _ready():
 	quality.get_popup().add_theme_font_size_override("font_size",16)
 	quality.get_popup().add_theme_stylebox_override("panel",UiSkin.panel("raven"))
 	_tag(root); session.changed.connect(_refresh); _refresh()
-	visibility_changed.connect(func(): if visible: _refresh())
+	focus_items.insert(0,code); focus_items.insert(0,address); focus_items.insert(4,quality)
+	for i in focus_items.size():
+		var item:=focus_items[i]
+		item.focus_next=item.get_path_to(focus_items[(i+1)%focus_items.size()])
+		item.focus_previous=item.get_path_to(focus_items[posmod(i-1,focus_items.size())])
+		item.focus_neighbor_bottom=item.focus_next; item.focus_neighbor_top=item.focus_previous
+	visibility_changed.connect(_visibility)
+	_visibility()
 func _text(parent: Node, text: String, pos: Vector2, size: Vector2, font_size: int) -> Label:
 	var label := Label.new(); label.text = text; label.position = pos; label.size = size
 	label.add_theme_font_override("font",UiSkin.font()); label.add_theme_font_size_override("font_size",font_size); parent.add_child(label); return label
 func _button(parent: Node, text: String, pos: Vector2, size: Vector2, callback: Callable):
-	var b := Button.new(); b.text = text; b.position = pos; b.size = size; UiSkin.apply_button(b,"raven"); b.pressed.connect(callback); parent.add_child(b)
+	var b := Button.new(); b.text = text; b.position = pos; b.size = size; UiSkin.apply_button(b,"raven"); b.pressed.connect(callback); parent.add_child(b); focus_items.append(b); return b
 func _tag(node: Node):
 	if node is CanvasItem: node.visibility_layer = 1 << 20
 	for child in node.get_children(): _tag(child)
 func _refresh():
 	if is_instance_valid(status_label): status_label.text = session.status
 	if is_instance_valid(quality): quality.disabled = session.is_client()
+func _visibility():
+	if visible:
+		previous_focus=get_viewport().gui_get_focus_owner(); _refresh(); host_button.grab_focus()
+	else:
+		quality.get_popup().hide()
+		if is_instance_valid(previous_focus) and previous_focus.is_visible_in_tree(): previous_focus.grab_focus()
 func _input(event: InputEvent):
-	if not visible: return
-	if event is InputEventKey and event.is_pressed() and event.physical_keycode in [KEY_ESCAPE,KEY_F8]: hide(); get_viewport().set_input_as_handled()
-	elif event is InputEventJoypadButton or event is InputEventJoypadMotion: get_viewport().set_input_as_handled()
+	if not visible or quality.get_popup().visible: return
+	var cancel: bool=event is InputEventKey and event.is_pressed() and event.physical_keycode in [KEY_ESCAPE,KEY_F8]
+	if event is InputEventJoypadButton: cancel=event.pressed and event.button_index in [JOY_BUTTON_B,JOY_BUTTON_START]
+	if cancel: hide(); get_viewport().set_input_as_handled()
