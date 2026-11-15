@@ -34,10 +34,14 @@ def audit():
     exports = configparser.ConfigParser(interpolation=None)
     exports.read(ROOT / "export_presets.cfg")
     export_filters = []
-    for section in ["preset.0", "preset.1"]:
+    for section in ["preset.0", "preset.1", "preset.2"]:
         export_filters.append(exports[section]["exclude_filter"].strip('"').split(','))
         for kind in (["file", "product"] if section == "preset.0" else []):
             check(exports[section + ".options"]["application/" + kind + "_version"].strip('"') == version + ".0", section + ": Windows-Versionsfeld inkonsistent")
+    android = exports["preset.2.options"]
+    check(android["version/name"].strip('"') == version, "Android-Versionsname inkonsistent")
+    check(android["version/code"] == str(sum(int(n)*p for n,p in zip(version.split('.'),[1000000,100,1]))), "Android-Versionscode inkonsistent")
+    check(android["permissions/internet"] == "true", "Android-WLAN-Berechtigung fehlt")
     for entry in manifest["entries"]:
         check(entry["status"] in statuses and bool(entry["note"]), "Ungültiger/unbeschriebener Status")
         for name in entry["paths"]:

@@ -104,7 +104,7 @@ func sync_frame() -> void:
 	target.global_canvas_transform = window.global_canvas_transform
 	for layer in layers:
 		if not is_instance_valid(layer): continue
-		var show_layer := layer.visible and layer.get_viewport() == window
+		var show_layer: bool = layer.visible and layer.get_viewport() == window and not layer.get_meta("root_only",false)
 		if show_layer:
 			var canvas := layer.get_canvas()
 			if not attached.has(layer):

@@ -47,6 +47,12 @@ var audio_on := true
 var profile := 1 if OS.has_feature("android") else 0
 var sent_sequence := 0
 var received_sequence := -1
+var outgoing_frame := 0
+var assembling_frame := -1
+var displayed_frame := -1
+var expected_parts := 0
+var video_parts := {}
+var in_flight := -1
 
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -71,7 +77,7 @@ func host(port: int = PORT) -> Error:
 	role = "host"; pin = "%06d" % randi_range(100000, 999999)
 	previous_coop = get_tree().get_meta("shadepi_coop_session", false)
 	peer.peer_disconnected.connect(_disconnected)
-	_message("Host bereit · IP %s · Port %d · Code %s" % [addresses(), port, pin])
+	_message("Host bereit · Code %s\nIP %s · UDP %d" % [pin, addresses(), port])
 	return OK
 
 func join(address: String, code: String, port: int = PORT) -> Error:
@@ -98,7 +104,7 @@ func _send(packet: Dictionary, target: int, channel: int = 0, reliable: bool = t
 	var data := var_to_bytes(packet)
 	if data.size() > MAX_PACKET: return
 	peer.set_target_peer(target); peer.transfer_channel = channel
-	peer.transfer_mode = MultiplayerPeer.TRANSFER_MODE_RELIABLE if reliable else MultiplayerPeer.TRANSFER_MODE_UNRELIABLE_ORDERED
+	peer.transfer_mode = MultiplayerPeer.TRANSFER_MODE_RELIABLE if reliable else MultiplayerPeer.TRANSFER_MODE_UNRELIABLE if channel == 1 else MultiplayerPeer.TRANSFER_MODE_UNRELIABLE_ORDERED
 	peer.put_packet(data)
 
 func _process(delta: float):
@@ -107,12 +113,13 @@ func _process(delta: float):
 	peer.poll()
 	if role == "joining" and peer.get_connection_status() == MultiplayerPeer.CONNECTION_CONNECTED and remote == 0:
 		remote = 1; _send({"type":"hello", "protocol":PROTOCOL, "version":version(), "pin":pin}, 1)
-	while peer.get_available_packet_count() > 0:
+	while peer != null and peer.get_available_packet_count() > 0:
 		var sender := peer.get_packet_peer()
 		var raw := peer.get_packet()
 		if raw.size() > MAX_PACKET or raw.is_empty(): continue
 		var packet: Variant = bytes_to_var(raw)
 		if packet is Dictionary: _receive(sender, packet)
+	if peer == null: return
 	if role == "joining" and clock > deadline: close(); _message("Host nicht erreichbar. IP, WLAN und Firewall prüfen.")
 	if role == "client":
 		input_clock += delta
@@ -131,7 +138,7 @@ func _receive(sender: int, data: Dictionary):
 	if role == "host" and kind == "hello":
 		if (remote != 0 and remote != sender) or data.get("protocol") != PROTOCOL or data.get("version") != version() or data.get("pin") != pin:
 			_send({"type":"reject", "reason":"Code, Spielversion oder freie Spielerposition stimmt nicht."}, sender); return
-		remote = sender; last_input = clock; received_sequence = -1; world = get_tree().current_scene
+		remote = sender; in_flight = -1; last_input = clock; received_sequence = -1; world = get_tree().current_scene
 		audio_rate = AudioServer.get_mix_rate()
 		_send({"type":"welcome", "rate":audio_rate, "protocol":PROTOCOL}, sender)
 		_configure_coop(); _start_capture()
@@ -153,16 +160,22 @@ func _receive(sender: int, data: Dictionary):
 		if not buttons is int or not axes is Vector2 or not triggers is Vector2: return
 		if not axes.is_finite() or not triggers.is_finite() or buttons < 0 or buttons > 65535: return
 		received_sequence = sequence; last_input = clock; _apply_input(buttons, axes.limit_length(1.0), triggers.clamp(Vector2(-1,-1),Vector2.ONE))
-	elif role == "client" and sender == 1 and kind == "frame":
-		var jpg: Variant = data.get("jpg")
-		if not jpg is PackedByteArray or jpg.size() < 32 or jpg.size() > 160000: return
-		# Only our bounded JPEG profile; never allocate arbitrary peer-supplied images.
-		var img := Image.new()
-		if img.load_jpg_from_buffer(jpg) != OK or img.get_width() > 1920 or img.get_height() > 1080: return
-		if image_texture == null: image_texture = ImageTexture.create_from_image(img); picture.texture = image_texture
-		elif Vector2i(image_texture.get_size()) == img.get_size(): image_texture.update(img)
-		else: image_texture.set_image(img)
-		last_frame = clock; received_frames += 1; frame_received.emit()
+	elif role == "client" and sender == 1 and kind == "video":
+		var id: Variant = data.get("id"); var part: Variant = data.get("part"); var count: Variant = data.get("count"); var payload: Variant = data.get("payload")
+		if not id is int or not part is int or not count is int or not payload is PackedByteArray: return
+		if id <= displayed_frame or count < 1 or count > 150 or part < 0 or part >= count or payload.size() > 1100: return
+		if id > assembling_frame: assembling_frame = id; expected_parts = count; video_parts.clear()
+		if id != assembling_frame or count != expected_parts: return
+		video_parts[part] = payload
+		if video_parts.size() == expected_parts:
+			var jpg := PackedByteArray()
+			for i in expected_parts: jpg.append_array(video_parts[i])
+			video_parts.clear()
+			if _present_image(jpg):
+				displayed_frame = id
+				_send({"type":"video_ack", "id":id},1)
+	elif role == "host" and sender == remote and kind == "video_ack":
+		if data.get("id") is int and data.id == in_flight: in_flight = -1
 	elif role == "client" and sender == 1 and kind == "audio":
 		var pcm: Variant = data.get("pcm")
 		if not pcm is PackedByteArray or pcm.size() > 8192 or pcm.size() % 4 != 0 or playback == null: return
@@ -225,8 +238,43 @@ func send_controls(reliable: bool = false):
 	sent_sequence += 1
 	_send({"type":"input", "buttons":pending_buttons, "axes":pending_axes, "triggers":pending_triggers, "sequence":sent_sequence}, 1, 0, reliable)
 
+func send_video(jpg: PackedByteArray):
+	if jpg.size() > 160000 or remote == 0: return
+	outgoing_frame += 1
+	in_flight = outgoing_frame
+	var count := ceili(jpg.size() / 1100.0)
+	for i in count:
+		_send({"type":"video", "id":outgoing_frame, "part":i, "count":count, "payload":jpg.slice(i*1100,mini((i+1)*1100,jpg.size()))},remote,1,true)
+
+static func jpeg_size(jpg: PackedByteArray) -> Vector2i:
+	if jpg.size() < 10 or jpg[0] != 255 or jpg[1] != 216: return Vector2i.ZERO
+	var p := 2
+	while p + 8 < jpg.size():
+		if jpg[p] != 255: return Vector2i.ZERO
+		while p < jpg.size() and jpg[p] == 255: p += 1
+		if p + 2 >= jpg.size(): return Vector2i.ZERO
+		var marker := jpg[p]; p += 1
+		var length := jpg[p]*256 + jpg[p+1]
+		if length < 2 or p+length > jpg.size(): return Vector2i.ZERO
+		if marker in [192,193,194]: return Vector2i(jpg[p+5]*256+jpg[p+6],jpg[p+3]*256+jpg[p+4])
+		p += length
+	return Vector2i.ZERO
+
+func _present_image(jpg: PackedByteArray) -> bool:
+	var size := jpeg_size(jpg)
+	if size.x < 1 or size.y < 1 or size.x > 1920 or size.y > 1080: return false
+	var img := Image.new()
+	if img.load_jpg_from_buffer(jpg) != OK: return false
+	if image_texture == null: image_texture = ImageTexture.create_from_image(img); picture.texture = image_texture
+	elif Vector2i(image_texture.get_size()) == img.get_size(): image_texture.update(img)
+	else: image_texture.set_image(img)
+	last_frame = clock; received_frames += 1; frame_received.emit(); return true
+
 func _capture_frame():
 	if not is_host() or not connected() or DisplayServer.get_name() == "headless": return
+	_capture_audio()
+	# Keep at most one frame in transit; slow clients cannot accumulate seconds of video.
+	if in_flight >= 0: return
 	var interval := 1.0 / (15.0 if profile == 0 else 12.0)
 	if clock - frame_clock < interval: return
 	frame_clock = clock
@@ -239,18 +287,20 @@ func _capture_frame():
 	var frame_size := VIDEO_SIZE if profile == 0 else Vector2i(640,360)
 	img.resize(frame_size.x, frame_size.y, Image.INTERPOLATE_BILINEAR)
 	var jpg := img.save_jpg_to_buffer(0.78)
-	if jpg.size() <= 160000: _send({"type":"frame", "jpg":jpg}, remote, 1, false)
+	if jpg.size() <= 160000: send_video(jpg)
 	else: dropped_frames += 1
+func _capture_audio():
 	if capture != null:
-		while capture.can_get_buffer(1024):
-			var frames := capture.get_buffer(1024); var pcm := PackedByteArray(); pcm.resize(frames.size()*4)
+		while capture.can_get_buffer(256):
+			var frames := capture.get_buffer(256); var pcm := PackedByteArray(); pcm.resize(frames.size()*4)
 			for i in frames.size():
 				pcm.encode_s16(i*4, int(clampf(frames[i].x, -1.0, 0.9999)*32768))
 				pcm.encode_s16(i*4+2, int(clampf(frames[i].y, -1.0, 0.9999)*32768))
 			_send({"type":"audio", "pcm":pcm}, remote, 2, false)
 
 func _start_capture():
-	if capture != null: return
+	if capture != null:
+		capture.clear_buffer(); return
 	capture = AudioEffectCapture.new(); capture.buffer_length = 0.25
 	AudioServer.add_bus_effect(0, capture)
 func _start_playback():
@@ -275,18 +325,22 @@ func _descendants(node: Node) -> Array:
 func _disconnected(id: int):
 	if id != remote: return
 	if is_host():
-		_apply_input(0,Vector2.ZERO,Vector2(-1,-1)); remote = 0
+		_apply_input(0,Vector2.ZERO,Vector2(-1,-1)); remote = 0; in_flight = -1
 		Input.joy_connection_changed.emit(REMOTE_DEVICE,false)
 		if is_instance_valid(world) and world.ui != null: world.menu_open = true; world.ui.show_menu()
 		_message("Spieler 2 getrennt. Partie pausiert; erneuter Beitritt mit gleichem Code möglich.")
 	else: close(); _message("Verbindung beendet. Dein lokaler Spielstand bleibt erhalten.")
 
 func close():
+	var touch := get_node_or_null("/root/MobileControls")
+	if touch != null and touch.enabled: touch.release_all()
 	var hosting := is_host()
 	if hosting: _apply_input(0, Vector2.ZERO, Vector2(-1,-1))
 	if peer != null: peer.close(); peer = null
 	role = "offline"; remote = 0; pin = ""; pending_buttons = 0; pending_axes = Vector2.ZERO; pending_triggers = Vector2(-1,-1)
 	sent_sequence = 0; received_sequence = -1
+	video_parts.clear(); assembling_frame = -1; displayed_frame = -1; expected_parts = 0; received_frames = 0
+	in_flight = -1
 	if hosting:
 		get_tree().set_meta("shadepi_coop_session",previous_coop)
 		if is_instance_valid(world) and world.has_method("set_coop"):
@@ -301,7 +355,7 @@ func close():
 	if is_instance_valid(client_world): client_world.process_mode = saved_mode
 	client_world = null; hidden_nodes.clear(); paused_audio.clear()
 	if is_instance_valid(audio_player): audio_player.stop(); audio_player.queue_free()
-	playback = null; audio_player = null
+	playback = null; audio_player = null; audio_stream = null
 	if capture != null:
 		for i in range(AudioServer.get_bus_effect_count(0)-1,-1,-1):
 			if AudioServer.get_bus_effect(0,i) == capture: AudioServer.remove_bus_effect(0,i)
@@ -310,7 +364,7 @@ func close():
 	_message("WLAN-Partie beendet.")
 
 func _build_display():
-	display = CanvasLayer.new(); display.layer = 800; add_child(display)
+	display = CanvasLayer.new(); display.layer = 800; display.set_meta("root_only",true); add_child(display)
 	picture = TextureRect.new(); picture.size = Vector2(640,360); picture.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	picture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED; picture.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	picture.visibility_layer = 1 << 20; display.add_child(picture); display.hide()

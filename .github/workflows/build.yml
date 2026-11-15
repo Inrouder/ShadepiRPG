@@ -37,7 +37,7 @@ jobs:
           curl --fail --location --retry 3 "$base/Godot_v${GODOT_VERSION}-stable_export_templates.tpz" -o /tmp/templates.tpz
           target="$HOME/.local/share/godot/export_templates/${GODOT_VERSION}.stable"
           mkdir -p "$target"
-          unzip -q -j /tmp/templates.tpz 'templates/windows_release_x86_64.exe' 'templates/linux_release.x86_64' -d "$target"
+          unzip -q -j /tmp/templates.tpz 'templates/windows_release_x86_64.exe' 'templates/linux_release.x86_64' 'templates/android_debug.apk' -d "$target"
       - name: Audit repository status, links and export boundaries
         run: python3 tools/audit_repository.py
       - name: Validate auxiliary asset generator
@@ -50,6 +50,13 @@ jobs:
           set -euo pipefail
           XDG_DATA_HOME=/tmp/shadepi-arcade-art-ci godot --headless --script res://tests/arcade_art.gd 2>&1 | tee /tmp/arcade-art.log
           if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/arcade-art.log; then exit 1; fi
+      - name: Validate mobile multitouch and real two-process LAN
+        shell: bash
+        run: |
+          set -euo pipefail
+          XDG_DATA_HOME=/tmp/shadepi-mobile-ci godot --headless --script res://tests/mobile_input.gd 2>&1 | tee /tmp/mobile-input.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/mobile-input.log; then exit 1; fi
+          python3 tools/test_lan.py
       - name: Parse test scripts before running gameplay
         run: godot --headless --check-only --script res://tests/run.gd
       - name: Smoke launch main menu and detect runtime errors
@@ -72,6 +79,10 @@ jobs:
           sudo apt-get install -y --no-install-recommends xvfb xauth libgl1-mesa-dri
           xvfb-run -a -s "-screen 0 640x360x24" env LIBGL_ALWAYS_SOFTWARE=1 XDG_DATA_HOME=/tmp/shadepi-popup-pixels godot --audio-driver Dummy --script res://tests/hq_popups.gd -- --small 2>&1 | tee /tmp/hq-popup-pixels.log
           if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/hq-popup-pixels.log; then exit 1; fi
+      - name: Validate native LAN picture and touchscreen movement
+        shell: bash
+        run: |
+          xvfb-run -a -s "-screen 0 1280x720x24" env LIBGL_ALWAYS_SOFTWARE=1 python3 tools/test_lan.py --native
       - name: Validate capped HQ rendering and display/input lifecycle
         shell: bash
         run: |
@@ -319,6 +330,20 @@ jobs:
         run: |
           mkdir -p build/source
           git archive --format=zip --output=build/source/ShadepiRPG-Godot-Projekt.zip HEAD
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Build signed Android test APK
+        shell: bash
+        run: |
+          set -euo pipefail
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" 'build-tools;36.0.0' 'platform-tools'
+          tools/android/build.sh
+      - uses: actions/upload-artifact@v7
+        with:
+          name: ShadepiRPG-Android-Test
+          path: build/android/*.apk
       - uses: actions/upload-artifact@v6
         with:
           name: ShadepiRPG-Windows

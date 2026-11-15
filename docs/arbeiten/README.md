@@ -6,6 +6,7 @@ Jeder Nachweis gehört zu der im Titel genannten Version. Prüfzähler, Bildschi
 
 | Nachweis | Versionsbezogenes Thema |
 | --- | --- |
+| [android-wlan-v062.md](android-wlan-v062.md) | Android, Multitouch und gemeinsamer WLAN-Remote-Koop · v0.62.0 · CodexAI |
 | [arcade-begleiter-v061.md](arcade-begleiter-v061.md) | Generierte Begleiter und 160 Arcade-Posen · v0.61.0 · CodexAI |
 | [dropdowns-v0511.md](dropdowns-v0511.md) | Sichtbare HQ-Menü-/Hack-Dropdowns · v0.51.1 · CodexAI |
 | [hq-anzeige-v051.md](hq-anzeige-v051.md) | Nativer HQ-Modus mit Full-HD-Grenze und 4K-Präsentation · v0.51.0 · CodexAI |

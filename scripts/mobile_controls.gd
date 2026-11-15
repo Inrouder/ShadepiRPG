@@ -12,11 +12,13 @@ var controls: Control
 var launcher: Button
 var labels: Dictionary = {}
 var net: Node
+var last_world: Node
 const STICK_CENTER := Vector2(78,278)
 const STICK_RADIUS := 58.0
 
 func _ready():
-	layer = 930; process_mode = Node.PROCESS_MODE_ALWAYS
+	set_meta("root_only",true)
+	layer = 930; process_mode = Node.PROCESS_MODE_ALWAYS; process_priority = 300
 	enabled = OS.has_feature("android") or "--touch-controls" in OS.get_cmdline_user_args()
 	net = get_node("/root/NetworkSession")
 	controls = Control.new(); controls.size = Vector2(640,360); controls.mouse_filter = Control.MOUSE_FILTER_IGNORE; add_child(controls)
@@ -25,6 +27,10 @@ func _ready():
 	for entry in [[JOY_BUTTON_X,Vector2(476,238),"X · Angriff"],[JOY_BUTTON_A,Vector2(554,274),"A · Weiter"],[JOY_BUTTON_B,Vector2(476,310),"B · Ausw."],[JOY_BUTTON_Y,Vector2(554,202),"Y · Spezial"],[JOY_BUTTON_RIGHT_SHOULDER,Vector2(554,130),"RB · Hack"],["rt",Vector2(476,166),"RT · Laden"],["lt",Vector2(398,202),"LT · Kick"],[JOY_BUTTON_START,Vector2(8,8),"Ⅱ · Pause"]]:
 		_surface(entry[0],Rect2(entry[1],Vector2(76,36)),entry[2])
 	launcher = Button.new(); launcher.text = "WLAN · Koop"; launcher.position = Vector2(8,48); launcher.size = Vector2(144,28)
+	if enabled:
+		labels[JOY_BUTTON_START].position = Vector2(282,318)
+		surfaces[JOY_BUTTON_START] = Rect2(Vector2(282,318),Vector2(76,36))
+		launcher.position = Vector2(268,280); launcher.size = Vector2(104,28)
 	UiSkin.apply_button(launcher,"raven",16); launcher.focus_mode = Control.FOCUS_NONE; launcher.pressed.connect(func(): release_all(); net.show_lobby()); add_child(launcher)
 	_tag(self)
 	get_window().go_back_requested.connect(_back)
@@ -40,8 +46,15 @@ func _tag(node: Node):
 	for child in node.get_children(): _tag(child)
 func _process(_delta: float):
 	var modal: bool = is_instance_valid(net.lobby) and net.lobby.visible
-	controls.visible = enabled and not modal
 	var world := get_tree().current_scene
+	var local_menu: bool = not net.is_client() and world != null and world.get("menu_open") == true
+	controls.visible = enabled and not modal and not local_menu
+	if world != last_world: release_all(); last_world = world
+	var compact: bool = enabled or (net.is_host() and net.connected())
+	if compact and world != null and world.get("ui") != null:
+		for key in ["controls","abilities","combat_hint"]:
+			var item = world.ui.get(key)
+			if item is CanvasItem: item.hide()
 	launcher.visible = not modal and (net.is_client() or (world != null and world.get("menu_open") == true))
 	if not controls.visible and not fingers.is_empty(): release_all()
 	for key in labels:

@@ -5,7 +5,8 @@
 - Android-Export als signierte Test-APK für ARM64 und x86_64, Querformat, eigene App-Kennung und Netzwerkberechtigung; Desktop-Exporte bleiben erhalten. HQ auf Android bis 1280×720, klassischer Modus weiterhin wählbar.
 - Multitouch-Steuerung als virtuelles Gamepad: Bewegen und Angreifen gleichzeitig, gehaltenes Aufladen, Kick, Interaktion, Ausweichen, Hack und Pause. Einheitlicher Controllerpfad auch für Hacks, Timing und Arcade; Freigabe bei Hintergrund oder Fokusverlust.
 - Gemeinsame WLAN-Partie mit Host-IP und sechsstelliger Sitzungsnummer. Ein Host simuliert die Story und speichert; ein nativer Client zeigt dessen Bild/Ton und steuert die vorhandene Spieler-2-Rolle, einschließlich Drohne/Naniten. Zwei Bildprofile, direkte Verbindung ohne zentralen Dienst. Dies ist zunächst Remote-Koop mit gemeinsamem Bild, keine unabhängige Client-Simulation.
-- ENet-Kanäle für Eingaben, Bilder und Ton; Eingabesequenzen und Heartbeats, Versions-/Codeprüfung, Trennung fremder lokaler Spielstände, Pause/Freigabe bei Verbindungsverlust. Bestehende Grafikquellen und Helden unverändert.
+- Native Zwei-Prozess-Bildprüfung mit Touch-Fernsteuerung, isolierte Mobil-/WLAN-Tests und Android-Test-APK als zusätzliches CI-Artefakt; bebilderte Anleitung mit Stream-Film.
+- ENet-Kanäle für Eingaben, Bilder und Ton; kleine bestätigte Bildpakete ohne lange Bildwarteschlange, Eingabesequenzen und Heartbeats, Versions-/Codeprüfung, Trennung fremder lokaler Spielstände, Pause/Freigabe bei Verbindungsverlust. Bestehende Grafikquellen und Helden unverändert.
 
 ## v0.61.0 – CodexAI: eigene Arcade-Kampfposen und generierte HQ-Begleiter · 15. November 2026
 

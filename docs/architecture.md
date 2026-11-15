@@ -32,3 +32,7 @@ Das [Entwicklungsarchiv](archiv/README.md) enthält verworfene Quellen, alte Com
 ## Prüfung
 
 [CI-Workflow](../.github/workflows/build.yml): Repository-Audit, Godot-Import, gezielte Spiel-/Darstellungsprüfungen und Windows-/Linux-Export. Neue Testeinstiege und lokale Tests brauchen ein isoliertes `XDG_DATA_HOME`, damit persönliche Spielstände erhalten bleiben. Skripte in `tools/` sind Entwicklungs-/QA-Werkzeuge; nach API-Änderungen vor Benutzung prüfen. Native Renderaufnahmen sind keine manuelle Abnahme jedes Spielabschnitts und ein Linux-Windows-Export keine tatsächliche Windows-Ausführung.
+
+## Android und WLAN · v0.62.0 · CodexAI
+
+[Plattform-/Netzwerkvertrag](android-wlan-v062.md): `NetworkSession` ist ein manuell gepollter ENet-Remote-Koop-Host/Client, keine RPC-Replikation der Welt. `MobileControls` erzeugt echte Joypad-Eingaben; `GamepadBindings.devices()` vereinigt physische und virtuelle Geräte. Alle Storysysteme benutzen ihre bisherigen Eingaberegeln. Clientwelt ist deaktiviert und unsichtbar, ihr lokaler Spielstand bleibt erhalten. Netzwerkdarstellung, Touch und Lobby sind Root-Canvases; HQ spiegelt sie nicht. Tests brauchen isolierte Datenverzeichnisse; `tools/test_lan.py` startet zwei echte Prozesse. Android-Build und Artefakt ergänzen die Desktop-CI.

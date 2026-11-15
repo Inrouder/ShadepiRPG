@@ -4,6 +4,14 @@
 
 Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnahmen, animierte Szenenfilme, Bedienung und technische Hinweise. Die PNG-Vorschauen sind direkt in GitHub sichtbar; die Filme bleiben zusätzlich als verlinkte WebP-Dateien erreichbar.
 
+## Android und gemeinsamer WLAN-Koop · v0.62.0 · CodexAI
+
+| Zweite Instanz mit Touch-Steuerung | Verbindung im Spiel |
+| --- | --- |
+| [![Hostbild und Touch-Steuerung im nativen Desktop-Client](previews/wlan-touch-v062.png)](android-wlan-v062.md) | [![WLAN-Menü mit Host und Beitritt](previews/wlan-lobby-v062.png)](android-wlan-v062.md) |
+
+[Android-Test-APK, Bedienung und bekannte Grenzen](android-wlan-v062.md) · [Film der übertragenen Spielbilder](previews/wlan-touch-v062.webp). Aufnahmen aus zwei nativen Linux-Spielinstanzen, keine Aufnahme eines physischen Handys.
+
 ## Eigene Arcade-Posen und HQ-Begleiter · v0.61.0 · CodexAI
 
 | Ravens Kick im Automaten | Drohne in der Kampagne |
