@@ -1,5 +1,6 @@
 extends Node2D
 
+const DetailArt = preload("res://scripts/arcade/pixel_art.gd")
 const VEHICLES = preload("res://assets/world/hq/vehicles.png")
 const Airframe = preload("res://scripts/aerodyne_art.gd")
 const BikeArt = preload("res://scripts/motorcycle_art.gd")
@@ -485,7 +486,7 @@ func _draw() -> void :
 	for bullet in bullets:
 		draw_line(bullet, bullet + Vector2(0, 11), cyan, 2)
 	if grenade != Vector2.ZERO:
-		draw_circle(grenade, 5, Color("ffd46b"))
+		DetailArt.centered(self, 1, grenade, Vector2(14, 14))
 	var bike: = Vector2(x, FLIGHT_Y if flight else BIKE_Y)
 	var paint: = pink if hurt > 0 else cyan
 	var tilt := clampf(-velocity_x * 0.001, -0.24, 0.24)
@@ -1060,7 +1061,7 @@ func _draw_bike_scene(cyan: Color, pink: Color) -> void:
 	for bullet in bullets:
 		draw_line(bullet, bullet + Vector2(0, 11), cyan, 2)
 	if grenade != Vector2.ZERO:
-		draw_circle(grenade, 5, Color("ffd46b"))
+		DetailArt.centered(self, 1, grenade, Vector2(14, 14))
 	var bike := Vector2(x, bike_y)
 	var lean := clampf(velocity_x/250.0,-1,1)
 	var braking := throttle < -0.35
@@ -1093,18 +1094,8 @@ func _draw_bike_scene(cyan: Color, pink: Color) -> void:
 		draw_string(font, Vector2(0, 96), callout, HORIZONTAL_ALIGNMENT_CENTER, 640, 18, Color(1.0, 0.86, 0.45, alpha))
 
 func _draw_barrier(point: Vector2) -> void:
-	# Concrete jersey barrier with hazard stripes and blinking end lamps.
-	var rect := Rect2(point - Vector2(29, 8), Vector2(58, 16))
-	draw_rect(Rect2(rect.position + Vector2(3, 4), rect.size), Color(0, 0, 0, 0.35))
-	draw_rect(rect, Color("6f747c"))
-	draw_rect(Rect2(rect.position, Vector2(rect.size.x, 4)), Color("9aa0a8"))
-	for i in 6:
-		var sx := rect.position.x + 4 + i * 9
-		draw_colored_polygon(PackedVector2Array([Vector2(sx, rect.end.y - 2), Vector2(sx + 5, rect.position.y + 5), Vector2(sx + 9, rect.position.y + 5), Vector2(sx + 4, rect.end.y - 2)]), Color("e8b730") if i % 2 == 0 else Color("1d1f24"))
-	var blink := 0.5 + 0.5 * sin(fx_clock * 9.0 + point.x)
-	for end_x in [rect.position.x + 3, rect.end.x - 3]:
-		draw_circle(Vector2(end_x, rect.position.y + 2), 2.5, Color(1.0, 0.25, 0.3, 0.5 + blink * 0.5))
-		draw_circle(Vector2(end_x, rect.position.y + 2), 7.0, Color(1.0, 0.2, 0.3, 0.12 * blink))
+	DetailArt.centered(self, 7, point + Vector2(2, 5), Vector2(64, 14))
+	DetailArt.centered(self, 0, point + Vector2(0, -5), Vector2(66, 36))
 
 func _draw_wreck(item: Dictionary) -> void:
 	var region := Rect2(627, 0, 627, 627)
@@ -1112,30 +1103,15 @@ func _draw_wreck(item: Dictionary) -> void:
 	draw_texture_rect_region(VEHICLES, Rect2(Vector2(-37, -27), Vector2(74, 54)), region, Color(0.32, 0.27, 0.27))
 	draw_set_transform(Vector2.ZERO)
 	for i in 3:
-		var flicker := 5.0 + sin(fx_clock * 13.0 + i * 2.1 + item.p.y) * 2.0
-		var p: Vector2 = item.p + Vector2(-10 + i * 10, -4 + (i % 2) * 6)
-		draw_circle(p, flicker + 3.0, Color(1.0, 0.35, 0.05, 0.45))
-		draw_circle(p, flicker * 0.55, Color("ffd87a"))
+		var frame := (int(fx_clock * 14.0) + i * 2) % 6
+		var at: Vector2 = item.p + Vector2(-10 + i * 10, -4 + (i % 2) * 6)
+		draw_texture_rect_region(FX_FLAME, Rect2(at - Vector2(10, 22), Vector2(20, 30)), Rect2(frame * 96, 0, 96, 144))
 
 func _draw_slick(point: Vector2) -> void:
-	draw_set_transform(point, 0.0, Vector2(1.0, 0.42))
-	draw_circle(Vector2.ZERO, 36.0, Color(0.05, 0.02, 0.09, 0.85))
-	draw_arc(Vector2(-6, -4), 22.0, 3.6, 5.2, 16, Color(0.8, 0.35, 1.0, 0.55), 3.0)
-	draw_arc(Vector2(8, 4), 16.0, 0.3, 1.8, 12, Color(0.3, 0.9, 1.0, 0.45), 2.0)
-	draw_set_transform(Vector2.ZERO)
+	DetailArt.centered(self, 2, point, Vector2(86, 42))
 
 func _draw_boost(point: Vector2, used: bool) -> void:
-	var color := Color(0.3, 0.95, 1.0, 0.25 if used else 0.55 + 0.35 * sin(fx_clock * 8.0))
-	for i in 3:
-		var tip := point + Vector2(0, -14 + i * 12)
-		draw_polyline(PackedVector2Array([tip + Vector2(-14, 9), tip, tip + Vector2(14, 9)]), color, 4.0, true)
-	draw_rect(Rect2(point - Vector2(20, 24), Vector2(40, 48)), Color(color, 0.12))
+	DetailArt.centered(self, 3, point, Vector2(48, 60), Color(1, 1, 1, 0.3 if used else 0.85 + 0.15 * sin(fx_clock * 8.0)))
 
 func _draw_mine(point: Vector2) -> void:
-	var blink := fposmod(fx_clock * 3.0 + point.x * 0.1, 1.0) < 0.5
-	draw_circle(point + Vector2(2, 3), 8.0, Color(0, 0, 0, 0.4))
-	draw_circle(point, 8.0, Color("2a2d33"))
-	draw_arc(point, 8.0, 0, TAU, 16, Color("5b616b"), 1.5)
-	draw_circle(point, 3.0, Color("ff3b55") if blink else Color("6b1220"))
-	if blink:
-		draw_arc(point, 13.0, 0, TAU, 20, Color(1.0, 0.25, 0.35, 0.5), 1.5)
+	DetailArt.centered(self, 1, point, Vector2(24, 24), Color.WHITE if fposmod(fx_clock * 3.0, 1.0) < 0.5 else Color(0.8, 0.8, 0.8))

@@ -40,6 +40,12 @@ jobs:
           unzip -q -j /tmp/templates.tpz 'templates/windows_release_x86_64.exe' 'templates/linux_release.x86_64' -d "$target"
       - name: Audit repository status, links and export boundaries
         run: python3 tools/audit_repository.py
+      - name: Validate generated arcade poses, contact windows and controller moves
+        shell: bash
+        run: |
+          set -euo pipefail
+          XDG_DATA_HOME=/tmp/shadepi-arcade-art-ci godot --headless --script res://tests/arcade_art.gd 2>&1 | tee /tmp/arcade-art.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/arcade-art.log; then exit 1; fi
       - name: Validate auxiliary asset generator
         run: node --check tools/generate_assets.cjs
       - name: Import resources

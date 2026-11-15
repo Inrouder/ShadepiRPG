@@ -8,10 +8,12 @@ extends Node2D
 ## Kollision und kann nicht sterben; ein Treffer in der Nähe lässt ihn nur kurz aussetzen.
 ## Pixelquellen: assets/sprites/companions/ (tools/companions/build_companions.py).
 
-const DRONE := preload("res://assets/sprites/companions/drone.png")
-const NANITES := preload("res://assets/sprites/companions/nanites.png")
-const DRONE_FRAME := Vector2(28, 22)
-const MOTE := Vector2(7, 7)
+## v0.61.0 · CodexAI: generated HQ material sources, existing world size/rules retained.
+const DRONE := preload("res://assets/sprites/companions/drone-hq.png")
+const NANITES := preload("res://assets/sprites/companions/nanites-hq.png")
+const ART = preload("res://scripts/arcade/pixel_art.gd")
+const DRONE_FRAME := Vector2(160, 160)
+const MOTE := Vector2(64, 64)
 const SPEED := 150.0
 const LEASH := 170.0            # weiter entfernt kehrt der Begleiter zum Helden zurück
 const IDLE_RELEASE := 25.0
@@ -37,6 +39,7 @@ var hack_cooldown := 0.0
 var attack_flash := 0.0        # > 0: Mündungsfeuer bzw. roter Schwarm
 var lunge := Vector2.ZERO      # Naniten schnellen kurz zum Ziel
 var shield_time := 0.0
+var pulse_time := 0.0
 var facing := Vector2.DOWN
 var pad_device := -1
 var pad_events: Array = []
@@ -182,6 +185,7 @@ func _process(delta: float) -> void:
 		# Im Koop erfährt Spieler 2 sofort, womit er jetzt spielt.
 		attack_flash = 0.0
 		shield_time = 0.0
+		pulse_time = 0.0
 	var wanted := 1.0 if next_kind == kind and kind != "" and not world.in_cinematic() else 0.0
 	presence = move_toward(presence, wanted, delta * 3.0)
 	visible = presence > 0.01
@@ -197,6 +201,7 @@ func _process(delta: float) -> void:
 	hack_cooldown = maxf(0.0, hack_cooldown - delta)
 	attack_flash = maxf(0.0, attack_flash - delta)
 	shield_time = maxf(0.0, shield_time - delta)
+	pulse_time = maxf(0.0, pulse_time - delta)
 	lunge = lunge.move_toward(Vector2.ZERO, delta * 260.0)
 	if world.is_busy():
 		_follow(delta)
@@ -254,7 +259,7 @@ func attack() -> void:
 	attack_cooldown = SHOT_COOLDOWN if kind == "drone" else BITE_COOLDOWN
 	attack_flash = 0.16 if kind == "drone" else 0.45
 	if kind == "drone":
-		var muzzle := position + Vector2(0, 4)
+		var muzzle := position + Vector2(0, 4 + roundf(sin(clock * 3.2) * 2.0))
 		var hit: Vector2 = muzzle + facing * 90.0 if foe == null else foe.position + Vector2(0, -18)
 		if foe != null: facing = (hit - muzzle).normalized()
 		world.effects.weapon_trace(muzzle, hit, true)
@@ -274,6 +279,7 @@ func attack() -> void:
 func hack() -> void:
 	if lead == null or kind == "": return
 	hack_cooldown = HACK_COOLDOWN
+	pulse_time = 0.5
 	if kind == "drone":
 		# Störimpuls: unterbricht alle Gegner in Reichweite kurz.
 		world.sound("hack")
@@ -297,8 +303,8 @@ func _draw() -> void:
 		var frame := int(clock * 14.0) % 4
 		var row := 1 if attack_flash > 0.0 else 0
 		# Weicher Bodenschatten, damit die Flughöhe lesbar ist.
-		draw_texture_rect_region(NANITES, Rect2(Vector2(-6, 30 - bob * 0.5), Vector2(12, 4)), Rect2(Vector2(7, 0), MOTE), Color(0, 0, 0, 0.35))
-		draw_texture_rect_region(DRONE, Rect2((Vector2(-14, -11 + bob)).round(), DRONE_FRAME), Rect2(Vector2(frame * DRONE_FRAME.x, row * DRONE_FRAME.y), DRONE_FRAME), Color(1, 1, 1, 1), false)
+		ART.centered(self, 7, Vector2(0, 30 - bob * 0.5), Vector2(22, 6), Color(1, 1, 1, 0.5))
+		draw_texture_rect_region(DRONE, Rect2(Vector2(-20, -16 + bob), Vector2(40, 40)), Rect2(Vector2(frame * DRONE_FRAME.x, row * DRONE_FRAME.y), DRONE_FRAME))
 	elif kind == "nanites":
 		var red := attack_flash > 0.0
 		var spread := 1.9 if shield_time > 0.0 else 1.0
@@ -307,5 +313,9 @@ func _draw() -> void:
 			var orbit := Vector2(cos(t) * mote.radius, sin(t * 1.3 + mote.wobble) * mote.radius * mote.tilt) * spread
 			# Beim Biss schnellen die vorderen Naniten zum Ziel und kehren zurück.
 			var reach: float = clampf(1.0 - mote.radius / 18.0, 0.0, 1.0)
-			var at := (orbit + lunge * reach - MOTE * 0.5).round()
-			draw_texture_rect_region(NANITES, Rect2(at, MOTE), Rect2(Vector2(mote.shape * MOTE.x, (MOTE.y if red else 0.0)), MOTE))
+			var at := (orbit + lunge * reach - Vector2(3.5, 3.5)).round()
+			draw_texture_rect_region(NANITES, Rect2(at, Vector2(7, 7)), Rect2(Vector2((int(mote.shape) % 4) * MOTE.x, (MOTE.y if red else 0.0)), MOTE))
+	if pulse_time > 0.0:
+		var phase := mini(3, int((0.5 - pulse_time) * 8.0))
+		var diameter := 80.0 if kind == "drone" else 66.0
+		ART.centered(self, 12 + phase, Vector2.ZERO, Vector2.ONE * diameter, Color(1, 1, 1, minf(1.0, pulse_time * 5.0)))

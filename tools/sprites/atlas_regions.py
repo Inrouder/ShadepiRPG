@@ -77,4 +77,10 @@ def catalog():
     legacy = json.loads((ROOT / mem / "legacy/actors.json").read_text())
     a[mem + "legacy/characters.png"] = _json_regions(legacy["figures"], [])
     a[mem + "legacy/master-death.png"] = _json_regions(legacy["master_death"], [])
+    # v0.61.0 CodexAI: separate registered game-only atlases.
+    for name in ["shadepi", "raven", "jackal", "kenzo", "punk-1", "punk-2", "punk-3", "punk-4", "shooter-violet", "shooter-visor"]:
+        path = "assets/arcade/fighters/" + name + ".png"
+        a[path] = grid(path, 4, 4)
+    for path, cols, rows in [("assets/sprites/companions/drone-hq.png",4,2),("assets/sprites/companions/nanites-hq.png",4,2),("assets/arcade/props-fx-hq.png",4,4)]:
+        a[path] = grid(path, cols, rows)
     return {k: sorted(set(v)) for k, v in a.items()}

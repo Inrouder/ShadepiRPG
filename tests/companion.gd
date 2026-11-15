@@ -17,13 +17,20 @@ func settle(w, frames: int = 40) -> void:
 		if w.cutscene.running: w.cutscene.skip()
 
 func run() -> void:
-	var drone: Image = load("res://assets/sprites/companions/drone.png").get_image()
-	var motes: Image = load("res://assets/sprites/companions/nanites.png").get_image()
-	check(drone.get_size() == Vector2i(112, 44) and motes.get_size() == Vector2i(56, 14), "companion sheets keep their frame grids")
+	var drone: Image = load("res://assets/sprites/companions/drone-hq.png").get_image()
+	var motes: Image = load("res://assets/sprites/companions/nanites-hq.png").get_image()
+	check(drone.get_size() == Vector2i(640, 320) and motes.get_size() == Vector2i(256, 128), "companion sheets keep their frame grids")
 	check(drone.get_pixel(0, 0).a == 0.0 and motes.get_pixel(0, 0).a == 0.0, "companion sheets are transparent pixel art")
-	var white := motes.get_pixel(3, 3)
-	var red := motes.get_pixel(3, 10)
-	check(white.r > 0.9 and white.g > 0.9 and white.b > 0.9 and red.r > 0.9 and red.g < 0.95 and red.b < 0.9, "nanites glow white when calm and red when attacking")
+	var white_energy := 0.0; var calm_energy := 0.0; var red_energy := Vector3.ZERO
+	for y in 64:
+		for x in 256:
+			var calm := motes.get_pixel(x, y); var hot := motes.get_pixel(x, y + 64)
+			if calm.a > 0.5:
+				calm_energy += 1.0
+				if minf(calm.r, minf(calm.g, calm.b)) > 0.7: white_energy += 1.0
+			if hot.a > 0.5: red_energy += Vector3(hot.r, hot.g, hot.b)
+	check(white_energy > calm_energy * 0.04 and red_energy.x > red_energy.y * 1.3, "nanites retain white cores and change to red on attack")
+
 	var w = load("res://scenes/campaign.tscn").instantiate()
 	root.add_child(w)
 	await process_frame

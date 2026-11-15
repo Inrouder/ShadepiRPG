@@ -1,20 +1,21 @@
 extends CanvasLayer
 ## v0.57.0 · ClaudeHelper (Nutzerauftrag vom 11. November 2026): Arcade-Automat „NEON KOMBAT“.
 ## Seitliches Kampfspiel mit den Figuren des Spiels – 1 Spieler gegen CPU oder 2 Spieler im Duell.
-## Nutzt ausschließlich die vorhandenen Seitenansichten der Figurenblätter (Stand, Lauf, Angriff).
+## v0.61.0 · CodexAI: eigene registrierte Arcade-Posen, Faust/Kick und Treffer-Kombos.
 signal closed
 
 const UiSkin = preload("res://scripts/ui_skin.gd")
 const STAGE = preload("res://assets/arcade/stage-rooftop.webp")
-const SPARKS = preload("res://assets/arcade/sparks.png")
+const ART = preload("res://scripts/arcade/pixel_art.gd")
+const ATLAS = preload("res://assets/arcade/fighters/atlas.json")
 const SAVE_PATH := "user://shadepi-arcade.cfg"
 const VIEW := Vector2(640, 360)
 const GROUND := 304.0
 const WALLS := Vector2(36.0, 604.0)
-const SCALE := 1.0                       # 128×160-Zelle in voller Größe
+const SCALE := 0.5                       # Arcade-eigene Quellen, Originalhelden unverändert
 const REACH := 1.2                       # Reichweiten der Tabelle gelten für die kleinere Weltgröße
-const CELL := Vector2(128, 160)
-const FOOT := 152.0                      # Fußlinie in der Zelle
+const CELL := Vector2(512, 320)
+const ANCHOR := Vector2(224, 288)
 const GRAVITY := 980.0
 const JUMP := -350.0
 const ROUND_SECONDS := 60.0
@@ -99,7 +100,7 @@ func _ready() -> void:
 	hud_node.draw.connect(_draw_hud)
 	add_child(hud_node)
 	for entry in ROSTER:
-		sheets[entry.id] = load(entry.sheet)
+		sheets[entry.id] = load("res://assets/arcade/fighters/" + str(entry.id) + ".png")
 	var config := ConfigFile.new()
 	if config.load(SAVE_PATH) == OK:
 		total_wins = int(config.get_value("arcade", "wins", 0))
@@ -202,7 +203,7 @@ func _start_round() -> void:
 	fighters.clear()
 	for index in 2:
 		var data: Dictionary = ROSTER[cursors[index]]
-		fighters.append({"data": data, "x": 200.0 if index == 0 else 440.0, "y": 0.0, "vx": 0.0, "vy": 0.0, "face": 1.0 if index == 0 else -1.0, "hp": float(data.hp), "meter": 0.0 if round_number == 1 else 25.0, "state": "idle", "t": 0.0, "hit": 0, "anim": 0.0, "flash": 0.0, "combo": 0, "combo_t": 0.0, "blocking": false, "cool": 0.0})
+		fighters.append({"data": data, "x": 200.0 if index == 0 else 440.0, "y": 0.0, "vx": 0.0, "vy": 0.0, "face": 1.0 if index == 0 else -1.0, "hp": float(data.hp), "meter": 0.0 if round_number == 1 else 25.0, "state": "idle", "t": 0.0, "hit": 0, "anim": 0.0, "flash": 0.0, "combo": 0, "combo_t": 0.0, "blocking": false, "cool": 0.0, "buffer": "", "buffer_t": 0.0, "land": 0.0})
 	shots.clear(); hits.clear()
 	timer = ROUND_SECONDS
 	phase = "intro"
@@ -302,7 +303,19 @@ func _control(index: int, controls: Dictionary) -> void:
 	var p: Dictionary = controls.pressed
 	f.cool = maxf(0.0, f.cool - get_process_delta_time())
 	f.blocking = false
-	if f.state in ["hurt", "ko"] or MOVES.has(f.state):
+	if f.state in ["hurt", "ko"]:
+		f.buffer = ""; f.buffer_t = 0.0
+		return
+	var requested := ""
+	if p.get("c", false) and f.meter >= SPECIAL_COST and f.y >= 0.0: requested = str(f.data.special)
+	elif p.get("b", false): requested = "heavy"
+	elif p.get("a", false): requested = "light"
+	if requested != "":
+		f.buffer = requested; f.buffer_t = 0.18
+	if MOVES.has(f.state):
+		# Confirmed punch → kick/special. Whiffs and blocked hits keep their recovery.
+		if f.state == "light" and f.get("confirmed", false) and f.t >= MOVES.light.active and f.buffer_t > 0.0 and f.buffer != "light":
+			_begin(f, f.buffer)
 		return
 	var grounded: bool = f.y >= 0.0
 	if grounded:
@@ -319,17 +332,16 @@ func _control(index: int, controls: Dictionary) -> void:
 		f.y = -1.0
 		_sound("drive_near_miss", 0.1)
 	f.state = "jump" if f.y < 0.0 else ("walk" if dir != 0.0 else "idle")
-	var move := ""
-	if p.get("c", false) and f.meter >= SPECIAL_COST and grounded: move = str(f.data.special)
-	elif p.get("b", false): move = "heavy"
-	elif p.get("a", false): move = "light"
-	if move != "" and f.cool <= 0.0:
-		_begin(f, move)
+	if f.buffer_t > 0.0 and f.cool <= 0.0:
+		_begin(f, f.buffer)
 
 func _begin(f: Dictionary, move: String) -> void:
 	f.state = move
 	f.t = 0.0
 	f.hit = 0
+	f.confirmed = false
+	f.buffer = ""; f.buffer_t = 0.0
+	f.blocking = false
 	if f.y >= 0.0: f.vx = 0.0
 	if move not in ["light", "heavy"]:
 		f.meter -= SPECIAL_COST
@@ -342,6 +354,8 @@ func _physics(f: Dictionary, other: Dictionary, delta: float, _unused: Dictionar
 	f.t += delta
 	f.anim += delta
 	f.flash = maxf(0.0, f.flash - delta)
+	f.buffer_t = maxf(0.0, f.buffer_t - delta)
+	f.land = maxf(0.0, f.land - delta)
 	f.combo_t = maxf(0.0, f.combo_t - delta)
 	if f.combo_t <= 0.0: f.combo = 0
 	if MOVES.has(f.state):
@@ -366,6 +380,7 @@ func _physics(f: Dictionary, other: Dictionary, delta: float, _unused: Dictionar
 		f.y += f.vy * delta
 		if f.y >= 0.0:
 			f.y = 0.0; f.vy = 0.0
+			f.land = 0.12
 	f.x = clampf(f.x + f.vx * delta, WALLS.x, WALLS.y)
 
 func _separate() -> void:
@@ -414,8 +429,9 @@ func _strike(index: int) -> void:
 		"shot":
 			if f.hit == 0:
 				f.hit = 1
-				shots.append({"x": f.x + f.face * 44.0, "y": GROUND + f.y - 84.0, "vx": f.face * 400.0, "owner": index, "dmg": 14.0, "c": f.data.color})
-				_sound("pistol", 0.1)
+				var muzzle := emitter(f)
+				shots.append({"x": muzzle.x, "y": muzzle.y, "vx": f.face * 400.0, "owner": index, "dmg": 14.0, "c": f.data.color, "art": 4 if f.data.id == "raven" else 6 if f.data.id == "punk-3" else 5})
+				_sound("electric" if f.data.id in ["raven", "punk-3"] else "pistol", 0.1)
 
 func _land(index: int, damage: float, strong: bool, point: Vector2 = Vector2.INF) -> void:
 	var f: Dictionary = fighters[index]
@@ -434,6 +450,7 @@ func _land(index: int, damage: float, strong: bool, point: Vector2 = Vector2.INF
 		_sound("prop_metal", 0.1)
 		hitstop = 0.04
 	else:
+		f.confirmed = true
 		other.hp -= damage
 		other.state = "hurt"
 		other.t = 0.0 if not strong else -0.14
@@ -551,46 +568,46 @@ func _incoming(index: int) -> bool:
 func _animate(f: Dictionary, delta: float) -> void:
 	f.anim += delta
 
-## Zelle im Figurenblatt: Zustand × 8 Richtungen; Reihe 2 ist die Ansicht nach rechts.
-func _frame(f: Dictionary) -> Rect2:
-	var state := 0
-	var column := int(f.anim * 8.0) % 8
+## Pose selection shares the same wind-up/contact/recovery windows as damage.
+func pose_index(f: Dictionary) -> int:
+	if f.state == "ko": return 6 if f.y < 0.0 else 7
+	if screen == Screen.RESULT or (phase == "ko" and f.hp > 0.0): return 14
 	match str(f.state):
-		"walk":
-			state = 1; column = int(f.anim * 10.0) % 8
-		"jump":
-			state = 1; column = 2
-		"light":
-			state = 2; column = clampi(int(f.t / 0.3 * 6.0), 0, 5)
-		"heavy":
-			state = 2; column = clampi(int(f.t / 0.56 * 6.0), 0, 5)
-		"dash", "slam", "flurry", "shot":
-			state = 2; column = 2 + int(f.t * 14.0) % 4
-		"hurt", "ko":
-			state = 3; column = 0
-	return Rect2(Vector2(column, state * 8 + 2) * CELL, CELL)
+		"block": return 5
+		"hurt": return 6
+		"jump": return 4
+		"walk": return [2, 0, 3, 1][int(f.anim * 10.0) % 4]
+	if MOVES.has(f.state):
+		var move: Dictionary = MOVES[f.state]
+		var first := 8 if f.state == "light" else 10 if f.state == "heavy" else 12
+		if f.state == "flurry" and f.t >= move.start and f.t <= move.active:
+			return 13 if fmod(f.t - move.start, 0.15) < 0.10 else 12
+		return first + 1 if f.t >= move.start and f.t <= move.active else first
+	if f.get("land", 0.0) > 0.0: return 15
+	return int(f.anim * 3.0) % 2
+
+func _frame(f: Dictionary) -> Rect2:
+	var pose := pose_index(f)
+	return Rect2(Vector2(pose % 4, pose / 4) * CELL, CELL)
+
+func emitter(f: Dictionary) -> Vector2:
+	var point: Array = ATLAS.data.fighters[f.data.id].emitter
+	return Vector2(f.x + point[0] * SCALE * f.face, GROUND + f.y + point[1] * SCALE)
 
 func _draw_fighter(c: CanvasItem, f: Dictionary, offset: Vector2) -> void:
 	var feet := Vector2(f.x, GROUND + f.y) + offset
 	var size := CELL * SCALE
-	# Bodenschatten.
 	var lift := clampf(1.0 + float(f.y) / 160.0, 0.45, 1.0)
-	c.draw_set_transform(Vector2(f.x + offset.x, GROUND + 3.0 + offset.y), 0.0, Vector2(1.0, 0.28))
-	c.draw_circle(Vector2.ZERO, 28.0 * lift, Color(0, 0, 0, 0.45 * lift))
-	var angle := 0.0
+	ART.centered(c, 7, Vector2(f.x, GROUND + 3.0) + offset, Vector2(68, 18) * lift, Color(1, 1, 1, 0.7 * lift))
 	var tint := Color.WHITE
-	if f.state == "hurt": angle = -0.22 * f.face
-	if f.state == "ko":
-		angle = -clampf(f.t * 5.0, 0.0, 1.0) * (PI * 0.5) * f.face
-		feet.y -= sin(clampf(f.t * 5.0, 0.0, 1.0) * PI * 0.5) * 12.0
-	if f.blocking: tint = Color(0.7, 0.85, 1.0)
 	if f.flash > 0.0: tint = Color(2.2, 2.2, 2.2) if int(f.flash * 30.0) % 2 == 0 else Color(1.6, 0.6, 0.6)
 	if f.state == "dash" and f.t >= 0.1 and f.t < 0.34:
 		for ghost in 3:
 			c.draw_set_transform(feet - Vector2(f.face * 26.0 * (ghost + 1), 0.0), 0.0, Vector2(f.face, 1.0))
-			c.draw_texture_rect_region(sheets[f.data.id], Rect2(Vector2(-size.x * 0.5, -FOOT * SCALE), size), _frame(f), Color(f.data.color, 0.32 - ghost * 0.09))
-	c.draw_set_transform(feet + Vector2(0, -6.0 if f.state == "ko" else 0.0), angle, Vector2(f.face, 1.0))
-	c.draw_texture_rect_region(sheets[f.data.id], Rect2(Vector2(-size.x * 0.5, -FOOT * SCALE), size), _frame(f), tint)
+			c.draw_texture_rect_region(sheets[f.data.id], Rect2(-ANCHOR * SCALE, size), _frame(f), Color(f.data.color, 0.32 - ghost * 0.09))
+	# Real hurt/lying/block poses; never rotate a standing body into a K.O.
+	c.draw_set_transform(feet, 0.0, Vector2(f.face, 1.0))
+	c.draw_texture_rect_region(sheets[f.data.id], Rect2(-ANCHOR * SCALE, size), _frame(f), tint)
 	c.draw_set_transform(Vector2.ZERO)
 
 func _draw_stage() -> void:
@@ -630,16 +647,16 @@ func _draw_hud() -> void:
 				if chosen: c.draw_rect(Rect2(190, 163 + i * 30, 260, 24), Color(pink, 0.28 + 0.1 * sin(clock * 6.0)))
 				c.draw_rect(Rect2(190, 163 + i * 30, 260, 24), pink if chosen else Color("3b4666"), false, 1.0)
 				_text(c, entries[i], Vector2(190, 180 + i * 30), 16, Color.WHITE if chosen else Color("9aa6c8"), HORIZONTAL_ALIGNMENT_CENTER, 260)
-			_text(c, "S1  WASD · J SCHLAG · K HIEB · L SPEZIAL · S BLOCKEN · W SPRUNG", Vector2(0, 288), 8, Color("c8d2f0"), HORIZONTAL_ALIGNMENT_CENTER, 640)
-			_text(c, "S2  PFEILE · U SCHLAG · I HIEB · O SPEZIAL · RUNTER BLOCKEN · HOCH SPRUNG", Vector2(0, 302), 8, Color("c8d2f0"), HORIZONTAL_ALIGNMENT_CENTER, 640)
-			_text(c, "GAMEPAD  X SCHLAG · Y HIEB · B SPEZIAL · A WÄHLEN · START ZURÜCK", Vector2(0, 316), 8, Color("c8d2f0"), HORIZONTAL_ALIGNMENT_CENTER, 640)
-			_text(c, "SIEGE GEGEN DIE CPU: %d" % total_wins, Vector2(0, 340), 8, gold, HORIZONTAL_ALIGNMENT_CENTER, 640)
+			_text(c, "S1  WASD · J SCHLAG · K KICK · L SPEZIAL · S BLOCKEN · W SPRUNG", Vector2(0, 288), 8, Color("c8d2f0"), HORIZONTAL_ALIGNMENT_CENTER, 640)
+			_text(c, "S2  PFEILE · U SCHLAG · I KICK · O SPEZIAL · RUNTER BLOCKEN · HOCH SPRUNG", Vector2(0, 302), 8, Color("c8d2f0"), HORIZONTAL_ALIGNMENT_CENTER, 640)
+			_text(c, "GAMEPAD  X SCHLAG · Y KICK · B SPEZIAL · A WÄHLEN · START ZURÜCK", Vector2(0, 316), 8, Color("c8d2f0"), HORIZONTAL_ALIGNMENT_CENTER, 640)
+			_text(c, "KOMBO: SCHLAG → KICK / SPEZIAL NACH TREFFER   ·   CPU-SIEGE: %d" % total_wins, Vector2(0, 340), 8, gold, HORIZONTAL_ALIGNMENT_CENTER, 640)
 		Screen.SELECT:
 			_text(c, "KÄMPFER WÄHLEN", Vector2(0, 40), 32, pink, HORIZONTAL_ALIGNMENT_CENTER, 640)
 			for i in ROSTER.size():
 				var card := Rect2(70 + (i % 5) * 102, 58 + (i / 5) * 118, 92, 108)
 				c.draw_rect(card, Color(0.04, 0.05, 0.11, 0.86))
-				c.draw_texture_rect_region(sheets[ROSTER[i].id], Rect2(card.position + Vector2(14, 6), Vector2(64, 80)), Rect2(Vector2(int(clock * 6.0) % 8 if i in cursors else 0, 0) * CELL, CELL))
+				c.draw_texture_rect_region(sheets[ROSTER[i].id], Rect2(card.position + Vector2(14, 6), Vector2(64, 80)), Rect2(Vector2((int(clock * 3.0) % 2 if i in cursors else 0) * CELL.x + 96, 24), Vector2(256, 280)))
 				_text(c, str(ROSTER[i].name), Vector2(card.position.x, card.end.y - 7), 8, Color.WHITE, HORIZONTAL_ALIGNMENT_CENTER, card.size.x)
 				c.draw_rect(card, Color("3b4666"), false, 1.0)
 				for index in 2:
@@ -658,13 +675,14 @@ func _draw_hud() -> void:
 			var offset := Vector2(sin(clock * 61.0), cos(clock * 47.0)) * shake
 			for shot in shots:
 				var dir := signf(shot.vx)
-				c.draw_rect(Rect2(shot.x - 9 + offset.x, shot.y - 2, 18, 4), shot.c)
-				c.draw_rect(Rect2(shot.x - 5 + dir * 4 + offset.x, shot.y - 3, 8, 6), Color.WHITE)
-				c.draw_rect(Rect2(shot.x - dir * 22 - 6 + offset.x, shot.y - 1, 12, 2), Color(shot.c, 0.5))
+				c.draw_set_transform(Vector2(shot.x, shot.y) + offset, 0.0, Vector2(dir, 1.0))
+				ART.draw(c, int(shot.get("art", 5)), Rect2(0, -9, 40, 18))
+				c.draw_set_transform(Vector2.ZERO)
 			for hit in hits:
 				var age: float = 1.0 - hit.t / float(hit.d)
 				var side: float = 48.0 * float(hit.s)
-				c.draw_texture_rect_region(SPARKS, Rect2(hit.p + offset - Vector2(side, side) * 0.5, Vector2(side, side)), Rect2(mini(5, int(age * 6.0)) * 96, 0, 96, 96), Color(hit.c).lerp(Color.WHITE, 0.55))
+				ART.centered(c, 8 + mini(3, int(age * 4.0)), hit.p + offset, Vector2(side, side))
+
 			for index in 2:
 				var f: Dictionary = fighters[index]
 				var left := index == 0

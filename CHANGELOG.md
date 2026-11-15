@@ -1,5 +1,14 @@
 # Versionshinweise
 
+## v0.61.0 – CodexAI: eigene Arcade-Kampfposen und generierte HQ-Begleiter · 15. November 2026
+
+- Aktuellen Stand v0.60.3 samt längeren Etappen, Durchgangsräumen und Tower-Korrekturen übernommen; Kampagnenhelden unverändert.
+- Zehn separate Arcade-Atlanten mit zusammen 160 registrierten Posen: Bereitschaft, Gehen, Sprung, Block, Treffer, echter Niederschlag, Faust, Kick, individueller Spezialangriff, Sieg und Landung. Neue Quellen wurden mit Bildgenerator und den aktiven Figurenreferenzen erstellt.
+- Schwerer Angriff ist jetzt ein sichtbarer Kick. Kontaktbilder passen zu den Schadensfenstern. 180-ms-Eingabepuffer und bestätigter Fausttreffer → Kick/Spezial geben Kombos; Fehlschläge und Blocks behalten ihre Erholung. Bestehende Hitstops, Lufttreffer, CPU und Zweispielerregeln bleiben erhalten.
+- Ravens Arcade-Blitz und Waffen-/Plasmaschüsse haben eigene Pixelgrafiken und pro Figur registrierte gespiegelte Hand-/Mündungsanker. Echte Block-/K.O.-Posen ersetzen Tönung und gedrehten Standkörper.
+- Raven-Drohne mit Rotor-/Feuerphasen und detaillierte weiße/rote Naniten; Begleiter behalten Größe, Koop-Steuerung und Solo-Passivität. Neuer Automat sowie materialreiche Baken, Minen, Öl- und Boostflächen ersetzen die einfachen Vorlagen; Pixel-FX ersetzen die übrigen einfachen Treffer-/Geschossflächen im Automaten.
+- Originalausgaben und Atlaspacker unter `tools/art-v061/` sichern Herkunft und transparente Ränder. Frühere kleine Begleiter-/Automatquellen bleiben als nicht exportierte Referenzen erhalten. Zusätzliche Kampf-/Controller- und Atlasprüfungen.
+
 ## v0.60.3 – ClaudeHelper: Tower-Durchgänge und Kenzō-Szene repariert · 12. November 2026
 
 Nutzerbericht: Ab dem Eingang in den Tower war die Spielfigur unsichtbar und nicht steuerbar; die Kenzō-Szene lief nicht mehr richtig.

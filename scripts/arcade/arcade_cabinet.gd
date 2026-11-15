@@ -1,7 +1,8 @@
 extends StaticBody2D
 ## v0.57.0 · ClaudeHelper: Arcade-Automat „NEON KOMBAT“ in der Halle des Ordens.
 ## Steht auf seinem Fußpunkt (y-sortiert), blockiert den Weg und flimmert leicht.
-const ART = preload("res://assets/arcade/cabinet.png")
+const ART = preload("res://assets/arcade/cabinet-hq.png")
+const PIXELS = preload("res://scripts/arcade/pixel_art.gd")
 const USE_POINT := Vector2(0, 16)        # Standpunkt davor, relativ zum Fußpunkt
 var clock := 0.0
 var world: Node
@@ -25,7 +26,7 @@ func _process(delta: float) -> void:
 
 func _draw() -> void:
 	# Bodenschatten und Bildschirmschein auf dem Hallenboden.
-	draw_rect(Rect2(-20, -4, 42, 7), Color(0, 0, 0, 0.4))
+	PIXELS.centered(self, 7, Vector2(0, -1), Vector2(48, 9))
 	var glow := 0.5 + 0.5 * sin(clock * 5.0) * sin(clock * 1.7)
 	for i in 3:
 		draw_rect(Rect2(-14 + i * 2, 3 + i * 4, 28 - i * 4, 4), Color(1.0, 0.25, 0.6, (0.16 - i * 0.045) * (0.7 + 0.3 * glow)))
