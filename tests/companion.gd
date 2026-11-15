@@ -91,8 +91,10 @@ func run() -> void:
 	check(pet.kind == "drone", "in co-op the roof gives player two the drone")
 	pet.claim()
 	pet.attack_cooldown = 0.0
+	w.effects.weapon_traces.clear()
 	pet.attack()
 	check(pet.attack_flash > 0.0, "drone shot shows its muzzle flash even without a target")
+	check(not w.effects.weapon_traces.is_empty() and w.effects.weapon_traces[-1].from.distance_to(pet.position + Vector2(0, 10 + roundf(sin(pet.clock * 3.2) * 2.0))) < 0.1, "drone trace starts at new underslung muzzle including hover")
 	pet.hack_cooldown = 0.0
 	pet.hack()
 	check(pet.hack_cooldown > 0.0, "drone jamming pulse goes on cooldown")

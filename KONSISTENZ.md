@@ -1,6 +1,6 @@
 # Verbindliche Konsistenzvorlage für ShadepiRPG
 
-**Stand v0.51.1 · CodexAI · 10. November 2026; eingeführt mit v0.32.1.** Gilt für das gesamte Spiel und alle Mitwirkenden, ob Mensch oder KI. Vor Änderungen zusammen mit [AGENTS.md](AGENTS.md) lesen und die [Arbeitsvorlage](docs/vorlagen/konsistenz-auftrag.md) verwenden. Eine neuere ausdrückliche Nutzervorgabe hat Vorrang; bestätigte Änderungen anschließend hier und in den betroffenen Referenzen nachführen.
+**Stand v0.61.0 · CodexAI · 15. November 2026; eingeführt mit v0.32.1.** Gilt für das gesamte Spiel und alle Mitwirkenden, ob Mensch oder KI. Vor Änderungen zusammen mit [AGENTS.md](AGENTS.md) lesen und die [Arbeitsvorlage](docs/vorlagen/konsistenz-auftrag.md) verwenden. Eine neuere ausdrückliche Nutzervorgabe hat Vorrang; bestätigte Änderungen anschließend hier und in den betroffenen Referenzen nachführen.
 
 **Repository-Ordnung v0.46.2 · CodexAI:** [Statuskatalog](docs/repository-status.md) unterscheidet aktive Quellen, Vergleichsbilder, Sicherungen und verworfene Varianten. Entwicklungsarchiv unter `docs/archiv/` nicht als Laufzeit-/Grafikstandard verwenden. `legacy` in Erinnerung III bleibt aktiv; Nutzer-/Storyquellen unter `docs/universum/` bleiben verbindlich.
 
@@ -103,6 +103,8 @@ Sonderatlanten für Sitzen, Liegen, Gegner oder Menü folgen ihren eigenen Metad
 **HQ-Anzeige v0.51.0 · CodexAI:** [Anzeigemodus](docs/hq-anzeige-v051.md) nutzt vorhandene Originale bis zu echter Full-HD-Rasterung; größere Ausgaben vergrößern das fertige Bild. Logische Größe, Figuren-/Hand-/Fußanker und Kollisionen bleiben 640×360. Kein neu generierter Heldenersatz und keine pauschal hochgerechneten PNGs. Schattenkontakt und Bloom folgen weiterhin der Weltgröße.
 
 **Dropdowns v0.51.1 · CodexAI:** [Popup-Korrektur](docs/dropdowns-v0511.md): eingebettete Listen dürfen nicht vom HQ-Präsentationsbild verdeckt oder herausgefiltert werden. Präsentation unterhalb der für eingebettete Fenster reservierten Ebene 1024 zeichnen; ursprüngliche CanvasItem-Masken nicht verändern. Geöffnete Listen zusätzlich im tatsächlichen Pixelbild prüfen.
+
+**Arcade/Begleiter v0.61.0 · CodexAI:** Separate [Arcade-Atlanten](assets/arcade/README.md) besitzen 16 tatsächliche Posen je Figur; Originalhelden bleiben unverändert. Registrierung und Emissionsanker in `assets/arcade/fighters/atlas.json` sind Teil der Grafik. Die Karte einer Figur sichert die Identität, nicht das alte Animationsformat. Block, Sprung und K.O. sind echte Zustände; Trefferfenster und Kontaktbild müssen synchron sein. Aktive Begleiterquellen unter `assets/sprites/companions/` heißen `drone-hq.png` und `nanites-hq.png`. Frühere kleine Vorlagen sind nur Referenzen. Keine alte Generatorausgabe darüberkopieren.
 
 ## 6. Animation und räumlicher Kontakt
 

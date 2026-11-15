@@ -1,5 +1,7 @@
 # Figurenkatalog · v0.32.2 · CodexAI
 
+**Arcade/Begleiter v0.61.0 · CodexAI:** [Neue eigene Arcade-Posen aller zehn wählbaren Figuren und HQ-Begleiter](../arcade-begleiter-v061.md). Diese separate Darstellung verwendet die Identität der Karten; normale Helden bleiben unverändert. [Aktiver Quellvertrag](../../assets/arcade/README.md).
+
 **Kontaktbilder v0.49.0 · CodexAI:** Normale Originalhelden und ihre Karten bleiben unverändert. Die [acht See-Kontaktbilder](../../assets/story/lake/README.md) sind eine eigene registrierte Szenenquelle mit denselben Merkmalen; [aktuelle Spielansichten](../mondsee-v049.md).
 
 **Aktueller Stand v0.46.1 · CodexAI:** Originalhelden wieder aktiv; beide Karten und die vollständige Übersicht zeigen wieder diese Quellen. [Spielansicht und Rückkehr](../original-helden.md). Der folgende v0.45.0-Eintrag dokumentiert die inzwischen verworfene Zwischenfassung.

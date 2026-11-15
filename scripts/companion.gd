@@ -259,7 +259,7 @@ func attack() -> void:
 	attack_cooldown = SHOT_COOLDOWN if kind == "drone" else BITE_COOLDOWN
 	attack_flash = 0.16 if kind == "drone" else 0.45
 	if kind == "drone":
-		var muzzle := position + Vector2(0, 4 + roundf(sin(clock * 3.2) * 2.0))
+		var muzzle := position + Vector2(0, 10 + roundf(sin(clock * 3.2) * 2.0))
 		var hit: Vector2 = muzzle + facing * 90.0 if foe == null else foe.position + Vector2(0, -18)
 		if foe != null: facing = (hit - muzzle).normalized()
 		world.effects.weapon_trace(muzzle, hit, true)
@@ -302,6 +302,7 @@ func _draw() -> void:
 		var bob := roundf(sin(clock * 3.2) * 2.0)
 		var frame := int(clock * 14.0) % 4
 		var row := 1 if attack_flash > 0.0 else 0
+		if row == 1: frame = clampi(int((0.16 - attack_flash) / 0.16 * 4.0), 0, 3)
 		# Weicher Bodenschatten, damit die Flughöhe lesbar ist.
 		ART.centered(self, 7, Vector2(0, 30 - bob * 0.5), Vector2(22, 6), Color(1, 1, 1, 0.5))
 		draw_texture_rect_region(DRONE, Rect2(Vector2(-20, -16 + bob), Vector2(40, 40)), Rect2(Vector2(frame * DRONE_FRAME.x, row * DRONE_FRAME.y), DRONE_FRAME))

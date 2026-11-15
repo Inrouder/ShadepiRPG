@@ -15,7 +15,7 @@ func run():
 		game.fighters[0].meter = 100.0; game.fighters[1].meter = 100.0
 		for step in 36:
 			for tick in 5:
-				game.pressed = [{}, {}]; game.held = [{}, {}]
+				game.pressed.assign([{}, {}]); game.held.assign([{}, {}])
 				if tick == 0:
 					if step == 0: game.pressed[0] = {"a": true}
 					if step == 2: game.pressed[0] = {"b": true}

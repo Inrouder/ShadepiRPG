@@ -1,6 +1,6 @@
-# Arcade-Automat „NEON KOMBAT“ · v0.57.0 · ClaudeHelper
+# Arcade-Automat „NEON KOMBAT“ · v0.61.0 · CodexAI
 
-**11. November 2026.** [Bildgalerie](README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
+**15. November 2026.** [Bildgalerie](README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
 
 ![Automat in der Halle, Kämpferwahl und Kampf](previews/arcade-v057.webp)
 
@@ -20,7 +20,7 @@ Nutzerauftrag vom 11. November 2026: In Shadepis Versteck steht ein Automat mit 
 | Springen | W | Pfeil hoch | hoch |
 | Blocken | S halten | Pfeil runter halten | runter |
 | Leichter Schlag | J | U | X |
-| Schwerer Hieb | K | I | Y |
+| Schwerer Kick | K | I | Y |
 | Spezial (halbe Leiste) | L | O | B |
 | Wählen | E / Leertaste | Enter | A |
 
@@ -43,13 +43,17 @@ Allein am Automaten gelten für Spieler 1 auch Pfeiltasten und Enter. Erstes Gam
 | Punk Ocker | 110 | Keulenhieb: Bodenschlag |
 | Wache Violett / Wache Cyan | 85 | Salve: Geschoss |
 
-## Grenzen der vorhandenen Figurenblätter
+## Eigene Arcade-Animationen · v0.61.0 · CodexAI
 
-Die Blätter enthalten Stand, Lauf, Angriff und Treffer in Seitenansicht. Eigene Bilder für Sprung, Block, Niederschlag und einen zweiten Angriff gibt es nicht. Das Spiel behilft sich: Sprung nutzt ein Laufbild, Block eine bläuliche Tönung, K.O. kippt die Figur, leichter und schwerer Angriff teilen sich die Angriffsbilder mit anderem Tempo und Vorstoß.
+Jeder der zehn Kämpfer besitzt jetzt ein separat generiertes 16-Posen-Blatt: Bereitschaft/Atmen, Gehen, Sprung, Block, Treffer, liegender K.O., Faust ausholen/treffen, Kick anziehen/ausstrecken, Spezial ausholen/auslösen, Sieg und Landung. Körpermaß und Fußkontakt werden registriert; die normalen Kampagnenhelden bleiben unverändert.
+
+**Kombo:** Faust treffen lassen, dann während der Treffer-/Erholungsphase **Kick oder Spezial** eingeben. Ein bestätigter Fausttreffer kann in diese Aktion übergehen. Der Eingabepuffer hält Eingaben 180 ms vor. Bei Fehlschlägen und Blocks bleibt die Erholung; Spezial braucht weiter eine halbe Leiste. Lufttreffer, Block, Rückstoß und Hitstop gehören zum Kampf, keine Änderung der globalen Kampagnenbelegung.
+
+Ravens Hack-Impuls kommt sichtbar aus ihrer offenen Hand, Schützen feuern aus der Gewehrmündung. [Neue Bilder, Film und Quellen](arcade-begleiter-v061.md).
 
 ## Technik
 
 - `scripts/arcade/neon_kombat.gd` (Spiel, eigenes Bild über der Welt), `scripts/arcade/arcade_cabinet.gd` (Automat in der Halle), `open_arcade()` in `scripts/main.gd`.
-- Bühne, Automat und Funken: `python3 tools/arcade/build_arcade.py` → `assets/arcade/`. Die Bühne spiegelt die Skyline des Hauptmenübilds.
+- Aktive [Arcade-Quellen](../assets/arcade/README.md); Bühne bleibt erhalten. `tools/art-v061/pack.py` registriert die neuen generierten Posen und Materialien. Der frühere `build_arcade.py` ist nur Hersteller des historischen kleinen Automaten/Funkenblatts und der vorhandenen Bühne; nicht zum Überschreiben aktueller Grafiken ausführen.
 - Spielstand `user://shadepi-arcade.cfg`: Fund und Siege gegen die CPU.
 - Prüfungen: `tests/arcade.gd`.

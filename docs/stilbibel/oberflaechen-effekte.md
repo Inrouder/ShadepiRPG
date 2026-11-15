@@ -1,5 +1,7 @@
 # Oberflächen, Effekte und Ton · v0.32.2 · CodexAI
 
+**Arcade/Begleiter v0.61.0 · CodexAI:** [Material-/FX-Atlas](../../assets/arcade/README.md) liefert separate Blitz-/Patronen-/Plasma-, Treffer-, EMP- und Kontaktschattenpixel. Keine einfachen Geschossrechtecke oder geometrischen Requisiten als Ersatz für diese Quellen. [Spielbilder](../arcade-begleiter-v061.md).
+
 **HQ-Dropdowns v0.51.1 · CodexAI:** [Listen sichtbar über dem Spielbild](../dropdowns-v0511.md); Hack-Auswahlen übernehmen Rahmen, Schrift und Farben ihres Decks. Controller A öffnet die Liste, B schließt diese zuerst.
 
 **HQ v0.51.0 · CodexAI:** [Wählbarer Full-HD-Modus](../hq-anzeige-v051.md) mit unveränderter logischer Bildkomposition, begrenztem Spielbild und vergrößerter Ausgabe oberhalb Full HD. Bloom-Radius in Weltgröße, bestehende Textur für weichen Fußkontakt, keine neuen Grafikquellen.

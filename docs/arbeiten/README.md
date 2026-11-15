@@ -6,6 +6,7 @@ Jeder Nachweis gehört zu der im Titel genannten Version. Prüfzähler, Bildschi
 
 | Nachweis | Versionsbezogenes Thema |
 | --- | --- |
+| [arcade-begleiter-v061.md](arcade-begleiter-v061.md) | Generierte Begleiter und 160 Arcade-Posen · v0.61.0 · CodexAI |
 | [dropdowns-v0511.md](dropdowns-v0511.md) | Sichtbare HQ-Menü-/Hack-Dropdowns · v0.51.1 · CodexAI |
 | [hq-anzeige-v051.md](hq-anzeige-v051.md) | Nativer HQ-Modus mit Full-HD-Grenze und 4K-Präsentation · v0.51.0 · CodexAI |
 | [anzeigeanalyse-v0502.md](anzeigeanalyse-v0502.md) | Renderpfad und native Full-HD-Vergleiche · v0.50.2 · CodexAI |

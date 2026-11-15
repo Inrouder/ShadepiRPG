@@ -1,6 +1,6 @@
-# Begleiter für Spieler 2 · v0.53.0 · ClaudeHelper
+# Begleiter für Spieler 2 · v0.61.0 · CodexAI
 
-**Stand 10. November 2026.** Nutzeridee: In vielen Szenen ist nur ein Held spielbar, der zweite Spieler hatte dort nichts zu tun. Jetzt steuert er den Begleiter des Helden.
+**Stand 15. November 2026.** Nutzeridee: In vielen Szenen ist nur ein Held spielbar, der zweite Spieler hatte dort nichts zu tun. Jetzt steuert er den Begleiter des Helden.
 
 [![Ravens Drohne schießt auf dem Tower-Dach, Shadepis Nanitenschwarm beißt im Hinterhalt rot zu](previews/begleiter-v053.png)](previews/begleiter-v053.png)
 
@@ -39,7 +39,7 @@ Solange Spieler 2 den Begleiter steuert, gehören die Pfeiltasten ihm; Spieler 1
 
 ## Technik
 
-`scripts/companion.gd` · Pixelquellen `assets/sprites/companions/` aus `tools/companions/build_companions.py` · Test `tests/companion.gd` (22 Prüfungen, in CI).
+`scripts/companion.gd` · aktive [generierte HQ-Quellen](../assets/sprites/companions/README.md): `drone-hq.png` und `nanites-hq.png`. Rotor-/Feuerphasen und metallische Naniten behalten die Weltgröße und Rollenregeln. [Aktuelle Bilder](arcade-begleiter-v061.md). Der alte `build_companions.py` erzeugt nur die historischen kleinen Referenzdateien.
 
 ## Koop-Prüfung aller Abschnitte · v0.55.0 · ClaudeHelper
 

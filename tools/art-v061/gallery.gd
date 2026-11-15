@@ -39,7 +39,7 @@ func run():
 	await shot("cabinet")
 	w.process_mode = Node.PROCESS_MODE_INHERIT; w._enter(w.Beat.CHASE); await settle()
 	w.process_mode = Node.PROCESS_MODE_DISABLED
-	w.drive.objects = [{"k":"slick", "p":Vector2(245,170), "done":false, "r":0.0}, {"k":"boost", "p":Vector2(350,165), "done":false, "r":0.0}, {"k":"mine", "p":Vector2(400,270), "done":false, "r":0.0}]
-	w.drive.hazards = [Vector2(250,100)]; w.drive.fx_clock = 2.2; w.drive.queue_redraw(); await shot("road")
+	w.drive.objects.assign([{"k":"slick", "p":Vector2(245,170), "done":false, "r":0.0}, {"k":"boost", "p":Vector2(350,165), "done":false, "r":0.0}, {"k":"mine", "p":Vector2(400,270), "done":false, "r":0.0}])
+	w.drive.hazards.assign([Vector2(250,100)]); w.drive.fx_clock = 2.2; w.drive.queue_redraw(); await shot("road")
 	w.free(); current_scene = null; await process_frame
 	print("v0.61.0 CodexAI: native world gallery saved to " + OUT); quit()

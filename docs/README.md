@@ -4,6 +4,14 @@
 
 Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnahmen, animierte Szenenfilme, Bedienung und technische Hinweise. Die PNG-Vorschauen sind direkt in GitHub sichtbar; die Filme bleiben zusätzlich als verlinkte WebP-Dateien erreichbar.
 
+## Eigene Arcade-Posen und HQ-Begleiter · v0.61.0 · CodexAI
+
+| Ravens Kick im Automaten | Drohne in der Kampagne |
+| --- | --- |
+| [![Ravens eigene Arcade-Kickpose](previews/arcade-kick-v061.png)](arcade-begleiter-v061.md) | [![Ravens detaillierte Drohne auf dem Dach](previews/drone-fire-v061.png)](arcade-begleiter-v061.md) |
+
+[Alle zehn Kämpfer, Automat, Naniten und Fahrgrafiken](arcade-begleiter-v061.md) · [Kampffilm](previews/arcade-kampf-v061.webp) · Native Aufnahmen v0.61.0 · CodexAI.
+
 ## Koop mit Raven und freie Tonaufnahmen · v0.54.0 · ClaudeHelper
 
 In Kapitel 3 bis 7 steuert Spieler 2 Raven selbst, wo sie frei in der Szene steht; sonst den [Begleiter](begleiter.md). Schüsse, Explosionen, Treffer und Gegnerstimmen sind jetzt freie CC0-Aufnahmen: [Tonquellen](../assets/audio/CREDITS.md).

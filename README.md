@@ -8,6 +8,12 @@ Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben�
 
 ## Bilder aus dem Spiel
 
+| Arcade-Kampfposen · v0.61.0 · CodexAI | Detaillierter Automat und Begleiter |
+| --- | --- |
+| [![Ravens neuer Kick im Arcade-Kampf](docs/previews/arcade-kick-v061.png)](docs/arcade-begleiter-v061.md) | [![Neuer Automat in der Halle neben Raven](docs/previews/cabinet-v061.png)](docs/arcade-begleiter-v061.md) |
+| [Alle zehn Kämpfer, neue HQ-Quellen und Bedienung](docs/arcade-begleiter-v061.md) | [18-Sekunden-Kampffilm](docs/previews/arcade-kampf-v061.webp) |
+
+
 | Begleiter für Spieler 2 · v0.53.0 · ClaudeHelper |
 | --- |
 | [![Ravens Drohne schießt, Shadepis Nanitenschwarm beißt rot zu](docs/previews/begleiter-v053.png)](docs/begleiter.md) |

@@ -1,5 +1,7 @@
 # Entwicklerwerkzeuge · v0.46.2 · CodexAI
 
+**v0.61.0 · CodexAI:** [Generierte Quellen, Atlaspacker und native Aufnahmen](art-v061/README.md). `art-v061/pack.py` registriert die neuen Pixelquellen und ist bewusst schreibend; nicht beim Setup ausführen. Frühere `arcade/build_arcade.py` und `companions/build_companions.py` erzeugen historische kleine Varianten, nicht den neuen HQ-Stand. Neue Prüfung: `tests/arcade_art.gd` mit isoliertem `XDG_DATA_HOME=/tmp/shadepi-…`; `-- --gallery` zeichnet alle zehn Figuren auf.
+
 [Repository-Status](../docs/repository-status.md) · [Aktive Assets](../assets/README.md) · [Mitwirken](../CONTRIBUTING.md).
 
 **Zum normalen Spielen oder Projektimport keines dieser Herstellungswerkzeuge ausführen.** Die erzeugten Ressourcen sind bereits im Git enthalten. Schreibende Compiler/Generatoren können bestehende Originalgrafiken, Schriften oder Klänge überschreiben. Erst Quellen, Zielpfade, aktuelle Nutzerentscheidung und Arbeitskopie prüfen. Die historische Herkunft eines Compilers macht seine fertigen aktiven Assets nicht veraltet.

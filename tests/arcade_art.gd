@@ -101,6 +101,13 @@ func run():
 	fresh(8); f = game.fighters[0]; f.meter = 100.0
 	game._begin(f, "shot"); f.t = game.MOVES.shot.start; game._strike(0)
 	check(game.shots[0].art == 5, "guard rifle fires bullet")
+	fresh(); f = game.fighters[0]
+	await press(JOY_BUTTON_DPAD_UP); check(f.vy < 0.0 and f.state == "jump", "controller jumps into dedicated pose")
+	fresh(); f = game.fighters[0]
+	await press(JOY_BUTTON_DPAD_DOWN); check(f.blocking and game.pose_index(f) == 5, "controller guards with real pose")
+	fresh(); game.winner = 0; game.phase = "ko"
+	check(game.pose_index(game.fighters[0]) == 14, "only actual round winner celebrates")
+	check(game.pose_index(game.fighters[1]) != 14, "timeout loser does not celebrate")
 	game.back(); check(game.fighters.is_empty() and game.shots.is_empty(), "leaving fight clears actions")
 	game.free(); await process_frame
 	print("ARCADE ART: %d checks, %d failures" % [checks, failures]); quit(1 if failures else 0)

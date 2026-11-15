@@ -4,6 +4,7 @@
 
 | Gruppe | Status / heutige Verwendung |
 | --- | --- |
+| `arcade/`, `sprites/companions/` | **Aktiv v0.61.0 · CodexAI:** [eigene Arcade-Kampfposen und Material-/FX-Quellen](arcade/README.md), [generierte Begleiter](sprites/companions/README.md). Frühere kleine Vorlagen sind Referenzen, nicht exportiert. |
 | `sprites/heroes/raven.png`, `shadepi.png` | **Aktiv:** unveränderte Originalhelden; keine automatische Ersatzvariante. |
 | `sprites/heroes/combat-poses.png`, `raven-hand-cast.png` / `.json` | **Aktiv:** Ladung, Kick, Ravens Handblitze und Anker. |
 | `sprites/npcs/ice-guardian-combat.png` | **Aktiv v0.50.0 · CodexAI:** acht ICE-Bossphasen; ursprüngliche Einzelquelle bleibt Identitäts-/Geschossquelle. [Belege](../docs/ice-kampf-v050.md). |

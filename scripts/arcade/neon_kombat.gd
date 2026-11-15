@@ -571,7 +571,7 @@ func _animate(f: Dictionary, delta: float) -> void:
 ## Pose selection shares the same wind-up/contact/recovery windows as damage.
 func pose_index(f: Dictionary) -> int:
 	if f.state == "ko": return 6 if f.y < 0.0 else 7
-	if screen == Screen.RESULT or (phase == "ko" and f.hp > 0.0): return 14
+	if (screen == Screen.RESULT or phase == "ko") and winner >= 0 and f == fighters[winner]: return 14
 	match str(f.state):
 		"block": return 5
 		"hurt": return 6
