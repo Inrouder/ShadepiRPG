@@ -174,12 +174,14 @@ func run() -> void:
 	await until(func(): return a.screen == a.Screen.RESULT)
 	check(a.screen == a.Screen.RESULT and a.total_wins == 1, "ein Sieg gegen die CPU wird gezählt")
 
-	# Esc: zurück zum Titel, dann aus dem Automaten; das Spiel läuft unverändert weiter.
+	# v0.64.0 · CodexAI: pause preserves the match; leaving is an explicit GUI action.
 	await tap(KEY_ESCAPE)
-	check(is_instance_valid(a) and a.screen == a.Screen.TITLE and not w.menu_open, "Esc führt zuerst zum Titelbild, nicht ins Pausenmenü")
+	check(is_instance_valid(a) and a.session_paused and a.screen == a.Screen.RESULT and not w.menu_open, "Esc pausiert den Automaten im eigenen sichtbaren Menü")
 	await tap(KEY_ESCAPE)
+	check(not a.session_paused and a.screen == a.Screen.RESULT,"zweites Esc setzt denselben Arcade-Zustand fort")
+	await tap(KEY_ESCAPE); a.exit_button.pressed.emit()
 	await frames(3)
-	check(not is_instance_valid(w.arcade) and not w.is_busy() and w.point_index == objective and w.beat == w.Beat.HANGAR, "zweites Esc verlässt den Automaten, die Mission ist unverändert")
+	check(not is_instance_valid(w.arcade) and not w.is_busy() and w.point_index == objective and w.beat == w.Beat.HANGAR, "Automat verlassen kehrt zur unveränderten Mission zurück")
 	w.queue_free()
 	await frames(3)
 
@@ -193,7 +195,7 @@ func run() -> void:
 	check(is_instance_valid(menu.arcade) and not menu.started, "der Automat öffnet sich aus dem Hauptmenü")
 	await tap(KEY_E)
 	check(menu.arcade.screen == menu.arcade.Screen.SELECT and not menu.started, "Eingaben gehen an den Automaten, nicht an das Menü darunter")
-	await tap(KEY_ESCAPE); await tap(KEY_ESCAPE)
+	await tap(KEY_ESCAPE); menu.arcade.exit_button.pressed.emit()
 	await frames(3)
 	check(not is_instance_valid(menu.arcade) and not menu.started and menu.menu_open, "nach dem Verlassen steht wieder das Hauptmenü")
 	print("ARCADE: %d checks, %d failures" % [checks, failures])

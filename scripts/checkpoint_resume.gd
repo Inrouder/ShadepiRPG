@@ -10,8 +10,8 @@ static func latest(tree: SceneTree, coop: bool = false) -> Dictionary:
 		# v0.55.0 · ClaudeHelper: Kapitel 2–7 haben einen gemeinsamen Spielstand; der Koop-Modus
 		# kommt aus der Sitzung, deshalb darf auch eine Koop-Runde dort weiterspielen.
 		var path: String = Admin.checkpoint_path(FILES[i],tree)
-		var cfg := ConfigFile.new()
-		if cfg.load(path)!=OK: continue
+		var cfg := preload("res://scripts/checkpoint_store.gd").read(path)
+		if cfg.get_sections().is_empty(): continue
 		var value: Variant
 		if i==0: value = cfg.get_value("chapter_one","coop" if coop else "solo",-1)
 		elif i==1: value = cfg.get_value("chapter","section",-1)

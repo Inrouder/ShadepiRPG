@@ -580,7 +580,7 @@ func _draw() -> void:
 	_draw_overlay()
 
 func _draw_canyon() -> void:
-	var art: Texture2D = Painted.ART.airspace
+	var art: Texture2D = Painted.texture("airspace")
 	var shift := fposmod(scroll * 0.45, 360.0)
 	draw_texture_rect(art, Rect2(0, shift - 360.0, 640, 360), false)
 	draw_texture_rect(art, Rect2(0, shift, 640, 360), false)
@@ -736,7 +736,7 @@ func _draw_debris() -> void:
 
 ## Tower roof seen from the following scene's camera; the Aerodyne descends in 3/4 view.
 func _draw_landing() -> void:
-	var art: Texture2D = Painted.ART.rooftop
+	var art: Texture2D = Painted.texture("rooftop")
 	var scale := Vector2(art.get_width() / 1024.0, art.get_height() / 640.0)
 	var half := Vector2(320, 180) / ROOF_ZOOM
 	var src := Rect2((ROOF_CAMERA - half) * scale, half * 2.0 * scale)

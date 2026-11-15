@@ -89,10 +89,10 @@ func _build_world() -> void:
 	enemy.max_health = JACKAL_HEALTH
 	var west := Sprite2D.new()
 	west.name = "BingoStreet"
-	west.texture = Painted.ART.market
+	west.texture = Painted.texture("market")
 	var join := ShaderMaterial.new()
 	join.shader = preload("res://shaders/street_join.gdshader")
-	join.set_shader_parameter("alley_art", Painted.ART.alley)
+	join.set_shader_parameter("alley_art", Painted.texture("alley"))
 	join.set_shader_parameter("west_height_offset", float(STREET_HEIGHT_OFFSET))
 	west.material = join
 	west.scale = Vector2(704, 640) / west.texture.get_size()
@@ -744,8 +744,8 @@ func player_defeated() -> void:
 	ui.resume_button.text = "Am Kontrollpunkt fortsetzen"
 
 func saved_checkpoint(local_coop: bool) -> int:
-	var config := ConfigFile.new()
-	if config.load(Admin.checkpoint_path(CHAPTER_SAVE, get_tree())) != OK:
+	var config := preload("res://scripts/checkpoint_store.gd").read(Admin.checkpoint_path(CHAPTER_SAVE, get_tree()))
+	if config.get_sections().is_empty():
 		return -1
 	var saved: Variant = config.get_value("chapter_one", "coop" if local_coop else "solo", -1)
 	if saved is int and saved in [Phase.APARTMENT, Phase.HUNT, Phase.RESCUE, Phase.TEAM, Phase.COMPLETE]:
@@ -762,13 +762,12 @@ func save_game() -> bool:
 	return success
 
 func _write_checkpoint() -> bool:
-	var config := ConfigFile.new()
-	config.load(Admin.checkpoint_path(CHAPTER_SAVE, get_tree()))
-	config.set_value("resume","coop_time" if chapter_coop else "solo_time",Time.get_unix_time_from_system())
+	var config := preload("res://scripts/checkpoint_store.gd").read(Admin.checkpoint_path(CHAPTER_SAVE, get_tree()))
+	config.set_value("resume","coop_time" if chapter_coop else "solo_time",preload("res://scripts/checkpoint_store.gd").next_time(get_tree()))
 	config.set_value("chapter_one", "coop" if chapter_coop else "solo", checkpoint)
 	config.set_value("arcade", "coop" if chapter_coop else "solo", encounter.section_index if encounter != null else 0)
 	config.set_value("props", "coop" if chapter_coop else "solo", dressing_state())
-	return config.save(Admin.checkpoint_path(CHAPTER_SAVE, get_tree())) == OK
+	return preload("res://scripts/checkpoint_store.gd").write(config,Admin.checkpoint_path(CHAPTER_SAVE, get_tree()))
 
 func load_game(requested_mode: Variant = null) -> bool:
 	var mode := chapter_coop if requested_mode == null else bool(requested_mode)
@@ -777,8 +776,7 @@ func load_game(requested_mode: Variant = null) -> bool:
 		toast("Kein Kontrollpunkt für diesen Modus")
 		return false
 	chapter_coop = mode
-	var config := ConfigFile.new()
-	config.load(Admin.checkpoint_path(CHAPTER_SAVE, get_tree()))
+	var config := preload("res://scripts/checkpoint_store.gd").read(Admin.checkpoint_path(CHAPTER_SAVE, get_tree()))
 	restore_dressing_state(config.get_value("props", "coop" if mode else "solo", {}))
 	var saved_section: Variant = config.get_value("arcade", "coop" if mode else "solo", 0)
 	_enter_checkpoint(saved as Phase, saved_section if saved_section is int else 0)
@@ -788,7 +786,7 @@ func load_game(requested_mode: Variant = null) -> bool:
 func _draw() -> void:
 	if phase == Phase.APARTMENT:
 		draw_rect(Rect2(WEST_EDGE - 200, -100, 1100, 840), Color("07090f"))
-		draw_texture_rect(Painted.ART.apartment, APARTMENT_RECT, false)
+		draw_texture_rect(Painted.texture("apartment"), APARTMENT_RECT, false)
 		var way: Array = []
 		if in_backalley() and backalley_met and not in_cinematic():
 			way = [[backalley.exit(), raven.position.distance_to(backalley.exit()) <= 47.0, false, 62.0]]

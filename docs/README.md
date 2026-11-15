@@ -1,10 +1,18 @@
 # Shadepi · Bilder, Filme und Dokumentation
 
-**Stand v0.63.0 · CodexAI · 15. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
+**Stand v0.64.0 · CodexAI · 15. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
 
 Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnahmen, animierte Szenenfilme, Bedienung und technische Hinweise. Die PNG-Vorschauen sind direkt in GitHub sichtbar; die Filme bleiben zusätzlich als verlinkte WebP-Dateien erreichbar.
 
 **[Gesamtprojektanalyse v0.63.0 · CodexAI](projektanalyse-v063.md)** · 50 Prüfreihen, gezielte Integrationsversuche und konkrete Optimierungsreihenfolge.
+
+## Stabilität, passende Touch-Tasten und echte Arcade-Pause · v0.64.0 · CodexAI
+
+| Touch-Arcade aus dem Hauptmenü | Kampf mit eigenem Pausenmenü |
+| --- | --- |
+| [![Schlag, Kick, Spezial und Block](previews/arcade-touch-v064.png)](verbesserungen-v064.md) | [![Fortsetzen und bewusstes Verlassen](previews/arcade-pause-v064.png)](verbesserungen-v064.md) |
+
+[Korrekturen, Messungen und Prüfnachweis](verbesserungen-v064.md) · [Animationsfilm](previews/arcade-pause-v064.webp). Native Linux-Aufnahmen im Touch-Modus; keine Handyaufnahme.
 
 ## Transparentes Touch-HUD und integriertes WLAN · v0.63.0 · CodexAI
 

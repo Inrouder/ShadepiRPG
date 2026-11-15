@@ -80,6 +80,11 @@ var stage_node: Node2D
 var hud_node: Node2D
 var rng := RandomNumberGenerator.new()
 var total_wins := 0
+var session_paused := false
+var pause_panel: PanelContainer
+var pause_note: Label
+var resume_button: Button
+var exit_button: Button
 
 func _ready() -> void:
 	layer = 70
@@ -104,6 +109,7 @@ func _ready() -> void:
 	var config := ConfigFile.new()
 	if config.load(SAVE_PATH) == OK:
 		total_wins = int(config.get_value("arcade", "wins", 0))
+	_build_pause()
 	_remember()
 	_sound("hack")
 
@@ -128,7 +134,6 @@ func _sound(key: String, variance: float = 0.06) -> void:
 ## zweites Spieler 2; im Duell mit nur einem Pad gehört es Spieler 2 (wie im Koop).
 func _pad_for(index: int) -> int:
 	var pads := preload("res://scripts/gamepad_bindings.gd").devices()
-	pads.sort()
 	if pads.is_empty(): return -1
 	if not versus: return pads[0] if index == 0 else -1
 	if pads.size() == 1: return pads[0] if index == 1 else -1
@@ -165,8 +170,37 @@ func _poll() -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey or event is InputEventJoypadButton or event is InputEventJoypadMotion:
 		if event.is_pressed() and not event.is_echo() and ((event is InputEventKey and event.physical_keycode == KEY_ESCAPE) or (event is InputEventJoypadButton and event.button_index == JOY_BUTTON_START)):
-			back()
+			if session_paused: resume_game()
+			else: pause_game()
+			get_viewport().set_input_as_handled(); return
+		if session_paused: return
 		get_viewport().set_input_as_handled()
+
+func _build_pause() -> void:
+	pause_panel = PanelContainer.new()
+	pause_panel.position = Vector2(174, 92); pause_panel.size = Vector2(292, 0)
+	pause_panel.add_theme_stylebox_override("panel", UiSkin.panel("raven"))
+	add_child(pause_panel)
+	var box := VBoxContainer.new(); box.add_theme_constant_override("separation", 8); pause_panel.add_child(box)
+	pause_note = Label.new(); pause_note.text = "NEON KOMBAT · PAUSE"; pause_note.custom_minimum_size.x = 268
+	pause_note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	pause_note.add_theme_font_override("font",UiSkin.font()); pause_note.add_theme_font_size_override("font_size",12); box.add_child(pause_note)
+	for entry in [["Kampf fortsetzen", resume_game], ["Zur Titelauswahl", func(): _show_title(); resume_game()], ["WLAN-Verbindung", func(): get_node("/root/NetworkSession").show_lobby()], ["Automat verlassen", close]]:
+		var button := Button.new(); button.text = entry[0]; button.custom_minimum_size.y = 28
+		UiSkin.apply_button(button,"raven",16); button.pressed.connect(entry[1]); box.add_child(button)
+		if resume_button == null: resume_button = button
+		if entry[0]=="Automat verlassen": exit_button=button
+	pause_panel.hide()
+
+func pause_game(reason: String = "NEON KOMBAT · PAUSE") -> void:
+	session_paused = true
+	held = [{}, {}]; pressed = [{}, {}]
+	pause_note.text = reason; pause_panel.show(); resume_button.grab_focus.call_deferred()
+
+func resume_game() -> void:
+	session_paused = false; pause_panel.hide()
+	# Suppress attacks held while the modal menu was open until they are released.
+	_poll(); pressed = [{}, {}]
 
 func back() -> void:
 	match screen:
@@ -212,6 +246,7 @@ func _start_round() -> void:
 	cpu_think = 0.6
 
 func _process(delta: float) -> void:
+	if session_paused: return
 	clock += delta
 	shake = move_toward(shake, 0.0, delta * 14.0)
 	_poll()
@@ -649,7 +684,7 @@ func _draw_hud() -> void:
 				_text(c, entries[i], Vector2(190, 180 + i * 30), 16, Color.WHITE if chosen else Color("9aa6c8"), HORIZONTAL_ALIGNMENT_CENTER, 260)
 			_text(c, "S1  WASD · J SCHLAG · K KICK · L SPEZIAL · S BLOCKEN · W SPRUNG", Vector2(0, 288), 8, Color("c8d2f0"), HORIZONTAL_ALIGNMENT_CENTER, 640)
 			_text(c, "S2  PFEILE · U SCHLAG · I KICK · O SPEZIAL · RUNTER BLOCKEN · HOCH SPRUNG", Vector2(0, 302), 8, Color("c8d2f0"), HORIZONTAL_ALIGNMENT_CENTER, 640)
-			_text(c, "GAMEPAD  X SCHLAG · Y KICK · B SPEZIAL · A WÄHLEN · START ZURÜCK", Vector2(0, 316), 8, Color("c8d2f0"), HORIZONTAL_ALIGNMENT_CENTER, 640)
+			_text(c, "GAMEPAD  X SCHLAG · Y KICK · B SPEZIAL · A WÄHLEN · START PAUSE", Vector2(0, 316), 8, Color("c8d2f0"), HORIZONTAL_ALIGNMENT_CENTER, 640)
 			_text(c, "KOMBO: SCHLAG → KICK / SPEZIAL NACH TREFFER   ·   CPU-SIEGE: %d" % total_wins, Vector2(0, 340), 8, gold, HORIZONTAL_ALIGNMENT_CENTER, 640)
 		Screen.SELECT:
 			_text(c, "KÄMPFER WÄHLEN", Vector2(0, 40), 32, pink, HORIZONTAL_ALIGNMENT_CENTER, 640)
@@ -670,7 +705,7 @@ func _draw_hud() -> void:
 				var x := 20.0 if index == 0 else 330.0
 				_text(c, "%s%s" % [data.name, "  · BEREIT" if locked[index] else ""], Vector2(x, 312), 16, pink if index == 0 else cyan, HORIZONTAL_ALIGNMENT_LEFT if index == 0 else HORIZONTAL_ALIGNMENT_RIGHT, 290)
 				_text(c, "SPEZIAL · %s    LEBEN %d · TEMPO %d" % [data.move, data.hp, int(data.speed)], Vector2(x, 326), 8, Color("c8d2f0"), HORIZONTAL_ALIGNMENT_LEFT if index == 0 else HORIZONTAL_ALIGNMENT_RIGHT, 290)
-			_text(c, "A / E / ENTER WÄHLEN · ESC ZURÜCK", Vector2(0, 350), 8, gold, HORIZONTAL_ALIGNMENT_CENTER, 640)
+			_text(c, "A / E / ENTER WÄHLEN · ESC PAUSE", Vector2(0, 350), 8, gold, HORIZONTAL_ALIGNMENT_CENTER, 640)
 		Screen.FIGHT, Screen.RESULT:
 			var offset := Vector2(sin(clock * 61.0), cos(clock * 47.0)) * shake
 			for shot in shots:

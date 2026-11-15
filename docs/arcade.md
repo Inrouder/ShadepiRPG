@@ -10,7 +10,7 @@ Nutzerauftrag vom 11. November 2026: In Shadepis Versteck steht ein Automat mit 
 
 - **Kapitel 4, Halle des Ordens:** an der Rückwand rechts neben dem grünen Tank. Raven tritt davor, **E / A** startet.
 - **Hauptmenü:** Nach dem ersten Fund erscheint „Arcade · NEON KOMBAT“.
-- **Esc / Start** führt zurück: aus dem Kampf zum Titelbild, vom Titelbild aus dem Automaten.
+- **Esc / Start** öffnet das eigene Pausenmenü. Fortsetzen erhält den Kampf; „Zur Titelauswahl“ oder „Automat verlassen“ sind bewusste Menüaktionen (v0.64.0 · CodexAI).
 
 ## Steuerung
 

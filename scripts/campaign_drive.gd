@@ -530,9 +530,9 @@ func _draw_highway() -> void :
 
 func _road_art(tile: int) -> Texture2D:
 	match stage:
-		1: return Painted.ART.tunnel
-		2: return Painted.ART.skyway
-	return [Painted.ART.highway, Painted.ART.highway_b, Painted.ART.highway, Painted.ART.highway_c][posmod(tile, 4)]
+		1: return Painted.texture("tunnel")
+		2: return Painted.texture("skyway")
+	return [Painted.texture("highway"), Painted.texture("highway_b"), Painted.texture("highway"), Painted.texture("highway_c")][posmod(tile, 4)]
 
 ## Fußgängerbrücke über der Stadtstraße: zieht mit der Fahrbahn durchs Bild, Fahrzeuge fahren
 ## darunter hindurch.
@@ -552,10 +552,10 @@ func _draw_overpass() -> void:
 		return
 	var offset := Vector2(sin(fx_clock * 57) * shake, cos(fx_clock * 43) * shake * 0.6)
 	over_layer.draw_rect(Rect2(Vector2(48, overpass_y + 16.0) + offset, Vector2(544, OVERPASS_SIZE.y - 14.0)), Color(0, 0, 0, 0.34))
-	over_layer.draw_texture_rect(Painted.ART.overpass, Rect2(Vector2(0, overpass_y) + offset, OVERPASS_SIZE), false)
+	over_layer.draw_texture_rect(Painted.texture("overpass"), Rect2(Vector2(0, overpass_y) + offset, OVERPASS_SIZE), false)
 
 func _draw_airspace(cyan: Color) -> void :
-	_draw_scrolling_city(Painted.ART.airspace, 84.0)
+	_draw_scrolling_city(Painted.texture("airspace"), 84.0)
 	for i in 9:
 		var y: = fposmod(i * 48 + elapsed * 135.0, 432.0) - 36.0
 		for x_pos in [168, 472]:

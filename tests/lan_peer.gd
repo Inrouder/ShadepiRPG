@@ -16,6 +16,7 @@ func run():
 		if arg.begins_with("--test-port="): test_port = arg.get_slice("=",1).to_int()
 	if not OS.get_user_data_dir().begins_with("/tmp/shadepi-"): quit(1); return
 	net = root.get_node("NetworkSession")
+	var host_first := "--host-first" in OS.get_cmdline_user_args()
 	var hosting := "--lan-host" in OS.get_cmdline_user_args()
 	var w = load("res://scenes/main.tscn" if hosting else "res://scenes/chapter_one.tscn").instantiate()
 	root.add_child(w); current_scene = w
@@ -34,13 +35,19 @@ func run():
 		print("LAN movement: ",before," → ",w.raven.position," P1 ",p1," → ",w.player.position," pad ",w.gamepads.raven_device," coop ",w.coop)
 		check(w.raven.position.x > before.x+5 and w.player.position.distance_to(p1)<2,"peer input moves only player two in actual scene")
 		check(w.gamepads.raven_device == net.REMOTE_DEVICE,"remote input has its own gamepad binding")
+		check(is_equal_approx(Input.get_joy_axis(net.REMOTE_DEVICE,JOY_AXIS_RIGHT_X),0.75) and is_equal_approx(Input.get_joy_axis(net.REMOTE_DEVICE,JOY_AXIS_RIGHT_Y),-0.5),"both right aim axes travel from actual client events")
 		var next_world = load("res://scenes/chapter_two.tscn").instantiate()
 		root.add_child(next_world); current_scene=next_world; w.free(); w=next_world
 		for i in 6: await process_frame
 		check(net.connected() and net.world==w and w.coop,"chapter transition keeps one connected cooperative story")
 		check(w.gamepads.raven_device==net.REMOTE_DEVICE,"player-two device follows the new chapter")
-		await wait_for(func():return not net.connected())
-		check(w.menu_open,"disconnect pauses host story")
+		if host_first: net.close()
+		else:
+			w.open_arcade(true); w.arcade.start_match(0,1,true); w.arcade.phase="fight"
+			await wait_for(func():return not net.connected())
+			check(w.arcade.session_paused,"client departure pauses active arcade")
+			var frozen: float=w.arcade.timer; await create_timer(0.15).timeout
+			check(w.arcade.timer==frozen,"disconnected arcade timer stays frozen")
 		check(not Input.is_action_pressed("raven_move_right"),"disconnect releases remote movement")
 		net.close(); check(AudioServer.get_bus_effect_count(0)==previous_effects,"audio capture effect removed on close")
 	else:
@@ -52,13 +59,20 @@ func run():
 		await wait_for(func():return net.role=="client")
 		check(net.role=="client" and w.process_mode==Node.PROCESS_MODE_DISABLED,"client suspends its local simulation")
 		net.pending_axes=Vector2.RIGHT
+		for axis in [JOY_AXIS_RIGHT_X,JOY_AXIS_RIGHT_Y]:
+			var event:=InputEventJoypadMotion.new(); event.device=55; event.axis=axis; event.axis_value=0.75 if axis==JOY_AXIS_RIGHT_X else -0.5; Input.parse_input_event(event)
 		await wait_for(func():return net.received_frames>=3)
 		check(net.received_frames>=3 and net.picture.texture!=null,"encoded host image arrives and becomes a real texture")
 		check(Vector2i(net.picture.texture.get_size())==Vector2i(64,36),"image dimensions preserved")
 		check(net.playback!=null,"client audio playback is ready")
 		await create_timer(2.0).timeout
 		net.pending_axes=Vector2.ZERO
-		net.close(); check(w.process_mode!=Node.PROCESS_MODE_DISABLED and w.visible,"local story restored without reloading save")
+		if host_first:
+			await wait_for(func():return net.role=="offline")
+			check(net.role=="offline","host-first disconnect safely returns the client offline")
+		else: net.close()
+		check(Input.get_joy_axis(net.REMOTE_DEVICE,JOY_AXIS_RIGHT_X)==0.0,"disconnect leaves no remote aim held")
+		check(w.process_mode!=Node.PROCESS_MODE_DISABLED and w.visible,"local story restored without reloading save")
 	await process_frame; await process_frame
 	w.free(); current_scene=null; await create_timer(0.2).timeout
 	print("LAN %s: %d checks, %d failures" % ["HOST" if hosting else "CLIENT",checks,failures]); quit(1 if failures else 0)

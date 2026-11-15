@@ -3,12 +3,13 @@ extends Node
 ## Native client presents the host image/audio; only player-2 controller state travels back.
 signal changed
 signal frame_received
-const PROTOCOL := 1
+const PROTOCOL := 2
 const PORT := 26562
 const REMOTE_DEVICE := 101
 const MAX_PACKET := 180000
 const VIDEO_SIZE := Vector2i(960, 540)
 const ALLOWED_BUTTONS := [JOY_BUTTON_A, JOY_BUTTON_B, JOY_BUTTON_X, JOY_BUTTON_Y, JOY_BUTTON_LEFT_SHOULDER, JOY_BUTTON_RIGHT_SHOULDER, JOY_BUTTON_START, JOY_BUTTON_DPAD_LEFT, JOY_BUTTON_DPAD_RIGHT, JOY_BUTTON_DPAD_UP, JOY_BUTTON_DPAD_DOWN]
+var connection_generation := 0
 var peer: ENetMultiplayerPeer
 var role := "offline"
 var status := "Gleiches WLAN · Host erstellen oder per IP beitreten."
@@ -24,6 +25,10 @@ var last_buttons := 0
 var last_axes := Vector2.ZERO
 var pending_buttons := 0
 var pending_axes := Vector2.ZERO
+var pending_aim := Vector2.ZERO
+var remote_aim := Vector2.ZERO
+var remote_context := "menu"
+var sent_context := ""
 var pending_triggers := Vector2(-1, -1)
 var remote_triggers := Vector2(-1, -1)
 var world: Node
@@ -53,12 +58,18 @@ var displayed_frame := -1
 var expected_parts := 0
 var video_parts := {}
 var in_flight := -1
+var stream_picture: Node
+var capture_ms := 0.0
+var encode_ms := 0.0
+var frame_bytes := 0
 
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	process_priority = -200
 	RenderingServer.frame_post_draw.connect(_capture_frame)
 	get_window().close_requested.connect(close)
+	get_node("/root/AudioSettings").changed.connect(_apply_audio_setting)
+	_apply_audio_setting()
 	_build_display()
 	var args := OS.get_cmdline_user_args()
 	if "--lan-panel" in args: show_lobby.call_deferred()
@@ -76,7 +87,7 @@ func host(port: int = PORT) -> Error:
 	if err != OK: peer = null; _message("Port belegt oder WLAN nicht verfügbar (%s)." % err); return err
 	role = "host"; pin = "%06d" % randi_range(100000, 999999)
 	previous_coop = get_tree().get_meta("shadepi_coop_session", false)
-	peer.peer_disconnected.connect(_disconnected)
+	peer.peer_disconnected.connect(_peer_disconnected.bind(connection_generation), CONNECT_DEFERRED)
 	_message("Host bereit · Code %s\nIP %s · UDP %d" % [pin, addresses(), port])
 	return OK
 
@@ -88,7 +99,7 @@ func join(address: String, code: String, port: int = PORT) -> Error:
 	var err := peer.create_client(address, port, 3)
 	if err != OK: peer = null; _message("Verbindung konnte nicht gestartet werden (%s)." % err); return err
 	role = "joining"; pin = code; deadline = clock + 10.0
-	peer.peer_disconnected.connect(_disconnected)
+	peer.peer_disconnected.connect(_peer_disconnected.bind(connection_generation), CONNECT_DEFERRED)
 	_message("Verbinde mit %s …" % address)
 	return OK
 
@@ -111,6 +122,7 @@ func _process(delta: float):
 	clock += delta
 	if peer == null: return
 	peer.poll()
+	if peer == null: return
 	if role == "joining" and peer.get_connection_status() == MultiplayerPeer.CONNECTION_CONNECTED and remote == 0:
 		remote = 1; _send({"type":"hello", "protocol":PROTOCOL, "version":version(), "pin":pin}, 1)
 	while peer != null and peer.get_available_packet_count() > 0:
@@ -128,6 +140,9 @@ func _process(delta: float):
 			send_controls()
 		if clock - last_frame > 8.0: close(); _message("Bildverbindung unterbrochen. Der Host behält den Spielstand.")
 	elif role == "host" and connected():
+		var context := preload("res://scripts/input_context.gd").for_world(get_tree().current_scene, true)
+		if context != sent_context:
+			sent_context = context; _send({"type":"context", "context":context}, remote)
 		if clock - last_input > 0.4: _apply_input(0, Vector2.ZERO, Vector2(-1,-1))
 		var next := get_tree().current_scene
 		if world != next: world = next; _configure_coop()
@@ -138,7 +153,7 @@ func _receive(sender: int, data: Dictionary):
 	if role == "host" and kind == "hello":
 		if (remote != 0 and remote != sender) or data.get("protocol") != PROTOCOL or data.get("version") != version() or data.get("pin") != pin:
 			_send({"type":"reject", "reason":"Code, Spielversion oder freie Spielerposition stimmt nicht."}, sender); return
-		remote = sender; in_flight = -1; last_input = clock; received_sequence = -1; world = get_tree().current_scene
+		remote = sender; sent_context = ""; in_flight = -1; last_input = clock; received_sequence = -1; world = get_tree().current_scene
 		audio_rate = AudioServer.get_mix_rate()
 		_send({"type":"welcome", "rate":audio_rate, "protocol":PROTOCOL}, sender)
 		_configure_coop(); _start_capture()
@@ -155,11 +170,15 @@ func _receive(sender: int, data: Dictionary):
 		_message("Verbunden · du steuerst Spieler 2. Der Host führt Partie und Spielstand.")
 	elif role == "host" and sender == remote and kind == "input":
 		var buttons: Variant = data.get("buttons"); var axes: Variant = data.get("axes"); var triggers: Variant = data.get("triggers")
+		var aim: Variant = data.get("aim", Vector2.ZERO)
 		var sequence: Variant = data.get("sequence")
 		if not sequence is int or sequence <= received_sequence or sequence > 2147483647: return
-		if not buttons is int or not axes is Vector2 or not triggers is Vector2: return
-		if not axes.is_finite() or not triggers.is_finite() or buttons < 0 or buttons > 65535: return
-		received_sequence = sequence; last_input = clock; _apply_input(buttons, axes.limit_length(1.0), triggers.clamp(Vector2(-1,-1),Vector2.ONE))
+		if not buttons is int or not axes is Vector2 or not triggers is Vector2 or not aim is Vector2: return
+		if not axes.is_finite() or not triggers.is_finite() or not aim.is_finite() or buttons < 0 or buttons > 65535: return
+		received_sequence = sequence; last_input = clock; _apply_input(buttons, axes.limit_length(1.0), triggers.clamp(Vector2(-1,-1),Vector2.ONE), aim.limit_length(1.0))
+	elif role == "client" and sender == 1 and kind == "context":
+		var context: Variant = data.get("context")
+		if context is String and context in preload("res://scripts/input_context.gd").CONTEXTS: remote_context = context
 	elif role == "client" and sender == 1 and kind == "video":
 		var id: Variant = data.get("id"); var part: Variant = data.get("part"); var count: Variant = data.get("count"); var payload: Variant = data.get("payload")
 		if not id is int or not part is int or not count is int or not payload is PackedByteArray: return
@@ -184,7 +203,7 @@ func _receive(sender: int, data: Dictionary):
 		if playback.get_frames_available() >= frames.size(): playback.push_buffer(frames)
 
 func _configure_coop():
-	var saved_buttons := last_buttons; var saved_axes := last_axes; var saved_triggers := remote_triggers
+	var saved_buttons := last_buttons; var saved_axes := last_axes; var saved_triggers := remote_triggers; var saved_aim := remote_aim
 	_apply_input(0,Vector2.ZERO,Vector2(-1,-1))
 	get_tree().set_meta("shadepi_coop_session", true)
 	if is_instance_valid(world) and world.has_method("set_coop"):
@@ -192,22 +211,22 @@ func _configure_coop():
 		world.restore_coop_session()
 		if world.ui != null: world.ui.requested_coop = true
 	Input.joy_connection_changed.emit(REMOTE_DEVICE, true)
-	_apply_input(saved_buttons,saved_axes,saved_triggers)
+	_apply_input(saved_buttons,saved_axes,saved_triggers,saved_aim)
 
-func _apply_input(buttons: int, axes: Vector2, triggers: Vector2):
+func _apply_input(buttons: int, axes: Vector2, triggers: Vector2, aim: Vector2 = Vector2.ZERO):
 	for button in ALLOWED_BUTTONS:
 		var mask: int = 1 << button
 		if (buttons & mask) == (last_buttons & mask): continue
 		var e := InputEventJoypadButton.new(); e.device = REMOTE_DEVICE; e.button_index = button; e.pressed = (buttons & mask) != 0
 		Input.parse_input_event(e)
-	for i in 4:
-		var value: float = [axes.x, axes.y, triggers.x, triggers.y][i]
-		var previous: float = [last_axes.x, last_axes.y, remote_triggers.x, remote_triggers.y][i]
+	for i in 6:
+		var value: float = [axes.x, axes.y, triggers.x, triggers.y, aim.x, aim.y][i]
+		var previous: float = [last_axes.x, last_axes.y, remote_triggers.x, remote_triggers.y, remote_aim.x, remote_aim.y][i]
 		if is_equal_approx(value, previous): continue
 		var e := InputEventJoypadMotion.new(); e.device = REMOTE_DEVICE
-		e.axis = [JOY_AXIS_LEFT_X, JOY_AXIS_LEFT_Y, JOY_AXIS_TRIGGER_LEFT, JOY_AXIS_TRIGGER_RIGHT][i]; e.axis_value = value
+		e.axis = [JOY_AXIS_LEFT_X, JOY_AXIS_LEFT_Y, JOY_AXIS_TRIGGER_LEFT, JOY_AXIS_TRIGGER_RIGHT, JOY_AXIS_RIGHT_X, JOY_AXIS_RIGHT_Y][i]; e.axis_value = value
 		Input.parse_input_event(e)
-	last_buttons = buttons; last_axes = axes; remote_triggers = triggers
+	last_buttons = buttons; last_axes = axes; remote_triggers = triggers; remote_aim = aim
 
 func _input(event: InputEvent):
 	if not is_client(): return
@@ -221,6 +240,8 @@ func _input(event: InputEvent):
 		match event.axis:
 			JOY_AXIS_LEFT_X: pending_axes.x = event.axis_value
 			JOY_AXIS_LEFT_Y: pending_axes.y = event.axis_value
+			JOY_AXIS_RIGHT_X: pending_aim.x = event.axis_value
+			JOY_AXIS_RIGHT_Y: pending_aim.y = event.axis_value
 			JOY_AXIS_TRIGGER_LEFT: pending_triggers.x = event.axis_value
 			JOY_AXIS_TRIGGER_RIGHT: pending_triggers.y = event.axis_value
 		send_controls()
@@ -239,7 +260,7 @@ func _input(event: InputEvent):
 func send_controls(reliable: bool = false):
 	if role != "client": return
 	sent_sequence += 1
-	_send({"type":"input", "buttons":pending_buttons, "axes":pending_axes, "triggers":pending_triggers, "sequence":sent_sequence}, 1, 0, reliable)
+	_send({"type":"input", "buttons":pending_buttons, "axes":pending_axes, "aim":pending_aim, "triggers":pending_triggers, "sequence":sent_sequence}, 1, 0, reliable)
 
 func send_video(jpg: PackedByteArray):
 	if jpg.size() > 160000 or remote == 0: return
@@ -280,16 +301,17 @@ func _capture_frame():
 	if in_flight >= 0: return
 	var interval := 1.0 / (15.0 if profile == 0 else 12.0)
 	if clock - frame_clock < interval: return
-	frame_clock = clock
-	var img := get_window().get_texture().get_image()
-	if img == null or img.is_empty(): return
-	# Crop letterboxing on ultrawide phones; both devices receive the same 16:9 game image.
-	var size := img.get_size(); var ratio := minf(size.x / 16.0, size.y / 9.0)
-	var fitted := Vector2i(int(ratio * 16), int(ratio * 9))
-	img = img.get_region(Rect2i((size-fitted)/2, fitted))
-	var frame_size := VIDEO_SIZE if profile == 0 else Vector2i(640,360)
-	img.resize(frame_size.x, frame_size.y, Image.INTERPOLATE_BILINEAR)
+	if not is_instance_valid(stream_picture):
+		stream_picture=preload("res://scripts/network_picture.gd").new(); add_child(stream_picture); return
+	if not stream_picture.armed: return
+	stream_picture.armed=false; frame_clock=clock
+	var began:=Time.get_ticks_usec()
+	var img: Image=stream_picture.target.get_texture().get_image()
+	capture_ms=(Time.get_ticks_usec()-began)/1000.0
+	if img==null or img.is_empty(): return
+	began=Time.get_ticks_usec()
 	var jpg := img.save_jpg_to_buffer(0.78)
+	encode_ms=(Time.get_ticks_usec()-began)/1000.0; frame_bytes=jpg.size()
 	if jpg.size() <= 160000: send_video(jpg)
 	else: dropped_frames += 1
 func _capture_audio():
@@ -306,10 +328,15 @@ func _start_capture():
 		capture.clear_buffer(); return
 	capture = AudioEffectCapture.new(); capture.buffer_length = 0.25
 	AudioServer.add_bus_effect(0, capture)
+func _apply_audio_setting():
+	audio_on=get_node("/root/AudioSettings").enabled
+	if is_instance_valid(audio_player): audio_player.volume_db=0.0 if audio_on else -80.0
+
 func _start_playback():
 	audio_stream = AudioStreamGenerator.new(); audio_stream.mix_rate = audio_rate; audio_stream.buffer_length = 0.25
 	audio_player = AudioStreamPlayer.new(); audio_player.stream = audio_stream; add_child(audio_player); audio_player.play()
 	playback = audio_player.get_stream_playback()
+	_apply_audio_setting()
 
 func _pause_client_world():
 	client_world = get_tree().current_scene
@@ -325,22 +352,31 @@ func _descendants(node: Node) -> Array:
 	for child in node.get_children(): result.append_array(_descendants(child))
 	return result
 
+# v0.64.0 · CodexAI: never destroy an ENet peer from inside its poll callback.
+func _peer_disconnected(id: int, generation: int):
+	if generation == connection_generation: _disconnected(id)
+
 func _disconnected(id: int):
 	if id != remote: return
 	if is_host():
 		_apply_input(0,Vector2.ZERO,Vector2(-1,-1)); remote = 0; in_flight = -1
 		Input.joy_connection_changed.emit(REMOTE_DEVICE,false)
-		if is_instance_valid(world) and world.ui != null: world.menu_open = true; world.ui.show_menu()
+		if is_instance_valid(world) and world.ui != null:
+			if is_instance_valid(world.get("arcade")): world.arcade.pause_game("Spieler 2 getrennt · erneut verbinden oder lokal fortsetzen.")
+			else: world.menu_open = true; world.ui.show_menu()
 		_message("Spieler 2 getrennt. Partie pausiert; erneuter Beitritt mit gleichem Code möglich.")
 	else: close(); _message("Verbindung beendet. Dein lokaler Spielstand bleibt erhalten.")
 
 func close():
+	connection_generation += 1
 	var touch := get_node_or_null("/root/MobileControls")
 	if touch != null and touch.enabled: touch.release_all()
+	if is_instance_valid(stream_picture): stream_picture.free()
+	stream_picture=null
 	var hosting := is_host()
 	if hosting: _apply_input(0, Vector2.ZERO, Vector2(-1,-1))
 	if peer != null: peer.close(); peer = null
-	role = "offline"; remote = 0; pin = ""; pending_buttons = 0; pending_axes = Vector2.ZERO; pending_triggers = Vector2(-1,-1)
+	role = "offline"; remote = 0; remote_context = "menu"; sent_context = ""; pin = ""; pending_buttons = 0; pending_axes = Vector2.ZERO; pending_aim = Vector2.ZERO; pending_triggers = Vector2(-1,-1)
 	sent_sequence = 0; received_sequence = -1
 	video_parts.clear(); assembling_frame = -1; displayed_frame = -1; expected_parts = 0; received_frames = 0
 	in_flight = -1
@@ -357,7 +393,7 @@ func close():
 		if is_instance_valid(pair[0]): pair[0].stream_paused = pair[1]
 	if is_instance_valid(client_world): client_world.process_mode = saved_mode
 	client_world = null; hidden_nodes.clear(); paused_audio.clear()
-	if is_instance_valid(audio_player): audio_player.stop(); audio_player.queue_free()
+	if is_instance_valid(audio_player): audio_player.stop(); audio_player.stream=null; audio_player.queue_free()
 	playback = null; audio_player = null; audio_stream = null
 	if capture != null:
 		for i in range(AudioServer.get_bus_effect_count(0)-1,-1,-1):
@@ -373,15 +409,17 @@ func _build_display():
 	picture.visibility_layer = 1 << 20; display.add_child(picture); display.hide()
 
 func show_lobby():
-	pending_buttons = 0; pending_axes = Vector2.ZERO; pending_triggers = Vector2(-1,-1)
+	pending_buttons = 0; pending_axes = Vector2.ZERO; pending_aim = Vector2.ZERO; pending_triggers = Vector2(-1,-1)
 	var scene := get_tree().current_scene
 	if not is_client() and scene != null and scene.get("ui") != null:
-		scene.menu_open = true
-		if not scene.ui.menu.visible: scene.ui.show_menu()
+		if is_instance_valid(scene.get("arcade")): scene.arcade.pause_game()
+		else:
+			scene.menu_open = true
+			if not scene.ui.menu.visible: scene.ui.show_menu()
 	if not is_instance_valid(lobby): lobby = load("res://scripts/network_lobby.gd").new(); add_child(lobby)
 	lobby.show()
 
 func _notification(what: int):
 	if what == NOTIFICATION_APPLICATION_FOCUS_OUT or what == NOTIFICATION_APPLICATION_PAUSED:
-		pending_buttons = 0; pending_axes = Vector2.ZERO; pending_triggers = Vector2(-1,-1)
+		pending_buttons = 0; pending_axes = Vector2.ZERO; pending_aim = Vector2.ZERO; pending_triggers = Vector2(-1,-1)
 		if is_client(): send_controls(true)

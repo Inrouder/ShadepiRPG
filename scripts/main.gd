@@ -369,7 +369,7 @@ func _build_world() -> void :
 	material = backdrop_material
 	var ground: = Sprite2D.new()
 	ground.name = "PaintedAlley"
-	ground.texture = Painted.ART.alley
+	ground.texture = Painted.texture("alley")
 	ground.material = material
 	ground.scale = Vector2(1024, 640) / ground.texture.get_size()
 	ground.centered = false
@@ -496,7 +496,7 @@ func add_painted_masks(key: String, offset: Vector2 = Vector2.ZERO, size: Vector
 		mask.position = offset + Vector2(0, entry[0])
 		var polygon: = PackedVector2Array()
 		var uv: = PackedVector2Array()
-		var texture: Texture2D = Painted.ART[key]
+		var texture: Texture2D = Painted.texture(key)
 		for point: Vector2 in entry[1]:
 			polygon.append(point - Vector2(0, entry[0]))
 			uv.append(point / size * texture.get_size())
@@ -773,6 +773,9 @@ func cycle_ambient_level() -> void:
 	toast("Umgebungsgeräusche: " + ambience.LEVELS[ambience.level] + ("" if saved else " · nicht gespeichert"))
 
 func _build_audio() -> void :
+	var settings := get_node("/root/AudioSettings")
+	audio_on = settings.enabled
+	settings.changed.connect(_apply_audio_setting)
 	combat_audio = preload("res://scripts/combat_audio.gd").new()
 	add_child(combat_audio)
 	ambience = preload("res://scripts/ambient_audio.gd").new()
@@ -1287,7 +1290,13 @@ func sound(kind: String, pitch_variance: float = 0.0) -> void :
 			return
 
 func toggle_audio() -> void :
-	audio_on = not audio_on
+	var settings := get_node("/root/AudioSettings")
+	settings.set_enabled(not settings.enabled)
+	toast("Ton an" if audio_on else "Ton aus")
+	if settings.save_error!=OK: toast("Toneinstellung konnte nicht gespeichert werden.")
+
+func _apply_audio_setting() -> void:
+	audio_on = get_node("/root/AudioSettings").enabled
 	music.stream_paused = not audio_on
 	if not audio_on and combat_audio != null: combat_audio.stop()
 	if audio_on and not music.playing and DisplayServer.get_name() != "headless" and AudioServer.get_driver_name() != "Dummy":
@@ -1296,7 +1305,6 @@ func toggle_audio() -> void :
 		if not audio_on:
 			channel.stop()
 	if ui != null and ui.audio_button != null: ui.audio_button.text = "Ton: An" if audio_on else "Ton: Aus"
-	toast("Ton an" if audio_on else "Ton aus")
 
 func _exit_tree() -> void :
 	# A freeze frame must never outlive its scene (chapter change mid-hit).

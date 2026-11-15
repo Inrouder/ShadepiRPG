@@ -1,5 +1,7 @@
 # Gesamtprojektanalyse · v0.63.0 · CodexAI
 
+**Folgestand v0.64.0 · CodexAI:** [Umgesetzte Korrekturen, Messungen und verbleibende Grenzen](verbesserungen-v064.md). Die folgenden Befunde beschreiben unverändert den untersuchten Stand v0.63.0.
+
 **15. November 2026. Analysierter Spielstand: [`7fb7625`](https://github.com/Inrouder/ShadepiRPG/commit/7fb76252878843e4f79c5ebb79b51c9a3a874b63).** Alle Remote-Branches abgerufen und verglichen; Main war aktuell, Arbeitskopie sauber. Auftrag ist Analyse: **Spielcode, Assets, Importkonfiguration und Versionsnummer bleiben unverändert.** Dieser Bericht samt Belegen ergänzt die Dokumentation, keine neue Spielveröffentlichung.
 
 Das Projekt besitzt eine umfangreiche funktionierende Basis: sieben Kapitel, Erinnerungen, Tower-Ablauf, Fahrzeuge, Arcade, Koop, eigenes Grafikmaterial und viele Prüfungen. Die dringendsten Verbesserungen betreffen jetzt **WLAN-Lebenszyklus, Eingabekontexte und Plattformwechsel**. Die grünen Einzelprüfungen decken diese Kombinationen noch nicht ausreichend ab.

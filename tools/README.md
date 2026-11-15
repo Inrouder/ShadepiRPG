@@ -1,4 +1,6 @@
-# Entwicklerwerkzeuge · v0.46.2 · CodexAI
+# Entwicklerwerkzeuge · v0.64.0 · CodexAI
+
+**v0.64.0 · CodexAI:** [Native UI-/Messgalerie](qa-v064/gallery.gd) schreibt ausschließlich Aufnahmen/Messungen nach `/tmp`; isolierte Testdaten und echten Desktop verwenden. `test_lan.py --host-first` prüft das Beenden durch den Host, ohne Parameter das Beenden durch den Client. Android-Build akzeptiert externe `GODOT_ANDROID_KEYSTORE_DEBUG_*` und erzeugt zusätzlich `build/android/signature.txt`. [Prüfnachweis und Signaturgrenze](../docs/verbesserungen-v064.md).
 
 **v0.63.0 · CodexAI:** [Touch-UI-Quellen und Packer](mobile-ui-v063/README.md) registrieren eine generierte Pixelquelle; schreibend, nicht beim Setup ausführen. `gallery.gd` liefert echte native UI-Aufnahmen mit isolierten Datenverzeichnissen. [Aktuelle Bilder und Bedienung](../docs/touch-hud-v063.md).
 

@@ -17,8 +17,8 @@ static func consume_entry(tree: SceneTree, path: String) -> bool:
 	return true
 
 static func checkpoint(path: String, section: String, key: String, allowed: Array) -> int:
-	var config := ConfigFile.new()
-	if config.load(path) != OK:
+	var config := preload("res://scripts/checkpoint_store.gd").read(path)
+	if config.get_sections().is_empty():
 		return -1
 	var value: Variant = config.get_value(section, key, -1)
 	return value if value is int and value in allowed else -1

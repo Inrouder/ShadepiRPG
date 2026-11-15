@@ -24,7 +24,18 @@ jobs:
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v5
+      - uses: actions/cache@v4
+        id: godot-cache
+        with:
+          path: |
+            /tmp/godot
+            ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION }}.stable
+          key: godot-linux-templates-v064-${{ env.GODOT_VERSION }}
+      - name: Add cached Godot to path
+        if: steps.godot-cache.outputs.cache-hit == 'true'
+        run: echo "/tmp/godot" >> "$GITHUB_PATH"
       - name: Install pinned Godot and desktop export templates
+        if: steps.godot-cache.outputs.cache-hit != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -44,6 +55,13 @@ jobs:
         run: node --check tools/generate_assets.cjs
       - name: Import resources
         run: godot --headless --editor --import --quit
+      - name: Validate audit regressions and both LAN disconnect directions
+        shell: bash
+        run: |
+          set -euo pipefail
+          XDG_DATA_HOME="$(mktemp -d /tmp/shadepi-integration-ci.XXXXXX)" godot --headless --script res://tests/integration_v064.gd 2>&1 | tee /tmp/integration-v064.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/integration-v064.log; then exit 1; fi
+          python3 tools/test_lan.py --host-first
       - name: Validate generated arcade poses, contact windows and controller moves
         shell: bash
         run: |
@@ -79,6 +97,12 @@ jobs:
           sudo apt-get install -y --no-install-recommends xvfb xauth libgl1-mesa-dri
           xvfb-run -a -s "-screen 0 640x360x24" env LIBGL_ALWAYS_SOFTWARE=1 XDG_DATA_HOME=/tmp/shadepi-popup-pixels godot --audio-driver Dummy --script res://tests/hq_popups.gd -- --small 2>&1 | tee /tmp/hq-popup-pixels.log
           if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/hq-popup-pixels.log; then exit 1; fi
+      - name: Validate bounded 4K stream, local overlays and embedded popup pixels
+        shell: bash
+        run: |
+          set -euo pipefail
+          xvfb-run -a -s "-screen 0 3840x2160x24" env LIBGL_ALWAYS_SOFTWARE=1 XDG_DATA_HOME="$(mktemp -d /tmp/shadepi-stream-ci.XXXXXX)" godot --audio-driver Dummy --script res://tests/stream_picture.gd 2>&1 | tee /tmp/stream-picture.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/stream-picture.log; then exit 1; fi
       - name: Validate native LAN picture and touchscreen movement
         shell: bash
         run: |
@@ -335,10 +359,24 @@ jobs:
           distribution: temurin
           java-version: '21'
       - name: Build signed Android test APK
+        env:
+          SHADEPI_ANDROID_KEYSTORE_B64: ${{ secrets.SHADEPI_ANDROID_KEYSTORE_B64 }}
+          GODOT_ANDROID_KEYSTORE_DEBUG_USER: ${{ secrets.SHADEPI_ANDROID_KEYSTORE_USER }}
+          GODOT_ANDROID_KEYSTORE_DEBUG_PASSWORD: ${{ secrets.SHADEPI_ANDROID_KEYSTORE_PASSWORD }}
         shell: bash
         run: |
           set -euo pipefail
           "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" 'build-tools;36.0.0' 'platform-tools'
+          if [ -n "$SHADEPI_ANDROID_KEYSTORE_B64" ]; then
+            key_dir="$(mktemp -d /tmp/shadepi-ci-key.XXXXXX)"
+            trap 'rm -rf "$key_dir"' EXIT
+            printf '%s' "$SHADEPI_ANDROID_KEYSTORE_B64" | base64 --decode > "$key_dir/test.keystore"
+            chmod 600 "$key_dir/test.keystore"
+            export GODOT_ANDROID_KEYSTORE_DEBUG_PATH="$key_dir/test.keystore"
+          else
+            echo '::warning::No persistent Android test key configured; this CI APK cannot guarantee updates over an older installation. See docs/verbesserungen-v064.md.'
+          fi
+          unset SHADEPI_ANDROID_KEYSTORE_B64
           tools/android/build.sh
       - uses: actions/upload-artifact@v7
         with:

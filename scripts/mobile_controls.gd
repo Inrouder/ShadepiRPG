@@ -23,6 +23,8 @@ var stick_base: TextureRect
 var stick_knob: TextureRect
 var net: Node
 var last_world: Node
+var input_context := ""
+var action_map: Dictionary = {}
 
 func _ready():
 	if Engine.is_editor_hint(): return
@@ -56,6 +58,9 @@ func _surface(key: Variant, center: Vector2, radius: float, art: String, caption
 	var icon: TextureRect
 	if not art.is_empty(): icon=_image(group,art,Rect2(area.size*0.18,area.size*0.64))
 	group.set_meta("ring",ring); group.set_meta("icon",icon)
+	var text := Label.new(); text.name="ActionName"; text.position=Vector2(-8,area.size.y-1); text.size=Vector2(area.size.x+16,12)
+	text.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER; text.mouse_filter=Control.MOUSE_FILTER_IGNORE
+	text.add_theme_font_override("font",UiSkin.font()); text.add_theme_font_size_override("font_size",7); text.modulate.a=0.55; group.add_child(text)
 	if not caption.is_empty():
 		var label := Label.new(); label.text=caption; label.size=Vector2(area.size.x+16,12)
 		label.position=Vector2(-8,area.size.y-1) if not art.is_empty() else Vector2(-8,5)
@@ -73,7 +78,10 @@ func _process(_delta: float):
 	var world := get_tree().current_scene
 	var terminal = world.get("terminal") if world != null else null
 	var local_terminal: bool = not net.is_client() and is_instance_valid(terminal) and terminal.visible
-	var local_menu: bool = not net.is_client() and world != null and world.get("menu_open") == true
+	var context: String=net.remote_context if net.is_client() else preload("res://scripts/input_context.gd").for_world(world)
+	if context != input_context:
+		release_all(); input_context=context; _configure_context()
+	var local_menu: bool=not net.is_client() and context=="menu"
 	controls.visible=enabled and not modal and not local_menu and not local_terminal
 	if world != last_world:
 		release_all(); last_world=world
@@ -93,9 +101,34 @@ func _process(_delta: float):
 		if bar is CanvasItem: bar.visible=not compact and world.ui.controls.visible
 		var raven: bool=net.is_client() or world.raven_leads() or (world.get("gamepads")!=null and world.gamepads.raven_device==DEVICE)
 		var icon: TextureRect=labels[JOY_BUTTON_X].get_meta("icon")
-		icon.texture=textures["pistol" if raven else "katana"]
+		if input_context not in ["arcade","arcade_menu"]: icon.texture=textures["pistol" if raven else "katana"]
 	if not controls.visible and not fingers.is_empty(): release_all()
 	_refresh_art()
+
+func _configure_context():
+	action_map.clear()
+	for key in labels:
+		labels[key].show(); labels[key].get_node("ActionName").text=""
+		for child in labels[key].get_children():
+			if child is Label and child.name!="ActionName": child.visible=(key is int and key==JOY_BUTTON_START) or input_context in ["shadepi","raven"]
+	var arcade: bool=input_context in ["arcade","arcade_menu"]
+	if arcade:
+		action_map["lt"]=JOY_BUTTON_Y; action_map[JOY_BUTTON_Y]=JOY_BUTTON_B; action_map[JOY_BUTTON_B]=JOY_BUTTON_DPAD_DOWN
+		labels["rt"].hide(); labels[JOY_BUTTON_RIGHT_SHOULDER].hide()
+		labels[JOY_BUTTON_X].get_meta("icon").texture=textures["charge"]
+		for entry in [[JOY_BUTTON_X,"Schlag"],["lt","Kick"],[JOY_BUTTON_Y,"Spezial"],[JOY_BUTTON_B,"Block"],[JOY_BUTTON_A,"OK"]]: labels[entry[0]].get_node("ActionName").text=entry[1]
+		if input_context=="arcade_menu":
+			for key in ["lt",JOY_BUTTON_Y,JOY_BUTTON_B]: labels[key].hide()
+	elif input_context in ["menu","terminal"]:
+		for key in ["lt","rt",JOY_BUTTON_X]: labels[key].hide()
+		labels[JOY_BUTTON_A].get_node("ActionName").text="OK"
+		labels[JOY_BUTTON_B].get_node("ActionName").text="Zurück"
+		if input_context=="menu":
+			labels[JOY_BUTTON_Y].hide(); labels[JOY_BUTTON_RIGHT_SHOULDER].hide()
+		else:
+			labels[JOY_BUTTON_Y].get_node("ActionName").text="Hilfe"
+			labels[JOY_BUTTON_RIGHT_SHOULDER].get_node("ActionName").text="Fokus"
+	elif input_context=="raven": labels["lt"].hide() # Raven has no story kick.
 
 func _refresh_art():
 	if not is_instance_valid(stick_base): return
@@ -122,7 +155,7 @@ func _input(event: InputEvent):
 			else:
 				for key in surfaces:
 					var area: Rect2=surfaces[key]
-					if point.distance_to(area.get_center())<=area.size.x*0.5:
+					if labels[key].visible and point.distance_to(area.get_center())<=area.size.x*0.5:
 						fingers[event.index]=key; _hold(key,true); break
 		elif owned:
 			var key: Variant=fingers[event.index]
@@ -143,14 +176,17 @@ func _move_stick(point: Vector2):
 func _hold(key: Variant, down: bool):
 	var count: int=held.get(key,0); held[key]=maxi(0,count+(1 if down else -1))
 	if (count>0)==(held[key]>0): return
-	if key is String:
-		var e:=InputEventJoypadMotion.new(); e.device=DEVICE; e.axis=JOY_AXIS_TRIGGER_LEFT if key=="lt" else JOY_AXIS_TRIGGER_RIGHT; e.axis_value=1.0 if down else -1.0; Input.parse_input_event(e)
+	var action: Variant=action_map.get(key,key)
+	if action is String:
+		var e:=InputEventJoypadMotion.new(); e.device=DEVICE; e.axis=JOY_AXIS_TRIGGER_LEFT if action=="lt" else JOY_AXIS_TRIGGER_RIGHT; e.axis_value=1.0 if down else -1.0; Input.parse_input_event(e)
 	else:
-		var e:=InputEventJoypadButton.new(); e.device=DEVICE; e.button_index=key; e.pressed=down; Input.parse_input_event(e)
+		var e:=InputEventJoypadButton.new(); e.device=DEVICE; e.button_index=action; e.pressed=down; Input.parse_input_event(e)
 func release_all():
 	for key in held.keys():
 		if held[key]>0: held[key]=1; _hold(key,false)
-	fingers.clear(); stick_finger=-1; _move_stick(STICK_CENTER)
+	var moved: bool=stick_finger>=0 or not stick.is_zero_approx()
+	fingers.clear(); stick_finger=-1
+	if moved: _move_stick(STICK_CENTER)
 func _back():
 	release_all()
 	if is_instance_valid(net.lobby) and net.lobby.visible: net.lobby.hide(); return

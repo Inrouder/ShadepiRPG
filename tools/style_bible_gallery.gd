@@ -119,7 +119,9 @@ func figures() -> void:
 	await save_card("figuren-uebersicht")
 
 func worlds() -> void:
-	var art: Dictionary = preload("res://scripts/painted_world.gd").ART.duplicate()
+	var art: Dictionary = {}
+	var painted = preload("res://scripts/painted_world.gd")
+	for key in painted.ART_PATHS: art[key] = painted.texture(key)
 	art["compensator"] = load("res://assets/world/painted/compensator-clear.png")
 	art["angriff"] = load("res://assets/memories/attack/courtyard.png")
 	art["lys-opfer"] = load("res://assets/memories/sacrifice/courtyard.png")

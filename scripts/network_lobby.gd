@@ -9,6 +9,7 @@ var quality: OptionButton
 var focus_items: Array[Control]=[]
 var previous_focus: Control
 var host_button: Button
+var local_audio: Button
 func _ready():
 	set_meta("root_only",true)
 	layer = 970; session = get_node("/root/NetworkSession")
@@ -24,10 +25,14 @@ func _ready():
 	status_label = _text(panel,"",Vector2(18,183),Vector2(404,46),14); status_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART; status_label.max_lines_visible = 3
 	_button(panel,"WLAN beenden",Vector2(18,266),Vector2(202,32),func(): session.close())
 	_button(panel,"Zurück",Vector2(232,266),Vector2(188,32),hide)
-	quality = OptionButton.new(); quality.position = Vector2(18,232); quality.size = Vector2(402,28)
-	quality.add_item("Host-Bild · 960 × 540 / 15 FPS"); quality.add_item("Host-Bild · 640 × 360 / 12 FPS · sparsam")
+	quality = OptionButton.new(); quality.position = Vector2(18,232); quality.size = Vector2(268,28)
+	quality.add_item("Bild · 960 × 540 / 15 FPS"); quality.add_item("Bild · 640 × 360 / 12 FPS")
 	quality.select(session.profile); quality.item_selected.connect(func(i): session.profile = i)
 	UiSkin.apply_button(quality,"raven",16); panel.add_child(quality)
+	local_audio=_button(panel,"",Vector2(296,232),Vector2(124,28),func():
+		var audio=get_node("/root/AudioSettings"); audio.set_enabled(not audio.enabled))
+	UiSkin.apply_button(local_audio,"raven",16)
+	get_node("/root/AudioSettings").changed.connect(_refresh)
 	_text(panel,"Host führt Story und Spielstand · F8 öffnet WLAN",Vector2(18,306),Vector2(404,16),12)
 	for field in [address,code]:
 		UiSkin.apply_button(field,"raven",14)
@@ -37,7 +42,7 @@ func _ready():
 	quality.get_popup().add_theme_font_size_override("font_size",16)
 	quality.get_popup().add_theme_stylebox_override("panel",UiSkin.panel("raven"))
 	_tag(root); session.changed.connect(_refresh); _refresh()
-	focus_items.insert(0,code); focus_items.insert(0,address); focus_items.insert(4,quality)
+	focus_items.insert(0,code); focus_items.insert(0,address); focus_items.insert(4,quality); focus_items.erase(local_audio); focus_items.insert(5,local_audio)
 	for i in focus_items.size():
 		var item:=focus_items[i]
 		item.focus_next=item.get_path_to(focus_items[(i+1)%focus_items.size()])
@@ -54,6 +59,7 @@ func _tag(node: Node):
 	if node is CanvasItem: node.visibility_layer = 1 << 20
 	for child in node.get_children(): _tag(child)
 func _refresh():
+	if is_instance_valid(local_audio): local_audio.text="Ton: An" if get_node("/root/AudioSettings").enabled else "Ton: Aus"
 	if is_instance_valid(status_label): status_label.text = session.status
 	if is_instance_valid(quality): quality.disabled = session.is_client()
 func _visibility():

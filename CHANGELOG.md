@@ -1,5 +1,16 @@
 # Versionshinweise
 
+## v0.64.0 – CodexAI: WLAN-Stabilität, Arcade-Eingabe, sichere Kapitelstände und begrenztes Streambild · 15. November 2026
+
+- Host-Ende zerstört den ENet-Peer erst nach dem Polling; Sitzungsgeneration verhindert verspätete Trennungen alter Verbindungen. Beide Zielstickachsen werden geprüft übertragen und bei Unterbrechung freigegeben.
+- Gemeinsamer Eingabekontext für lokale/entfernte Touchflächen. Arcade aus dem Hauptmenü ist bedienbar; Schlag, Kick, Spezial und Block senden die passenden Aktionen. Gerätezuordnung bleibt in zentraler Reihenfolge, Ravens nicht vorhandener Story-Kick wird ausgeblendet. Inaktive Touch-Sticks überschreiben keine Hardwareeingaben.
+- Eigenes Arcade-Pausenmenü mit Fortsetzen, Titelwahl, WLAN und Verlassen; Runde, CPU, Geschosse und Schaden stehen bei Pause/Trennung still.
+- Kapitel-CFGs transaktional mit temporärer Datei, validierter Vorversion, Backup-Lesepfad und kompatiblem Formatfeld; Modusfelder und Enum-Werte bleiben erhalten. Neuester Kontrollpunkt bleibt bei zurückgestellter Uhr geordnet.
+- Geräteweite Tonwahl bleibt über Kapitelwechsel/Neustart erhalten, schaltet auch Remote-Ton stumm und ist direkt im WLAN-Fenster erreichbar.
+- Separates 960×540-/640×360-Streamziel schließt lokale Host-Tasten aus und übernimmt eingebettete Dropdowns. 4K-CPU-Verkleinerung entfällt; Renderer-Auslesen/Encoding und Paketgröße sind messbar. Weltkulissen erst bei Verwendung laden, Originalgrafiken und Sampling erhalten.
+- CI ergänzt Integrationstests, beide Trennrichtungen, native Popup-/Stream-Pixelprüfung und Template-Cache. Android-Build unterstützt externen dauerhaften Testschlüssel samt Zertifikatsnachweis; CI nutzt diesen bei vorhandenen Secrets, sonst ausdrücklich nur eine nicht updategarantierte Testsignatur.
+- [Bilder, Film, Messungen, Grenzen und Prüfnachweis](docs/verbesserungen-v064.md). Physische Android-/Bluetooth-Abnahme, öffentliche Release-Signierung, vollständige Asset-Entladung und Spielbalance bleiben gesonderte Schritte.
+
 ## v0.63.0 – CodexAI: integrierter WLAN-Eintrag und transparentes Android-HUD · 15. November 2026
 
 - CodexAI-Analyse-Nachtrag: [Gesamtprojektprüfung](docs/projektanalyse-v063.md) mit 50 aktuellen Prüfreihen, nachgestellten WLAN-/Touch-/Pausefehlern und priorisierter Optimierungsfolge; Spielcode und Binärversion unverändert.

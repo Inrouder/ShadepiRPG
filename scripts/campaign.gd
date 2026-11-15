@@ -1087,8 +1087,8 @@ func _exit_tree() -> void:
 	super._exit_tree()
 
 func saved_checkpoint() -> int:
-	var config: = ConfigFile.new()
-	if config.load(Admin.checkpoint_path(SAVE, get_tree())) != OK:
+	var config := preload("res://scripts/checkpoint_store.gd").read(Admin.checkpoint_path(SAVE, get_tree()))
+	if config.get_sections().is_empty():
 		return -1
 	var value: Variant = config.get_value("campaign", "beat", -1)
 	return value if value is int and value >= Beat.PACT and value <= Beat.END else -1
@@ -1099,7 +1099,7 @@ func autosave() -> void :
 
 func save_game() -> bool:
 	var config: = ConfigFile.new()
-	config.set_value("resume","solo_time",Time.get_unix_time_from_system())
+	config.set_value("resume","solo_time",preload("res://scripts/checkpoint_store.gd").next_time(get_tree()))
 	config.set_value("campaign", "beat", beat)
 	config.set_value("campaign", "point", point_index)
 	config.set_value("campaign", "echo_started", beat==Beat.ECHO and (echo_ready or memory_legacy_complete))
@@ -1116,14 +1116,13 @@ func save_game() -> bool:
 	config.set_value("campaign", "lake_scene_pending",lake_scene_pending)
 	config.set_value("campaign", "discovery_pending",discovery_pending)
 	config.set_value("props", "state", dressing_state())
-	return config.save(Admin.checkpoint_path(SAVE, get_tree())) == OK
+	return preload("res://scripts/checkpoint_store.gd").write(config,Admin.checkpoint_path(SAVE, get_tree()))
 
 func load_game(_requested_mode: Variant = null) -> bool:
 	var saved: = saved_checkpoint()
 	if saved < 0:
 		return false
-	var config: = ConfigFile.new()
-	config.load(Admin.checkpoint_path(SAVE, get_tree()))
+	var config := preload("res://scripts/checkpoint_store.gd").read(Admin.checkpoint_path(SAVE, get_tree()))
 	restore_dressing_state(config.get_value("props", "state", {}))
 	var saved_section: Variant = config.get_value("campaign", "arcade_section", 0)
 	var saved_point: Variant = config.get_value("campaign", "point", 0)
@@ -1153,9 +1152,9 @@ func load_game(_requested_mode: Variant = null) -> bool:
 	return true
 
 func _draw() -> void :
-	var art: Texture2D = Story.LEVEL_ART[beat]
+	var art: Texture2D = Painted.texture(Story.LEVEL_ART[beat])
 	if beat == Beat.ECHO and echo_ready:
-		art = Painted.ART.memory
+		art = Painted.texture("memory")
 	if beat == Beat.ECHO and not echo_ready:
 		draw_rect(Rect2(0, 0, 1024, 640), Color("080c11"))
 		if sanctuary_stage == 2: art = SanctuaryTableau.ROOM
@@ -1561,7 +1560,7 @@ func _draw_garage() -> void:
 	if garage_door > 0.0:
 		var h := GARAGE_DOOR.size.y * garage_door
 		var opening := Rect2(GARAGE_DOOR.position.x, GARAGE_DOOR.end.y - h, GARAGE_DOOR.size.x, h)
-		var street: Texture2D=Painted.ART.industry
+		var street: Texture2D=Painted.texture("industry")
 		var source:=Rect2(Vector2(100,360)/Vector2(1024,640)*street.get_size(),Vector2(220,h)/Vector2(1024,640)*street.get_size())
 		draw_texture_rect_region(street,opening,source)
 		# Night street outside: wet asphalt glow and rain behind the door.

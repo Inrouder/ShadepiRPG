@@ -84,7 +84,7 @@ func _make_water() -> void:
 	for outline in Geometry2D.intersect_polygons(PackedVector2Array(Painted.WATER_EDGE),clip):
 		var surface := Polygon2D.new()
 		surface.polygon = outline
-		surface.texture = Painted.ART.lakeside
+		surface.texture = Painted.texture("lakeside")
 		surface.material = water_material
 		var uv := PackedVector2Array()
 		for point in outline: uv.append(point/Vector2(1024,640)*surface.texture.get_size())

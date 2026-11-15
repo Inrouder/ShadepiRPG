@@ -14,30 +14,36 @@ static func draw_hangar_brand(canvas: CanvasItem) -> void:
 static func chamber_point(point: Vector2) -> Vector2:
 	return CHAMBER_RECT.position + point * CHAMBER_SCALE
 
-const ART: = {
-	"alley": preload("res://assets/world/painted/alley.png"), 
+const ART_PATHS: = {
+	"alley": "res://assets/world/painted/alley.png",
 	# v0.58.1 · ClaudeHelper: Kulissen der Verfolgung, vom Nutzer am 11. November 2026 geliefert.
-	"tunnel": preload("res://assets/world/painted/tunnel.webp"),
-	"skyway": preload("res://assets/world/painted/skyway.webp"),
-	"highway_b": preload("res://assets/world/painted/highway-b.webp"),
-	"highway_c": preload("res://assets/world/painted/highway-c.webp"),
-	"overpass": preload("res://assets/world/painted/overpass.webp"),
-	"market": preload("res://assets/world/painted/market.png"), 
-	"apartment": preload("res://assets/world/painted/apartment.png"), 
-	"industry": preload("res://assets/world/painted/industry.png"), 
-	"hideout": preload("res://assets/world/painted/hideout.png"), 
-	"dive": preload("res://assets/world/painted/dive.png"), 
-	"ambush": preload("res://assets/world/painted/ambush.png"), 
-	"garage": preload("res://assets/world/painted/garage.png"), 
-	"hangar": preload("res://assets/world/painted/hangar.png"), 
-	"chamber": preload("res://assets/world/painted/chamber-connected.png"),
-	"memory": preload("res://assets/world/painted/memory.png"), 
-	"rooftop": preload("res://assets/world/painted/rooftop.png"), 
-	"suite": preload("res://assets/world/painted/suite.png"), 
-	"lakeside": preload("res://assets/world/painted/lakeside.png"), 
-	"highway": preload("res://assets/world/painted/highway.png"), 
-	"airspace": preload("res://assets/world/painted/airspace.png"), 
+	"tunnel": "res://assets/world/painted/tunnel.webp",
+	"skyway": "res://assets/world/painted/skyway.webp",
+	"highway_b": "res://assets/world/painted/highway-b.webp",
+	"highway_c": "res://assets/world/painted/highway-c.webp",
+	"overpass": "res://assets/world/painted/overpass.webp",
+	"market": "res://assets/world/painted/market.png",
+	"apartment": "res://assets/world/painted/apartment.png",
+	"industry": "res://assets/world/painted/industry.png",
+	"hideout": "res://assets/world/painted/hideout.png",
+	"dive": "res://assets/world/painted/dive.png",
+	"ambush": "res://assets/world/painted/ambush.png",
+	"garage": "res://assets/world/painted/garage.png",
+	"hangar": "res://assets/world/painted/hangar.png",
+	"chamber": "res://assets/world/painted/chamber-connected.png",
+	"memory": "res://assets/world/painted/memory.png",
+	"rooftop": "res://assets/world/painted/rooftop.png",
+	"suite": "res://assets/world/painted/suite.png",
+	"lakeside": "res://assets/world/painted/lakeside.png",
+	"highway": "res://assets/world/painted/highway.png",
+	"airspace": "res://assets/world/painted/airspace.png",
 }
+# v0.64.0 · CodexAI: retain used resources, but do not upload every chapter at startup.
+# Active sprites/masks retain their own references. No art/import or sampling changes.
+static var _loaded_art: Dictionary = {}
+static func texture(key: String) -> Texture2D:
+	if not _loaded_art.has(key): _loaded_art[key] = load(ART_PATHS[key])
+	return _loaded_art[key]
 
 
 

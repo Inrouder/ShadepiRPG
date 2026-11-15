@@ -1,0 +1,81 @@
+[
+	{
+		"loaded_worlds": [
+			"alley",
+			"market",
+			"apartment"
+		],
+		"scene": "main-menu",
+		"texture_mib": 382.306056022644
+	},
+	{
+		"loaded_worlds": [
+			"alley",
+			"market",
+			"apartment"
+		],
+		"scene": "arcade",
+		"texture_mib": 520.222632408142
+	},
+	{
+		"loaded_worlds": [
+			"alley",
+			"market",
+			"apartment"
+		],
+		"scene": "world-hq",
+		"texture_mib": 391.264388084412
+	},
+	{
+		"samples": [
+			{
+				"bytes": 111368,
+				"jpeg_ms": 8.497,
+				"read_ms": 2.305
+			},
+			{
+				"bytes": 111415,
+				"jpeg_ms": 9.072,
+				"read_ms": 2.485
+			},
+			{
+				"bytes": 111400,
+				"jpeg_ms": 8.7,
+				"read_ms": 2.848
+			},
+			{
+				"bytes": 111407,
+				"jpeg_ms": 8.408,
+				"read_ms": 2.336
+			}
+		],
+		"target": "(960, 540)",
+		"window": "(1280, 720)"
+	},
+	{
+		"samples": [
+			{
+				"bytes": 111706,
+				"jpeg_ms": 8.453,
+				"read_ms": 2.548
+			},
+			{
+				"bytes": 111789,
+				"jpeg_ms": 8.479,
+				"read_ms": 3.583
+			},
+			{
+				"bytes": 111799,
+				"jpeg_ms": 8.127,
+				"read_ms": 2.762
+			},
+			{
+				"bytes": 111723,
+				"jpeg_ms": 8.021,
+				"read_ms": 2.414
+			}
+		],
+		"target": "(960, 540)",
+		"window": "(3840, 2160)"
+	}
+]

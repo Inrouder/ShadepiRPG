@@ -10,6 +10,7 @@ import tempfile
 parser=argparse.ArgumentParser()
 parser.add_argument('--native',action='store_true',help='requires a native DISPLAY, captures actual video')
 parser.add_argument("--capture",action="store_true",help="also save native client film frames in /tmp")
+parser.add_argument('--host-first',action='store_true',help='regression: host closes before client')
 args=parser.parse_args()
 root=Path(__file__).resolve().parents[1]
 out=Path(tempfile.mkdtemp(prefix='shadepi-lan-'))
@@ -24,6 +25,7 @@ try:
         mode=['--audio-driver','Dummy'] if args.native else ['--headless']
         test='lan_native' if args.native else 'lan_peer'
         cmd=[os.environ.get('GODOT_BIN','godot'),*mode,'--script','res://tests/'+test+'.gd','--','--lan-'+role,'--test-port='+str(port)]
+        if args.host_first: cmd+=['--host-first']
         if args.native and role=='client':
             cmd+=['--touch-controls']
             if args.capture:cmd+=['--lan-film']

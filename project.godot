@@ -11,12 +11,14 @@ config_version=5
 [application]
 
 config/name="Shadepi - Echos in Neon"
-config/version="0.63.0"
+config/version="0.64.0"
 run/main_scene="res://scenes/chapter_one.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://assets/icon.png"
 
 [autoload]
+
+AudioSettings="*res://scripts/audio_settings.gd"
 
 DisplaySettings="*res://scripts/display_settings.gd"
 NetworkSession="*res://scripts/network_session.gd"

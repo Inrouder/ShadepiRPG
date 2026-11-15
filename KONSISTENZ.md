@@ -2,11 +2,13 @@
 
 **Android/WLAN v0.62.0 · CodexAI:** [Bedienung und Plattformvertrag](docs/android-wlan-v062.md). Erste WLAN-Fassung ist Remote-Koop: ein Host simuliert und speichert, der Client zeigt Bild/Ton und sendet P2-Gamepadzustände. Keine zweite Story-Simulation. Geräte ausschließlich über `GamepadBindings.devices()` zuweisen; Touchgerät 100, Netzwerkgerät 101. Mehrfache Finger, gehaltene Trigger, Fokusverlust und Trennung müssen Tasten freigeben. Canvas-Ebenen mit `root_only` niemals ins HQ-Spielbild spiegeln; Popup-Ebene 1024 erhalten. Android-HQ maximal 1280×720, Desktop unverändert. Signierschlüssel und APKs außerhalb des Git; keine Behauptung physischer Handy-Abnahme ohne tatsächlichen Test.
 
-**Stand v0.63.0 · CodexAI · 15. November 2026; eingeführt mit v0.32.1.** Gilt für das gesamte Spiel und alle Mitwirkenden, ob Mensch oder KI. Vor Änderungen zusammen mit [AGENTS.md](AGENTS.md) lesen und die [Arbeitsvorlage](docs/vorlagen/konsistenz-auftrag.md) verwenden. Eine neuere ausdrückliche Nutzervorgabe hat Vorrang; bestätigte Änderungen anschließend hier und in den betroffenen Referenzen nachführen.
+**Stand v0.64.0 · CodexAI · 15. November 2026; eingeführt mit v0.32.1.** Gilt für das gesamte Spiel und alle Mitwirkenden, ob Mensch oder KI. Vor Änderungen zusammen mit [AGENTS.md](AGENTS.md) lesen und die [Arbeitsvorlage](docs/vorlagen/konsistenz-auftrag.md) verwenden. Eine neuere ausdrückliche Nutzervorgabe hat Vorrang; bestätigte Änderungen anschließend hier und in den betroffenen Referenzen nachführen.
 
 **Repository-Ordnung v0.46.2 · CodexAI:** [Statuskatalog](docs/repository-status.md) unterscheidet aktive Quellen, Vergleichsbilder, Sicherungen und verworfene Varianten. Entwicklungsarchiv unter `docs/archiv/` nicht als Laufzeit-/Grafikstandard verwenden. `legacy` in Erinnerung III bleibt aktiv; Nutzer-/Storyquellen unter `docs/universum/` bleiben verbindlich.
 
 **Mobiles HUD v0.63.0 · CodexAI:** [Aktuelle Pixel-Bildtasten und Kreisstick](docs/touch-hud-v063.md). Große Textrechtecke sind durch transparente PNG-Ringe/Glyphen ersetzt; WLAN wird über die gemeinsame Menüliste geöffnet. Bedienflächen bleiben auf dem logischen Raster, Root-only-UI nicht ins HQ-Ziel spiegeln. Keine Figurgrafiken für UI-Symbole austauschen.
+
+**Bedienung/Stabilität v0.64.0 · CodexAI:** [Aktueller WLAN-, Touch-, Pause-, Speicher- und Tonvertrag](docs/verbesserungen-v064.md). Arcade-Pause hält die Runde an; Touchbilder und Aktionen müssen zum aktiven Kontext passen. Originalgrafiken und Sampling bleiben unverändert. Weltkulissen sind bedarfsgeladen, separate Streambilder enthalten keine lokalen Host-Tasten; eingebettete Listen müssen sichtbar bleiben.
 
 ## Bebilderter Einstieg für das gesamte Spiel
 

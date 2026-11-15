@@ -753,8 +753,8 @@ func _scene_chapter_end() -> void:
 	cs.end(func(): toast("E / A · Weiter zu Kapitel 3"))
 
 func saved_checkpoint() -> int:
-	var config: = ConfigFile.new()
-	if config.load(Admin.checkpoint_path(SLOT, get_tree())) != OK:
+	var config := preload("res://scripts/checkpoint_store.gd").read(Admin.checkpoint_path(SLOT, get_tree()))
+	if config.get_sections().is_empty():
 		return -1
 	var value: Variant = config.get_value("chapter", "section", -1)
 	return value if value is int and value >= Section.YARD and value <= Section.COOLING else -1
@@ -765,20 +765,19 @@ func autosave() -> void :
 
 func save_game() -> bool:
 	var config: = ConfigFile.new()
-	config.set_value("resume","solo_time",Time.get_unix_time_from_system())
+	config.set_value("resume","solo_time",preload("res://scripts/checkpoint_store.gd").next_time(get_tree()))
 	config.set_value("chapter", "section", section)
 	config.set_value("chapter", "relay", relay_index)
 	config.set_value("chapter", "spray_ready",spray_ready)
 	config.set_value("chapter", "bath_pending",bath_pending)
 	config.set_value("props", "state", dressing_state())
-	return config.save(Admin.checkpoint_path(SLOT, get_tree())) == OK
+	return preload("res://scripts/checkpoint_store.gd").write(config,Admin.checkpoint_path(SLOT, get_tree()))
 
 func load_game(_requested_mode: Variant = null) -> bool:
 	var saved: = saved_checkpoint()
 	if saved < 0:
 		return false
-	var config: = ConfigFile.new()
-	config.load(Admin.checkpoint_path(SLOT, get_tree()))
+	var config := preload("res://scripts/checkpoint_store.gd").read(Admin.checkpoint_path(SLOT, get_tree()))
 	restore_dressing_state(config.get_value("props", "state", {}))
 	var relay: Variant = config.get_value("chapter","relay",0)
 	var spray: Variant = config.get_value("chapter","spray_ready",false)
@@ -794,9 +793,9 @@ func _draw() -> void :
 	var tint: = Color("225b70") if net else Color("353f4e")
 	var accent: = (Color("69ecff") if _ice_open() else Color("ff537e")) if net else Color("b5c575") if section == Section.YARD else Color("6dc6b6")
 	if section == Section.YARD:
-		draw_texture_rect(Painted.ART.industry, Rect2(0, 0, 1024, 640), false)
+		draw_texture_rect(Painted.texture("industry"), Rect2(0, 0, 1024, 640), false)
 	elif net:
-		draw_texture_rect(Painted.ART.dive, Rect2(Vector2.ZERO, ice_map_size()), false)
+		draw_texture_rect(Painted.texture("dive"), Rect2(Vector2.ZERO, ice_map_size()), false)
 		if not _ice_open() and relay_index != 2:
 			var scan_y: = 271.0 + fposmod(ice_cycle * 114.0, 211.0)
 			draw_rect(Rect2(0, scan_y, 1024, 2), Color(0.76, 0.16, 0.33, 0.45))
@@ -813,7 +812,7 @@ func _draw() -> void :
 		for i in RELAYS.size():
 			draw_circle(RELAYS[i] * (ICE_SCALE if relay_index == 2 else 1.0), 15, accent.darkened(0.65) if i < relay_index else tint, false, 2)
 	else:
-		draw_texture_rect(Painted.ART.hideout, Rect2(0, 0, 1024, 640), false)
+		draw_texture_rect(Painted.texture("hideout"), Rect2(0, 0, 1024, 640), false)
 		if section == Section.RECOVERY:
 			draw_rect(Rect2(SPRAY + Vector2(-4, -11), Vector2(8, 11)), tint if spray_ready else Color("a5e3e8"))
 	var marker: = Vector2.ZERO if in_cinematic() else _target()
