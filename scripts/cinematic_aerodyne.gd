@@ -4,6 +4,8 @@ const Art = preload("res://scripts/aerodyne_art.gd")
 const FLAMES = preload("res://assets/memories/attack/props-fx.png")
 const EXHAUST = preload("res://shaders/cinematic_exhaust.gdshader")
 const NOZZLES = Art.NOZZLES
+var side_view := false
+var side_rig: Node2D
 var pivot: Node2D
 var hull: Sprite2D
 var plumes: Array[Sprite2D] = []
@@ -47,6 +49,16 @@ func _ready() -> void:
 		bank_hulls.append(sprite)
 	set_pose(Vector2.ZERO,1,0,0,0)
 
+# v0.65.1 · CodexAI. Only the desert shot uses a genuine side camera.
+# Keep this same vehicle node; roof, gameplay and lake retain the original rig.
+func set_side_view(enabled: bool) -> void:
+	side_view=enabled
+	if enabled and side_rig==null:
+		side_rig=load("res://scripts/aerodyne_side.gd").new()
+		add_child(side_rig)
+	if pivot!=null: pivot.visible=not enabled
+	if side_rig!=null: side_rig.visible=enabled
+
 func set_door(amount: float) -> void:
 	door = clampf(amount,0,1)
 	_update_hull()
@@ -78,6 +90,9 @@ func set_pose(center: Vector2, grow: float, tilt: float, thrust: float, scene_cl
 	clock = scene_clock
 	bank = clampf(bank_amount,-1,1)
 	if pivot == null: return
+	if side_view:
+		side_rig.set_pose(power,clock)
+		return
 	_update_hull()
 	pivot.transform = Transform2D(0.0,Vector2(1.0,0.6),0.0,Vector2.ZERO)*Transform2D(tilt,Vector2.ZERO)
 	_update_plumes()

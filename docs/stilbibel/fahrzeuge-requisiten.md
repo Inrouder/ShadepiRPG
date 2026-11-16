@@ -1,5 +1,7 @@
 # Fahrzeuge und Requisiten · v0.32.2 · CodexAI
 
+**v0.65.1 · CodexAI:** [Seitenflug und Nachtcockpit](../nomaden-cockpit-v0651.md) ergänzen den Nomadenabschnitt. Profilquelle und echte horizontale Düsenanker nur dort verwenden; übrige Fahrzeugansichten erhalten.
+
 **v0.65.0 · CodexAI:** [Aktive Überschlagsfolge](../../assets/vehicles/pursuit/README.md) ergänzt den unveränderten Verfolgerwagen um sechs registrierte Seiten-/Unterbodenposen. [Fahr-/Flugkino und Sichtfeld](../fahrt-flug-v065.md) verwenden denselben Aerodyne und dieselben Helden.
 
 **Technische Umgebung v0.42.0 · CodexAI:** [Bewegte Schaltkästen und Serverschränke](../technik-gegenstaende.md) mit festen Bodenankern aus `technology_art.gd`. Nur oberhalb halber Lebenspunkte neue Betriebsphasen; darunter die passenden alten Schadensbilder mit vollständig zurückgesetztem Sprite-Raster verwenden. Zugriff nur an explizit verbundenen Statusgeräten, keine neue Storysperre. Menü/Terminal frieren die Uhren ein; Abbruch/Laden/Wechsel lösen Referenzen und Generationstickets verhindern späte Rückmeldungen. Neue PNG-Vorschauen in Root-README und Doku-Galerie erhalten.
@@ -34,7 +36,7 @@ Die Tafel zeigt vorhandene Quellbilder zur Form-/Materialerkennung, **keinen gem
 | --- | --- |
 | ![Aerodyne beim Abflug](../previews/bericht8-abflug.png) | ![Aerodyne nach der Landung](../flug-dach.png) |
 
-Die Bilder in dieser historischen Vergleichstabelle zeigen den früheren Unterschied. Seit v0.35.0 nutzt der filmische Hangar-Abflug denselben Fahrzeugrenderer wie die Tower-Flucht; ab v0.37.0 verwenden diese, Flug, Landung und See den gemeinsamen animierten Atlas. **Seit v0.39.0 ist auch das eingemalte Schiff im Erkundungs-Hangar ersetzt.** Der identische animierte Rumpf steht separat auf dem freien Hallenboden. v0.40.0 ergänzt vier Kurvenlagen und eine Luftbremsansicht. Vollständige Seiten-/Unterseiten-/Fahrwerksansichten stehen weiterhin in der [Roadmap](../cinema-roadmap.md).
+Die Bilder in dieser historischen Vergleichstabelle zeigen den früheren Unterschied. Seit v0.35.0 nutzt der filmische Hangar-Abflug denselben Fahrzeugrenderer wie die Tower-Flucht; ab v0.37.0 verwenden diese, Flug, Landung und See den gemeinsamen animierten Atlas. **Seit v0.39.0 ist auch das eingemalte Schiff im Erkundungs-Hangar ersetzt.** Der identische animierte Rumpf steht separat auf dem freien Hallenboden. v0.40.0 ergänzt vier Kurvenlagen und eine Luftbremsansicht. Weitere Seiten-/Unterseiten-/Fahrwerksansichten stehen weiterhin in der [Roadmap](../cinema-roadmap.md).
 
 ## Neun Weltobjekte in allen drei Zuständen
 

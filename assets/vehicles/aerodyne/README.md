@@ -1,5 +1,7 @@
 # Aerodyne-Rumpfanimation · v0.37.0 · CodexAI
 
+**Seitenflug v0.65.1 · CodexAI:** `side-flight.png` ergänzt vier echte rechte Profilansichten in 2×2 Zellen à 768×512 (1536×1024 RGBA). Unveränderte neue Bildgenerator-Ausgabe mit `airframe.png` als tatsächlich übermittelter Referenz. Nur im Nomaden-Außenflug aktiv, normaler Rumpf/Banklage erhalten. Maßstab 240/768, Rumpfanker (384,256), Düsenaustritte (89,207)/(91,305) pro Zelle; Strahlen zeigen nach links. Keine Perspektivquetschung. [Bilder und Film](../../../docs/nomaden-cockpit-v0651.md) · [Herkunft](../../../tools/cinema-v0651/sources.json).
+
 **Erweiterung v0.40.0 · CodexAI:** `banks.png` enthält sechs 512×512-Zellen (1536×1024), unmittelbar anhand dieses Rumpfs generiert. Erste Quelle wegen weißer/transluzenter Matte verworfen und gezielt neu freigestellt; die korrigierte RGBA-PNG unverändert kopiert. Keine programmgesteuerte Bemalung oder Alpha-Erzwingung. Metall, Cockpit, zwei Triebwerke und Lichtakzente bleiben dieselbe Fahrzeugidentität.
 
 | Zelle | Inhalt / Verwendung |
@@ -29,4 +31,4 @@ Tatsächlich gemessene Cockpitanker und die beiden Düsenzentren je Ansicht steh
 
 Ruhender Rumpf nutzt Bild 0; bei Schub läuft die Folge 4–5–4–0 mit acht Bildern pro Sekunde. Öffnen/Schließen durchläuft 0–1–2–3 beziehungsweise umgekehrt. Eine offene Tür unterbricht die Triebwerksfolge; die übergeordnete Szenenuhr steuert Bewegung und Pause. Der Flug, die Landung, das geparkte Dachschiff und die filmischen Start-/Seeansichten lesen dieselbe Quelle. Seit v0.39.0 verwendet auch der normale Erkundungs-Hangar diesen separaten Renderer.
 
-Diese sechs Zustände sind ein erster konkreter Ausbau. v0.40.0 ergänzt die oben beschriebenen Kurvenlagen. Vollständige Seiten-/Unterseiten-/360°-Rollansichten, Fahrwerk und mehr Cockpit-/Einsteigeposen bleiben weiterer Spritebedarf. Ein gedrehtes Bild ist keine zusätzlich gezeichnete Ansicht.
+Diese sechs Zustände sind ein erster konkreter Ausbau. v0.40.0 ergänzt die oben beschriebenen Kurvenlagen. Weitere Seiten-/Unterseiten-/360°-Rollansichten, Fahrwerk und mehr Cockpit-/Einsteigeposen bleiben weiterer Spritebedarf. Ein gedrehtes Bild ist keine zusätzlich gezeichnete Ansicht.

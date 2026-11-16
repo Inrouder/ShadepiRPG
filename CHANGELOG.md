@@ -1,5 +1,11 @@
 # Versionshinweise
 
+## v0.65.1 – CodexAI: echter Aerodyne-Seitenflug und Gespräch im Nachtcockpit · 17. November 2026
+
+- Vier eigene HQ-Pixel-Seitenphasen statt versetzter Draufsicht über den Nomadenlagern; horizontale Abgasstrahlen an registrierten Heckdüsen. Derselbe Fahrzeug-Node, bestehende Flug-/Landequellen erhalten.
+- Schnitt vor Ravens erster Zeile ins Cockpit im Stil des Hangarstarts, mit Nachtwüste vor der Scheibe und eigenen Gesprächs-/Ruheposen. Dialog, Zeitsprung und See-Finale erhalten.
+- Pause, Rückschalten, Überspringen und Szenenabbruch geprüft; Quellen und native PNG-/Filmbelege dokumentiert. [Bilder und Prüfnachweis](docs/nomaden-cockpit-v0651.md).
+
 ## v0.65.0 – CodexAI: mehr Fahrzeug-Voraussicht, Überschlag und Mondscheinflug zum See · 16. November 2026
 
 - Fahr-/Flugfeld auf 800×450 Weltkoordinaten erweitert: 25 % mehr Breite und Höhe, frühere Hindernissicht. Gemeinsame Projektion für Körper/Kollision/FX, normales HUD und unveränderte präzise Landeprojektion. Seitliche Kulisse deckt die alte Welt ohne gespiegelte Schriftzüge ab.

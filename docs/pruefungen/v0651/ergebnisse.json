@@ -1,0 +1,59 @@
+{
+  "version": "0.65.1",
+  "author": "CodexAI",
+  "base_commit": "c1d60e5c2d0943081ab368f527fa1d552806c9d1",
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "headless_suites": 6,
+  "headless_checks": 208,
+  "failures": 0,
+  "suites": [
+    {
+      "test": "cinema_v065",
+      "checks": 30,
+      "failures": 0
+    },
+    {
+      "test": "aerodyne_art",
+      "checks": 30,
+      "failures": 0
+    },
+    {
+      "test": "vehicle_motion",
+      "checks": 45,
+      "failures": 0
+    },
+    {
+      "test": "tower_sequence",
+      "checks": 42,
+      "failures": 0
+    },
+    {
+      "test": "lake_sequence",
+      "checks": 40,
+      "failures": 0
+    },
+    {
+      "test": "report8",
+      "checks": 21,
+      "failures": 0
+    }
+  ],
+  "native": {
+    "checks": 32,
+    "failures": 0,
+    "renderer": "X11 / llvmpipe",
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  "atlas": {
+    "sheets": 51,
+    "rectangles": 3282,
+    "visible_faults": 0
+  },
+  "limits": [
+    "Gezielter Nachlauf der betroffenen Szenen, kein erneuter vollständiger Sieben-Kapitel-Durchlauf.",
+    "Kein physischer Android-/Windows-Durchlauf."
+  ]
+}

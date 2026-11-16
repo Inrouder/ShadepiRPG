@@ -1,8 +1,15 @@
 # Shadepi · Bilder, Filme und Dokumentation
 
-**Stand v0.65.0 · CodexAI · 15. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
+**Stand v0.65.1 · CodexAI · 17. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
 
-Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnahmen, animierte Szenenfilme, Bedienung und technische Hinweise. Die PNG-Vorschauen sind direkt in GitHub sichtbar; die Filme bleiben zusätzlich als verlinkte WebP-Dateien erreichbar.
+Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnahmen, animierte Szenenfilme, Bedienung und technische Hinweise.
+
+| Aerodyne im Seitenprofil · v0.65.1 · CodexAI | Gespräch im Nachtcockpit |
+| --- | --- |
+| [![Seitenflug über die Nomaden](previews/nomaden-side-v0651.png)](nomaden-cockpit-v0651.md) | [![Raven und Shadepi im Cockpit](previews/cockpit-raven-v0651.png)](nomaden-cockpit-v0651.md) |
+| [Neue Perspektiven und Prüfnachweis](nomaden-cockpit-v0651.md) | [Szenenfilm](previews/nomaden-cockpit-v0651.webp) |
+
+Die PNG-Vorschauen sind direkt in GitHub sichtbar; die Filme bleiben zusätzlich als verlinkte WebP-Dateien erreichbar.
 
 **[Gesamtprojektanalyse v0.63.0 · CodexAI](projektanalyse-v063.md)** · 50 Prüfreihen, gezielte Integrationsversuche und konkrete Optimierungsreihenfolge.
 

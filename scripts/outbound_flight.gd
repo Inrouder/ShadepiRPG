@@ -1,7 +1,8 @@
 extends Node2D
-## v0.65.0 · CodexAI. One continuous escape: city → moonlit nomads → two hours later → lake.
+## v0.65.1 · CodexAI. One continuous escape: city → moonlit nomads → two hours later → lake.
 const Aerodyne = preload("res://scripts/cinematic_aerodyne.gd")
 const DESERT_PATH := "res://assets/story/outbound/desert.png"
+const COCKPIT_PATH := "res://assets/story/outbound/cockpit-night.png"
 const LIGHT = preload("res://assets/world/light.png")
 const FLAME = preload("res://assets/fx/drive/flame.png")
 const FIRES := [Vector2(721,691),Vector2(1013,755),Vector2(1332,647)]
@@ -10,6 +11,9 @@ const SHADEPI_LINE := "Wir sollten für ein paar Stunden untertauchen. Ich möch
 var world: Node2D
 var vehicle: Node2D
 var background: Texture2D
+var cockpit: Texture2D
+var presentation := "exterior"
+var cockpit_frame := 0
 var clock := 0.0
 var progress := 0.0
 var stage := "city"
@@ -23,6 +27,7 @@ func _ready():
 	background=load(DESERT_PATH)
 	if not is_instance_valid(vehicle): vehicle=Aerodyne.new(); add_child(vehicle)
 	else: vehicle.reparent(self,false)
+	vehicle.set_side_view(true)
 	_sync()
 
 func paused() -> bool: return world.menu_open or world.terminal!=null
@@ -30,6 +35,10 @@ func _process(delta: float):
 	if paused(): return
 	clock+=delta
 	progress=minf(1.0,progress+delta/55.0)
+	if presentation=="cockpit":
+		var cs=world.cutscene
+		cockpit_frame=0 if cs.waiting_input and cs.speaker_label.text=="RAVEN" and int(clock*3)%3==0 else 1
+		if cs.speaker_label.text=="SHADEPI": cockpit_frame=2 if cs.waiting_input else 3
 	_sync(); queue_redraw()
 func mark(value: String):
 	stage=value
@@ -37,10 +46,19 @@ func mark(value: String):
 func _sync():
 	if not is_instance_valid(vehicle): return
 	craft=Vector2(lerpf(-100,180,entry)+crossing*320+progress*40,224-crossing*58-progress*20+sin(clock*0.7)*2)
-	vehicle.set_pose(craft,0.42-progress*0.14-crossing*0.06,lerpf(1.15,0.15,crossing),0.75,clock,-0.35*sin(crossing*PI)+0.08*sin(clock*0.4))
+	vehicle.visible=presentation=="exterior"
+	vehicle.set_pose(craft,0.75-progress*0.06-crossing*0.12,0,0.75,clock)
 func background_rect() -> Rect2:
 	return Rect2(-crossing*58-progress*6,-crossing*10-progress*10,704,396)
+func enter_cockpit():
+	cockpit=load(COCKPIT_PATH)
+	presentation="cockpit"
+	_sync(); queue_redraw()
 func _draw():
+	if presentation=="cockpit" and cockpit!=null:
+		var cell:=Vector2(cockpit.get_size())/2.0
+		draw_texture_rect_region(cockpit,Rect2(0,0,640,360),Rect2(Vector2(cockpit_frame%2,cockpit_frame/2)*cell,cell))
+		return
 	if background==null: return
 	var rect:=background_rect()
 	draw_texture_rect(background,rect,false)
@@ -64,7 +82,12 @@ func play(cs, ticket: int):
 	mark("nomads")
 	await cs.animate(func(p: float): crossing=smoothstep(0,1,p); _sync(),4.0)
 	if not cs.alive(ticket): return
+	await cs.fade(Color.BLACK,0.25)
+	if not cs.alive(ticket): return
+	enter_cockpit()
 	mark("conversation")
+	await cs.fade(Color(0,0,0,0),0.35)
+	if not cs.alive(ticket): return
 	await cs.say("RAVEN",RAVEN_LINE)
 	if not cs.alive(ticket): return
 	await cs.say("SHADEPI",SHADEPI_LINE)

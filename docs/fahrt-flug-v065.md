@@ -1,5 +1,7 @@
 # Mehr Voraussicht und der Flug zum Mond · v0.65.0 · CodexAI
 
+**Nachfolge v0.65.1 · CodexAI:** [Echtes Seitenprofil über den Nomaden und Schnitt ins Nachtcockpit](nomaden-cockpit-v0651.md) ersetzen die Außenperspektive während dieses Gesprächs. Die folgenden Bilder dokumentieren den damaligen v0.65.0-Stand.
+
 **16. November 2026.** [Spieleranleitung](../Spiel-README.md) · [Bildgalerie](README.md) · [Versionshinweise](../CHANGELOG.md). Ausgangspunkt: aktueller GitHub-Stand `6853378`, alle Remote-Branches abgerufen und verglichen. [Verbindliches Nutzerbriefing](universum/teil-8/README.md) · [Arbeitsnachweis](arbeiten/cinema-v065.md).
 
 ## Größeres Sichtfeld beim Fahren und Fliegen

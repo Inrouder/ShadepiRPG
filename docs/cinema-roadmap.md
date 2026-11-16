@@ -1,5 +1,7 @@
 # Mehr Geschichte im Bild · v0.37.0 · CodexAI
 
+**Fortschritt v0.65.1 · CodexAI:** [Echtes Aerodyne-Seitenprofil im Nomadenflug und vier Nachtcockpit-Gesprächsbilder](nomaden-cockpit-v0651.md) sind umgesetzt. Weitere Unterseiten-, Fahrwerks- und 360°-Ansichten bleiben separate Arbeiten.
+
 **Umgesetzt v0.65.0 · CodexAI:** [Größeres Fahrzeugfeld, echte Überschlagsphasen und Mondscheinflug über Nomaden zum See](fahrt-flug-v065.md), einschließlich korrigierter Garagentor-Projektion.
 
 **Prüfung vom 9. November 2026.** Die stärkste Verbesserung entsteht dort, wo eine körperliche Handlung bislang nur im Untertitel steht. Dafür zuerst die benötigten Kontakt- und Objektbilder schaffen und dann die Kamera daran ausrichten. Mehr Filter oder dauerhaftes Wackeln lösen diese Lücke nicht.

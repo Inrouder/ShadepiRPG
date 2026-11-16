@@ -1,0 +1,19 @@
+{
+  "version": "0.65.1",
+  "author": "CodexAI",
+  "date": "2026-11-17",
+  "sources": [
+    {
+      "file": "assets/vehicles/aerodyne/side-flight.png",
+      "sha256": "2ae0fb7d130f41c88898eb5cb6ec14afee352673af61c3f0702988dce5318002",
+      "reference": "assets/vehicles/aerodyne/airframe.png",
+      "method": "Unveränderte Bildgenerator-Ausgabe, Referenz tatsächlich übermittelt"
+    },
+    {
+      "file": "assets/story/outbound/cockpit-night.png",
+      "sha256": "eb45379c64186febbc04ae6201dedd5977b78de00197ef24cd27fbf048932d00",
+      "reference": "assets/story/departure/cockpit.png",
+      "method": "Unveränderte Bildgenerator-Ausgabe, Referenz tatsächlich übermittelt"
+    }
+  ]
+}

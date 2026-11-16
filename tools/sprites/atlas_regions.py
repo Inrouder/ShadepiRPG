@@ -62,6 +62,7 @@ def catalog():
     a["assets/vehicles/pursuit/car.png"] = grid("assets/vehicles/pursuit/car.png", 3, 3)
     a["assets/vehicles/pursuit/drone.png"] = grid("assets/vehicles/pursuit/drone.png", 2, 2)
     a["assets/vehicles/aerodyne/airframe.png"] = grid("assets/vehicles/aerodyne/airframe.png", 3, 2)
+    a["assets/vehicles/aerodyne/side-flight.png"] = grid("assets/vehicles/aerodyne/side-flight.png", 2, 2)
     a["assets/vehicles/aerodyne/banks.png"] = grid("assets/vehicles/aerodyne/banks.png", 3, 2)
     a["assets/memories/legacy/shadepi-aura.png"] = grid("assets/memories/legacy/shadepi-aura.png", 4, 4)
     mem = "assets/memories/"

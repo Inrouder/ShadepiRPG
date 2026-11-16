@@ -7,3 +7,5 @@ Bestätigt: Nach dem Entkommen vom Tower fliegen Raven und Shadepi aus der Stadt
 Die Spielzeile glättet Ravens abgebrochene Formulierung zu: „Woohoo! Das war geil! Aber verdammt knapp. Wäre beinahe ins Höschen gegangen. Und wo jetzt hin?“ Bedeutung, Sprecher und Reihenfolge bleiben erhalten. Die Lagergestaltung und Flugbahn sind Umsetzungsentscheidungen; keine Fraktion oder Eigennamen daraus ableiten. Tower-Landeplatz, Fangmanöver, Penthouse-Explosion und romantisches See-Finale bleiben erhalten.
 
 Derselbe Auftrag wünscht mehr Voraussicht beim Fahren/Fliegen, einen sichtbaren Überschlag des besiegten Verfolgers vor Explosion und Herausfahren sowie die Reparatur des mit dem Garagentor wandernden Straßenbildes. Signaturarbeit übernimmt der Nutzer selbst und ist aktuell kein Arbeitsziel.
+
+**Perspektivkorrektur vom 17. November 2026 · v0.65.1 · CodexAI:** Der Nutzer wünscht über den Nomaden eine tatsächliche Seitenansicht statt verschobener Draufsicht. Sobald das Gespräch beginnt, soll eine Cockpitszene wie beim Start zu sehen sein. Handlung und Dialog bleiben unverändert. [Umsetzung](../../nomaden-cockpit-v0651.md).

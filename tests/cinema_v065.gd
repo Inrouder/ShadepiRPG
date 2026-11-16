@@ -1,5 +1,5 @@
 extends SceneTree
-## v0.65.0 · CodexAI. Look-ahead, grounded garage, physical rollover and moonlit story continuity.
+## v0.65.1 · CodexAI. Look-ahead, grounded garage, physical rollover and moonlit story continuity.
 const View=preload("res://scripts/vehicle_view.gd")
 const Car=preload("res://scripts/pursuit_car_art.gd")
 const Outbound=preload("res://scripts/outbound_flight.gd")
@@ -75,18 +75,31 @@ func run():
 	w._enter(w.Beat.ROOF); w.cutscene.abort(); w.close_menu(); w.ui.clear_dialogue()
 	var scene:=Outbound.new(); scene.world=w; w.drive_layer.add_child(scene)
 	var craft: Node=scene.vehicle
+	check(craft.side_view and not craft.pivot.visible and craft.side_rig.visible,"nomad shot selects the real side-profile source and hides the overhead rig")
+	check(craft.side_rig.hull.texture.resource_path.ends_with("side-flight.png") and craft.side_rig.scale==Vector2.ONE,"side profile uses its own source without flattening the overhead hull")
+	var rig=craft.side_rig
+	for i in 2:
+		var start: Vector2=rig.plumes[i].transform*Vector2(rig.FLAMES.get_width()*0.5,0)
+		check(start.distance_to((rig.NOZZLES[i]-rig.ANCHORS[rig.frame])*rig.UNIT)<3,"side exhaust %d begins at its real nozzle"%i)
+		check((rig.plumes[i].transform.y).x<0 and absf((rig.plumes[i].transform.y).y)<0.001,"side exhaust %d points behind the right-facing craft"%i)
+	craft.set_side_view(false); craft.set_pose(Vector2.ZERO,1,0,0.7,0)
+	check(craft.pivot.visible and not rig.visible,"switching back preserves the existing landing/roof rig")
+	craft.set_side_view(true); scene._sync()
 	var cs=w.begin_cutscene(); var ticket: int=cs.generation
 	scene.play(cs,ticket)
 	Engine.time_scale=6
-	var saw_raven:=false; var saw_shadepi:=false; var paused_once:=false
+	var saw_raven:=false; var saw_shadepi:=false; var paused_once:=false; var checked_cockpit:=false
 	for i in 1800:
 		await process_frame
 		if cs.waiting_input:
+			if not checked_cockpit:
+				check(scene.presentation=="cockpit" and scene.cockpit!=null and not craft.visible,"conversation cuts into the night cockpit before the first line, hiding the exterior aircraft")
+				checked_cockpit=true
 			if cs.speaker_label.text=="RAVEN": saw_raven=true
 			if cs.speaker_label.text=="SHADEPI": saw_shadepi=true
 			if not paused_once:
-				w.menu_open=true; var clock: float=scene.clock; await frames(5)
-				check(scene.clock==clock,"desert flight and camp effects pause with the menu")
+				w.menu_open=true; var clock: float=scene.clock; var pose: int=scene.cockpit_frame; await frames(5)
+				check(scene.clock==clock and scene.cockpit_frame==pose,"desert/cockpit animation pauses with the menu")
 				w.menu_open=false; paused_once=true
 			cs.advance()
 		if scene.events.has("two_hours_later") and cs.title_label.modulate.a>0.65: break
@@ -107,4 +120,4 @@ func run():
 	w.fresh_entry=true; w._enter(w.Beat.LAKE); scene.free(); await frames()
 	check(w.beat==w.Beat.LAKE and w.lake_sequence!=null and w.lake_scene_pending,"scene replacement aborts the old flight and preserves lake arrival")
 	Engine.time_scale=1; w.free(); current_scene=null; await frames()
-	print("CINEMA v0.65.0 CodexAI: %d checks, %d failures"%[checks,failures]); quit(1 if failures else 0)
+	print("CINEMA v0.65.1 CodexAI: %d checks, %d failures"%[checks,failures]); quit(1 if failures else 0)
