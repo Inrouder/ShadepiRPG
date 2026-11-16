@@ -6,7 +6,7 @@
 - Sechs generierte HQ-Pixelphasen für Überschlag/Unterboden des letzten Verfolgers, lesbare kleine Brände vor großer Explosion. Sechssekündiger Abgang; beide fahren vor dem Übergang zur Garage vollständig aus dem Bild. Frühere Wrackquelle als nicht exportierte Referenz erhalten.
 - Feste Außenansicht hinter dem Garagentor: Öffnung beschneidet die Landschaft statt sie hochzuziehen; vorhandene Hafenwand-/Asphalttextur, fest verankerter Regen und keine wandernde Reflexionsfläche.
 - Nach der unveränderten Tower-Flucht derselbe animierte Aerodyne über neuer Mondschein-Wüste mit Nomadenautos/-lagern und verankerten Feuer-FX. Ravens erleichterter Dialog, Shadepis Untertauchen-Vorschlag und „Zwei Stunden später“ verbinden mit dem bestehenden Kapitel-7-Anflug; See-Finale und Heldenquellen bleiben erhalten.
-- Quellen, Lore-Ergänzung, native PNG-/WebP-Belege und neue Kopf-/Pixelprüfungen dokumentiert. [Bilder, Filme und Prüfnachweis](docs/fahrt-flug-v065.md). Signaturarbeit bleibt nach Nutzerwunsch beim Nutzer.
+- Quellen, Lore-Ergänzung, native PNG-/WebP-Belege und neue Ablauf-/Pixelprüfungen dokumentiert. [Bilder, Filme und Prüfnachweis](docs/fahrt-flug-v065.md). Signaturarbeit bleibt nach Nutzerwunsch beim Nutzer.
 
 ## v0.64.0 – CodexAI: WLAN-Stabilität, Arcade-Eingabe, sichere Kapitelstände und begrenztes Streambild · 15. November 2026
 

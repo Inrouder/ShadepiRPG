@@ -570,5 +570,31 @@
       "nomad camps crossed even with immediate dialogue confirmation"
     ],
     "screenshot_time_card": "docs/previews/two-hours-v065.png"
+  },
+  "build_source_commit": "a11847494f80ae152ea8450062b2645c4dbd6478",
+  "builds": {
+    "android": {
+      "file": "build/android/Shadepi-Echos-in-Neon.apk",
+      "bytes": 240228206,
+      "sha256": "bddf7342aa0154476eb7cc49ef01d750545b1675f70a215bc426e532f7a38d39",
+      "export_exit_code": 0,
+      "runtime": "Not tested on a physical device or Windows",
+      "metadata": "package: name='de.shadepi.rpg' versionCode='6500' versionName='0.65.0' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'",
+      "apk_signature_verified": true
+    },
+    "linux": {
+      "file": "build/linux/Shadepi-Echos-in-Neon.x86_64",
+      "bytes": 256975232,
+      "sha256": "ff999e4d58055cf213934fc1a8a41135ff689a9d8f273e9765911d3be267ad8d",
+      "export_exit_code": 0,
+      "runtime": "Headless-Start des exportierten Spiels ohne Scriptfehler; keine vollständige Gameplay-Abnahme."
+    },
+    "windows": {
+      "file": "build/windows/Shadepi-Echos-in-Neon.exe",
+      "bytes": 292724304,
+      "sha256": "a1d371b1b850af8eb59408720959961b1d183aac32bc321a9bda3313524aebcb",
+      "export_exit_code": 0,
+      "runtime": "Not tested on a physical device or Windows"
+    }
   }
 }
