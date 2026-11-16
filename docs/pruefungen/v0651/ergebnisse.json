@@ -45,6 +45,12 @@
     "resolution": [
       1280,
       720
+    ],
+    "cases": [
+      "Side source, horizontal exhaust registration, restoring normal rig",
+      "Interior visible before first line and exterior hidden",
+      "Pause freezes interior frames; skip and scene replacement preserve lake",
+      "Visible two-hours title in actual rendered pixels"
     ]
   },
   "atlas": {
@@ -55,5 +61,54 @@
   "limits": [
     "Gezielter Nachlauf der betroffenen Szenen, kein erneuter vollständiger Sieben-Kapitel-Durchlauf.",
     "Kein physischer Android-/Windows-Durchlauf."
+  ],
+  "build_source_commit": "4e4ac7690f71948aec9053feeed2c38de8a112e3",
+  "builds": [
+    {
+      "platform": "android",
+      "exit_code": 0,
+      "seconds": 22.35,
+      "errors": []
+    },
+    {
+      "platform": "linux",
+      "exit_code": 0,
+      "seconds": 4.28,
+      "errors": []
+    },
+    {
+      "platform": "windows",
+      "exit_code": 0,
+      "seconds": 4.29,
+      "errors": []
+    },
+    {
+      "platform": "linux-start",
+      "exit_code": 0,
+      "seconds": 1.74,
+      "errors": []
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "build/android/Shadepi-Echos-in-Neon.apk",
+      "bytes": 244210124,
+      "sha256": "ddf3e19a67ae3598c4a3bc4c3b3606580fd353662fd93a4adb4ef86e4cba5837"
+    },
+    {
+      "file": "build/linux/Shadepi-Echos-in-Neon.x86_64",
+      "bytes": 260956976,
+      "sha256": "eaadb63ef829abb2c6d3aea47a948745c5a888a1dbbf047d51aaa01c0970a618"
+    },
+    {
+      "file": "build/windows/Shadepi-Echos-in-Neon.exe",
+      "bytes": 296706048,
+      "sha256": "ee2d4523e006d33a55cb8c4fc7ef997323afde8dc33fa9bade03f96ed17459ed"
+    }
+  ],
+  "android_metadata": "package: name='de.shadepi.rpg' versionCode='6501' versionName='0.65.1' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'",
+  "new_art_in_apk": [
+    "assets/.godot/imported/cockpit-night.png-13128ea97fe3334b0e473af9c1a86c90.ctex",
+    "assets/.godot/imported/side-flight.png-cdfbe436a35e80ecc75788b179049aac.ctex"
   ]
 }
