@@ -1,5 +1,7 @@
 # Fahrzeuge und Requisiten · v0.32.2 · CodexAI
 
+**v0.65.0 · CodexAI:** [Aktive Überschlagsfolge](../../assets/vehicles/pursuit/README.md) ergänzt den unveränderten Verfolgerwagen um sechs registrierte Seiten-/Unterbodenposen. [Fahr-/Flugkino und Sichtfeld](../fahrt-flug-v065.md) verwenden denselben Aerodyne und dieselben Helden.
+
 **Technische Umgebung v0.42.0 · CodexAI:** [Bewegte Schaltkästen und Serverschränke](../technik-gegenstaende.md) mit festen Bodenankern aus `technology_art.gd`. Nur oberhalb halber Lebenspunkte neue Betriebsphasen; darunter die passenden alten Schadensbilder mit vollständig zurückgesetztem Sprite-Raster verwenden. Zugriff nur an explizit verbundenen Statusgeräten, keine neue Storysperre. Menü/Terminal frieren die Uhren ein; Abbruch/Laden/Wechsel lösen Referenzen und Generationstickets verhindern späte Rückmeldungen. Neue PNG-Vorschauen in Root-README und Doku-Galerie erhalten.
 
 **Verfolgung v0.41.0 · CodexAI:** [Neun Wagenbilder und vier Frachtdrohnen-Rotorphasen](../verfolger-animationen.md). Tatsächliche Zellgrößen 418 beziehungsweise 627; gemeinsame Rumpf-/Mündungs-/Abwurfkontakte in `pursuit_car_art.gd` und `cargo_drone_art.gd`. Schusszustand vor Bestimmen der Mündung setzen; Pixel-Feuer bleibt an der bewegten Mündung. Beschädigter Wagen fächert den zweiten Schuss erst nach Austritt auf. Rotorlauf unabhängig vom Trudeln einer gehackten Drohne; Pause und Kapitelbereinigung erhalten.

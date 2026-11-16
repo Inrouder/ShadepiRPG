@@ -1,4 +1,6 @@
-# Entwicklerwerkzeuge · v0.64.0 · CodexAI
+# Entwicklerwerkzeuge · v0.65.0 · CodexAI
+
+**v0.65.0 · CodexAI:** [Fahr-/Fluggalerie und Quellfingerabdrücke](cinema-v065/README.md), native Aufnahmen mit isolierten Daten. `tests/cinema_v065.gd` prüft Sichtfeld, Straßenausschnitt, Überschlag, Herausfahren, Pause, Zeitsprung und Szenentausch; nativ zusätzlich tatsächliche Rand-/Schriftpixel. Keine Generatoren beim Setup ausführen.
 
 **v0.64.0 · CodexAI:** [Native UI-/Messgalerie](qa-v064/gallery.gd) schreibt ausschließlich Aufnahmen/Messungen nach `/tmp`; isolierte Testdaten und echten Desktop verwenden. `test_lan.py --host-first` prüft das Beenden durch den Host, ohne Parameter das Beenden durch den Client. Android-Build akzeptiert externe `GODOT_ANDROID_KEYSTORE_DEBUG_*` und erzeugt zusätzlich `build/android/signature.txt`. [Prüfnachweis und Signaturgrenze](../docs/verbesserungen-v064.md).
 

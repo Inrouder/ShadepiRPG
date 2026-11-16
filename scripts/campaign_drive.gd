@@ -1,5 +1,6 @@
 extends Node2D
 
+const View = preload("res://scripts/vehicle_view.gd")
 const DetailArt = preload("res://scripts/arcade/pixel_art.gd")
 const VEHICLES = preload("res://assets/world/hq/vehicles.png")
 const Airframe = preload("res://scripts/aerodyne_art.gd")
@@ -13,9 +14,9 @@ const FX_EXPLOSION = preload("res://assets/fx/drive/explosion.png")
 const FX_SMOKE = preload("res://assets/fx/drive/smoke.png")
 const FX_FLAME = preload("res://assets/fx/drive/flame.png")
 const FX_CHUNKS = preload("res://assets/fx/drive/chunks.png")
-const CAR_WRECK = preload("res://assets/vehicles/pursuit/wreck.png")
-const CAR_BLAST_AT := 0.9      # Sekunden vom letzten Treffer bis zur großen Explosion
-const VICTORY_SECONDS := 4.6
+const CONTACT = preload("res://assets/world/light.png")
+const CAR_BLAST_AT := 1.6      # Sekunden vom letzten Treffer bis zur großen Explosion
+const VICTORY_SECONDS := 6.0
 
 signal completed
 signal crashed
@@ -93,6 +94,9 @@ var callout := ""
 var callout_time := 0.0
 var fx_layer: Node2D
 ## v0.56.0 · ClaudeHelper: Der besiegte Wagen brennt, explodiert und bleibt als Wrack zurück.
+var escape_bike_y := BIKE_Y
+var car_roll_frame := 0
+var car_origin_y := REAR_Y
 var car_dead := -1.0
 var car_rot := 0.0
 var car_spin := 0.0
@@ -120,6 +124,7 @@ var overpass_y := 400.0
 var next_overpass := 7.0
 
 func _ready() -> void:
+	transform=View.projection()
 	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	rng.seed = 2534
 	# Pixel-FX liegen auf einer eigenen Ebene mit harter Abtastung über Straße und Fahrzeugen.
@@ -285,7 +290,7 @@ func _draw_fx() -> void:
 		for i in fires:
 			var offset: Vector2 = [Vector2(-9, -14), Vector2(11, 6), Vector2(-4, 16), Vector2(8, -22)][i].rotated(car_rot)
 			var frame := int(fx_clock * 12.0 + i * 2) % 6
-			var size := Vector2(32, 48) * (0.75 + 0.25 * (i % 2))
+			var size := Vector2(32,48)*(0.5 if car_dead<CAR_BLAST_AT else 1.0)*(0.75 + 0.25 * (i % 2))
 			c.draw_texture_rect_region(FX_FLAME, Rect2(car + offset - Vector2(size.x * 0.5, size.y - 4.0), size), Rect2(frame * 96, 0, 96, 144))
 	for blast in explosions:
 		var age: float = 1.0 - blast.t / float(blast.get("d", 0.65))
@@ -511,21 +516,19 @@ func _draw() -> void :
 
 func _draw_scrolling_city(texture: Texture2D, speed: float) -> void :
 	var shift: = fposmod(elapsed * speed, 360.0)
-	draw_texture_rect(texture, Rect2(0, shift - 360.0, 640, 360), false)
-	draw_texture_rect(texture, Rect2(0, shift, 640, 360), false)
+	for row in range(-2,1): View.tile(self,texture,shift+row*360.0)
 
 func _draw_highway() -> void :
 	# v0.58.1 · ClaudeHelper: In der Stadt wechseln drei Straßenzüge, Tunnel und Hochstraße
 	# kacheln mit sich selbst. Welche Kachel wo liegt, hängt nur an der gefahrenen Strecke.
 	var tile := int(floor(scroll / 360.0))
 	var shift: = fposmod(scroll, 360.0)
-	draw_texture_rect(_road_art(tile + 1), Rect2(0, shift - 360.0, 640, 360), false)
-	draw_texture_rect(_road_art(tile), Rect2(0, shift, 640, 360), false)
+	for row in range(-2,1): View.tile(self,_road_art(tile-row),shift+row*360.0)
 	if stage == 1:
 		return                      # im Tunnel regnet es nicht
 	var slant := -2.0 - wind * wind_dir * 9.0 if stage == 2 else -2.0
 	for i in 44:
-		var rain: = Vector2(i * 157 % 640, fposmod(i * 37 + elapsed * 335, 360))
+		var rain: = Vector2(i*157%800-80,fposmod(i*37+elapsed*335,450)-90)
 		draw_line(rain, rain + Vector2(slant, 8), Color(0.67, 0.71, 0.9, 0.18))
 
 func _road_art(tile: int) -> Texture2D:
@@ -541,7 +544,7 @@ func _advance_overpass(delta: float) -> void:
 	if overpass_y < 400.0:
 		overpass_y += ROAD_SPEED * speed * delta
 	elif stage == 0 and stage_shift < 0.0 and victory_left < 0.0 and elapsed >= next_overpass:
-		overpass_y = -OVERPASS_SIZE.y - 20.0
+		overpass_y = View.SPAWN_Y-OVERPASS_SIZE.y
 		next_overpass = elapsed + rng.randf_range(13.0, 19.0)
 		next_hazard = maxf(next_hazard, elapsed + 0.7)      # nichts Neues im Sichtschatten
 	if is_instance_valid(over_layer):
@@ -601,10 +604,13 @@ func _process_bike(delta: float) -> void:
 		victory_left -= delta
 		throttle = 1.0
 		steer_axis = 0.0
-		_steer(delta)
+		velocity_x=move_toward(velocity_x,0.0,300.0*delta)
+		x=move_toward(x,320.0,70.0*delta)
+		bike_vy=0.0
 		speed = 1.35
 		scroll += ROAD_SPEED * speed * delta
 		_advance_car_wreck(delta)
+		bike_y=lerpf(escape_bike_y,View.FRAME.position.y-125.0,smoothstep(3.3,5.5,car_dead))
 		for i in range(hazards.size() - 1, -1, -1):
 			hazards[i].y += ROAD_SPEED * speed * delta
 			if hazards[i].y > 380: hazards.remove_at(i)
@@ -740,7 +746,9 @@ func _destroy_car() -> void:
 	ram_warning = 0.0
 	ram_recovery = 0.0
 	hack = 0.0
+	bullets.clear(); grenade=Vector2.ZERO
 	car_dead = 0.0
+	car_roll_frame=0; car_origin_y=car_y; escape_bike_y=bike_y
 	car_rot = 0.0
 	car_spin = 0.0
 	car_fall = 0.0
@@ -754,7 +762,7 @@ func _destroy_car() -> void:
 	objects.clear()
 	rear_shots.clear()
 	rear_shot_vx.clear()
-	impact(Vector2(boss_x, car_y - 12), true)
+	impact(Vector2(boss_x,car_y-12),true,Color("ffba68"),0.45)
 	chunks(Vector2(boss_x, car_y), [6, 7, 8, 9], 8, 1.0, Vector2(0, 60))
 	_callout("VOLLTREFFER!")
 	world.toast("RAVEN: Der Wagen brennt – gleich fliegt er auseinander!")
@@ -767,10 +775,12 @@ func _advance_car_wreck(delta: float) -> void:
 	if car_dead < CAR_BLAST_AT:
 		# Brennend und führerlos: schlingert, kleine Folgeexplosionen laufen über die Karosserie.
 		boss_x = clampf(boss_x + (car_drift + sin(car_dead * 19.0) * 60.0) * delta, ROAD.x + 10.0, ROAD.y - 10.0)
-		car_rot = sin(car_dead * 13.0) * 0.12
+		car_roll_frame=clampi(int(smoothstep(0.2,CAR_BLAST_AT,car_dead)*5),0,4)
+		car_y=car_origin_y-sin(car_dead/CAR_BLAST_AT*PI)*24.0
+		car_rot=sin(car_dead*9.0)*0.08
 		if car_dead >= car_next_blast:
-			car_next_blast += 0.24
-			impact(Vector2(boss_x, car_y) + Vector2(rng.randf_range(-18, 18), rng.randf_range(-26, 22)), true, Color("ffba68"), 0.6)
+			car_next_blast += 0.35
+			impact(Vector2(boss_x, car_y) + Vector2(rng.randf_range(-18, 18), rng.randf_range(-26, 22)), true, Color("ffba68"),0.2)
 		return
 	if before < CAR_BLAST_AT:
 		# Tank und Munition gehen hoch.
@@ -781,6 +791,7 @@ func _advance_car_wreck(delta: float) -> void:
 		chunks(at, [6, 7, 8, 9], 26, 1.6)
 		white_flash = 0.3
 		shake = 10.0
+		car_roll_frame=5
 		car_spin = (1.0 if car_drift > 0.0 else -1.0) * 5.5
 		world.sound("prop_metal")
 		_callout("WEG FREI · ZUR GARAGE")
@@ -889,16 +900,16 @@ func _spawn_road_object() -> void:
 	var lane_x: float = lanes[(int(x > 278.0) + int(x > 362.0) + 1 + pattern % 2) % 3]
 	match pattern % 8:
 		0, 2:
-			hazards.append(Vector2(lane_x, -20))
+			hazards.append(Vector2(lane_x, View.SPAWN_Y))
 		1, 6:
-			objects.append({"k": "wreck", "p": Vector2(lane_x, -40), "done": false, "r": rng.randf_range(-0.5, 0.5)})
+			objects.append({"k": "wreck", "p": Vector2(lane_x, View.SPAWN_Y), "done": false, "r": rng.randf_range(-0.5, 0.5)})
 		3:
-			objects.append({"k": "slick", "p": Vector2(lane_x, -20), "done": false, "r": 0.0})
+			objects.append({"k": "slick", "p": Vector2(lane_x, View.SPAWN_Y), "done": false, "r": 0.0})
 		4:
-			hazards.append(Vector2(lanes[0], -20))
-			hazards.append(Vector2(lanes[2], -20))
+			hazards.append(Vector2(lanes[0], View.SPAWN_Y))
+			hazards.append(Vector2(lanes[2], View.SPAWN_Y))
 		5, 7:
-			objects.append({"k": "boost", "p": Vector2(lanes[(pattern / 2) % 3], -30), "done": false, "r": 0.0})
+			objects.append({"k": "boost", "p": Vector2(lanes[(pattern / 2) % 3], View.SPAWN_Y), "done": false, "r": 0.0})
 	if hack == 0 and ram_warning <= 0.0:
 		boss_lane = [1, 0, 2, 1, 2, 0][pattern % 6]
 		if pattern % 4 == 3:
@@ -1040,14 +1051,18 @@ func _draw_bike_scene(cyan: Color, pink: Color) -> void:
 			draw_line(Vector2(lx, ly), Vector2(lx, ly + 26.0 + boost * 10.0), Color(0.75, 0.95, 1.0, 0.16 + boost * 0.08), 1.0)
 	draw_set_transform(Vector2.ZERO)
 	var car := car_position()
+	if car_dead>=0:
+		draw_set_transform(car+Vector2(0,12),0,Vector2(1,0.28))
+		draw_texture_rect(CONTACT,Rect2(-48,-48,96,96),false,Color(0,0,0,0.4))
+		draw_set_transform(Vector2.ZERO)
 	if car_dead >= CAR_BLAST_AT:
 		if car.y < 440.0:
 			draw_set_transform(car, car_rot)
-			draw_texture_rect_region(CAR_WRECK, Rect2(-CarArt.ANCHORS[0] * CarArt.SCALE, CarArt.SIZE), Rect2(Vector2.ZERO, CarArt.CELL))
+			CarArt.draw_roll(self,Vector2.ZERO,5)
 			draw_set_transform(Vector2.ZERO)
 	elif car_dead >= 0.0:
 		draw_set_transform(car, car_rot)
-		draw_texture_rect_region(CarArt.ATLAS, Rect2(-CarArt.ANCHORS[0] * CarArt.SCALE, CarArt.SIZE), CarArt.region(0), Color(1.0, 0.72, 0.6).lerp(Color(0.5, 0.42, 0.42), car_dead / CAR_BLAST_AT))
+		CarArt.draw_roll(self,Vector2.ZERO,car_roll_frame)
 		draw_set_transform(Vector2.ZERO)
 	else:
 		CarArt.draw(self,car,car_frame())

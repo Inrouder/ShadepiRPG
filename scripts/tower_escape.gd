@@ -1,5 +1,6 @@
 extends Node2D
 ## v0.35.1 · CodexAI: launch from the actual roof pad, fall past the balcony below.
+const Outbound = preload("res://scripts/outbound_flight.gd")
 const Motion = preload("res://scripts/cinematic_motion.gd")
 const Aerodyne = preload("res://scripts/cinematic_aerodyne.gd")
 const Flight = preload("res://scripts/aerodyne_flight.gd")
@@ -21,6 +22,7 @@ const FLIGHT: Array = [
 	[Vector2(492,212),Vector2(740,125),Vector2(145,-60),Vector2(210,-75),1.4],
 ]
 var world: Node2D
+var outbound: Node2D
 var deck: Node2D
 var vehicle: Node2D
 var heroes: Array[PixelActor] = []
@@ -73,6 +75,7 @@ func _process(delta: float) -> void:
 	queue_redraw()
 
 func _sync_vehicle() -> void:
+	if is_instance_valid(outbound): return
 	vehicle.set_pose(craft,grow,tilt,power,clock,bank)
 
 func roof_route() -> Array:
@@ -126,6 +129,7 @@ func flight_step(segment: int, p: float) -> void:
 	queue_redraw()
 
 func _draw() -> void:
+	if view=="outbound": return
 	if view=="roof":
 		draw_set_transform(ROOF_OFFSET,0,Vector2.ONE*ROOF_SCALE)
 		draw_texture_rect(ROOF,Rect2(0,0,1024,640),false)
@@ -215,6 +219,12 @@ func run() -> void:
 	set_stage("clear")
 	await cs.wait(0.6)
 	if not cs.alive(ticket): return
-	await cs.fade(Color.BLACK,0.65)
+	await cs.fade(Color.BLACK,0.35)
+	if not cs.alive(ticket): return
+	set_stage("outbound")
+	view="outbound"
+	outbound=Outbound.new(); outbound.world=world; outbound.vehicle=vehicle
+	add_child(outbound); queue_redraw()
+	await outbound.play(cs,ticket)
 	if not cs.alive(ticket): return
 	cs.end(func(): world._advance())

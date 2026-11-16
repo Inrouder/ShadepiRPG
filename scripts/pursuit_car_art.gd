@@ -24,3 +24,11 @@ static func muzzle(center: Vector2,frame: int) -> Vector2:
 
 static func draw(canvas: CanvasItem,center: Vector2,frame: int):
 	canvas.draw_texture_rect_region(ATLAS,Rect2(center-ANCHORS[frame]*SCALE,SIZE),region(frame))
+
+# v0.65.0 · CodexAI: physical side/undercarriage poses rather than a rotated top view.
+const ROLL = preload("res://assets/vehicles/pursuit/rollover.png")
+const ROLL_CELL := Vector2(512,512)
+const ROLL_ANCHORS := [Vector2(280,269),Vector2(270,272),Vector2(257,275),Vector2(294,279),Vector2(254,284),Vector2(256,285)]
+static func draw_roll(canvas: CanvasItem, center: Vector2, frame: int):
+	frame=clampi(frame,0,5)
+	canvas.draw_texture_rect_region(ROLL,Rect2(center-ROLL_ANCHORS[frame]*SIZE/ROLL_CELL,SIZE),Rect2(Vector2(frame%3,frame/3)*ROLL_CELL,ROLL_CELL))

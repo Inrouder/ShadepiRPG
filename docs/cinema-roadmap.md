@@ -1,5 +1,7 @@
 # Mehr Geschichte im Bild · v0.37.0 · CodexAI
 
+**Umgesetzt v0.65.0 · CodexAI:** [Größeres Fahrzeugfeld, echte Überschlagsphasen und Mondscheinflug über Nomaden zum See](fahrt-flug-v065.md), einschließlich korrigierter Garagentor-Projektion.
+
 **Prüfung vom 9. November 2026.** Die stärkste Verbesserung entsteht dort, wo eine körperliche Handlung bislang nur im Untertitel steht. Dafür zuerst die benötigten Kontakt- und Objektbilder schaffen und dann die Kamera daran ausrichten. Mehr Filter oder dauerhaftes Wackeln lösen diese Lücke nicht.
 
 **Fortschritt v0.38.0 · CodexAI:** Der erste nächste Block ist umgesetzt: [Kapitel 2 mit Eisbad, Rückkehr, spielbarem Sprayholen und gestützter Behandlung](eisbad.md). Acht HQ-Pixelposen, tatsächliche Wannen-/Wasserverdeckung und sichere Szenen-/Inventar-Kontrollpunkte sind eingebunden. Die Tabellen darunter dokumentieren den Ausgangsbedarf der v0.37.0; der Kapitel-2-Block ist nun erledigt, zusätzliche Zwischenbilder bleiben spätere Verfeinerung. Kapitel 4 wurde anschließend mit v0.39.0 umgesetzt.

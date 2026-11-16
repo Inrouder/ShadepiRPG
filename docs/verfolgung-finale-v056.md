@@ -1,5 +1,7 @@
 # Verfolgung: Finale und Zerstörung · v0.56.0 · ClaudeHelper
 
+**Folgestand v0.65.0 · CodexAI:** [Überschlagsfolge und Herausfahren](fahrt-flug-v065.md) ersetzen den hier historisch beschriebenen Einzelwrack-Abgang.
+
 **11. November 2026.** [Bildgalerie](README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
 
 ![Bake zerbirst am Wagen, der Wagen brennt, das Wrack bleibt zurück](previews/verfolgung-wrack-v056.webp)

@@ -1,0 +1,19 @@
+{
+  "version": "0.65.0",
+  "author": "CodexAI",
+  "date": "2026-11-16",
+  "sources": [
+    {
+      "file": "assets/story/outbound/desert.png",
+      "sha256": "a50efc6fba6249f4b42b78c4da6a82c0ca7810415719c9ad440d63a8aab9dd7d",
+      "role": "Unveränderte generierte Mondschein-Wüste mit Nomadenlagern",
+      "reference": "Gesichtete aktive airspace.png/lakeside.png und Stilbibel; neues Szenenbriefing ohne fremde Bildvorlage."
+    },
+    {
+      "file": "assets/vehicles/pursuit/rollover.png",
+      "sha256": "3b5e2f10b698a2ab7faf7d14e353c8e409d2e9366909552e98a770d292617280",
+      "role": "Unveränderte generierte Folge aus sechs Überschlag-/Unterbodenposen",
+      "reference": "Aktive car.png als tatsächlich übermittelte Bildreferenz."
+    }
+  ]
+}

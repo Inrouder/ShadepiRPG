@@ -1,10 +1,18 @@
 # Shadepi · Bilder, Filme und Dokumentation
 
-**Stand v0.64.0 · CodexAI · 15. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
+**Stand v0.65.0 · CodexAI · 15. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
 
 Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnahmen, animierte Szenenfilme, Bedienung und technische Hinweise. Die PNG-Vorschauen sind direkt in GitHub sichtbar; die Filme bleiben zusätzlich als verlinkte WebP-Dateien erreichbar.
 
 **[Gesamtprojektanalyse v0.63.0 · CodexAI](projektanalyse-v063.md)** · 50 Prüfreihen, gezielte Integrationsversuche und konkrete Optimierungsreihenfolge.
+
+## Mehr Voraussicht und Mondscheinflug · v0.65.0 · CodexAI
+
+| Größeres Fahr-/Flugsichtfeld | Über den Nomadenlagern |
+| --- | --- |
+| [![Fahransicht mit mehr Vorlauf](previews/drive-after-v065.png)](fahrt-flug-v065.md) | [![Mondschein, Lager und gemeinsamer Weiterflug](previews/nomads-v065.png)](fahrt-flug-v065.md) |
+
+[Vorher/Nachher, korrigiertes Garagentor und Prüfnachweis](fahrt-flug-v065.md) · [Überschlagsfilm](previews/roll-v065.webp) · [Flug zum letzten Kapitel](previews/outbound-v065.webp). Native Linux-Aufnahmen; keine Handyaufnahme.
 
 ## Stabilität, passende Touch-Tasten und echte Arcade-Pause · v0.64.0 · CodexAI
 

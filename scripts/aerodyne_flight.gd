@@ -4,6 +4,7 @@ extends Node2D
 ## Ravens Jumper-Reparatur → Turmabwehr (Laser-Drohnen) → Sequenzkalibrierung am
 ## Tower-Scanner → Driftkurve → Landung auf dem Landeplatz (Bremsdüsen, Ausrichten).
 
+const View = preload("res://scripts/vehicle_view.gd")
 const VEHICLES = preload("res://assets/world/hq/vehicles.png")
 const DroneArt = preload("res://scripts/cargo_drone_art.gd")
 const Airframe = preload("res://scripts/aerodyne_art.gd")
@@ -41,6 +42,7 @@ const PAD_RADIUS := Vector2(64, 34)
 ## Compatibility with the shared vehicle HUD and checkpoint code.
 var flight := true
 var world: Node2D
+var overlay: Node2D
 var active := true
 var phase := "canyon"   # canyon | defence | scan | alarm | approach | landing | done
 var elapsed := 0.0      # course progress in seconds at normal speed
@@ -104,6 +106,9 @@ var rng := RandomNumberGenerator.new()
 func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	rng.seed = 6106
+	transform=View.projection()
+	overlay=Node2D.new(); overlay.name="FlightOverlay"; add_child(overlay)
+	overlay.transform=transform.affine_inverse(); overlay.draw.connect(_draw_overlay)
 
 func _sound(key: String) -> void:
 	if world != null and world.has_method("sound"):
@@ -161,6 +166,8 @@ func request_repair() -> void:
 func _process(delta: float) -> void:
 	if not active or world.is_busy():
 		return
+	transform=Transform2D.IDENTITY if phase=="landing" or touchdown!="" else View.projection()
+	overlay.transform=transform.affine_inverse(); overlay.queue_redraw()
 	clock += delta
 	_update_fx(delta)
 	if victory_left >= 0.0:
@@ -305,13 +312,13 @@ func _spawn() -> void:
 		var narrow: bool = elapsed > 14.0 and pattern % 8 == 0
 		var w := 50.0 if narrow else 122.0
 		var gap := rng.randf_range(X_RANGE.x + w * 0.5 + 8.0, X_RANGE.y - w * 0.5 - 8.0)
-		hazards.append({"k": "bridge", "p": Vector2(0, -20), "gap": gap, "w": w, "near": false, "narrow": narrow})
+		hazards.append({"k": "bridge", "p": Vector2(0, View.SPAWN_Y), "gap": gap, "w": w, "near": false, "narrow": narrow})
 		if narrow:
 			say("ENGE LÜCKE · ROLLEN!", 1.2)
 		return
 	for i in (2 if elapsed > 12.0 and pattern % 3 == 0 else 1):
 		var x := rng.randf_range(X_RANGE.x + 12.0, X_RANGE.y - 12.0)
-		hazards.append({"k": "cargo", "p": Vector2(x, -24.0 - i * 46.0), "vx": rng.randf_range(-28.0, 28.0), "near": false})
+		hazards.append({"k": "cargo", "p": Vector2(x, View.SPAWN_Y-i*46.0), "vx": rng.randf_range(-28.0, 28.0), "near": false})
 
 func _half_width() -> float:
 	return ROLL_HALF_WIDTH if roll > 0.0 else HALF_WIDTH
@@ -486,6 +493,8 @@ func pad_screen() -> Vector2:
 
 func _start_landing() -> void:
 	phase = "landing"
+	transform=Transform2D.IDENTITY
+	if is_instance_valid(overlay): overlay.transform=Transform2D.IDENTITY
 	hazards.clear()
 	lasers.clear()
 	altitude = 1.0
@@ -577,16 +586,15 @@ func _draw() -> void:
 	else:
 		_draw_canyon()
 	draw_set_transform(Vector2.ZERO)
-	_draw_overlay()
+	if is_instance_valid(overlay): overlay.queue_redraw()
 
 func _draw_canyon() -> void:
 	var art: Texture2D = Painted.texture("airspace")
 	var shift := fposmod(scroll * 0.45, 360.0)
-	draw_texture_rect(art, Rect2(0, shift - 360.0, 640, 360), false)
-	draw_texture_rect(art, Rect2(0, shift, 640, 360), false)
+	for row in range(-2,1): View.tile(self,art,shift+row*360.0,_shake_offset())
 	# Rain streaks and canyon beacons give speed.
 	for i in 36:
-		var p := Vector2(float(i * 157 % 640), fposmod(i * 37.0 + scroll * 1.6, 360.0))
+		var p := Vector2(float(i*157%800-80),fposmod(i*37.0+scroll*1.6,450.0)-90)
 		draw_rect(Rect2(p.round(), Vector2(1, 6)), Color(0.67, 0.75, 0.95, 0.22))
 	for i in 7:
 		var y := fposmod(i * 64.0 + scroll * 0.9, 448.0) - 44.0
@@ -812,62 +820,62 @@ func _draw_overlay() -> void:
 		var font := UiSkin.font("title")
 		var width := font.get_string_size(callout, HORIZONTAL_ALIGNMENT_LEFT, -1, 16).x
 		var p := Vector2(roundf(320.0 - width * 0.5), 128)
-		draw_string(font, p + Vector2(1, 1), callout, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color(0, 0, 0, 0.8))
-		draw_string(font, p, callout, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("ffcf5a") if hurt > 0.0 else Color("cffcff"))
+		overlay.draw_string(font, p + Vector2(1, 1), callout, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color(0, 0, 0, 0.8))
+		overlay.draw_string(font, p, callout, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("ffcf5a") if hurt > 0.0 else Color("cffcff"))
 	if phase == "scan" and calibration != null:
 		_draw_calibration()
 	if phase == "landing":
 		_draw_landing_gauge()
 	if engine_failed:
-		draw_rect(Rect2(210, 118, 220, 18), Color(0.04, 0.07, 0.12, 0.92))
-		draw_rect(Rect2(218, 124, 204, 6), Color("4d2431"))
-		draw_rect(Rect2(218, 124, roundf(204.0 * repair_left / REPAIR_SECONDS), 6), Color("67f0fc"))
+		overlay.draw_rect(Rect2(210, 118, 220, 18), Color(0.04, 0.07, 0.12, 0.92))
+		overlay.draw_rect(Rect2(218, 124, 204, 6), Color("4d2431"))
+		overlay.draw_rect(Rect2(218, 124, roundf(204.0 * repair_left / REPAIR_SECONDS), 6), Color("67f0fc"))
 
 func _draw_calibration() -> void:
 	var c = calibration
 	var rect := Rect2(120, 258, 400, 74)
-	draw_style_box(UiSkin.panel("tower", true), rect)
+	overlay.draw_style_box(UiSkin.panel("tower", true), rect)
 	var title := UiSkin.font("title")
 	var ui := UiSkin.font("ui")
-	draw_string(title, Vector2(134, 273), "SEQUENZKALIBRIERUNG · GLEITERKENNUNG", HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color("ffe9ec"))
+	overlay.draw_string(title, Vector2(134, 273), "SEQUENZKALIBRIERUNG · GLEITERKENNUNG", HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color("ffe9ec"))
 	for i in Calibration.MAX_ERRORS:
-		draw_rect(Rect2(474 + i * 10, 266, 6, 6), Color("ff3150") if i < c.errors else Color("3d0710"))
+		overlay.draw_rect(Rect2(474 + i * 10, 266, 6, 6), Color("ff3150") if i < c.errors else Color("3d0710"))
 	# Code steps: locked, current (blinking frame), pending.
 	for i in c.steps.size():
 		var step: Dictionary = c.steps[i]
 		var box := Rect2(134 + i * 50, 278, 44, 26)
 		var current: bool = i == c.index
 		var state := "used" if step.locked else ("cursor" if current else "idle")
-		draw_style_box(UiSkin.cell("tower", state), box)
+		overlay.draw_style_box(UiSkin.cell("tower", state), box)
 		var label: String = step.code
 		var col := Color("7dffaa") if step.locked else (Color.WHITE if current else Color("b98d95"))
-		draw_string(title, box.position + Vector2(4, 11), label, HORIZONTAL_ALIGNMENT_LEFT, -1, 8, col)
+		overlay.draw_string(title, box.position + Vector2(4, 11), label, HORIZONTAL_ALIGNMENT_LEFT, -1, 8, col)
 		var arrow: String = "✓" if step.locked else Calibration.ARROWS[int(step.dir)]
-		draw_string(ui, box.position + Vector2(25, 21), arrow, HORIZONTAL_ALIGNMENT_LEFT, -1, 20, col)
+		overlay.draw_string(ui, box.position + Vector2(25, 21), arrow, HORIZONTAL_ALIGNMENT_LEFT, -1, 20, col)
 	# Sweep track: the beam position and the hull window.
 	var track := Rect2(134, 310, 372, 8)
-	draw_rect(track, Color("1a0b10"))
+	overlay.draw_rect(track, Color("1a0b10"))
 	var w: Vector2 = c.window()
 	var inside: bool = c.in_window()
-	draw_rect(Rect2(track.position.x + track.size.x * w.x, track.position.y, track.size.x * (w.y - w.x), track.size.y), Color("7dffaa") if inside else Color("2f6b4a"))
+	overlay.draw_rect(Rect2(track.position.x + track.size.x * w.x, track.position.y, track.size.x * (w.y - w.x), track.size.y), Color("7dffaa") if inside else Color("2f6b4a"))
 	var mx := roundf(track.position.x + track.size.x * c.marker)
-	draw_rect(Rect2(mx - 1, track.position.y - 3, 3, track.size.y + 6), Color("cffcff"))
-	draw_rect(Rect2(track.position.x, track.end.y + 3, roundf(track.size.x * c.time_left / 16.0), 2), Color("ff3150"))
+	overlay.draw_rect(Rect2(mx - 1, track.position.y - 3, 3, track.size.y + 6), Color("cffcff"))
+	overlay.draw_rect(Rect2(track.position.x, track.end.y + 3, roundf(track.size.x * c.time_left / 16.0), 2), Color("ff3150"))
 	var hint: String = "JETZT  %s" % Calibration.ARROWS[int(c.current().dir)] if inside else c.feedback
 	var hint_col := Color("7dffaa") if inside else (Color("ff697c") if c.error_flash > 0.0 else Color("d9c3c7"))
-	draw_string(ui, Vector2(388, 292), hint.left(22), HORIZONTAL_ALIGNMENT_LEFT, 128, 20, hint_col)
+	overlay.draw_string(ui, Vector2(388, 292), hint.left(22), HORIZONTAL_ALIGNMENT_LEFT, 128, 20, hint_col)
 
 func _draw_landing_gauge() -> void:
 	var rect := Rect2(560, 120, 56, 150)
-	draw_style_box(UiSkin.panel("artos", true), rect)
+	overlay.draw_style_box(UiSkin.panel("artos", true), rect)
 	var title := UiSkin.font("title")
-	draw_string(title, Vector2(568, 136), "HÖHE", HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color("ffe7bd"))
+	overlay.draw_string(title, Vector2(568, 136), "HÖHE", HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color("ffe7bd"))
 	var bar := Rect2(574, 144, 10, 110)
-	draw_rect(bar, Color("0c0905"))
-	draw_rect(Rect2(bar.position.x, bar.end.y - roundf(bar.size.y * clampf(altitude, 0.0, 1.0)), bar.size.x, roundf(bar.size.y * clampf(altitude, 0.0, 1.0))), Color("ffb43a"))
+	overlay.draw_rect(bar, Color("0c0905"))
+	overlay.draw_rect(Rect2(bar.position.x, bar.end.y - roundf(bar.size.y * clampf(altitude, 0.0, 1.0)), bar.size.x, roundf(bar.size.y * clampf(altitude, 0.0, 1.0))), Color("ffb43a"))
 	# Descent speed: green is a clean touchdown.
 	var speed_bar := Rect2(592, 144, 10, 110)
-	draw_rect(speed_bar, Color("0c0905"))
-	draw_rect(Rect2(speed_bar.position.x, speed_bar.end.y - 110.0 * 0.32 / 0.9, speed_bar.size.x, 110.0 * 0.32 / 0.9), Color(0.2, 0.6, 0.35, 0.6))
+	overlay.draw_rect(speed_bar, Color("0c0905"))
+	overlay.draw_rect(Rect2(speed_bar.position.x, speed_bar.end.y - 110.0 * 0.32 / 0.9, speed_bar.size.x, 110.0 * 0.32 / 0.9), Color(0.2, 0.6, 0.35, 0.6))
 	var v := roundf(110.0 * clampf(descent, 0.0, 0.9) / 0.9)
-	draw_rect(Rect2(speed_bar.position.x - 2, speed_bar.end.y - v - 1, speed_bar.size.x + 4, 3), Color("7dffaa") if descent < 0.32 else (Color("ffcf5a") if descent < 0.6 else Color("ff3150")))
+	overlay.draw_rect(Rect2(speed_bar.position.x - 2, speed_bar.end.y - v - 1, speed_bar.size.x + 4, 3), Color("7dffaa") if descent < 0.32 else (Color("ffcf5a") if descent < 0.6 else Color("ff3150")))

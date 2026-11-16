@@ -1556,18 +1556,24 @@ func _scene_garage() -> void:
 	cs.do(func(): garage_door = 0.0)
 	cs.end(func(): toast("Geheimes Werkbanksymbol finden"))
 
+static func garage_street_source(amount: float, image_size: Vector2) -> Rect2:
+	# Fixed street projection: opening only clips, never pans or rescales the asphalt.
+	var unit:=image_size/Vector2(1024,640)
+	var visible_height:=240.0*clampf(amount,0,1)
+	return Rect2(Vector2(70,140+240.0-visible_height)*unit,Vector2(240,visible_height)*unit)
+
 func _draw_garage() -> void:
 	if garage_door > 0.0:
 		var h := GARAGE_DOOR.size.y * garage_door
 		var opening := Rect2(GARAGE_DOOR.position.x, GARAGE_DOOR.end.y - h, GARAGE_DOOR.size.x, h)
 		var street: Texture2D=Painted.texture("industry")
-		var source:=Rect2(Vector2(100,360)/Vector2(1024,640)*street.get_size(),Vector2(220,h)/Vector2(1024,640)*street.get_size())
+		var source:=garage_street_source(garage_door,street.get_size())
 		draw_texture_rect_region(street,opening,source)
-		# Night street outside: wet asphalt glow and rain behind the door.
-		draw_rect(Rect2(opening.position.x, GARAGE_DOOR.end.y - minf(h, 30.0), opening.size.x, minf(h, 30.0)), Color(0.85, 0.2, 0.5, 0.18))
+		# The fixed wet-asphalt pixels already contain their reflected light.
 		for i in 12:
 			var rx := opening.position.x + 6 + i * 12.5
-			var ry := opening.position.y + fposmod(i * 23 + clock * 260.0, maxf(1.0, h))
+			var ry := GARAGE_DOOR.position.y+fposmod(i*23+clock*260.0,GARAGE_DOOR.size.y)
+			if ry<opening.position.y: continue
 			draw_line(Vector2(rx, ry), Vector2(rx - 2, ry + 7), Color(0.65, 0.75, 0.95, 0.35))
 		draw_rect(Rect2(opening.position.x - 2, opening.position.y - 5, opening.size.x + 4, 6), Color("4c535e"))
 		draw_rect(Rect2(opening.position.x - 2, opening.position.y - 1, opening.size.x + 4, 2), Color("e2b13c"))

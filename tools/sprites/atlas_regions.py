@@ -58,6 +58,7 @@ def catalog():
     a["assets/story/chapter-one/poses.png"] = [(0,0,443,443),(443,0,444,443),(887,0,443,443),(1330,0,444,443),(0,443,443,444),(443,443,444,444),(887,443,443,444),(1330,443,444,444)]
     a["assets/story/lake/poses-moon.png"] = grid("assets/story/lake/poses-moon.png", 4, 2)
     a["assets/vehicles/motorcycle/riding.png"] = grid("assets/vehicles/motorcycle/riding.png", 3, 3)
+    a["assets/vehicles/pursuit/rollover.png"] = grid("assets/vehicles/pursuit/rollover.png",3,2)
     a["assets/vehicles/pursuit/car.png"] = grid("assets/vehicles/pursuit/car.png", 3, 3)
     a["assets/vehicles/pursuit/drone.png"] = grid("assets/vehicles/pursuit/drone.png", 2, 2)
     a["assets/vehicles/aerodyne/airframe.png"] = grid("assets/vehicles/aerodyne/airframe.png", 3, 2)

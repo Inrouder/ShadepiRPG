@@ -1,4 +1,14 @@
-# Verfolgerwagen und Frachtdrohne · v0.41.0 · CodexAI
+# Verfolgerwagen · v0.65.0 · CodexAI
+
+`car.png` bleibt die unveränderte aktive Quelle der normalen Fahrt (neun 418×418-Phasen). `drone.png` bleibt die bestehende Drohnenquelle.
+
+**Neu: `rollover.png`**, unveränderte transparente Bildgenerator-Ausgabe vom 16. November 2026, mit `car.png` als tatsächlich gesichteter Identitäts-/Materialreferenz. 1536×1024, Raster 3×2, sechs 512×512-Zellen: Ankippen, angehobene Seite/Räder, Seitenlage, weiterer Überschlag, Unterboden, zerstörte Dachlage. Dunkle Panzerung, cyanfarbene Scheibe, rote Rückleuchten und Dachwaffe gehören weiterhin zu demselben Wagen. Keine Flammen oder Schatten als Ersatz für Körperphasen; diese kommen separat aus bestehenden Spiel-FX.
+
+Ausschnitte, individuelle Kontaktanker und unveränderte Welt-Zeichenfläche 112×96 stehen in `scripts/pursuit_car_art.gd`. Alle Zellen besitzen transparenten Freiraum; tatsächliche Alpha-/Schnittprüfung über `tools/sprites/audit_atlases.py`, Registrierung in `atlas_regions.py`. Kein starres Drehen einer einzelnen Draufsicht als Überschlagsersatz. [Arbeitsnachweis](../../../docs/arbeiten/cinema-v065.md).
+
+`wreck.png` ist die frühere einzelne Wrackansicht aus v0.56.0: **Referenz/Sicherung, nicht mehr aktiv und vom Spieleexport ausgeschlossen.** Der historische `tools/fx/build_drive_fx.py` kann sie erzeugen; er erzeugt oder ersetzt den neuen Überschlagsatlas nicht. Alte Herstellungswerkzeuge nicht beim Setup ausführen.
+
+## Bestehende Normalphasen und Drohne · v0.41.0 · CodexAI
 
 Beide Quellen sind direkte HQ-Pixelgenerierungen mit den tatsächlich aktiven Einzelbildern aus `assets/world/hq/vehicles.png` als Bildreferenz. Unverändert kopierte PNGs, keine programmgesteuerte Bemalung/Freistellung, keine neue Fahrzeugidentität. Dunkle Panzerung, verschlissene Metallkanten, Cyan-Scheibe, Dachgeschütz und rote Rücklichter des Wagens bleiben erhalten; die Frachtdrohne behält orange Last, vier Rotor-Ringe und Cyan-Akzente. Die separate bewaffnete Tower-Sentry bleibt ein anderes vorhandenes Objekt.
 
