@@ -26,14 +26,18 @@ func run():
 	await touch(mobile,JOY_BUTTON_A,true); await touch(mobile,JOY_BUTTON_A,false)
 	check(a.screen==a.Screen.FIGHT,"both CPU fighters can be selected by touch")
 	a.phase="fight"; a.cpu_think=10.0; a.fighters[1].x=550.0; await frames()
-	await touch(mobile,"lt",true)
-	check(a.fighters[0].state=="heavy","touch Kick performs the actual arcade kick")
-	await touch(mobile,"lt",false)
-	a.fighters[0].state="idle"; a.fighters[0].cool=0.0; a.fighters[0].meter=100.0
+	await touch(mobile,JOY_BUTTON_B,true)
+	check(a.fighters[0].state=="heavy","touch Heavy performs the actual arcade kick")
+	await touch(mobile,JOY_BUTTON_B,false)
+	a.fighters[0].state="idle"; a.fighters[0].cool=0.0
 	await touch(mobile,JOY_BUTTON_Y,true)
-	check(a.fighters[0].state==a.fighters[0].data.special,"touch Special performs the selected fighter special")
+	check(a.fighters[0].state=="medium","touch Medium uses the same Y mapping as the gamepad")
 	await touch(mobile,JOY_BUTTON_Y,false)
-	check(not mobile.labels["rt"].visible and not mobile.labels[JOY_BUTTON_RIGHT_SHOULDER].visible,"unsupported story charge/hack are absent in arcade")
+	a.fighters[0].state="idle"; a.fighters[0].cool=0.0; a.fighters[0].meter=100.0
+	await touch(mobile,JOY_BUTTON_A,true)
+	check(a.fighters[0].state==a.fighters[0].data.special and a.fighters[0].meter==50.0,"touch Special performs the selected fighter special")
+	await touch(mobile,JOY_BUTTON_A,false)
+	check(not mobile.labels["lt"].visible and not mobile.labels["rt"].visible and not mobile.labels[JOY_BUTTON_RIGHT_SHOULDER].visible,"unsupported story charge/hack are absent in arcade")
 	var timer: float=a.timer; var hp: float=a.fighters[0].hp
 	a.pause_game("Verbindung unterbrochen"); await create_timer(0.25).timeout
 	check(is_equal_approx(a.timer,timer) and a.fighters[0].hp==hp,"pause freezes timer, CPU and damage")
@@ -49,6 +53,7 @@ func run():
 	net.close(); a.close(); await frames()
 	w.close_menu(); w.cutscene.abort(); w.ui.clear_dialogue(); await frames()
 	check(mobile.input_context=="raven" and not mobile.labels["lt"].visible,"Raven's story controls do not advertise an unavailable kick")
+	check(mobile.labels[JOY_BUTTON_A].get_meta("icon").texture==mobile.textures["interact"] and mobile.labels[JOY_BUTTON_B].get_meta("icon").texture==mobile.textures["dodge"],"leaving arcade restores story action icons")
 	var settings=root.get_node("AudioSettings"); settings.set_enabled(false)
 	var w2=load("res://scenes/chapter_two.tscn").instantiate(); root.add_child(w2); current_scene=w2; w.free(); await frames(12)
 	check(not w2.audio_on and not net.audio_on,"mute survives a real chapter/world change")

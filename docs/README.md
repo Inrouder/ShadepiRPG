@@ -1,8 +1,13 @@
 # Shadepi · Bilder, Filme und Dokumentation
 
-**Stand v0.66.0 · CodexAI · 17. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
+**Stand v0.67.0 · CodexAI · 17. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
 
 Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnahmen, animierte Szenenfilme, Bedienung und technische Hinweise.
+
+| Klassische Arcade-Steuerung · v0.67.0 · CodexAI | Vier Tasten auch auf Touch |
+| --- | --- |
+| [![Ravens Viertelkreis löst ihren Handimpuls aus](previews/arcade-quarter-v067.png)](arcade-inputs-v067.md) | [![Light, Medium, Heavy und Special am mobilen Rand](previews/arcade-touch-v067.png)](arcade-inputs-v067.md) |
+| [Sprung, Block, Motions, Charge und Seitenwechsel](arcade-inputs-v067.md) | [Eingabe- und Kampffilm](previews/arcade-inputs-v067.webp) |
 
 | Szene und Koop · v0.66.0 · CodexAI | Beweglicher ICE-Wächter |
 | --- | --- |

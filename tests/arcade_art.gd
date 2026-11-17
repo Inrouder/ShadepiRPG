@@ -55,7 +55,7 @@ func run():
 			unique[hash(cell.get_data())] = true
 			check(cell.get_used_rect().has_area(), str(f.data.id) + " complete pose " + str(pose))
 		check(unique.size() >= 15, str(f.data.id) + " distinct drawn actions")
-		for action in ["light", "heavy", str(f.data.special)]:
+		for action in ["light", "medium", "heavy", str(f.data.special)]:
 			game._begin(f, action); f.t = 0.0
 			var before: int = game.pose_index(f)
 			f.t = game.MOVES[action].start
@@ -79,10 +79,10 @@ func run():
 	game._strike(0); var remaining: float = other.hp
 	game._strike(0)
 	check(f.confirmed and other.hp == remaining, "one punch contact damages exactly once")
-	f.t = game.MOVES.light.active
+	f.t = game.MOVES.light.active; game.hitstop = 0.0
 	game._control(0, {"held": {}, "pressed": {"b": true}})
-	check(f.state == "heavy", "confirmed punch cancels into kick")
-	fresh(); f = game.fighters[0]; game._begin(f, "light"); f.t = game.MOVES.light.active
+	check(f.state == "medium", "confirmed Light cancels into Medium")
+	fresh(); f = game.fighters[0]; game._begin(f, "light"); f.t = game.MOVES.light.active; game.hitstop = 0.0
 	game._control(0, {"held": {}, "pressed": {"b": true}})
 	check(f.state == "light", "whiff keeps recovery")
 	fresh(); f = game.fighters[0]; other = game.fighters[1]
@@ -92,9 +92,11 @@ func run():
 	fresh(1); f = game.fighters[0]; f.meter = 100.0
 	await press(JOY_BUTTON_X); check(f.state == "light", "controller X punches")
 	fresh(1); f = game.fighters[0]
-	await press(JOY_BUTTON_Y); check(f.state == "heavy", "controller Y kicks")
+	await press(JOY_BUTTON_Y); check(f.state == "medium", "controller Y is Medium")
+	fresh(1); f = game.fighters[0]
+	await press(JOY_BUTTON_B); check(f.state == "heavy", "controller B is Heavy")
 	fresh(1); f = game.fighters[0]; f.meter = 100.0
-	await press(JOY_BUTTON_B); check(f.state == "shot" and f.meter == 50.0, "controller B special")
+	await press(JOY_BUTTON_A); check(f.state == "shot" and f.meter == 50.0, "controller A is Special EX")
 	f.t = game.MOVES.shot.start; game._strike(0)
 	check(not game.shots.is_empty() and Vector2(game.shots[0].x, game.shots[0].y).is_equal_approx(game.emitter(f)), "actual projectile starts at registered palm")
 	check(game.shots[0].art == 4, "Raven casts lightning rather than bullet")
@@ -104,7 +106,7 @@ func run():
 	fresh(); f = game.fighters[0]
 	await press(JOY_BUTTON_DPAD_UP); check(f.vy < 0.0 and f.state == "jump", "controller jumps into dedicated pose")
 	fresh(); f = game.fighters[0]
-	await press(JOY_BUTTON_DPAD_DOWN); check(f.blocking and game.pose_index(f) == 5, "controller guards with real pose")
+	await press(JOY_BUTTON_DPAD_DOWN); check(not f.blocking and game.pose_index(f) == 15, "controller down crouches in the dedicated low pose")
 	fresh(); game.winner = 0; game.phase = "ko"
 	check(game.pose_index(game.fighters[0]) == 14, "only actual round winner celebrates")
 	check(game.pose_index(game.fighters[1]) != 14, "timeout loser does not celebrate")

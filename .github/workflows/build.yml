@@ -74,6 +74,12 @@ jobs:
           set -euo pipefail
           XDG_DATA_HOME="$(mktemp -d /tmp/shadepi-cinema-ci.XXXXXX)" godot --headless --script res://tests/cinema_v065.gd 2>&1 | tee /tmp/cinema-v065.log
           if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/cinema-v065.log; then exit 1; fi
+      - name: Validate arcade motions, charge, guard, fixed jumps and mirrored controllers
+        shell: bash
+        run: |
+          set -euo pipefail
+          XDG_DATA_HOME="$(mktemp -d /tmp/shadepi-arcade-inputs.XXXXXX)" godot --headless --script res://tests/arcade_inputs.gd 2>&1 | tee /tmp/arcade-inputs.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/arcade-inputs.log; then exit 1; fi
       - name: Validate generated arcade poses, contact windows and controller moves
         shell: bash
         run: |

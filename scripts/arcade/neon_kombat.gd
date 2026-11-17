@@ -2,8 +2,10 @@ extends CanvasLayer
 ## v0.57.0 · ClaudeHelper (Nutzerauftrag vom 11. November 2026): Arcade-Automat „NEON KOMBAT“.
 ## Seitliches Kampfspiel mit den Figuren des Spiels – 1 Spieler gegen CPU oder 2 Spieler im Duell.
 ## v0.61.0 · CodexAI: eigene registrierte Arcade-Posen, Faust/Kick und Treffer-Kombos.
+## v0.67.0 · CodexAI: LMHS, motion/charge parser, fixed jumps and directional guards.
 signal closed
 
+const FighterInput = preload("res://scripts/arcade/fighter_input.gd")
 const UiSkin = preload("res://scripts/ui_skin.gd")
 const STAGE = preload("res://assets/arcade/stage-rooftop.webp")
 const ART = preload("res://scripts/arcade/pixel_art.gd")
@@ -38,6 +40,9 @@ const ROSTER: Array[Dictionary] = [
 ## Anlauf, Ende der Trefferphase, Gesamtdauer, Rückstoß, Vorwärtsschritt.
 const MOVES := {
 	"light": {"start": 0.09, "active": 0.2, "total": 0.3, "push": 70.0, "lunge": 30.0},
+	"medium": {"start": 0.14, "active": 0.27, "total": 0.42, "push": 115.0, "lunge": 45.0},
+	"rise": {"start": 0.08, "active": 0.29, "total": 0.62, "push": 170.0, "lunge": 0.0},
+	"rush": {"start": 0.12, "active": 0.32, "total": 0.56, "push": 210.0, "lunge": 170.0},
 	"heavy": {"start": 0.2, "active": 0.34, "total": 0.56, "push": 190.0, "lunge": 80.0},
 	"dash": {"start": 0.1, "active": 0.34, "total": 0.5, "push": 150.0, "lunge": 0.0},
 	"slam": {"start": 0.3, "active": 0.42, "total": 0.75, "push": 260.0, "lunge": 0.0},
@@ -45,10 +50,10 @@ const MOVES := {
 	"shot": {"start": 0.16, "active": 0.2, "total": 0.46, "push": 110.0, "lunge": 0.0},
 }
 const KEYS := [
-	{"left": [KEY_A], "right": [KEY_D], "up": [KEY_W], "down": [KEY_S], "a": [KEY_J], "b": [KEY_K], "c": [KEY_L], "ok": [KEY_E, KEY_SPACE]},
-	{"left": [KEY_LEFT], "right": [KEY_RIGHT], "up": [KEY_UP], "down": [KEY_DOWN], "a": [KEY_U], "b": [KEY_I], "c": [KEY_O], "ok": [KEY_ENTER, KEY_KP_ENTER]},
+	{"left": [KEY_A], "right": [KEY_D], "up": [KEY_W], "down": [KEY_S], "a": [KEY_J], "b": [KEY_K], "c": [KEY_L], "d": [KEY_H], "ok": [KEY_E, KEY_SPACE]},
+	{"left": [KEY_LEFT], "right": [KEY_RIGHT], "up": [KEY_UP], "down": [KEY_DOWN], "a": [KEY_U], "b": [KEY_I], "c": [KEY_O], "d": [KEY_P], "ok": [KEY_ENTER, KEY_KP_ENTER]},
 ]
-const PAD := {"left": JOY_BUTTON_DPAD_LEFT, "right": JOY_BUTTON_DPAD_RIGHT, "up": JOY_BUTTON_DPAD_UP, "down": JOY_BUTTON_DPAD_DOWN, "a": JOY_BUTTON_X, "b": JOY_BUTTON_Y, "c": JOY_BUTTON_B, "ok": JOY_BUTTON_A}
+const PAD := {"left": JOY_BUTTON_DPAD_LEFT, "right": JOY_BUTTON_DPAD_RIGHT, "up": JOY_BUTTON_DPAD_UP, "down": JOY_BUTTON_DPAD_DOWN, "a": JOY_BUTTON_X, "b": JOY_BUTTON_Y, "c": JOY_BUTTON_B, "d": JOY_BUTTON_A, "ok": JOY_BUTTON_A}
 
 enum Screen {TITLE, SELECT, FIGHT, RESULT}
 
@@ -73,6 +78,11 @@ var banner := ""
 var winner := -1
 var cpu_think := 0.0
 var cpu_plan := {"dir": 0.0, "block": 0.0, "jump": false}
+var inputs := [FighterInput.new(),FighterInput.new()]
+var cpu_sequence: Array[int] = []
+var cpu_sequence_time := 0.0
+var cpu_sequence_step := 0
+var cpu_attack := "a"
 var held: Array[Dictionary] = [{}, {}]
 var pressed: Array[Dictionary] = [{}, {}]
 var sheets := {}
@@ -130,7 +140,7 @@ func _sound(key: String, variance: float = 0.06) -> void:
 
 # --- Eingabe -----------------------------------------------------------------------------------
 
-## Tastatur: Spieler 1 WASD + J/K/L, Spieler 2 Pfeile + U/I/O. Gamepads: erstes Pad Spieler 1,
+## Tastatur: Spieler 1 WASD + J/K/L/H, Spieler 2 Pfeile + U/I/O/P. Gamepads: erstes Pad Spieler 1,
 ## zweites Spieler 2; im Duell mit nur einem Pad gehört es Spieler 2 (wie im Koop).
 func _pad_for(index: int) -> int:
 	var pads := preload("res://scripts/gamepad_bindings.gd").devices()
@@ -194,6 +204,9 @@ func _build_pause() -> void:
 
 func pause_game(reason: String = "NEON KOMBAT · PAUSE") -> void:
 	session_paused = true
+	for input in inputs:input.reset()
+	for f in fighters:f.buffer="";f.buffer_t=0.0
+	cpu_sequence.clear()
 	held = [{}, {}]; pressed = [{}, {}]
 	pause_note.text = reason; pause_panel.show(); resume_button.grab_focus.call_deferred()
 
@@ -216,6 +229,8 @@ func close() -> void:
 # --- Ablauf ------------------------------------------------------------------------------------
 
 func _show_title() -> void:
+	for input in inputs:input.reset()
+	cpu_sequence.clear()
 	screen = Screen.TITLE
 	shots.clear(); hits.clear(); fighters.clear()
 	wins = [0, 0]
@@ -234,10 +249,13 @@ func start_match(first: int, second: int, two_players: bool) -> void:
 	_start_round()
 
 func _start_round() -> void:
+	hitstop=0.0;shake=0.0
+	for input in inputs:input.reset()
+	cpu_sequence.clear()
 	fighters.clear()
 	for index in 2:
 		var data: Dictionary = ROSTER[cursors[index]]
-		fighters.append({"data": data, "x": 200.0 if index == 0 else 440.0, "y": 0.0, "vx": 0.0, "vy": 0.0, "face": 1.0 if index == 0 else -1.0, "hp": float(data.hp), "meter": 0.0 if round_number == 1 else 25.0, "state": "idle", "t": 0.0, "hit": 0, "anim": 0.0, "flash": 0.0, "combo": 0, "combo_t": 0.0, "blocking": false, "cool": 0.0, "buffer": "", "buffer_t": 0.0, "land": 0.0})
+		fighters.append({"data": data, "x": 200.0 if index == 0 else 440.0, "y": 0.0, "vx": 0.0, "vy": 0.0, "face": 1.0 if index == 0 else -1.0, "hp": float(data.hp), "meter": 0.0 if round_number == 1 else 25.0, "state": "idle", "t": 0.0, "hit": 0, "anim": 0.0, "flash": 0.0, "combo": 0, "combo_t": 0.0, "blocking": false, "guard_t":0.0, "cool": 0.0, "buffer": "", "buffer_t": 0.0, "land": 0.0, "crouching":false, "guard_x":0, "guard_y":0, "attack_height":"mid", "move_face":1.0 if index==0 else -1.0, "air_t":0.0, "air_y":0.0, "air_vy":0.0, "air_vx":0.0, "strength":1.0, "ex":false, "buffer_strength":1.0, "buffer_ex":false, "command":"", "command_t":0.0})
 	shots.clear(); hits.clear()
 	timer = ROUND_SECONDS
 	phase = "intro"
@@ -305,6 +323,11 @@ func _update_fight(delta: float) -> void:
 	for i in range(hits.size() - 1, -1, -1):
 		hits[i].t -= delta
 		if hits[i].t <= 0.0: hits.remove_at(i)
+	if phase=="fight":
+		_sync_facing()
+		for index in 2:
+			var controls: Dictionary=_cpu_controls(delta) if index==1 and not versus else {"held":held[index],"pressed":pressed[index]}
+			_control(index,controls,delta)
 	if hitstop > 0.0:
 		hitstop -= delta
 		return
@@ -320,57 +343,89 @@ func _update_fight(delta: float) -> void:
 			if phase_time >= 2.6: _next_round()
 			return
 	timer = maxf(0.0, timer - delta)
-	for index in 2:
-		var controls: Dictionary = _cpu_controls(delta) if index == 1 and not versus else {"held": held[index], "pressed": pressed[index]}
-		_control(index, controls)
-	for index in 2:
-		_physics(fighters[index], fighters[1 - index], delta, {})
-		_strike(index)
+	for index in 2:_physics(fighters[index],fighters[1-index],delta,{})
 	_separate()
+	_sync_facing()
+	for index in 2:_strike(index)
 	_advance_shots(delta)
 	if fighters[0].hp <= 0.0 or fighters[1].hp <= 0.0 or timer <= 0.0:
 		_end_round()
 
-func _control(index: int, controls: Dictionary) -> void:
-	var f: Dictionary = fighters[index]
-	var other: Dictionary = fighters[1 - index]
-	var h: Dictionary = controls.held
-	var p: Dictionary = controls.pressed
-	f.cool = maxf(0.0, f.cool - get_process_delta_time())
-	f.blocking = false
-	if f.state in ["hurt", "ko"]:
-		f.buffer = ""; f.buffer_t = 0.0
-		return
-	var requested := ""
-	if p.get("c", false) and f.meter >= SPECIAL_COST and f.y >= 0.0: requested = str(f.data.special)
-	elif p.get("b", false): requested = "heavy"
-	elif p.get("a", false): requested = "light"
-	if requested != "":
-		f.buffer = requested; f.buffer_t = 0.18
-	if MOVES.has(f.state):
-		# Confirmed punch → kick/special. Whiffs and blocked hits keep their recovery.
-		if f.state == "light" and f.get("confirmed", false) and f.t >= MOVES.light.active and f.buffer_t > 0.0 and f.buffer != "light":
-			_begin(f, f.buffer)
-		return
-	var grounded: bool = f.y >= 0.0
-	if grounded:
-		f.face = 1.0 if other.x >= f.x else -1.0
-	var dir := float(int(h.get("right", false)) - int(h.get("left", false)))
-	if grounded and h.get("down", false):
-		f.blocking = true
-		f.vx = 0.0
-		f.state = "block"
-		return
-	f.vx = dir * float(f.data.speed) * (1.0 if grounded else 0.85)
-	if grounded and p.get("up", false):
-		f.vy = JUMP
-		f.y = -1.0
-		_sound("drive_near_miss", 0.1)
-	f.state = "jump" if f.y < 0.0 else ("walk" if dir != 0.0 else "idle")
-	if f.buffer_t > 0.0 and f.cool <= 0.0:
-		_begin(f, f.buffer)
+func _sync_facing() -> void:
+	if fighters.size()!=2:return
+	for index in 2:
+		var f: Dictionary=fighters[index]
+		var gap: float=fighters[1-index].x-f.x
+		if absf(gap)>0.1:f.face=signf(gap)
+		inputs[index].set_facing(int(f.face))
+		if hitstop<=0:_guard(f)
 
-func _begin(f: Dictionary, move: String) -> void:
+func _guard(f: Dictionary) -> void:
+	if f.state in ["hurt","ko"] or MOVES.has(f.state) or f.y<0:
+		f.blocking=false;return
+	f.crouching=int(f.guard_y)>0
+	f.blocking=int(f.guard_x)*float(f.face)<0
+	if f.crouching:f.state="block_low" if f.blocking and f.guard_t>0 else "crouch"
+	elif f.blocking and f.guard_t>0:f.state="block"
+	elif f.state in ["block","block_low","crouch"]:f.state="idle"
+
+func _control(index: int, controls: Dictionary, delta: float=1.0/60.0) -> void:
+	var f: Dictionary=fighters[index]
+	var h: Dictionary=controls.held
+	var p: Dictionary=controls.pressed
+	var x:=int(h.get("right",false))-int(h.get("left",false))
+	var y:=int(h.get("down",false))-int(h.get("up",false))
+	f.guard_x=x;f.guard_y=y
+	if hitstop<=0 and f.y>=0 and not MOVES.has(f.state):f.crouching=y>0
+	inputs[index].sample(x,y,int(f.face),delta)
+	var requested:="";var strength:=1.0;var ex:=false
+	var button:="a" if p.get("a",false) else "b" if p.get("b",false) else "c" if p.get("c",false) else ""
+	if button!="":
+		strength=1.0 if button=="a" else 1.15 if button=="b" else 1.3
+		var motion: String=inputs[index].take_motion() if f.y>=0 else ""
+		match motion:
+			"dragon","charge_up":requested="rise"
+			"charge_forward":requested="rush"
+			"quarter":requested=str(f.data.special)
+			_:requested={"a":"light","b":"medium","c":"heavy"}[button];strength=1.0
+		if motion!="":f.command={"dragon":"623 · AUFSTIEG","charge_up":"[2]8 · AUFSTIEG","charge_forward":"[4]6 · ANSTURM","quarter":"236 · "+str(f.data.move)}[motion];f.command_t=1.2
+	if p.get("d",false):
+		if f.meter>=SPECIAL_COST:requested=str(f.data.special);ex=true;strength=1.35;f.command="S · EX "+str(f.data.move);f.command_t=1.2
+		else:f.command="S BRAUCHT 50 ENERGIE";f.command_t=0.8
+	if requested!="" and f.state!="ko":
+		f.buffer=requested;f.buffer_t=0.18;f.buffer_strength=strength;f.buffer_ex=ex
+	if hitstop>0 or f.guard_t>0 or f.state in ["hurt","ko"]:return
+	if MOVES.has(f.state):
+		# Only confirmed L→M/H/S and M→H/S may cancel; whiffs/blocks keep recovery.
+		var next_rank:=_rank(str(f.buffer))
+		if f.get("confirmed",false) and f.t>=float(MOVES[f.state].active) and f.buffer_t>0 and _rank(str(f.state))<next_rank and f.state in ["light","medium"]:
+			_begin(f,str(f.buffer),float(f.buffer_strength),bool(f.buffer_ex))
+		return
+	if f.buffer_t>0 and f.cool<=0:
+		_begin(f,str(f.buffer),float(f.buffer_strength),bool(f.buffer_ex));return
+	var grounded: bool=f.y>=0
+	if not grounded:
+		f.vx=f.air_vx;f.state="jump";f.blocking=false;return
+	_guard(f)
+	if y<0 or (p.get("up",false) and not h.get("down",false)):
+		_launch(f,JUMP,x*float(f.data.speed)*1.05)
+		f.state="jump";f.blocking=false
+		_sound("drive_near_miss",0.1);return
+	f.vx=0.0 if f.crouching else x*float(f.data.speed)
+	if not f.crouching:f.state="walk" if x!=0 else "idle"
+
+static func _rank(move: String) -> int:
+	return {"":0,"light":1,"medium":2,"heavy":3}.get(move,4)
+func _launch(f: Dictionary, vertical: float,horizontal: float):
+	f.air_t=0.0;f.air_y=f.y;f.air_vy=vertical;f.air_vx=horizontal
+	f.vy=vertical;f.vx=horizontal
+	if f.y>=0:f.y=-0.001
+
+func _begin(f: Dictionary, move: String, strength: float=1.0, ex: bool=true) -> void:
+	if f.y<0 and move not in ["light","medium","heavy"]:
+		f.buffer="";f.buffer_t=0.0;return
+	f.move_face=f.face;f.strength=strength;f.ex=ex
+	f.attack_height="overhead" if f.y<0 or move=="heavy" else "low" if f.get("crouching",false) and move in ["light","medium"] else "low" if move=="slam" else "mid"
 	f.state = move
 	f.t = 0.0
 	f.hit = 0
@@ -378,15 +433,20 @@ func _begin(f: Dictionary, move: String) -> void:
 	f.buffer = ""; f.buffer_t = 0.0
 	f.blocking = false
 	if f.y >= 0.0: f.vx = 0.0
-	if move not in ["light", "heavy"]:
-		f.meter -= SPECIAL_COST
+	if move not in ["light", "medium", "heavy"]:
+		if ex:f.meter=maxf(0,f.meter-SPECIAL_COST)
 		f.flash = 0.25
 		_sound("electric" if move == "shot" else "slash" if move == "dash" else "enemy_attack_0")
+		if move=="rise":_launch(f,-310.0,f.face*100.0)
 	else:
 		_sound("slash" if f.data.id == "shadepi" else "enemy_attack_1", 0.12)
 
 func _physics(f: Dictionary, other: Dictionary, delta: float, _unused: Dictionary) -> void:
 	f.t += delta
+	f.cool=maxf(0,f.cool-delta)
+	f.command_t=maxf(0,f.command_t-delta)
+	if f.guard_t>0:f.vx=move_toward(f.vx,0,900*delta)
+	f.guard_t=maxf(0,f.guard_t-delta)
 	f.anim += delta
 	f.flash = maxf(0.0, f.flash - delta)
 	f.buffer_t = maxf(0.0, f.buffer_t - delta)
@@ -396,9 +456,9 @@ func _physics(f: Dictionary, other: Dictionary, delta: float, _unused: Dictionar
 	if MOVES.has(f.state):
 		var move: Dictionary = MOVES[f.state]
 		if f.state == "dash":
-			f.vx = f.face * 760.0 if f.t >= move.start and f.t < move.active else 0.0
+			f.vx = f.move_face * 760.0 if f.t >= move.start and f.t < move.active else 0.0
 		elif f.t < move.active and f.y >= 0.0:
-			f.vx = f.face * float(move.lunge) / float(move.active)
+			f.vx = f.move_face * float(move.lunge) / float(move.active)
 		elif f.y >= 0.0:
 			f.vx = 0.0
 		if f.t >= move.total:
@@ -410,20 +470,25 @@ func _physics(f: Dictionary, other: Dictionary, delta: float, _unused: Dictionar
 			f.state = "idle"; f.t = 0.0
 	elif f.state == "ko":
 		f.vx = move_toward(f.vx, 0.0, 300.0 * delta)
-	if f.y < 0.0 or f.vy < 0.0:
-		f.vy += GRAVITY * delta
-		f.y += f.vy * delta
-		if f.y >= 0.0:
-			f.y = 0.0; f.vy = 0.0
-			f.land = 0.12
-	f.x = clampf(f.x + f.vx * delta, WALLS.x, WALLS.y)
+	var moving_time:=delta
+	if f.y<0 or f.vy<0:
+		# Analytic vertical arc, fixed take-off horizontal speed: no air steering.
+		var prior: float=f.air_t
+		var land_at: float=(-float(f.air_vy)+sqrt(float(f.air_vy)*float(f.air_vy)-2*GRAVITY*float(f.air_y)))/GRAVITY
+		f.air_t=minf(land_at,float(f.air_t)+delta)
+		f.y=float(f.air_y)+float(f.air_vy)*float(f.air_t)+0.5*GRAVITY*float(f.air_t)*float(f.air_t)
+		f.vy=float(f.air_vy)+GRAVITY*float(f.air_t)
+		if f.state not in ["hurt","ko"]:f.vx=f.air_vx
+		if f.air_t>=land_at:
+			moving_time=float(f.air_t)-prior;f.y=0.0;f.vy=0.0;f.land=0.12
+	f.x=clampf(f.x+f.vx*moving_time,WALLS.x,WALLS.y)
 
 func _separate() -> void:
 	var a: Dictionary = fighters[0]
 	var b: Dictionary = fighters[1]
 	if a.state == "dash" or b.state == "dash": return
 	var gap: float = b.x - a.x
-	if absf(gap) < 34.0 and absf(a.y - b.y) < 80.0:
+	if absf(gap) < 34.0 and absf(a.y - b.y) < 38.0:
 		var push := (34.0 - absf(gap)) * 0.5 * (1.0 if gap >= 0.0 else -1.0)
 		a.x = clampf(a.x - push, WALLS.x, WALLS.y)
 		b.x = clampf(b.x + push, WALLS.x, WALLS.y)
@@ -438,10 +503,10 @@ func _strike(index: int) -> void:
 	var gap: float = (other.x - f.x) * f.face
 	var level: bool = absf(f.y - other.y) < 90.0
 	match f.state:
-		"light", "heavy":
+		"light", "medium", "heavy", "rise", "rush":
 			if f.hit == 0 and gap > -8.0 and gap < reach + (10.0 if f.state == "heavy" else 0.0) and level:
 				f.hit = 1
-				_land(index, float(f.data[f.state]), f.state == "heavy")
+				_land(index, float(f.data.light) if f.state=="light" else (float(f.data.light)+float(f.data.heavy))*0.5 if f.state=="medium" else float(f.data.heavy)+2.0 if f.state in ["rise","rush"] else float(f.data.heavy), f.state in ["heavy","rise","rush"])
 		"dash":
 			if f.hit == 0 and absf(other.x - f.x) < 42.0 and level:
 				f.hit = 1
@@ -465,19 +530,26 @@ func _strike(index: int) -> void:
 			if f.hit == 0:
 				f.hit = 1
 				var muzzle := emitter(f)
-				shots.append({"x": muzzle.x, "y": muzzle.y, "vx": f.face * 400.0, "owner": index, "dmg": 14.0, "c": f.data.color, "art": 4 if f.data.id == "raven" else 6 if f.data.id == "punk-3" else 5})
+				shots.append({"x": muzzle.x, "y": muzzle.y, "vx": f.face * 400.0, "owner": index, "height":"mid", "dmg": 14.0*float(f.strength), "c": f.data.color, "art": 4 if f.data.id == "raven" else 6 if f.data.id == "punk-3" else 5})
 				_sound("electric" if f.data.id in ["raven", "punk-3"] else "pistol", 0.1)
 
-func _land(index: int, damage: float, strong: bool, point: Vector2 = Vector2.INF) -> void:
+func _land(index: int, damage: float, strong: bool, point: Vector2 = Vector2.INF, height: String="") -> void:
 	var f: Dictionary = fighters[index]
 	var other: Dictionary = fighters[1 - index]
-	if other.state == "ko" or other.state == "dash": return
-	var at := point if point != Vector2.INF else Vector2((f.x + other.x) * 0.5 + f.face * 8.0, GROUND + other.y - 86.0)
+	if other.state=="ko":return
+	if other.state=="dash" and other.get("ex",false) and other.t>=0.1 and other.t<0.22:return
+	if height=="":height=str(f.get("attack_height","mid"))
+	var at := point if point != Vector2.INF else Vector2((f.x + other.x) * 0.5 + f.face * 8.0, GROUND + other.y - (22.0 if height=="low" else 86.0))
 	var side: float = 1.0 if other.x >= f.x else -1.0
 	if point != Vector2.INF: side = signf(float(shots_side))
-	if f.state == "dash": side = -f.face          # Schattenschnitt: der Gegner bleibt hinter Shadepi zurück
+	if f.state == "dash": side = f.move_face          # Schattenschnitt: der Gegner bleibt hinter Shadepi zurück
 	var push := float(MOVES[f.state].push) if MOVES.has(f.state) and point == Vector2.INF else 110.0
-	if other.blocking and other.face == -side:
+	if point==Vector2.INF:damage*=float(f.get("strength",1.0))
+	var low_guard: bool=other.get("crouching",false)
+	var guarded: bool=other.blocking and other.face==-side and (low_guard if height=="low" else not low_guard if height=="overhead" else true)
+	if guarded:
+		other.guard_t=0.24 if strong else 0.16
+		other.state="block_low" if low_guard else "block"
 		other.hp -= damage * 0.2
 		other.vx = side * push * 0.5
 		other.meter = minf(100.0, other.meter + 4.0)
@@ -491,7 +563,7 @@ func _land(index: int, damage: float, strong: bool, point: Vector2 = Vector2.INF
 		other.t = 0.0 if not strong else -0.14
 		other.vx = side * push
 		if strong and other.y >= 0.0:
-			other.vy = -170.0; other.y = -1.0
+			_launch(other,-170.0,side*push)
 		other.flash = 0.2
 		other.meter = minf(100.0, other.meter + 6.0)
 		f.meter = minf(100.0, f.meter + (10.0 if point == Vector2.INF else 5.0))
@@ -512,7 +584,7 @@ func _advance_shots(delta: float) -> void:
 		var target: Dictionary = fighters[1 - int(shot.owner)]
 		if absf(shot.x - target.x) < 16.0 and absf(shot.y - (GROUND + target.y - 74.0)) < 60.0:
 			shots_side = signf(shot.vx)
-			_land(int(shot.owner), float(shot.dmg), false, Vector2(shot.x, shot.y))
+			_land(int(shot.owner), float(shot.dmg), false, Vector2(shot.x, shot.y),str(shot.get("height","mid")))
 			shots.remove_at(i)
 			continue
 		if shot.x < -20.0 or shot.x > 660.0:
@@ -537,7 +609,7 @@ func _end_round() -> void:
 	for index in 2:
 		if fighters[index].hp <= 0.0:
 			fighters[index].state = "ko"; fighters[index].t = 0.0
-			fighters[index].vy = -220.0; fighters[index].y = -1.0
+			_launch(fighters[index],-220.0,fighters[index].vx)
 	if winner >= 0: wins[winner] += 1
 	shots.clear()
 	shake = 8.0
@@ -560,38 +632,52 @@ func _next_round() -> void:
 # --- CPU ---------------------------------------------------------------------------------------
 
 func _cpu_controls(delta: float) -> Dictionary:
-	var me: Dictionary = fighters[1]
-	var foe: Dictionary = fighters[0]
-	var h := {"left": false, "right": false, "down": false}
-	var p := {"up": false, "a": false, "b": false, "c": false}
-	var gap: float = absf(foe.x - me.x)
-	var reach := float(me.data.reach) * REACH
-	cpu_plan.block = maxf(0.0, float(cpu_plan.block) - delta)
-	cpu_think -= delta
-	if cpu_think <= 0.0:
-		cpu_think = rng.randf_range(0.14, 0.3)
-		cpu_plan.dir = 0.0
-		var threatened: bool = (MOVES.has(foe.state) and gap < 110.0) or _incoming(1)
-		if threatened and rng.randf() < 0.5:
-			cpu_plan.block = rng.randf_range(0.25, 0.45)
-		elif _incoming(1) and rng.randf() < 0.5:
-			p.up = true
-		elif gap > reach - 4.0:
-			if str(me.data.special) == "shot" and me.meter >= SPECIAL_COST and gap > 150.0 and rng.randf() < 0.6: p.c = true
-			elif str(me.data.special) == "dash" and me.meter >= SPECIAL_COST and gap < 190.0 and rng.randf() < 0.5: p.c = true
-			else:
-				cpu_plan.dir = signf(foe.x - me.x)
-				if rng.randf() < 0.07: p.up = true
+	var me: Dictionary=fighters[1];var foe: Dictionary=fighters[0]
+	var h:={"left":false,"right":false,"up":false,"down":false}
+	var p:={"up":false,"a":false,"b":false,"c":false,"d":false}
+	if not cpu_sequence.is_empty():
+		cpu_sequence_time+=delta
+		if cpu_sequence_time>=0.065:
+			cpu_sequence_time=0;cpu_sequence_step+=1
+		if cpu_sequence_step>=cpu_sequence.size():
+			p[cpu_attack]=true;cpu_sequence.clear()
 		else:
-			var roll := rng.randf()
-			if roll < 0.14 and me.meter >= SPECIAL_COST: p.c = true
-			elif roll < 0.5: p.a = true
-			elif roll < 0.74: p.b = true
-			elif roll < 0.86: cpu_plan.dir = -signf(foe.x - me.x)
-	if float(cpu_plan.block) > 0.0: h.down = true
-	elif float(cpu_plan.dir) < 0.0: h.left = true
-	elif float(cpu_plan.dir) > 0.0: h.right = true
-	return {"held": h, "pressed": p}
+			var code: int=cpu_sequence[cpu_sequence_step]
+			h.down=code in [1,2,3];h.up=code in [7,8,9]
+			var x:=(-1 if code in [1,4,7] else 1 if code in [3,6,9] else 0)*int(me.face)
+			h.left=x<0;h.right=x>0
+			return {"held":h,"pressed":p}
+		# Finish on the final direction, not neutral, including a skipped diagonal.
+		h.right=me.face>0;h.left=me.face<0
+		return {"held":h,"pressed":p}
+	var gap: float=absf(foe.x-me.x)
+	cpu_plan.block=maxf(0,float(cpu_plan.block)-delta);cpu_think-=delta
+	if cpu_think<=0:
+		cpu_think=rng.randf_range(0.14,0.3);cpu_plan.dir=0.0
+		var threatened: bool=(MOVES.has(foe.state) and gap<115) or _incoming(1)
+		if threatened and rng.randf()<0.55:cpu_plan.block=rng.randf_range(0.2,0.4)
+		elif foe.y< -20 and gap<115 and rng.randf()<0.5:
+			cpu_sequence.assign([6,2,3]);cpu_sequence_step=0;cpu_sequence_time=0;cpu_attack="b"
+		elif gap>float(me.data.reach)*REACH-4:
+			if str(me.data.special) in ["shot","dash"] and gap<360 and rng.randf()<0.4:
+				cpu_sequence.assign([2,3,6]);cpu_sequence_step=0;cpu_sequence_time=0;cpu_attack="a"
+			else:
+				cpu_plan.dir=signf(foe.x-me.x)
+				if rng.randf()<0.10:p.up=true;h.up=true
+		else:
+			var roll:=rng.randf()
+			if roll<0.14 and me.meter>=SPECIAL_COST:p.d=true
+			elif roll<0.44:p.a=true
+			elif roll<0.69:p.b=true
+			elif roll<0.83:p.c=true
+			else:cpu_plan.dir=-float(me.face)
+	if not cpu_sequence.is_empty():return _cpu_controls(0)
+	if float(cpu_plan.block)>0:
+		h.left=me.face>0;h.right=me.face<0
+		h.down=foe.get("attack_height","mid")=="low"
+	elif float(cpu_plan.dir)<0:h.left=true
+	elif float(cpu_plan.dir)>0:h.right=true
+	return {"held":h,"pressed":p}
 
 func _incoming(index: int) -> bool:
 	for shot in shots:
@@ -609,12 +695,14 @@ func pose_index(f: Dictionary) -> int:
 	if (screen == Screen.RESULT or phase == "ko") and winner >= 0 and f == fighters[winner]: return 14
 	match str(f.state):
 		"block": return 5
+		"crouch","block_low": return 15
 		"hurt": return 6
 		"jump": return 4
 		"walk": return [2, 0, 3, 1][int(f.anim * 10.0) % 4]
 	if MOVES.has(f.state):
+		if f.get("attack_height","mid")=="low" and f.state in ["light","medium"]:return 15
 		var move: Dictionary = MOVES[f.state]
-		var first := 8 if f.state == "light" else 10 if f.state == "heavy" else 12
+		var first := 8 if f.state == "light" else 10 if f.state in ["medium","heavy","rise"] else 12
 		if f.state == "flurry" and f.t >= move.start and f.t <= move.active:
 			return 13 if fmod(f.t - move.start, 0.15) < 0.10 else 12
 		return first + 1 if f.t >= move.start and f.t <= move.active else first
@@ -682,10 +770,10 @@ func _draw_hud() -> void:
 				if chosen: c.draw_rect(Rect2(190, 163 + i * 30, 260, 24), Color(pink, 0.28 + 0.1 * sin(clock * 6.0)))
 				c.draw_rect(Rect2(190, 163 + i * 30, 260, 24), pink if chosen else Color("3b4666"), false, 1.0)
 				_text(c, entries[i], Vector2(190, 180 + i * 30), 16, Color.WHITE if chosen else Color("9aa6c8"), HORIZONTAL_ALIGNMENT_CENTER, 260)
-			_text(c, "S1  WASD · J SCHLAG · K KICK · L SPEZIAL · S BLOCKEN · W SPRUNG", Vector2(0, 288), 8, Color("c8d2f0"), HORIZONTAL_ALIGNMENT_CENTER, 640)
-			_text(c, "S2  PFEILE · U SCHLAG · I KICK · O SPEZIAL · RUNTER BLOCKEN · HOCH SPRUNG", Vector2(0, 302), 8, Color("c8d2f0"), HORIZONTAL_ALIGNMENT_CENTER, 640)
-			_text(c, "GAMEPAD  X SCHLAG · Y KICK · B SPEZIAL · A WÄHLEN · START PAUSE", Vector2(0, 316), 8, Color("c8d2f0"), HORIZONTAL_ALIGNMENT_CENTER, 640)
-			_text(c, "KOMBO: SCHLAG → KICK / SPEZIAL NACH TREFFER   ·   CPU-SIEGE: %d" % total_wins, Vector2(0, 340), 8, gold, HORIZONTAL_ALIGNMENT_CENTER, 640)
+			_text(c, "S1  WASD · J LIGHT · K MEDIUM · L HEAVY · H SPECIAL", Vector2(0, 288), 8, Color("c8d2f0"), HORIZONTAL_ALIGNMENT_CENTER, 640)
+			_text(c, "S2  PFEILE · U LIGHT · I MEDIUM · O HEAVY · P SPECIAL", Vector2(0, 302), 8, Color("c8d2f0"), HORIZONTAL_ALIGNMENT_CENTER, 640)
+			_text(c, "PAD X/Y/B/A = L/M/H/S · ZURÜCK BLOCK · RUNTER-ZURÜCK TIEFBLOCK", Vector2(0, 316), 8, Color("c8d2f0"), HORIZONTAL_ALIGNMENT_CENTER, 640)
+			_text(c, "236 + L/M/H · 623 + L/M/H · [4]6 + L/M/H · CPU-SIEGE: %d" % total_wins, Vector2(0, 340), 8, gold, HORIZONTAL_ALIGNMENT_CENTER, 640)
 		Screen.SELECT:
 			_text(c, "KÄMPFER WÄHLEN", Vector2(0, 40), 32, pink, HORIZONTAL_ALIGNMENT_CENTER, 640)
 			for i in ROSTER.size():
@@ -718,6 +806,8 @@ func _draw_hud() -> void:
 				var side: float = 48.0 * float(hit.s)
 				ART.centered(c, 8 + mini(3, int(age * 4.0)), hit.p + offset, Vector2(side, side))
 
+			_text(c,"HOCH / SCHRÄG-HOCH: SPRUNG · RUNTER: DUCKEN · ZURÜCK / TIEF-ZURÜCK: BLOCK",Vector2(0,337),8,Color("c8d2f0"),HORIZONTAL_ALIGNMENT_CENTER,640)
+			_text(c,"L/M/H: J/K/L · S: H / PAD A (50) · 236 / 623 / [4]6 + L/M/H",Vector2(0,351),8,Color("7fe3ee"),HORIZONTAL_ALIGNMENT_CENTER,640)
 			for index in 2:
 				var f: Dictionary = fighters[index]
 				var left := index == 0
@@ -726,11 +816,13 @@ func _draw_hud() -> void:
 				_bar(c, Rect2(24 if left else 486, 40, 130, 5), f.meter / 100.0, cyan if f.meter >= SPECIAL_COST else Color("3f7fa8"), left)
 				_text(c, str(f.data.name) + ("" if versus or left else " · CPU"), Vector2(24 if left else 346, 16), 8, pink if left else cyan, HORIZONTAL_ALIGNMENT_LEFT if left else HORIZONTAL_ALIGNMENT_RIGHT, 270)
 				if f.meter >= SPECIAL_COST and int(clock * 4.0) % 2 == 0:
-					_text(c, "SPEZIAL", Vector2(160 if left else 346, 46), 8, cyan, HORIZONTAL_ALIGNMENT_LEFT if left else HORIZONTAL_ALIGNMENT_RIGHT, 134)
+					_text(c, "S · EX", Vector2(160 if left else 346, 46), 8, cyan, HORIZONTAL_ALIGNMENT_LEFT if left else HORIZONTAL_ALIGNMENT_RIGHT, 134)
 				for pip in ROUNDS_TO_WIN:
 					var px := (24.0 + pip * 10.0) if left else (608.0 - pip * 10.0)
 					c.draw_rect(Rect2(px, 50, 7, 7), gold if wins[index] > pip else Color("26131c"))
 					c.draw_rect(Rect2(px, 50, 7, 7), Color("0b0c16"), false, 1.0)
+				if f.command_t>0:_text(c,str(f.command),Vector2(24 if left else 346,68),8,cyan,HORIZONTAL_ALIGNMENT_LEFT if left else HORIZONTAL_ALIGNMENT_RIGHT,270)
+				elif inputs[index].charge_fraction()>0.05:_text(c,"CHARGE %d / 45"%mini(45,int(inputs[index].charge_fraction()*45)),Vector2(24 if left else 346,68),8,gold,HORIZONTAL_ALIGNMENT_LEFT if left else HORIZONTAL_ALIGNMENT_RIGHT,270)
 				if f.combo >= 2 and f.combo_t > 0.0:
 					_text(c, "%d TREFFER!" % f.combo, Vector2(24 if left else 346, 84), 16, gold, HORIZONTAL_ALIGNMENT_LEFT if left else HORIZONTAL_ALIGNMENT_RIGHT, 270)
 			c.draw_rect(Rect2(300, 14, 40, 26), Color("0b0c16"))

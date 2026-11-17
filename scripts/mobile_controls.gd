@@ -107,18 +107,21 @@ func _process(_delta: float):
 
 func _configure_context():
 	action_map.clear()
+	for entry in [[JOY_BUTTON_X,"pistol"],[JOY_BUTTON_Y,"charge"],[JOY_BUTTON_B,"dodge"],[JOY_BUTTON_A,"interact"]]:labels[entry[0]].get_meta("icon").texture=textures[entry[1]]
 	for key in labels:
 		labels[key].show(); labels[key].get_node("ActionName").text=""
 		for child in labels[key].get_children():
 			if child is Label and child.name!="ActionName": child.visible=(key is int and key==JOY_BUTTON_START) or input_context in ["shadepi","raven"]
 	var arcade: bool=input_context in ["arcade","arcade_menu"]
 	if arcade:
-		action_map["lt"]=JOY_BUTTON_Y; action_map[JOY_BUTTON_Y]=JOY_BUTTON_B; action_map[JOY_BUTTON_B]=JOY_BUTTON_DPAD_DOWN
-		labels["rt"].hide(); labels[JOY_BUTTON_RIGHT_SHOULDER].hide()
-		labels[JOY_BUTTON_X].get_meta("icon").texture=textures["charge"]
-		for entry in [[JOY_BUTTON_X,"Schlag"],["lt","Kick"],[JOY_BUTTON_Y,"Spezial"],[JOY_BUTTON_B,"Block"],[JOY_BUTTON_A,"OK"]]: labels[entry[0]].get_node("ActionName").text=entry[1]
+		# v0.67.0 · CodexAI: the four face buttons match LMHS; the stick carries guard/jump.
+		for key in ["lt","rt",JOY_BUTTON_RIGHT_SHOULDER]:labels[key].hide()
+		for key in [JOY_BUTTON_X,JOY_BUTTON_Y,JOY_BUTTON_B]:labels[key].get_meta("icon").texture=textures["charge"]
+		labels[JOY_BUTTON_A].get_meta("icon").texture=textures["hack"]
+		for entry in [[JOY_BUTTON_X,"Light"],[JOY_BUTTON_Y,"Medium"],[JOY_BUTTON_B,"Heavy"],[JOY_BUTTON_A,"Special"]]:labels[entry[0]].get_node("ActionName").text=entry[1]
 		if input_context=="arcade_menu":
-			for key in ["lt",JOY_BUTTON_Y,JOY_BUTTON_B]: labels[key].hide()
+			for key in [JOY_BUTTON_Y,JOY_BUTTON_B]:labels[key].hide()
+			labels[JOY_BUTTON_A].get_node("ActionName").text="OK"
 	elif input_context in ["menu","terminal"]:
 		for key in ["lt","rt",JOY_BUTTON_X]: labels[key].hide()
 		labels[JOY_BUTTON_A].get_node("ActionName").text="OK"

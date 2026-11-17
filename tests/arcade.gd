@@ -114,22 +114,22 @@ func run() -> void:
 	await frames(60)
 	p1.x = 300.0; p2.x = 348.0; p2.vx = 0.0
 	life = p2.hp
-	key(KEY_DOWN, true); await frames(4)
-	check(p2.blocking, "Pfeil runter blockt")
+	key(KEY_DOWN, true); key(KEY_RIGHT, true); await frames(4)
+	check(p2.blocking, "Unten-Zurück blockt tief")
 	await tap(KEY_K)
 	await frames(30)
-	key(KEY_DOWN, false); await frames(2)
+	key(KEY_DOWN, false); key(KEY_RIGHT, false); await frames(2)
 	check(p2.hp < life and p2.hp > life - float(p1.data.heavy) * 0.5, "ein geblockter Hieb kostet nur einen Bruchteil")
 
 	# Spezialangriffe.
 	await frames(40)
 	p1.x = 150.0; p2.x = 420.0; p1.meter = 100.0
 	life = p2.hp
-	await tap(KEY_L)
-	check(p1.meter == 50.0 and (p1.state == "shot" or not a.shots.is_empty()), "L löst Ravens Hack-Impuls aus und kostet die halbe Leiste")
+	await tap(KEY_H)
+	check(p1.meter == 50.0 and (p1.state == "shot" or not a.shots.is_empty()), "H löst Ravens Hack-Impuls aus und kostet die halbe Leiste")
 	await until(func(): return p2.hp < life)
 	await frames(2)
-	check(p2.hp == life - 14.0 and a.shots.is_empty(), "das Geschoss trifft auf Distanz")
+	check(is_equal_approx(p2.hp, life - 14.0 * 1.35) and a.shots.is_empty(), "das Geschoss trifft auf Distanz")
 	a.start_match(0, 2, true)
 	await fighting(a)
 	p1 = a.fighters[0]; p2 = a.fighters[1]

@@ -1,5 +1,7 @@
 # Arcade- und Materialgrafiken · v0.61.0 · CodexAI
 
+**Steuerung v0.67.0 · CodexAI:** [Klassische Eingaben](../../docs/arcade-inputs-v067.md) verwenden dieselben unveränderten HQ-Atlanten. Pose 15 dient zusätzlich als echte tiefe Duck-/Blockhaltung; Medium nutzt die vorhandene Kickfolge mit eigenem Tempo/Schaden. Keine neue Körperquelle oder Stauchung.
+
 **15. November 2026.** Neue Grafiken wurden mit dem Bildgenerator anhand aktiver Spielreferenzen erstellt und anschließend registriert. [Herstellungsquellen](../../tools/art-v061/README.md) · [Arbeitsnachweis](../../docs/arbeiten/arcade-begleiter-v061.md).
 
 | Quelle | Aktiver Vertrag |

@@ -1,6 +1,6 @@
-# Arcade-Automat „NEON KOMBAT“ · v0.61.0 · CodexAI
+# Arcade-Automat „NEON KOMBAT“ · v0.67.0 · CodexAI
 
-**15. November 2026.** [Bildgalerie](README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
+**17. November 2026.** [Bildgalerie](README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
 
 ![Automat in der Halle, Kämpferwahl und Kampf](previews/arcade-v057.webp)
 
@@ -12,25 +12,30 @@ Nutzerauftrag vom 11. November 2026: In Shadepis Versteck steht ein Automat mit 
 - **Hauptmenü:** Nach dem ersten Fund erscheint „Arcade · NEON KOMBAT“.
 - **Esc / Start** öffnet das eigene Pausenmenü. Fortsetzen erhält den Kampf; „Zur Titelauswahl“ oder „Automat verlassen“ sind bewusste Menüaktionen (v0.64.0 · CodexAI).
 
-## Steuerung
+## Steuerung · v0.67.0 · CodexAI
 
-| | Spieler 1 | Spieler 2 | Gamepad |
+| Aktion | Spieler 1 | Spieler 2 | Gamepad / Touch |
 | --- | --- | --- | --- |
 | Laufen | A / D | Pfeil links / rechts | Steuerkreuz / Stick |
-| Springen | W | Pfeil hoch | hoch |
-| Blocken | S halten | Pfeil runter halten | runter |
-| Leichter Schlag | J | U | X |
-| Schwerer Kick | K | I | Y |
-| Spezial (halbe Leiste) | L | O | B |
+| Fester Sprungbogen | W, auch mit A/D | hoch, auch diagonal | hoch / diagonal-hoch |
+| Ducken | S | runter | runter |
+| Hoch-/Mittelblock | Zurück halten | Zurück halten | vom Gegner weg |
+| Tief-/Mittelblock | Unten-Zurück | Unten-Zurück | diagonal unten weg |
+| Light | J | U | X |
+| Medium | K | I | Y |
+| Heavy | L | O | B |
+| Special EX · 50 Energie | H | P | A |
 | Wählen | E / Leertaste | Enter | A |
 
-Allein am Automaten gelten für Spieler 1 auch Pfeiltasten und Enter. Erstes Gamepad: Spieler 1, zweites: Spieler 2. Im Duell mit nur einem Gamepad gehört es Spieler 2.
+Allein am Automaten gelten für Spieler 1 auch Pfeiltasten und Enter. Erstes Gamepad: Spieler 1, zweites: Spieler 2. Im Duell mit nur einem Gamepad gehört es Spieler 2. Touch und WLAN senden dieselben Gamepad-Tasten.
+
+**Richtungstechniken:** `236 + L/M/H` startet die persönliche Technik ohne Energieverbrauch, `623 + L/M/H` einen Aufstieg. **Zurück 0,75 s halten, dann Vorwärts + L/M/H** startet Ansturm; Unten halten → Oben + L/M/H einen Aufstieg. Vorwärts/Zurück spiegeln sich sofort bei einem Seitenwechsel. Die Special-Taste ist die stärkere EX-Abkürzung. [Schrittfolge, Toleranz, Hoch-/Tiefblock und native Bilder](arcade-inputs-v067.md).
 
 ## Regeln
 
 - 60 Sekunden je Runde, wer zwei Runden gewinnt, gewinnt das Duell. Bei Zeitablauf zählt der höhere Lebensanteil.
-- Treffer füllen die Spezialleiste. Ein Spezialangriff kostet die Hälfte.
-- Block fängt vier Fünftel des Schadens ab, aber nur von vorn.
+- Treffer füllen die Spezialleiste. Nur Special EX kostet die Hälfte; Richtungsbefehle sind energiefrei.
+- Passender Hoch-/Tiefblock fängt vier Fünftel des Schadens ab, nur am Boden und von vorn. Heavy/Luftangriffe schlagen über Tiefblock, geduckte Light/Medium unter Hochblock durch.
 
 | Kämpfer | Leben | Spezial |
 | --- | --- | --- |
@@ -47,7 +52,7 @@ Allein am Automaten gelten für Spieler 1 auch Pfeiltasten und Enter. Erstes Gam
 
 Jeder der zehn Kämpfer besitzt jetzt ein separat generiertes 16-Posen-Blatt: Bereitschaft/Atmen, Gehen, Sprung, Block, Treffer, liegender K.O., Faust ausholen/treffen, Kick anziehen/ausstrecken, Spezial ausholen/auslösen, Sieg und Landung. Körpermaß und Fußkontakt werden registriert; die normalen Kampagnenhelden bleiben unverändert.
 
-**Kombo:** Faust treffen lassen, dann während der Treffer-/Erholungsphase **Kick oder Spezial** eingeben. Ein bestätigter Fausttreffer kann in diese Aktion übergehen. Der Eingabepuffer hält Eingaben 180 ms vor. Bei Fehlschlägen und Blocks bleibt die Erholung; Spezial braucht weiter eine halbe Leiste. Lufttreffer, Block, Rückstoß und Hitstop gehören zum Kampf, keine Änderung der globalen Kampagnenbelegung.
+**Kombo:** Nach bestätigtem Light-Treffer während der Kontakt-/Erholungsphase Medium, Heavy oder eine Technik eingeben; Medium kann zu Heavy/Technik übergehen. Der Eingabepuffer hält 180 ms vor, auch während Hitstop. Bei Fehlschlägen und Blocks bleibt die Erholung. Normale Luftangriffe, Block, Rückstoß und Hitstop bleiben im Automaten; die globale Kampagnenbelegung ändert sich nicht.
 
 Ravens Hack-Impuls kommt sichtbar aus ihrer offenen Hand, Schützen feuern aus der Gewehrmündung. [Neue Bilder, Film und Quellen](arcade-begleiter-v061.md).
 
@@ -56,4 +61,4 @@ Ravens Hack-Impuls kommt sichtbar aus ihrer offenen Hand, Schützen feuern aus d
 - `scripts/arcade/neon_kombat.gd` (Spiel, eigenes Bild über der Welt), `scripts/arcade/arcade_cabinet.gd` (Automat in der Halle), `open_arcade()` in `scripts/main.gd`.
 - Aktive [Arcade-Quellen](../assets/arcade/README.md); Bühne bleibt erhalten. `tools/art-v061/pack.py` registriert die neuen generierten Posen und Materialien. Der frühere `build_arcade.py` ist nur Hersteller des historischen kleinen Automaten/Funkenblatts und der vorhandenen Bühne; nicht zum Überschreiben aktueller Grafiken ausführen.
 - Spielstand `user://shadepi-arcade.cfg`: Fund und Siege gegen die CPU.
-- Prüfungen: `tests/arcade.gd`.
+- Prüfungen: `tests/arcade.gd`, `tests/arcade_art.gd`, `tests/arcade_inputs.gd`, `tests/integration_v064.gd`. Der reine Richtungsring steht in `scripts/arcade/fighter_input.gd`.

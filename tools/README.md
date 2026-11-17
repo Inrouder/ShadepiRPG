@@ -1,4 +1,6 @@
-# Entwicklerwerkzeuge · v0.65.0 · CodexAI
+# Entwicklerwerkzeuge · v0.67.0 · CodexAI
+
+**v0.67.0 · CodexAI:** [Arcade-Eingabe-Galerie](arcade-v067/README.md) erfasst geskriptete reale Kampfzustände als native PNGs/Filmframes, ausschließlich nach `/tmp` und mit isolierten Daten. Keine Grafikgenerierung.
 
 **v0.66.0 · CodexAI:** [Fehlerbericht-Aufnahmen](report-v066/README.md) für Jackal/Abgang, rote Welt/Boss, Kapitelübergang, Garage und Tower-Koop. Ausschließlich native isolierte QA-Aufnahmen nach `/tmp`; keine Grafikgenerierung.
 

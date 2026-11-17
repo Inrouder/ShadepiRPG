@@ -1,5 +1,13 @@
 # Versionshinweise
 
+## v0.67.0 – CodexAI: klassische Arcade-Eingaben, Motion-Parser und Richtungsblock · 17. November 2026
+
+- Acht-Wege-Stick/Steuerkreuz mit festen Vorwärts-/Neutral-/Rückwärtssprüngen, echtem Ducken und Hoch-/Tiefblock durch Zurück bzw. Unten-Zurück. Keine Luftlenkung; die vorhandene tiefe HQ-Pose wird ohne Körperstauchung verwendet.
+- Begrenzter Richtungsring erkennt tolerante Viertelkreise und Dragon Punch, kurze Neutralphasen sowie ausgelassene Diagonalen. Gespiegelte Erkennung beim Seitenwechsel, keine wiederverwendbaren alten Befehle. Eingaben bleiben während Hitstop und kurzer Erholung gepuffert.
+- Zeitbasierte 45-Frame-Charge: Zurück → Vorwärts startet Ansturm, Unten → Oben einen Aufstieg. Seitenwechsel verwirft alte horizontale Ladung; Pause/Rundenwechsel löschen Puffer und Ladung.
+- Kompakte vier Tasten Light/Medium/Heavy/Special, ebenso auf Touch und beiden Controllern. Normale Richtungs-Techniken sind energiefrei; Special ist die stärkere EX-Abkürzung für 50 Energie. Bestätigte L→M→H/Technik-Ketten, blockierte/verfehlte Schläge behalten ihre Erholung.
+- Sofortiges Auto-Facing auch beim Überspringen; CPU verwendet dieselben Eingaben. Kampagnenbelegung, Grafikquellen und Spielstände bleiben erhalten. [Bedienung, native Bilder/Film und Prüfnachweis](docs/arcade-inputs-v067.md).
+
 ## v0.66.0 – CodexAI: Szenenkontinuität, digitale Kämpfe und Ravens Tower-Koop · 17. November 2026
 
 - Jackal steht vor Shadepis Kampf nahe der liegenden Raven mit dem Rücken zu ihr; kein Versetzen an den anderen Hofrand. Nach seinem Tod verschwindet Shadepi zu Fuß in der sichtbaren dunklen Gasse statt auf einer Wand zu landen.
