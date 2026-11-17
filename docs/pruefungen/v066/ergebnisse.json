@@ -509,5 +509,55 @@
     "Keine physische Android-/Controller-/Windows-Abnahme.",
     "Native QA bestätigt Dialoge automatisch, rafft Filmzeit und schützt die Boss-Testfigur vor dem Tod.",
     "Kein vollständiger manueller Sieben-Kapitel-Durchlauf; Kapitelwerte und Spielstandformate unverändert."
+  ],
+  "build_source_commit": "64169ece2feb2424ac9a0a69d69a34204e217f53",
+  "builds": [
+    {
+      "platform": "android",
+      "exit_code": 0,
+      "seconds": 26.68,
+      "errors": []
+    },
+    {
+      "platform": "linux",
+      "exit_code": 0,
+      "seconds": 4.29,
+      "errors": []
+    },
+    {
+      "platform": "windows",
+      "exit_code": 0,
+      "seconds": 4.56,
+      "errors": []
+    },
+    {
+      "platform": "linux-start",
+      "exit_code": 0,
+      "seconds": 1.64,
+      "errors": []
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "build/android/Shadepi-Echos-in-Neon.apk",
+      "bytes": 244218563,
+      "sha256": "0cd134564f6686f096d96c6d063ceb8fe6f49215949714f4eeda340c612e3d96"
+    },
+    {
+      "file": "build/linux/Shadepi-Echos-in-Neon.x86_64",
+      "bytes": 260964704,
+      "sha256": "e9a0b7495528097ccca66f12436ce98e86998271746f4ac18018cc75b426fbd5"
+    },
+    {
+      "file": "build/windows/Shadepi-Echos-in-Neon.exe",
+      "bytes": 296713776,
+      "sha256": "e47ba7befee5d5dfce5c26a0751be1d4acce367954df2b29539a44ffee6b045b"
+    }
+  ],
+  "android_metadata": "package: name='de.shadepi.rpg' versionCode='6600' versionName='0.66.0' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'",
+  "arrival_resources_in_apk": [
+    "assets/shaders/garage_arrival.gdshader",
+    "assets/scripts/garage_arrival.gdc",
+    "assets/scripts/garage_arrival.gd.remap"
   ]
 }
