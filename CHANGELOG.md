@@ -1,5 +1,14 @@
 # Versionshinweise
 
+## v0.66.0 – CodexAI: Szenenkontinuität, digitale Kämpfe und Ravens Tower-Koop · 17. November 2026
+
+- Jackal steht vor Shadepis Kampf nahe der liegenden Raven mit dem Rücken zu ihr; kein Versetzen an den anderen Hofrand. Nach seinem Tod verschwindet Shadepi zu Fuß in der sichtbaren dunklen Gasse statt auf einer Wand zu landen.
+- Rote Netz-Ebene: freie Wellenstartpunkte und gemeinsame Hindernisnavigation verhindern den Einschluss an der zweiten Säule. P2-Drohne nutzt einen echten digitalen Treffer-/Störempfänger; erst ICE knacken, dann löschen.
+- ICE-Wächter fliegt während Warnung/Feuer zwischen freien Arenapunkten, feuert sieben Dreiersalven in kürzeren Abständen und hat eine kürzere, stationäre Gegenangriffsphase. Kamera berücksichtigt den Abstand beider Kämpfer.
+- Sichtbarer gemeinsamer Weg von der Wanne zur Konsole vor Kapitel 3; kontrollierter Schnitt an denselben Positionen im selben Versteck. Motorrad nähert sich außerhalb der Garage und fährt durch die korrekt maskierte Toröffnung hinein; Kamera hält es im Bild.
+- P2 steuert Raven im Kenzō-Kampf und beim Rückweg durch Tower-Lobby/Flur. Datenextraktion bleibt eine geschützte feste Handlung; dort weiterhin Naniten. Solo-Kenzō bleibt Shadepis Kampf.
+- Originalgrafiken, Kapitelwerte und Spielstandformate erhalten; Regressionen, native Bilder/Filme und Paketnachweise im [bebilderten Bericht](docs/fehlerkorrekturen-v066.md).
+
 ## v0.65.1 – CodexAI: echter Aerodyne-Seitenflug und Gespräch im Nachtcockpit · 17. November 2026
 
 - Vier eigene HQ-Pixel-Seitenphasen statt versetzter Draufsicht über den Nomadenlagern; horizontale Abgasstrahlen an registrierten Heckdüsen. Derselbe Fahrzeug-Node, bestehende Flug-/Landequellen erhalten.

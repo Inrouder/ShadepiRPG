@@ -10,7 +10,7 @@ func _ready() -> void :
 	mode_button.hide()
 	restart_button.text = "Kapitel 2 neu starten"
 	# v0.55.0 · ClaudeHelper: Kapitelsprünge liegen im Hauptmenü; hier nur noch der Weg dorthin.
-	campaign_button = button_at("Kapitel 3–7 fortsetzen", 93, func(): open_chapter("res://scenes/campaign.tscn"))
+	campaign_button = button_at("Kapitel 3–7 fortsetzen", 93, func(): world.continue_to_pact())
 	campaign_button.hide()
 	menu_help.text = "E / A Zugriff · F11 Vollbild"
 func show_menu(title: String = "KAPITEL 2") -> void :

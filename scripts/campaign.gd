@@ -73,6 +73,7 @@ const PARKED_BIKE: = preload("res://assets/world/hq/bike-parked.png")
 const GARAGE_DOOR: = Rect2(238, 104, 152, 136)
 const BIKE_PARK: = Vector2(902, 386)
 var garage_door: = 0.0
+var garage_bike: Sprite2D
 var bike_mode: = ""
 ## Aerodyne on the tower pad (ROOF): touchdown point from the landing.
 var aerodyne_spot := AerodyneFlight.PAD_WORLD
@@ -154,16 +155,17 @@ func actor_is_playable(actor: PixelActor) -> bool:
 
 ## v0.54.0 · ClaudeHelper: Im Koop steuert Spieler 2 Raven selbst, sobald Shadepi führt und Raven
 ## frei in der Szene steht: im Versteck, im Hinterhalt, bei der Symbolsuche in der Garage und im
-## Kampf gegen die Aufzugwachen. Wo die Geschichte Raven festlegt (Datenextraktion im Tower,
+## Kampf gegen Kenzō und die Wachen, auch im Rückweg durch Lobby/Flur (v0.66.0 · CodexAI).
+## Wo die Geschichte Raven festlegt (Datenextraktion im Tower,
 ## Gang zur Hebebühne, See), bleibt sie geführt und Spieler 2 spielt den Begleiter.
 func coop_raven_playable() -> bool:
 	if not coop or raven_leads() or not is_instance_valid(raven) or not raven.visible: return false
 	if drive != null or timing != null or memory_scene != null: return false
 	if is_instance_valid(tower) and tower.active: return false
 	match beat:
-		Beat.PACT, Beat.AMBUSH: return true
+		Beat.PACT, Beat.AMBUSH, Beat.BOSS: return true
 		Beat.GARAGE: return point_index == 0
-		Beat.ESCAPE: return not escape_guards_cleared
+		Beat.ESCAPE: return in_passage() or not escape_guards_cleared
 	return false
 
 func companion_allowed() -> bool:
@@ -416,7 +418,13 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo:
 		foe.set_physics_process(false)
 		foe.queue_free()
 	foes.clear()
+	if is_instance_valid(garage_bike):
+		garage_bike.set_process(false); garage_bike.hide(); garage_bike.queue_free()
+	garage_bike=null
 	beat = next
+	if beat==Beat.GARAGE:
+		garage_bike=preload("res://scripts/garage_arrival.gd").new()
+		garage_bike.world=self; add_child(garage_bike)
 	garage_door = 0.0
 	bike_mode = "parked" if beat == Beat.GARAGE else ""
 	bike_pos = BIKE_PARK
@@ -1475,9 +1483,9 @@ func _scene_chase() -> void:
 func _scene_garage() -> void:
 	player.hide()
 	raven.hide()
-	bike_mode = ""
-	bike_pos = Vector2(314, 214)
-	bike_rot = PI
+	bike_mode = "approach"
+	bike_pos = Vector2(160,210)
+	bike_rot = PI*0.5
 	var cs = begin_cutscene()
 	var ticket: int = cs.generation
 	await cs.camera(Vector2(330, 250), 0.0, 1.25)
@@ -1496,15 +1504,24 @@ func _scene_garage() -> void:
 	)
 	await cs.animate(func(k: float):
 		garage_door = smoothstep(0.0, 1.0, k)
-		if k > 0.55:
-			bike_mode = "ride"
 	, 1.6)
 	if not cs.alive(ticket): return
 	cs.do(func(): sound("drive_engine_restart"))
-	var start := Vector2(314, 214)
+	# Approach sideways on the fixed outside street, clipped behind the facade.
+	await cs.animate(func(k: float):
+		bike_pos=Vector2(160,210).lerp(Vector2(314,210),smoothstep(0,1,k))
+		garage_bike.sync()
+	,1.4)
+	if not cs.alive(ticket): return
+	bike_mode="ride"
+	await cs.animate(func(k: float):
+		bike_rot=lerp_angle(PI*0.5,PI,smoothstep(0,1,k))
+		garage_bike.sync()
+	,0.45)
+	if not cs.alive(ticket): return
+	var start := Vector2(314, 210)
 	var bend := Vector2(360, 452)
 	var finish := BIKE_PARK + Vector2(0, 34)
-	var camera_from: Vector2 = camera.position
 	await cs.animate(func(k: float):
 		var t := smoothstep(0.0, 1.0, k)
 		var a := start.lerp(bend, t)
@@ -1513,7 +1530,8 @@ func _scene_garage() -> void:
 		var direction := (b - a).normalized()
 		bike_pos = p
 		bike_rot = direction.angle() + PI * 0.5
-		camera.position = camera_from.lerp(Vector2(clampf(p.x, 330.0, 700.0), 330.0), smoothstep(0.0, 1.0, k))
+		garage_bike.sync()
+		camera.position=Vector2(clampf(p.x,330.0,760.0),clampf(p.y-30.0,250.0,430.0))
 		if fposmod(k * 20.0, 1.0) < 0.15:
 			effects.water_step(p + Vector2(0, 20))
 	, 2.8)
@@ -1577,11 +1595,7 @@ func _draw_garage() -> void:
 			draw_line(Vector2(rx, ry), Vector2(rx - 2, ry + 7), Color(0.65, 0.75, 0.95, 0.35))
 		draw_rect(Rect2(opening.position.x - 2, opening.position.y - 5, opening.size.x + 4, 6), Color("4c535e"))
 		draw_rect(Rect2(opening.position.x - 2, opening.position.y - 1, opening.size.x + 4, 2), Color("e2b13c"))
-	if bike_mode == "ride":
-		draw_set_transform(bike_pos, bike_rot)
-		draw_texture_rect_region(VEHICLES, Rect2(Vector2(-39, -39), Vector2(78, 78)), Rect2(0, 627, 627, 627))
-		draw_set_transform(Vector2.ZERO)
-	elif bike_mode == "parked":
+	if bike_mode == "parked":
 		var size: = Vector2(72.0 * PARKED_BIKE.get_width() / PARKED_BIKE.get_height(), 72.0)
 		draw_set_transform(bike_pos, bike_rot)
 		draw_texture_rect(PARKED_BIKE, Rect2(-size * 0.5 + Vector2(3, 4), size), false, Color(0, 0, 0, 0.35))

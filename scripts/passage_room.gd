@@ -63,6 +63,8 @@ var body: StaticBody2D
 var saved := {}
 var covers: Array[Sprite2D] = []
 var clock := 0.0
+var navigation: AStarGrid2D
+const NAV_STEP := 12.0
 
 func open(owner_world: Node2D, room_key: String, route_key: String, lead_actor: Callable) -> void:
 	world = owner_world
@@ -180,6 +182,42 @@ func blocked(global_point: Vector2, radius: float) -> bool:
 	for box: Rect2 in config.solids:
 		if box.grow(radius).has_point(local): return true
 	return not Geometry2D.is_point_in_polygon(local, PackedVector2Array(config.floor))
+
+## v0.66.0 · CodexAI. Shared clear cells for ICE spawns and detours around column bases.
+func _navigation() -> AStarGrid2D:
+	if navigation!=null: return navigation
+	navigation=AStarGrid2D.new()
+	navigation.region=Rect2i(Vector2i.ZERO,Vector2i(ceil(config.size.x/NAV_STEP),ceil(config.size.y/NAV_STEP)))
+	navigation.cell_size=Vector2.ONE*NAV_STEP
+	navigation.offset=ORIGIN+Vector2.ONE*NAV_STEP*0.5
+	navigation.diagonal_mode=AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
+	navigation.update()
+	for y in navigation.region.size.y:
+		for x in navigation.region.size.x:
+			var id:=Vector2i(x,y)
+			navigation.set_point_solid(id,blocked(navigation.get_point_position(id),14.0))
+	return navigation
+func _clear_cell(point: Vector2) -> Vector2i:
+	var nav:=_navigation()
+	var nearest:=Vector2i((point-ORIGIN)/NAV_STEP)
+	nearest=nearest.clamp(nav.region.position,nav.region.end-Vector2i.ONE)
+	if not nav.is_point_solid(nearest): return nearest
+	var best:=Vector2i(-1,-1); var distance:=INF
+	for y in nav.region.size.y:
+		for x in nav.region.size.x:
+			var id:=Vector2i(x,y)
+			if nav.is_point_solid(id): continue
+			var d:=nav.get_point_position(id).distance_squared_to(point)
+			if d<distance: distance=d; best=id
+	return best
+func safe_point(point: Vector2) -> Vector2:
+	if not blocked(point,14): return point
+	var id:=_clear_cell(point)
+	return _navigation().get_point_position(id) if id.x>=0 else entry()
+func route_around(from: Vector2,to: Vector2) -> PackedVector2Array:
+	var start:=_clear_cell(from); var finish:=_clear_cell(to)
+	if start.x<0 or finish.x<0: return PackedVector2Array()
+	return _navigation().get_point_path(start,finish)
 
 func contains(global_point: Vector2) -> bool:
 	return Geometry2D.is_point_in_polygon(global_point - ORIGIN, PackedVector2Array(config.floor))

@@ -53,9 +53,15 @@ func run() -> void:
 	check(w.companion_lead() == null and not pet.visible, "co-op ambush: player two plays Raven herself, so no companion")
 	w._enter(w.Beat.BOSS)
 	await settle(w, 90)
-	check(w.companion_lead() == w.player and pet.kind == "nanites" and pet.visible, "in co-op Shadepi's nanite swarm joins when only he is playable")
+	check(w.coop_raven_playable() and w.companion_lead()==null and not pet.visible,"in co-op Kenzo fight player two is Raven")
+	# During protected extraction Raven really is story-bound; the swarm remains appropriate here.
+	w.escape_guards_cleared=false
+	w._enter(w.Beat.ESCAPE,0,0)
+	for foe in w.foes: foe.set_physics_process(false)
+	await settle(w,90)
+	check(w.tower.active and w.companion_lead()==w.player and pet.kind=="nanites" and pet.visible,"during extraction P2 uses the nanite swarm while Raven is at the terminal")
 	var foes: Array = w.special_targets()
-	check(not foes.is_empty(), "the tower fight has an enemy for the companion")
+	check(not foes.is_empty(), "the extraction has a guard for the companion")
 	if not foes.is_empty():
 		var foe = foes[0]
 		var before: int = foe.health

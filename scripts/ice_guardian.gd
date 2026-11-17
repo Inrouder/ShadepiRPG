@@ -1,13 +1,16 @@
 extends "res://scripts/dive_threat.gd"
-## v0.50.0 · CodexAI. Readable salvo / close-range core / retreat encounter.
+## v0.66.0 · CodexAI. Mobile guardian, seven denser volleys and a stationary punish window.
 const COMBAT_ART: Texture2D = preload("res://assets/sprites/npcs/ice-guardian-combat.png")
 const Bolt = preload("res://scripts/ice_orb.gd")
-const WINDUP := 1.35
-const SALVO := 2.25
-const COOLING := 6.2
+const WINDUP := 1.1
+const SALVO := 2.1
+const COOLING := 3.6
 const CORE_RANGE := 66.0
 const MAX_HEALTH := 8
-const SHOT_COUNT := 5
+const SHOT_COUNT := 7
+const SHOT_INTERVAL := 0.28
+const FLIGHT_ROUTE: Array[Vector2] = [Vector2(1300,430),Vector2(1320,730),Vector2(1090,780),Vector2(1060,480)]
+var flight_point := 0
 enum Phase { AIM, FIRE, COOL, DEFEATED }
 var phase := Phase.AIM
 var phase_time := 0.0
@@ -25,6 +28,7 @@ func _init() -> void:
 
 func _ready() -> void:
 	super._ready()
+	bounds=Rect2(Vector2(30,30),world.ice_map_size()-Vector2(60,60))
 	# Atlas replaces only this boss; standard Raven/Shadepi stay untouched.
 	visual.texture = COMBAT_ART
 	visual.hframes = 4
@@ -41,13 +45,18 @@ func _process(delta: float) -> void:
 	phase_time += delta
 	hit_cooldown = maxf(0, hit_cooldown - delta)
 	flash = maxf(0, flash - delta)
+	if phase in [Phase.AIM,Phase.FIRE]:
+		var destination: Vector2=FLIGHT_ROUTE[flight_point]
+		_move(position.direction_to(destination)*minf((115.0 if health>4 else 145.0)*delta,position.distance_to(destination)))
+		if position.distance_to(destination)<4: flight_point=(flight_point+1)%FLIGHT_ROUTE.size()
 	if phase == Phase.AIM:
+		if phase_time<WINDUP*0.65: aim=position.direction_to(world.raven.position)
 		if phase_time >= WINDUP:
 			phase = Phase.FIRE
 			phase_time = 0
 			volleys = 0
 	elif phase == Phase.FIRE:
-		while volleys < SHOT_COUNT and phase_time >= volleys * 0.42:
+		while volleys < SHOT_COUNT and phase_time >= volleys * SHOT_INTERVAL:
 			_fire_volley()
 			volleys += 1
 		if phase_time >= SALVO:
@@ -74,7 +83,7 @@ func _fire_volley() -> void:
 		orb.owner_boss = self
 		orb.position = position
 		orb.direction = aim.rotated(spread + (0.035 if volleys % 2 else -0.035))
-		orb.speed = 190.0 if health > 4 else 215.0
+		orb.speed = 190.0 if health > 4 else 235.0
 		world.actors.add_child(orb)
 		bolts.append(orb)
 	world.sound("electric", -0.12)
@@ -87,14 +96,17 @@ func crack(_from: Vector2) -> void:
 	flash = 0.08
 
 func receive_strike(source: PixelActor, strength: int) -> bool:
+	return receive_contact(source.position,strength)
+
+func receive_contact(origin: Vector2,strength: int) -> bool:
 	if phase == Phase.DEFEATED: return false
 	if not vulnerable():
 		world.damage_number(position + Vector2(-28, -62), "PANZERUNG")
 		return false
-	if source.position.distance_to(position) > CORE_RANGE:
+	if origin.distance_to(position) > CORE_RANGE:
 		world.damage_number(position + Vector2(-28, -62), "NÄHER RAN")
 		return false
-	if hit_cooldown > 0 or not world._line_clear(source.position, position): return false
+	if hit_cooldown > 0 or not world._line_clear(origin, position): return false
 	var damage := mini(mini(strength, 2 - cycle_damage), health)
 	health -= damage
 	cycle_damage += damage
@@ -141,13 +153,13 @@ func _update_visual() -> void:
 	match phase:
 		Phase.DEFEATED: atlas_frame = 7
 		Phase.COOL: atlas_frame = 6 if flash > 0 else 5 if cycle_damage < 2 else 4
-		Phase.FIRE: atlas_frame = 3 + int(fposmod(phase_time, 0.42) > 0.12)
+		Phase.FIRE: atlas_frame = 3 + int(fposmod(phase_time, SHOT_INTERVAL) > 0.12)
 		_: atlas_frame = 0 if phase_time < 0.25 else 1 + int(phase_time > WINDUP * 0.65)
 	if visual.hframes == 4: visual.frame = atlas_frame
 	visual.scale = Vector2.ONE * visual_scale
 	visual.position = Vector2(0, -18 + sin(visual_elapsed * 2.8) * 2.0)
 	if phase == Phase.FIRE:
-		visual.position -= aim * (3.0 * maxf(0, 1.0 - fposmod(phase_time, 0.42) / 0.16))
+		visual.position -= aim * (3.0 * maxf(0, 1.0 - fposmod(phase_time, SHOT_INTERVAL) / 0.16))
 	visual.rotation = sin(visual_elapsed * 1.5) * 0.025
 	visual.modulate = Color(1.5,1.5,1.5) if flash > 0 else Color.WHITE
 

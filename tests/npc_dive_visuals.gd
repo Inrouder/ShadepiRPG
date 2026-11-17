@@ -10,6 +10,7 @@ class TestWorld:
 	var busy := false
 	var raven: Target
 	func is_busy() -> bool: return busy
+	func ice_map_size() -> Vector2: return Vector2(1536,960)
 var checks := 0
 var failures := 0
 func _initialize():run.call_deferred()

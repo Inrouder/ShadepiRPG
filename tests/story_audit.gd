@@ -140,6 +140,7 @@ func run() -> void:
 	check(two.raven.health == 100 and two.relay_index == 1 and two.threats.size() == 1, "dive death restores health and relay encounter")
 	two._enter(two.Section.END)
 	two.interact()
+	finish_dialogue(two) # v0.66.0: visible walk to the console precedes the scene handover.
 	await scene_changed
 	var campaign = current_scene
 	freeze(campaign)

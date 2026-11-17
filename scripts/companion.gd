@@ -265,7 +265,7 @@ func attack() -> void:
 		world.effects.weapon_trace(muzzle, hit, true)
 		world.sound("pistol", 0.12)
 		if foe != null:
-			foe.take_damage(SHOT_DAMAGE, position)
+			world.companion_hit(foe,SHOT_DAMAGE,position)
 			world.effects.burst(hit, Color("7defff"), 5)
 	else:
 		world.sound("slash", 0.12)
@@ -273,7 +273,7 @@ func attack() -> void:
 			var bite: Vector2 = foe.position + Vector2(0, -18)
 			facing = (bite - position).normalized()
 			lunge = (bite - position).limit_length(BITE_RANGE)
-			foe.take_damage(BITE_DAMAGE, position)
+			world.companion_hit(foe,BITE_DAMAGE,position)
 			world.effects.burst(bite, Color("ff5a68"), 7)
 
 func hack() -> void:
@@ -285,9 +285,8 @@ func hack() -> void:
 		world.sound("hack")
 		world.effects.burst(position, Color("7defff"), 14)
 		for foe: Node2D in world.special_targets():
-			if foe.position.distance_to(position) <= HACK_RANGE and foe.has_method("hack_interrupt"):
-				foe.hack_interrupt(1.4)
-				world.effects.hack_arc(position, foe.position + Vector2(0, -20))
+			if foe.position.distance_to(position) <= HACK_RANGE:
+				world.companion_interrupt(foe,position)
 	else:
 		# Schutzschwarm: die Naniten legen sich kurz um Shadepi und fangen Treffer ab.
 		world.sound("hack")

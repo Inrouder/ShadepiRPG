@@ -1,5 +1,7 @@
 # Entwicklerwerkzeuge · v0.65.0 · CodexAI
 
+**v0.66.0 · CodexAI:** [Fehlerbericht-Aufnahmen](report-v066/README.md) für Jackal/Abgang, rote Welt/Boss, Kapitelübergang, Garage und Tower-Koop. Ausschließlich native isolierte QA-Aufnahmen nach `/tmp`; keine Grafikgenerierung.
+
 **v0.65.1 · CodexAI:** [Native Nomaden-/Cockpitaufnahme](cinema-v0651/README.md) schreibt ausschließlich isolierte QA-Aufnahmen nach `/tmp`, kein Asset-Generator. Neue Quellen/Fingerabdrücke dort dokumentiert.
 
 **v0.65.0 · CodexAI:** [Fahr-/Fluggalerie und Quellfingerabdrücke](cinema-v065/README.md), native Aufnahmen mit isolierten Daten. `tests/cinema_v065.gd` prüft Sichtfeld, Straßenausschnitt, Überschlag, Herausfahren, Pause, Zeitsprung und Szenentausch; nativ zusätzlich tatsächliche Rand-/Schriftpixel. Keine Generatoren beim Setup ausführen.

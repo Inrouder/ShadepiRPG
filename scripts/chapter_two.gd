@@ -32,7 +32,7 @@ var dive_hold: = 0.0
 const PassageRoom = preload("res://scripts/passage_room.gd")
 const NET_LAYERS := {
 	"dive_archive": [[Vector2(420, 200), Vector2(560, 170)], [Vector2(820, 190), Vector2(900, 222), Vector2(480, 195)]],
-	"dive_core": [[Vector2(330, 240), Vector2(520, 200), Vector2(600, 252)], [Vector2(900, 210), Vector2(960, 250), Vector2(700, 200), Vector2(430, 232)]],
+	"dive_core": [[Vector2(330, 240), Vector2(520, 200), Vector2(600, 252)], [Vector2(900, 210), Vector2(960, 250), Vector2(700, 200), Vector2(430, 208)]],
 }
 var net_layer: Node2D
 var net_waves: Array = []
@@ -103,6 +103,7 @@ func _process(delta: float) -> void :
 	_sync_net_avatar(delta)
 	if raven_leads() and not in_cinematic():
 		camera.position = ice_camera_home()
+		if ice_guardian()!=null: camera.zoom=Vector2.ONE*ice_camera_zoom()
 		if not is_busy():
 			ice_cycle = fposmod(ice_cycle + delta, 2.4)
 			if _ice_open() != previous_ice_open and raven.position.distance_to(_target()) < 75.0:
@@ -253,7 +254,7 @@ func interaction_prompt() -> String:
 
 func interact(_actor: PixelActor = null) -> void :
 	if section == Section.END and not is_busy():
-		ChapterFlow.advance(get_tree(), "res://scenes/campaign.tscn")
+		continue_to_pact()
 		return
 	if is_busy() or interaction_prompt().is_empty():
 		return
@@ -322,7 +323,13 @@ func ice_cover() -> Array[Rect2]:
 
 func ice_camera_home() -> Vector2:
 	var boss = ice_guardian()
-	return raven.position.lerp(boss.position, 0.35) + Vector2(0, -35) if boss != null else raven.position + Vector2(0, -45)
+	return raven.position.lerp(boss.position,0.5)+Vector2(0,-25) if boss!=null else raven.position+Vector2(0,-45)
+
+func ice_camera_zoom() -> float:
+	var boss=ice_guardian()
+	if boss==null: return 1.0
+	var distance: Vector2=(boss.position-raven.position).abs()+Vector2(190,270)
+	return clampf(minf(0.85,minf(640.0/distance.x,360.0/distance.y)),0.45,0.85)
 
 func atmosphere_rect() -> Rect2:
 	return Rect2(Vector2.ZERO, ice_map_size())
@@ -457,6 +464,26 @@ func special_hit(target: Node2D, amount: int, source: PixelActor, kick: bool) ->
 		return
 	_destroy_threat(target)
 
+## v0.66.0 · CodexAI. Drone shots crack ICE first, then delete the open program.
+func companion_hit(target: Node2D, amount: int, origin: Vector2) -> void:
+	if target not in threats:
+		super.companion_hit(target,amount,origin)
+		return
+	if target.guardian:
+		target.receive_contact(origin,1)
+	elif target.vulnerable():
+		_destroy_threat(target)
+	else:
+		target.crack(origin)
+		damage_number(target.position+Vector2(-10,-40),"RISS")
+
+func companion_interrupt(target: Node2D, origin: Vector2) -> void:
+	if target in threats:
+		if target.guardian: target.extend_cooling()
+		else: target.crack(origin)
+		effects.hack_arc(origin,target.position+Vector2(0,-20))
+	else: super.companion_interrupt(target,origin)
+
 func admin_defeat_enemies() -> int:
 	var amount := super.admin_defeat_enemies()
 	if section == Section.DIVE:
@@ -510,7 +537,7 @@ func _spawn_net_wave() -> void:
 	for local: Vector2 in wave:
 		var threat: Node2D = Threat.new()
 		threat.world = self
-		threat.position = net_layer.point(local)
+		threat.position = net_layer.safe_point(net_layer.point(local))
 		threat.bounds = net_layer.floor_bounds().grow(-10.0)
 		actors.add_child(threat)
 		threats.append(threat)
@@ -751,6 +778,26 @@ func _scene_chapter_end() -> void:
 	await cs.title("KAPITEL 2 · ENDE", "Auf den Monitoren bleibt ein Name stehen: Kenzō Moriyama", 2.8)
 	if not cs.alive(ticket): return
 	cs.end(func(): toast("E / A · Weiter zu Kapitel 3"))
+
+## v0.66.0 · CodexAI. Chapter 3 begins in this same room, at the end of a visible walk.
+func continue_to_pact() -> void:
+	if section!=Section.END or in_cinematic(): return
+	close_menu()
+	var cs=begin_cutscene(); var ticket: int=cs.generation
+	await cs.say("RAVEN","Komm mit zur Konsole. Ich muss dir etwas über Kenzō erzählen.")
+	if not cs.alive(ticket): return
+	for targets in [[Vector2(610,430),Vector2(620,450)],[Vector2(550,430),Vector2(560,450)],[Vector2(437,427),Vector2(410,441)]]:
+		var duration: float=maxf(player.position.distance_to(targets[0]),raven.position.distance_to(targets[1]))/58.0
+		cs.camera((targets[0]+targets[1])*0.5+Vector2(0,-38),duration,1.1)
+		await preload("res://scripts/cinematic_motion.gd").walk_pair(cs,[player,raven],targets,58)
+		if not cs.alive(ticket): return
+	cs.face(player,raven.position); cs.face(raven,player.position)
+	cs.pose(player,"idle"); cs.pose(raven,"idle")
+	await cs.camera(player.position.lerp(raven.position,0.5)+Vector2(0,-42),0.6,1.3)
+	if not cs.alive(ticket): return
+	await cs.fade(Color.BLACK,0.55)
+	if not cs.alive(ticket): return
+	cs.end(func(): ChapterFlow.advance(get_tree(),"res://scenes/campaign.tscn"))
 
 func saved_checkpoint() -> int:
 	var config := preload("res://scripts/checkpoint_store.gd").read(Admin.checkpoint_path(SLOT, get_tree()))

@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.65.1 · CodexAI · Godot 4.7.2 · Windows / Linux / Android-Testfassung · Einzelspieler, Lokal- und WLAN-Remote-Koop**
+**2D-Action-RPG · v0.66.0 · CodexAI · Godot 4.7.2 · Windows / Linux / Android-Testfassung · Einzelspieler, Lokal- und WLAN-Remote-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -9,6 +9,11 @@ Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben�
 **[Gesamtprojektanalyse v0.63.0 · CodexAI: bestätigte Fehler, Messungen und Prioritäten](docs/projektanalyse-v063.md)**
 
 ## Bilder aus dem Spiel
+
+| Szene und Koop · v0.66.0 · CodexAI | Beweglicher ICE-Wächter |
+| --- | --- |
+| [![Jackal bei Raven vor Shadepis Kampf](docs/previews/jackal-standoff-v066.png)](docs/fehlerkorrekturen-v066.md) | [![Fliegender Wächter mit dichteren Salven](docs/previews/ice-mobile-v066.png)](docs/fehlerkorrekturen-v066.md) |
+| [Szenen, Kapitelübergang, Einfahrt und Tower-Rollen](docs/fehlerkorrekturen-v066.md) | [Bossfilm](docs/previews/ice-mobile-v066.webp) |
 
 | Aerodyne im Seitenprofil · v0.65.1 · CodexAI | Gespräch im Nachtcockpit |
 | --- | --- |

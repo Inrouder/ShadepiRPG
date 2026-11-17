@@ -1,5 +1,7 @@
 # ICE-Wächter: Deckung, Salven und Vorstoß
 
+**Ausbau v0.66.0 · CodexAI:** [Beweglicher Wächter, dichtere Salven und gemeinsames Kamera-Framing](fehlerkorrekturen-v066.md) ersetzen die damalige stationäre Boss-/Timingvariante. Quelle, Kern-Nahkampfregel, Deckung und originale Helden bleiben erhalten; die folgenden Aufnahmen dokumentieren v0.50.0.
+
 **v0.50.0 · CodexAI · 10. November 2026.** [Spieleranleitung](../Spiel-README.md) · [Galerie](README.md) · [Arbeitsnachweis](arbeiten/ice-v050.md).
 
 Der dritte Datenknoten in Kapitel 2 hat einen eigenen Bosskampf. Der bisherige sofort berechnete Querstrahl und die schnelle Zwei-Schuss-Löschung sind ersetzt durch einen wiederholbaren Kampf mit bewegten Energiekugeln, lesbaren Angriffen und einem Kern, den Raven aus kurzer Distanz treffen muss.

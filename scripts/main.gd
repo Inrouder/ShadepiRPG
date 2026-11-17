@@ -1060,6 +1060,16 @@ func special_targets() -> Array[Node2D]:
 			targets.append(node)
 	return targets
 
+## v0.66.0 · CodexAI. Companion contacts have a real origin and a world-specific receiver.
+func companion_hit(target: Node2D, amount: int, origin: Vector2) -> void:
+	if is_instance_valid(target) and target.has_method("take_damage"):
+		target.take_damage(amount,origin)
+
+func companion_interrupt(target: Node2D, origin: Vector2) -> void:
+	if is_instance_valid(target) and target.has_method("hack_interrupt"):
+		target.hack_interrupt(1.4)
+		effects.hack_arc(origin,target.position+Vector2(0,-20))
+
 func special_hit(target: Node2D, amount: int, source: PixelActor, kick: bool) -> void:
 	var before: int = target.health
 	target.take_damage(amount, source.position)

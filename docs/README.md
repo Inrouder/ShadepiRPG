@@ -1,8 +1,15 @@
 # Shadepi · Bilder, Filme und Dokumentation
 
-**Stand v0.65.1 · CodexAI · 17. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
+**Stand v0.66.0 · CodexAI · 17. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
 
 Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnahmen, animierte Szenenfilme, Bedienung und technische Hinweise.
+
+| Szene und Koop · v0.66.0 · CodexAI | Beweglicher ICE-Wächter |
+| --- | --- |
+| [![Jackal bei Raven vor Shadepis Kampf](previews/jackal-standoff-v066.png)](fehlerkorrekturen-v066.md) | [![Fliegender Wächter mit dichteren Salven](previews/ice-mobile-v066.png)](fehlerkorrekturen-v066.md) |
+| [Szenen, Kapitelübergang, Einfahrt und Tower-Rollen](fehlerkorrekturen-v066.md) | [Bossfilm](previews/ice-mobile-v066.webp) |
+
+
 
 | Aerodyne im Seitenprofil · v0.65.1 · CodexAI | Gespräch im Nachtcockpit |
 | --- | --- |

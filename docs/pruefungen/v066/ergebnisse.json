@@ -1,0 +1,512 @@
+{
+  "version": "0.66.0",
+  "author": "CodexAI",
+  "date": "2026-11-17",
+  "base_commit": "353936e022729a41119ab1aba9778b77377154f9",
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "headless_suites": 53,
+  "headless_checks": 4938,
+  "failures": 0,
+  "method": "Breite Prüfrunde aller 53 headless Suiten; gezielte finale Nachläufe für NPC-TestWorld, zusätzliche P2-Eingaben und kollisionsfreie Kapitel-Wegführung. Keine doppelte Summierung wiederholter Prüfungen.",
+  "suites": [
+    {
+      "test": "aerodyne_art",
+      "code": 0,
+      "seconds": 6.56,
+      "errors": [],
+      "summary": [
+        "AERODYNE ART: 30 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "aerodyne_flight",
+      "code": 0,
+      "seconds": 0.73,
+      "errors": [],
+      "summary": [
+        "AERODYNE FLIGHT: 53 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "ambient_audio",
+      "code": 0,
+      "seconds": 3.86,
+      "errors": [],
+      "summary": [
+        "AMBIENT AUDIO: 56 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "arcade",
+      "code": 0,
+      "seconds": 31.0,
+      "errors": [],
+      "summary": [
+        "ARCADE: 57 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "arcade_art",
+      "code": 0,
+      "seconds": 0.97,
+      "errors": [],
+      "summary": [
+        "ARCADE ART: 266 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "arcade_waves",
+      "code": 0,
+      "seconds": 4.33,
+      "errors": [],
+      "summary": [
+        "ARCADE WAVES: 354 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "blood_fx",
+      "code": 0,
+      "seconds": 1.22,
+      "errors": [],
+      "summary": [
+        "BLOOD FX: 29 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "bug_report_v045",
+      "code": 0,
+      "seconds": 17.04,
+      "errors": [],
+      "summary": [
+        "BUG REPORT v045: 424 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "chapter_one_intro",
+      "code": 0,
+      "seconds": 7.3,
+      "errors": [],
+      "summary": [
+        "CHAPTER ONE INTRO: 58 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "cinema_v065",
+      "code": 0,
+      "seconds": 5.75,
+      "errors": [],
+      "summary": [
+        "CINEMA v0.65.1 CodexAI: 30 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "cinematic_blocking",
+      "code": 0,
+      "seconds": 14.1,
+      "errors": [],
+      "summary": [
+        "CINEMATIC BLOCKING: 50 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "combat_moves",
+      "code": 0,
+      "seconds": 4.14,
+      "errors": [],
+      "summary": [
+        "COMBAT MOVES: 68 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "companion",
+      "code": 0,
+      "seconds": 6.78,
+      "errors": [],
+      "summary": [
+        "COMPANION: 25 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "companion_input",
+      "code": 0,
+      "seconds": 9.1,
+      "errors": [],
+      "summary": [
+        "COMPANION INPUT: 41 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "coop_campaign",
+      "code": 0,
+      "seconds": 6.5,
+      "errors": [],
+      "summary": [
+        "COOP CAMPAIGN: 23 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "coop_chapters",
+      "code": 0,
+      "seconds": 25.92,
+      "errors": [],
+      "summary": [
+        "COOP CHAPTERS: 76 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "display_settings",
+      "code": 0,
+      "seconds": 4.18,
+      "errors": [],
+      "summary": [
+        "Display settings: 74 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "drive_action",
+      "code": 0,
+      "seconds": 1.02,
+      "errors": [],
+      "summary": [
+        "Drive action: 76 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "hangar_discovery",
+      "code": 0,
+      "seconds": 7.96,
+      "errors": [],
+      "summary": [
+        "HANGAR DISCOVERY: 38 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "hq_display",
+      "code": 0,
+      "seconds": 2.63,
+      "errors": [],
+      "summary": [
+        "HQ DISPLAY: 66 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "hq_popups",
+      "code": 0,
+      "seconds": 5.06,
+      "errors": [],
+      "summary": [
+        "HQ POPUPS: 64 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "ice_bath",
+      "code": 0,
+      "seconds": 4.03,
+      "errors": [],
+      "summary": [
+        "ICE BATH: 49 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "ice_boss",
+      "code": 0,
+      "seconds": 1.88,
+      "errors": [],
+      "summary": [
+        "ICE BOSS: 41 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "integration_v064",
+      "code": 0,
+      "seconds": 3.82,
+      "errors": [],
+      "summary": [
+        "INTEGRATION v0.64.0 CodexAI: 26 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "lake_sequence",
+      "code": 0,
+      "seconds": 9.31,
+      "errors": [],
+      "summary": [
+        "LAKE SEQUENCE: 40 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "legacy_memory",
+      "code": 0,
+      "seconds": 18.3,
+      "errors": [],
+      "summary": [
+        "LEGACY MEMORY: 79 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "menu_checkpoints",
+      "code": 0,
+      "seconds": 7.11,
+      "errors": [],
+      "summary": [
+        "MENU CHECKPOINTS: 205 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "menu_navigation",
+      "code": 0,
+      "seconds": 2.63,
+      "errors": [],
+      "summary": [
+        "MENU NAVIGATION: 16 checks, 0 failures; testing real desktop exit"
+      ]
+    },
+    {
+      "test": "mobile_input",
+      "code": 0,
+      "seconds": 2.14,
+      "errors": [],
+      "summary": [
+        "MOBILE INPUT: 18 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "monastery_battle",
+      "code": 0,
+      "seconds": 9.31,
+      "errors": [],
+      "summary": [
+        "MONASTERY BATTLE: 226 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "monastery_memory",
+      "code": 0,
+      "seconds": 3.83,
+      "errors": [],
+      "summary": [
+        "MONASTERY MEMORY: 143 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "moon_lake_menu",
+      "code": 0,
+      "seconds": 4.03,
+      "errors": [],
+      "summary": [
+        "MOON LAKE / MENU: 262 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "net_avatar",
+      "code": 0,
+      "seconds": 1.67,
+      "errors": [],
+      "summary": [
+        "NET AVATAR: 52 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "npc_dive_visuals",
+      "code": 0,
+      "errors": [],
+      "summary": [
+        "NPC DIVE VISUAL TESTS: 18 checks, 0 failures"
+      ],
+      "note": "TestWorld um reale Arena-Größe ergänzt."
+    },
+    {
+      "test": "passages",
+      "code": 0,
+      "seconds": 10.95,
+      "errors": [],
+      "summary": [
+        "PASSAGES: 69 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "pursuit_art",
+      "code": 0,
+      "seconds": 3.64,
+      "errors": [],
+      "summary": [
+        "PURSUIT ART: 55 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "raven_enemy_combat",
+      "code": 0,
+      "seconds": 2.18,
+      "errors": [],
+      "summary": [
+        "RAVEN / ENEMY COMBAT: 292 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "regressions_v066",
+      "code": 0,
+      "errors": [],
+      "summary": [
+        "REGRESSIONS v0.66.0 CodexAI: 22 checks, 0 failures"
+      ],
+      "note": "Finale Wege und echte P2-Bewegungs-/Pistoleneingaben."
+    },
+    {
+      "test": "report8",
+      "code": 0,
+      "seconds": 7.99,
+      "errors": [],
+      "summary": [
+        "REPORT 8: 21 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "run",
+      "code": 0,
+      "seconds": 26.28,
+      "errors": [],
+      "summary": [
+        "SHADEPI TESTS: 386 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "sacrifice_memory",
+      "code": 0,
+      "seconds": 18.0,
+      "errors": [],
+      "summary": [
+        "SACRIFICE MEMORY: 69 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "sanctuary_art",
+      "code": 0,
+      "seconds": 0.67,
+      "errors": [],
+      "summary": [
+        "SANCTUARY ART: 18 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "sanctuary_story",
+      "code": 0,
+      "seconds": 4.38,
+      "errors": [],
+      "summary": [
+        "SANCTUARY STORY: 27 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "scene_atmosphere",
+      "code": 0,
+      "seconds": 4.13,
+      "errors": [],
+      "summary": [
+        "SCENE ATMOSPHERE: 134 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "scene_polish",
+      "code": 0,
+      "seconds": 5.96,
+      "errors": [],
+      "summary": [
+        "SCENE POLISH: 54 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "story_audit",
+      "code": 0,
+      "errors": [],
+      "summary": [
+        "STORY AUDIT: 206 checks, 0 failures"
+      ],
+      "note": "Nachlauf nach endgültiger kollisionsfreier Wegführung vor Kapitel 3."
+    },
+    {
+      "test": "story_plan",
+      "code": 0,
+      "seconds": 4.47,
+      "errors": [],
+      "summary": [
+        "STORY PLAN: 15 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "technology_props",
+      "code": 0,
+      "seconds": 3.19,
+      "errors": [],
+      "summary": [
+        "TECHNOLOGY PROPS: 55 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "terminal_controller",
+      "code": 0,
+      "seconds": 6.81,
+      "errors": [],
+      "summary": [
+        "Terminal controller: 186 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "terminal_puzzles",
+      "code": 0,
+      "seconds": 3.45,
+      "errors": [],
+      "summary": [
+        "Terminal puzzles: 67 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "tower_sequence",
+      "code": 0,
+      "seconds": 4.6,
+      "errors": [],
+      "summary": [
+        "TOWER SEQUENCE: 42 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "tower_walkthrough",
+      "code": 0,
+      "seconds": 116.23,
+      "errors": [],
+      "summary": [
+        "TOWER WALKTHROUGH: 42 checks, 0 failures"
+      ]
+    },
+    {
+      "test": "vehicle_motion",
+      "code": 0,
+      "seconds": 4.15,
+      "errors": [],
+      "summary": [
+        "VEHICLE MOTION: 45 checks, 0 failures"
+      ]
+    }
+  ],
+  "native": {
+    "checks": 25,
+    "failures": 0,
+    "renderer": "X11 / llvmpipe",
+    "size": [
+      1280,
+      720
+    ],
+    "cases": [
+      "Echter Motorrad-Shader in transparentem SubViewport: außerhalb unsichtbar, in Öffnung sichtbar, danach innen sichtbar",
+      "Rote ICE-Startpunkte, Säulenumgehung und wirkliche Drohnenangriffe",
+      "P2-Bewegung und Pistolenschuss gegen Kenzō",
+      "Bossbewegung, schnellere Salven, stationäres Kernfenster und Pause",
+      "Unterbrechbarer Kapitelübergang, Tower-Rollen und Shadepi-Gassenausgang"
+    ]
+  },
+  "art": "Vorhandene Bildquellen und Originalhelden unverändert; keine neuen Atlanten.",
+  "limits": [
+    "Keine physische Android-/Controller-/Windows-Abnahme.",
+    "Native QA bestätigt Dialoge automatisch, rafft Filmzeit und schützt die Boss-Testfigur vor dem Tod.",
+    "Kein vollständiger manueller Sieben-Kapitel-Durchlauf; Kapitelwerte und Spielstandformate unverändert."
+  ]
+}

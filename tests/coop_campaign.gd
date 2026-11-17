@@ -56,7 +56,7 @@ func run() -> void:
 	# Tower: Raven extrahiert Daten – geführt; Spieler 2 bekommt die Naniten.
 	w._enter(w.Beat.BOSS)
 	await settle(w, 90)
-	check(not w.coop_raven_playable() and w.companion_lead() == w.player, "tower fight: Raven is story-bound, player two gets the nanite swarm")
+	check(w.coop_raven_playable() and w.companion_lead()==null, "tower fight: player two controls Raven")
 	# Raven führt (Dach): Spieler 1 steuert sie, Spieler 2 die Drohne.
 	w._enter(w.Beat.ROOF)
 	await settle(w)

@@ -19,6 +19,8 @@ var visual_scale := 1.0
 var cracked := 0.0
 var knock := Vector2.ZERO
 var flash := 0.0
+var route := PackedVector2Array()
+var route_timer := 0.0
 
 func _ready() -> void:
 	visual = Sprite2D.new()
@@ -51,8 +53,8 @@ func _process(delta: float) -> void :
 	elapsed += delta
 	var target: Vector2 = world.raven.position
 	if elapsed < 0.85:
-		direction = position.direction_to(target)
-		_move(position.direction_to(target) * minf(delta * 45.0, position.distance_to(target)))
+		direction = _approach_direction(target,delta)
+		_move(direction * minf(delta * 55.0, position.distance_to(target)))
 	elif elapsed < 1.18:
 		if not _move(direction * delta * 195.0):
 			elapsed = 1.18
@@ -64,6 +66,16 @@ func _process(delta: float) -> void :
 		hit = false
 	_update_visual()
 	queue_redraw()
+
+## v0.66.0 · CodexAI. Recompute a short detour, rather than pushing forever into a pillar.
+func _approach_direction(target: Vector2,delta: float) -> Vector2:
+	if not world.has_method("in_net_layer") or not world.in_net_layer(): return position.direction_to(target)
+	route_timer-=delta
+	if route_timer<=0:
+		route=world.net_layer.route_around(position,target)
+		route_timer=0.35
+	while not route.is_empty() and position.distance_to(route[0])<9: route.remove_at(0)
+	return position.direction_to(route[0]) if not route.is_empty() else position.direction_to(target)
 
 ## Moves while respecting the data-space walls; returns false when blocked.
 func _move(step: Vector2) -> bool:

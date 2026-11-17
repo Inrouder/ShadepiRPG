@@ -49,11 +49,11 @@ func run():
 	var before=boss.phase_time;w.menu_open=true;boss._process(3)
 	check(boss.phase_time==before and boss.bolts.is_empty(),"pause freezes animation and salvo timers")
 	w.menu_open=false
-	tick(boss,1.3);check(boss.bolts.is_empty() and boss.phase==boss.Phase.AIM,"full visible warning precedes any projectile")
+	tick(boss,boss.WINDUP-0.05);check(boss.bolts.is_empty() and boss.phase==boss.Phase.AIM,"full visible warning precedes any projectile")
 	tick(boss,0.1);check(boss.phase==boss.Phase.FIRE and boss.bolts.size()==3,"first fan has three moving balls")
 	var locked=boss.aim;w.raven.position+=Vector2(0,120)
-	tick(boss,2.3);check(boss.aim==locked,"salvo stays locked rather than tracking evasive player")
-	check(boss.bolts.size()==15 and boss.phase==boss.Phase.COOL,"five volleys end in explicit cooling window")
+	tick(boss,boss.SALVO+0.05);check(boss.aim==locked,"salvo stays locked rather than tracking evasive player")
+	check(boss.bolts.size()==boss.SHOT_COUNT*3 and boss.phase==boss.Phase.COOL,"all denser volleys end in an explicit cooling window")
 	boss.clear_bolts();check(boss.bolts.is_empty(),"projectiles have bounded tracked lifecycle")
 	# Cover resolves before a player behind it, even in a single large frame.
 	var cover:Rect2=w.ice_cover()[1]

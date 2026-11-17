@@ -88,9 +88,10 @@ func run() -> void:
 	w._enter(w.Beat.ROOF)
 	await play_until_free(w)
 	await drive(w, "tower roof", w.raven)
-	w._enter(w.Beat.BOSS)
+	w.escape_guards_cleared=false
+	w._enter(w.Beat.ESCAPE,0,0)
 	await play_until_free(w)
-	await drive(w, "tower fight", w.player)
+	await drive(w, "tower extraction", w.player)
 	# Kapitelwechsel: die Koop-Sitzung gilt weiter, ohne dass im neuen Kapitel neu gewählt wird.
 	check(get_meta("shadepi_coop_session", false), "the menu choice is remembered for the session")
 	w.queue_free()

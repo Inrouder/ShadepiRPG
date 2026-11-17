@@ -659,8 +659,8 @@ func check_chapter() -> void:
 	chapter.enemy.take_damage(200)
 	check(chapter.phase == chapter.Phase.EPILOGUE and chapter.in_cinematic(), "winning starts the closing scene")
 	finish_dialogue(chapter)
-	check(not chapter.raven.visible and chapter.player.position.y == 223.0, "Raven leaves through the door and Shadepi leaps onto the roof")
-	check(chapter.phase == chapter.Phase.COMPLETE and not chapter.in_cinematic(), "the rooftop jump completes the chapter")
+	check(not chapter.raven.visible and not chapter.player.visible and chapter.player.position==chapter.SHADOW_EXIT, "Raven leaves through the door and Shadepi vanishes into the real dark alley")
+	check(chapter.phase == chapter.Phase.COMPLETE and not chapter.in_cinematic(), "the dark-alley departure completes the chapter")
 	check(is_equal_approx(chapter.player.visual.position.y, chapter.player.standing_visual_position.y), "rooftop landing restores the HQ sprite foot position")
 	check(chapter.load_game(true) and chapter.phase == chapter.Phase.COMPLETE and not chapter.enemy.visible, "the completed co-op checkpoint can be reloaded")
 	chapter.chapter_coop = false

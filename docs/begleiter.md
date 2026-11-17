@@ -1,5 +1,7 @@
 # Begleiter für Spieler 2 · v0.61.0 · CodexAI
 
+**Korrektur v0.66.0 · CodexAI:** [Aktuelle digitale Treffer und Tower-Rollen](fehlerkorrekturen-v066.md). Im Kenzō-Kampf und im Fluchtflur steuert P2 Raven selbst; die folgende ältere Tower-Nanitenbeschreibung gilt dort nicht mehr. Während Datenextraktion bleibt Raven gebunden und der Schwarm unterstützt Shadepi. Drohnenschüsse und Störimpuls können nun die wirklichen digitalen Gegner treffen/öffnen; keine direkte `take_damage()`-Annahme für virtuelle Nodes.
+
 **Stand 15. November 2026.** Nutzeridee: In vielen Szenen ist nur ein Held spielbar, der zweite Spieler hatte dort nichts zu tun. Jetzt steuert er den Begleiter des Helden.
 
 [![Ravens Drohne schießt auf dem Tower-Dach, Shadepis Nanitenschwarm beißt im Hinterhalt rot zu](previews/begleiter-v053.png)](previews/begleiter-v053.png)

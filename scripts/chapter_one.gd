@@ -28,6 +28,8 @@ const PUNKS := [
 ]
 const ARENA_ENTRY := Vector2(568, 356)
 const DOWNED_SPOT := Vector2(636, 365)
+const JACKAL_STANDOFF := DOWNED_SPOT+Vector2(44,-18)
+const SHADOW_EXIT := Vector2(427,220)
 const RESCUE_START := Vector2(295, 451)
 const BARRIERS: Array[Rect2] = [
 	Rect2(-441, 284, 36, 107), Rect2(-270, 388, 41, 104), Rect2(-113, 284, 38, 107),
@@ -264,19 +266,20 @@ func _enter_checkpoint(next_phase: Phase, saved_section: int = 0) -> void:
 	if phase == Phase.RESCUE:
 		player.position = RESCUE_START
 	elif phase == Phase.COMPLETE:
-		player.position = Vector2(919, 223)
+		player.position = SHADOW_EXIT
+		player.hide()
 	player.health = 100
 	player.energy = 100.0
 	player.reset_transients()
 	player.reset_visual_pose()
 	player.facing = Vector2.RIGHT
-	player.visible = not raven_leads()
+	player.visible = phase!=Phase.COMPLETE and not raven_leads()
 	reset_raven(APARTMENT_EXIT if raven_leads() else DOWNED_SPOT)
 	raven.visible = phase != Phase.COMPLETE
 	raven.health_floor = 0
 	raven.facing = Vector2.RIGHT
 	raven.reset_visual_pose()
-	enemy.position = WorldData.JACKAL
+	enemy.position = JACKAL_STANDOFF if phase==Phase.TEAM else WorldData.JACKAL
 	enemy.armoured = false
 	enemy.min_health = (JACKAL_HEALTH >> 1) if phase == Phase.TEAM else 0
 	enemy.move_speed = 54.0
@@ -286,6 +289,7 @@ func _enter_checkpoint(next_phase: Phase, saved_section: int = 0) -> void:
 	enemy.lunge_speed = 235.0
 	enemy.reset_fight(0 if phase == Phase.COMPLETE else enemy.max_health)
 	enemy.active = phase == Phase.TEAM
+	if phase==Phase.TEAM: enemy.facing=enemy.position.direction_to(player.position)
 	enemy.visible = enemy.active
 	close_menu()
 	_update_apartment_lighting()
@@ -620,25 +624,34 @@ func interact(_actor: PixelActor = null) -> void:
 ## Kapitel 1: Shadepi erreicht Raven; Jackal tritt aus dem Hof.
 func _scene_revive() -> void:
 	var cs = begin_cutscene()
+	var ticket: int=cs.generation
+	enemy.position=JACKAL_STANDOFF
+	enemy.facing=(enemy.position-raven.position).normalized()
+	enemy.show()
+	cs.pose(enemy,"idle")
 	cs.pose(raven, "hurt")
 	await cs.camera(raven.position + Vector2(0, -50), 0.6, 1.25)
+	if not cs.alive(ticket): return
 	await cs.walk(player, raven.position + Vector2(-26, 8), 70)
+	if not cs.alive(ticket): return
 	cs.face(player, raven.position)
 	cs.pose(player, "idle")
 	await cs.lines([
 		["SHADEPI", "Kannst du mich hören? Bleib liegen. Der Rückstoß hat deine Beinimplantate verriegelt."],
 		["RAVEN", "Er ist noch auf meiner Leitung. Solange seine Panzerung volle Leistung hat, komme ich nicht aus der Schleife."],
 	])
-	cs.do(func():
-		enemy.position = WorldData.JACKAL
-		enemy.show()
-	)
-	await cs.camera(WorldData.JACKAL + Vector2(-40, -50), 0.9, 1.1)
-	cs.pose(enemy, "idle")
-	cs.face(enemy, player.position)
+	if not cs.alive(ticket): return
+	cs.pose(enemy,"idle")
+	await cs.camera(raven.position.lerp(enemy.position,0.5)+Vector2(0,-48),0.7,1.2)
+	if not cs.alive(ticket): return
+	await cs.wait(0.4)
+	if not cs.alive(ticket): return
+	cs.face(enemy,player.position)
 	await cs.say("CHROME JACKAL", "Noch so ein Held. Wie viele Teile von dir passen in meinen Kofferraum?")
+	if not cs.alive(ticket): return
 	cs.face(player, enemy.position)
 	await cs.say("SHADEPI", "Dann kümmere ich mich um seine Panzerung. Wenn dein Deck wieder hochfährt, brauche ich deine Hilfe.")
+	if not cs.alive(ticket): return
 	cs.end(func():
 		_enter_checkpoint(Phase.TEAM)
 		autosave()
@@ -694,6 +707,7 @@ func _scene_epilogue() -> void:
 	cs.pose(player, "idle")
 	cs.pose(raven, "idle")
 	await cs.camera(player.position.lerp(raven.position, 0.5) + Vector2(0, -50), 0.8, 1.2)
+	if not cs.alive(ticket): return
 	cs.face(raven, player.position)
 	cs.face(player, raven.position)
 	await cs.lines([
@@ -704,29 +718,50 @@ func _scene_epilogue() -> void:
 		["SHADEPI", "Ja, ich bin ein Cyber-Ninja. Man nennt mich Shadepi. Und wie darf ich dich nennen?"],
 		["RAVEN", "Man sieht wenige von euch. Mein Name ist Raven. Vielleicht bin ich beim Running auf nützliche Informationen gestoßen. Aber das kostet …"],
 	])
+	if not cs.alive(ticket): return
 	await cs.walk(player, body + Vector2(-22, 10), 70)
+	if not cs.alive(ticket): return
 	cs.face(player, body)
 	cs.pose(player, "attack")
 	cs.do(func(): effects.burst(body + Vector2(0, -6), Color("b98cff"), 10))
 	await cs.wait(0.5)
+	if not cs.alive(ticket): return
 	cs.pose(player, "idle")
 	cs.face(player, raven.position)
 	await cs.say("SHADEPI", "1-2-3-4. Das war einfach. Bezahlt dich das?")
+	if not cs.alive(ticket): return
 	cs.do(func(): effects.hack_arc(player.position + Vector2(0, -20), raven.position + Vector2(0, -20)))
 	await cs.lines([
 		["RAVEN", "Was soll ich damit? Das Konto ist voll von seinem Blutgeld."],
 		["RAVEN", "Aber da du mir geholfen hast, helfe ich dir. Ich bin mal nicht so. Triff mich dort – dann sehe ich nach den Infos, die du brauchst."],
 	])
+	if not cs.alive(ticket): return
 	cs.do(func(): effects.burst(player.position + Vector2(0, -24), Color("8be0e4"), 8))
 	cs.release(raven)
 	await cs.walk(raven, Vector2(EXIT_DOOR.x, 327), 80)
+	if not cs.alive(ticket): return
 	await cs.walk(raven, EXIT_DOOR + Vector2(0, 4), 60)
+	if not cs.alive(ticket): return
 	cs.do(func(): raven.hide())
 	await cs.wait(0.4)
+	if not cs.alive(ticket): return
 	await cs.say("SHADEPI / LEISE", "Ein Hauch von Rosen … Geld ist doch Geld. … Danke, Raven.")
-	var roof := Vector2(clampf(player.position.x + 40.0, 550.0, 1000.0), 223.0)
-	cs.face(player, roof)
-	await cs.leap(player, roof, 78.0, 0.7)
+	if not cs.alive(ticket): return
+	# v0.66.0 · CodexAI. The dark opening between the buildings is a real ground-level exit.
+	# No leap onto the painted roller-door wall.
+	for point in [Vector2(600,345),Vector2(460,337),Vector2(427,300),Vector2(427,255)]:
+		await cs.walk(player,point,125)
+		if not cs.alive(ticket): return
+	var shadow_start: Vector2=player.position
+	await cs.animate(func(p: float):
+		player.position=shadow_start.lerp(SHADOW_EXIT,p)
+		player.facing=Vector2.UP
+		player.animate("walk",player.get_process_delta_time())
+		player.modulate=Color(1.0-p*0.8,1.0-p*0.8,1.0-p*0.8,1.0-p)
+	,0.75)
+	if not cs.alive(ticket): return
+	player.hide()
+	player.modulate=Color.WHITE
 	cs.do(func():
 		phase = Phase.COMPLETE
 		checkpoint = Phase.COMPLETE
@@ -734,6 +769,7 @@ func _scene_epilogue() -> void:
 		autosave()
 	)
 	await cs.title("KAPITEL 1 · ENDE", "Auf der Datenkarte blinkt eine Adresse.", 2.6)
+	if not cs.alive(ticket): return
 	cs.end()
 
 func player_defeated() -> void:

@@ -2,7 +2,7 @@
 
 **Android/WLAN v0.62.0 · CodexAI:** [Bedienung und Plattformvertrag](docs/android-wlan-v062.md). Erste WLAN-Fassung ist Remote-Koop: ein Host simuliert und speichert, der Client zeigt Bild/Ton und sendet P2-Gamepadzustände. Keine zweite Story-Simulation. Geräte ausschließlich über `GamepadBindings.devices()` zuweisen; Touchgerät 100, Netzwerkgerät 101. Mehrfache Finger, gehaltene Trigger, Fokusverlust und Trennung müssen Tasten freigeben. Canvas-Ebenen mit `root_only` niemals ins HQ-Spielbild spiegeln; Popup-Ebene 1024 erhalten. Android-HQ maximal 1280×720, Desktop unverändert. Signierschlüssel und APKs außerhalb des Git; keine Behauptung physischer Handy-Abnahme ohne tatsächlichen Test.
 
-**Stand v0.65.1 · CodexAI · 17. November 2026; eingeführt mit v0.32.1.** Gilt für das gesamte Spiel und alle Mitwirkenden, ob Mensch oder KI. Vor Änderungen zusammen mit [AGENTS.md](AGENTS.md) lesen und die [Arbeitsvorlage](docs/vorlagen/konsistenz-auftrag.md) verwenden. Eine neuere ausdrückliche Nutzervorgabe hat Vorrang; bestätigte Änderungen anschließend hier und in den betroffenen Referenzen nachführen.
+**Stand v0.66.0 · CodexAI · 17. November 2026; eingeführt mit v0.32.1.** Gilt für das gesamte Spiel und alle Mitwirkenden, ob Mensch oder KI. Vor Änderungen zusammen mit [AGENTS.md](AGENTS.md) lesen und die [Arbeitsvorlage](docs/vorlagen/konsistenz-auftrag.md) verwenden. Eine neuere ausdrückliche Nutzervorgabe hat Vorrang; bestätigte Änderungen anschließend hier und in den betroffenen Referenzen nachführen.
 
 **Repository-Ordnung v0.46.2 · CodexAI:** [Statuskatalog](docs/repository-status.md) unterscheidet aktive Quellen, Vergleichsbilder, Sicherungen und verworfene Varianten. Entwicklungsarchiv unter `docs/archiv/` nicht als Laufzeit-/Grafikstandard verwenden. `legacy` in Erinnerung III bleibt aktiv; Nutzer-/Storyquellen unter `docs/universum/` bleiben verbindlich.
 
@@ -13,6 +13,8 @@
 **Fahr-/Flugkino v0.65.0 · CodexAI:** [Neue Sichtfeld-/Überschlagsregeln und Storyanschluss](docs/fahrt-flug-v065.md). Gemeinsame Projektion erhält Kontakt-/Kollisionsanker; HUD und Landehandover bleiben korrekt. Rollkörper besitzt echte Seiten-/Unterbodenphasen. Die feste Außenansicht hinter dem Tor wird nur freigegeben, nicht mitgenommen. [Teil 8](docs/universum/teil-8/README.md) bestätigt Nomadenflug, Dialog und Zeitsprung vor dem bisherigen See-Anflug; originale Hauptfiguren unverändert.
 
 **Nomadenflug v0.65.1 · CodexAI:** [Echtes Seitenprofil und anschließendes Nachtcockpit](docs/nomaden-cockpit-v0651.md). Nur der Wüstenflug verwendet `side-flight.png` mit eigenen horizontalen Düsenankern; ursprüngliche Drauf-/Landequellen bleiben aktiv. Vor Gesprächsbeginn ins an den Start angeglichene Nachtcockpit schneiden. Keine Fehlstart-/Schlagposen im ruhigen Gespräch verwenden.
+
+**Szenen/Koop v0.66.0 · CodexAI:** [Aktueller Fehlerbericht und Bildbelege](docs/fehlerkorrekturen-v066.md). Jackals Nähe/Blickrichtung vor dem Duell und Shadepis Abgang in die sichtbare dunkle Gasse erhalten. Kapitel 2→3 bleibt im selben Versteck mit sichtbarem Weg zur Konsole. Garagenfahrt kontinuierlich durch echte Tor-Verdeckung, keine sichtbare Aktivierung an der Schwelle. Beweglicher ICE-Wächter behält die vorhandene Figurenquelle und ein stationäres Nahkampffenster. P2 Raven in Kenzōs Kampf und Rückweg, Naniten nur während der gebundenen Extraktion; Solo kämpft Shadepi allein.
 
 ## Bebilderter Einstieg für das gesamte Spiel
 
