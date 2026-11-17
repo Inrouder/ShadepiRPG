@@ -20,7 +20,7 @@ Nach Jackals Tod verlässt Raven die Szene durch ihre Tür. Shadepi geht anschli
 
 Ein Startpunkt der zweiten Welle lag im vergrößerten Kollisionsbereich des zweiten Säulensockels. Er liegt nun frei. Zusätzlich prüft der Raum die Startpunkte und liefert den ICE-Gegnern Wege um die Sockel; sie drücken nicht endlos gegen dieselbe Ecke. Säulen und Verdeckungen bleiben erhalten.
 
-Die Drohne rief bisher direkt `take_damage()` auf. Digitale Gegner besitzen diese Funktion nicht. Begleitertreffer werden jetzt über die Welt an den passenden Gegner weitergereicht: Ein Schuss öffnet die ICE-Hülle, ein weiterer Treffer löscht sie. Der Störimpuls erreicht ebenfalls digitale Gegner. Am Wächter kann die Drohne den offenen Kern aus tatsächlicher Nähe treffen; sie umgeht seine geschlossene Panzerung nicht.
+Die Drohne rief bisher direkt `take_damage()` auf. Digitale Gegner besitzen diese Funktion nicht. Begleitertreffer werden jetzt über die Welt an den passenden Gegner weitergereicht: Ein Schuss öffnet die ICE-Hülle, ein weiterer Treffer löscht sie. Der Störimpuls erreicht ebenfalls digitale Gegner. Bei einem Raumwechsel setzt die Drohne direkt neben Raven wieder an, statt am entfernten Rand ihrer Leine zu landen. Am Wächter kann die Drohne den offenen Kern aus tatsächlicher Nähe treffen; sie umgeht seine geschlossene Panzerung nicht.
 
 ## Beweglicher ICE-Wächter
 
@@ -67,6 +67,6 @@ Spieler 2 steuert Raven im Kenzō-Kampf und beim Rückweg durch Lobby und Flur. 
 
 ## Prüfung und Grenzen
 
-[Maschinenlesbarer Prüfnachweis](pruefungen/v066/ergebnisse.json): **53 headless Prüfreihen, 4.938 erfolgreiche Prüfungen, keine verbleibenden Fehler**, dazu **25 native Prüfungen**. Automatisierte Fehlerfälle prüfen unter anderem alle roten Wellenstartpunkte, die Umgehung der zweiten Säule, echte P2-Drohnenangriffe, kontinuierliche Bossbewegung ohne Begrenzungssprung, Salven/Kernfenster, die beiden Tower-Rollen und den unterbrechbaren Kapitelübergang. Native Pixelprüfungen kontrollieren, dass das Motorrad außerhalb der Toröffnung unsichtbar bleibt, innerhalb sichtbar wird und nach der Schwelle weiter sichtbar ist.
+[Maschinenlesbarer Prüfnachweis](pruefungen/v066/ergebnisse.json): **53 headless Prüfreihen, 4.939 erfolgreiche Prüfungen, keine verbleibenden Fehler**, dazu **26 native Prüfungen**. Automatisierte Fehlerfälle prüfen unter anderem alle roten Wellenstartpunkte, die Umgehung der zweiten Säule, echte P2-Drohnenangriffe, kontinuierliche Bossbewegung ohne Begrenzungssprung, Salven/Kernfenster, die beiden Tower-Rollen und den unterbrechbaren Kapitelübergang. Native Pixelprüfungen kontrollieren, dass das Motorrad außerhalb der Toröffnung unsichtbar bleibt, innerhalb sichtbar wird und nach der Schwelle weiter sichtbar ist.
 
 Alle Abbildungen und Filme sind echte Linux-/X11-Godot-Aufnahmen mit isolierten QA-Spielständen. Die Vorschau bestätigt Dialoge automatisch, rafft Teile der Szenen und schützt die Testfigur in der Bossaufnahme vor dem Tod. Sie ersetzt keinen physischen Android-/Controller-/Windows-Durchlauf. Keine neuen Figuren oder Bildquellen generiert: vorhandene HQ-Pixelquellen und Originalhelden bleiben unverändert. Signaturarbeit bleibt beim Nutzer; Cloud-Veröffentlichung und Release sind nicht Bestandteil dieser Korrektur.

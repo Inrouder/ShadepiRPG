@@ -5,7 +5,7 @@
   "base_commit": "353936e022729a41119ab1aba9778b77377154f9",
   "engine": "4.7.2.stable.official.ed1daf0bf",
   "headless_suites": 53,
-  "headless_checks": 4938,
+  "headless_checks": 4939,
   "failures": 0,
   "method": "Breite Prüfrunde aller 53 headless Suiten; gezielte finale Nachläufe für NPC-TestWorld, zusätzliche P2-Eingaben und kollisionsfreie Kapitel-Wegführung. Keine doppelte Summierung wiederholter Prüfungen.",
   "suites": [
@@ -129,11 +129,11 @@
     {
       "test": "companion_input",
       "code": 0,
-      "seconds": 9.1,
       "errors": [],
       "summary": [
         "COMPANION INPUT: 41 checks, 0 failures"
-      ]
+      ],
+      "note": "Abschließender Nachlauf nach gemeinsamer Drohnenplatzierung beim digitalen Raumwechsel."
     },
     {
       "test": "coop_campaign",
@@ -318,11 +318,11 @@
     {
       "test": "passages",
       "code": 0,
-      "seconds": 10.95,
       "errors": [],
       "summary": [
         "PASSAGES: 69 checks, 0 failures"
-      ]
+      ],
+      "note": "Abschließender Nachlauf nach gemeinsamer Drohnenplatzierung beim digitalen Raumwechsel."
     },
     {
       "test": "pursuit_art",
@@ -347,9 +347,9 @@
       "code": 0,
       "errors": [],
       "summary": [
-        "REGRESSIONS v0.66.0 CodexAI: 22 checks, 0 failures"
+        "REGRESSIONS v0.66.0 CodexAI: 23 checks, 0 failures"
       ],
-      "note": "Finale Wege und echte P2-Bewegungs-/Pistoleneingaben."
+      "note": "Abschließender Nachlauf nach gemeinsamer Drohnenplatzierung beim digitalen Raumwechsel."
     },
     {
       "test": "report8",
@@ -488,7 +488,7 @@
     }
   ],
   "native": {
-    "checks": 25,
+    "checks": 26,
     "failures": 0,
     "renderer": "X11 / llvmpipe",
     "size": [
@@ -500,7 +500,8 @@
       "Rote ICE-Startpunkte, Säulenumgehung und wirkliche Drohnenangriffe",
       "P2-Bewegung und Pistolenschuss gegen Kenzō",
       "Bossbewegung, schnellere Salven, stationäres Kernfenster und Pause",
-      "Unterbrechbarer Kapitelübergang, Tower-Rollen und Shadepi-Gassenausgang"
+      "Unterbrechbarer Kapitelübergang, Tower-Rollen und Shadepi-Gassenausgang",
+      "P2-Drohne startet nach digitalem Raumwechsel direkt bei Raven"
     ]
   },
   "art": "Vorhandene Bildquellen und Originalhelden unverändert; keine neuen Atlanten.",

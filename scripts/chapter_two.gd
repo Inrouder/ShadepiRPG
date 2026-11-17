@@ -182,6 +182,7 @@ func _enter(next: Section, saved_relay: int = 0, keep_positions: bool = false, s
 	net_avatar_clock = 0.0
 	_sync_net_avatar(0.0)
 	if raven_leads():
+		if is_instance_valid(companion): companion.position=raven.position+Vector2(-18,-30)
 		_spawn_ice()
 	player.visible = not raven_leads()
 	raven.visible = section != Section.YARD
@@ -571,6 +572,7 @@ func _finish_net_layer() -> void:
 	_close_net_layer()
 	raven.position = back
 	if after.is_valid(): after.call()
+	if is_instance_valid(companion): companion.position=raven.position+Vector2(-18,-30)
 
 ## Tests und Admin-Sprünge: die offene Netz-Ebene sofort abschließen.
 func skip_net_layer() -> void:

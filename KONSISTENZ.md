@@ -14,7 +14,7 @@
 
 **Nomadenflug v0.65.1 · CodexAI:** [Echtes Seitenprofil und anschließendes Nachtcockpit](docs/nomaden-cockpit-v0651.md). Nur der Wüstenflug verwendet `side-flight.png` mit eigenen horizontalen Düsenankern; ursprüngliche Drauf-/Landequellen bleiben aktiv. Vor Gesprächsbeginn ins an den Start angeglichene Nachtcockpit schneiden. Keine Fehlstart-/Schlagposen im ruhigen Gespräch verwenden.
 
-**Szenen/Koop v0.66.0 · CodexAI:** [Aktueller Fehlerbericht und Bildbelege](docs/fehlerkorrekturen-v066.md). Jackals Nähe/Blickrichtung vor dem Duell und Shadepis Abgang in die sichtbare dunkle Gasse erhalten. Kapitel 2→3 bleibt im selben Versteck mit sichtbarem Weg zur Konsole. Garagenfahrt kontinuierlich durch echte Tor-Verdeckung, keine sichtbare Aktivierung an der Schwelle. Beweglicher ICE-Wächter behält die vorhandene Figurenquelle und ein stationäres Nahkampffenster. P2 Raven in Kenzōs Kampf und Rückweg, Naniten nur während der gebundenen Extraktion; Solo kämpft Shadepi allein.
+**Szenen/Koop v0.66.0 · CodexAI:** [Aktueller Fehlerbericht und Bildbelege](docs/fehlerkorrekturen-v066.md). Jackals Nähe/Blickrichtung vor dem Duell und Shadepis Abgang in die sichtbare dunkle Gasse erhalten. Kapitel 2→3 bleibt im selben Versteck mit sichtbarem Weg zur Konsole. Garagenfahrt kontinuierlich durch echte Tor-Verdeckung, keine sichtbare Aktivierung an der Schwelle. Beweglicher ICE-Wächter behält die vorhandene Figurenquelle und ein stationäres Nahkampffenster. P2 Raven in Kenzōs Kampf und Rückweg, Naniten während der gebundenen Extraktion; Solo kämpft Shadepi allein.
 
 ## Bebilderter Einstieg für das gesamte Spiel
 

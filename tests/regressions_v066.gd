@@ -46,6 +46,7 @@ func run():
 	check(virus not in two.threats and not two.net_layer.locked,"second drone shot deletes the open ICE and unlocks the cleared room")
 	# Direct attacks and jamming share the digital receiver in the ordinary map as well.
 	two._enter(two.Section.DIVE,2);two.cutscene.abort();two.close_menu();freeze(two)
+	check(two.companion.position.distance_to(two.raven.position)<50,"P2 drone arrives beside Raven after leaving the distant red room")
 	var boss=two.ice_guardian();var origin: Vector2=boss.position
 	boss._process(1.0/60)
 	check(boss.position.distance_to(origin)<3,"guardian movement starts continuously in its actual expanded arena bounds")
