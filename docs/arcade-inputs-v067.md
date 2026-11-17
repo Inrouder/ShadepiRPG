@@ -17,7 +17,7 @@ NEON KOMBAT erhält feste Sprünge, Richtungsblock, vier Angriffstasten und klas
 | Heavy | L | O | B |
 | Special EX | H | P | A |
 
-Special benötigt **50 Energie** und verstärkt die persönliche Technik um 35 %. Ein Richtungsbefehl mit Light/Medium/Heavy benötigt keine Energie; Medium/Heavy verstärken diese Technik um 15/30 %. Normale Angriffe haben ihre eigenen abgestuften Schadenswerte und Anlaufzeiten. Bestätigte Treffer erlauben Light → Medium → Heavy oder Technik; Fehlschläge/Blocks behalten ihre Erholung.
+Special benötigt **50 Energie** und verstärkt die persönliche Technik um 35 %. EX-Schattenschnitt schützt außerdem kurz in seinem aktiven Startfenster (0,10–0,22 s). Ein Richtungsbefehl mit Light/Medium/Heavy benötigt keine Energie; Medium/Heavy verstärken diese Technik um 15/30 %. Normale Angriffe haben ihre eigenen abgestuften Schadenswerte und Anlaufzeiten. Bestätigte Treffer erlauben Light → Medium → Heavy oder Technik; Fehlschläge/Blocks behalten ihre Erholung.
 
 ![Vier klar benannte Touch-Flächen am Rand](previews/arcade-touch-v067.png)
 
@@ -73,5 +73,7 @@ Beispiel Raven auf der linken Seite: **S → S+D → D+J** startet den energiefr
 ## Prüfungen und Grenzen
 
 [Maschinenlesbarer Prüfnachweis](pruefungen/v067/ergebnisse.json) · [Konsistenz-/Arbeitsnachweis](arbeiten/arcade-inputs-v067.md) · [Aufnahmewerkzeug](../tools/arcade-v067/README.md).
+
+**Ergebnis:** 54 Headless-Prüfreihen mit **5.023 Checks**, 348 native Checks und 21 Checks der Zwei-Prozess-WLAN-Verbindung ohne Fehler. Windows-, Linux- und Android-Export erfolgreich; Linux-Paket gestartet, APK als v0.67.0 / Code 6700 samt Arcade-Skripten kontrolliert.
 
 Die gezielten Prüfungen umfassen echte Tastatur-, Touch- und Godot-Gamepad-Ereignisse, beide Spieler, gespiegelte Stickbefehle, Hoch-/Tiefschutz, tatsächliches Überspringen, Sprung-Endpunkte bei 30/60/144 Hz, 44/45/50-Frame-Ladung, Befehlstoleranz/-Verbrauch sowie Hitstop und Pause. Die Desktop-Aufnahmen zeigen die tatsächlichen Pixel; ein physischer Android-Controller-Test und subjektives Feintuning des Turnier-Balancings sind damit nicht behauptet. Windows-/Linux-/Android-Builds werden ohne Release-Veröffentlichung erzeugt; Signaturverwaltung bleibt beim Nutzer.

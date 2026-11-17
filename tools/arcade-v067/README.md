@@ -6,4 +6,4 @@
 XDG_DATA_HOME=/tmp/shadepi-arcade-gallery godot --audio-driver Dummy --script res://tools/arcade-v067/gallery.gd
 ```
 
-PNG-Einzelbilder und 15-fps-Filmframes unter `frames/`. Mobilbild verwendet die tatsächliche kontextabhängige Touch-Ebene über dem Automaten. Keine Handyaufnahme. [Bedienung/Bilder/Film](../../docs/arcade-inputs-v067.md) · [Arbeitsnachweis](../../docs/arbeiten/arcade-inputs-v067.md). Vor normalen Spielstarts nicht ausführen.
+PNG-Einzelbilder und 15-fps-Filmframes unter `frames/`. `-- --rest` setzt eine unterbrochene Aufnahme ab dem Charge-Teil fort und erhält vorhandene Frames. Mobilbild verwendet die tatsächliche kontextabhängige Touch-Ebene über dem Automaten. Keine Handyaufnahme. [Bedienung/Bilder/Film](../../docs/arcade-inputs-v067.md) · [Arbeitsnachweis](../../docs/arbeiten/arcade-inputs-v067.md). Vor normalen Spielstarts nicht ausführen.
