@@ -34,6 +34,8 @@ Der vorhandene GitHub-Actions-Ablauf baut und prüft vor der Veröffentlichung. 
 
 ## Abnahme
 
+**Ergebnis vor dem Release-Tag:** 55 Headless-Prüfreihen mit **5.034 Checks** ohne Fehler; zusätzlich 11 native Checks. Android-/Windows-/Linux-Export erfolgreich, Linux-Paket gestartet, APK-Version 0.67.1 / Code 6701 kontrolliert.
+
 Die neue Nachstellung meldete im unveränderten v0.67.0 fünf Fehler bei acht Checks; nach der Korrektur wurden weitere Randfälle ergänzt. [Automatisierte Ergebnisse und lokale Paketnachweise](pruefungen/v0671/ergebnisse.json) · [Konsistenz-/Arbeitsnachweis](arbeiten/release-v0671.md).
 
 Windows-/Android-Export und native Linux-Prüfung ersetzen keine physische Geräteabnahme. Die lokal dokumentierten Paketfingerabdrücke gehören zu den lokalen QA-Builds; die veröffentlichten Pakete besitzen ihre eigenen im Release mitgelieferten Prüfsummen. Cloud-Umgebung und App-Stores werden durch diesen GitHub-Release-Auftrag nicht veröffentlicht.
