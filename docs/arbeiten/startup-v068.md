@@ -1,0 +1,13 @@
+# Konsistenzauftrag / Arbeitsnachweis · v0.68.0 · CodexAI
+
+**Auftrag:** Vom Nutzer geliefertes SHAD3PI-/Claude-/OpenAI-Bild kurz vor dem Hauptbildschirm einblenden, anschließend übliche Licht-/Gesundheits- und allgemeine Hinweise. Der Nutzer ergänzte die Originaldatei im GitHub-Commit `83cea59` („Logo update“), nachdem sie als Chat-Vorschau nicht als Arbeitsdatei verfügbar war.
+
+**Basis / Aktualität:** Ausgang `af17bd9` / v0.67.1, Arbeitskopie sauber. Alle Remote-Branches geholt und Versionen verglichen; main neuer als ClaudeHelper v0.60.3. Während der Aufgabe Nutzernachtrag `83cea59` ohne Verlust lokaler Vorbereitungen per Fast-forward übernommen. Neue Version v0.68.0 · CodexAI, Windows 0.68.0.0, Android 6800, Mac erbt 0.68.0. Bestehende veröffentlichte Tags/Pakete werden durch diese Quellcodearbeit nicht verschoben oder ersetzt.
+
+**Tatsächlich gesichtete Quellen:** `docs/Game Logos.png` als Bild betrachtet, 1920×1080; bestehende UI-/HQ-/Touch-Verträge und Pixel-UI-Fonts/Paneltexturen gelesen. Neue native Bilder des Originalbildes und der Hinweisseite betrachtet. Nutzerbild bytegleich unter `assets/branding/game-logos.png`, keine neuen Grafikwerkzeuge oder Generierung. Hero-/Welt-/Menübilder und Figurenmerkmale bleiben unverändert; keine neue Stilvorlage aus dem Branding abgeleitet.
+
+**Bild-/Kontaktvertrag:** Ganze Bildfläche einschließlich Claude-/OpenAI-Schriftzügen, kein Zuschnitt und keine Streckung. 16:9 passend zum vorhandenen Fenster/HQ-Ziel, lineare Abtastung der hochauflösenden PNG. Statische Hinweise mit vorhandener Raven-Paneltextur und Pixel-Fonts, lesbare Umbrüche und feste Kartenränder. Die Labelbreite wird vor dem Text gesetzt, damit kein übergroßes Mindestmaß entsteht. Keine Körper-/Waffen-/Kontaktanker betroffen.
+
+**Ablauf / Rücksetzung:** Ruhige Überblendung, danach keine automatische Hinweis-Ausblendung. Explizites Weiter ohne Einwilligungs-/Altersfreigabe-Behauptung. Frische Bestätigung und kurze Übergabe verhindern Durchreichen ins Menü. Fokuswechsel hält den Timer an. Frühes Beenden erzeugt keinen offenen Hintergrund-Szenenladeauftrag. Menüfehler bleiben lesbar; Kapitelrückkehr bleibt direkt beim bekannten Menü. Keine Spielstandfelder/Chapter-Enums geändert.
+
+**Abnahme / Grenzen:** [Bilder und tatsächlicher Startfilm](../startup-v068.md), [Tests und Paketnachweis](../pruefungen/v068/ergebnisse.json). Native X11-/llvmpipe-Ansichten mit Full-HD-Ausgabe; echte Godot-Tastatur-/Pad-/Touch-Ereignisse, keine physische Geräteabnahme behauptet. Vorhandene relevante Menü-/HQ-/Koop-Suiten ergänzen die neue Startup-Prüfung. Mac-Liesmich-Versionsplatzhalter verhindert veraltete Versionsangaben in künftigen Mac-Paketen. Datum 20. November 2026; CodexAI.

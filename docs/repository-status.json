@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "0.67.1",
+  "version": "0.68.0",
   "author": "CodexAI",
   "entries": [
     {
@@ -177,6 +177,22 @@
         "assets/vehicles/pursuit/wreck.png"
       ],
       "note": "v0.65.0 CodexAI: früheres einzelnes Wrack aus v0.56.0 bleibt als Rückfall-/Herkunftsbeleg erhalten, ist vom Export ausgeschlossen. Aktive Überschlagsfolge ist rollover.png mit sechs registrierten Posen."
+    },
+    {
+      "status": "active",
+      "paths": [
+        "assets/branding/game-logos.png",
+        "scenes/startup.tscn",
+        "scripts/startup.gd"
+      ],
+      "note": "v0.68.0 CodexAI: Nutzer-Startgrafik und ruhiger, bestätigbarer Vorspann vor dem bestehenden Hauptmenü."
+    },
+    {
+      "status": "authoritative-source",
+      "paths": [
+        "docs/Game Logos.png"
+      ],
+      "note": "Originales vom Nutzer bereitgestelltes Startbild, übernommen aus Commit 83cea59. Brandingquelle, keine neue Heldensprite-Vorlage."
     }
   ]
 }

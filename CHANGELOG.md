@@ -1,5 +1,13 @@
 # Versionshinweise
 
+## v0.68.0 – CodexAI: Original-Startbild und Hinweise vor dem Hauptmenü · 20. November 2026
+
+- Nutzerbild `docs/Game Logos.png` bytegleich als aktive Startgrafik übernommen. Schwarzer Hintergrund, vollständiges 16:9-Bild, etwa 2,8 Sekunden ruhiges Ein-/Ausblenden; bereits der Engine-Ladebildschirm verwendet dieselbe Grafik.
+- Anschließend lesbare Hinweise zu blinkenden Lichtern/Photosensibilität, epileptischen Anfällen, Abbruch bei Beschwerden, Spielpausen, fiktiver Gewalt sowie Marken-/Quellenhinweise. Die Seite bleibt bis zur ausdrücklichen Bestätigung sichtbar; keine erfundene Altersfreigabe oder Einwilligung.
+- Enter/Leertaste/E, Controller A und skalierte Touch-Fläche; kurze Sperre verhindert versehentliches Überspringen durch dieselbe Eingabe. Fokusverlust hält den Vorspann an, Ladefehler bleiben lesbar. Das bestehende Hauptmenü öffnet ohne automatischen Spielstart, Kapitelrückkehr bleibt direkt.
+- Originalbild/Import, Layoutgrenzen, volle HD-Ausgabe, Eingabegeräte und Hauptmenü-Übergang geprüft. [Native PNGs, Startfilm und Nachweise](docs/startup-v068.md).
+- Mac-Startanleitung erhält die tatsächliche Release-Version beim Verpacken statt einer fest eingetragenen alten Version.
+
 ## v0.67.1 – CodexAI: Arcade-Stabilität und vollständiges Plattform-Release · 20. November 2026
 
 - Kurze Ruckler überspringen keine Treffer-/Schussfenster mehr: Der Arcade-Kampf verarbeitet maximal 1/60 s je Simulationsschritt. Ein Button zählt pro Bild nur einmal; 250 ms Nachholgrenze verhindert lange unsichtbare Kampfabläufe nach einem Systemstillstand.

@@ -1,10 +1,15 @@
 # Shadepi · Bilder, Filme und Dokumentation
 
-**Stand v0.67.1 · CodexAI · 20. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
+**Stand v0.68.0 · CodexAI · 20. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
 
 **[Fehlerkorrekturen und Release v0.67.1 · CodexAI](release-v0671.md)**: langsame Arcade-Bilder, neue CPU-Partie, Hintergrundpause und vollständige Plattform-Downloads.
 
 **[macOS-Nachtrag v0.67.1 · CodexAI](macos-v0671.md):** Universal-App für Intel/Apple Silicon mit eigenem Paket-/Startnachweis.
+
+| Spielstart · v0.68.0 · CodexAI | Licht-, Gesundheits- und Markenhinweise |
+| --- | --- |
+| [![Originales SHAD3PI-Startbild vor dem Hauptmenü](previews/startup-logo-v068.png)](startup-v068.md) | [![Lesbare Sicherheitshinweise mit ausdrücklichem Weiter](previews/startup-notice-v068.png)](startup-v068.md) |
+| [Ablauf, Quellen und Prüfungen](startup-v068.md) | [Kurzer Startfilm](previews/startup-v068.webp) |
 
 Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnahmen, animierte Szenenfilme, Bedienung und technische Hinweise.
 

@@ -1,5 +1,7 @@
 # Assets: aktive Quellen, Vergleich und Sicherungen
 
+**Startgrafik v0.68.0 · CodexAI:** [Brandingquelle und Herkunft](branding/README.md). Vom Nutzer gelieferte PNG unverändert übernommen; keine neue Illustration oder Ersatzfigur generiert.
+
 **v0.46.2 · CodexAI.** [Repository-Status](../docs/repository-status.md) · [Verbindliche Stilbibel](../docs/stilbibel/README.md).
 
 | Gruppe | Status / heutige Verwendung |

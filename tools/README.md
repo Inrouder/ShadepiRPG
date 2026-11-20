@@ -1,5 +1,7 @@
 # Entwicklerwerkzeuge · v0.67.0 · CodexAI
 
+**Startgalerie v0.68.0 · CodexAI:** [startup_gallery.gd](startup_gallery.gd) rendert den tatsächlichen Logo-/Hinweis-/Menüablauf ausschließlich nach `/tmp/shadepi-v068-film`, mit isolierten Daten und nativem Desktop. Kein Grafikgenerator; bewusst gesetzte Bestätigung und geraffte Filmzeit.
+
 **macOS-Nachtrag v0.67.1 · CodexAI:** [Mac-Preset, Universal-Paketprüfung und ergänzender Release-Ablauf](macos/README.md). Signatur-/Startprüfung auf macOS vor Upload; derselbe Spiel-Tag, keine neuen Spielgrafiken.
 
 **v0.67.0 · CodexAI:** [Arcade-Eingabe-Galerie](arcade-v067/README.md) erfasst geskriptete reale Kampfzustände als native PNGs/Filmframes, ausschließlich nach `/tmp` und mit isolierten Daten. Keine Grafikgenerierung.

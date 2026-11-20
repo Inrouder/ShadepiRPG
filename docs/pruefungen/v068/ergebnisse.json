@@ -1,0 +1,76 @@
+{
+  "version": "0.68.0",
+  "author": "CodexAI",
+  "date": "2026-11-20",
+  "source_base": "83cea59",
+  "status": "Targeted checks passed; platform exports pending.",
+  "source_image": {
+    "path": "docs/Game Logos.png",
+    "runtime_path": "assets/branding/game-logos.png",
+    "sha256": "65d219bf2067478099c4565d0ae74567c110ae075dcda8945d83d7d2fce9dc07",
+    "size": [
+      1920,
+      1080
+    ],
+    "byte_identical": true
+  },
+  "flow": {
+    "logo_seconds": 2.8,
+    "notice_minimum_seconds": 0.75,
+    "notice_requires_fresh_confirmation": true,
+    "automatic_game_start": false
+  },
+  "headless_suites": {
+    "menu_navigation": [
+      "MENU NAVIGATION: 16 checks, 0 failures; testing real desktop exit"
+    ],
+    "menu_checkpoints": [
+      "MENU CHECKPOINTS: 205 checks, 0 failures"
+    ],
+    "hq_display": [
+      "HQ DISPLAY: 66 checks, 0 failures"
+    ],
+    "hq_popups": [
+      "HQ POPUPS: 64 checks, 0 failures"
+    ],
+    "integration_v064": [
+      "INTEGRATION v0.64.0 CodexAI: 28 checks, 0 failures"
+    ],
+    "mobile_input": [
+      "MOBILE INPUT: 18 checks, 0 failures"
+    ],
+    "coop_chapters": [
+      "COOP CHAPTERS: 76 checks, 0 failures"
+    ],
+    "arcade": [
+      "ARCADE: 57 checks, 0 failures"
+    ],
+    "startup": [
+      "35 checks, 0 failures"
+    ]
+  },
+  "headless_total_checks": 565,
+  "native_startup": {
+    "1920x1080": "35 checks, 0 failures",
+    "640x360": "35 checks, 0 failures",
+    "renderer": "X11 llvmpipe",
+    "runtime_errors_or_leaks": false
+  },
+  "documentation": {
+    "film_source_frames": 66,
+    "film_encoded_frames": 25,
+    "film_bytes": 462294,
+    "film_duration_ms": 6600,
+    "captures": "Native Godot output; explicit scripted Continue in the compressed preview."
+  },
+  "other_checks": {
+    "repository_audit": "6583 checks, 0 failures",
+    "mac_packaging_unit_tests": 2,
+    "workflow_yaml_and_bash": "valid"
+  },
+  "limitations": [
+    "No physical phone/controller test for this change.",
+    "No new macOS native test yet; local exports do not replace the published v0.67.1 release."
+  ],
+  "platform_exports": {}
+}

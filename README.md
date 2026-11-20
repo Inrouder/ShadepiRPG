@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.67.1 · CodexAI · Godot 4.7.2 · Windows / Linux / macOS-Nachtrag / Android-Testfassung · Einzelspieler, Lokal- und WLAN-Remote-Koop**
+**2D-Action-RPG · v0.68.0 · CodexAI · Godot 4.7.2 · Windows / Linux / macOS-Nachtrag / Android-Testfassung · Einzelspieler, Lokal- und WLAN-Remote-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -13,6 +13,11 @@ Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben�
 **macOS-Nachtrag v0.67.1 · CodexAI:** Universal-App für Intel und Apple Silicon, ergänzt zum bestehenden Release. [Mac-Download, Start und Prüfgrenzen](docs/macos-v0671.md).
 
 ## Bilder aus dem Spiel
+
+| Spielstart · v0.68.0 · CodexAI | Licht-, Gesundheits- und Markenhinweise |
+| --- | --- |
+| [![Originales SHAD3PI-Startbild vor dem Hauptmenü](docs/previews/startup-logo-v068.png)](docs/startup-v068.md) | [![Lesbare Sicherheitshinweise mit ausdrücklichem Weiter](docs/previews/startup-notice-v068.png)](docs/startup-v068.md) |
+| [Ablauf, Quellen und Prüfungen](docs/startup-v068.md) | [Kurzer Startfilm](docs/previews/startup-v068.webp) |
 
 | Fehlerkorrekturen / Release · v0.67.1 · CodexAI | Kampf pausiert im Hintergrund |
 | --- | --- |

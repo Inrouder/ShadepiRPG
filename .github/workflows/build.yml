@@ -57,6 +57,12 @@ jobs:
         run: node --check tools/generate_assets.cjs
       - name: Import resources
         run: godot --headless --editor --import --quit
+      - name: Validate branding, health notice and keyboard/controller/touch startup
+        shell: bash
+        run: |
+          set -euo pipefail
+          XDG_DATA_HOME="$(mktemp -d /tmp/shadepi-startup-ci.XXXXXX)" godot --headless --script res://tests/startup.gd 2>&1 | tee /tmp/startup-flow.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:|ObjectDB instances were leaked' /tmp/startup-flow.log; then exit 1; fi
       - name: Validate audit regressions and both LAN disconnect directions
         shell: bash
         run: |
@@ -123,6 +129,12 @@ jobs:
           sudo apt-get install -y --no-install-recommends xvfb xauth libgl1-mesa-dri
           xvfb-run -a -s "-screen 0 640x360x24" env LIBGL_ALWAYS_SOFTWARE=1 XDG_DATA_HOME=/tmp/shadepi-popup-pixels godot --audio-driver Dummy --script res://tests/hq_popups.gd -- --small 2>&1 | tee /tmp/hq-popup-pixels.log
           if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/hq-popup-pixels.log; then exit 1; fi
+      - name: Validate visible startup notice and scaled touch controls
+        shell: bash
+        run: |
+          set -euo pipefail
+          xvfb-run -a -s "-screen 0 640x360x24" env LIBGL_ALWAYS_SOFTWARE=1 XDG_DATA_HOME="$(mktemp -d /tmp/shadepi-startup-pixels.XXXXXX)" godot --audio-driver Dummy --script res://tests/startup.gd -- --small 2>&1 | tee /tmp/startup-pixels.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:|ObjectDB instances were leaked' /tmp/startup-pixels.log; then exit 1; fi
       - name: Validate bounded 4K stream, local overlays and embedded popup pixels
         shell: bash
         run: |

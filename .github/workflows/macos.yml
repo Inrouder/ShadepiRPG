@@ -83,9 +83,9 @@ jobs:
           "$godot_bin" --headless --path game --export-release macOS "$GITHUB_WORKSPACE/output/ShadepiRPG-macOS.zip" 2>&1 | tee output/export.log
           if grep -Eq 'SCRIPT ERROR|^ERROR:|Parse Error' output/export.log; then exit 1; fi
           python3 - <<'PY'
-          import pathlib,zipfile
+          import os,pathlib,zipfile
           with zipfile.ZipFile('output/ShadepiRPG-macOS.zip','a') as z:
-              z.write('builder/tools/macos/LIESMICH-macOS.txt','LIESMICH-macOS.txt')
+              z.writestr('LIESMICH-macOS.txt',pathlib.Path('builder/tools/macos/LIESMICH-macOS.txt').read_text().replace('{{RELEASE_TAG}}',os.environ['RELEASE_TAG']))
               for name in ['GODOT-LICENSE.txt','GODOT-COPYRIGHT.txt']:z.write('game/docs/'+name,name)
           PY
           python3 builder/tools/macos/verify.py output/ShadepiRPG-macOS.zip "${RELEASE_TAG#v}" --output output/macos-verification.json

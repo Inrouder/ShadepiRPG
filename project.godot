@@ -11,10 +11,14 @@ config_version=5
 [application]
 
 config/name="Shadepi - Echos in Neon"
-config/version="0.67.1"
-run/main_scene="res://scenes/chapter_one.tscn"
+config/version="0.68.0"
+run/main_scene="res://scenes/startup.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://assets/icon.png"
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/image="res://assets/branding/game-logos.png"
+boot_splash/fullsize=true
+boot_splash/use_filter=true
 
 [autoload]
 
