@@ -1,4 +1,4 @@
-# Entwicklerwerkzeuge · v0.67.0 · CodexAI
+# Entwicklerwerkzeuge · v0.68.0 · CodexAI
 
 **Startgalerie v0.68.0 · CodexAI:** [startup_gallery.gd](startup_gallery.gd) rendert den tatsächlichen Logo-/Hinweis-/Menüablauf ausschließlich nach `/tmp/shadepi-v068-film`, mit isolierten Daten und nativem Desktop. Kein Grafikgenerator; bewusst gesetzte Bestätigung und geraffte Filmzeit.
 

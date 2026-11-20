@@ -3,7 +3,7 @@
   "author": "CodexAI",
   "date": "2026-11-20",
   "source_base": "83cea59",
-  "status": "Targeted checks passed; platform exports pending.",
+  "status": "Passed: targeted headless/native checks and four local platform exports.",
   "source_image": {
     "path": "docs/Game Logos.png",
     "runtime_path": "assets/branding/game-logos.png",
@@ -70,7 +70,64 @@
   },
   "limitations": [
     "No physical phone/controller test for this change.",
-    "No new macOS native test yet; local exports do not replace the published v0.67.1 release."
+    "Mac bundle/version/Universal architectures/signature presence checked locally; native macOS execution and Apple notarization not performed for this version.",
+    "Local builds are validation artifacts. No release/tag published or existing release assets replaced."
   ],
-  "platform_exports": {}
+  "platform_exports": {
+    "android": {
+      "exit_code": 0,
+      "seconds": 23.4,
+      "errors": [],
+      "file": "build/android/Shadepi-Echos-in-Neon.apk",
+      "bytes": 245210621,
+      "sha256": "f463f3c4456521885825265aa4d1d135fb238772699f5a12c2a8fd5213f23f1f",
+      "version_code": 6800,
+      "version_name": "0.68.0",
+      "signature_verified": true,
+      "original_boot_png_and_startup_scene_present": true
+    },
+    "linux": {
+      "exit_code": 0,
+      "seconds": 3.8,
+      "errors": [],
+      "file": "build/linux/Shadepi-Echos-in-Neon.x86_64",
+      "bytes": 261955288,
+      "sha256": "e7a42b93aa2e20c72019efbfba0a2af6f025487610309c355b936c733c583254",
+      "packaged_headless_start": "210 frames at 60 fps; exit 0; no errors or leaks"
+    },
+    "windows": {
+      "exit_code": 0,
+      "seconds": 4.6,
+      "errors": [],
+      "file": "build/windows/Shadepi-Echos-in-Neon.exe",
+      "bytes": 297704360,
+      "sha256": "666f296719c13aeae6f30b320899439600dc2a7ea0686cace1c017d2adc0e688"
+    },
+    "macos": {
+      "exit_code": 0,
+      "seconds": 21.0,
+      "errors": [],
+      "file": "build/macos/ShadepiRPG-macOS.zip",
+      "bytes": 248271549,
+      "sha256": "bbb48e65d33b8d6631f168c2cb28e5810660b91fb272ac061a5f3419aa7aa55a",
+      "verification": {
+        "version": "0.68.0",
+        "author": "CodexAI",
+        "file": "ShadepiRPG-macOS.zip",
+        "bytes": 248271549,
+        "sha256": "bbb48e65d33b8d6631f168c2cb28e5810660b91fb272ac061a5f3419aa7aa55a",
+        "app": "Shadepi - Echos in Neon.app",
+        "executable": "Shadepi - Echos in Neon",
+        "architectures": [
+          "x86_64",
+          "arm64"
+        ],
+        "resource_pack_bytes": 188435864,
+        "signature": "ad-hoc",
+        "notarized": false,
+        "native_start_tested": false
+      }
+    }
+  },
+  "build_source_commit": "ef555f06319b3abb070e03dbf4d7b8ff81c782d1"
 }
