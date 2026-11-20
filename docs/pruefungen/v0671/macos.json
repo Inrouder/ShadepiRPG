@@ -1,0 +1,58 @@
+{
+  "version": "0.67.1",
+  "author": "CodexAI",
+  "file": "ShadepiRPG-macOS.zip",
+  "bytes": 246591687,
+  "sha256": "15c944e273c21c4184b580609aeb66a5fcf5d42985a5e58770ea76dcd9dbe867",
+  "app": "Shadepi - Echos in Neon.app",
+  "executable": "Shadepi - Echos in Neon",
+  "architectures": [
+    "x86_64",
+    "arm64"
+  ],
+  "resource_pack_bytes": 187454844,
+  "signature": "ad-hoc",
+  "notarized": false,
+  "native_start_tested": true,
+  "native_signature_verified": true,
+  "native_architecture": "arm64",
+  "native_test_evidence": "https://github.com/Inrouder/ShadepiRPG/actions/runs/44810408050",
+  "game_commit": "c2aa7a63f8b121626c6d12e95bff6b109b86f357",
+  "published_url": "https://github.com/Inrouder/ShadepiRPG/releases/download/v0.67.1/ShadepiRPG-macOS.zip",
+  "release_note_verified": true,
+  "published_zip_fully_downloaded_and_hashed": true,
+  "previous_four_checksums_unchanged": true,
+  "checksum_entries": {
+    "ShadepiRPG-Windows.zip": "8010dfc85283ef64794aa583a390a0068120b5c35926df2975c1c9777f7c0baf",
+    "ShadepiRPG-Linux.zip": "19ef0f85a2a6cd0cc3980546bf8405a4ab68c48afdde259158f25c128280d179",
+    "ShadepiRPG-Android-Test.apk": "80251d1f6e1ab46a82a1b5f31938d2c54d090cb8ca49107a881a5726d8251538",
+    "ShadepiRPG-Godot-Projekt.zip": "9cd8867040f72ec15466591051dbad7c584f12477865a288f8174f907a6bd954",
+    "ShadepiRPG-macOS.zip": "15c944e273c21c4184b580609aeb66a5fcf5d42985a5e58770ea76dcd9dbe867"
+  },
+  "release_assets": 6,
+  "workflow": {
+    "id": "44810408050",
+    "url": "https://github.com/Inrouder/ShadepiRPG/actions/runs/44810408050",
+    "state": {
+      "status": "WORKFLOW_RUN_STATUS_COMPLETED",
+      "conclusion": "WORKFLOW_RUN_CONCLUSION_SUCCESS"
+    },
+    "timing": {
+      "kind": "WORKFLOW_RUN_TIMING_KIND_DURATION",
+      "text": "4m 8s"
+    },
+    "jobs": [
+      {
+        "url": "https://github.com/Inrouder/ShadepiRPG/actions/runs/44810408050/job/136545205610",
+        "passed": 14,
+        "total": 14,
+        "active": [],
+        "last_passed": [
+          "Post Run actions/checkout@v5",
+          "Complete job"
+        ],
+        "failures": []
+      }
+    ]
+  }
+}

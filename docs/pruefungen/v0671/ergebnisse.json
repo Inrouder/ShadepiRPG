@@ -593,6 +593,7 @@
       "ShadepiRPG-Linux.zip",
       "ShadepiRPG-Android-Test.apk",
       "ShadepiRPG-Godot-Projekt.zip",
+      "ShadepiRPG-macOS.zip",
       "SHA256SUMS.txt"
     ],
     "checksums": "Published SHA256SUMS.txt is produced by the release runner; local QA package hashes above are separate.",
@@ -602,7 +603,15 @@
     "workflow_url": "https://github.com/Inrouder/ShadepiRPG/actions/runs/44800932004",
     "workflow_conclusion": "success",
     "public_downloads_checked": true,
-    "verification_file": "veroeffentlichung.json"
+    "verification_file": "veroeffentlichung.json",
+    "macos_supplement": {
+      "workflow_url": "https://github.com/Inrouder/ShadepiRPG/actions/runs/44810408050",
+      "workflow_conclusion": "success",
+      "verification_file": "macos.json",
+      "native_start_architecture": "arm64",
+      "both_architectures_structurally_verified": true,
+      "published_archive_downloaded_and_hashed": true
+    }
   },
   "limits": [
     "No physical Android/controller/Windows gameplay acceptance.",

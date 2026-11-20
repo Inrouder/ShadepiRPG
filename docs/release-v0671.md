@@ -2,7 +2,7 @@
 
 **20. November 2026.** [Änderungen](../CHANGELOG.md) · [Anleitung](../Spiel-README.md) · [GitHub-Releases](https://github.com/Inrouder/ShadepiRPG/releases) · [Prüfnachweis](pruefungen/v0671/ergebnisse.json).
 
-**Veröffentlicht:** [v0.67.1 · CodexAI mit allen fünf Anhängen](https://github.com/Inrouder/ShadepiRPG/releases/tag/v0.67.1). [GitHub-Test-/Release-Lauf erfolgreich](https://github.com/Inrouder/ShadepiRPG/actions/runs/44800932004), alle Download-Header HTTP 200, Prüfsummendatei vollständig und „latest“ korrekt. [Veröffentlichungsnachweis](pruefungen/v0671/veroeffentlichung.json). Die Anhänge wurden für diese Erreichbarkeitsprüfung nicht vollständig erneut heruntergeladen/gehasht.
+**Veröffentlicht:** [v0.67.1 · CodexAI mit sechs Anhängen inklusive macOS](https://github.com/Inrouder/ShadepiRPG/releases/tag/v0.67.1). [GitHub-Test-/Release-Lauf erfolgreich](https://github.com/Inrouder/ShadepiRPG/actions/runs/44800932004), alle Download-Header HTTP 200, Prüfsummendatei vollständig und „latest“ korrekt. [Veröffentlichungsnachweis](pruefungen/v0671/veroeffentlichung.json). Die Anhänge wurden für diese Erreichbarkeitsprüfung nicht vollständig erneut heruntergeladen/gehasht.
 
 Der letzte öffentliche Download war v0.60.3; main und sämtliche Remote-Branches wurden erneut verglichen. v0.67.1 bündelt die zwischenzeitlichen HQ-Arcade-, Android-/WLAN-, Touch-, Fahrzeug- und Flugszenen-Verbesserungen mit drei reproduzierten Fehlerkorrekturen. Die ursprünglichen Figuren-/Weltquellen, Story und Spielstände bleiben erhalten.
 
@@ -31,8 +31,9 @@ Neue native Linux-PNGs in 1280×720. Die Unterbrechung wurde programmgesteuert a
 | `ShadepiRPG-Windows.zip` | Vollständig entpacken, EXE starten. |
 | `ShadepiRPG-Linux.zip` | Vollständig entpacken, ausführbare x86_64-Datei starten. |
 | `ShadepiRPG-Android-Test.apk` | Android-Testfassung, weiterhin keine Store-Veröffentlichung. |
+| `ShadepiRPG-macOS.zip` | Universal-App für Intel/Apple Silicon; [Mac-Start und Nachweis](macos-v0671.md). |
 | `ShadepiRPG-Godot-Projekt.zip` | Vollständiger versionierter Godot-Projektstand. |
-| `SHA256SUMS.txt` | SHA-256-Prüfsummen der vier vorgenannten Downloads. |
+| `SHA256SUMS.txt` | SHA-256-Prüfsummen der fünf vorgenannten Plattform-/Projektpakete. |
 
 Der vorhandene GitHub-Actions-Ablauf baut und prüft vor der Veröffentlichung. Der Release-Job lädt jetzt auch Android, ergänzt Prüfsummen und übernimmt ausschließlich den passenden versionsbezogenen Changelog-Eintrag mit CodexAI. Tag und Projektversion müssen übereinstimmen. Ein finaler Commit mit `[release]` vermeidet den doppelten Main-Build; der zugehörige Tag startet den vollständigen Test-/Release-Lauf. Andere Main-/PR-/manuelle Läufe bleiben aktiv. Signaturverwaltung bleibt nach Nutzerwunsch außerhalb dieser Arbeit.
 
