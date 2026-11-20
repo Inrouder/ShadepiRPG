@@ -20,6 +20,8 @@ env:
 
 jobs:
   game:
+    # Release commits are built by their tag push, without a duplicate main build.
+    if: github.event_name != 'push' || github.ref != 'refs/heads/main' || !contains(github.event.head_commit.message, '[release]')
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     steps:
@@ -80,6 +82,12 @@ jobs:
           set -euo pipefail
           XDG_DATA_HOME="$(mktemp -d /tmp/shadepi-arcade-inputs.XXXXXX)" godot --headless --script res://tests/arcade_inputs.gd 2>&1 | tee /tmp/arcade-inputs.log
           if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/arcade-inputs.log; then exit 1; fi
+      - name: Validate low-FPS attacks, CPU reset and background pause
+        shell: bash
+        run: |
+          set -euo pipefail
+          XDG_DATA_HOME="$(mktemp -d /tmp/shadepi-arcade-regressions.XXXXXX)" godot --headless --script res://tests/arcade_regressions.gd 2>&1 | tee /tmp/arcade-regressions.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/arcade-regressions.log; then exit 1; fi
       - name: Validate generated arcade poses, contact windows and controller moves
         shell: bash
         run: |
@@ -458,6 +466,10 @@ jobs:
         with:
           name: ShadepiRPG-Godot-Projekt
           path: source
+      - uses: actions/download-artifact@v7
+        with:
+          name: ShadepiRPG-Android-Test
+          path: android
       - name: Publish release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -467,5 +479,18 @@ jobs:
           cd windows && zip -9 ../ShadepiRPG-Windows.zip * && cd ..
           chmod +x linux/Shadepi-Echos-in-Neon.x86_64
           cd linux && zip -9 ../ShadepiRPG-Linux.zip * && cd ..
-          gh release create "$RELEASE_TAG" ShadepiRPG-Windows.zip ShadepiRPG-Linux.zip source/ShadepiRPG-Godot-Projekt.zip \
-            --target "$GITHUB_SHA" --title "Shadepi $RELEASE_TAG" --generate-notes
+          cp android/*.apk ShadepiRPG-Android-Test.apk
+          cp source/ShadepiRPG-Godot-Projekt.zip ShadepiRPG-Godot-Projekt.zip
+          sha256sum ShadepiRPG-Windows.zip ShadepiRPG-Linux.zip ShadepiRPG-Android-Test.apk ShadepiRPG-Godot-Projekt.zip > SHA256SUMS.txt
+          python3 - "$RELEASE_TAG" <<'PYNOTES' > release-notes.md
+          import os,pathlib,re,sys
+          tag=sys.argv[1]
+          sections=re.split(r'(?=^## )',pathlib.Path('CHANGELOG.md').read_text(),flags=re.M)
+          entry=next((part for part in sections if part.startswith('## '+tag+' ')),None)
+          if entry is None: raise SystemExit('No changelog entry for '+tag)
+          entry=entry.replace('](docs/','](https://github.com/'+os.environ['GH_REPO']+'/blob/'+os.environ['GITHUB_SHA']+'/docs/')
+          print(entry.strip())
+          print('\nWindows- und Linux-ZIP vollstaendig entpacken. Android ist eine Test-APK; das Godot-Projekt liegt als eigenes ZIP bei. SHA256SUMS.txt enthaelt die Pruefsummen aller vier Downloads.')
+          PYNOTES
+          gh release create "$RELEASE_TAG" ShadepiRPG-Windows.zip ShadepiRPG-Linux.zip ShadepiRPG-Android-Test.apk ShadepiRPG-Godot-Projekt.zip SHA256SUMS.txt \
+            --target "$GITHUB_SHA" --title "Shadepi $RELEASE_TAG · CodexAI" --notes-file release-notes.md --latest

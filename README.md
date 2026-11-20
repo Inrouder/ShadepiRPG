@@ -1,6 +1,6 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.67.0 · CodexAI · Godot 4.7.2 · Windows / Linux / Android-Testfassung · Einzelspieler, Lokal- und WLAN-Remote-Koop**
+**2D-Action-RPG · v0.67.1 · CodexAI · Godot 4.7.2 · Windows / Linux / Android-Testfassung · Einzelspieler, Lokal- und WLAN-Remote-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -8,7 +8,14 @@ Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben�
 
 **[Gesamtprojektanalyse v0.63.0 · CodexAI: bestätigte Fehler, Messungen und Prioritäten](docs/projektanalyse-v063.md)**
 
+**v0.67.1 · CodexAI:** Zuverlässigere Arcade-Treffer bei kurzen Rucklern, saubere CPU-Rücksetzung und automatische Hintergrundpause. Release mit Windows/Linux, Android-Test-APK, Godot-Projekt und SHA-256-Prüfsummen. [Fehlerkorrekturen und Prüfnachweis](docs/release-v0671.md).
+
 ## Bilder aus dem Spiel
+
+| Fehlerkorrekturen / Release · v0.67.1 · CodexAI | Kampf pausiert im Hintergrund |
+| --- | --- |
+| [![Ravens Schuss nach einem simulierten 250-ms-Bild](docs/previews/arcade-slow-frame-v0671.png)](docs/release-v0671.md) | [![Sichtbares Pausenmenü nach Hintergrundmeldung](docs/previews/arcade-focus-pause-v0671.png)](docs/release-v0671.md) |
+| [Korrekturen, Tests und Plattformpakete](docs/release-v0671.md) | [Kampffilm der unveränderten Grafik aus v0.67.0](docs/previews/arcade-inputs-v067.webp) |
 
 | Klassische Arcade-Steuerung · v0.67.0 · CodexAI | Vier Tasten auch auf Touch |
 | --- | --- |

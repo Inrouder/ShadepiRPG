@@ -23,6 +23,8 @@ const JUMP := -350.0
 const ROUND_SECONDS := 60.0
 const SPECIAL_COST := 50.0
 const ROUNDS_TO_WIN := 2
+const MAX_FIGHT_STEP := 1.0 / 60.0
+const MAX_FRAME_TIME := 0.25
 
 ## hp, Tempo, leichter/schwerer Schaden, Reichweite, Spezialangriff, Farbe der Effekte.
 const ROSTER: Array[Dictionary] = [
@@ -186,6 +188,12 @@ func _input(event: InputEvent) -> void:
 		if session_paused: return
 		get_viewport().set_input_as_handled()
 
+func _notification(what: int) -> void:
+	# v0.67.1 · CodexAI: backgrounding must not leave a live CPU fight running.
+	if what in [NOTIFICATION_APPLICATION_FOCUS_OUT, NOTIFICATION_APPLICATION_PAUSED]:
+		if screen == Screen.FIGHT and not session_paused and is_instance_valid(pause_panel):
+			pause_game("NEON KOMBAT · PAUSE · FENSTER INAKTIV")
+
 func _build_pause() -> void:
 	pause_panel = PanelContainer.new()
 	pause_panel.position = Vector2(174, 92); pause_panel.size = Vector2(292, 0)
@@ -250,6 +258,8 @@ func start_match(first: int, second: int, two_players: bool) -> void:
 
 func _start_round() -> void:
 	hitstop=0.0;shake=0.0
+	cpu_plan={"dir":0.0,"block":0.0,"jump":false}
+	cpu_sequence_step=0;cpu_sequence_time=0.0;cpu_attack="a"
 	for input in inputs:input.reset()
 	cpu_sequence.clear()
 	fighters.clear()
@@ -319,6 +329,18 @@ func _update_result() -> void:
 		menu_index = 0
 
 func _update_fight(delta: float) -> void:
+	# v0.67.1 · CodexAI: never skip a short contact/emission window on a slow frame.
+	# The physical button edge belongs to the first step only; held directions persist.
+	var remaining := clampf(delta, 0.0, MAX_FRAME_TIME)
+	var frame_buttons: Array[Dictionary] = pressed
+	while remaining > 0.000001 and screen == Screen.FIGHT:
+		var step := minf(remaining, MAX_FIGHT_STEP)
+		_step_fight(step)
+		remaining -= step
+		pressed = [{}, {}]
+	pressed = frame_buttons
+
+func _step_fight(delta: float) -> void:
 	phase_time += delta
 	for i in range(hits.size() - 1, -1, -1):
 		hits[i].t -= delta

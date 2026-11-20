@@ -1,8 +1,15 @@
 # Shadepi · Bilder, Filme und Dokumentation
 
-**Stand v0.67.0 · CodexAI · 17. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
+**Stand v0.67.1 · CodexAI · 20. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
+
+**[Fehlerkorrekturen und Release v0.67.1 · CodexAI](release-v0671.md)**: langsame Arcade-Bilder, neue CPU-Partie, Hintergrundpause und vollständige Plattform-Downloads.
 
 Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnahmen, animierte Szenenfilme, Bedienung und technische Hinweise.
+
+| Fehlerkorrekturen / Release · v0.67.1 · CodexAI | Kampf pausiert im Hintergrund |
+| --- | --- |
+| [![Ravens Schuss nach einem simulierten 250-ms-Bild](previews/arcade-slow-frame-v0671.png)](release-v0671.md) | [![Sichtbares Pausenmenü nach Hintergrundmeldung](previews/arcade-focus-pause-v0671.png)](release-v0671.md) |
+| [Korrekturen, Tests und Plattformpakete](release-v0671.md) | [Kampffilm der unveränderten Grafik aus v0.67.0](previews/arcade-inputs-v067.webp) |
 
 | Klassische Arcade-Steuerung · v0.67.0 · CodexAI | Vier Tasten auch auf Touch |
 | --- | --- |

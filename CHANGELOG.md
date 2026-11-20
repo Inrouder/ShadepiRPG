@@ -1,5 +1,14 @@
 # Versionshinweise
 
+## v0.67.1 – CodexAI: Arcade-Stabilität und vollständiges Plattform-Release · 20. November 2026
+
+- Kurze Ruckler überspringen keine Treffer-/Schussfenster mehr: Der Arcade-Kampf verarbeitet maximal 1/60 s je Simulationsschritt. Ein Button zählt pro Bild nur einmal; 250 ms Nachholgrenze verhindert lange unsichtbare Kampfabläufe nach einem Systemstillstand.
+- Neue Runde/Partie setzt alte CPU-Bewegungs-, Block- und Sprungpläne zurück.
+- Fokusverlust und App-Hintergrund pausieren den Arcade-Kampf automatisch. Fortsetzen bleibt eine bewusste Aktion; CPU, Zeit und Schaden stehen währenddessen still.
+- Release enthält zusätzlich die Android-Test-APK sowie SHA-256-Prüfsummen zu Windows/Linux/Android/Godot-Projekt. Versionsbezogene Änderungsinfos mit CodexAI statt automatisch zusammengewürfelter Commitnotizen.
+- Bündelt gegenüber dem letzten öffentlichen Release v0.60.3 auch die Zwischenstände v0.61–v0.67: eigene HQ-Arcade-Posen, LMHS/Motion-/Charge-Steuerung, Android/WLAN-Koop, transparentes Touch-HUD, breiteres Fahr-/Flugsichtfeld und Nomaden-/Cockpit-Flug.
+- Gezielte Fehlernachstellungen und breite Regressionstests; Originalhelden, Grafikquellen, Story und Spielstände bleiben erhalten. [Prüfnachweis und Release-Details](docs/release-v0671.md).
+
 ## v0.67.0 – CodexAI: klassische Arcade-Eingaben, Motion-Parser und Richtungsblock · 17. November 2026
 
 - Acht-Wege-Stick/Steuerkreuz mit festen Vorwärts-/Neutral-/Rückwärtssprüngen, echtem Ducken und Hoch-/Tiefblock durch Zurück bzw. Unten-Zurück. Keine Luftlenkung; die vorhandene tiefe HQ-Pose wird ohne Körperstauchung verwendet.
