@@ -1,0 +1,60 @@
+{
+  "version": "0.67.1",
+  "author": "CodexAI",
+  "checked_at_utc": "2026-11-20T19:34:04.597519+00:00",
+  "release_url": "https://github.com/Inrouder/ShadepiRPG/releases/tag/v0.67.1",
+  "latest_url": "https://github.com/Inrouder/ShadepiRPG/releases/tag/v0.67.1",
+  "all_assets_present": true,
+  "download_headers": [
+    {
+      "name": "ShadepiRPG-Windows.zip",
+      "status": 200,
+      "bytes": "224344935",
+      "sha256": "8010dfc85283ef64794aa583a390a0068120b5c35926df2975c1c9777f7c0baf"
+    },
+    {
+      "name": "ShadepiRPG-Linux.zip",
+      "status": 200,
+      "bytes": "214764644",
+      "sha256": "19ef0f85a2a6cd0cc3980546bf8405a4ab68c48afdde259158f25c128280d179"
+    },
+    {
+      "name": "ShadepiRPG-Android-Test.apk",
+      "status": 200,
+      "bytes": "244231026",
+      "sha256": "80251d1f6e1ab46a82a1b5f31938d2c54d090cb8ca49107a881a5726d8251538"
+    },
+    {
+      "name": "ShadepiRPG-Godot-Projekt.zip",
+      "status": 200,
+      "bytes": "585027757",
+      "sha256": "9cd8867040f72ec15466591051dbad7c584f12477865a288f8174f907a6bd954"
+    },
+    {
+      "name": "SHA256SUMS.txt",
+      "status": 200,
+      "bytes": "365",
+      "sha256": null
+    }
+  ],
+  "checksum_entries": {
+    "ShadepiRPG-Windows.zip": "8010dfc85283ef64794aa583a390a0068120b5c35926df2975c1c9777f7c0baf",
+    "ShadepiRPG-Linux.zip": "19ef0f85a2a6cd0cc3980546bf8405a4ab68c48afdde259158f25c128280d179",
+    "ShadepiRPG-Android-Test.apk": "80251d1f6e1ab46a82a1b5f31938d2c54d090cb8ca49107a881a5726d8251538",
+    "ShadepiRPG-Godot-Projekt.zip": "9cd8867040f72ec15466591051dbad7c584f12477865a288f8174f907a6bd954"
+  },
+  "method": "Public release/expanded-assets pages, published checksum file and successful HTTP HEAD for every attachment. Hash file format/coverage checked; packages not downloaded and rehashed.",
+  "github_actions": {
+    "id": "44800932004",
+    "url": "https://github.com/Inrouder/ShadepiRPG/actions/runs/44800932004",
+    "state": {
+      "status": "WORKFLOW_RUN_STATUS_COMPLETED",
+      "conclusion": "WORKFLOW_RUN_CONCLUSION_SUCCESS"
+    },
+    "duration": {
+      "kind": "WORKFLOW_RUN_TIMING_KIND_DURATION",
+      "text": "15m 5s"
+    },
+    "release_commit": "c2aa7a63f8b121626c6d12e95bff6b109b86f357"
+  }
+}

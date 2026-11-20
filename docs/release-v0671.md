@@ -2,6 +2,8 @@
 
 **20. November 2026.** [Änderungen](../CHANGELOG.md) · [Anleitung](../Spiel-README.md) · [GitHub-Releases](https://github.com/Inrouder/ShadepiRPG/releases) · [Prüfnachweis](pruefungen/v0671/ergebnisse.json).
 
+**Veröffentlicht:** [v0.67.1 · CodexAI mit allen fünf Anhängen](https://github.com/Inrouder/ShadepiRPG/releases/tag/v0.67.1). [GitHub-Test-/Release-Lauf erfolgreich](https://github.com/Inrouder/ShadepiRPG/actions/runs/44800932004), alle Download-Header HTTP 200, Prüfsummendatei vollständig und „latest“ korrekt. [Veröffentlichungsnachweis](pruefungen/v0671/veroeffentlichung.json). Die Anhänge wurden für diese Erreichbarkeitsprüfung nicht vollständig erneut heruntergeladen/gehasht.
+
 Der letzte öffentliche Download war v0.60.3; main und sämtliche Remote-Branches wurden erneut verglichen. v0.67.1 bündelt die zwischenzeitlichen HQ-Arcade-, Android-/WLAN-, Touch-, Fahrzeug- und Flugszenen-Verbesserungen mit drei reproduzierten Fehlerkorrekturen. Die ursprünglichen Figuren-/Weltquellen, Story und Spielstände bleiben erhalten.
 
 ## Behobene Fehler

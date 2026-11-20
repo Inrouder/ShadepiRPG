@@ -596,7 +596,13 @@
       "SHA256SUMS.txt"
     ],
     "checksums": "Published SHA256SUMS.txt is produced by the release runner; local QA package hashes above are separate.",
-    "verification": "Check public release page and expanded asset list after successful tag workflow."
+    "verification": "Check public release page and expanded asset list after successful tag workflow.",
+    "status": "published",
+    "url": "https://github.com/Inrouder/ShadepiRPG/releases/tag/v0.67.1",
+    "workflow_url": "https://github.com/Inrouder/ShadepiRPG/actions/runs/44800932004",
+    "workflow_conclusion": "success",
+    "public_downloads_checked": true,
+    "verification_file": "veroeffentlichung.json"
   },
   "limits": [
     "No physical Android/controller/Windows gameplay acceptance.",
