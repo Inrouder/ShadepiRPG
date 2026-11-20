@@ -1,0 +1,128 @@
+name: macOS supplement · CodexAI
+
+on:
+  push:
+    tags: ['macos-v*']
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: 'Vorhandenes Release, z. B. v0.67.1'
+        required: true
+        default: 'v0.67.1'
+
+permissions:
+  contents: read
+
+env:
+  GODOT_VERSION: 4.7.2
+
+jobs:
+  macos:
+    runs-on: macos-15
+    timeout-minutes: 25
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          path: builder
+      - name: Select and validate existing release
+        env:
+          REQUESTED_TAG: ${{ inputs.release_tag }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          release_tag="${REQUESTED_TAG:-${GITHUB_REF_NAME#macos-}}"
+          release_tag="${release_tag%-r[0-9]*}"
+          [[ "$release_tag" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || exit 1
+          gh release view "$release_tag" --json tagName,isDraft > "$RUNNER_TEMP/release.json"
+          python3 - "$RUNNER_TEMP/release.json" "$release_tag" <<'PY'
+          import json,sys
+          d=json.load(open(sys.argv[1]));assert d['tagName']==sys.argv[2] and not d['isDraft']
+          PY
+          echo "RELEASE_TAG=$release_tag" >> "$GITHUB_ENV"
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ env.RELEASE_TAG }}
+          path: game
+      - uses: actions/cache@v4
+        id: godot
+        with:
+          path: |
+            ${{ runner.temp }}/godot-macos
+            ~/Library/Application Support/Godot/export_templates/4.7.2.stable
+          key: macos-universal-godot-${{ env.GODOT_VERSION }}-v1
+      - name: Install pinned Godot and Mac template
+        if: steps.godot.outputs.cache-hit != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          base="https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable"
+          curl --fail --location --retry 3 "$base/Godot_v${GODOT_VERSION}-stable_macos.universal.zip" -o "$RUNNER_TEMP/godot.zip"
+          mkdir -p "$RUNNER_TEMP/godot-macos"
+          unzip -q "$RUNNER_TEMP/godot.zip" -d "$RUNNER_TEMP/godot-macos"
+          curl --fail --location --retry 3 "$base/Godot_v${GODOT_VERSION}-stable_export_templates.tpz" -o "$RUNNER_TEMP/templates.tpz"
+          target="$HOME/Library/Application Support/Godot/export_templates/${GODOT_VERSION}.stable"
+          mkdir -p "$target"
+          unzip -p "$RUNNER_TEMP/templates.tpz" templates/macos.zip > "$target/macos.zip"
+      - name: Import and export exact released game
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p output
+          python3 builder/tools/macos/test_tools.py
+          godot_bin="$RUNNER_TEMP/godot-macos/Godot.app/Contents/MacOS/Godot"
+          chmod +x "$godot_bin"
+          "$godot_bin" --version | grep -F "${GODOT_VERSION}.stable"
+          python3 builder/tools/macos/prepare.py game "$RELEASE_TAG"
+          "$godot_bin" --headless --path game --editor --import --quit 2>&1 | tee output/import.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|Parse Error' output/import.log; then exit 1; fi
+          "$godot_bin" --headless --path game --export-release macOS "$GITHUB_WORKSPACE/output/ShadepiRPG-macOS.zip" 2>&1 | tee output/export.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|Parse Error' output/export.log; then exit 1; fi
+          python3 - <<'PY'
+          import pathlib,zipfile
+          with zipfile.ZipFile('output/ShadepiRPG-macOS.zip','a') as z:
+              z.write('builder/tools/macos/LIESMICH-macOS.txt','LIESMICH-macOS.txt')
+              for name in ['GODOT-LICENSE.txt','GODOT-COPYRIGHT.txt']:z.write('game/docs/'+name,name)
+          PY
+          python3 builder/tools/macos/verify.py output/ShadepiRPG-macOS.zip "${RELEASE_TAG#v}" --output output/macos-verification.json
+      - name: Native signature and packaged startup test
+        shell: bash
+        run: |
+          set -euo pipefail
+          unzip -q output/ShadepiRPG-macOS.zip -d "$RUNNER_TEMP/mac-smoke"
+          app_name="$(python3 -c 'import json;print(json.load(open("output/macos-verification.json"))["app"])')"
+          executable="$(python3 -c 'import json;print(json.load(open("output/macos-verification.json"))["executable"])')"
+          app_path="$RUNNER_TEMP/mac-smoke/$app_name"
+          codesign --verify --deep --strict "$app_path" 2>&1 | tee output/signature.log
+          cd "$RUNNER_TEMP"
+          "$app_path/Contents/MacOS/$executable" --headless --quit-after 30 2>&1 | tee "$GITHUB_WORKSPACE/output/startup.log"
+          cd "$GITHUB_WORKSPACE"
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|Parse Error' output/startup.log; then exit 1; fi
+          python3 - <<'PY'
+          import json,pathlib,platform,subprocess
+          p=pathlib.Path('output/macos-verification.json');d=json.loads(p.read_text())
+          d.update(native_start_tested=True,native_signature_verified=True,native_architecture=platform.machine(),native_macos=platform.mac_ver()[0],game_commit=subprocess.check_output(['git','-C','game','rev-parse','HEAD'],text=True).strip())
+          p.write_text(json.dumps(d,indent=2)+'\n')
+          PY
+      - name: Add Mac asset, checksum and release note
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh release view "$RELEASE_TAG" --json body --jq .body > output/previous-notes.md
+          mkdir -p output/previous
+          gh release download "$RELEASE_TAG" --pattern SHA256SUMS.txt --dir output/previous
+          cp output/previous/SHA256SUMS.txt output/previous-SHA256SUMS.txt
+          python3 builder/tools/macos/release_files.py output "$RELEASE_TAG" "$GH_REPO"
+          gh release upload "$RELEASE_TAG" output/ShadepiRPG-macOS.zip output/SHA256SUMS.txt --clobber
+          gh release edit "$RELEASE_TAG" --notes-file output/release-notes.md
+      - uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: ShadepiRPG-macOS-proof
+          path: |
+            output/*.json
+            output/*.log

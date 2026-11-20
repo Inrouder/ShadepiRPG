@@ -1,5 +1,7 @@
 # Shadepi · Spieleranleitung
 
+**macOS-Nachtrag v0.67.1 · CodexAI:** [Universal-ZIP für Intel und Apple Silicon](docs/macos-v0671.md). Vollständig entpacken und die .app nach Programme kopieren. Ad-hoc signiert, nicht von Apple notarisiert; Hinweise zum ersten Start stehen in der Mac-Anleitung.
+
 **Neu v0.67.1 · CodexAI:** Arcade-Schläge und Ravens Schuss lösen auch bei kurzen Bildrucklern aus. Ein neuer Kampf übernimmt keine alten CPU-Bewegungen. Beim Verlassen des Fensters oder Wechsel in den App-Hintergrund pausiert der Automat; anschließend bewusst fortsetzen. [Release und Korrekturen](docs/release-v0671.md).
 
 **Neu v0.67.0 · CodexAI:** NEON KOMBAT spielt sich mit festen Acht-Wege-Sprüngen, Ducken und Rückwärtsblock. **Light / Medium / Heavy / Special:** S1 **J/K/L/H**, S2 **U/I/O/P**, Controller **X/Y/B/A**. Viertelkreis, Dragon Punch und 45-Frame-Charge lösen ohne Energie normale Techniken aus; die Special-Taste startet für 50 Energie die stärkere EX-Technik. Die Belegung gilt nur im Automaten und ersetzt die älteren Arcade-Angaben weiter unten. [Genaue Eingaben, Bilder und Film](docs/arcade-inputs-v067.md).

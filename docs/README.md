@@ -4,6 +4,8 @@
 
 **[Fehlerkorrekturen und Release v0.67.1 · CodexAI](release-v0671.md)**: langsame Arcade-Bilder, neue CPU-Partie, Hintergrundpause und vollständige Plattform-Downloads.
 
+**[macOS-Nachtrag v0.67.1 · CodexAI](macos-v0671.md):** Universal-App für Intel/Apple Silicon mit eigenem Paket-/Startnachweis.
+
 Die Bilder öffnen den jeweiligen Bericht. Dort findest du größere Spielaufnahmen, animierte Szenenfilme, Bedienung und technische Hinweise.
 
 | Fehlerkorrekturen / Release · v0.67.1 · CodexAI | Kampf pausiert im Hintergrund |

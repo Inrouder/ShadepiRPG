@@ -1,0 +1,18 @@
+Shadepi - Echos in Neon · macOS · v0.67.1 · CodexAI
+
+Universal-App fuer Intel-Macs (x86_64) und Apple Silicon (arm64).
+Das ZIP vollstaendig entpacken und die .app nach Programme kopieren.
+
+Die App ist ad-hoc signiert, aber nicht von Apple notarisiert.
+Falls macOS den ersten Start blockiert: nach einem Startversuch unter
+Systemeinstellungen > Datenschutz & Sicherheit gezielt fuer diese App
+"Dennoch oeffnen" waehlen. Gatekeeper nicht global deaktivieren.
+
+Der Release-Nachtrag verwendet denselben Spielcode wie v0.67.1.
+Der native Headless-Start wird vor dem Upload auf einem macOS-Runner
+geprueft. Ein manueller Grafik-/Controller-Spieltest auf einem echten
+Mac steht noch aus. Bitte Auffaelligkeiten mit Mac-Modell und macOS-
+Version melden.
+
+Downloads und SHA-256-Pruefsummen:
+https://github.com/Inrouder/ShadepiRPG/releases/tag/v0.67.1

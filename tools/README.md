@@ -1,5 +1,7 @@
 # Entwicklerwerkzeuge · v0.67.0 · CodexAI
 
+**macOS-Nachtrag v0.67.1 · CodexAI:** [Mac-Preset, Universal-Paketprüfung und ergänzender Release-Ablauf](macos/README.md). Signatur-/Startprüfung auf macOS vor Upload; derselbe Spiel-Tag, keine neuen Spielgrafiken.
+
 **v0.67.0 · CodexAI:** [Arcade-Eingabe-Galerie](arcade-v067/README.md) erfasst geskriptete reale Kampfzustände als native PNGs/Filmframes, ausschließlich nach `/tmp` und mit isolierten Daten. Keine Grafikgenerierung.
 
 **v0.66.0 · CodexAI:** [Fehlerbericht-Aufnahmen](report-v066/README.md) für Jackal/Abgang, rote Welt/Boss, Kapitelübergang, Garage und Tower-Koop. Ausschließlich native isolierte QA-Aufnahmen nach `/tmp`; keine Grafikgenerierung.

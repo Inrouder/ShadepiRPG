@@ -1,0 +1,17 @@
+{
+  "version": "0.67.1",
+  "author": "CodexAI",
+  "file": "ShadepiRPG-macOS.zip",
+  "bytes": 247301744,
+  "sha256": "f3218c5719591943182992a2d1f52da78d7675675e503f4c21081cc67755464a",
+  "app": "Shadepi - Echos in Neon.app",
+  "executable": "Shadepi - Echos in Neon",
+  "architectures": [
+    "x86_64",
+    "arm64"
+  ],
+  "resource_pack_bytes": 187454844,
+  "signature": "ad-hoc",
+  "notarized": false,
+  "native_start_tested": false
+}

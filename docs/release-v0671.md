@@ -6,6 +6,8 @@
 
 Der letzte öffentliche Download war v0.60.3; main und sämtliche Remote-Branches wurden erneut verglichen. v0.67.1 bündelt die zwischenzeitlichen HQ-Arcade-, Android-/WLAN-, Touch-, Fahrzeug- und Flugszenen-Verbesserungen mit drei reproduzierten Fehlerkorrekturen. Die ursprünglichen Figuren-/Weltquellen, Story und Spielstände bleiben erhalten.
 
+**macOS-Nachtrag · v0.67.1 · CodexAI:** [Universal-ZIP, Startanleitung und eigener Nachweis](macos-v0671.md) ergänzen den ursprünglichen Release. Der ursprüngliche Fünf-Anhänge-Nachweis oben beschreibt den Stand vor diesem Nachtrag.
+
 ## Behobene Fehler
 
 | Nachstellung im alten Stand | Korrektur |
