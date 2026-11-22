@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "0.68.1",
+  "version": "0.69.0",
   "author": "CodexAI",
   "entries": [
     {
@@ -193,6 +193,13 @@
         "docs/Game Logos.png"
       ],
       "note": "Originales vom Nutzer bereitgestelltes Startbild, übernommen aus Commit 83cea59. Brandingquelle, keine neue Heldensprite-Vorlage."
+    },
+    {
+      "status": "active",
+      "note": "v0.69.0 CodexAI: separate clearing, rose-petal atlas and unknown cosmic swarm for chapter 7; original shore/contact sources retained.",
+      "paths": [
+        "assets/story/lake/epilogue/"
+      ]
     }
   ]
 }

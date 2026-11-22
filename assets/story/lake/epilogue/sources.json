@@ -1,0 +1,18 @@
+{
+  "version": "0.69.0",
+  "author": "CodexAI",
+  "sources": {
+    "clearing.png": {
+      "source": "/workspace/generated_images/exec-6a4b11ba-4964-4716-9401-3d75997ebf94.png",
+      "sha256": "fb463af96c402db4a1bd6bf255d927cc078671fdb445706ff4fd5ba533a9f34f"
+    },
+    "alien-swarm.png": {
+      "source": "/workspace/generated_images/exec-6410123f-c874-4885-a489-85405151606d.png",
+      "sha256": "7872c9754d37571658e31ddbdd471df3d4d7a116bcf76bfa77ba9d79db1715c8"
+    },
+    "rose-petals.png": {
+      "source": "/workspace/generated_images/exec-7be7cdf0-0895-47b6-ae9f-45ac29ea731e.png",
+      "sha256": "b5e02aba2679d300184a752883ca204a4f00a429bca3860c5142b2e2b4998812"
+    }
+  }
+}

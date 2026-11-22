@@ -1,5 +1,8 @@
 extends Node2D
-## v0.36.0 · CodexAI. Land on dry ground, leave the craft, then the lake finale.
+## v0.69.0 · CodexAI. Clearing landing, walk-and-talk, intimate lake and cosmic credits.
+const CLEARING = preload("res://assets/story/lake/epilogue/clearing.png")
+const Petals = preload("res://scripts/lake_petals.gd")
+const Epilogue = preload("res://scripts/lake_epilogue.gd")
 const Aerodyne = preload("res://scripts/cinematic_aerodyne.gd")
 const Motion = preload("res://scripts/cinematic_motion.gd")
 const Tableau = preload("res://scripts/lake_tableau.gd")
@@ -9,6 +12,10 @@ const WATER = preload("res://shaders/lake_mystic.gdshader")
 const PARK := Vector2(225,430)
 const FOOTPRINT := Rect2(177,442,96,44)
 const SHORE: Array[Vector2] = [Vector2(570,405),Vector2(592,420)]
+var clearing_active := false
+var petals: Node2D
+var epilogue: CanvasLayer
+var landing_body: StaticBody2D
 var world: Node2D
 var vehicle: Node2D
 var tableau: Node2D
@@ -57,6 +64,7 @@ func _ready() -> void:
 	tableau = Tableau.new()
 	add_child(tableau)
 	var body := StaticBody2D.new()
+	landing_body=body
 	body.position = FOOTPRINT.get_center()
 	body.collision_layer = 1
 	body.collision_mask = 0
@@ -66,6 +74,8 @@ func _ready() -> void:
 	collider.shape = shape
 	body.add_child(collider)
 	add_child(body)
+	petals=Petals.new();petals.sequence=self;add_child(petals)
+	epilogue=Epilogue.new();add_child(epilogue)
 	_sync()
 
 func paused() -> bool:
@@ -79,8 +89,11 @@ func _process(delta: float) -> void:
 	queue_redraw()
 
 func _sync() -> void:
+	vehicle.visible=clearing_active
 	vehicle.set_pose(craft,grow,roll,power,clock,bank)
-	water.visible = glow>0.001 or dragon_passage>=0
+	moon_halo.visible=not clearing_active
+	if is_instance_valid(world.scene_atmosphere.water):world.scene_atmosphere.water.visible=not clearing_active and world.visual_quality>0
+	water.visible = not clearing_active and (glow>0.001 or dragon_passage>=0)
 	water_material.set_shader_parameter("clock",clock)
 	water_material.set_shader_parameter("glow",glow*(0.6 if world.visual_quality==0 else 1.0))
 	water_material.set_shader_parameter("passage",dragon_passage)
@@ -93,6 +106,7 @@ func set_stage(value: String) -> void:
 	if not events.has(value): events.append(value)
 
 func _draw() -> void:
+	if not clearing_active:return
 	var fade := 0.34*(1-altitude)
 	draw_set_transform(PARK+Vector2(0,28),0,Vector2(1,0.3))
 	draw_circle(Vector2.ZERO,48-altitude*12,Color(0,0,0,fade))
@@ -139,10 +153,11 @@ func _exit(cs, actor: PixelActor, target: Vector2) -> void:
 func play_arrival() -> void:
 	var cs = world.begin_cutscene()
 	world.ui.set_lake_cinema(true)
-	cs.ended.connect(func(): world.ui.set_lake_cinema(false),CONNECT_ONE_SHOT)
+	cs.ended.connect(_scene_ended,CONNECT_ONE_SHOT)
 	var ticket: int = cs.generation
 	world.player.hide()
 	world.raven.hide()
+	set_clearing(true)
 	set_stage("approach")
 	world.sound("drive_boost")
 	arrival_step(0,0)
@@ -179,21 +194,29 @@ func play_arrival() -> void:
 	if not cs.alive(ticket): return
 	await cs.title("KAPITEL 7","Der neue Orden",2.2)
 	if not cs.alive(ticket): return
-	await cs.say("RAVEN","Diese Stille … Ich habe vergessen, wie sich das anfühlt.")
+	set_stage("forest_walk")
+	await _walk_talk(cs,[Vector2(460,456),Vector2(482,470)],"RAVEN","Diese Stille … Nach der Stadt ist das fast unwirklich.")
 	if not cs.alive(ticket): return
+	await _walk_talk(cs,[Vector2(650,390),Vector2(671,407)],"SHADEPI","Hier hat der Orden früher Zuflucht gesucht. Den Weg kennt kaum jemand.")
+	if not cs.alive(ticket): return
+	await _walk_talk(cs,[Vector2(842,330),Vector2(862,347)],"RAVEN","Und du bringst ausgerechnet mich hierher?")
+	if not cs.alive(ticket): return
+	set_stage("lake_reveal")
+	await cs.fade(Color.BLACK,0.7)
+	if not cs.alive(ticket):return
+	set_clearing(false)
+	world.player.position=Vector2(320,466);world.raven.position=Vector2(343,481)
+	await cs.camera(Vector2(460,374),0,1.2)
+	await cs.fade(Color.TRANSPARENT,0.9)
+	if not cs.alive(ticket):return
+	await _walk_talk(cs,[Vector2(444,448),Vector2(465,463)],"SHADEPI","Das Heiligtum hat dich schon in der Gasse erkannt. Aber ich wäre auch ohne Prophezeiung an deiner Seite.",27)
+	if not cs.alive(ticket):return
 	set_stage("shore")
-	await Motion.walk_pair(cs,[world.player,world.raven],[Vector2(430,475),Vector2(454,492)],72)
+	await _walk_talk(cs,SHORE,"RAVEN","Gut. Ich will wissen, was du fühlst. Nicht, was irgendeine Prophezeiung von uns will.",26)
 	if not cs.alive(ticket): return
-	await Motion.walk_pair(cs,[world.player,world.raven],SHORE,66)
-	if not cs.alive(ticket): return
-	world.player.z_index = 0
-	world.raven.z_index = 0
-	cs.face(world.player,world.raven.position)
-	cs.face(world.raven,world.player.position)
-	cs.pose(world.player,"idle")
-	cs.pose(world.raven,"idle")
-	await cs.lines([["RAVEN","Was ist das für ein Ort?"],["SHADEPI","Ein Zufluchtsort des Ordens. Komm, ich zeige dir etwas."]])
-	if not cs.alive(ticket): return
+	world.player.z_index=0;world.raven.z_index=0
+	cs.face(world.player,world.raven.position);cs.face(world.raven,world.player.position)
+	cs.pose(world.player,"idle");cs.pose(world.raven,"idle")
 	set_stage("parked")
 	cs.end(func():
 		world.ui.set_lake_cinema(false)
@@ -201,6 +224,41 @@ func play_arrival() -> void:
 		world.autosave()
 		world.toast("Gemeinsam ans Wasser · E / A")
 	)
+
+func set_clearing(value: bool) -> void:
+	clearing_active=value
+	if is_instance_valid(landing_body):landing_body.collision_layer=1 if value else 0
+	world.queue_redraw();_sync()
+
+func _walk_talk(cs,targets: Array,speaker: String,text: String,speed: float=34.0) -> void:
+	var ticket: int=cs.generation
+	var pair: Array=[world.player,world.raven]
+	var duration: float=world.player.position.distance_to(targets[0])/speed
+	cs.camera((targets[0]+targets[1])*0.5-Vector2(0,40),duration,1.35)
+	for i in 2:cs.walk(pair[i],targets[i],speed)
+	await cs.say(speaker,text)
+	if not cs.alive(ticket):return
+	while cs.walkers.has(pair[0]) or cs.walkers.has(pair[1]):
+		await cs.wait(0.05)
+		if not cs.alive(ticket):return
+
+func _restore_actors() -> void:
+	for actor in [world.player,world.raven]:
+		if not is_instance_valid(actor):continue
+		actor.external_pose=false;actor.modulate=Color.WHITE;actor.z_index=0;actor.show()
+		if is_instance_valid(actor.visual):actor.visual.show()
+		if is_instance_valid(actor.cast_shadow):actor.cast_shadow.show()
+		if is_instance_valid(actor.light_occluder):actor.light_occluder.visible=not actor.cloaked
+		actor.queue_redraw()
+
+func _scene_ended() -> void:
+	if not is_instance_valid(world):return
+	world.ui.set_lake_cinema(false)
+	epilogue.reset();tableau.hide();_restore_actors()
+	if clearing_active:
+		world.player.position=SHORE[0];world.raven.position=SHORE[1]
+		set_clearing(false)
+	world.camera.zoom=Vector2.ONE;world.camera.position=world.camera_home()
 
 func ritual_step(index: int) -> void:
 	glow_target = [0.05,0.4,0.65,0.85][clampi(index,0,3)]
@@ -235,7 +293,7 @@ func rest() -> void:
 func play_finale() -> void:
 	var cs = world.begin_cutscene()
 	world.ui.set_lake_cinema(true)
-	cs.ended.connect(func(): world.ui.set_lake_cinema(false),CONNECT_ONE_SHOT)
+	cs.ended.connect(_scene_ended,CONNECT_ONE_SHOT)
 	var ticket: int = cs.generation
 	cs.pose(world.player,"idle")
 	cs.pose(world.raven,"idle")
@@ -247,7 +305,7 @@ func play_finale() -> void:
 	_hide_actors()
 	set_stage("hands")
 	glow_target = 0.65
-	await cs.camera(tableau.position+Vector2(10,-32),1.4,2.1)
+	await cs.camera(tableau.position+Vector2(10,-32),2.0,2.7)
 	if not cs.alive(ticket): return
 	await cs.lines([["RAVEN","Jetzt gehöre ich zum Orden … darf ich?"],["SHADEPI","Jetzt darfst du."]])
 	if not cs.alive(ticket): return
@@ -260,10 +318,12 @@ func play_finale() -> void:
 	await tableau.transition(cs,2,0.8)
 	if not cs.alive(ticket): return
 	glow_target = 1.0
-	await cs.wait(2.2)
+	cs.camera(tableau.position+Vector2(13,-33),2.8,3.15)
+	await cs.wait(2.8)
 	if not cs.alive(ticket): return
 	set_stage("dragon")
-	cs.camera(Vector2(540,277),1.8,0.65)
+	petals.gust()
+	cs.camera(Vector2(615,350),2.2,0.95)
 	await cs.animate(func(p: float):
 		dragon_passage = p
 		_sync()
@@ -275,12 +335,37 @@ func play_finale() -> void:
 	if not cs.alive(ticket): return
 	await cs.wait(1.4)
 	if not cs.alive(ticket): return
-	await cs.camera(tableau.position+Vector2(10,-30),1.0,1.8)
+	await cs.camera(tableau.position+Vector2(10,-30),1.7,2.6)
 	if not cs.alive(ticket): return
 	await cs.lines([["RAVEN","Kenzōs Auftraggeber … morgen suchen wir weiter."],["SHADEPI","Morgen."],["RAVEN","Heute bleibst du hier."],["SHADEPI","Bei dir."]])
 	if not cs.alive(ticket): return
-	await cs.title("DER ORDEN DES WEISSEN DRACHEN","Ein neuer Anfang",3.0)
-	if not cs.alive(ticket): return
+	set_stage("moon")
+	await cs.camera(Vector2(727,97),4.8,3.2)
+	if not cs.alive(ticket):return
+	set_stage("stars")
+	await cs.animate(func(p: float):epilogue.frame(p*0.28,clock,p),3.2)
+	if not cs.alive(ticket):return
+	set_stage("galaxy")
+	await cs.animate(func(p: float):epilogue.frame(lerpf(0.28,0.65,p),clock),4.4)
+	if not cs.alive(ticket):return
+	set_stage("swarm")
+	await cs.animate(func(p: float):epilogue.frame(lerpf(0.65,1.0,p),clock),5.2)
+	if not cs.alive(ticket):return
+	await cs.wait(1.5)
+	if not cs.alive(ticket):return
+	set_stage("credits")
+	for page in Epilogue.PAGES.size():
+		await cs.animate(func(p: float):
+			epilogue.frame(1.0,clock)
+			epilogue.credit(page,p)
+		,4.6 if page==1 else 3.8)
+		if not cs.alive(ticket):return
+	await cs.fade(Color.BLACK,0.8)
+	if not cs.alive(ticket):return
+	epilogue.reset()
+	await cs.camera(world.camera_home(),0,1)
+	await cs.fade(Color.TRANSPARENT,1.0)
+	if not cs.alive(ticket):return
 	cs.end(func():
 		rest()
 		world.ui.set_lake_cinema(false)

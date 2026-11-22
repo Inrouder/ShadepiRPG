@@ -1,5 +1,6 @@
 extends Node2D
 ## v0.49.0 · CodexAI. Eight registered contact frames; original heroes stay unchanged.
+const CONTACT_SHADOW = preload("res://assets/world/light.png")
 const ART = preload("res://assets/story/lake/poses-moon.png")
 const CONTACT = preload("res://shaders/lake_contact.gdshader")
 const CELL := Vector2(443.5,443.5)
@@ -71,7 +72,6 @@ func transition(cs, index: int, seconds: float = 0.5) -> void:
 	set_pose(target_pose)
 
 func _draw() -> void:
+	# v0.69.0 · CodexAI: soft authored radial texture, no hard ellipse at close zoom.
 	for foot in [Vector2.ZERO,RAVEN_OFFSET]:
-		draw_set_transform(foot+Vector2(0,1),0,Vector2(1,0.25))
-		draw_circle(Vector2.ZERO,10,Color(0,0,0,0.3))
-	draw_set_transform(Vector2.ZERO)
+		draw_texture_rect(CONTACT_SHADOW,Rect2(foot+Vector2(-11,-2),Vector2(22,7)),false,Color(0,0,0,0.42))

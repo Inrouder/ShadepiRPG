@@ -1,5 +1,7 @@
 # Shadepi · Spieleranleitung
 
+**Neu v0.69.0 · CodexAI:** Kapitel 7 führt nach der Landung in einer Waldlichtung gemeinsam und mit Gesprächen zum See. Nähere Kamera, Rosenblätter im Drachenwind und ein kosmischer Epilog leiten in den nach Rollen gegliederten Abspann über. **E/Enter/A** für Dialoge, **Leertaste/B** zum Überspringen; Pause hält auch die Schlussfahrt an. [Bilder, Ablauf und Credits](docs/see-epilog-v069.md).
+
 **Neu v0.68.1 · CodexAI:** Die vier Ordenskrieger tragen ihre bestätigten Namen: Drake Gatnom (MG), Swifty Dex (Kampfstab), Tahiro Crow (Oni-Maske) und Shame Ly (weiße Gewandung). Dialoge, Erinnerungsüberschrift und Kontrollpunktwahl verwenden sie durchgängig. [Figuren und Details](docs/ordensnamen-v0681.md).
 
 **Neu v0.68.0 · CodexAI:** Vor dem Hauptmenü erscheint das bereitgestellte SHAD3PI-Bild kurz mit ruhiger Überblendung. Danach folgen Licht-/Gesundheits-, Inhalts- und Markenhinweise. **Enter / Leertaste / E, Controller A oder Tippen auf „Weiter zum Hauptmenü“** bestätigt; die Seite verschwindet nicht automatisch. Beim Zurückkehren aus einem Kapitel zum Menü wiederholt sich der Vorspann nicht. [Bilder, Film und Hinweise](docs/startup-v068.md).

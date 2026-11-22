@@ -947,12 +947,8 @@ func _complete_point() -> void:
 # v0.47.0 · ClaudeHelper: Wortlaut nach Kapitel 7 des Romans; löst die Prophezeiung aus
 # dem Hangar und den Maskenkodex aus Kapitel 5 auf.
 const RITUAL: = [
-	[["SHADEPI", "Raven … das Heiligtum in mir hat dich erkannt. Schon in der Gasse. Es hat dich erwählt. Das meinte ich mit der Prophezeiung."],
-		["RAVEN", "Und du? Bin ich für dich nur eine Prophezeiung?"],
-		["SHADEPI", "Nein. Ich stünde an deiner Seite, auch wenn es das nicht getan hätte. Du hast mich daran erinnert, was es heißt, nicht nur ein Schatten zu sein."],
-		["RAVEN", "Das klingt … irgendwie sehr schön. Ich würde dich ja küssen, aber mit der Maske geht das schwer."],
-		["SHADEPI", "Ich kann dich in den Orden aufnehmen. Nur wenn du es freiwillig willst. Dann darf ich mich dir zeigen."],
-		["RAVEN", "Ich habe nichts mehr zu verlieren. Ich bin bereit, nach vorne zu blicken. Ich will."]],
+	[["SHADEPI", "Ich kann dich in den Orden aufnehmen. Aber nur, wenn du es selbst willst."],
+		["RAVEN", "Ich will. Nicht wegen einer Prophezeiung. Wegen dir – und weil ich mit dir nach vorne sehen will."]],
 	[["SHADEPI", "Ich, Shadepi, Überlebender und einst erster Krieger des Ordens des Weißen Drachen, bitte dich: Nimm diese Seele in deine Obhut."]],
 	[["HEILIGTUM", "Dein Wille ist stark. Ich spüre viel Gutes in dir. Ich akzeptiere dich."]],
 	[["SHADEPI", "Hiermit nehme ich dich, Raven, in den Orden des Weißen Drachen auf. Ich ernenne dich zur Zweiten Kriegerin des Ordens und Behüterin des Heiligtums."]],
@@ -1163,6 +1159,8 @@ func _draw() -> void :
 	var art: Texture2D = Painted.texture(Story.LEVEL_ART[beat])
 	if beat == Beat.ECHO and echo_ready:
 		art = Painted.texture("memory")
+	if beat in [Beat.LAKE,Beat.END] and is_instance_valid(lake_sequence) and lake_sequence.clearing_active:
+		art=LakeSequence.CLEARING
 	if beat == Beat.ECHO and not echo_ready:
 		draw_rect(Rect2(0, 0, 1024, 640), Color("080c11"))
 		if sanctuary_stage == 2: art = SanctuaryTableau.ROOM

@@ -1,5 +1,13 @@
 # Versionshinweise
 
+## v0.69.0 – CodexAI: Waldlichtung, romantischer Mondsee und kosmischer Abspann · 23. November 2026
+
+- Kapitel 7 beginnt mit Landung/Ausstieg in einer eigenen detailreichen HQ-Waldlichtung. Beide gehen unter Mondlicht zum See und sprechen tatsächlich während des Gehens; der Aerodyne bleibt zurück.
+- Freiwillige Ordensaufnahme erhalten; nähere ruhige Kameraeinstellungen, weichere Kontaktschatten, acht vorhandene Kuss-/Maskenphasen und animierte Rosenblätter im Wind des Drachenschattens.
+- Kamerafahrt zum Mond, Übergang ins Sternenfeld, Galaxie und schimmernder unbekannter außerirdischer Strukturschwarm. Erst danach sieben Abspannkarten mit Shadepi, ChatGPT/Gemini/Claude, Codex AI, Suno und Godot nach Nutzervorgabe.
+- Pause, Überspringen, Kapitelwechsel und bisherige See-Kontrollpunkte erhalten; kosmischer Canvas, normale Figuren und HUD bei Abbruch zurücksetzen. Originalhelden-/Fahrzeug-/Drachenquellen bleiben erhalten.
+- [Native Vorschauen, Film, Bildquellen und Prüfungen](docs/see-epilog-v069.md).
+
 ## v0.68.1 – CodexAI: bestätigte Namen der vier Ordenskrieger · 22. November 2026
 
 - Drake Gatnom (schweres MG), Swifty Dex (Roboterkopf und Kampfstab), Tahiro Crow (Oni-Maske und Katana) und Shame Ly (weiße Gewandung) in Erinnerungsdialogen und aktueller Figurendokumentation.

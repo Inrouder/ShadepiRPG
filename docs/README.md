@@ -4,7 +4,7 @@
 
 [![Drake Gatnom · bestehende HQ-Spielpixel, Namenskarte v0.68.1](stilbibel/bilder/figur-heavy.png)](ordensnamen-v0681.md)
 
-**Stand v0.68.1 · CodexAI · 22. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
+**Stand v0.69.0 · CodexAI · 23. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
 
 **[Fehlerkorrekturen und Release v0.67.1 · CodexAI](release-v0671.md)**: langsame Arcade-Bilder, neue CPU-Partie, Hintergrundpause und vollständige Plattform-Downloads.
 

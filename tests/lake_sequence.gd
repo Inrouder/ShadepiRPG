@@ -1,5 +1,5 @@
 extends SceneTree
-## v0.36.0 · CodexAI. Arrival geography, consent order, privacy states and checkpoints.
+## v0.69.0 · CodexAI. Clearing route, moving dialogue, cosmic finale and safe checkpoints.
 const Lake = preload("res://scripts/lake_sequence.gd")
 const Tableau = preload("res://scripts/lake_tableau.gd")
 const Painted = preload("res://scripts/painted_world.gd")
@@ -63,11 +63,16 @@ func run() -> void:
 	d = w.lake_sequence
 	same_vehicle = d.vehicle
 	var saw_exits := false
-	for i in 1800:
+	var walking_dialogue := false
+	var landed_in_clearing := false
+	for i in 3000:
 		await process_frame
 		if d.stage=="exit_raven": saw_exits = true
+		if d.stage=="touchdown":landed_in_clearing=d.clearing_active and d.vehicle.visible
+		if d.stage=="forest_walk" and w.cutscene.waiting_input and not w.cutscene.walkers.is_empty():walking_dialogue=true
 		if w.cutscene.waiting_input: w.cutscene.advance()
 		if not w.cutscene.running: break
+	check(landed_in_clearing and walking_dialogue and d.events.has("lake_reveal"),"landing occurs in a separate clearing and dialogue really runs while both walk toward the lake")
 	check(not w.lake_scene_pending and saw_exits and d.events.has("exit_shadepi"),"actual approach, touchdown and both disembarkations finish")
 	check(d.vehicle==same_vehicle and d.craft==Lake.PARK and d.power==0,"same vehicle remains parked after touchdown")
 	check(w.player.visible and w.raven.visible and w.player.modulate.a==1 and w.raven.modulate.a==1 and w.player.z_index==0 and w.raven.z_index==0,"both complete figures and ordinary depth order are restored on land")
@@ -86,9 +91,19 @@ func run() -> void:
 	var seen := {}
 	var source_hidden := true
 	var pause_checked := false
-	for i in 1600:
+	var cosmic_pause := false
+	var credits_seen := {}
+	for i in 3600:
 		await process_frame
 		seen[d.stage] = true
+		if d.stage=="credits":credits_seen[d.epilogue.page]=true
+		if d.stage=="galaxy" and not cosmic_pause:
+			w.menu_open=true
+			var t: float=d.clock
+			var travel: float=d.epilogue.space_material.get_shader_parameter("travel")
+			for frame in 5:await process_frame
+			check(d.clock==t and d.epilogue.space_material.get_shader_parameter("travel")==travel,"pause freezes the cosmic camera/shimmer instead of advancing behind the menu")
+			w.close_menu();cosmic_pause=true
 		if d.tableau.visible:
 			source_hidden = source_hidden and not w.player.visual.visible and not w.raven.visual.visible and d.tableau.pose>=0 and d.tableau.pose<=3 and d.tableau.target_pose<=3
 		if d.stage=="mask" and d.tableau.pose==1 and not pause_checked:
@@ -102,6 +117,8 @@ func run() -> void:
 		if w.cutscene.waiting_input: w.cutscene.advance()
 		if not w.cutscene.running: break
 	check(seen.has("mask") and seen.has("kiss") and seen.has("dragon") and seen.has("embrace"),"mask, kiss, passing shadow and embrace really play")
+	check(seen.has("moon") and seen.has("stars") and seen.has("galaxy") and seen.has("swarm") and cosmic_pause,"real playback travels from moon through space and galaxy to the unknown swarm")
+	check(credits_seen.size()>=7 and not d.epilogue.visible,"every credit card plays after the swarm and the overlay clears at completion")
 	check(source_hidden and pause_checked,"only the registered contact sequence are visible during the private moment")
 	check(d.tableau.pose==3 and d.dragon_passage==-1 and not w.lake_scene_pending,"final rest restores the masked embrace and clears the brief dragon")
 	check(w.save_game() and w.load_game() and not w.cutscene.running and w.lake_sequence.tableau.pose==3,"completed finale loads the peaceful masked end pose")
@@ -109,6 +126,11 @@ func run() -> void:
 	w._enter(w.Beat.END)
 	check(w.save_game() and w.load_game() and w.cutscene.running and w.lake_scene_pending,"pending finale resumes as a scene rather than losing the kiss")
 	await finish(w)
+	w.fresh_entry=true;w._enter(w.Beat.END)
+	var old_epilogue=w.lake_sequence.epilogue
+	old_epilogue.frame(0.8,2.0);old_epilogue.credit(2,0.5)
+	w._enter(w.Beat.ROOF)
+	check(not old_epilogue.visible and w.player.visual.visible and not w.player.external_pose,"chapter jump closes a live cosmic credit canvas and restores the heroes")
 	w.fresh_entry = true
 	w._enter(w.Beat.LAKE)
 	w.set_process(false)

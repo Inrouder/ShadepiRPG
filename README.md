@@ -4,7 +4,7 @@
 
 [![Drake Gatnom · bestehende HQ-Spielpixel, Namenskarte v0.68.1](docs/stilbibel/bilder/figur-heavy.png)](docs/ordensnamen-v0681.md)
 
-**2D-Action-RPG · v0.68.1 · CodexAI · Godot 4.7.2 · Windows / Linux / macOS-Nachtrag / Android-Testfassung · Einzelspieler, Lokal- und WLAN-Remote-Koop**
+**2D-Action-RPG · v0.69.0 · CodexAI · Godot 4.7.2 · Windows / Linux / macOS-Nachtrag / Android-Testfassung · Einzelspieler, Lokal- und WLAN-Remote-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 

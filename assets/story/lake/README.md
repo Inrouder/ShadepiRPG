@@ -1,5 +1,7 @@
 # See-Ankunft, Mondlicht und Kontaktposen · v0.49.0 · CodexAI
 
+**Aktiv seit v0.69.0 · CodexAI:** Die Landung findet jetzt in der eigenen [Waldlichtung](epilogue/README.md) vor dem Weg zum See statt. Originale Kontakt-/Drachenquellen unten bleiben aktiv; weiche texturierte Fußschatten ersetzen die harten Kontaktscheiben. Rosenblattatlas und kosmische Kulisse ergänzen das Finale. Die unten genannten früheren Landegeografie-/Kameradetails gelten nur für ihren Aufnahmestand. [Aktueller Ablauf](../../../docs/see-epilog-v069.md).
+
 ## Aktive Quellen v0.49.0 · CodexAI
 
 - `poses-moon.png`: unveränderte Bildwerkzeugquelle, tatsächlich 1774×887, vier Spalten / zwei Reihen. Acht echte Schritte: Hände, Griff, Maske heben, Annäherung, Kuss, gehaltener Kuss, Maske wieder aufsetzen, Umarmung. `lake_tableau.gd` registriert gerundete Einzelregionen, Fußanker lokal `(200,423)` und Maßstab `58/408`. Quellenkörper bleiben auf dem Boden; keine durchsichtigen Silhouetten-Überblendungen. Bestehende logische Posen 0–3 bleiben kompatibel und wählen die passenden Bildfolgen.
