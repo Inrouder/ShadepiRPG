@@ -1,6 +1,6 @@
 extends SceneTree
 ## v0.69.0 · CodexAI. Real complete chapter playback, isolated saves, native HQ captures.
-const OUT := "/tmp/shadepi-v069-gallery"
+var OUT := "/tmp/shadepi-v069-gallery"
 var w
 var seen := {}
 var frames_written := 0
@@ -54,6 +54,8 @@ func drive_scene() -> void:
 func run() -> void:
  if DisplayServer.get_name()=="headless" or not OS.get_user_data_dir().begins_with("/tmp/shadepi-"):
   push_error("Use native renderer and isolated /tmp/shadepi- data");quit(1);return
+ var cosmos_only:= "--cosmos-only" in OS.get_cmdline_user_args()
+ if cosmos_only:OUT="/tmp/shadepi-v069-cosmos"
  DirAccess.make_dir_recursive_absolute(OUT+"/film")
  set_meta("shadepi_admin_testing",true)
  Engine.max_fps=30;Engine.time_scale=4.0
@@ -62,6 +64,13 @@ func run() -> void:
  w.set_visual_quality(2);w.started=true;w.close_menu()
  for i in 5:await process_frame
  root.size=Vector2i(1920,1080)
+ if cosmos_only:
+  w._enter(w.Beat.END);w.cutscene.abort();w.ui.set_lake_cinema(true)
+  await walk_detail()
+  play_cosmos()
+  await drive_scene()
+  print("COSMIC QA: ",frames_written," native frames; ",seen)
+  w.free();await process_frame;quit();return
  w.fresh_entry=true;w._enter(w.Beat.LAKE)
  await drive_scene()
  for step in 4:
@@ -76,3 +85,21 @@ func run() -> void:
   if not seen.has(tag):ok=false;push_error("Missing capture "+tag)
  print("LAKE v0.69.0 CodexAI: ",frames_written," native movie frames; captures ",seen)
  w.free();await process_frame;quit(0 if ok else 1)
+
+func play_cosmos() -> void:
+ var cs=w.begin_cutscene()
+ var d=w.lake_sequence
+ cs.ended.connect(d._scene_ended,CONNECT_ONE_SHOT)
+ await d.cosmic_departure(cs)
+ if cs.running:cs.end(d.rest)
+
+func walk_detail() -> void:
+ var d=w.lake_sequence
+ d.set_clearing(true);d.tableau.hide();d._restore_actors()
+ w.player.position=Vector2(460,456);w.raven.position=Vector2(482,470)
+ w.camera.position=Vector2(520,410);w.camera.zoom=Vector2.ONE*1.35
+ var cs=w.begin_cutscene();cs.ended.connect(d._scene_ended,CONNECT_ONE_SHOT)
+ d._walk_talk(cs,[Vector2(650,390),Vector2(671,407)],"SHADEPI","Hier hat der Orden früher Zuflucht gesucht. Den Weg kennt kaum jemand.")
+ for i in 10:await process_frame
+ await shot("forest-dialogue")
+ cs.abort();d.rest();w.ui.set_lake_cinema(true)

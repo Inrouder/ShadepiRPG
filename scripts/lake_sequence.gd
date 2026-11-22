@@ -339,6 +339,18 @@ func play_finale() -> void:
 	if not cs.alive(ticket): return
 	await cs.lines([["RAVEN","Kenzōs Auftraggeber … morgen suchen wir weiter."],["SHADEPI","Morgen."],["RAVEN","Heute bleibst du hier."],["SHADEPI","Bei dir."]])
 	if not cs.alive(ticket): return
+	await cosmic_departure(cs)
+	if not cs.alive(ticket):return
+	cs.end(func():
+		rest()
+		world.ui.set_lake_cinema(false)
+		world.lake_scene_pending = false
+		world.autosave()
+		world.toast("Der neue Orden · Die gemeinsame Suche beginnt")
+	)
+
+func cosmic_departure(cs) -> void:
+	var ticket: int=cs.generation
 	set_stage("moon")
 	await cs.camera(Vector2(727,97),4.8,3.2)
 	if not cs.alive(ticket):return
@@ -366,10 +378,3 @@ func play_finale() -> void:
 	await cs.camera(world.camera_home(),0,1)
 	await cs.fade(Color.TRANSPARENT,1.0)
 	if not cs.alive(ticket):return
-	cs.end(func():
-		rest()
-		world.ui.set_lake_cinema(false)
-		world.lake_scene_pending = false
-		world.autosave()
-		world.toast("Der neue Orden · Die gemeinsame Suche beginnt")
-	)
