@@ -1,0 +1,187 @@
+{
+  "version": "0.69.0",
+  "author": "CodexAI",
+  "date": "2026-11-23",
+  "timezone": "Europe/Berlin",
+  "base_commit": "1b344dc",
+  "build_source_commit": "8a90b17ba88b4d42decb4cc2d29362d7fb2427ab",
+  "status": "Passed",
+  "headless_suites": {
+    "lake_sequence": {
+      "exit_code": 0,
+      "summary": [
+        "LAKE SEQUENCE: 46 checks, 0 failures"
+      ],
+      "errors": []
+    },
+    "moon_lake_menu": {
+      "exit_code": 0,
+      "summary": [
+        "MOON LAKE / MENU: 262 checks, 0 failures"
+      ],
+      "errors": []
+    },
+    "story_audit": {
+      "exit_code": 0,
+      "summary": [
+        "STORY AUDIT: 206 checks, 0 failures"
+      ],
+      "errors": []
+    },
+    "coop_chapters": {
+      "exit_code": 0,
+      "summary": [
+        "COOP CHAPTERS: 76 checks, 0 failures"
+      ],
+      "errors": []
+    },
+    "scene_atmosphere": {
+      "exit_code": 0,
+      "summary": [
+        "SCENE ATMOSPHERE: 134 checks, 0 failures"
+      ],
+      "errors": []
+    }
+  },
+  "headless_checks": 724,
+  "exported_linux_pack_probe": "29 checks, 0 failures; real packed resources, arrival/ritual/finale skip, credit text bounds, chapter cleanup",
+  "total_targeted_checks": 753,
+  "linux_packaged_start": "210 frames at 60 fps, no runtime errors or leaks",
+  "native_gallery": {
+    "version": "0.69.0",
+    "author": "CodexAI",
+    "complete_native_playback_frames": 304,
+    "targeted_cosmic_frames": 91,
+    "edited_frames": 294,
+    "first_take_selected_frames": 203,
+    "framerate": 8,
+    "output_size": [
+      640,
+      360
+    ],
+    "native_stills_size": [
+      1920,
+      1080
+    ],
+    "note": "Edited/accelerated native samples, original approach/romance plus final color-correct cosmic take. Dialogue advances scripted; no physical device/audio review.",
+    "film_bytes": 4282032,
+    "encoded_frames": 265,
+    "duration_ms": 36750,
+    "renderer": "X11 llvmpipe",
+    "visual_source_commit": "b4015ac",
+    "runtime_errors_or_leaks": false
+  },
+  "full_hd_captures": {
+    "lake-kiss-v069.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 1758452
+    },
+    "lake-walk-v069.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 2465106
+    },
+    "lake-swarm-v069.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 2796079
+    },
+    "lake-production-v069.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 1976090
+    },
+    "lake-clearing-v069.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 2763555
+    },
+    "lake-credits-v069.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 1978628
+    },
+    "lake-petals-v069.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 2359895
+    }
+  },
+  "platform_exports": {
+    "android": {
+      "exit_code": 0,
+      "seconds": 21.6,
+      "errors": [],
+      "path": "build/android/Shadepi-Echos-in-Neon.apk",
+      "bytes": 251150981,
+      "sha256": "cb999dd7c320330b3140e4a61469a37bcaaca6ca38f21005d6a25387084331a3",
+      "version_name": "0.69.0",
+      "version_code": 6900,
+      "debug_signature_verified": true,
+      "three_new_imported_textures_and_epilogue_script_present": true
+    },
+    "linux": {
+      "exit_code": 0,
+      "seconds": 3.9,
+      "errors": [],
+      "path": "build/linux/Shadepi-Echos-in-Neon.x86_64",
+      "bytes": 267892664,
+      "sha256": "7f9f6b05b6c79121048b3ad826f6e5e24fa9c23fc7f095eb5fe6a5ada1cdc75a"
+    },
+    "windows": {
+      "exit_code": 0,
+      "seconds": 4.1,
+      "errors": [],
+      "path": "build/windows/Shadepi-Echos-in-Neon.exe",
+      "bytes": 303641736,
+      "sha256": "98b4a7bcc462b286a9c6873a071c21f3973dcc5f00d9af8dae2ce270da95a271"
+    },
+    "macos": {
+      "exit_code": 0,
+      "seconds": 20.1,
+      "errors": [],
+      "path": "build/macos/ShadepiRPG-macOS.zip",
+      "bytes": 254207707,
+      "sha256": "2c32c7f92c7e44655f9bae978b2cc930f263ab812a7b78fe86985fd413706928",
+      "bundle_verification": {
+        "version": "0.69.0",
+        "author": "CodexAI",
+        "file": "ShadepiRPG-macOS.zip",
+        "bytes": 254207707,
+        "sha256": "2c32c7f92c7e44655f9bae978b2cc930f263ab812a7b78fe86985fd413706928",
+        "app": "Shadepi - Echos in Neon.app",
+        "executable": "Shadepi - Echos in Neon",
+        "architectures": [
+          "x86_64",
+          "arm64"
+        ],
+        "resource_pack_bytes": 194373244,
+        "signature": "ad-hoc",
+        "notarized": false,
+        "native_start_tested": false
+      }
+    }
+  },
+  "original_sources": "Original normal heroes, eight contact frames, six dragon phases and vehicle PNGs retained; three new authored sources fingerprinted in assets/story/lake/epilogue/sources.json.",
+  "limitations": [
+    "Windows/macOS binaries not executed natively for this change.",
+    "No physical phone/controller or new live two-device WLAN review; existing coop suite passed and the ordinary shared canvas is retained.",
+    "No acoustic audio review; existing chapter-7 music mapping retained.",
+    "Local validation exports only; no new release/tag or Cloud publish."
+  ]
+}

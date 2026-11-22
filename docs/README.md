@@ -1,5 +1,11 @@
 # Shadepi · Bilder, Filme und Dokumentation
 
+**Kapitel 7 · v0.69.0 · CodexAI:** Landung in der Lichtung, Gespräche auf dem Waldweg, romantischer Mondsee mit Rosenblättern und kosmischer Epilog vor dem Abspann. [Ablauf, Bilder und Film](see-epilog-v069.md).
+
+| Gemeinsam zum See | Der unbekannte Schwarm |
+| --- | --- |
+| [![Gespräche während des Gehens](previews/lake-walk-v069.png)](see-epilog-v069.md) | [![Schimmernde fremdartige Strukturen im All](previews/lake-swarm-v069.png)](see-epilog-v069.md) |
+
 **Ordensnamen v0.68.1 · CodexAI:** [Zuordnung und aktuelle Figurenkarten](ordensnamen-v0681.md).
 
 [![Drake Gatnom · bestehende HQ-Spielpixel, Namenskarte v0.68.1](stilbibel/bilder/figur-heavy.png)](ordensnamen-v0681.md)

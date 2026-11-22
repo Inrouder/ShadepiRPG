@@ -14,7 +14,23 @@
 
 ## Bilder und Film
 
-Native Full-HD-Aufnahmen des tatsächlichen Kapitelablaufs werden nach der Sichtprüfung hier eingebettet. Keine Konzepttafel ersetzt die Spielaufnahme.
+| Landung in der Lichtung | Gespräch während des Gehens |
+| --- | --- |
+| ![Aerodyne auf trockenem Gras](previews/lake-clearing-v069.png) | ![Raven und Shadepi gehen mit laufendem Dialog zum See](previews/lake-walk-v069.png) |
+
+| Näherer privater Moment | Rosenblätter und Drachenschatten |
+| --- | --- |
+| ![Kuss mit verdecktem Gesicht und weichen Fußschatten](previews/lake-kiss-v069.png) | ![Vollständige Figuren im Drachen-Weitbild](previews/lake-petals-v069.png) |
+
+![Kamerafahrt zum unbekannten schimmernden Schwarm](previews/lake-swarm-v069.png)
+
+| Urheberschaft | Spieleentwicklung |
+| --- | --- |
+| ![Shadepis Ideen, Story und Gestaltung](previews/lake-credits-v069.png) | ![Umsetzung durch Codex AI, Claude und Shadepi](previews/lake-production-v069.png) |
+
+[**Gekürzter, beschleunigter Film aus nativen Godot-Frames**](previews/lake-epilogue-v069.webp) – 36,75 Sekunden, 640×360, unter 5 MB. Der Film kombiniert den vollständigen Durchlauf mit der abschließenden farbkorrigierten Weltraumaufnahme. Dialoge wurden für die Aufnahme automatisch bestätigt; im Spiel bestimmt der Spieler die Lesedauer. Die zusätzliche Dialog-Nahansicht nutzt dieselbe echte Geh-/Dialogfunktion.
+
+Einzelbilder stammen aus dem Full-HD-Spielbild (1920×1080); Konzeptbilder wurden nicht als Spielaufnahme ausgegeben.
 
 ## Abspann nach Nutzervorgabe
 
@@ -41,4 +57,8 @@ Basis `1b344dc` / v0.68.1; alle Remote-Branches vor Beginn abgerufen und verglic
 
 Neue Kulissen/Rosenblätter mit dem Bildwerkzeug anhand der tatsächlich gesichteten See-/Figurenreferenzen erstellt; vollständige Quellen unverändert erhalten. Bestehende Schwarztöne, Cyan-Linien, Maske, Kasa, Haarfarben, Anatomie und Kontaktanker bleiben erhalten. Die Kamera macht die vorhandenen Detailpixel sichtbar, verändert aber keine Figurenproportionen. Der Comic liegt weiterhin nicht als Arbeitsdatei vor.
 
-Gezielte Szenen-, Menü-, Story-, Koop- und Atmosphäre-Prüfungen: **723 Prüfungen ohne Fehler**. Neue Fälle prüfen tatsächliche Landung in der separaten Lichtung, Gehbewegung während Dialogen, vollständige kosmische Reihenfolge und sämtliche Credits, Pause im All sowie Abbruch während einer sichtbaren Abspannkarte. Native Sichtprüfung und Paketnachweis werden vor Abschluss ergänzt. Dies ist keine physische Handy-/Controllerabnahme.
+Gezielte Szenen-, Menü-, Story-, Koop- und Atmosphäre-Prüfungen: **724 Prüfungen ohne Fehler**. Neue Fälle prüfen tatsächliche Landung in der separaten Lichtung, Gehbewegung während Dialogen, vollständige kosmische Reihenfolge und sämtliche Credits, Pause im All sowie Abbruch während einer sichtbaren Abspannkarte. Zusätzlich **29 Prüfungen aus einem exportierten Linux-Ressourcenpaket**: neue Grafiken/Shader vorhanden, Ankunft/Ritual/Finale/Abspann überspringbar, alle Creditstexte innerhalb ihrer Flächen und saubere Rückkehr bei Kapitelwechsel. **753 gezielte Prüfungen insgesamt ohne Fehler.** Native X11-/llvmpipe-Sichtprüfung in Full HD einschließlich Dialog beim Gehen, vollständiger Füße beim Drachenschatten, Kontaktbilder, Rosenblätter, Sterne/Galaxie/Schwarm und sämtlicher sieben Credits.
+
+Lokale Windows-, Linux-, Android- und Universal-Mac-Exporte sowie der Linux-Paketstart erfolgreich. Android-Versionscode 6900 und Testsignatur geprüft; Mac-Bundle/Version/Intel+ARM/Ad-hoc-Signatur strukturell geprüft. Kein nativer neuer Mac-/Windows-Lauf und keine physische Handy-/Controllerabnahme. Ton wurde bei der Sichtprüfung nicht akustisch bewertet; die bestehende Kapitel-7-Musikzuordnung bleibt erhalten.
+
+[Maschinenlesbarer Prüf-/Paketnachweis](pruefungen/v069/ergebnisse.json) · [Konsistenzauftrag](arbeiten/see-epilog-v069.md).
