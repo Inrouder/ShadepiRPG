@@ -35,4 +35,8 @@ Basis `5549296`, GitHub-main v0.69.0, sauber. Alle Remote-Branches vor Beginn ab
 
 Vorhandene See-/Lichtungsquelle, aktuelle Szenen-/Konsistenzregeln und Tests geprüft. Originalhelden, Masken-/Handfolge, Pixeldichte, Drachenanimation, Musik, kosmischer Schwarm und Rollen im Abspann bleiben gleich. Die Änderungen benötigen keine Bildgenerierung. Die native Galerie zeigt echte Markierungsaktionen und dieselben Geh-/Dialogfunktionen wie im Spiel.
 
-Gezielte Tests, Sichtprüfung und Exportpaket-Nachweis werden vor dem Push ergänzt. Kein neues Release und keine physische Geräteabnahme.
+**540 gezielte Prüfungen ohne Fehler:** See-/Wegablauf 59, Story und physische Erreichbarkeit 200, Menü/Kontrollpunkte 205, Koop-Kapitel 76. Die ersten drei eigentlichen Gespräche wurden mit aktiven gepaarten Walkern abgespielt; nach jedem Punkt Speichern/Laden und korrekte Karte geprüft. Der letzte Punkt bleibt am See. Pause, Controller-Überspringen, Abbruch und bisheriger Finale-Ablauf bleiben geprüft.
+
+**10 weitere Prüfungen aus einem exportierten Linux-Ressourcenpaket** bestätigen Fortschritt/Kartenwahl, Ankunft vor dem Waldweg, alle vier Markierungen, Kuss-/Abspannabschluss und Kapitelwechsel. **550 Prüfungen insgesamt bestanden.** Native Full-HD-Sichtprüfung aller drei Waldpunkte und der letzten See-Markierung; 121 reale Filmframes, 15,125 Sekunden, 2,68 MB. Bestehende Spielgrafiken bytegleich erhalten. [Maschinenlesbarer Nachweis](pruefungen/v0691/ergebnisse.json).
+
+Kein neues Release und keine physische Geräteabnahme. Für diese plattformneutrale Weg-/Dialogkorrektur wurde gezielt das Ressourcenpaket geprüft; die vier Plattformpakete aus v0.69.0 werden nicht als neue v0.69.1-Builds ausgegeben.
