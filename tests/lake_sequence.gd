@@ -88,6 +88,7 @@ func run() -> void:
 	w.fresh_entry = true
 	w._enter(w.Beat.END)
 	d = w.lake_sequence
+	check(not d.clearing_active and d.landing_body.collision_layer==0,"direct finale/checkpoint entry has no invisible aircraft collider in the lake scene")
 	var seen := {}
 	var source_hidden := true
 	var pause_checked := false

@@ -66,7 +66,7 @@ func _ready() -> void:
 	var body := StaticBody2D.new()
 	landing_body=body
 	body.position = FOOTPRINT.get_center()
-	body.collision_layer = 1
+	body.collision_layer = 0
 	body.collision_mask = 0
 	var shape := RectangleShape2D.new()
 	shape.size = FOOTPRINT.size
