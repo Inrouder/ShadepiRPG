@@ -1,6 +1,6 @@
 # Story-Durchsicht Kapitel 1–7 · v0.47.0–v0.47.1 · ClaudeHelper
 
-**Stand 9. November 2026.** Der gesamte spielbare Storyverlauf von Ravens Apartment bis zum See wurde gegen die Romanfassung ([Teil 4](universum/teil-4/README.md)), die Erinnerungsbriefings ([Teil 5](universum/teil-5/README.md)), die Tower-Vorgaben ([Teil 6](universum/teil-6/README.md)) und das See-Finale ([Teil 7](universum/teil-7/README.md)) gelesen. Bestätigte Nutzerzeilen und -abläufe blieben unverändert, darunter der Maskengriff mit allen fünf Zeilen, Lys Ruf, die Meisterübergabe, „Dreckmühle“, Kenzōs Griff vor Shadepis Eingreifen, die Extraktion vor Kenzōs Tod und Ravens Handverdeckung am See.
+**Stand 9. November 2026.** Der gesamte spielbare Storyverlauf von Ravens Apartment bis zum See wurde gegen die Romanfassung ([Teil 4](universum/teil-4/README.md)), die Erinnerungsbriefings ([Teil 5](universum/teil-5/README.md)), die Tower-Vorgaben ([Teil 6](universum/teil-6/README.md)) und das See-Finale ([Teil 7](universum/teil-7/README.md)) gelesen. Bestätigte Nutzerzeilen und -abläufe blieben unverändert, darunter der Maskengriff mit allen fünf Zeilen, Shame Lys Ruf, die Meisterübergabe, „Dreckmühle“, Kenzōs Griff vor Shadepis Eingreifen, die Extraktion vor Kenzōs Tod und Ravens Handverdeckung am See.
 
 Es wurden keine neuen Grafiken erzeugt und keine Spielmechaniken geändert. Geändert wurden Dialoge, Ziele, Hinweise und ein Terminaltitel.
 
@@ -23,13 +23,13 @@ Es wurden keine neuen Grafiken erzeugt und keine Spielmechaniken geändert. Geä
 - **Kapitel 2:** Während Ravens Deep Dive meldet Shadepis HUD die Unruhe des Heiligtums (85 %) wie im Roman. Das bereitet Kapitel 5 vor, ohne Ordensgeheimnisse zu verraten. Ravens Kollaps klingt nach Synapsenüberhitzung.
 - **Kapitel 3:** Der Tower-Plan nennt Kenzōs Dienstagsritual, Shadepis Misstrauen („fast zu einfach“) und Ravens Ziel, Kenzō am Ende ins Gesicht zu sehen.
 - **Kapitel 4:** Ravens Romanfrage „Mensch oder nur Metall?“ fällt vor Shadepis Gang zum Kompensator und führt zum späteren Maskengriff.
-- **Kapitel 5:** Ravens Eintritt in die Rückblende beginnt mit Rauch, Explosionen und Schreien. Nach jeder Erinnerung reagiert sie in einem eigenen Satz auf die Gefallenen und auf Ly.
+- **Kapitel 5:** Ravens Eintritt in die Rückblende beginnt mit Rauch, Explosionen und Schreien. Nach jeder Erinnerung reagiert sie in einem eigenen Satz auf die Gefallenen und auf Shame Ly.
 - **Kapitel 6:** Shadepi sagt im Hangar „Du wurdest mir prophezeit“, und Raven verschiebt die Erklärung auf „wenn wir lebend zurück sind“. Shadepi ruft „Nicht ich töte dich – das ist ihr Vergnügen“, die Flucht endet mit „Halt dich gut fest – jetzt wird's holprig!“.
 - **Kapitel 7:** Die Aufnahme folgt dem Romanwortlaut: Shadepi stünde auch ohne Prophezeiung an Ravens Seite und ist mit ihr „nicht nur ein Schatten“. Er spricht als einst erster Krieger des Ordens, und Ravens „Ich habe nichts mehr zu verlieren“ löst die Prophezeiung aus dem Hangar auf.
 
 ## Unverändert offen
 
-Warum Kenzō den Angriff inszeniert hat und wer sein Auftraggeber ist, bleibt laut Teil 6 unbekannt. Ebenso offen sind das spätere Schicksal des Roboterkopf-Kriegers, der Name des Meisters und die Identität des Drachen am See.
+Warum Kenzō den Angriff inszeniert hat und wer sein Auftraggeber ist, bleibt laut Teil 6 unbekannt. Ebenso offen sind das spätere Schicksal des Swifty Dexs, der Name des Meisters und die Identität des Drachen am See.
 
 ## Prüfung
 

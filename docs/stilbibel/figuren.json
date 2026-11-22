@@ -1,5 +1,5 @@
 {
-  "version": "0.46.1",
+  "version": "0.68.1",
   "author": "CodexAI",
   "source_commit": "37fa48e7a2183711eef34eb0bed98b0fb8854b68",
   "note": "Aktive Spielgrafiken als Dokumentationsreferenzen. Kein neuer Figurenentwurf. Koordinaten werden beim Rendern aus den aktiven Metadaten gelesen.",
@@ -108,7 +108,7 @@
     },
     {
       "id": "oni",
-      "title": "Oni-Krieger",
+      "title": "Tahiro Crow",
       "group": "Orden",
       "kind": "memory",
       "traits": [
@@ -118,7 +118,7 @@
     },
     {
       "id": "robot",
-      "title": "Roboterkopf-Krieger",
+      "title": "Swifty Dex",
       "group": "Orden",
       "kind": "memory",
       "traits": [
@@ -128,7 +128,7 @@
     },
     {
       "id": "ly",
-      "title": "Ly · weißer Ordenskrieger",
+      "title": "Shame Ly · weißer Ordenskrieger",
       "group": "Orden",
       "kind": "memory",
       "traits": [
@@ -138,12 +138,12 @@
     },
     {
       "id": "heavy",
-      "title": "Schwerer MG-Krieger",
+      "title": "Drake Gatnom · schwerer MG-Krieger",
       "group": "Orden",
       "kind": "memory",
       "traits": [
         "Samurai-Maske, vollständige schwere Panzerung und großes MG.",
-        "Fällt mit Oni in Erinnerung I zum Schutz Shadepis; Gewicht und Waffengröße sichtbar erhalten."
+        "Fällt mit Tahiro Crow in Erinnerung I zum Schutz Shadepis; Gewicht und Waffengröße sichtbar erhalten."
       ]
     },
     {
@@ -214,7 +214,7 @@
       "kind": "minotaur",
       "traits": [
         "Großer gepanzerter zweibeiniger Cyborg-/Mech-Hybrid mit Servomechanik und schwerer Bewaffnung.",
-        "Beine und Lys konkrete Sprengtechnik sind dokumentierte Umsetzungsentscheidungen; kein neu bestätigtes Nutzerzitat.",
+        "Beine und Shame Lys konkrete Sprengtechnik sind dokumentierte Umsetzungsentscheidungen; kein neu bestätigtes Nutzerzitat.",
         "Ein Exemplar in Erinnerung II, zwei unabhängig besiegbare Exemplare in Erinnerung III. Gleicher Typ und gleiche Materialfamilie."
       ]
     },

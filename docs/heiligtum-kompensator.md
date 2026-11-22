@@ -8,7 +8,7 @@ Die drei Rückblenden haben jetzt den bestätigten Gegenwartsrahmen. Shadepi geh
 2. **Automatisch nach der Ankunft:** Raven steigt aufs Bett, setzt sich und legt sich sichtbar schlafen. Die Nahaufnahme bleibt länger bestehen; nach „Zwei Stunden später“ wacht sie auf. Shadepi ist immer noch nicht zurück.
 3. **E / A an der beleuchteten Tür:** Raven betritt den separaten Kompensatorraum. Shadepi sitzt regungslos im Sessel; kein zweites stehendes Shadepi-Modell.
 4. **E / A am Sessel:** „Schläfst du?“ – Raven greift neugierig nach seiner Maske. Er fängt ihr Handgelenk ab. Nach dem kurzen Wortwechsel geht weißes Licht auf sie über und ihre Augen schimmern.
-5. In der Erinnerungswelt bleiben die drei bekannten Anker: Angriff, Lys Opfer und Vermächtnis. Die historischen Schauplätze und Kämpfe sind erhalten. Das bisher vorgeschaltete Timing-Minispiel entfällt.
+5. In der Erinnerungswelt bleiben die drei bekannten Anker: Angriff, Shame Lys Opfer und Vermächtnis. Die historischen Schauplätze und Kämpfe sind erhalten. Das bisher vorgeschaltete Timing-Minispiel entfällt.
 6. Danach steht Raven wieder am selben Sessel und torkelt zurück. Shadepi entschuldigt sich und erklärt: Der Kompensator ist **alle sechs Tage** nötig, sonst zerstören die Naniten seinen Körper. Er bestätigt das Gesehene, wahrt aber interne Ordensgeheimnisse. Danach folgt seit v0.30.0 die sichtbare Hangar-Abflugszene vor der bisherigen Flugsteuerung.
 
 Zwischensequenzen: **E / A** blättert weiter, **Leertaste / B** überspringt; **Esc / Start** pausiert. In den spielbaren Erinnerungskämpfen bleibt B das Ausweichen; dort erfolgt bewusstes Überspringen über das Pausenmenü.

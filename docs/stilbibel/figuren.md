@@ -34,10 +34,10 @@ Die Übersicht passt die Vergrößerung zur Erkennbarkeit an. Auf jeder Einzelka
 - [Straßenkämpfer · ockerfarbener Typ](#punk-4)
 - [Schütze · Cyanvisier](#shooter-visor)
 - [Schütze · Violettvisier](#shooter-violet)
-- [Oni-Krieger](#oni)
-- [Roboterkopf-Krieger](#robot)
-- [Ly · weißer Ordenskrieger](#ly)
-- [Schwerer MG-Krieger](#heavy)
+- [Tahiro Crow](#oni)
+- [Swifty Dex](#robot)
+- [Shame Ly · weißer Ordenskrieger](#ly)
+- [Drake Gatnom · schwerer MG-Krieger](#heavy)
 - [Älterer Klosterbewohner](#elder)
 - [Mönch](#monk)
 - [Klosterbewohner](#resident)
@@ -171,11 +171,11 @@ Die Übersicht passt die Vergrößerung zur Erkennbarkeit an. Auf jeder Einzelka
 **Aktive Quellen und Darstellung:** [shooter-violet.png](../../assets/sprites/npcs/shooter-violet.png) · [pixel_actor.gd](../../scripts/pixel_actor.gd) · [sprite_assets.gd](../../scripts/sprite_assets.gd) · [contact-poses.json](../../assets/sprites/npcs/contact-poses.json) · [contact-poses.png](../../assets/sprites/npcs/contact-poses.png).
 
 <a id="oni"></a>
-## Oni-Krieger
+## Tahiro Crow
 
 **Familie:** Orden · **technische ID:** `oni`
 
-![Oni-Krieger · vorhandene Ansichten und Weltgröße](bilder/figur-oni.png)
+![Tahiro Crow · vorhandene Ansichten und Weltgröße](bilder/figur-oni.png)
 
 - Oni-Maske und Katana, dunkle Ordensausrüstung.
 - Fällt in Erinnerung I, um Shadepi zu schützen. Kein bestätigter Eigenname.
@@ -183,11 +183,11 @@ Die Übersicht passt die Vergrößerung zur Erkennbarkeit an. Auf jeder Einzelka
 **Aktive Quellen und Darstellung:** [warriors-ready.png](../../assets/memories/attack/warriors-ready.png) · [actors.json](../../assets/memories/attack/actors.json) · [combat.png](../../assets/memories/attack/combat.png) · [memory_actor.gd](../../scripts/memories/memory_actor.gd).
 
 <a id="robot"></a>
-## Roboterkopf-Krieger
+## Swifty Dex
 
 **Familie:** Orden · **technische ID:** `robot`
 
-![Roboterkopf-Krieger · vorhandene Ansichten und Weltgröße](bilder/figur-robot.png)
+![Swifty Dex · vorhandene Ansichten und Weltgröße](bilder/figur-robot.png)
 
 - Roboterkopf mit Dreadlocks aus Kabeln; Stab als bestätigte Bewaffnung.
 - Überlebt Erinnerung I. Sein späteres Schicksal ist nicht festgelegt.
@@ -195,11 +195,11 @@ Die Übersicht passt die Vergrößerung zur Erkennbarkeit an. Auf jeder Einzelka
 **Aktive Quellen und Darstellung:** [warriors-ready.png](../../assets/memories/attack/warriors-ready.png) · [actors.json](../../assets/memories/attack/actors.json) · [combat.png](../../assets/memories/attack/combat.png) · [memory_actor.gd](../../scripts/memories/memory_actor.gd).
 
 <a id="ly"></a>
-## Ly · weißer Ordenskrieger
+## Shame Ly · weißer Ordenskrieger
 
 **Familie:** Orden · **technische ID:** `ly`
 
-![Ly · weißer Ordenskrieger · vorhandene Ansichten und Weltgröße](bilder/figur-ly.png)
+![Shame Ly · weißer Ordenskrieger · vorhandene Ansichten und Weltgröße](bilder/figur-ly.png)
 
 - Shadepi-ähnliche geschlossene Maske, weiße Gewandung und Klinge.
 - Überlebt Erinnerung I und opfert sich in Erinnerung II. Nicht als weiß eingefärbter Shadepi ohne eigenes Kostüm behandeln.
@@ -207,14 +207,14 @@ Die Übersicht passt die Vergrößerung zur Erkennbarkeit an. Auf jeder Einzelka
 **Aktive Quellen und Darstellung:** [warriors-ready.png](../../assets/memories/attack/warriors-ready.png) · [actors.json](../../assets/memories/attack/actors.json) · [combat.png](../../assets/memories/attack/combat.png) · [memory_actor.gd](../../scripts/memories/memory_actor.gd).
 
 <a id="heavy"></a>
-## Schwerer MG-Krieger
+## Drake Gatnom · schwerer MG-Krieger
 
 **Familie:** Orden · **technische ID:** `heavy`
 
-![Schwerer MG-Krieger · vorhandene Ansichten und Weltgröße](bilder/figur-heavy.png)
+![Drake Gatnom · schwerer MG-Krieger · vorhandene Ansichten und Weltgröße](bilder/figur-heavy.png)
 
 - Samurai-Maske, vollständige schwere Panzerung und großes MG.
-- Fällt mit Oni in Erinnerung I zum Schutz Shadepis; Gewicht und Waffengröße sichtbar erhalten.
+- Fällt mit Tahiro Crow in Erinnerung I zum Schutz Shadepis; Gewicht und Waffengröße sichtbar erhalten.
 
 **Sichtbarer Altbestand:** Kleine abgetrennte Nachbarfragmente an den Bereitschaftszellen sind Atlasartefakte, keine zusätzlichen Waffen- oder Kostümteile. Neue Quellen sollen saubere Zellränder haben; die Bildkarte dokumentiert die unveränderte aktive Quelle.
 
@@ -301,7 +301,7 @@ Die Übersicht passt die Vergrößerung zur Erkennbarkeit an. Auf jeder Einzelka
 ![Minotaurus · Mech-Hybrid · vorhandene Ansichten und Weltgröße](bilder/figur-minotaur.png)
 
 - Großer gepanzerter zweibeiniger Cyborg-/Mech-Hybrid mit Servomechanik und schwerer Bewaffnung.
-- Beine und Lys konkrete Sprengtechnik sind dokumentierte Umsetzungsentscheidungen; kein neu bestätigtes Nutzerzitat.
+- Beine und Shame Lys konkrete Sprengtechnik sind dokumentierte Umsetzungsentscheidungen; kein neu bestätigtes Nutzerzitat.
 - Ein Exemplar in Erinnerung II, zwei unabhängig besiegbare Exemplare in Erinnerung III. Gleicher Typ und gleiche Materialfamilie.
 
 **Aktive Quellen und Darstellung:** [minotaur.png](../../assets/memories/sacrifice/minotaur.png) · [actors.json](../../assets/memories/sacrifice/actors.json) · [minotaur.gd](../../scripts/memories/minotaur.gd).

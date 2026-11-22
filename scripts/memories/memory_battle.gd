@@ -103,7 +103,7 @@ func play() -> void:
 	var group := spawn_wave(1,[Vector2(710,350),Vector2(740,415),Vector2(800,490)])
 	await cs.wait(2.8)
 	if not active(): return
-	await cs.say("ROBOTERKOPF-KRIEGER","Ich decke links. Lasst sie nicht zum Seitengang!")
+	await cs.say("SWIFTY DEX","Ich decke links. Lasst sie nicht zum Seitengang!")
 	if not active(): return
 	cs.walk(world.squad[1],Vector2(696,415),90)
 	cs.walk(world.squad[3],Vector2(756,490),90)
@@ -134,14 +134,14 @@ func play() -> void:
 	if not active(): return
 	pose(group[0],"windup")
 	world.phase = "oni_warning"
-	await cs.say("LY","Shadepi! Rechts!")
+	await cs.say("SHAME LY","Shadepi! Rechts!")
 	if not active(): return
 	await cs.walk(world.squad[1],Vector2(735,350),145)
 	if not active(): return
 	mark("oni_protected")
 	world.phase = "oni_protection"
 	await cs.camera(Vector2(735,365),0.55,1.3)
-	await cs.say("ONI-KRIEGER","Runter, Shadepi!")
+	await cs.say("TAHIRO CROW","Runter, Shadepi!")
 	if not active(): return
 	await melee(world.squad[1],group[0])
 	if not active(): return
@@ -180,7 +180,7 @@ func play() -> void:
 	if not active(): return
 	world.phase = "mg_cover"
 	mark("mg_cover")
-	await cs.say("MG-KRIEGER","Zurück! Ich halte sie auf!")
+	await cs.say("DRAKE GATNOM","Zurück! Ich halte sie auf!")
 	if not active(): return
 	cs.walk(world.squad[2],Vector2(590,340),90)
 	cs.walk(world.squad[3],Vector2(570,495),90)
@@ -207,7 +207,7 @@ func play() -> void:
 	world.phase = "mg_last_stand"
 	world.map.impact(Vector2(748,410))
 	sound("drive_explosion")
-	await cs.say("MG-KRIEGER","Los! Zum inneren Hof!")
+	await cs.say("DRAKE GATNOM","Los! Zum inneren Hof!")
 	if not active(): return
 	await fall(world.squad[4])
 	if not active(): return
@@ -217,7 +217,7 @@ func play() -> void:
 	await cs.camera(Vector2(710,385),0.7,1.15)
 	await cs.wait(1.2)
 	if not active(): return
-	await cs.say("LY","Shadepi … wir müssen weiter.")
+	await cs.say("SHAME LY","Shadepi … wir müssen weiter.")
 	if not active(): return
 	await cs.say("SHADEPI","Zum inneren Hof. Bleibt zusammen.")
 	if not active(): return

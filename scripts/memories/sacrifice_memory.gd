@@ -67,7 +67,7 @@ func play() -> void:
 	mark("arrival")
 	await cutscene.letterbox(true)
 	await cutscene.camera(Vector2(560,375),0.9,0.88)
-	await cutscene.title("ERINNERUNG II","LYS OPFER",1.7)
+	await cutscene.title("ERINNERUNG II","SHAME LYS OPFER",1.7)
 	if not active(): return
 	phase="minotaur"
 	tank.show()
@@ -76,7 +76,7 @@ func play() -> void:
 	await cutscene.walk(tank,Vector2(780,400),55)
 	await cutscene.camera(Vector2(715,385),0.8,0.9)
 	if not active(): return
-	await cutscene.say("ROBOTERKOPF-KRIEGER","Ein Minotaurus. Haltet Abstand!")
+	await cutscene.say("SWIFTY DEX","Ein Minotaurus. Haltet Abstand!")
 	if not active(): return
 	phase="defence"
 	cutscene.walk(squad[1],Vector2(590,335),90)
@@ -120,7 +120,7 @@ func play() -> void:
 	pose(tank,"hurt")
 	phase="weak_point"
 	mark("servo_exposed")
-	await cutscene.say("ROBOTERKOPF-KRIEGER","Der Servoschacht. Unter dem Schild!")
+	await cutscene.say("SWIFTY DEX","Der Servoschacht. Unter dem Schild!")
 	if not active(): return
 	await cutscene.walk(squad[2],Vector2(665,465),85)
 	if not active(): return
@@ -131,9 +131,9 @@ func play() -> void:
 	phase="decision"
 	pose(squad[2],"charge_arm")
 	mark("charge_armed")
-	await cutscene.say("SHADEPI","Nein! Ly, nicht!")
+	await cutscene.say("SHADEPI","Nein! Shame Ly, nicht!")
 	if not active(): return
-	await cutscene.say("LY","Verzeih mir, Bruder. FÜR DEN ORDEN!")
+	await cutscene.say("SHAME LY","Verzeih mir, Bruder. FÜR DEN ORDEN!")
 	if not active(): return
 	phase="charge_run"
 	mark("ly_commits")
@@ -184,9 +184,9 @@ func play() -> void:
 	await cutscene.camera(Vector2(710,365),0.9,1.05)
 	await cutscene.wait(1.1)
 	if not active(): return
-	await cutscene.say("SHADEPI","Ly …")
+	await cutscene.say("SHADEPI","Shame Ly …")
 	if not active(): return
-	await cutscene.say("ROBOTERKOPF-KRIEGER","Shadepi. Der Weg ist frei.")
+	await cutscene.say("SWIFTY DEX","Shadepi. Der Weg ist frei.")
 	if not active(): return
 	mark("survivors_hold")
 	await cutscene.fade(Color.BLACK,0.8)

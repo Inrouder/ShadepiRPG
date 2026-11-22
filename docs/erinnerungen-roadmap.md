@@ -1,6 +1,6 @@
 # Roadmap: Shadepis drei Erinnerungen · v0.29.0 · CodexAI
 
-**Stand: Pakete 0–6 abgeschlossen.** Seit v0.25.0 · CodexAI ist der Abwehrkampf in Erinnerung II als 45-Sekunden-Überlebenskampf spielbar; danach folgt Lys bestehende Opferszene. Erinnerung 1 zeigt jetzt den vollständigen inszenierten Ablauf mit drei Bot-Wellen, den Schutzopfern von Oni und MG-Krieger sowie dem Rückzug der Überlebenden. Mönche und Bewohner besitzen vier Gehbilder pro Richtung. **Alle drei Erinnerungen sind eingebunden. Erinnerung III enthält seit v0.26.0 Meister, Heiligtumsübergabe, spielbaren Zweibosskampf und Zusammenbruch.** [Aktuelle dritte Erinnerung](das-vermaechtnis.md). [Lys Opfer: Szene und Vorschau](lys-opfer.md). [Aktuelle Umsetzung und Vorschau](kloster-kampf.md). Grundlage sind das [Nutzerbriefing mit bestätigten Schutzopfern](universum/teil-5/README.md), die vorhandenen Figurenreferenzen und das [Heiligtum-/Romanarchiv](universum/teil-4/README.md). Diese Roadmap hält Produktionspakete, Fortschritt und erzählerische Kontinuität fest.
+**Stand: Pakete 0–6 abgeschlossen.** Seit v0.25.0 · CodexAI ist der Abwehrkampf in Erinnerung II als 45-Sekunden-Überlebenskampf spielbar; danach folgt Shame Lys bestehende Opferszene. Erinnerung 1 zeigt jetzt den vollständigen inszenierten Ablauf mit drei Bot-Wellen, den Schutzopfern von Tahiro Crow und Drake Gatnom sowie dem Rückzug der Überlebenden. Mönche und Bewohner besitzen vier Gehbilder pro Richtung. **Alle drei Erinnerungen sind eingebunden. Erinnerung III enthält seit v0.26.0 Meister, Heiligtumsübergabe, spielbaren Zweibosskampf und Zusammenbruch.** [Aktuelle dritte Erinnerung](das-vermaechtnis.md). [Shame Lys Opfer: Szene und Vorschau](lys-opfer.md). [Aktuelle Umsetzung und Vorschau](kloster-kampf.md). Grundlage sind das [Nutzerbriefing mit bestätigten Schutzopfern](universum/teil-5/README.md), die vorhandenen Figurenreferenzen und das [Heiligtum-/Romanarchiv](universum/teil-4/README.md). Diese Roadmap hält Produktionspakete, Fortschritt und erzählerische Kontinuität fest.
 
 ## Gegenwartsrahmen v0.29.0 · CodexAI
 
@@ -10,7 +10,7 @@ Der Einstieg folgt nun der bestätigten Reihenfolge: Shadepi geht zum Kompensato
 
 Raven erlebt an jedem der drei Erinnerungsknoten eine eigenständige Rückblende aus Shadepis Vergangenheit. Der Spieler sieht das historische Geschehen mit Shadepi und dem Orden. Raven bleibt die Empfängerin der Erinnerung; sie läuft nicht als zusätzliche Kämpferin durch das damalige Kloster.
 
-Im aktuellen Spiel existieren die drei Anker bereits: `Painted.ECHO_POINTS` in `scripts/painted_world.gd` und der Ablauf `Beat.ECHO` in `scripts/campaign.gd`. Knoten 1 zeigt jetzt „Der Angriff“ als eigene Szene. Knoten 2 zeigt „Lys Opfer“ als eigene Szene. Knoten 3 zeigt nun **Das Vermächtnis** mit anschließendem Rückkehrdialog. Die bestehenden übrigen Kapitel, Menüs und Kontrollpunkte bleiben Ausgangsbasis.
+Im aktuellen Spiel existieren die drei Anker bereits: `Painted.ECHO_POINTS` in `scripts/painted_world.gd` und der Ablauf `Beat.ECHO` in `scripts/campaign.gd`. Knoten 1 zeigt jetzt „Der Angriff“ als eigene Szene. Knoten 2 zeigt „Shame Lys Opfer“ als eigene Szene. Knoten 3 zeigt nun **Das Vermächtnis** mit anschließendem Rückkehrdialog. Die bestehenden übrigen Kapitel, Menüs und Kontrollpunkte bleiben Ausgangsbasis.
 
 Die erste Rückblende nutzt das vorhandene System für laufende Figuren, Kamerafahrten, Dialoge und Überspringen. Zunächst entstehen inszenierte Szenen; vollständige spielbare Kämpfe sind getrennte Ausbaupakete. Es werden keine Comicseiten als Ersatz für die Szene eingeplant.
 
@@ -27,27 +27,27 @@ Die erste Rückblende nutzt das vorhandene System für laufende Figuren, Kameraf
 | Gegenstoß | Shadepi tritt vorne an, die vier Krieger folgen in erkennbarer Formation. | Alle fünf Figuren eindeutig vorstellen. |
 | Shadepis Ruf | „Bringt euch in Sicherheit! Wir werden sie abwehren!“ | Schutzauftrag statt namenloser Kampf. |
 | Erste Feindberührung | Bots dringen durch den äußeren Zugang ein; die Verteidiger fangen sie ab. | Übergang zum späteren Kampf. |
-| Späteres Kampf-Ausbaupaket | Bot-Wellen durchbrechen Teile der Verteidigung. Oni- und MG-Krieger schützen Shadepi und fallen dabei. | Den Verlust der beiden verbindlich ausgewählten Kameraden erzählen. |
+| Späteres Kampf-Ausbaupaket | Bot-Wellen durchbrechen Teile der Verteidigung. Tahiro Crow und Drake Gatnom schützen Shadepi und fallen dabei. | Den Verlust der beiden verbindlich ausgewählten Kameraden erzählen. |
 
 Für den ersten sichtbaren Bot-Auftritt gehört eine passende HQ-Botansicht zusätzlich zum Szenenpaket; sie entsteht nach der Map und nur bei verbleibendem Kontingent. Eine echte neue Angreiferfigur wird dabei nicht durch einen beliebigen menschlichen NPC oder eine einfache Form ersetzt.
 
-Der Auftakt aus v0.22.0 endete beim Beginn der Auseinandersetzung. Der getrennte Kampf-Ausbau ist seit v0.23.0 als inszenierte Szene enthalten. Ly und der Roboterkopf-Krieger überleben diese Erinnerung. Die beiden Opfer werden später als feste Storymomente inszeniert; sie sollen nicht zufällig durch die erste beliebige KI-Attacke sterben.
+Der Auftakt aus v0.22.0 endete beim Beginn der Auseinandersetzung. Der getrennte Kampf-Ausbau ist seit v0.23.0 als inszenierte Szene enthalten. Shame Ly und Swifty Dex überleben diese Erinnerung. Die beiden Opfer werden später als feste Storymomente inszeniert; sie sollen nicht zufällig durch die erste beliebige KI-Attacke sterben.
 
-**Umgesetzte Choreografie:** Oni stellt sich zwischen Shadepi und einen vorrückenden Bot, wehrt ihn ab und wird vom zweiten Angreifer getroffen. Der MG-Krieger deckt später den Rückzug von Shadepi, Ly und dem Roboterkopf-Krieger, hält bis zur letzten Salve stand und fällt. Dies konkretisiert die bestätigten Schutzopfer, ohne neue Namen oder Verwandtschaften festzulegen.
+**Umgesetzte Choreografie:** Tahiro Crow stellt sich zwischen Shadepi und einen vorrückenden Bot, wehrt ihn ab und wird vom zweiten Angreifer getroffen. Drake Gatnom deckt später den Rückzug von Shadepi, Shame Ly und Swifty Dex, hält bis zur letzten Salve stand und fällt. Dies konkretisiert die bestätigten Schutzopfer, ohne neue Namen oder Verwandtschaften festzulegen.
 
-### 2. Lys Opfer
+### 2. Shame Lys Opfer
 
-Der Hof geht in einen schwer beschädigten Verteidigungsbereich über. Ein deutlich größerer **Minotaurus-Panzer** dominiert den Kampf. Ly bleibt durch seine weiße Gewandung sofort erkennbar. Shadepi versucht, ihn aufzuhalten; Ly entscheidet sich bewusst für sein Opfer.
+Der Hof geht in einen schwer beschädigten Verteidigungsbereich über. Ein deutlich größerer **Minotaurus-Panzer** dominiert den Kampf. Shame Ly bleibt durch seine weiße Gewandung sofort erkennbar. Shadepi versucht, ihn aufzuhalten; Shame Ly entscheidet sich bewusst für sein Opfer.
 
-> **Shadepi:** „Nein! Ly, nicht!“
+> **Shadepi:** „Nein! Shame Ly, nicht!“
 >
-> **Ly:** „Verzeih mir, Bruder. FÜR DEN ORDEN!“
+> **Shame Ly:** „Verzeih mir, Bruder. FÜR DEN ORDEN!“
 
-Die Dialogfassung ist sprachlich geglättet, die Aussage des Nutzerbriefings bleibt erhalten. Ly rennt auf den Minotaurus zu; sein Angriff zerstört den Panzer und kostet ihn das Leben. In v0.24.0 befestigt er dazu eine Sprengladung am Servoschacht und bleibt bei der Zündung am Panzer. Das ist die konkrete Umsetzung der Szene, keine zusätzlich bestätigte Fähigkeit des Heiligtums.
+Die Dialogfassung ist sprachlich geglättet, die Aussage des Nutzerbriefings bleibt erhalten. Shame Ly rennt auf den Minotaurus zu; sein Angriff zerstört den Panzer und kostet ihn das Leben. In v0.24.0 befestigt er dazu eine Sprengladung am Servoschacht und bleibt bei der Zündung am Panzer. Das ist die konkrete Umsetzung der Szene, keine zusätzlich bestätigte Fähigkeit des Heiligtums.
 
-**In v0.24.0 erstellt:** beschädigte Variante des vorhandenen Hofs, Minotaurus-Atlas mit Servoschacht und Wrack, weiße Ly-/Ladungsposen. Vorhandene Feuer-/Rauch-/Einschlaggrafiken werden wiederverwendet. Bauform als zweibeiniger Mech nach der Original-Dossierbeschreibung umgesetzt; diese Ausführung ist als Umsetzungsentscheidung dokumentiert.
+**In v0.24.0 erstellt:** beschädigte Variante des vorhandenen Hofs, Minotaurus-Atlas mit Servoschacht und Wrack, weiße Shame Ly-/Ladungsposen. Vorhandene Feuer-/Rauch-/Einschlaggrafiken werden wiederverwendet. Bauform als zweibeiniger Mech nach der Original-Dossierbeschreibung umgesetzt; diese Ausführung ist als Umsetzungsentscheidung dokumentiert.
 
-Der Roboterkopf-Krieger ist nach Erinnerung 1 noch am Leben. Sein weiterer Einsatz oder Verbleib wird nicht ohne zusätzliche Vorgabe als Tod erzählt. Diese Erinnerung ist nach Abschluss des ersten Pakets in v0.24.0 eingebunden.
+Der Swifty Dex ist nach Erinnerung 1 noch am Leben. Sein weiterer Einsatz oder Verbleib wird nicht ohne zusätzliche Vorgabe als Tod erzählt. Diese Erinnerung ist nach Abschluss des ersten Pakets in v0.24.0 eingebunden.
 
 ### 3. Das Vermächtnis
 
@@ -70,14 +70,14 @@ Nach einem Moment der Stille richtet sich Shadepi auf. Nach der Übergabe breche
 | Figur | Verbindliche Merkmale | Rolle und Kontinuität |
 | --- | --- | --- |
 | Shadepi | Bestehende Originalmerkmale: schwarzer Kasa, segmentierte Maske, rote Augenlinsen, taktische Ausrüstung, Schal, Umhang und Laser-Katana. | Führt den Gegenstoß; überlebt die drei Erinnerungen, bricht zuletzt zusammen. |
-| Oni-Krieger | Deutlich erkennbare Oni-Maske; eigene Silhouette und passende Ordensrüstung. | Stirbt in Erinnerung 1 beim Schutz Shadepis. Katana bestätigt; Name offen. |
-| Roboterkopf-Krieger | Erkennbarer Roboterkopf, Dreadlocks aus Kabelsträngen; gemeinsame Ordensgestaltung. | Überlebt Erinnerung 1; weiteres Schicksal offen. Stab bestätigt; Name offen. |
-| Ly | Shadepi-ähnliche Maske und weiße Gewandung, als eigene Person erkennbar. | Überlebt Erinnerung 1 und opfert sich in Erinnerung 2. „Bruder“ wird nicht ungefragt zu einer bestätigten biologischen Verwandtschaft ausgebaut. |
-| Schwerer MG-Krieger | Samurai-Maske, volle schwere Panzerung, sehr großes MG; breite und gewichtige Silhouette. | Stirbt in Erinnerung 1 beim Schutz Shadepis. Name offen. |
+| Tahiro Crow | Deutlich erkennbare Oni-Maske; eigene Silhouette und passende Ordensrüstung. | Stirbt in Erinnerung 1 beim Schutz Shadepis. Katana bestätigt. |
+| Swifty Dex | Erkennbarer Roboterkopf, Dreadlocks aus Kabelsträngen; gemeinsame Ordensgestaltung. | Überlebt Erinnerung 1; weiteres Schicksal offen. Stab bestätigt. |
+| Shame Ly | Shadepi-ähnliche Maske und weiße Gewandung, als eigene Person erkennbar. | Überlebt Erinnerung 1 und opfert sich in Erinnerung 2. „Bruder“ wird nicht ungefragt zu einer bestätigten biologischen Verwandtschaft ausgebaut. |
+| Drake Gatnom · schwerer MG-Krieger | Samurai-Maske, volle schwere Panzerung, sehr großes MG; breite und gewichtige Silhouette. | Stirbt in Erinnerung 1 beim Schutz Shadepis. Name inzwischen bestätigt. |
 | Mönche und Bewohner | Unbewaffnete Klosterbevölkerung in passenden Gewändern bzw. einfacher Alltagskleidung. | Fliehen auf nachvollziehbaren Wegen; keine bloß im Hintergrund eingebrannten Personen. |
 | Meister / alter Träger | Alter Mann in traditioneller Kampfausrüstung. | Übergibt in Erinnerung 3 das Heiligtum und stirbt danach. Design umgesetzt; Eigenname offen. |
 
-Neue Grafiken sind **detailreiche HQ-Pixelart**: sichtbare Pixelcluster, strukturierte Stoffe, Metall, Stein und Holz, abgestimmte Lichtstufen und echte Materialtiefe. Große Dateimaße allein reichen nicht. Perspektive, Figurengröße, Fußpunkte und Pixeldichte richten sich nach dem aktuellen Spiel. Ly darf nicht mit Shadepi oder dem Meister verwechselt werden. Keine einfachen Vektorfiguren oder glatten Ersatzillustrationen.
+Neue Grafiken sind **detailreiche HQ-Pixelart**: sichtbare Pixelcluster, strukturierte Stoffe, Metall, Stein und Holz, abgestimmte Lichtstufen und echte Materialtiefe. Große Dateimaße allein reichen nicht. Perspektive, Figurengröße, Fußpunkte und Pixeldichte richten sich nach dem aktuellen Spiel. Shame Ly darf nicht mit Shadepi oder dem Meister verwechselt werden. Keine einfachen Vektorfiguren oder glatten Ersatzillustrationen.
 
 ## Produktionsreihenfolge für Erinnerung 1
 
@@ -87,11 +87,11 @@ Neue Grafiken sind **detailreiche HQ-Pixelart**: sichtbare Pixelcluster, struktu
 | --- | --- | --- | --- |
 | 0 · Roadmap | Quellen, Handlung und Prioritäten sichern. | Dieses Dokument und Archiv Teil 5. | Reihenfolge, Opfer und offene Fragen sind benannt. **Abgeschlossen.** |
 | 1 · Kulissen zuerst | Ein Kloster-Master mit Tor/Hof/Hauptgebäude; beschädigte und brennende Ebenen daraus ableiten. | HQ-Pixel-PNGs, getrennte Vorder-/Mittel-/Hintergrundteile sowie erste modulare Trümmer- und Feuerbereiche. | Ort, Maßstab und Stimmung funktionieren ohne Figuren; keine Bewohner oder Krieger ins Bild einbrennen. **Abgeschlossen in v0.22.0.** |
-| 2 · Vier Krieger | Zuerst die vier Identitäten sauber festlegen, danach die für den Ansturm nötigen Richtungen und Bewegungen. Shadepi wiederverwenden. | Oni-, Roboterkopf-, Ly- und MG-Referenzen; nutzbare Spritebilder mit konsistenten Fußankern. | Alle vier sind im Spielmaßstab unterscheidbar und behalten Ausrüstung und Proportionen beim Blickwechsel. **Abgeschlossen in v0.22.0.** |
+| 2 · Vier Krieger | Zuerst die vier Identitäten sauber festlegen, danach die für den Ansturm nötigen Richtungen und Bewegungen. Shadepi wiederverwenden. | Referenzen von Tahiro Crow, Swifty Dex, Shame Ly und Drake Gatnom; nutzbare Spritebilder mit konsistenten Fußankern. | Alle vier sind im Spielmaßstab unterscheidbar und behalten Ausrüstung und Proportionen beim Blickwechsel. **Abgeschlossen in v0.22.0.** |
 | 3 · Mönche und Bewohner | Kleine Gruppe unterschiedlicher unbewaffneter Figuren mit Stehen, Rennen und erschrockenem Reagieren. | Wiederverwendbare Bewohner-/Mönch-Sprites statt vieler unnötiger Einzelporträts. | Ein kurzer Fluchtlauf wirkt lebendig und führt ohne Stau aus der Gefahrenzone. **Abgeschlossen in v0.22.0.** |
 | 4 · Map-Kulisse | Kulissenebenen, Figurenmaßstab und Laufwege zusammenführen. | Spielmap mit Torbresche, Verteidigungslinie, Fluchtweg, Kollisionskörpern und Vordergrundverdeckungen. | Niemand läuft durch Mauern; Füße stehen auf dem Boden; Figuren werden hinter Säulen/Dächern korrekt verdeckt. **Abgeschlossen in v0.22.0.** |
 | 5 · Szene, nur bei verbleibendem Kontingent | Kamerafahrt, Flucht, Ansturm, Shadepis Ruf, Einschläge und beginnender Bot-Angriff verbinden. | Erste inszenierte Rückblende am ersten Erinnerungsknoten. | Szene startet und endet sauber, lässt sich bedienen/überspringen und kehrt korrekt zu Raven zurück. **Abgeschlossen in v0.22.0.** |
-| 6 · Kampf-Ausbau später | Erst jetzt vollständige Bots, Wellen, Kampfposen und die Schutzopfer von Oni und MG-Krieger ergänzen. | Spielbarer oder vollständig inszenierter Angriff mit verbindlichen Storyereignissen. | Ly und Roboterkopf überleben, die beiden Schutzopfer sind klar verständlich, Fortschritt ist zuverlässig gespeichert. **Abgeschlossen in v0.23.0 als inszenierter Kampf.** |
+| 6 · Kampf-Ausbau später | Erst jetzt vollständige Bots, Wellen, Kampfposen und die Schutzopfer von Tahiro Crow und Drake Gatnom ergänzen. | Spielbarer oder vollständig inszenierter Angriff mit verbindlichen Storyereignissen. | Shame Ly und Swifty Dex überleben, die beiden Schutzopfer sind klar verständlich, Fortschritt ist zuverlässig gespeichert. **Abgeschlossen in v0.23.0 als inszenierter Kampf.** |
 
 Die Identitätsreferenzen kommen vor den Bewegungsatlanten. Neue Angriffssätze entstehen jeweils dann, wenn sie für den nächsten Kampfabschnitt gebraucht werden.
 
@@ -105,14 +105,14 @@ Paket 6 sowie **Erinnerung 2 und 3** sind abgeschlossen. Erst die Roadmap umfass
 | Innerer Hof | Bewohner fliehen, Shadepi und vier Krieger sammeln sich. |
 | Geschützter Seitenweg | Klarer Fluchtkorridor, der nicht durch den Bot-Zugang führt. |
 | Tor und Bresche | Eindeutiger Eintritt der Angreifer und spätere Wellenbegrenzung. |
-| Verteidigungslinie | Platz für fünf verschieden breite Figuren und spätere Kämpfe, besonders den MG-Krieger. |
+| Verteidigungslinie | Platz für fünf verschieden breite Figuren und spätere Kämpfe, besonders Drake Gatnom. |
 | Arkaden, Säulen, Trümmer | Tiefe und Deckung mit getrennten Vordergrundebenen statt flachem Tapetenbild. |
 
 Feuer, Rauch, Bombeneinschläge und herumfliegende Teile werden als begrenzte, wiederverwendbare FX-Gruppen angelegt. Reale Fluchtfiguren und bewegte Verteidiger erzeugen die Handlung; Kamera und Hintergrund werden nicht nur zur Simulation von Bewegung hin- und hergeschoben.
 
 ## Einbindung an den Erinnerungsknoten
 
-Zuordnung: **Knoten 1 → Der Angriff (umgesetzt); Knoten 2 → Lys Opfer (umgesetzt); Knoten 3 → Das Vermächtnis (umgesetzt)**. Jede Rückblende erhält einen eigenen stabilen Bezeichner, getrennt vom sichtbaren Titel.
+Zuordnung: **Knoten 1 → Der Angriff (umgesetzt); Knoten 2 → Shame Lys Opfer (umgesetzt); Knoten 3 → Das Vermächtnis (umgesetzt)**. Jede Rückblende erhält einen eigenen stabilen Bezeichner, getrennt vom sichtbaren Titel.
 
 Beim Start werden Ravens aktuelle Position und der Erinnerungsknoten gehalten. Die historische Szene erhält eigene Figuren und lokalen Szenenzustand; Shadepi ist darin sichtbar und wird bei einem später spielbaren Ausbau gesteuert. Historische Figuren ersetzen keine Gegenwarts-NPCs und überschreiben keine aktuellen Lebens-/Energiewerte.
 
@@ -126,8 +126,8 @@ Es wird keine feste Rest-Credit-Zahl oder garantierte Zahl weiterer Bildgenerier
 
 Wenn das Kontingent nach der Map ausgeschöpft ist, endet der Durchlauf mit gesicherten Kulissen, Kriegern, Bewohnern und Map. Die Szene bleibt dann ausdrücklich offen. Jeder Abschluss enthält Versionsnummer, CodexAI-Vermerk, Assetübersicht und tatsächlichen Prüfstatus; fertige Arbeit wird auf GitHub gesichert. Bei fehlgeschlagenem Push gilt die vollständige lokale Sicherung laut Projektregeln.
 
-Spätere Prüfungen umfassen Grafik- und Fußanker, Laufwege, Sichtbarkeit der vier Krieger, korrekte Sterbereihenfolge, Lys Überleben bis Erinnerung 2, unveränderte Gegenwartsfiguren, Controllerbedienung, Pause/Überspringen, Speichern/Laden und Export aller benötigten Assets. Kulissen und Bewegungen werden zusätzlich im tatsächlichen Godot-Renderer angesehen.
+Spätere Prüfungen umfassen Grafik- und Fußanker, Laufwege, Sichtbarkeit der vier Krieger, korrekte Sterbereihenfolge, Shame Lys Überleben bis Erinnerung 2, unveränderte Gegenwartsfiguren, Controllerbedienung, Pause/Überspringen, Speichern/Laden und Export aller benötigten Assets. Kulissen und Bewegungen werden zusätzlich im tatsächlichen Godot-Renderer angesehen.
 
 ## Noch offene Festlegungen
 
-Die Auswahl der beiden ersten Gefallenen ist **geklärt: Oni und MG-Krieger**. **Oni: Katana; Roboterkopf-Krieger: Stab** sind ebenfalls bestätigt. Offen bleiben Eigennamen der übrigen neuen Figuren, das spätere Schicksal des Roboterkopf-Kriegers. Das Meisterdesign ist in v0.26.0 als traditionelle bronze-/braune Kampfausrüstung mit weißem Bart und gebundenem Haar umgesetzt. Minotaurus-Bauform (zwei Laufbeine nach Mech-Dossier) und Lys Sprengladung sind in v0.24.0 als Umsetzungsentscheidungen dokumentiert. Diese Punkte blockieren die Roadmap nicht; sie werden vor dem jeweiligen betroffenen Asset bzw. Storymoment festgelegt. Weitere Tote oder zusätzliche Fähigkeiten werden nicht ungefragt als Kanon eingetragen.
+Die Auswahl der beiden ersten Gefallenen ist **geklärt: Tahiro Crow und Drake Gatnom**. **Tahiro Crow: Katana; Swifty Dex: Stab** sind ebenfalls bestätigt. Die vier Eigennamen sind seit v0.68.1 bestätigt. Offen bleibt das spätere Schicksal von Swifty Dex. Das Meisterdesign ist in v0.26.0 als traditionelle bronze-/braune Kampfausrüstung mit weißem Bart und gebundenem Haar umgesetzt. Minotaurus-Bauform (zwei Laufbeine nach Mech-Dossier) und Shame Lys Sprengladung sind in v0.24.0 als Umsetzungsentscheidungen dokumentiert. Diese Punkte blockieren die Roadmap nicht; sie werden vor dem jeweiligen betroffenen Asset bzw. Storymoment festgelegt. Weitere Tote oder zusätzliche Fähigkeiten werden nicht ungefragt als Kanon eingetragen.

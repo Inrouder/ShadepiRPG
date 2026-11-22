@@ -1,6 +1,10 @@
 # Shadepi · Echos in Neon
 
-**2D-Action-RPG · v0.68.0 · CodexAI · Godot 4.7.2 · Windows / Linux / macOS-Nachtrag / Android-Testfassung · Einzelspieler, Lokal- und WLAN-Remote-Koop**
+**Ordensnamen v0.68.1 · CodexAI:** [Zuordnung und aktuelle Figurenkarten](docs/ordensnamen-v0681.md).
+
+[![Drake Gatnom · bestehende HQ-Spielpixel, Namenskarte v0.68.1](docs/stilbibel/bilder/figur-heavy.png)](docs/ordensnamen-v0681.md)
+
+**2D-Action-RPG · v0.68.1 · CodexAI · Godot 4.7.2 · Windows / Linux / macOS-Nachtrag / Android-Testfassung · Einzelspieler, Lokal- und WLAN-Remote-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 
@@ -11,6 +15,8 @@ Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben�
 **v0.67.1 · CodexAI:** Zuverlässigere Arcade-Treffer bei kurzen Rucklern, saubere CPU-Rücksetzung und automatische Hintergrundpause. Release mit Windows/Linux, Android-Test-APK, Godot-Projekt und SHA-256-Prüfsummen. [Fehlerkorrekturen und Prüfnachweis](docs/release-v0671.md).
 
 **macOS-Nachtrag v0.67.1 · CodexAI:** Universal-App für Intel und Apple Silicon, ergänzt zum bestehenden Release. [Mac-Download, Start und Prüfgrenzen](docs/macos-v0671.md).
+
+**v0.68.1 · CodexAI:** Ordenskrieger heißen nun Drake Gatnom, Swifty Dex, Tahiro Crow und Shame Ly. [Zuordnung, Figurenkarten und Prüfungen](docs/ordensnamen-v0681.md).
 
 ## Bilder aus dem Spiel
 

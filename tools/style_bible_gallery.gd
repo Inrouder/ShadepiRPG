@@ -12,6 +12,7 @@ var legacy: Dictionary
 var contact: Dictionary
 var frames_written := 0
 var only_heroes := false
+var only_order := false
 
 func _initialize() -> void: run.call_deferred()
 
@@ -99,6 +100,7 @@ func save_card(id: String) -> void:
 func figures() -> void:
 	for entry in catalog.figures:
 		if only_heroes and entry.kind!="hero":continue
+		if only_order and entry.id not in ["oni","robot","ly","heavy"]:continue
 		var poses := figure_poses(entry)
 		var zoom := 1.7 if entry.kind == "minotaur" else 3.0 if entry.kind == "master" else 4.0
 		start_card(Vector2i(1200,450),entry.title,"AKTIVE SPIELPIXEL · Ansicht ×%.1f · rechts Weltmaßstab ×1 · v%s · CodexAI" % [zoom,catalog.version])
@@ -109,7 +111,7 @@ func figures() -> void:
 		place(poses[0],Vector2(1080,377 if entry.kind!="digital" else 240))
 		label_at("ID: "+entry.id+" · "+poses[0].path.trim_prefix("res://"),Vector2(22,423),12)
 		await save_card("figur-"+entry.id)
-	start_card(Vector2i(1400,1180),"FIGUREN · gesamter aktiver Bestand","23 Figuren / Typen · für die Übersicht angepasst · verbindliche Weltgröße rechts auf jeder Einzelkarte · v0.45.0 · CodexAI")
+	start_card(Vector2i(1400,1180),"FIGUREN · gesamter aktiver Bestand","23 Figuren / Typen · für die Übersicht angepasst · verbindliche Weltgröße rechts auf jeder Einzelkarte · v%s · CodexAI" % catalog.version)
 	for i in catalog.figures.size():
 		var entry: Dictionary = catalog.figures[i]
 		var data: Dictionary = figure_poses(entry)[0]
@@ -140,7 +142,6 @@ func worlds() -> void:
 		image.position = Vector2(167+col*318,205+row*246)
 		stage.add_child(image)
 		if key=="hangar":
-			var painted = preload("res://scripts/painted_world.gd")
 			var brand := Sprite2D.new()
 			brand.texture = painted.HANGAR_BRAND
 			var unit := image.scale*tex.get_size()/Vector2(1024,640)
@@ -229,7 +230,7 @@ func run() -> void:
 	var part := "all"
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--part="): part = argument.trim_prefix("--part=")
-	if part not in ["all","figures","worlds","props","vehicles","ui","effects","heroes"]:
+	if part not in ["all","figures","worlds","props","vehicles","ui","effects","heroes","order"]:
 		push_error("Unknown style bible part: "+part)
 		quit(1)
 		return
@@ -242,9 +243,10 @@ func run() -> void:
 	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	root.add_child(viewport)
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUT))
+	only_order=part=="order"
 	if part=="heroes":
 		only_heroes=true
-	if part in ["all","figures","heroes"]: await figures()
+	if part in ["all","figures","heroes","order"]: await figures()
 	if part in ["all","worlds"]: await worlds()
 	if part in ["all","props"]: await props()
 	if part in ["all","vehicles"]: await vehicles()

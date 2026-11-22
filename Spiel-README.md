@@ -1,5 +1,7 @@
 # Shadepi · Spieleranleitung
 
+**Neu v0.68.1 · CodexAI:** Die vier Ordenskrieger tragen ihre bestätigten Namen: Drake Gatnom (MG), Swifty Dex (Kampfstab), Tahiro Crow (Oni-Maske) und Shame Ly (weiße Gewandung). Dialoge, Erinnerungsüberschrift und Kontrollpunktwahl verwenden sie durchgängig. [Figuren und Details](docs/ordensnamen-v0681.md).
+
 **Neu v0.68.0 · CodexAI:** Vor dem Hauptmenü erscheint das bereitgestellte SHAD3PI-Bild kurz mit ruhiger Überblendung. Danach folgen Licht-/Gesundheits-, Inhalts- und Markenhinweise. **Enter / Leertaste / E, Controller A oder Tippen auf „Weiter zum Hauptmenü“** bestätigt; die Seite verschwindet nicht automatisch. Beim Zurückkehren aus einem Kapitel zum Menü wiederholt sich der Vorspann nicht. [Bilder, Film und Hinweise](docs/startup-v068.md).
 
 **macOS-Nachtrag v0.67.1 · CodexAI:** [Universal-ZIP für Intel und Apple Silicon](docs/macos-v0671.md). Vollständig entpacken und die .app nach Programme kopieren. Ad-hoc signiert, nicht von Apple notarisiert; Hinweise zum ersten Start stehen in der Mac-Anleitung.

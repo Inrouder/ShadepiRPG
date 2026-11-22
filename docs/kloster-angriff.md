@@ -10,7 +10,7 @@ Die Vorschau stammt aus dem tatsächlichen Godot-Spielablauf mit automatisch wei
 
 ## Ablauf und Bedienung
 
-Die Kamera zeigt das beschädigte Kloster. Ein Einschlag trifft die Torseite, acht unbewaffnete Bewohner fliehen zum geschützten Seitengang. Shadepi zieht mit Oni, dem Roboterkopf-Krieger, Ly und dem MG-Krieger vor und ruft: **„Bringt euch in Sicherheit! Wir werden sie abwehren!“** Drei Bots dringen durch die Bresche ein. Ein erster kurzer Schusswechsel leitet die Auseinandersetzung ein; danach kehrt die Ansicht zu Raven zurück.
+Die Kamera zeigt das beschädigte Kloster. Ein Einschlag trifft die Torseite, acht unbewaffnete Bewohner fliehen zum geschützten Seitengang. Shadepi zieht mit Tahiro Crow, Swifty Dex, Shame Ly und Drake Gatnom vor und ruft: **„Bringt euch in Sicherheit! Wir werden sie abwehren!“** Drei Bots dringen durch die Bresche ein. Ein erster kurzer Schusswechsel leitet die Auseinandersetzung ein; danach kehrt die Ansicht zu Raven zurück.
 
 | Eingabe | Wirkung |
 | --- | --- |
@@ -32,7 +32,7 @@ Der 1024×640 große Hof hat eine geschlossene Gebäudefront mit Seitentür link
 
 ![Fünf Verteidiger](kloster-krieger.png)
 
-Von links: **Shadepi mit seinem vorhandenen Original-Sprite**, Oni-Krieger mit Katana, Roboterkopf-Krieger mit Kabel-Dreadlocks und Stab, Ly in weißer Gewandung und der schwere Samurai-Krieger mit MG. Neue Krieger haben acht Blickrichtungen und zwei Laufschritte pro Richtung. Die neuen Bilder sind transparente Pixel-PNGs mit vermessenen Fußpunkten; sie werden mit dem Nearest-Filter dargestellt.
+Von links: **Shadepi mit seinem vorhandenen Original-Sprite**, Tahiro Crow mit Katana, Swifty Dex mit Kabel-Dreadlocks und Stab, Shame Ly in weißer Gewandung und Drake Gatnom mit Samurai-Maske und MG. Neue Krieger haben acht Blickrichtungen und zwei Laufschritte pro Richtung. Die neuen Bilder sind transparente Pixel-PNGs mit vermessenen Fußpunkten; sie werden mit dem Nearest-Filter dargestellt.
 
 ![Mönche und Bewohner](kloster-bewohner.png)
 
@@ -67,4 +67,4 @@ Für eine direkte Hofvorschau in Godot `attack.tscn` öffnen, `autoplay` ausscha
 
 Die Szene wurde im Godot-OpenGL-Renderer bis zur bestätigten Rückkehr zu Raven kontrolliert. Ein Linux-PCK wurde erstellt; neue Szene, Anker-JSON, 16 Figuren und importierte Texturen ließen sich direkt aus diesem Exportpaket laden. Die gezielten Erinnerungsprüfungen laufen auch im GitHub-Workflow.
 
-**Zum damaligen Stand noch offen, inzwischen in v0.23.0 umgesetzt: Paket 6:** vollständige Bot-Wellen, Kampfbewegungen und die festgelegten Schutzopfer von **Oni und MG-Krieger**. Im jetzigen Auftakt stirbt niemand; Ly und der Roboterkopf-Krieger bleiben erhalten. Erinnerung 2 mit Lys Opfer und Erinnerung 3 mit Meister, Heiligtumsübergabe und zwei Minotauren sind noch nicht umgesetzt. Der genaue Plan und offene Festlegungen stehen in der [Roadmap](erinnerungen-roadmap.md); die verbindlichen Storyvorgaben in [Archiv Teil 5](universum/teil-5/README.md).
+**Zum damaligen Stand noch offen, inzwischen in v0.23.0 umgesetzt: Paket 6:** vollständige Bot-Wellen, Kampfbewegungen und die festgelegten Schutzopfer von **Tahiro Crow und Drake Gatnom**. Im jetzigen Auftakt stirbt niemand; Shame Ly und Swifty Dex bleiben erhalten. Erinnerung 2 mit Shame Lys Opfer und Erinnerung 3 mit Meister, Heiligtumsübergabe und zwei Minotauren sind noch nicht umgesetzt. Der genaue Plan und offene Festlegungen stehen in der [Roadmap](erinnerungen-roadmap.md); die verbindlichen Storyvorgaben in [Archiv Teil 5](universum/teil-5/README.md).

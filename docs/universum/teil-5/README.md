@@ -1,5 +1,7 @@
 # Archiv Teil 5: Kloster-Erinnerungen · 7. November 2026
 
+**Verbindliche Namenspräzisierung · v0.68.1 · CodexAI · 22. November 2026:** Der Nutzer benennt den MG-Krieger **Drake Gatnom**, den Roboterkopf-Krieger mit Kampfstab **Swifty Dex**, den Krieger mit Oni-Maske **Tahiro Crow** und den weißen Ordenskrieger **Shame Ly**. Diese Namen haben Vorrang vor älteren Rollenbezeichnungen, „Ly“ als Vollnamen und bisherigen Angaben „Name offen“. Historische Originalzitate/Filmaufnahmen darunter dokumentieren weiterhin ihren damaligen Stand. Bewaffnung und bestätigte Schutzopfer bleiben erhalten.
+
 Quelle: Nutzerbriefing im Chat zu den drei Erinnerungen, einschließlich der anschließenden Auswahl der beiden gefallenen Krieger. Dies ist eine Textsicherung der Vorgaben, keine neue PDF- oder Bildquelle. Umsetzungsplanung: [Roadmap der Erinnerungen](../../erinnerungen-roadmap.md).
 
 ## Verbindliche Schauplatzkorrektur · v0.27.0 · CodexAI

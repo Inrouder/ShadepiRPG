@@ -1,5 +1,7 @@
 # Shadepi-Universum-Archiv
 
+**Verbindliche Namenspräzisierung · v0.68.1 · CodexAI · 22. November 2026:** Der Nutzer benennt den MG-Krieger **Drake Gatnom**, den Roboterkopf-Krieger mit Kampfstab **Swifty Dex**, den Krieger mit Oni-Maske **Tahiro Crow** und den weißen Ordenskrieger **Shame Ly**. Diese Namen haben Vorrang vor älteren Rollenbezeichnungen, „Ly“ als Vollnamen und bisherigen Angaben „Name offen“. Historische Originalzitate/Filmaufnahmen darunter dokumentieren weiterhin ihren damaligen Stand. Bewaffnung und bestätigte Schutzopfer bleiben erhalten.
+
 **Ergänzung v0.65.0 · CodexAI:** [Teil 8](teil-8/README.md) sichert die beauftragte Flucht über Mondschein-Wüste und Nomadenlager, Ravens erleichterten Dialog sowie den Zeitsprung zum See.
 
 **Handkorrektur v0.36.1 · CodexAI:** Im [See-Finale](../see-finale.md) hebt Raven die Maske mit ihrer **rechten** Hand; ihre **linke** berührt und verdeckt Shadepis Gesicht. Diese Zuordnung gilt für Maskenabnahme und Kuss, jeweils aus Ravens eigener Sicht.

@@ -115,7 +115,7 @@ func full_story() -> void:
 	check(pause_checked and attachment_seen,"decision and mounted charge actually play")
 	check(bad_paths.is_empty(),"ground movement avoids map and mech footprint: "+str(bad_paths.keys()))
 	check(scene.events==["arrival","minotaur_arrives","survival_started","survival_resolved","armour_holds","servo_exposed","charge_armed","ly_commits","charge_attached","detonation","ly_fallen","minotaur_destroyed","survivors_hold"],"Lys sacrifice destroys the Minotaur in the intended causal order")
-	check(lines.has("Nein! Ly, nicht!") and lines.has("Verzeih mir, Bruder. FÜR DEN ORDEN!"),"both confirmed lines are spoken on screen")
+	check(lines.has("Nein! Shame Ly, nicht!") and lines.has("Verzeih mir, Bruder. FÜR DEN ORDEN!"),"both confirmed lines are spoken on screen")
 	check(scene.squad[2].fallen and not scene.squad[2].visible and not scene.charge.visible,"Ly remains at the detonation and cannot escape or respawn")
 	check(not scene.squad[0].fallen and not scene.squad[1].fallen,"Shadepi and robot-headed warrior survive without inventing another death")
 	scene.tank.animate("fire",1)

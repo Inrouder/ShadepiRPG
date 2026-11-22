@@ -31,7 +31,7 @@ const ENTRIES := [
 	["sanctuary",5,"Heiligtum · Ravens Ankunft",5,0,0],
 	["sanctuary-wake",5,"Heiligtum · Nach zwei Stunden",5,0,0],
 	["memory1",5,"Erinnerung 1 · Der Angriff",5,0,0],
-	["memory2",5,"Erinnerung 2 · Lys Opfer",5,1,0],
+	["memory2",5,"Erinnerung 2 · Shame Lys Opfer",5,1,0],
 	["memory3",5,"Erinnerung 3 · Das Vermächtnis",5,2,0],
 	["flight",6,"Aerodyne · Flug zum Tower",6,0,0],
 	["roof",6,"Tower · Dach-Landeplatz",7,0,0],

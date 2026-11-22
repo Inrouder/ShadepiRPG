@@ -1,5 +1,12 @@
 # Versionshinweise
 
+## v0.68.1 – CodexAI: bestätigte Namen der vier Ordenskrieger · 22. November 2026
+
+- Drake Gatnom (schweres MG), Swifty Dex (Roboterkopf und Kampfstab), Tahiro Crow (Oni-Maske und Katana) und Shame Ly (weiße Gewandung) in Erinnerungsdialogen und aktueller Figurendokumentation.
+- „Shame Lys Opfer“ auch im Erinnerungstitel, Hinweis und Test-Kontrollpunkt; interne IDs und Speicherstandschlüssel bleiben kompatibel.
+- Figurenkarten und Quellenarchiv mit datierter Nutzerpräzisierung; ältere Originalzitate und Versionsbelege bleiben nachvollziehbar. Im derzeitigen Arcade-Kader gibt es keinen Eintrag dieser vier Krieger; keine fremden Kämpfer umbenannt.
+- [Zuordnung, Vorschauen und gezielte Prüfungen](docs/ordensnamen-v0681.md).
+
 ## v0.68.0 – CodexAI: Original-Startbild und Hinweise vor dem Hauptmenü · 20. November 2026
 
 - Nutzerbild `docs/Game Logos.png` bytegleich als aktive Startgrafik übernommen. Schwarzer Hintergrund, vollständiges 16:9-Bild, etwa 2,8 Sekunden ruhiges Ein-/Ausblenden; bereits der Engine-Ladebildschirm verwendet dieselbe Grafik.

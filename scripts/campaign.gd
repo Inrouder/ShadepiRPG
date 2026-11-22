@@ -885,7 +885,7 @@ func interact(_actor: PixelActor = null) -> void :
 		if point_index == 2 and not memory_legacy_complete:
 			_open_memory(2)
 			return
-		toast(["Das Kloster brennt noch immer in ihm.", "Lys Opfer.", "Das Vermächtnis."][point_index])
+		toast(["Das Kloster brennt noch immer in ihm.", "Shame Lys Opfer.", "Das Vermächtnis."][point_index])
 		if point_index == 2:
 			_scene_echo_end()
 			return

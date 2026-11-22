@@ -27,7 +27,7 @@ Der äußere Zugang ist geschlossen, während Shadepi den Meister stützt. Diese
 
 ![Shadepi hält den Meister im Tempel](vermaechtnis-meister.png)
 
-Licht entsteht in der Brust des Meisters und geht als weißer Nanitenstrom auf Shadepi über. Acht Bildphasen, weiße Partikel und eigenes Knistern begleiten die Übertragung. Nach der vollständigen Übertragung erschlafft der Meister in Shadepis Armen. Shadepi legt ihn flach ab: geschlossene Augen, schlaffe Arme und kein aufgestützter Oberkörper. **Sein Tod ist durch den Nutzer bestätigt.** Der Körper bleibt anschließend leblos im Seitenbereich; eine gesperrte Leichenpose verhindert die Rückkehr zur alten Ellenbogenhaltung. Er hat keinen erfundenen Eigennamen. Der Roboterkopf-Krieger wird hier nicht gezeigt und erhält keinen zusätzlichen Tod.
+Licht entsteht in der Brust des Meisters und geht als weißer Nanitenstrom auf Shadepi über. Acht Bildphasen, weiße Partikel und eigenes Knistern begleiten die Übertragung. Nach der vollständigen Übertragung erschlafft der Meister in Shadepis Armen. Shadepi legt ihn flach ab: geschlossene Augen, schlaffe Arme und kein aufgestützter Oberkörper. **Sein Tod ist durch den Nutzer bestätigt.** Der Körper bleibt anschließend leblos im Seitenbereich; eine gesperrte Leichenpose verhindert die Rückkehr zur alten Ellenbogenhaltung. Er hat keinen erfundenen Eigennamen. Der Swifty Dex wird hier nicht gezeigt und erhält keinen zusätzlichen Tod.
 
 ![Der weiße Strom zwischen Meister und Shadepi](vermaechtnis-uebergabe.png)
 
