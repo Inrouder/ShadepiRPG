@@ -168,14 +168,18 @@ func run() -> void:
 			await physics_frame
 			await physics_frame
 			await process_frame
-			check_routes(campaign, campaign.raven.position if campaign.raven_leads() else campaign.player.position, Story.POINTS[beat], 43, "Campaign / %d" % beat)
+			check_routes(campaign, campaign.raven.position if campaign.raven_leads() else campaign.player.position, Story.POINTS[beat].slice(0,3) if beat==Story.Beat.LAKE else Story.POINTS[beat], 43, "Campaign / %d" % beat)
 		if beat == Story.Beat.HANGAR:
 			check_routes(campaign, campaign.raven.position, campaign.PORTS, 22, "Hangar ports")
-		if beat in [Story.Beat.LAKE, Story.Beat.END]:
-			check(not clear_at(campaign, Vector2(746, 353)), "old ending position is correctly inside water")
-			for point: Vector2 in Story.POINTS[Story.Beat.LAKE]:
-				check(clear_at(campaign, point) and clear_at(campaign, point + Vector2(18, 5)), "both ritual participants stand on shore at " + str(point))
-			check(clear_at(campaign, campaign.player.position) and clear_at(campaign, campaign.raven.position), "finale actors have clearance on land")
+		if beat == Story.Beat.LAKE:
+			check(campaign.lake_sequence.clearing_active,"the three marked conversations belong to the forest map")
+			for point: Vector2 in Story.POINTS[Story.Beat.LAKE].slice(0,3):
+				check(clear_at(campaign,point) and clear_at(campaign,point+Vector2(21,15)),"both conversation participants have forest-trail clearance at "+str(point))
+		if beat == Story.Beat.END:
+			check(not clear_at(campaign,Vector2(746,353)),"the final lake retains its real water collision")
+			var point: Vector2=Story.POINTS[Story.Beat.LAKE].back()
+			check(clear_at(campaign,point) and clear_at(campaign,point+Vector2(18,5)),"the last admission/kiss point has shore clearance")
+			check(clear_at(campaign,campaign.player.position) and clear_at(campaign,campaign.raven.position),"finale actors have clearance on land")
 		if beat == Story.Beat.ECHO:
 			check(clear_at(campaign, campaign._target()), "chamber chair interaction has full player clearance")
 			check(not clear_at(campaign, Vector2(470, 300)), "rescaled chair blocks the player's feet")

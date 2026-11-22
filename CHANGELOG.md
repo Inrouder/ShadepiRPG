@@ -1,5 +1,12 @@
 # Versionshinweise
 
+## v0.69.1 – CodexAI: Gesprächspunkte entlang des Waldwegs · 23. November 2026
+
+- Die drei ersten tatsächlichen Gesprächs-/Ritualpunkte liegen auf dem Weg durch die Lichtung. Ihre Dialogzeilen begleiten die gemeinsame Gehbewegung; die Landesequenz endet vor diesen Punkten.
+- Erst nach dem dritten Waldpunkt erreichen beide den See. Nur der letzte Punkt mit Aufnahme, Maskenabnahme und Kuss findet dort statt; Drachenwind, Weltraumfahrt und Abspann bleiben erhalten.
+- Gesprächsindex 0–3 beim Laden erhalten statt auf 0 zurücksetzen. Karten-/Wasser-/Lande-Colliderzustand zum gespeicherten Abschnitt passend; direkter Test-Kontrollpunkt am See öffnet Punkt 3.
+- [Wegpunkte, neue native Bilder und Prüfungen](docs/gespraechsweg-v0691.md).
+
 ## v0.69.0 – CodexAI: Waldlichtung, romantischer Mondsee und kosmischer Abspann · 23. November 2026
 
 - Kapitel 7 beginnt mit Landung/Ausstieg in einer eigenen detailreichen HQ-Waldlichtung. Beide gehen unter Mondlicht zum See und sprechen tatsächlich während des Gehens; der Aerodyne bleibt zurück.

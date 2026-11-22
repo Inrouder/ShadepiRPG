@@ -1,5 +1,7 @@
 # Entwicklerwerkzeuge · v0.68.0 · CodexAI
 
+**Gesprächsweg v0.69.1 · CodexAI:** [trail_v0691_gallery.gd](trail_v0691_gallery.gd) zeigt die drei markierten Waldgespräche und den letzten See-/Kusspunkt im echten Spiel. Isolierte Daten und nativer Desktop; PNG-/Filmframes ausschließlich nach `/tmp/shadepi-v0691-gallery`. Kein Asset-Generator.
+
 **See-Epilog v0.69.0 · CodexAI:** [lake_v069_gallery.gd](lake_v069_gallery.gd) spielt Landung, Weg, Ritual, Kuss, kosmische Fahrt und Credits im echten Renderer durch. Nur mit isoliertem `XDG_DATA_HOME=/tmp/shadepi-…`; Full-HD-PNGs und kompakte Filmframes ausschließlich unter `/tmp/shadepi-v069-gallery`. Kein Asset-Generator.
 
 **Startgalerie v0.68.0 · CodexAI:** [startup_gallery.gd](startup_gallery.gd) rendert den tatsächlichen Logo-/Hinweis-/Menüablauf ausschließlich nach `/tmp/shadepi-v068-film`, mit isolierten Daten und nativem Desktop. Kein Grafikgenerator; bewusst gesetzte Bestätigung und geraffte Filmzeit.

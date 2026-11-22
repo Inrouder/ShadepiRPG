@@ -41,8 +41,8 @@ const ENTRIES := [
 	["escape-charge",6,"Flucht · Bombe scharfstellen",9,1,0],
 	["escape-gate",6,"Flucht · Ausgang hacken",9,2,0],
 	["escape-pad",6,"Flucht · Zum Aerodyne",9,3,0],
-	["lake-arrival",7,"See · Landeanflug und Finale",10,0,0],
-	["lake-shore",7,"See · Ufer erkunden",10,0,0],
+	["lake-arrival",7,"Lichtung · Landeanflug und Weg",10,0,0],
+	["lake-shore",7,"See · Letzter Gesprächspunkt und Kuss",10,0,3],
 	["ending",7,"Der neue Orden · Abschluss",11,0,0],
 ]
 

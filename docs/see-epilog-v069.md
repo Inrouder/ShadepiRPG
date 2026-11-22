@@ -1,5 +1,7 @@
 # Kapitel 7: Lichtung, Mondsee und unbekannter Schwarm · v0.69.0 · CodexAI
 
+**Wegführung korrigiert in v0.69.1 · CodexAI:** Die unten gezeigte ursprüngliche Fassung ließ die eigentlichen Ritualpunkte noch am See. Jetzt liegen die ersten drei markierten Gesprächs-/Ritualpunkte auf dem Waldweg; nur der letzte Punkt führt zur Aufnahme und zum Kuss ans Wasser. [Aktueller Ablauf und Aufnahmen](gespraechsweg-v0691.md).
+
 **23. November 2026.** [Spieleranleitung](../Spiel-README.md) · [Änderungen](../CHANGELOG.md) · [Bildquellen](../assets/story/lake/epilogue/README.md).
 
 ## Der neue Ablauf

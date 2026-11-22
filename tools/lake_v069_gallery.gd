@@ -31,7 +31,7 @@ func sample() -> void:
  var tag: String=d.stage
  var ready:=stage_elapsed>1.0
  if tag=="touchdown":ready=stage_elapsed>1.0
- if tag=="forest_walk":ready=w.player.position.x>560
+ if tag=="forest_walk":ready=stage_elapsed>0.4
  if tag=="lake_reveal":ready=stage_elapsed>1.6
  if tag in ["hands","kiss","embrace"]:ready=stage_elapsed>2.0
  if tag=="dragon":ready=d.dragon_passage>0.45

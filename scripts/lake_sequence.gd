@@ -11,6 +11,8 @@ const DRAGON = preload("res://assets/story/lake/dragon-flight.png")
 const WATER = preload("res://shaders/lake_mystic.gdshader")
 const PARK := Vector2(225,430)
 const FOOTPRINT := Rect2(177,442,96,44)
+const TRAIL_START: Array[Vector2] = [Vector2(340,485),Vector2(363,500)]
+const TRAIL_ENDS: Array[Vector2] = [Vector2(550,425),Vector2(750,357),Vector2(880,325)]
 const SHORE: Array[Vector2] = [Vector2(570,405),Vector2(592,420)]
 var clearing_active := false
 var petals: Node2D
@@ -195,37 +197,19 @@ func play_arrival() -> void:
 	await cs.title("KAPITEL 7","Der neue Orden",2.2)
 	if not cs.alive(ticket): return
 	set_stage("forest_walk")
-	await _walk_talk(cs,[Vector2(460,456),Vector2(482,470)],"RAVEN","Diese Stille … Nach der Stadt ist das fast unwirklich.")
-	if not cs.alive(ticket): return
-	await _walk_talk(cs,[Vector2(650,390),Vector2(671,407)],"SHADEPI","Hier hat der Orden früher Zuflucht gesucht. Den Weg kennt kaum jemand.")
-	if not cs.alive(ticket): return
-	await _walk_talk(cs,[Vector2(842,330),Vector2(862,347)],"RAVEN","Und du bringst ausgerechnet mich hierher?")
-	if not cs.alive(ticket): return
-	set_stage("lake_reveal")
-	await cs.fade(Color.BLACK,0.7)
+	await Motion.walk_pair(cs,[world.player,world.raven],TRAIL_START,38)
 	if not cs.alive(ticket):return
-	set_clearing(false)
-	world.player.position=Vector2(320,466);world.raven.position=Vector2(343,481)
-	await cs.camera(Vector2(460,374),0,1.2)
-	await cs.fade(Color.TRANSPARENT,0.9)
-	if not cs.alive(ticket):return
-	await _walk_talk(cs,[Vector2(444,448),Vector2(465,463)],"SHADEPI","Das Heiligtum hat dich schon in der Gasse erkannt. Aber ich wäre auch ohne Prophezeiung an deiner Seite.",27)
-	if not cs.alive(ticket):return
-	set_stage("shore")
-	await _walk_talk(cs,SHORE,"RAVEN","Gut. Ich will wissen, was du fühlst. Nicht, was irgendeine Prophezeiung von uns will.",26)
-	if not cs.alive(ticket): return
 	world.player.z_index=0;world.raven.z_index=0
-	cs.face(world.player,world.raven.position);cs.face(world.raven,world.player.position)
-	cs.pose(world.player,"idle");cs.pose(world.raven,"idle")
 	set_stage("parked")
 	cs.end(func():
 		world.ui.set_lake_cinema(false)
 		world.lake_scene_pending = false
 		world.autosave()
-		world.toast("Gemeinsam ans Wasser · E / A")
+		world.toast("Dem Waldweg folgen · Mit Raven sprechen · E / A")
 	)
 
 func set_clearing(value: bool) -> void:
+	if clearing_active!=value:world.set_painted_solids("clearing" if value else "lakeside")
 	clearing_active=value
 	if is_instance_valid(landing_body):landing_body.collision_layer=1 if value else 0
 	world.queue_redraw();_sync()
@@ -255,10 +239,55 @@ func _scene_ended() -> void:
 	if not is_instance_valid(world):return
 	world.ui.set_lake_cinema(false)
 	epilogue.reset();tableau.hide();_restore_actors()
-	if clearing_active:
-		world.player.position=SHORE[0];world.raven.position=SHORE[1]
-		set_clearing(false)
+	if world.beat==world.Beat.LAKE and world.point_index<3 and not clearing_active and stage in ["lake_reveal","shore"]:
+		set_clearing(true)
+		world.player.position=TRAIL_ENDS[world.point_index];world.raven.position=world.player.position+Vector2(21,15)
+	if clearing_active and stage in ["approach","descent","touchdown","exit_raven","exit_shadepi","forest_walk"]:
+		arrival_step(2,1);power=0;vehicle.set_door(0)
+		world.player.position=TRAIL_START[0];world.raven.position=TRAIL_START[1]
+		set_stage("parked")
 	world.camera.zoom=Vector2.ONE;world.camera.position=world.camera_home()
+
+func play_trail_point(index: int) -> void:
+	var cs=world.begin_cutscene()
+	world.ui.set_lake_cinema(true);cs.ended.connect(_scene_ended,CONNECT_ONE_SHOT)
+	var ticket: int=cs.generation
+	set_stage("trail_%d"%index)
+	ritual_step(index)
+	if index>0:
+		world.ritual_flash=1.0;world.ritual_origin=world.player.position
+		world.effects.burst(world.player.position,Color("72eff4"),24);world.sound("hack")
+	var start: Vector2=world.player.position
+	var lines: Array=world.RITUAL[index]
+	for i in lines.size():
+		var spot: Vector2=start.lerp(TRAIL_ENDS[index],float(i+1)/lines.size())
+		await _walk_talk(cs,[spot,spot+Vector2(21,15)],lines[i][0],lines[i][1],20)
+		if not cs.alive(ticket):return
+	if index==2:
+		await reach_shore(cs)
+		if not cs.alive(ticket):return
+	set_stage("trail_done_%d"%index)
+	cs.end(func():
+		world.point_index=index+1
+		world.autosave()
+		world.toast("Dem Weg folgen · Nächstes Gespräch" if index<2 else "Der letzte gemeinsame Schritt ans Wasser")
+	)
+
+func reach_shore(cs) -> void:
+	var ticket: int=cs.generation
+	set_stage("lake_reveal")
+	await cs.fade(Color.BLACK,0.7)
+	if not cs.alive(ticket):return
+	set_clearing(false)
+	world.player.position=Vector2(320,466);world.raven.position=Vector2(343,481)
+	await cs.camera(Vector2(460,374),0,1.2)
+	await cs.fade(Color.TRANSPARENT,0.9)
+	if not cs.alive(ticket):return
+	set_stage("shore")
+	cs.camera(Vector2(570,365),4.0,1.25)
+	await Motion.walk_pair(cs,[world.player,world.raven],SHORE,44)
+	if not cs.alive(ticket):return
+	cs.face(world.player,world.raven.position);cs.face(world.raven,world.player.position)
 
 func ritual_step(index: int) -> void:
 	glow_target = [0.05,0.4,0.65,0.85][clampi(index,0,3)]

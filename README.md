@@ -1,5 +1,9 @@
 # Shadepi · Echos in Neon
 
+**Korrektur v0.69.1 · CodexAI:** Die drei ersten tatsächlichen Gesprächspunkte liegen jetzt auf dem Waldweg. Nur der letzte Punkt mit Aufnahme und Kuss bleibt am See. [Wegpunkte und neuer Film](docs/gespraechsweg-v0691.md).
+
+[![Gesprächspunkt 2 unter den Bäumen](docs/previews/trail-point-2-v0691.png)](docs/gespraechsweg-v0691.md)
+
 **Kapitel 7 · v0.69.0 · CodexAI:** Landung in der Lichtung, Gespräche auf dem Waldweg, romantischer Mondsee mit Rosenblättern und kosmischer Epilog vor dem Abspann. [Ablauf, Bilder und Film](docs/see-epilog-v069.md).
 
 | Gemeinsam zum See | Der unbekannte Schwarm |
@@ -10,7 +14,7 @@
 
 [![Drake Gatnom · bestehende HQ-Spielpixel, Namenskarte v0.68.1](docs/stilbibel/bilder/figur-heavy.png)](docs/ordensnamen-v0681.md)
 
-**2D-Action-RPG · v0.69.0 · CodexAI · Godot 4.7.2 · Windows / Linux / macOS-Nachtrag / Android-Testfassung · Einzelspieler, Lokal- und WLAN-Remote-Koop**
+**2D-Action-RPG · v0.69.1 · CodexAI · Godot 4.7.2 · Windows / Linux / macOS-Nachtrag / Android-Testfassung · Einzelspieler, Lokal- und WLAN-Remote-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 

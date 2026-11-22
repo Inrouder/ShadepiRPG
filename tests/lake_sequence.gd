@@ -63,26 +63,38 @@ func run() -> void:
 	d = w.lake_sequence
 	same_vehicle = d.vehicle
 	var saw_exits := false
-	var walking_dialogue := false
 	var landed_in_clearing := false
 	for i in 3000:
 		await process_frame
 		if d.stage=="exit_raven": saw_exits = true
 		if d.stage=="touchdown":landed_in_clearing=d.clearing_active and d.vehicle.visible
-		if d.stage=="forest_walk" and w.cutscene.waiting_input and not w.cutscene.walkers.is_empty():walking_dialogue=true
 		if w.cutscene.waiting_input: w.cutscene.advance()
 		if not w.cutscene.running: break
-	check(landed_in_clearing and walking_dialogue and d.events.has("lake_reveal"),"landing occurs in a separate clearing and dialogue really runs while both walk toward the lake")
+	check(landed_in_clearing and d.clearing_active,"arrival ends in the clearing before the actual conversation markers")
 	check(not w.lake_scene_pending and saw_exits and d.events.has("exit_shadepi"),"actual approach, touchdown and both disembarkations finish")
 	check(d.vehicle==same_vehicle and d.craft==Lake.PARK and d.power==0,"same vehicle remains parked after touchdown")
 	check(w.player.visible and w.raven.visible and w.player.modulate.a==1 and w.raven.modulate.a==1 and w.player.z_index==0 and w.raven.z_index==0,"both complete figures and ordinary depth order are restored on land")
-	check(w.player.position==Lake.SHORE[0] and w.raven.position==Lake.SHORE[1],"both walk from the craft to the shore")
-	check(w.load_game() and not w.cutscene.running and w.player.position==Lake.SHORE[0],"completed-arrival checkpoint resumes on shore without repeating flight")
+	check(w.player.position==Lake.TRAIL_START[0] and w.raven.position==Lake.TRAIL_START[1],"both leave the craft at the beginning of the forest trail")
+	check(w.load_game() and not w.cutscene.running and w.player.position==Lake.TRAIL_START[0] and w.lake_sequence.clearing_active,"completed-arrival checkpoint resumes at the forest trail without repeating flight")
 	d = w.lake_sequence
 	for step in 4:
 		w.player.position = w._target()
 		w.interact()
-		await finish(w)
+		if step<3:
+			var spoken_while_moving:=false
+			check(w.lake_sequence.clearing_active,"conversation %d starts in the forest, not at the lake"%step)
+			for frame in 2400:
+				await process_frame
+				if w.cutscene.waiting_input:
+					spoken_while_moving=spoken_while_moving or w.cutscene.walkers.size()==2
+					w.cutscene.advance()
+				if not w.cutscene.running:break
+			check(spoken_while_moving and w.point_index==step+1,"actual marked dialogue %d plays during the paired walk and advances once"%step)
+			check(w.lake_sequence.clearing_active==(step<2),"shore transition happens only after the third forest conversation")
+			check(w.save_game() and w.load_game() and w.point_index==step+1 and w.lake_sequence.clearing_active==(step<2),"checkpoint restores the correct forest/shore domain after marked dialogue")
+		else:
+			check(not w.lake_sequence.clearing_active,"only the last marked admission/kiss point is at the lake")
+			await finish(w)
 	check(w.beat==w.Beat.END and w.point_index==0,"consent and admission still precede the final scene")
 	# Restart finale without skipping to verify every privacy/contact state.
 	w.fresh_entry = true

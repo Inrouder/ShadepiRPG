@@ -175,6 +175,7 @@ func actor_input_prefix(actor: PixelActor) -> String:
 	return "raven_" if actor == raven and coop_raven_playable() else ""
 
 func atmosphere_profile() -> String:
+	if beat in [Beat.LAKE,Beat.END]:return "lakeside"
 	if beat in [Beat.CHASE, Beat.FLIGHT]: return ""
 	if beat == Beat.ECHO and not echo_ready: return "compensator" if sanctuary_stage == 2 else "chamber"
 	return painted_layout
@@ -440,8 +441,8 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo:
 	set_dressing(layouts[beat])
 	stage = 0
 	point_index = 0
-	if beat in [Beat.GARAGE, Beat.HANGAR, Beat.ROOF, Beat.ESCAPE]:
-		point_index = clampi(saved_point, 0, 3 if beat in [Beat.HANGAR, Beat.ESCAPE] else 1)
+	if beat in [Beat.GARAGE, Beat.HANGAR, Beat.ROOF, Beat.ESCAPE, Beat.LAKE]:
+		point_index = clampi(saved_point, 0, 3 if beat in [Beat.HANGAR, Beat.ESCAPE, Beat.LAKE] else 1)
 	clock = 0.0
 	countdown = 60.0
 	ritual_flash = 0.0
@@ -526,9 +527,10 @@ func _enter(next: int, saved_section: int = 0, saved_point: int = 0, saved_echo:
 		lake_sequence = LakeSequence.new()
 		lake_sequence.world = self
 		actors.add_child(lake_sequence)
-		if beat==Beat.LAKE and not lake_scene_pending and point_index==0:
-			player.position = LakeSequence.SHORE[0]
-			raven.position = LakeSequence.SHORE[1]
+		if beat==Beat.LAKE:
+			lake_sequence.set_clearing(point_index<3)
+			if not lake_scene_pending and point_index==0:
+				player.position=LakeSequence.TRAIL_START[0];raven.position=LakeSequence.TRAIL_START[1]
 	_update_lighting()
 	ui.clear_dialogue()
 	close_menu()
@@ -818,7 +820,7 @@ func chapter_objective() -> String:
 			var hp: int = foes.back().health if not foes.is_empty() else 360
 			return "Kenzō · %d / 360 HP%s" % [hp, " · Hackfenster" if hp <= 180 and fposmod(clock, 3.0) <= 1.45 else ""]
 		Beat.LAKE:
-			return ["Mit Raven am Ufer sprechen", "Bitte am Wasser sprechen", "Antwort des Heiligtums hören", "Aufnahme vollziehen"][point_index]
+			return ["Waldweg · Mit Raven reden", "Unter den alten Bäumen", "Heiligtum am Waldweg hören", "Am See · Aufnahme und Kuss"][point_index]
 		Beat.ESCAPE:
 			if tower_stage==3: return "Zum Aerodyne · Abflug"
 			if tower_stage==1: return "Daten gesichert · Kenzō stellen"
@@ -947,7 +949,12 @@ func _complete_point() -> void:
 # v0.47.0 · ClaudeHelper: Wortlaut nach Kapitel 7 des Romans; löst die Prophezeiung aus
 # dem Hangar und den Maskenkodex aus Kapitel 5 auf.
 const RITUAL: = [
-	[["SHADEPI", "Ich kann dich in den Orden aufnehmen. Aber nur, wenn du es selbst willst."],
+	[["RAVEN", "Diese Stille … Nach der Stadt ist das fast unwirklich."],
+		["SHADEPI", "Hier hat der Orden früher Zuflucht gesucht. Den Weg kennt kaum jemand."],
+		["RAVEN", "Und du bringst ausgerechnet mich hierher?"],
+		["SHADEPI", "Das Heiligtum hat dich schon in der Gasse erkannt. Aber ich wäre auch ohne Prophezeiung an deiner Seite."],
+		["RAVEN", "Gut. Ich will wissen, was du fühlst. Nicht, was irgendeine Prophezeiung von uns will."],
+		["SHADEPI", "Ich kann dich in den Orden aufnehmen. Aber nur, wenn du es selbst willst."],
 		["RAVEN", "Ich will. Nicht wegen einer Prophezeiung. Wegen dir – und weil ich mit dir nach vorne sehen will."]],
 	[["SHADEPI", "Ich, Shadepi, Überlebender und einst erster Krieger des Ordens des Weißen Drachen, bitte dich: Nimm diese Seele in deine Obhut."]],
 	[["HEILIGTUM", "Dein Wille ist stark. Ich spüre viel Gutes in dir. Ich akzeptiere dich."]],
@@ -955,6 +962,9 @@ const RITUAL: = [
 ]
 
 func _ritual_step() -> void :
+	if point_index<3:
+		lake_sequence.play_trail_point(point_index)
+		return
 	var step: = point_index
 	var spot: Vector2 = _target()
 	var cs = begin_cutscene()

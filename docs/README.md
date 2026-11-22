@@ -1,5 +1,9 @@
 # Shadepi · Bilder, Filme und Dokumentation
 
+**Korrektur v0.69.1 · CodexAI:** Die drei ersten tatsächlichen Gesprächspunkte liegen jetzt auf dem Waldweg. Nur der letzte Punkt mit Aufnahme und Kuss bleibt am See. [Wegpunkte und neuer Film](gespraechsweg-v0691.md).
+
+[![Gesprächspunkt 2 unter den Bäumen](previews/trail-point-2-v0691.png)](gespraechsweg-v0691.md)
+
 **Kapitel 7 · v0.69.0 · CodexAI:** Landung in der Lichtung, Gespräche auf dem Waldweg, romantischer Mondsee mit Rosenblättern und kosmischer Epilog vor dem Abspann. [Ablauf, Bilder und Film](see-epilog-v069.md).
 
 | Gemeinsam zum See | Der unbekannte Schwarm |
@@ -10,7 +14,7 @@
 
 [![Drake Gatnom · bestehende HQ-Spielpixel, Namenskarte v0.68.1](stilbibel/bilder/figur-heavy.png)](ordensnamen-v0681.md)
 
-**Stand v0.69.0 · CodexAI · 23. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
+**Stand v0.69.1 · CodexAI · 23. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
 
 **[Fehlerkorrekturen und Release v0.67.1 · CodexAI](release-v0671.md)**: langsame Arcade-Bilder, neue CPU-Partie, Hintergrundpause und vollständige Plattform-Downloads.
 

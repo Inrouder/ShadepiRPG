@@ -54,7 +54,8 @@ const FLOOR_EDGES: = {
 	"compensator": Vector2(300, 416.45),
 	"chamber": Vector2(286.65, 416.45), "memory": Vector2(199, 495),
 	"rooftop": Vector2(235, 495), "suite": Vector2(283, 523), 
-	"lakeside": Vector2(251, 540), 
+	"lakeside": Vector2(251, 540),
+	"clearing": Vector2(275, 540),
 }
 const SOLIDS: = {
 	"industry": [Rect2(346, 252, 81, 137), Rect2(591, 384, 80, 122)], 
@@ -71,7 +72,8 @@ const SOLIDS: = {
 	"memory": [], 
 	"rooftop": [Rect2(774, 262, 160, 49), Rect2(293, 318, 94, 25)], 
 	"suite": [Rect2(330, 360, 61, 24), Rect2(573, 283, 80, 24), Rect2(755, 422, 92, 25)], 
-	"lakeside": [], 
+	"lakeside": [],
+	"clearing": [Rect2(930,275,94,55)],
 }
 const WATER_EDGE: = [
 	Vector2(0, 0), Vector2(1024, 0), Vector2(1024, 460),

@@ -23,11 +23,11 @@ const OBJECTIVES: = [
 	"Towerplan prüfen · %d / 3", "Hinterhalt überleben · %d / %d", "Verfolger ausschalten", 
 	"Geheimes Werkbanksymbol finden", "Aerodyne vorbereiten · %d / 3", "Mit Raven sprechen", 
 	"Den Tower erreichen", "Biometrie-Log und Tür hacken · %d / 2", "Kenzō ausschalten", 
-	"Raven schützen und zum Aerodyne", "Raven zum Wasser folgen", "Der neue Orden · Neue Spur",
+	"Raven schützen und zum Aerodyne", "Mit Raven dem Waldweg folgen", "Der neue Orden · Neue Spur",
 ]
 const POINTS: = [
 	[Vector2(498, 333), Vector2(498, 333), Vector2(498, 333)], [Vector2(920, 380)], [],
 	[Vector2(738, 323), Vector2(738, 323)], [Vector2(306, 360), Vector2(542, 423), Vector2(795, 347)], [Vector2(486, 310), Vector2(606, 310), Vector2(709, 318)],
 	[], [Vector2(310, 340), Vector2(818, 365)], [], [Vector2(345, 325), Vector2(592, 350), Vector2(858, 366), Vector2(914, 397)], 
-	[Vector2(615, 390), Vector2(655, 400), Vector2(695, 420), Vector2(735, 440)], [],
+	[Vector2(430, 465), Vector2(630, 400), Vector2(830, 340), Vector2(735, 440)], [],
 ]
