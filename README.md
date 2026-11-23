@@ -1,5 +1,11 @@
 # Shadepi · Echos in Neon
 
+**Game-Icon v0.69.2 · CodexAI:** Das weiße Drachensymbol als detailreiches Pixel-Icon. [PNG, ICO, Größenprüfung und Quellen](docs/game-icon-v0692.md).
+
+| Neues Spiel-Icon | Native Größen-/Maskenprüfung |
+| --- | --- |
+| [![Weißer Drache](assets/icon.png)](docs/game-icon-v0692.md) | [![Icon-Größen und Android-Masken](docs/previews/game-icon-sizes-v0692.png)](docs/game-icon-v0692.md) |
+
 **Korrektur v0.69.1 · CodexAI:** Die drei ersten tatsächlichen Gesprächspunkte liegen jetzt auf dem Waldweg. Nur der letzte Punkt mit Aufnahme und Kuss bleibt am See. [Wegpunkte und neuer Film](docs/gespraechsweg-v0691.md).
 
 [![Gesprächspunkt 2 unter den Bäumen](docs/previews/trail-point-2-v0691.png)](docs/gespraechsweg-v0691.md)
@@ -14,7 +20,7 @@
 
 [![Drake Gatnom · bestehende HQ-Spielpixel, Namenskarte v0.68.1](docs/stilbibel/bilder/figur-heavy.png)](docs/ordensnamen-v0681.md)
 
-**2D-Action-RPG · v0.69.1 · CodexAI · Godot 4.7.2 · Windows / Linux / macOS-Nachtrag / Android-Testfassung · Einzelspieler, Lokal- und WLAN-Remote-Koop**
+**2D-Action-RPG · v0.69.2 · CodexAI · Godot 4.7.2 · Windows / Linux / macOS-Nachtrag / Android-Testfassung · Einzelspieler, Lokal- und WLAN-Remote-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 

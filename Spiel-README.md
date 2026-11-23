@@ -1,5 +1,7 @@
 # Shadepi · Spieleranleitung
 
+**Neu v0.69.2 · CodexAI:** Das Spiel trägt jetzt das weiße Drachensymbol als detailreiches Icon. [Bild, PNG-/ICO-Download und Plattformhinweise](docs/game-icon-v0692.md).
+
 **Korrektur v0.69.1 · CodexAI:** Die ersten drei Gesprächspunkte befinden sich jetzt verteilt auf dem Waldweg. Gehe zur nächsten Markierung und drücke **E/A**; beide sprechen beim Weitergehen. Erst danach führt der Weg zum letzten Punkt am See mit Ordensaufnahme und Kuss. Kontrollpunkte behalten den erreichten Gesprächsabschnitt. [Weg und Bilder](docs/gespraechsweg-v0691.md).
 
 **Neu v0.69.0 · CodexAI:** Kapitel 7 führt nach der Landung in einer Waldlichtung gemeinsam und mit Gesprächen zum See. Nähere Kamera, Rosenblätter im Drachenwind und ein kosmischer Epilog leiten in den nach Rollen gegliederten Abspann über. **E/Enter/A** für Dialoge, **Leertaste/B** zum Überspringen; Pause hält auch die Schlussfahrt an. [Bilder, Ablauf und Credits](docs/see-epilog-v069.md).

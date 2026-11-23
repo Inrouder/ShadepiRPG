@@ -1,5 +1,7 @@
 # Entwicklerwerkzeuge · v0.68.0 · CodexAI
 
+**Icon-Vorschau v0.69.2 · CodexAI:** [icon_preview_v0692.gd](icon_preview_v0692.gd) prüft echte PNG-Größen und Launcher-Masken im nativen Godot-Renderer. Mit `--path /tmp --script /absoluter/pfad/tools/icon_preview_v0692.gd` ausführen; Ausgabe ausschließlich unter `/tmp/shadepi-icon-v0692`. Keine neue Bildgenerierung, nur Dokumentationsansichten vorhandener Pixel.
+
 **Gesprächsweg v0.69.1 · CodexAI:** [trail_v0691_gallery.gd](trail_v0691_gallery.gd) zeigt die drei markierten Waldgespräche und den letzten See-/Kusspunkt im echten Spiel. Isolierte Daten und nativer Desktop; PNG-/Filmframes ausschließlich nach `/tmp/shadepi-v0691-gallery`. Kein Asset-Generator.
 
 **See-Epilog v0.69.0 · CodexAI:** [lake_v069_gallery.gd](lake_v069_gallery.gd) spielt Landung, Weg, Ritual, Kuss, kosmische Fahrt und Credits im echten Renderer durch. Nur mit isoliertem `XDG_DATA_HOME=/tmp/shadepi-…`; Full-HD-PNGs und kompakte Filmframes ausschließlich unter `/tmp/shadepi-v069-gallery`. Kein Asset-Generator.

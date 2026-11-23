@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "0.69.1",
+  "version": "0.69.2",
   "author": "CodexAI",
   "entries": [
     {
@@ -200,6 +200,14 @@
       "paths": [
         "assets/story/lake/epilogue/"
       ]
+    },
+    {
+      "status": "active",
+      "paths": [
+        "assets/icon.png",
+        "assets/branding/icon"
+      ],
+      "note": "v0.69.2 CodexAI: game icon derived from user dragon symbol; PNG/ICO and safe Android launcher layers."
     }
   ]
 }

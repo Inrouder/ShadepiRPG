@@ -1,0 +1,100 @@
+{
+  "version": "0.69.2",
+  "author": "CodexAI",
+  "date": "2026-11-23",
+  "base_commit": "6d3eb9f",
+  "status": "Passed",
+  "checks": [
+    "1024px project PNG",
+    "six real ICO subimages",
+    "original SVG unchanged",
+    "previous icon backup byte-identical",
+    "image-tool source unchanged",
+    "android-foreground.png bright dragon fits 66dp safe-circle",
+    "android-monochrome.png bright dragon fits 66dp safe-circle",
+    "icon resource present",
+    "icon correct dimensions",
+    "icon encoded pixels/alpha match new source",
+    "icon_foreground resource present",
+    "icon_foreground correct dimensions",
+    "icon_foreground encoded pixels/alpha match new source",
+    "icon_background resource present",
+    "icon_background correct dimensions",
+    "icon_background encoded pixels/alpha match new source",
+    "icon_monochrome resource present",
+    "icon_monochrome correct dimensions",
+    "icon_monochrome encoded pixels/alpha match new source",
+    "import no resource/runtime errors",
+    "native no resource/runtime errors",
+    "android no resource/runtime errors",
+    "native size demo below 5 MB",
+    "native size inspection image"
+  ],
+  "check_count": 24,
+  "android_packaged_icons": {
+    "icon": {
+      "path": "res/mipmap-xxxhdpi-v4/icon.webp",
+      "size": [
+        192,
+        192
+      ],
+      "mean_rgba_error": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "icon_foreground": {
+      "path": "res/mipmap-xxxhdpi-v4/icon_foreground.webp",
+      "size": [
+        432,
+        432
+      ],
+      "mean_rgba_error": [
+        4.939836248285323,
+        4.943908607681756,
+        4.777306241426611,
+        0.0
+      ]
+    },
+    "icon_background": {
+      "path": "res/mipmap-xxxhdpi-v4/icon_background.webp",
+      "size": [
+        432,
+        432
+      ],
+      "mean_rgba_error": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "icon_monochrome": {
+      "path": "res/mipmap-xxxhdpi-v4/icon_monochrome.webp",
+      "size": [
+        432,
+        432
+      ],
+      "mean_rgba_error": [
+        5.147606953017832,
+        5.147606953017832,
+        5.147606953017832,
+        0.0
+      ]
+    }
+  },
+  "adaptive_bright_dragon_max_radius_in_432px_layer": {
+    "android-foreground.png": 124.40458190918854,
+    "android-monochrome.png": 117.73911839316617
+  },
+  "native": "Godot 4.7.2, X11/llvmpipe, five real sizes and two masks; 20 documentation frames",
+  "film_bytes": 44576,
+  "windows": "ICO decoded and six sizes checked; existing modify_resources=false intentionally retained, no claim of new Explorer PE resource embedding.",
+  "scope": "Icon/artifact/import metadata only; no gameplay or character changes, no new release.",
+  "limitations": [
+    "No physical Android launcher test.",
+    "No new native Windows/Mac launch test."
+  ]
+}

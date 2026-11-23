@@ -1,5 +1,7 @@
 # Assets: aktive Quellen, Vergleich und Sicherungen
 
+**Spiel-Icon v0.69.2 · CodexAI:** `icon.png` ist das neue 1024px-Drachen-Icon aus dem Nutzer-SVG. [Plattformvarianten](branding/icon/README.md), [Quellen/Original](../docs/branding/game-icon-v0692/sources.json) und [Vorschau](../docs/game-icon-v0692.md). Das frühere Icon liegt als Sicherung im Dokumentationsarchiv.
+
 **Startgrafik v0.68.0 · CodexAI:** [Brandingquelle und Herkunft](branding/README.md). Vom Nutzer gelieferte PNG unverändert übernommen; keine neue Illustration oder Ersatzfigur generiert.
 
 **v0.46.2 · CodexAI.** [Repository-Status](../docs/repository-status.md) · [Verbindliche Stilbibel](../docs/stilbibel/README.md).

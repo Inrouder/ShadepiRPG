@@ -1,0 +1,12 @@
+{
+  "version": "0.69.2",
+  "author": "CodexAI",
+  "user_source": "Drachensymbol.svg",
+  "generated_source": "game-icon-generated.png",
+  "image_tool_output": "/workspace/generated_images/exec-8481168b-3f1d-4de1-803a-622199ad9df7.png",
+  "runtime": "../../../assets/icon.png",
+  "sha256": {
+    "game-icon-generated.png": "8995821bd870f6a6d39fc0a1608eb7dbc43b528f25bf814221d8d44220cb4933",
+    "Drachensymbol.svg": "0b5a02d62ba0d02f288ee6b96ca511bd070673341d939642485bd18f5fc72c83"
+  }
+}

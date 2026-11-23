@@ -1,5 +1,12 @@
 # Versionshinweise
 
+## v0.69.2 – CodexAI: Spiel-Icon aus dem weißen Drachensymbol · 23. November 2026
+
+- Vom Nutzer geliefertes Drachensymbol als Formreferenz für ein detailreiches HQ-Pixel-Icon: weißer Drache, dunkle Techniktextur, dezente Cyan-/Magenta-Kanten und rotes Augenlicht. Vollständige S-Kurve, Mähne und Schwanz erkennbar erhalten.
+- 1024-Pixel-Spiel-Icon, Windows-ICO mit sechs Größen und explizite Android-Legacy-/Adaptive-/Monochrom-Ebenen mit Masken-Sicherheitsabstand. Mac-Preset verwendet weiterhin das Projekt-PNG.
+- Original-SVG, unbearbeitete Bildwerkzeugquelle und bisheriges Icon als nachvollziehbare Quellen/Sicherung erhalten. Startbild, Figuren und Gameplay unverändert.
+- [Icon, Größenprüfung und Plattformgrenzen](docs/game-icon-v0692.md).
+
 ## v0.69.1 – CodexAI: Gesprächspunkte entlang des Waldwegs · 23. November 2026
 
 - Die drei ersten tatsächlichen Gesprächs-/Ritualpunkte liegen auf dem Weg durch die Lichtung. Ihre Dialogzeilen begleiten die gemeinsame Gehbewegung; die Landesequenz endet vor diesen Punkten.

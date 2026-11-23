@@ -1,5 +1,11 @@
 # Shadepi · Bilder, Filme und Dokumentation
 
+**Game-Icon v0.69.2 · CodexAI:** Das weiße Drachensymbol als detailreiches Pixel-Icon. [PNG, ICO, Größenprüfung und Quellen](game-icon-v0692.md).
+
+| Neues Spiel-Icon | Native Größen-/Maskenprüfung |
+| --- | --- |
+| [![Weißer Drache](../assets/icon.png)](game-icon-v0692.md) | [![Icon-Größen und Android-Masken](previews/game-icon-sizes-v0692.png)](game-icon-v0692.md) |
+
 **Korrektur v0.69.1 · CodexAI:** Die drei ersten tatsächlichen Gesprächspunkte liegen jetzt auf dem Waldweg. Nur der letzte Punkt mit Aufnahme und Kuss bleibt am See. [Wegpunkte und neuer Film](gespraechsweg-v0691.md).
 
 [![Gesprächspunkt 2 unter den Bäumen](previews/trail-point-2-v0691.png)](gespraechsweg-v0691.md)
@@ -14,7 +20,7 @@
 
 [![Drake Gatnom · bestehende HQ-Spielpixel, Namenskarte v0.68.1](stilbibel/bilder/figur-heavy.png)](ordensnamen-v0681.md)
 
-**Stand v0.69.1 · CodexAI · 23. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
+**Stand v0.69.2 · CodexAI · 23. November 2026.** [Zur Repository-Startseite](../README.md) · [Spieleranleitung](../Spiel-README.md) · [Versionshinweise](../CHANGELOG.md).
 
 **[Fehlerkorrekturen und Release v0.67.1 · CodexAI](release-v0671.md)**: langsame Arcade-Bilder, neue CPU-Partie, Hintergrundpause und vollständige Plattform-Downloads.
 
