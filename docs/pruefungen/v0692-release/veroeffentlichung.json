@@ -1,0 +1,159 @@
+{
+  "version": "0.69.2",
+  "author": "CodexAI",
+  "status": "published",
+  "verified_at_utc": "2026-11-23T23:19:43.890194+00:00",
+  "release_url": "https://github.com/Inrouder/ShadepiRPG/releases/tag/v0.69.2",
+  "game_commit": "e10a67d62381713200334d22a4aba3011e405b16",
+  "release_tag_preserved": true,
+  "mac_supplement_tag": "macos-v0.69.2",
+  "public_downloads": {
+    "ShadepiRPG-Windows.zip": {
+      "http_status": "200",
+      "curl_exit": 0
+    },
+    "ShadepiRPG-Linux.zip": {
+      "http_status": "200",
+      "curl_exit": 0
+    },
+    "ShadepiRPG-Android-Test.apk": {
+      "http_status": "200",
+      "curl_exit": 0
+    },
+    "ShadepiRPG-Godot-Projekt.zip": {
+      "http_status": "200",
+      "curl_exit": 0
+    },
+    "SHA256SUMS.txt": {
+      "http_status": "200",
+      "curl_exit": 0
+    },
+    "latest": "200 https://github.com/Inrouder/ShadepiRPG/releases/tag/v0.69.2",
+    "ShadepiRPG-macOS.zip": {
+      "http_status": "200",
+      "verification": "Full public download; ZIP, Universal binary and SHA-256 verified."
+    }
+  },
+  "published_sha256": {
+    "ShadepiRPG-Windows.zip": "6da3768957e6faa6c6e1f1629ce267fb15ca30d68183737a80c9676a2abe95ce",
+    "ShadepiRPG-Linux.zip": "32dfdd69ad440c36f84a014c45d59eaf15c721f386c49d4359854c020e9a8e3b",
+    "ShadepiRPG-Android-Test.apk": "ba748b25344742f7001f9bc4cb58c73bedf3807512b6cf029588d8edea94c373",
+    "ShadepiRPG-Godot-Projekt.zip": "3cf79dd19466893597c216fd3af12eebfed23cbe99ef19d88476f93e8c19ec75",
+    "ShadepiRPG-macOS.zip": "e83674b12ce5bcd80c26f4e38c77afd93f2c15d3961b3e5fdcec0aa776d99444"
+  },
+  "original_four_checksums_preserved": true,
+  "main_ci": {
+    "job_status": "completed",
+    "completed_steps": 72,
+    "last_completed": "Complete job",
+    "active": [],
+    "failed": [],
+    "url": "https://github.com/Inrouder/ShadepiRPG/actions/runs/45284499973/job/138077181561"
+  },
+  "macos_ci": {
+    "url": "https://github.com/Inrouder/ShadepiRPG/actions/runs/45287021110",
+    "status": "success",
+    "steps": [
+      {
+        "name": "Set up job",
+        "conclusion": "success"
+      },
+      {
+        "name": "Run actions/checkout@v5",
+        "conclusion": "success"
+      },
+      {
+        "name": "Select and validate existing release",
+        "conclusion": "success"
+      },
+      {
+        "name": "Run actions/checkout@v5",
+        "conclusion": "success"
+      },
+      {
+        "name": "Run actions/cache@v4",
+        "conclusion": "success"
+      },
+      {
+        "name": "Install pinned Godot and Mac template",
+        "conclusion": "success"
+      },
+      {
+        "name": "Import and export exact released game",
+        "conclusion": "success"
+      },
+      {
+        "name": "Native signature and packaged startup test",
+        "conclusion": "success"
+      },
+      {
+        "name": "Add Mac asset, checksum and release note",
+        "conclusion": "success"
+      },
+      {
+        "name": "Run actions/upload-artifact@v6",
+        "conclusion": "success"
+      },
+      {
+        "name": "Post Run actions/cache@v4",
+        "conclusion": "success"
+      },
+      {
+        "name": "Post Run actions/checkout@v5",
+        "conclusion": "success"
+      },
+      {
+        "name": "Post Run actions/checkout@v5",
+        "conclusion": "success"
+      },
+      {
+        "name": "Complete job",
+        "conclusion": "success"
+      }
+    ],
+    "native_headless_start_and_signature_step_passed": true
+  },
+  "public_windows_package": {
+    "version": "0.69.2",
+    "author": "CodexAI",
+    "icon_sizes": [
+      256,
+      128,
+      64,
+      48,
+      32,
+      16
+    ],
+    "embedded_pack_offset": 109496320,
+    "embedded_pack_reachable": true,
+    "sha256": "996c7339b32444a313efd4c0b5c83d978dc2afdf1b8c3dd663a1d9a1fc059f17",
+    "native_windows_start_tested": false,
+    "signed": false,
+    "zip_sha256": "6da3768957e6faa6c6e1f1629ce267fb15ca30d68183737a80c9676a2abe95ce",
+    "published_report_matches": true
+  },
+  "public_macos_package_structural_verification_on_linux": {
+    "version": "0.69.2",
+    "author": "CodexAI",
+    "file": "ShadepiRPG-macOS.zip",
+    "bytes": 259347536,
+    "sha256": "e83674b12ce5bcd80c26f4e38c77afd93f2c15d3961b3e5fdcec0aa776d99444",
+    "app": "Shadepi - Echos in Neon.app",
+    "executable": "Shadepi - Echos in Neon",
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "resource_pack_bytes": 197565724,
+    "signature": "ad-hoc",
+    "notarized": false,
+    "native_start_tested": false
+  },
+  "limits": [
+    "No manual graphical Windows or macOS playthrough performed during this release.",
+    "Windows package unsigned; macOS ad-hoc signed, not notarized.",
+    "Linux, Android and project download endpoints verified; their packages not independently downloaded and hashed here.",
+    "Android remains a test build."
+  ],
+  "notes": "All five package downloads plus SHA256SUMS publicly listed. Original release notes preserved and macOS supplement added. Game tag remains immutable; subsequent commit only records publication."
+}

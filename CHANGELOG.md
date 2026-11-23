@@ -4,6 +4,8 @@
 
 **Release-Abschluss:** Windows-Icon und Versionsressourcen werden vor dem Export im Template gesetzt, das fertige PCK geprüft. Der historische Blickrichtungstest verwendet den letzten See-Punkt statt eines neuen Wald-Gehgesprächs. Vollständige [Release-Notizen](docs/releases/v0.69.2.md) bündeln v0.68–v0.69.2; Download-Verweise auf der Projektseite aktualisiert.
 
+**Veröffentlicht · v0.69.2 · CodexAI:** Windows, Linux, macOS Universal, Android-Testfassung und Godot-Projekt stehen im neuesten GitHub-Release bereit. Haupt-Build und nativer Mac-Starttest erfolgreich; öffentliche Windows-/Mac-Pakete gegen SHA-256 geprüft. [Veröffentlichungsnachweis](docs/pruefungen/v0692-release/veroeffentlichung.json).
+
 - Vom Nutzer geliefertes Drachensymbol als Formreferenz für ein detailreiches HQ-Pixel-Icon: weißer Drache, dunkle Techniktextur, dezente Cyan-/Magenta-Kanten und rotes Augenlicht. Vollständige S-Kurve, Mähne und Schwanz erkennbar erhalten.
 - 1024-Pixel-Spiel-Icon, Windows-ICO mit sechs Größen und explizite Android-Legacy-/Adaptive-/Monochrom-Ebenen mit Masken-Sicherheitsabstand. Mac-Preset verwendet weiterhin das Projekt-PNG.
 - Original-SVG, unbearbeitete Bildwerkzeugquelle und bisheriges Icon als nachvollziehbare Quellen/Sicherung erhalten. Startbild, Figuren und Gameplay unverändert.
