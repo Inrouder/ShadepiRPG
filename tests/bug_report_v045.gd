@@ -110,7 +110,7 @@ func run():
 	check(recovery,"memory aftermath visibly holds Raven's dazed recovery pose")
 	w.cutscene.abort()
 	check(not w.raven.external_pose and w.raven.visual.visible,"aborting the aftermath restores the normal actor")
-	w._enter(w.Beat.LAKE);w._ritual_step()
+	w._enter(w.Beat.LAKE,0,3);w._ritual_step()
 	for i in 2000:
 		await process_frame
 		if w.cutscene.waiting_input:break

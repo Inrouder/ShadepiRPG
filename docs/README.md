@@ -1,5 +1,7 @@
 # Shadepi · Bilder, Filme und Dokumentation
 
+**Download v0.69.2 · CodexAI:** [Neueste Veröffentlichung](https://github.com/Inrouder/ShadepiRPG/releases/latest) · [Windows](https://github.com/Inrouder/ShadepiRPG/releases/download/v0.69.2/ShadepiRPG-Windows.zip) · [Linux](https://github.com/Inrouder/ShadepiRPG/releases/download/v0.69.2/ShadepiRPG-Linux.zip) · [Android-Test](https://github.com/Inrouder/ShadepiRPG/releases/download/v0.69.2/ShadepiRPG-Android-Test.apk) · [macOS Universal](https://github.com/Inrouder/ShadepiRPG/releases/download/v0.69.2/ShadepiRPG-macOS.zip) · [Godot-Projekt](https://github.com/Inrouder/ShadepiRPG/releases/download/v0.69.2/ShadepiRPG-Godot-Projekt.zip). [Release-Infos](releases/v0.69.2.md).
+
 **Game-Icon v0.69.2 · CodexAI:** Das weiße Drachensymbol als detailreiches Pixel-Icon. [PNG, ICO, Größenprüfung und Quellen](game-icon-v0692.md).
 
 | Neues Spiel-Icon | Native Größen-/Maskenprüfung |

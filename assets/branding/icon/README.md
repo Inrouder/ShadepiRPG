@@ -1,7 +1,7 @@
 # Spiel-Icon und Plattformvarianten · v0.69.2 · CodexAI
 
 - `../../icon.png`: aktive 1024×1024-PNG für Projekt-/Fenster- und Mac-Icon, aus der unverändert archivierten Bildwerkzeugquelle per Lanczos verkleinert.
-- `game-icon.ico`: sechs echte Windows-Größen, 16/32/48/64/128/256 Pixel. Exportpreset zeigt auf diese Datei. Die bestehende Windows-Einstellung `application/modify_resources=false` bleibt erhalten: der Linux-Exporter schreibt damit das Explorer-Icon des EXE-Templates nicht um. Das laufende Fenster verwendet das Projekt-PNG. Vor einem Windows-Release ist die PE-Einbettung separat nötig; die ICO-Datei lässt sich bereits direkt für Verknüpfungen verwenden.
+- `game-icon.ico`: sechs echte Windows-Größen, 16/32/48/64/128/256 Pixel. Exportpreset zeigt auf diese Datei. Die bestehende Windows-Einstellung `application/modify_resources=false` bleibt erhalten: der Linux-Exporter schreibt damit selbst das Explorer-Icon nicht um. Der Release-Ablauf verwendet deshalb [den geprüften Template-Vorbereitungsschritt](../../../tools/windows/README.md), der Icon und Version vor der PCK-Einbettung setzt. Das laufende Fenster verwendet das Projekt-PNG; die ICO-Datei ist auch direkt für Verknüpfungen nutzbar.
 - `android-main.png`: 192×192, vollständige Legacy-Icon-Fläche.
 - `android-foreground.png`: 432×432 RGBA mit zentrierter 224px-Farbquelle und transparentem Außenraum. Die sichtbare 72dp-Zone liegt im mittleren 288px-Bereich; der Drache passt auch in runde Masken.
 - `android-background.png`: dunkle 432px-Unterlage.

@@ -393,7 +393,10 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p build/windows build/linux
-          godot --headless --export-release 'Windows Desktop' build/windows/Shadepi-Echos-in-Neon.exe
+          python3 -m venv /tmp/shadepi-windows-tools
+          /tmp/shadepi-windows-tools/bin/pip install --disable-pip-version-check 'lief==0.17.1'
+          /tmp/shadepi-windows-tools/bin/python tools/windows/export.py --godot godot --template "$HOME/.local/share/godot/export_templates/${GODOT_VERSION}.stable/windows_release_x86_64.exe" --output build/windows/Shadepi-Echos-in-Neon.exe
+          git diff --exit-code -- export_presets.cfg
           godot --headless --export-release Linux build/linux/Shadepi-Echos-in-Neon.x86_64
           chmod +x build/linux/Shadepi-Echos-in-Neon.x86_64
           build/linux/Shadepi-Echos-in-Neon.x86_64 --headless --quit-after 90
@@ -497,6 +500,9 @@ jobs:
           python3 - "$RELEASE_TAG" <<'PYNOTES' > release-notes.md
           import os,pathlib,re,sys
           tag=sys.argv[1]
+          dedicated=pathlib.Path('docs/releases')/(tag+'.md')
+          if dedicated.exists():
+            print(dedicated.read_text().strip());raise SystemExit(0)
           sections=re.split(r'(?=^## )',pathlib.Path('CHANGELOG.md').read_text(),flags=re.M)
           entry=next((part for part in sections if part.startswith('## '+tag+' ')),None)
           if entry is None: raise SystemExit('No changelog entry for '+tag)

@@ -1,5 +1,7 @@
 # Weißer Drache als Game-Icon · v0.69.2 · CodexAI
 
+**Release-Abschluss · v0.69.2 · CodexAI:** Die unten dokumentierte ursprüngliche Windows-PE-Grenze wird für die Veröffentlichung durch den [Template-Vorbereitungsschritt](../tools/windows/README.md) behoben. Das fertige Windows-EXE enthält die sechs neuen Icongrößen und Version 0.69.2.0; der eingebettete Godot-PCK wird danach erneut geprüft. Die frühere reine Icon-Abnahme bleibt als datierter Nachweis erhalten. [Release und Downloads](releases/v0.69.2.md).
+
 **23. November 2026.** [PNG herunterladen](../assets/icon.png) · [Windows-ICO herunterladen](../assets/branding/icon/game-icon.ico) · [Original-SVG](branding/game-icon-v0692/Drachensymbol.svg).
 
 ![Neues Game-Icon](../assets/icon.png)
