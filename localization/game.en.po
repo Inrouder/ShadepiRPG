@@ -4262,4 +4262,3 @@ msgstr "hard"
 #: scripts/start_menu_backdrop.gd
 msgid "IM SCHATTEN DES RABEN  ·  V%s"
 msgstr "IN THE RAVEN'S SHADOW  ·  V%s"
-
