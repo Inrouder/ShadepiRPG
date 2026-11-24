@@ -818,10 +818,10 @@ static func _pixel_plume(canvas: CanvasItem, nozzle: Vector2, block: float, brak
 func _draw_overlay() -> void:
 	if callout_time > 0.0 and callout != "":
 		var font := UiSkin.font("title")
-		var width := font.get_string_size(callout, HORIZONTAL_ALIGNMENT_LEFT, -1, 16).x
+		var width := font.get_string_size(GameText.t(callout), HORIZONTAL_ALIGNMENT_LEFT, -1, 16).x
 		var p := Vector2(roundf(320.0 - width * 0.5), 128)
-		overlay.draw_string(font, p + Vector2(1, 1), callout, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color(0, 0, 0, 0.8))
-		overlay.draw_string(font, p, callout, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("ffcf5a") if hurt > 0.0 else Color("cffcff"))
+		overlay.draw_string(font, p + Vector2(1, 1), GameText.t(callout), HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color(0, 0, 0, 0.8))
+		overlay.draw_string(font, p, GameText.t(callout), HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("ffcf5a") if hurt > 0.0 else Color("cffcff"))
 	if phase == "scan" and calibration != null:
 		_draw_calibration()
 	if phase == "landing":
@@ -837,7 +837,7 @@ func _draw_calibration() -> void:
 	overlay.draw_style_box(UiSkin.panel("tower", true), rect)
 	var title := UiSkin.font("title")
 	var ui := UiSkin.font("ui")
-	overlay.draw_string(title, Vector2(134, 273), "SEQUENZKALIBRIERUNG · GLEITERKENNUNG", HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color("ffe9ec"))
+	overlay.draw_string(title, Vector2(134, 273), GameText.t("SEQUENZKALIBRIERUNG · GLEITERKENNUNG"), HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color("ffe9ec"))
 	for i in Calibration.MAX_ERRORS:
 		overlay.draw_rect(Rect2(474 + i * 10, 266, 6, 6), Color("ff3150") if i < c.errors else Color("3d0710"))
 	# Code steps: locked, current (blinking frame), pending.
@@ -849,9 +849,9 @@ func _draw_calibration() -> void:
 		overlay.draw_style_box(UiSkin.cell("tower", state), box)
 		var label: String = step.code
 		var col := Color("7dffaa") if step.locked else (Color.WHITE if current else Color("b98d95"))
-		overlay.draw_string(title, box.position + Vector2(4, 11), label, HORIZONTAL_ALIGNMENT_LEFT, -1, 8, col)
+		overlay.draw_string(title, box.position + Vector2(4, 11), GameText.t(label), HORIZONTAL_ALIGNMENT_LEFT, -1, 8, col)
 		var arrow: String = "✓" if step.locked else Calibration.ARROWS[int(step.dir)]
-		overlay.draw_string(ui, box.position + Vector2(25, 21), arrow, HORIZONTAL_ALIGNMENT_LEFT, -1, 20, col)
+		overlay.draw_string(ui, box.position + Vector2(25, 21), GameText.t(arrow), HORIZONTAL_ALIGNMENT_LEFT, -1, 20, col)
 	# Sweep track: the beam position and the hull window.
 	var track := Rect2(134, 310, 372, 8)
 	overlay.draw_rect(track, Color("1a0b10"))
@@ -863,13 +863,13 @@ func _draw_calibration() -> void:
 	overlay.draw_rect(Rect2(track.position.x, track.end.y + 3, roundf(track.size.x * c.time_left / 16.0), 2), Color("ff3150"))
 	var hint: String = "JETZT  %s" % Calibration.ARROWS[int(c.current().dir)] if inside else c.feedback
 	var hint_col := Color("7dffaa") if inside else (Color("ff697c") if c.error_flash > 0.0 else Color("d9c3c7"))
-	overlay.draw_string(ui, Vector2(388, 292), hint.left(22), HORIZONTAL_ALIGNMENT_LEFT, 128, 20, hint_col)
+	overlay.draw_string(ui, Vector2(388, 292), GameText.t(hint).left(22), HORIZONTAL_ALIGNMENT_LEFT, 128, 20, hint_col)
 
 func _draw_landing_gauge() -> void:
 	var rect := Rect2(560, 120, 56, 150)
 	overlay.draw_style_box(UiSkin.panel("artos", true), rect)
 	var title := UiSkin.font("title")
-	overlay.draw_string(title, Vector2(568, 136), "HÖHE", HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color("ffe7bd"))
+	overlay.draw_string(title, Vector2(568, 136), GameText.t("HÖHE"), HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color("ffe7bd"))
 	var bar := Rect2(574, 144, 10, 110)
 	overlay.draw_rect(bar, Color("0c0905"))
 	overlay.draw_rect(Rect2(bar.position.x, bar.end.y - roundf(bar.size.y * clampf(altitude, 0.0, 1.0)), bar.size.x, roundf(bar.size.y * clampf(altitude, 0.0, 1.0))), Color("ffb43a"))

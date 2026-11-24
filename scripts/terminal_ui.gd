@@ -357,7 +357,7 @@ func _refresh() -> void:
 			for i in cells.size():
 				cells[i].disabled = paused or not puzzle.legal(i)
 				UiSkin.mark_used(cells[i], skin, i in puzzle.used)
-			details.text = "PUFFER %d / %d\n%s\n\nDAEMONS" % [puzzle.buffer.size(), puzzle.capacity, " · ".join(puzzle.buffer) if not puzzle.buffer.is_empty() else "—"]
+			details.text = GameText.t("PUFFER %d / %d\n%s\n\nDAEMONS") % [puzzle.buffer.size(), puzzle.capacity, " · ".join(puzzle.buffer) if not puzzle.buffer.is_empty() else "—"]
 			for goal in puzzle.goals:
 				details.text += "\n%s  %s" % ["✓" if puzzle.has_sequence(goal) else "○", " → ".join(goal)]
 		"decoder":
@@ -366,9 +366,9 @@ func _refresh() -> void:
 			for i in cells.size():
 				cells[i].text = "......" if i in puzzle.removed else (Puzzle.WORDS[i] if puzzle.filter_locked() else _scramble(Puzzle.WORDS[i], i))
 				cells[i].disabled = paused or not puzzle.available() or not puzzle.filter_locked() or i in puzzle.removed or i in puzzle.guessed
-			glitch.text = "SIGNAL STABIL" if puzzle.filter_locked() else "↓ " + _scramble("SPEICHERDUMP", 3) + " ↓"
+			glitch.text = "SIGNAL STABIL" if puzzle.filter_locked() else "↓ " + _scramble(GameText.t("SPEICHERDUMP"), 3) + " ↓"
 			glitch.position.y = 99 if puzzle.filter_locked() else 99 + sin(puzzle.clock * 4) * 5
-			details.text = "Signalqualität: %d %% · Versuche: %d\n%s" % [100 - absi(puzzle.filter - puzzle.filter_target), puzzle.attempts, puzzle.history.left(114)]
+			details.text = "Signalqualität: %d %% · Versuche: %d\n%s" % [100 - absi(puzzle.filter - puzzle.filter_target), puzzle.attempts, GameText.t(puzzle.history).left(114)]
 			for i in 2:
 				helper_buttons[i].disabled = paused or not puzzle.available() or ["dud", "reset"][i] in puzzle.helpers
 		"routing":

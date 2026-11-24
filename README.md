@@ -1,5 +1,7 @@
 # Shadepi · Echos in Neon
 
+**Neu v0.70.0 · CodexAI:** Englisch als zweite Spielsprache. Im Haupt- und Pausenmenü **Optionen → Sprache / Language → English** wählen; Auswahl wird sofort übernommen und gespeichert. [Bilder, Umfang und Prüfung](docs/sprachen-v070.md).
+
 **Download v0.69.2 · CodexAI:** [Neueste Veröffentlichung](https://github.com/Inrouder/ShadepiRPG/releases/latest) · [Windows](https://github.com/Inrouder/ShadepiRPG/releases/download/v0.69.2/ShadepiRPG-Windows.zip) · [Linux](https://github.com/Inrouder/ShadepiRPG/releases/download/v0.69.2/ShadepiRPG-Linux.zip) · [Android-Test](https://github.com/Inrouder/ShadepiRPG/releases/download/v0.69.2/ShadepiRPG-Android-Test.apk) · [macOS Universal](https://github.com/Inrouder/ShadepiRPG/releases/download/v0.69.2/ShadepiRPG-macOS.zip) · [Godot-Projekt](https://github.com/Inrouder/ShadepiRPG/releases/download/v0.69.2/ShadepiRPG-Godot-Projekt.zip). [Release-Infos](docs/releases/v0.69.2.md).
 
 **Game-Icon v0.69.2 · CodexAI:** Das weiße Drachensymbol als detailreiches Pixel-Icon. [PNG, ICO, Größenprüfung und Quellen](docs/game-icon-v0692.md).
@@ -22,7 +24,7 @@
 
 [![Drake Gatnom · bestehende HQ-Spielpixel, Namenskarte v0.68.1](docs/stilbibel/bilder/figur-heavy.png)](docs/ordensnamen-v0681.md)
 
-**2D-Action-RPG · v0.69.2 · CodexAI · Godot 4.7.2 · Windows / Linux / macOS-Nachtrag / Android-Testfassung · Einzelspieler, Lokal- und WLAN-Remote-Koop**
+**2D-Action-RPG · v0.70.0 · CodexAI · Godot 4.7.2 · Windows / Linux / macOS-Nachtrag / Android-Testfassung · Einzelspieler, Lokal- und WLAN-Remote-Koop**
 
 Ein spielbares Cyberpunk-Abenteuer nach **„Shadepi – Im Schatten des Raben“** mit sieben Kapiteln, gemalten Spielwelten, illustrierten Sprites für Raven, Shadepi und die Gegner sowie zerstörbarer Umgebung.
 

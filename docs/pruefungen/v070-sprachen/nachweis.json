@@ -1,0 +1,85 @@
+{
+  "version": "0.70.0",
+  "author": "CodexAI",
+  "base_commit": "e33997879d24cb2f930968a952fad474ee3fe525",
+  "languages": [
+    "de",
+    "en"
+  ],
+  "default": "de",
+  "catalog_messages": 1066,
+  "checks": {
+    "catalog": "2313 checks, 0 failures",
+    "language_headless": "151 checks, 0 failures",
+    "language_native_x11": "151 checks, 0 failures",
+    "display_regression": "74 checks, 0 failures",
+    "terminal_controller_regression": "186 checks, 0 failures",
+    "main_regression": "386 checks, 0 failures",
+    "repository_audit": "6884 checks, 0 failures"
+  },
+  "linux_release_export": {
+    "success": true,
+    "headless_start_exit": 0,
+    "stdout_errors": false,
+    "package": "build/language-qa/Shadepi-v070.x86_64",
+    "note": "Local QA package, not a published download; source/native tests verify English output."
+  },
+  "captures": [
+    {
+      "path": "docs/previews/language-hack-en-v070.png",
+      "sha256": "366cb2a4ea0ecc993fc427708e3b95b61e2d3fdefb1a91e1424ce1a907948343",
+      "native_size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "docs/previews/language-hack-help-en-v070.png",
+      "sha256": "eb6e944135934c545e3623b9beb1907cf1424c02df5488a473d8a07ac07acc1b",
+      "native_size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "docs/previews/language-language-list-en-v070.png",
+      "sha256": "1c0f363b8357646cc7e6dcb3caa87b9ad0128de42728034610663fe476cc2eae",
+      "native_size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "docs/previews/language-menu-en-v070.png",
+      "sha256": "632c9423fe1a70893e5fbc0d260cb909ea869ab0682d642d5c49946a15431713",
+      "native_size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "docs/previews/language-notice-en-v070.png",
+      "sha256": "5c8f66c7441f9fd05cf8b17ed78dc7f83ceb00f03c28cf79e04fdb48db86a9e6",
+      "native_size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "docs/previews/language-options-en-v070.png",
+      "sha256": "6244216027280900c501e5d9aaebe2403c0306d6f46972e4e3d493deb44f84d3",
+      "native_size": [
+        1280,
+        720
+      ]
+    }
+  ],
+  "limits": [
+    "Original image-embedded text and user logos remain original artwork.",
+    "Decoder codes, technical pins, proper names and internal IDs stay unchanged.",
+    "Remote co-op shares the host-rendered story language; local lobby follows device preference.",
+    "No manual physical Android/macOS/Windows test performed for this change."
+  ],
+  "source_art_changed": false,
+  "release_created": false
+}

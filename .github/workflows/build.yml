@@ -121,6 +121,13 @@ jobs:
           set -euo pipefail
           XDG_DATA_HOME=/tmp/shadepi-popup-ci godot --headless --script res://tests/hq_popups.gd 2>&1 | tee /tmp/hq-popups.log
           if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/hq-popups.log; then exit 1; fi
+      - name: Validate German-English catalog, preferences and controller language switching
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/localization/audit.py
+          XDG_DATA_HOME=/tmp/shadepi-language-ci godot --headless --script res://tests/localization.gd 2>&1 | tee /tmp/localization.log
+          if grep -Eq 'SCRIPT ERROR|^ERROR:|FAIL:' /tmp/localization.log; then exit 1; fi
       - name: Validate visible HQ popup pixels on a virtual desktop
         shell: bash
         run: |

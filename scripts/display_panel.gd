@@ -9,6 +9,7 @@ var mode_select: OptionButton
 var resolution_select: OptionButton
 var quality_select: OptionButton
 var scaling_select: OptionButton
+var language_select: OptionButton
 var output_label: Label
 var status_label: Label
 var close_button: Button
@@ -29,25 +30,30 @@ func _ready() -> void:
 	sheet.size = Vector2(340, 344)
 	sheet.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	add_child(sheet)
-	_text("ANZEIGE", Vector2(18, 10), Vector2(304, 28), 32)
-	_text("16:9 · Auflösung und Bildschirmmodus", Vector2(18, 39), Vector2(304, 19))
-	_text("Darstellung", Vector2(18, 59), Vector2(304, 20))
-	quality_select = _select(78)
+	_text("OPTIONEN", Vector2(18, 8), Vector2(304, 28), 24)
+	_text("Sprache / Language", Vector2(18, 40), Vector2(304, 18), 16)
+	language_select = _select(57)
+	language_select.add_item("Deutsch")
+	language_select.add_item("English")
+	language_select.item_selected.connect(func(index): get_node("/root/LanguageSettings").set_language(["de", "en"][index]))
+	get_node("/root/LanguageSettings").changed.connect(_sync)
+	_text("Darstellung", Vector2(18, 83), Vector2(304, 18), 16)
+	quality_select = _select(100)
 	quality_select.add_item("HQ · bis 1920 × 1080 nativ")
 	quality_select.add_item("Klassisch · 640 × 360")
 	quality_select.item_selected.connect(func(index): settings.set_hq(index == 0))
-	_text("Bildschirmmodus", Vector2(18, 109), Vector2(304, 20))
-	mode_select = _select(128)
+	_text("Bildschirmmodus", Vector2(18, 126), Vector2(304, 18), 16)
+	mode_select = _select(143)
 	for title in Settings.MODE_NAMES:
 		mode_select.add_item(title)
 	mode_select.item_selected.connect(func(index): settings.set_mode(index))
-	_text("Fenstergröße (Vollbild nutzt den Desktop)", Vector2(18, 159), Vector2(304, 20))
-	resolution_select = _select(178)
+	_text("Fenstergröße (Vollbild nutzt den Desktop)", Vector2(18, 169), Vector2(304, 18), 16)
+	resolution_select = _select(186)
 	for resolution in Settings.RESOLUTIONS:
 		resolution_select.add_item("%d × %d" % [resolution.x, resolution.y])
 	resolution_select.item_selected.connect(func(index): settings.set_resolution(index))
-	_text("Skalierung", Vector2(18, 209), Vector2(304, 20))
-	scaling_select = _select(228)
+	_text("Skalierung", Vector2(18, 212), Vector2(304, 18), 16)
+	scaling_select = _select(229)
 	scaling_select.add_item("Bildschirmfüllend · empfohlen")
 	scaling_select.add_item("Pixelgenau · nur ganze Stufen")
 	scaling_select.item_selected.connect(func(index): settings.set_integer_scaling(index == 1))
@@ -76,7 +82,7 @@ func _text(value: String, at: Vector2, extent: Vector2, font_size: int = 20) -> 
 func _select(y: int) -> OptionButton:
 	var select := OptionButton.new()
 	select.position = Vector2(18, y)
-	select.size = Vector2(304, 27)
+	select.size = Vector2(304, 25)
 	sheet.add_child(select)
 	return select
 
@@ -86,8 +92,8 @@ func present(theme: String) -> void:
 	for child in sheet.get_children():
 		if child is Label:
 			UiSkin.style_label(child, colors.text)
-	for button in [quality_select, mode_select, resolution_select, scaling_select, close_button]:
-		UiSkin.apply_button(button, theme)
+	for button in [language_select, quality_select, mode_select, resolution_select, scaling_select, close_button]:
+		UiSkin.apply_button(button, theme, 18)
 		if button is OptionButton:
 			var popup: PopupMenu = button.get_popup()
 			popup.add_theme_stylebox_override("panel", UiSkin.panel(theme))
@@ -97,9 +103,13 @@ func present(theme: String) -> void:
 			popup.add_theme_color_override("font_color", colors.text)
 	_sync()
 	show()
-	mode_select.grab_focus()
+	if mode_select.disabled: language_select.grab_focus()
+	else: mode_select.grab_focus()
 
 func _sync() -> void:
+	if language_select == null or scaling_select == null: return
+	var languages := get_node("/root/LanguageSettings")
+	language_select.select(1 if languages.language == "en" else 0)
 	quality_select.select(0 if settings.hq_enabled else 1)
 	mode_select.select(settings.mode)
 	resolution_select.select(settings.resolution_index)
@@ -108,7 +118,8 @@ func _sync() -> void:
 	if OS.has_feature("android"):
 		mode_select.disabled = true; resolution_select.disabled = true
 	if resolution_had_focus and resolution_select.disabled:
-		mode_select.grab_focus()
+		if mode_select.disabled: language_select.grab_focus()
+		else: mode_select.grab_focus()
 	scaling_select.select(1 if settings.integer_scaling else 0)
 	var extent := get_window().size
 	var render_size: Vector2i = settings.game_render_size()
@@ -120,9 +131,12 @@ func _sync() -> void:
 		status_label.text = "Aktiv; Einstellungen konnten nicht gespeichert werden."
 	if OS.has_feature("android"):
 		status_label.text = "Android · Querformat. HQ bis 1280 × 720.\nKlassisch spart Akku und Grafikleistung."
-	var controls: Array[Control] = [quality_select, mode_select, scaling_select, close_button]
+	if languages.save_error != OK:
+		status_label.text = "Sprache konnte nicht gespeichert werden."
+	var controls: Array[Control] = [language_select, quality_select, mode_select, scaling_select, close_button]
 	if not resolution_select.disabled:
-		controls.insert(2, resolution_select)
+		controls.insert(3, resolution_select)
+	if mode_select.disabled: controls.erase(mode_select)
 	for i in controls.size():
 		var previous := controls[(i - 1 + controls.size()) % controls.size()]
 		var next := controls[(i + 1) % controls.size()]
@@ -134,7 +148,7 @@ func _sync() -> void:
 		controls[i].focus_neighbor_right = NodePath(".")
 
 func dismiss() -> void:
-	for select in [quality_select, mode_select, resolution_select, scaling_select]:
+	for select in [language_select, quality_select, mode_select, resolution_select, scaling_select]:
 		select.get_popup().hide()
 	hide()
 	closed.emit()
@@ -143,7 +157,7 @@ func _input(event: InputEvent) -> void:
 	if not visible:
 		return
 	# Let a dropdown handle its own cancel before dismissing the options panel.
-	for select in [quality_select, mode_select, resolution_select, scaling_select]:
+	for select in [language_select, quality_select, mode_select, resolution_select, scaling_select]:
 		if select.get_popup().visible:
 			return
 	var cancel := event.is_action_pressed("ui_cancel")

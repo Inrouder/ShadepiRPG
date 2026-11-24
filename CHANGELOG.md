@@ -1,5 +1,12 @@
 # Versionshinweise
 
+## v0.70.0 – CodexAI: Deutsch / Englisch und gespeicherte Sprachwahl · 24. November 2026
+
+- Englisch als zweite Spielsprache: Kapitel 1–7, Erinnerungen, Ziele, Haupt-/Pausenmenü, Steuerungshinweise, Hacks/Handbuch, Arcade, Start-/Gesundheitshinweise, WLAN-Meldungen und Abspann.
+- **Optionen → Sprache / Language → Deutsch / English** gilt sofort und wird unabhängig vom Spielstand gespeichert. Deutsch bleibt die Voreinstellung. Während eines Dialogs wird nur die aktuelle Zeile neu umbrochen; Storyaktionen bleiben unberührt.
+- Zentraler PO-Katalog mit Prüfung von Platzhaltern und sichtbaren Texten. Formatierte HUD-Anzeigen, zusammengesetzte Hinweise, Glitch und selbst gezeichnete Arcade-/Fahrtexte übersetzt. Namen und Rätselcodes bleiben stabil.
+- Bestehende Pixel-Oberflächen und Originalgrafiken erhalten; Optionen um eine controllerbedienbare Sprachliste ergänzt. [Native Bilder, Sprachumfang und Prüfungen](docs/sprachen-v070.md).
+
 ## v0.69.2 – CodexAI: Spiel-Icon aus dem weißen Drachensymbol · 23. November 2026
 
 **Release-Abschluss:** Windows-Icon und Versionsressourcen werden vor dem Export im Template gesetzt, das fertige PCK geprüft. Der historische Blickrichtungstest verwendet den letzten See-Punkt statt eines neuen Wald-Gehgesprächs. Vollständige [Release-Notizen](docs/releases/v0.69.2.md) bündeln v0.68–v0.69.2; Download-Verweise auf der Projektseite aktualisiert.

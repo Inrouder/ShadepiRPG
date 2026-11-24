@@ -20,6 +20,9 @@ var speaker: Label
 var dialogue_text: Label
 var dialogue_open: = false
 var dialogue_lines: Array = []
+var dialogue_source_lines: Array = []
+var dialogue_page_sources: Array[int] = []
+var dialogue_source_cursor := 0
 var dialogue_done: Callable
 var comic_panel: Panel
 var comic_art: TextureRect
@@ -98,6 +101,7 @@ func label_at(text: String, point: Vector2, size: Vector2, parent: Node = null, 
 	return node
 
 func _ready() -> void :
+	get_node("/root/LanguageSettings").changed.connect(_retranslate_dialogue)
 	layer = 10
 	root = Control.new()
 	root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -234,11 +238,11 @@ func _ready() -> void :
 	ambient_button.tooltip_text = "Leise Ortsgeräusche wie Regen, Lüftung, Stadt und See: Aus, Leise oder Normal."
 	visual_button = button_at("Bildstil: " + world.VISUAL_PRESETS[world.visual_quality], 244, func(): world.cycle_visual_quality())
 	visual_button.size.x = 168
-	display_button = button_at("Anzeige", 244, _open_display_panel)
+	display_button = button_at("Optionen", 244, _open_display_panel)
 	display_button.position.x = 188
 	display_button.set_meta("home_x", 188.0)
 	display_button.size.x = 72
-	display_button.tooltip_text = "Vollbild, Fenstergröße und Skalierung · F11 / Alt+Enter"
+	display_button.tooltip_text = "Sprache und Anzeige"
 	# v0.55.0 · ClaudeHelper: Aus jedem Kapitel zurück ins Hauptmenü (statt „Zurück zu Kapitel 1“).
 	main_menu_button = button_at("Zurück ins Hauptmenü", 274, return_to_main_menu)
 	main_menu_button.tooltip_text = "Spielstand bleibt am letzten Kontrollpunkt. Modus und Kapitel wählst du im Hauptmenü."
@@ -354,7 +358,7 @@ func _fit_prompt() -> void:
 		_prompt_theme = theme
 		prompt.add_theme_stylebox_override("normal", UiSkin.panel(theme, true))
 	var font := prompt.get_theme_font("font")
-	var width := font.get_string_size(prompt.text, HORIZONTAL_ALIGNMENT_LEFT, -1, prompt.get_theme_font_size("font_size")).x
+	var width := font.get_string_size(GameText.t(prompt.text), HORIZONTAL_ALIGNMENT_LEFT, -1, prompt.get_theme_font_size("font_size")).x
 	width = clampf(roundf(width) + 34.0, 120.0, 600.0)
 	prompt.size = Vector2(width, 26)
 	prompt.position = Vector2(roundf(320.0 - width * 0.5), 275)
@@ -718,22 +722,37 @@ func clear_toast() -> void:
 
 func toast(text: String) -> void :
 	notice.text = text
-	message_time = maxf(3.2, text.length() * 0.055)
+	message_time = maxf(3.2, GameText.t(text).length() * 0.055)
 
 func dialogue(lines: Array, done: Callable = Callable()) -> void :
-	dialogue_lines.clear()
-	for line: Array in lines:
-		var pages := dialogue_pages(str(line[1]))
-		for page in pages:
-			var entry := line.duplicate()
-			entry[1] = page
-			dialogue_lines.append(entry)
+	dialogue_source_lines = lines.duplicate(true)
+	dialogue_source_cursor = 0
+	_build_dialogue_pages(0)
 	dialogue_done = done
 	dialogue_open = true
 	dialogue_panel.show()
 	advance_dialogue()
 
+func _build_dialogue_pages(start: int) -> void:
+	dialogue_lines.clear()
+	dialogue_page_sources.clear()
+	for source_index in range(start, dialogue_source_lines.size()):
+		var line: Array = dialogue_source_lines[source_index]
+		var pages := dialogue_pages(str(line[1]))
+		for page in pages:
+			var entry := line.duplicate()
+			entry[1] = page
+			dialogue_lines.append(entry)
+			dialogue_page_sources.append(source_index)
+
+func _retranslate_dialogue() -> void:
+	_prompt_text = ""
+	if not dialogue_open: return
+	_build_dialogue_pages(dialogue_source_cursor)
+	advance_dialogue()
+
 func dialogue_pages(text: String) -> Array[String]:
+	text = GameText.t(text)
 	var pages: Array[String] = []
 	var current := ""
 	var font := dialogue_text.get_theme_font("font")
@@ -754,7 +773,7 @@ func fit_hud_text() -> void:
 		label.clip_text = true
 		var font := label.get_theme_font("font")
 		var font_size: int = entry[2]
-		while font_size > 9 and font.get_string_size(label.text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x > entry[1]:
+		while font_size > 9 and font.get_string_size(GameText.t(label.text), HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x > entry[1]:
 			font_size -= 1
 		label.add_theme_font_size_override("font_size", font_size)
 		label.size.x = entry[1]
@@ -763,6 +782,8 @@ func comic_texture(_key: String) -> Texture2D:
 	return null
 
 func clear_dialogue() -> void :
+	dialogue_source_lines.clear()
+	dialogue_page_sources.clear()
 	dialogue_lines.clear()
 	dialogue_done = Callable()
 	dialogue_open = false
@@ -793,6 +814,7 @@ func advance_dialogue() -> void :
 			done.call()
 		return
 	var line: Array = dialogue_lines.pop_front()
+	if not dialogue_page_sources.is_empty(): dialogue_source_cursor = dialogue_page_sources.pop_front()
 	speaker.text = line[0]
 	dialogue_text.text = line[1]
 	dialogue_next.text = "E / Enter / A · " + ("Zurück zum Spiel" if dialogue_lines.is_empty() else "Weiter")

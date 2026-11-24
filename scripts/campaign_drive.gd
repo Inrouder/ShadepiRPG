@@ -1105,8 +1105,8 @@ func _draw_bike_scene(cyan: Color, pink: Color) -> void:
 	if callout_time > 0.0:
 		var font := ThemeDB.fallback_font
 		var alpha := minf(1.0, callout_time * 2.0)
-		draw_string_outline(font, Vector2(0, 96), callout, HORIZONTAL_ALIGNMENT_CENTER, 640, 18, 5, Color(0.05, 0.02, 0.08, alpha))
-		draw_string(font, Vector2(0, 96), callout, HORIZONTAL_ALIGNMENT_CENTER, 640, 18, Color(1.0, 0.86, 0.45, alpha))
+		draw_string_outline(font, Vector2(0, 96), GameText.t(callout), HORIZONTAL_ALIGNMENT_CENTER, 640, 18, 5, Color(0.05, 0.02, 0.08, alpha))
+		draw_string(font, Vector2(0, 96), GameText.t(callout), HORIZONTAL_ALIGNMENT_CENTER, 640, 18, Color(1.0, 0.86, 0.45, alpha))
 
 func _draw_barrier(point: Vector2) -> void:
 	DetailArt.centered(self, 7, point + Vector2(2, 5), Vector2(64, 14))

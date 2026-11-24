@@ -82,7 +82,7 @@ func _ready() -> void:
 	add_child(atmosphere)
 	visibility_changed.connect(_sync_activity)
 	var signature := Label.new()
-	signature.text = "IM SCHATTEN DES RABEN  ·  V" + str(ProjectSettings.get_setting("application/config/version"))
+	signature.text = "IM SCHATTEN DES RABEN  ·  V%s" % str(ProjectSettings.get_setting("application/config/version"))
 	signature.position = Vector2(14, 345)
 	signature.add_theme_font_override("font", preload("res://scripts/ui_skin.gd").font("title"))
 	signature.add_theme_font_size_override("font_size", 8)

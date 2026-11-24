@@ -1,5 +1,7 @@
 # Entwicklerwerkzeuge · v0.68.0 · CodexAI
 
+**Sprachen v0.70.0 · CodexAI:** [Katalogaudit und native UI-Galerie](localization/README.md). Audit nur lesend; Aufnahme ausschließlich mit isolierten Daten nach `/tmp`, keine Grafikgenerierung.
+
 **Windows-Release v0.69.2 · CodexAI:** [Template-Vorbereitung und Export](windows/README.md) bettet das neue Drachen-Icon und Versionsinfos vor dem PCK ein, ohne Wine. Fertige Ressourcen und PCK-Offset werden erneut geprüft; normale Presets im finally-Block wiederhergestellt.
 
 **Icon-Vorschau v0.69.2 · CodexAI:** [icon_preview_v0692.gd](icon_preview_v0692.gd) prüft echte PNG-Größen und Launcher-Masken im nativen Godot-Renderer. Mit `--path /tmp --script /absoluter/pfad/tools/icon_preview_v0692.gd` ausführen; Ausgabe ausschließlich unter `/tmp/shadepi-icon-v0692`. Keine neue Bildgenerierung, nur Dokumentationsansichten vorhandener Pixel.

@@ -1,0 +1,4265 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Shadepi 0.70.0 CodexAI\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: scripts/campaign.gd:258
+msgid "WACHEN IM WEG · alle ausschalten"
+msgstr "GUARDS BLOCKING THE WAY · take them all out"
+
+#: scripts/campaign.gd:260
+msgid "Weiter zu Kenzōs Penthouse →"
+msgstr "On to Kenzō's penthouse →"
+
+#: scripts/campaign.gd:260
+msgid "Zum Landeplatz ←"
+msgstr "To the landing pad ←"
+
+#: scripts/campaign.gd:305
+msgid "Weg frei · zum Landeplatz ←"
+msgstr "Path clear · to the landing pad ←"
+
+#: scripts/campaign.gd:305
+msgid "Lobby frei · weiter in den Flur ←"
+msgstr "Lobby clear · into the corridor ←"
+
+#: scripts/campaign.gd:309
+msgid "Zeit abgelaufen · Kontrollpunkt"
+msgstr "Time's up · checkpoint"
+
+#: scripts/campaign.gd:561
+msgid "Landung abgebrochen · Kontrollpunkt"
+msgstr "Landing aborted · checkpoint"
+
+#: scripts/campaign.gd:561
+msgid "Fahrzeug ausgefallen · Kontrollpunkt"
+msgstr "Vehicle disabled · checkpoint"
+
+#: scripts/campaign.gd:644
+msgid "ALLE ABSCHNITTE FREI · Zum Motorrad →"
+msgstr "ALL SECTIONS CLEAR · To the motorcycle →"
+
+#: scripts/campaign.gd:654
+msgid "TRUPPFÜHRER · Schild vorn – von hinten treffen oder Ravens Hack nutzen"
+msgstr "SQUAD LEADER · Frontal shield – strike from behind or use Raven's hack"
+
+#: scripts/campaign.gd:710
+msgid "Raven extrahiert Daten · Shadepi muss die Wachen abfangen"
+msgstr "Raven is extracting data · Shadepi must intercept the guards"
+
+#: scripts/campaign.gd:715
+msgid "Ravens Deck lädt."
+msgstr "Raven's deck is recharging."
+
+#: scripts/campaign.gd:725
+msgid "Raven braucht eine freie Verbindung."
+msgstr "Raven needs a clear connection."
+
+#: scripts/campaign.gd:728
+msgid "Kenzō sperrt die Leitung. Auf das Flackern am Schulterservo warten."
+msgstr "Kenzō is blocking the link. Wait for his shoulder servo to flicker."
+
+#: scripts/campaign.gd:734
+msgid "Optik und Implantate gestört."
+msgstr "Optics and implants disrupted."
+
+#: scripts/campaign.gd:745
+msgid "Die Gasse ist frei. Zum Motorrad!"
+msgstr "The alley's clear. To the bike!"
+
+#: scripts/campaign.gd:759
+msgid "Systemausfall · Kontrollpunkt"
+msgstr "System failure · checkpoint"
+
+#: scripts/campaign.gd:764
+msgid "KAPITEL 5 / HEILIGTUM"
+msgstr "CHAPTER 5 / SANCTUARY"
+
+#: scripts/campaign.gd:766
+msgid "KAPITEL 4 / DRACHENHÖHLE"
+msgstr "CHAPTER 4 / DRAGON'S DEN"
+
+#: scripts/campaign.gd:799
+msgid "Wachen ausschalten · %d übrig"
+msgstr "Eliminate the guards · %d left"
+
+#: scripts/campaign.gd:800
+msgid "Durch den Flur zu Kenzōs Penthouse"
+msgstr "Through the corridor to Kenzō's penthouse"
+
+#: scripts/campaign.gd:800
+msgid "Zurück zum Landeplatz"
+msgstr "Back to the landing pad"
+
+#: scripts/campaign.gd:806
+msgid "Hinterhalt · %d Gegner"
+msgstr "Ambush · %d enemies"
+
+#: scripts/campaign.gd:806
+msgid "Zum Motorrad"
+msgstr "To the motorcycle"
+
+#: scripts/campaign.gd:808
+msgid "Erinnerungen ordnen · %d / 3"
+msgstr "Piece together the memories · %d / 3"
+
+#: scripts/campaign.gd:808
+msgid "Raven: Am Bett ausruhen"
+msgstr "Raven: Rest on the bed"
+
+#: scripts/campaign.gd:808
+msgid "Raven: Durch die Tür nachsehen"
+msgstr "Raven: Look through the doorway"
+
+#: scripts/campaign.gd:808
+msgid "Raven: Shadepi am Sessel prüfen"
+msgstr "Raven: Check on Shadepi in the chair"
+
+#: scripts/campaign.gd:810
+msgid "Raven: Zugangscode entschlüsseln"
+msgstr "Raven: Decode the access code"
+
+#: scripts/campaign.gd:813
+msgid "Raven: Prüf-ICE per Matrix umgehen"
+msgstr "Raven: Bypass the verification ICE with the matrix"
+
+#: scripts/campaign.gd:816
+msgid "Biometrie-Log der Landung fälschen"
+msgstr "Forge the landing biometrics log"
+
+#: scripts/campaign.gd:816
+msgid "Penthouse-Tür öffnen · Tarnung bereit"
+msgstr "Open the penthouse door · cloak ready"
+
+#: scripts/campaign.gd:821
+msgid "Kenzō · %d / 360 HP%s"
+msgstr "Kenzō · %d / 360 HP%s"
+
+#: scripts/campaign.gd:823
+msgid "Waldweg · Mit Raven reden"
+msgstr "Forest path · Talk to Raven"
+
+#: scripts/campaign.gd:823
+msgid "Unter den alten Bäumen"
+msgstr "Beneath the ancient trees"
+
+#: scripts/campaign.gd:823
+msgid "Heiligtum am Waldweg hören"
+msgstr "Listen to the Sanctuary along the forest path"
+
+#: scripts/campaign.gd:823
+msgid "Am See · Aufnahme und Kuss"
+msgstr "At the lake · Initiation and kiss"
+
+#: scripts/campaign.gd:825
+msgid "Zum Aerodyne · Abflug"
+msgstr "To the Aerodyne · Takeoff"
+
+#: scripts/campaign.gd:826
+msgid "Daten gesichert · Kenzō stellen"
+msgstr "Data secured · Confront Kenzō"
+
+#: scripts/campaign.gd:827
+msgid "%s · %02d s"
+msgstr "%s · %02d s"
+
+#: scripts/campaign.gd:827
+msgid "Raven schützen"
+msgstr "Protect Raven"
+
+#: scripts/campaign.gd:827
+msgid "Sperrladung synchronisieren"
+msgstr "Synchronize the blocking charge"
+
+#: scripts/campaign.gd:827
+msgid "Treibstoffpumpe fernstarten"
+msgstr "Remote-start the fuel pump"
+
+#: scripts/campaign.gd:827
+msgid "Zum Dachausgang"
+msgstr "To the roof exit"
+
+#: scripts/campaign.gd:834
+msgid "E / A · Flimmerndes Echo prüfen"
+msgstr "E / A · Examine the flickering echo"
+
+#: scripts/campaign.gd:840 scripts/campaign.gd:847 scripts/chapter_two.gd:254 scripts/main.gd:954
+msgid "E / A · "
+msgstr "E / A · "
+
+#: scripts/campaign.gd:844
+msgid "E / A · Ravens Terminal öffnen"
+msgstr "E / A · Open Raven's terminal"
+
+#: scripts/campaign.gd:846
+msgid "E / A · Daten abgreifen"
+msgstr "E / A · Extract data"
+
+#: scripts/campaign.gd:846 scripts/chapter_two.gd:253
+msgid "ICE scannt · auf Cyan warten"
+msgstr "ICE scanning · wait for cyan"
+
+#: scripts/campaign.gd:858 scripts/campaign.gd:894
+msgid "NEON KOMBAT spielen"
+msgstr "Play NEON KOMBAT"
+
+#: scripts/campaign.gd:859
+msgid "Klingen ansehen"
+msgstr "Inspect the blades"
+
+#: scripts/campaign.gd:859
+msgid "Ersatzteile ansehen"
+msgstr "Inspect the spare parts"
+
+#: scripts/campaign.gd:859
+msgid "Aerodyne ansehen"
+msgstr "Inspect the Aerodyne"
+
+#: scripts/campaign.gd:879
+msgid "Das Bild zerfällt. Zur letzten stabilen Erinnerung."
+msgstr "The image is falling apart. Back to the last stable memory."
+
+#: scripts/campaign.gd:890
+msgid "Das Kloster brennt noch immer in ihm."
+msgstr "The monastery is still burning inside him."
+
+#: scripts/campaign.gd:890
+msgid "Shame Lys Opfer."
+msgstr "Shame Ly's sacrifice."
+
+#: scripts/campaign.gd:890
+msgid "Das Vermächtnis."
+msgstr "The legacy."
+
+#: scripts/campaign.gd:898
+msgid " · Bestände des Ordens."
+msgstr " · The Order's supplies."
+
+#: scripts/campaign.gd:914
+msgid "Zugriff blockiert. Warte auf das Cyan-Signal."
+msgstr "Access blocked. Wait for the cyan signal."
+
+#: scripts/campaign.gd:924
+msgid "Aufzug: Sicherheitskräfte eine Etage tiefer."
+msgstr "Elevator: security forces one floor below."
+
+#: scripts/campaign.gd:924
+msgid "Dachzugang: privater Landeplatz."
+msgstr "Roof access: private landing pad."
+
+#: scripts/campaign.gd:924
+msgid "Scanner: Kennung von Kenzōs Gleiter erforderlich."
+msgstr "Scanner: Kenzō's aircraft ID required."
+
+#: scripts/campaign.gd:928
+msgid "Stromversorgung aktiv."
+msgstr "Power supply active."
+
+#: scripts/campaign.gd:928
+msgid "Kennung kopiert."
+msgstr "ID copied."
+
+#: scripts/campaign.gd:928
+msgid "Aerodyne gangbar. Noch die Prüf-ICE am Transponder umgehen."
+msgstr "The Aerodyne is operational. Still need to bypass the transponder's verification ICE."
+
+#: scripts/campaign.gd:930
+msgid "Daten gesichert. Spuren gelöscht."
+msgstr "Data secured. Traces erased."
+
+#: scripts/campaign.gd:930
+msgid "Raven: Sperrladung scharf. Aufzug blockiert."
+msgstr "Raven: Blocking charge armed. Elevator sealed."
+
+#: scripts/campaign.gd:930
+msgid "Fernstart bestätigt. Zum Dachausgang!"
+msgstr "Remote start confirmed. To the roof exit!"
+
+#: scripts/campaign.gd:930
+msgid "Raven: Raus hier! Durch die Lobby zum Landeplatz – da stehen noch Wachen."
+msgstr "Raven: Let's get out of here! Through the lobby to the landing pad – there are still guards out there."
+
+#: scripts/campaign.gd:952 scripts/campaign.gd:954 scripts/campaign.gd:956 scripts/campaign.gd:958 scripts/campaign.gd:1320 scripts/campaign.gd:1332 scripts/campaign.gd:1333 scripts/campaign.gd:1334 scripts/campaign.gd:1357 scripts/campaign.gd:1382 scripts/campaign.gd:1396 scripts/campaign.gd:1401 scripts/campaign.gd:1405 scripts/campaign.gd:1407 scripts/campaign.gd:1461 scripts/campaign.gd:1473 scripts/campaign.gd:1475 scripts/campaign.gd:1481 scripts/campaign.gd:1483 scripts/campaign.gd:1578 scripts/campaign.gd:1667 scripts/campaign.gd:1669 scripts/chapter_one.gd:375 scripts/chapter_one.gd:392 scripts/chapter_one.gd:491 scripts/chapter_one.gd:548 scripts/chapter_one.gd:641 scripts/chapter_one.gd:714 scripts/chapter_one.gd:715 scripts/chapter_one.gd:717 scripts/chapter_one.gd:719 scripts/chapter_one.gd:735 scripts/chapter_one.gd:736 scripts/chapter_two.gd:516 scripts/chapter_two.gd:715 scripts/chapter_two.gd:717 scripts/chapter_two.gd:741 scripts/chapter_two.gd:748 scripts/chapter_two.gd:767 scripts/chapter_two.gd:769 scripts/chapter_two.gd:771 scripts/chapter_two.gd:772 scripts/chapter_two.gd:789 scripts/hud.gd:821 scripts/chapter_one_intro.gd:153 scripts/chapter_one_intro.gd:167 scripts/chapter_one_intro.gd:175 scripts/chapter_one_intro.gd:206 scripts/chapter_one_intro.gd:208 scripts/sanctuary_story.gd:18 scripts/sanctuary_story.gd:28 scripts/sanctuary_story.gd:32 scripts/sanctuary_story.gd:74 scripts/sanctuary_story.gd:100 scripts/sanctuary_story.gd:115 scripts/sanctuary_story.gd:151 scripts/sanctuary_story.gd:183 scripts/sanctuary_story.gd:187 scripts/sanctuary_story.gd:191 scripts/sanctuary_story.gd:195 scripts/sanctuary_story.gd:201 scripts/sanctuary_story.gd:205 scripts/outbound_flight.gd:40 scripts/outbound_flight.gd:91 scripts/tower_escape.gd:169 scripts/tower_escape.gd:201 scripts/ice_bath_sequence.gd:155 scripts/ice_bath_sequence.gd:204 scripts/hangar_discovery.gd:145 scripts/hangar_discovery.gd:161 scripts/hangar_discovery.gd:161 scripts/cutscene.gd:18 scripts/tower_story.gd:35 scripts/tower_story.gd:43 scripts/tower_story.gd:62 scripts/tower_story.gd:99 scripts/tower_story.gd:114 scripts/tower_story.gd:119 scripts/tower_story.gd:121 scripts/tower_story.gd:137 scripts/tower_story.gd:139 scripts/tower_story.gd:142 scripts/tower_story.gd:165 scripts/tower_story.gd:167 scripts/tower_story.gd:171 scripts/lake_sequence.gd:339 scripts/lake_sequence.gd:369 scripts/lake_sequence.gd:369 scripts/hangar_departure.gd:110 scripts/hangar_departure.gd:114 scripts/hangar_departure.gd:153 scripts/hangar_departure.gd:157 scripts/hangar_departure.gd:176 scripts/hangar_departure.gd:196 scripts/arcade/neon_kombat.gd:32
+msgid "RAVEN"
+msgstr "RAVEN"
+
+#: scripts/campaign.gd:952
+msgid "Diese Stille … Nach der Stadt ist das fast unwirklich."
+msgstr "It's so quiet… After the city, this almost doesn't feel real."
+
+#: scripts/campaign.gd:953 scripts/campaign.gd:955 scripts/campaign.gd:957 scripts/campaign.gd:959 scripts/campaign.gd:961 scripts/campaign.gd:1348 scripts/campaign.gd:1349 scripts/campaign.gd:1365 scripts/campaign.gd:1399 scripts/campaign.gd:1406 scripts/campaign.gd:1412 scripts/campaign.gd:1460 scripts/campaign.gd:1474 scripts/campaign.gd:1476 scripts/campaign.gd:1480 scripts/campaign.gd:1482 scripts/campaign.gd:1579 scripts/campaign.gd:1668 scripts/campaign.gd:1670 scripts/chapter_one.gd:640 scripts/chapter_one.gd:653 scripts/chapter_one.gd:716 scripts/chapter_one.gd:718 scripts/chapter_one.gd:731 scripts/chapter_two.gd:659 scripts/chapter_two.gd:716 scripts/chapter_two.gd:739 scripts/chapter_two.gd:740 scripts/chapter_two.gd:766 scripts/chapter_two.gd:768 scripts/chapter_two.gd:770 scripts/chapter_two.gd:773 scripts/chapter_two.gd:774 scripts/hud.gd:215 scripts/hud.gd:396 scripts/hud.gd:821 scripts/chapter_one_intro.gd:124 scripts/chapter_one_intro.gd:126 scripts/chapter_one_intro.gd:128 scripts/chapter_one_intro.gd:130 scripts/chapter_one_intro.gd:256 scripts/sanctuary_story.gd:128 scripts/sanctuary_story.gd:132 scripts/sanctuary_story.gd:185 scripts/sanctuary_story.gd:189 scripts/sanctuary_story.gd:193 scripts/sanctuary_story.gd:197 scripts/sanctuary_story.gd:203 scripts/sanctuary_story.gd:207 scripts/sanctuary_story.gd:209 scripts/outbound_flight.gd:41 scripts/outbound_flight.gd:93 scripts/tower_escape.gd:185 scripts/tower_escape.gd:209 scripts/ice_bath_sequence.gd:155 scripts/ice_bath_sequence.gd:208 scripts/ice_bath_sequence.gd:237 scripts/hangar_discovery.gd:101 scripts/hangar_discovery.gd:161 scripts/hangar_discovery.gd:161 scripts/hangar_discovery.gd:161 scripts/cutscene.gd:18 scripts/tower_story.gd:98 scripts/tower_story.gd:120 scripts/tower_story.gd:138 scripts/tower_story.gd:141 scripts/tower_story.gd:166 scripts/tower_story.gd:170 scripts/lake_sequence.gd:339 scripts/lake_sequence.gd:369 scripts/lake_sequence.gd:369 scripts/hangar_departure.gd:112 scripts/hangar_departure.gd:142 scripts/hangar_departure.gd:155 scripts/hangar_departure.gd:194 scripts/arcade/neon_kombat.gd:31 scripts/memories/legacy_memory.gd:104 scripts/memories/legacy_memory.gd:126 scripts/memories/legacy_memory.gd:169 scripts/memories/memory_battle.gd:158 scripts/memories/memory_battle.gd:222 scripts/memories/sacrifice_memory.gd:86 scripts/memories/sacrifice_memory.gd:116 scripts/memories/sacrifice_memory.gd:134 scripts/memories/sacrifice_memory.gd:187 scripts/memories/attack_memory.gd:176
+msgid "SHADEPI"
+msgstr "SHADEPI"
+
+#: scripts/campaign.gd:953
+msgid "Hier hat der Orden früher Zuflucht gesucht. Den Weg kennt kaum jemand."
+msgstr "The Order used to take refuge here. Hardly anyone knows this path."
+
+#: scripts/campaign.gd:954
+msgid "Und du bringst ausgerechnet mich hierher?"
+msgstr "And of all people, you bring me here?"
+
+#: scripts/campaign.gd:955
+msgid "Das Heiligtum hat dich schon in der Gasse erkannt. Aber ich wäre auch ohne Prophezeiung an deiner Seite."
+msgstr "The Sanctuary recognized you back in the alley. But I'd stand by you even without a prophecy."
+
+#: scripts/campaign.gd:956
+msgid "Gut. Ich will wissen, was du fühlst. Nicht, was irgendeine Prophezeiung von uns will."
+msgstr "Good. I want to know how you feel. Not what some prophecy wants from us."
+
+#: scripts/campaign.gd:957
+msgid "Ich kann dich in den Orden aufnehmen. Aber nur, wenn du es selbst willst."
+msgstr "I can bring you into the Order. But only if it's what you want."
+
+#: scripts/campaign.gd:958
+msgid "Ich will. Nicht wegen einer Prophezeiung. Wegen dir – und weil ich mit dir nach vorne sehen will."
+msgstr "It is. Not because of a prophecy. Because of you – and because I want us to face what's next together."
+
+#: scripts/campaign.gd:959
+msgid "Ich, Shadepi, Überlebender und einst erster Krieger des Ordens des Weißen Drachen, bitte dich: Nimm diese Seele in deine Obhut."
+msgstr "I, Shadepi, survivor and once First Warrior of the Order of the White Dragon, ask you: take this soul into your care."
+
+#: scripts/campaign.gd:960 scripts/cutscene.gd:19
+msgid "HEILIGTUM"
+msgstr "SANCTUARY"
+
+#: scripts/campaign.gd:960
+msgid "Dein Wille ist stark. Ich spüre viel Gutes in dir. Ich akzeptiere dich."
+msgstr "Your will is strong. I sense much good in you. I accept you."
+
+#: scripts/campaign.gd:961
+msgid "Hiermit nehme ich dich, Raven, in den Orden des Weißen Drachen auf. Ich ernenne dich zur Zweiten Kriegerin des Ordens und Behüterin des Heiligtums."
+msgstr "Raven, I hereby welcome you into the Order of the White Dragon. I appoint you Second Warrior of the Order and Guardian of the Sanctuary."
+
+#: scripts/campaign.gd:1097
+msgid "RAVEN: Zwei von ihnen sind gestorben, um ihn zu schützen …"
+msgstr "RAVEN: Two of them died to protect him…"
+
+#: scripts/campaign.gd:1097
+msgid "RAVEN: Er hat ihn Bruder genannt … und ihn verloren."
+msgstr "RAVEN: He called him his brother… and lost him."
+
+#: scripts/campaign.gd:1097
+msgid " · Erinnerung gesichert"
+msgstr " · Memory secured"
+
+#: scripts/campaign.gd:1112 scripts/chapter_one.gd:793 scripts/chapter_two.gd:813
+msgid "Kontrollpunkt konnte nicht gespeichert werden."
+msgstr "Could not save the checkpoint."
+
+#: scripts/campaign.gd:1260
+msgid "Hinterhalt · Welle %d"
+msgstr "Ambush · Wave %d"
+
+#: scripts/campaign.gd:1277
+msgid "Kenzō · Hackfenster nur beim Flackern am Schulterservo"
+msgstr "Kenzō · Hack only when the shoulder servo flickers"
+
+#: scripts/campaign.gd:1281
+msgid "Daten gesichert · Aufzug sperren · Fernstart · zum Dach"
+msgstr "Data secured · Block elevator · Remote start · To the roof"
+
+#: scripts/campaign.gd:1317
+msgid "Der Pakt"
+msgstr "The Pact"
+
+#: scripts/campaign.gd:1320
+msgid "Du hörst dich an wie aus einem billigen Theaterstück. Es ist lieb von dir, aber diese Typen sind Monster. Ich brauche keinen Schutz."
+msgstr "You sound like you're in some cheap play. It's sweet of you, but these guys are monsters. I don't need protecting."
+
+#: scripts/campaign.gd:1329 scripts/campaign.gd:1343 scripts/chapter_two.gd:705
+msgid "RAVENS VERSTECK"
+msgstr "RAVEN'S HIDEOUT"
+
+#: scripts/campaign.gd:1329
+msgid "Seine unerschütterliche Entschlossenheit bricht etwas in ihr auf. Die Dämme um ihre Vergangenheit bekommen Risse."
+msgstr "His unwavering resolve breaks something open inside her. The walls around her past begin to crack."
+
+#: scripts/campaign.gd:1332
+msgid "Mein Vater war Programmierer bei Arasaka. Brillant. Kenzō Moriyama hat ihn beneidet – und meine Eltern ermorden lassen."
+msgstr "My father was a programmer at Arasaka. Brilliant. Kenzō Moriyama envied him – and had my parents murdered."
+
+#: scripts/campaign.gd:1333
+msgid "Danach hat er mich jahrelang gefangen gehalten. Ein Spielzeug, das er nach Belieben quälte und brach."
+msgstr "Then he kept me prisoner for years. A toy he could torture and break whenever he felt like it."
+
+#: scripts/campaign.gd:1334
+msgid "Ich bin geflohen und habe meine Identität gelöscht. Chrome Jackal war kein zufälliges Kopfgeld. Er war einer von Kenzōs Bluthunden. Ich habe ihn gejagt, bevor er mich jagen konnte."
+msgstr "I escaped and erased my identity. Chrome Jackal wasn't some random bounty. He was one of Kenzō's bloodhounds. I was hunting him before he could hunt me."
+
+#: scripts/campaign.gd:1343
+msgid "Shadepis Fäuste ballen sich so fest, dass die Servos in seinen Händen leise surren."
+msgstr "Shadepi clenches his fists so hard that the servos in his hands begin to hum."
+
+#: scripts/campaign.gd:1348
+msgid "Das tut mir leid. Ich kann es nicht ungeschehen machen. Aber ich biete dir meine Dienste an."
+msgstr "I'm sorry. I can't undo what happened. But I can offer you my help."
+
+#: scripts/campaign.gd:1349
+msgid "Oder du gibst mir die Informationen und siehst mich nie wieder. Wobei ich auf eine Netrunnerin wie dich ungern verzichten würde."
+msgstr "Or you give me the information, and you'll never see me again. Though I'd hate to lose a netrunner like you."
+
+#: scripts/campaign.gd:1357
+msgid "Ich würde Kenzō gerne tot sehen. Ich kann nicht mein Leben lang fliehen."
+msgstr "I want Kenzō dead. I can't spend my whole life running."
+
+#: scripts/campaign.gd:1363
+msgid "RAVEN / STUPST GEGEN SEINEN KASA"
+msgstr "RAVEN / NUDGES HIS KASA"
+
+#: scripts/campaign.gd:1363
+msgid "Ich helfe dir. Aber wir sind keine Freunde."
+msgstr "I'll help you. But we're not friends."
+
+#: scripts/campaign.gd:1365
+msgid "Perfekt. Damit komme ich klar. Wie finden wir Kenzō?"
+msgstr "Perfect. I can work with that. How do we find Kenzō?"
+
+#: scripts/campaign.gd:1382
+msgid "Ich weiß, wo er wohnt. Immerhin war ich jahrelang sein Spielzeug. Der Arasaka-Tower – die Elite wohnt natürlich ganz oben."
+msgstr "I know where he lives. I was his toy for years, remember? Arasaka Tower – the elite always live at the top."
+
+#: scripts/campaign.gd:1384
+msgid "Towerplan am Terminal prüfen · Aufzug, Dach, Scanner"
+msgstr "Check the tower plan at the terminal · Elevator, roof, scanner"
+
+#: scripts/campaign.gd:1396
+msgid "Er hat einen privaten Landeplatz. Entweder wir dringen von oben ein, oder wir marschieren durch den Hauptaufzug direkt in sein Penthouse."
+msgstr "He has a private landing pad. We either get in from above, or take the main elevator straight to his penthouse."
+
+#: scripts/campaign.gd:1399
+msgid "Dieser Sensor scannt jeden Gleiter vor der Landung – Identifikation, Fracht, Biometrie. Wenn du die Kennung von Kenzōs Flieger auf einen anderen überträgst … ich weiß, wo ich einen herbekomme."
+msgstr "This sensor scans every aircraft before landing – ID, cargo, biometrics. If you transfer Kenzō's aircraft ID to another one… I know where to find one."
+
+#: scripts/campaign.gd:1401
+msgid "Das kann ich. Aber ich komme mit. Ich will ihm ins Gesicht sehen, wenn es vorbei ist – nachdem du deine Informationen hast."
+msgstr "I can do that. But I'm coming with you. I want to look him in the eye when it's over – after you've got your information."
+
+#: scripts/campaign.gd:1405
+msgid "Wir machen es morgen Abend. Dienstags schickt Kenzō seine Angestellten weg, um seine … Spielsachen zu quälen. Dann ist er allein, seine Wachen sind eine Etage tiefer, und er schaltet die Kameras ab."
+msgstr "Tomorrow evening. On Tuesdays, Kenzō sends his staff away so he can torture his… toys. He'll be alone, his guards one floor down, and he switches off the cameras."
+
+#: scripts/campaign.gd:1406
+msgid "Das klingt fast zu einfach."
+msgstr "That sounds almost too easy."
+
+#: scripts/campaign.gd:1407
+msgid "Es ist einfach, wenn es nach Plan läuft. Aber Kenzō selbst ist bis an die Zähne mit Militärtechnologie ausgestattet. Wir werden uns mit ihm einschließen."
+msgstr "It is easy, if everything goes to plan. But Kenzō himself is loaded with military tech. We'll be locking ourselves in with him."
+
+#: scripts/campaign.gd:1412
+msgid "Ich habe immer gern einen Plan C. Dann lass uns den Aerodyne holen. Komm mit."
+msgstr "I've always liked having a plan C. Let's get the Aerodyne, then. Come on."
+
+#: scripts/campaign.gd:1438
+msgid "GASSE VOR DEM VERSTECK"
+msgstr "ALLEY OUTSIDE THE HIDEOUT"
+
+#: scripts/campaign.gd:1438
+msgid "Sie treten in die feuchte Nachtluft. Raven schließt die Tür ab –"
+msgstr "They step into the damp night air. Raven locks the door –"
+
+#: scripts/campaign.gd:1460
+msgid "Rechts in der Gasse – kannst du ihn hacken? Er muss künstliche Augen haben! Ich übernehme den linken."
+msgstr "On the right, in the alley – can you hack him? He must have artificial eyes! I'll take the one on the left."
+
+#: scripts/campaign.gd:1461
+msgid "Gib mir eine freie Verbindung, dann flute ich seine Optik mit Rauschen."
+msgstr "Give me a clear connection and I'll flood his optics with noise."
+
+#: scripts/campaign.gd:1464
+msgid "Hinterhalt · Nutze die Deckung"
+msgstr "Ambush · Use cover"
+
+#: scripts/campaign.gd:1473
+msgid "Das ist unmöglich. Ich habe jede Spur verwischt!"
+msgstr "That's impossible. I covered every trace!"
+
+#: scripts/campaign.gd:1474
+msgid "Du warst heute Nacht in Kenzōs Daten. Vielleicht hat sein ICE mehr gesehen, als du denkst."
+msgstr "You were in Kenzō's data tonight. Maybe his ICE saw more than you think."
+
+#: scripts/campaign.gd:1475
+msgid "Er hat nichts gefunden. Er rät nur – und schickt seine Schläger überall hin, wo ich sein könnte."
+msgstr "He didn't find anything. He's guessing – sending his thugs everywhere I might be."
+
+#: scripts/campaign.gd:1476
+msgid "Dann hat er diesmal richtig geraten."
+msgstr "Well, this time he guessed right."
+
+#: scripts/campaign.gd:1480
+msgid "*pfeift* – Ein mattschwarzes Motorrad rollt wie von Geisterhand aus der Seitenstraße. Kommst du mit?"
+msgstr "*whistles* – A matte-black motorcycle rolls out of the side street as if by magic. Coming?"
+
+#: scripts/campaign.gd:1481
+msgid "Ein bisschen eng."
+msgstr "A bit tight."
+
+#: scripts/campaign.gd:1482
+msgid "Airbags im Rücken, perfekt! Der Wagen kommt hinter uns aus der Gasse – festhalten!"
+msgstr "Airbags on my back, perfect! That car's coming out of the alley behind us – hold on!"
+
+#: scripts/campaign.gd:1483
+msgid "Du fährst, ich decke uns nach hinten. Bring mich auf seine Spur, dann hacke ich seine Lenkung."
+msgstr "You drive, I'll cover our rear. Get me into his lane, then I'll hack his steering."
+
+#: scripts/campaign.gd:1505
+msgid "Die Höhle des Drachen"
+msgstr "The Dragon's Den"
+
+#: scripts/campaign.gd:1507
+msgid "INDUSTRIEHAFEN"
+msgstr "INDUSTRIAL HARBOR"
+
+#: scripts/campaign.gd:1507
+msgid "Die wilde Fahrt endet vor einer unscheinbaren, heruntergekommenen Garage in einem vergessenen Teil des Hafens."
+msgstr "The wild ride ends outside an unremarkable, run-down garage in a forgotten corner of the harbor."
+
+#: scripts/campaign.gd:1578
+msgid "Und das ist dein Zuhause? Eine rostige Garage?"
+msgstr "And this is where you live? A rusty garage?"
+
+#: scripts/campaign.gd:1579
+msgid "Genau das ist es. Niemand sucht einen Drachen in einer Garage. Sieh dir die Werkbank an."
+msgstr "Exactly. Nobody looks for a dragon in a garage. Take a look at the workbench."
+
+#: scripts/campaign.gd:1583 scripts/campaign_story.gd:24
+msgid "Geheimes Werkbanksymbol finden"
+msgstr "Find the hidden workbench symbol"
+
+#: scripts/campaign.gd:1661
+msgid "ARASAKA TOWER / LANDEPLATZ"
+msgstr "ARASAKA TOWER / LANDING PAD"
+
+#: scripts/campaign.gd:1661
+msgid "Heiße Luft peitscht über die Plattform, das Metall knackt. Der Aerodyne steht."
+msgstr "Hot air lashes across the platform. The metal creaks. The Aerodyne is down."
+
+#: scripts/campaign.gd:1667
+msgid "Der Scanner hat unsere Biometrie mitgelesen. Wenn das Log die Wache erreicht, stehen sie in einer Minute hier oben. Ich fälsche es."
+msgstr "The scanner picked up our biometrics. If that log reaches security, they'll be up here in a minute. I'll forge it."
+
+#: scripts/campaign.gd:1668
+msgid "Hals- und Beinbruch. Mein Tarnfeld hält drinnen zwanzig Sekunden. Ich warte im Schatten der Luke, bis du die Tür offen hast."
+msgstr "Good luck. My cloak lasts twenty seconds inside. I'll wait in the hatch's shadow until you open the door."
+
+#: scripts/campaign.gd:1669
+msgid "Dann lass mich vorgehen. Ich lenke ihn ab. Keine Angst – er wird sein Lieblingsspielzeug nicht töten wollen."
+msgstr "Then let me go first. I'll distract him. Don't worry – he won't want to kill his favorite toy."
+
+#: scripts/campaign.gd:1670
+msgid "Wenn er dich anfasst, bin ich da."
+msgstr "If he touches you, I'll be there."
+
+#: scripts/campaign.gd:1680
+msgid "Biometrie-Log am Dachterminal fälschen"
+msgstr "Forge the biometrics log at the roof terminal"
+
+#: scripts/campaign_drive.gd:111
+msgid "STADT"
+msgstr "CITY"
+
+#: scripts/campaign_drive.gd:111
+msgid "TUNNEL"
+msgstr "TUNNEL"
+
+#: scripts/campaign_drive.gd:111
+msgid "HOCHSTRASSE"
+msgstr "ELEVATED HIGHWAY"
+
+#: scripts/campaign_drive.gd:154 scripts/aerodyne_flight.gd:147
+msgid "ARTOS: Triebwerk ausgefallen! Raven öffnet das Wartungsdeck. J / X öffnet es erneut."
+msgstr "ARTOS: Engine failure! Raven is opening the maintenance deck. J / X opens it again."
+
+#: scripts/campaign_drive.gd:168 scripts/aerodyne_flight.gd:161
+msgid "RAVEN: Brücken geprüft. – ARTOS: Schub wiederhergestellt."
+msgstr "RAVEN: Bridges checked. – ARTOS: Thrust restored."
+
+#: scripts/campaign_drive.gd:376
+msgid "Für den Hack auf die Spur des Wagens wechseln."
+msgstr "Move into the car's lane to hack it."
+
+#: scripts/campaign_drive.gd:447 scripts/campaign_drive.gd:798
+msgid "RAVEN: Verfolger ausgeschaltet! Weiter zur Garage!"
+msgstr "RAVEN: Pursuer down! On to the garage!"
+
+#: scripts/campaign_drive.gd:654
+msgid "DROHNE ÜBER DER STRASSE"
+msgstr "DRONE ABOVE THE ROAD"
+
+#: scripts/campaign_drive.gd:661
+msgid "MOTORRAD AUSGEFALLEN · Kontrollpunkt wird neu geladen"
+msgstr "MOTORCYCLE DISABLED · Reloading checkpoint"
+
+#: scripts/campaign_drive.gd:685
+msgid "VERFOLGER ABGEHÄNGT"
+msgstr "PURSUER LOST"
+
+#: scripts/campaign_drive.gd:686
+msgid "RAVEN: Einer weniger – aber da kommt schon der nächste. In den Tunnel!"
+msgstr "RAVEN: One down – but here comes another. Into the tunnel!"
+
+#: scripts/campaign_drive.gd:686
+msgid "RAVEN: Raus auf die Hochstraße! Achte auf den Wind – und auf die Drohnen."
+msgstr "RAVEN: Out onto the elevated highway! Watch the wind – and the drones."
+
+#: scripts/campaign_drive.gd:718
+msgid "ETAPPE %d · %s"
+msgstr "STAGE %d · %s"
+
+#: scripts/campaign_drive.gd:726
+msgid "RAVEN: Der Neue hat dickere Reifen als Verstand. Mach ihn fertig!"
+msgstr "RAVEN: This one's got tires bigger than his brain. Take him out!"
+
+#: scripts/campaign_drive.gd:726
+msgid "RAVEN: Letzter Wagen. Danach ist der Weg zur Garage frei!"
+msgstr "RAVEN: Last car. After this, it's a clear run to the garage!"
+
+#: scripts/campaign_drive.gd:767
+msgid "VOLLTREFFER!"
+msgstr "DIRECT HIT!"
+
+#: scripts/campaign_drive.gd:768
+msgid "RAVEN: Der Wagen brennt – gleich fliegt er auseinander!"
+msgstr "RAVEN: That car's burning – it's about to blow!"
+
+#: scripts/campaign_drive.gd:797
+msgid "WEG FREI · ZUR GARAGE"
+msgstr "PATH CLEAR · TO THE GARAGE"
+
+#: scripts/campaign_drive.gd:830
+msgid "DROHNE GEKAPERT"
+msgstr "DRONE HIJACKED"
+
+#: scripts/campaign_drive.gd:835
+msgid "LENKUNG GEHACKT"
+msgstr "STEERING HACKED"
+
+#: scripts/campaign_drive.gd:837
+msgid "Für den Hack hinter den Wagen oder unter eine Drohne fahren."
+msgstr "Drive behind the car or under a drone to hack it."
+
+#: scripts/campaign_drive.gd:892
+msgid "RAMMSTOSS!"
+msgstr "RAM ATTACK!"
+
+#: scripts/campaign_drive.gd:970
+msgid "WAGEN RAMMT WRACK"
+msgstr "CAR HITS WRECKAGE"
+
+#: scripts/campaign_drive.gd:977
+msgid "ÖLSPUR!"
+msgstr "OIL SLICK!"
+
+#: scripts/campaign_drive.gd:984
+msgid "TURBO"
+msgstr "TURBO"
+
+#: scripts/campaign_drive.gd:994
+msgid "MINE TRIFFT DEN WAGEN"
+msgstr "MINE HITS THE CAR"
+
+#: scripts/campaign_drive.gd:1032
+msgid "DROHNE TRIFFT DEN WAGEN!"
+msgstr "DRONE HITS THE CAR!"
+
+#: scripts/campaign_hud.gd:5
+msgid "Kapitel 3–7 · Der Pakt bis Der neue Orden"
+msgstr "Chapters 3–7 · From The Pact to The New Order"
+
+#: scripts/campaign_hud.gd:6
+msgid "Ab Kapitel 3 neu starten"
+msgstr "Restart from Chapter 3"
+
+#: scripts/campaign_hud.gd:8
+msgid "SHADEPI / KAMPAGNE"
+msgstr "SHADEPI / CAMPAIGN"
+
+#: scripts/campaign_hud.gd:17
+msgid "Kampagne starten"
+msgstr "Start campaign"
+
+#: scripts/campaign_hud.gd:18 scripts/chapter_hud.gd:33 scripts/chapter_two_hud.gd:21 scripts/hud.gd:224 scripts/hud.gd:467
+msgid "Letzten Kontrollpunkt laden"
+msgstr "Load last checkpoint"
+
+#: scripts/campaign_hud.gd:34
+msgid "KENZŌ MORIYAMA / %d HP\n%s"
+msgstr "KENZŌ MORIYAMA / %d HP\n%s"
+
+#: scripts/campaign_hud.gd:34
+msgid "SCHULTERSERVO OFFEN · Q / RB"
+msgstr "SHOULDER SERVO OPEN · Q / RB"
+
+#: scripts/campaign_hud.gd:34
+msgid "Leitung gesperrt"
+msgstr "Link blocked"
+
+#: scripts/campaign_hud.gd:34
+msgid "Implantate aktiv"
+msgstr "Implants active"
+
+#: scripts/campaign_hud.gd:36
+msgid "RAVEN / NETRUNNERIN"
+msgstr "RAVEN / NETRUNNER"
+
+#: scripts/campaign_hud.gd:40
+msgid "INTEGRITÄT / %d %%"
+msgstr "INTEGRITY / %d %%"
+
+#: scripts/campaign_hud.gd:46
+msgid "Verfolger · %d %% Panzerung"
+msgstr "Pursuer · %d %% armor"
+
+#: scripts/campaign_hud.gd:48
+msgid "Etappe %d/%d · %s · Wagen %d %%"
+msgstr "Stage %d/%d · %s · Car %d %%"
+
+#: scripts/campaign_hud.gd:49
+msgid "A/D · Lenken   W/S · Gas/Bremse   J / X · Feuer   Q / RB · Hack (Wagen/Drohne)   Leertaste / B · Granate"
+msgstr "A/D · Steer   W/S · Accelerate/Brake   J / X · Fire   Q / RB · Hack (car/drone)   Space / B · Grenade"
+
+#: scripts/campaign_hud.gd:51
+msgid "S1 · A/D Lenken · W/S Gas · J Feuer      S2 Raven · U Feuer · O Hack · P Granate (Pad 2: X / Y / B)"
+msgstr "P1 · A/D Steer · W/S Throttle · J Fire      P2 Raven · U Fire · O Hack · P Grenade (Pad 2: X / Y / B)"
+
+#: scripts/campaign_hud.gd:53
+msgid "Hack %.0f s    Granate %.0f s"
+msgstr "Hack %.0f s    Grenade %.0f s"
+
+#: scripts/campaign_hud.gd:55
+msgid "J / X · Tippen    U / zweiter Controller · Raven    Esc / Start · Pause"
+msgstr "J / X · Tap    U / second controller · Raven    Esc / Start · Pause"
+
+#: scripts/campaign_hud.gd:57
+msgid "WASD / Stick · Bewegen    J / X · Katana    Q / RB · Ravens Hack    Leertaste / B · Dash"
+msgstr "WASD / Stick · Move    J / X · Katana    Q / RB · Raven's hack    Space / B · Dash"
+
+#: scripts/campaign_hud.gd:59
+msgid "WASD / Stick · Abfangen    J / X · Katana    L / LT · Kick    Leertaste / B · Ausweichen"
+msgstr "WASD / Stick · Intercept    J / X · Katana    L / LT · Kick    Space / B · Dodge"
+
+#: scripts/campaign_hud.gd:63
+msgid "Welle %d/3 · %d Wachen · Raven %d/3"
+msgstr "Wave %d/3 · %d guards · Raven %d/3"
+
+#: scripts/campaign_hud.gd:65
+msgid "Die Suche beginnt · Esc / Start öffnet das Menü"
+msgstr "The search begins · Esc / Start opens the menu"
+
+#: scripts/campaign_hud.gd:67
+msgid "WASD / Stick · Bewegen    E / A · Interagieren    Leertaste / B · Ausweichen    Esc · Menü"
+msgstr "WASD / Stick · Move    E / A · Interact    Space / B · Dodge    Esc · Menu"
+
+#: scripts/campaign_hud.gd:76
+msgid "Turmabwehr · "
+msgstr "Tower defenses · "
+
+#: scripts/campaign_hud.gd:76
+msgid "Tower-Anflug · "
+msgstr "Tower approach · "
+
+#: scripts/campaign_hud.gd:76
+msgid "%.1f km"
+msgstr "%.1f km"
+
+#: scripts/campaign_hud.gd:77
+msgid "A/D · Steuern   W/S · Schub/Bremse   Leertaste / B · Ausweichrolle"
+msgstr "A/D · Steer   W/S · Thrust/Brake   Space / B · Evasive roll"
+
+#: scripts/campaign_hud.gd:78
+msgid "Rolle bereit"
+msgstr "Roll ready"
+
+#: scripts/campaign_hud.gd:78
+msgid "Rolle lädt …"
+msgstr "Roll recharging…"
+
+#: scripts/campaign_hud.gd:80
+msgid "Sequenzkalibrierung · Scanner %.0f s"
+msgstr "Sequence calibration · Scanner %.0f s"
+
+#: scripts/campaign_hud.gd:81
+msgid "Pfeile / WASD / Steuerkreuz · Richtung, wenn der Strahl auf dem Aerodyne liegt"
+msgstr "Arrows / WASD / D-pad · Direction when the beam crosses the Aerodyne"
+
+#: scripts/campaign_hud.gd:82
+msgid "S1 · WASD      S2 Raven · Pfeile / Steuerkreuz Pad 2 · Richtung, wenn der Strahl auf dem Aerodyne liegt"
+msgstr "P1 · WASD      P2 Raven · Arrows / Pad 2 D-pad · Direction when the beam crosses the Aerodyne"
+
+#: scripts/campaign_hud.gd:83
+msgid "Code %d / %d    Abweichungen %d / 3"
+msgstr "Code %d / %d    Errors %d / 3"
+
+#: scripts/campaign_hud.gd:85
+msgid "ALARM · Neuer Scan in %.0f s"
+msgstr "ALARM · New scan in %.0f s"
+
+#: scripts/campaign_hud.gd:86
+msgid "A/D · Steuern   Leertaste / B · Rolle durch die Laser"
+msgstr "A/D · Steer   Space / B · Roll through the lasers"
+
+#: scripts/campaign_hud.gd:87
+msgid "Kennung abgelehnt – überleben"
+msgstr "ID rejected – survive"
+
+#: scripts/campaign_hud.gd:89
+msgid "Kennung akzeptiert · Landeanflug"
+msgstr "ID accepted · Landing approach"
+
+#: scripts/campaign_hud.gd:90
+msgid "Leertaste / B beim Signal · Driftkurve"
+msgstr "Space / B on cue · Drift turn"
+
+#: scripts/campaign_hud.gd:91
+msgid "Kontrollierter Drift"
+msgstr "Controlled drift"
+
+#: scripts/campaign_hud.gd:91
+msgid "Plattform voraus"
+msgstr "Platform ahead"
+
+#: scripts/campaign_hud.gd:93
+msgid "Landung · Tower-Plattform"
+msgstr "Landing · Tower platform"
+
+#: scripts/campaign_hud.gd:94
+msgid "A/D/W/S · Schatten in den Ring   J / X halten · Bremsdüsen"
+msgstr "A/D/W/S · Place shadow in ring   Hold J / X · Braking thrusters"
+
+#: scripts/campaign_hud.gd:95
+msgid "Im Ring"
+msgstr "Inside the ring"
+
+#: scripts/campaign_hud.gd:97
+msgid "TRIEBWERK AUS · %.1f s"
+msgstr "ENGINE OFFLINE · %.1f s"
+
+#: scripts/campaign_hud.gd:98
+msgid "J / X · Ravens Wartungsdeck    A/D / Stick · Gegenlenken"
+msgstr "J / X · Raven's maintenance deck    A/D / Stick · Countersteer"
+
+#: scripts/campaign_hud.gd:99
+msgid "Jumper prüfen · TX/RX kreuzen · Alpha 120 Ω"
+msgstr "Check jumpers · Cross TX/RX · Alpha 120 Ω"
+
+#: scripts/campaign_hud.gd:102
+msgid "TRIEBWERK LÄUFT · Anflug fortsetzen"
+msgstr "ENGINE RUNNING · Continue approach"
+
+#: scripts/campaign_story.gd:6
+msgid "DER PAKT"
+msgstr "THE PACT"
+
+#: scripts/campaign_story.gd:6
+msgid "DIE HÖHLE DES DRACHEN"
+msgstr "THE DRAGON'S DEN"
+
+#: scripts/campaign_story.gd:6
+msgid "EINE VERBINDUNG AUS FEUER UND FLEISCH"
+msgstr "A BOND OF FIRE AND FLESH"
+
+#: scripts/campaign_story.gd:6
+msgid "DIE RACHE"
+msgstr "REVENGE"
+
+#: scripts/campaign_story.gd:6
+msgid "DER NEUE ORDEN"
+msgstr "THE NEW ORDER"
+
+#: scripts/campaign_story.gd:23
+msgid "Towerplan prüfen · %d / 3"
+msgstr "Check tower plan · %d / 3"
+
+#: scripts/campaign_story.gd:23
+msgid "Hinterhalt überleben · %d / %d"
+msgstr "Survive the ambush · %d / %d"
+
+#: scripts/campaign_story.gd:23
+msgid "Verfolger ausschalten"
+msgstr "Eliminate the pursuer"
+
+#: scripts/campaign_story.gd:24
+msgid "Aerodyne vorbereiten · %d / 3"
+msgstr "Prepare the Aerodyne · %d / 3"
+
+#: scripts/campaign_story.gd:24
+msgid "Mit Raven sprechen"
+msgstr "Talk to Raven"
+
+#: scripts/campaign_story.gd:25
+msgid "Den Tower erreichen"
+msgstr "Reach the tower"
+
+#: scripts/campaign_story.gd:25
+msgid "Biometrie-Log und Tür hacken · %d / 2"
+msgstr "Hack biometrics log and door · %d / 2"
+
+#: scripts/campaign_story.gd:25
+msgid "Kenzō ausschalten"
+msgstr "Take down Kenzō"
+
+#: scripts/campaign_story.gd:26
+msgid "Raven schützen und zum Aerodyne"
+msgstr "Protect Raven and reach the Aerodyne"
+
+#: scripts/campaign_story.gd:26
+msgid "Mit Raven dem Waldweg folgen"
+msgstr "Follow the forest path with Raven"
+
+#: scripts/campaign_story.gd:26
+msgid "Der neue Orden · Neue Spur"
+msgstr "The New Order · A new lead"
+
+#: scripts/chapter_hud.gd:8
+msgid "KAPITEL 1 / ECHOS IN NEON UND SCHATTEN"
+msgstr "CHAPTER 1 / ECHOES IN NEON AND SHADOW"
+
+#: scripts/chapter_hud.gd:9
+msgid "Kapitel 1 · Ravens Jagd\nLokal-Koop beginnt mit Ravens Rückkehr."
+msgstr "Chapter 1 · Raven's hunt\nLocal co-op begins when Raven returns."
+
+#: scripts/chapter_hud.gd:10
+msgid "Kapitel 2 öffnen"
+msgstr "Open Chapter 2"
+
+#: scripts/chapter_hud.gd:12
+msgid "Kapitel 3–7 öffnen"
+msgstr "Open Chapters 3–7"
+
+#: scripts/chapter_hud.gd:14
+msgid "Arcade · NEON KOMBAT"
+msgstr "Arcade · NEON KOMBAT"
+
+#: scripts/chapter_hud.gd:15
+msgid "Kampfspiel für 1 oder 2 Spieler mit den Figuren des Spiels."
+msgstr "A fighting game for 1 or 2 players featuring the game's characters."
+
+#: scripts/chapter_hud.gd:16
+msgid "Stick / Kreuz und A · F11 Vollbild"
+msgstr "Stick / D-pad and A · F11 Fullscreen"
+
+#: scripts/chapter_hud.gd:17
+msgid "Kapitel 1 neu starten"
+msgstr "Restart Chapter 1"
+
+#: scripts/chapter_hud.gd:31 scripts/hud.gd:454 scripts/hud.gd:462
+msgid "Modus · "
+msgstr "Mode · "
+
+#: scripts/chapter_hud.gd:32
+msgid "Kapitel 1 starten"
+msgstr "Start Chapter 1"
+
+#: scripts/chapter_hud.gd:39
+msgid "Kapitel 2 fortsetzen"
+msgstr "Continue Chapter 2"
+
+#: scripts/chapter_hud.gd:39 scripts/chapter_two_hud.gd:20
+msgid "Kapitel 2 starten"
+msgstr "Start Chapter 2"
+
+#: scripts/chapter_hud.gd:42 scripts/chapter_two_hud.gd:13 scripts/chapter_two_hud.gd:25
+msgid "Kapitel 3–7 fortsetzen"
+msgstr "Continue Chapters 3–7"
+
+#: scripts/chapter_hud.gd:42 scripts/chapter_two_hud.gd:25
+msgid "Kapitel 3 starten"
+msgstr "Start Chapter 3"
+
+#: scripts/chapter_hud.gd:61 scripts/hud.gd:834
+msgid "RAVEN / %03d   EN %03d"
+msgstr "RAVEN / %03d   EN %03d"
+
+#: scripts/chapter_hud.gd:65
+msgid "WASD / Pfeile  Bewegen     Maus / J  Schuss     Leertaste  Ausweichen     Esc  Menü"
+msgstr "WASD / Arrows  Move     Mouse / J  Shoot     Space  Dodge     Esc  Menu"
+
+#: scripts/chapter_hud.gd:67
+msgid "Linker Stick  Bewegen     Rechter Stick  Zielen     X  Schuss     B  Ausweichen"
+msgstr "Left stick  Move     Right stick  Aim     X  Shoot     B  Dodge"
+
+#: scripts/chapter_hud.gd:69
+msgid "Raven · Rechter Stick / X oder rechte Maustaste / U     Shadepi · J / linke Maustaste"
+msgstr "Raven · Right stick / X or right mouse / U     Shadepi · J / left mouse"
+
+#: scripts/chapter_hud.gd:72
+msgid "Kopfgeld / Chrome Jackal"
+msgstr "Bounty / Chrome Jackal"
+
+#: scripts/chapter_hud.gd:75
+msgid "Betritt den Wartungshof"
+msgstr "Enter the maintenance yard"
+
+#: scripts/chapter_hud.gd:77
+msgid "Folge der Spur · %d Punks übrig"
+msgstr "Follow the trail · %d punks left"
+
+#: scripts/chapter_hud.gd:79
+msgid "Raven: Jackals Torschleuse hacken"
+msgstr "Raven: Hack Jackal's gate lock"
+
+#: scripts/chapter_hud.gd:81
+msgid "Folge der Spur zur Schleuse"
+msgstr "Follow the trail to the gate"
+
+#: scripts/chapter_hud.gd:83
+msgid "Halte durch. Dein Hack läuft."
+msgstr "Hold out. Your hack is running."
+
+#: scripts/chapter_hud.gd:85
+msgid "Signal verloren"
+msgstr "Signal lost"
+
+#: scripts/chapter_hud.gd:87
+msgid "Finde Raven"
+msgstr "Find Raven"
+
+#: scripts/chapter_hud.gd:87
+msgid "Besiege die Wachen in der Wartungsgasse"
+msgstr "Defeat the guards in the maintenance alley"
+
+#: scripts/chapter_hud.gd:89
+msgid "Hör Raven zu"
+msgstr "Listen to Raven"
+
+#: scripts/chapter_hud.gd:91
+msgid "Schaltet Jackals Implantate aus"
+msgstr "Disable Jackal's implants"
+
+#: scripts/chapter_hud.gd:91
+msgid "Bring Jackal auf halbe Stärke"
+msgstr "Reduce Jackal to half health"
+
+#: scripts/chapter_hud.gd:93
+msgid "Der Auftrag danach"
+msgstr "The next assignment"
+
+#: scripts/chapter_hud.gd:95
+msgid "Kapitel 1 abgeschlossen"
+msgstr "Chapter 1 complete"
+
+#: scripts/chapter_hud.gd:101
+msgid "CHROME JACKAL / %d HP\n%s"
+msgstr "CHROME JACKAL / %d HP\n%s"
+
+#: scripts/chapter_hud.gd:101
+msgid "GEGENHACK"
+msgstr "COUNTERHACK"
+
+#: scripts/chapter_hud.gd:101
+msgid "Panzerung undurchdringlich"
+msgstr "Armor impenetrable"
+
+#: scripts/chapter_hud.gd:102
+msgid "NETRUNNING / Handshake in %02d s     Leertaste / B  Ausweichen"
+msgstr "NETRUNNING / Handshake in %02d s     Space / B  Dodge"
+
+#: scripts/chapter_hud.gd:104
+msgid "CHROME JACKAL / %d von %d HP\n%s"
+msgstr "CHROME JACKAL / %d of %d HP\n%s"
+
+#: scripts/chapter_hud.gd:104 scripts/hud.gd:855
+msgid "IMPLANTATE GESTÖRT"
+msgstr "IMPLANTS DISRUPTED"
+
+#: scripts/chapter_hud.gd:104 scripts/hud.gd:855
+msgid "Panzerung aktiv"
+msgstr "Armor active"
+
+#: scripts/chapter_hud.gd:107
+msgid "C / Y  Tarnfeld: %s"
+msgstr "C / Y  Cloak: %s"
+
+#: scripts/chapter_one.gd:154
+msgid "Q / Y / RB"
+msgstr "Q / Y / RB"
+
+#: scripts/chapter_one.gd:197
+msgid "Raven: Er hängt sich an mein Deck. Raus aus der Verbindung!"
+msgstr "Raven: He's hooked into my deck. Disconnect!"
+
+#: scripts/chapter_one.gd:373
+msgid "PUNK"
+msgstr "PUNK"
+
+#: scripts/chapter_one.gd:373
+msgid "Na, Püppchen. Wie wär's mit uns beiden?"
+msgstr "Hey, doll. How about you and me?"
+
+#: scripts/chapter_one.gd:375
+msgid "Dein Neuralport hängt offen im Netz. Ganz schlechte Idee."
+msgstr "Your neural port's wide open on the net. Really bad idea."
+
+#: scripts/chapter_one.gd:392
+msgid "Schlaf dich aus. In zehn Minuten weißt du wieder, wie du heißt."
+msgstr "Sleep it off. You'll remember your name in ten minutes."
+
+#: scripts/chapter_one.gd:396
+msgid "Weiter zur Straße →"
+msgstr "On to the street →"
+
+#: scripts/chapter_one.gd:436 scripts/chapter_one.gd:687
+msgid "Wartungsgasse frei. Raven liegt hinter der Schleuse."
+msgstr "Maintenance alley clear. Raven is beyond the gate."
+
+#: scripts/chapter_one.gd:453
+msgid "Raven: Wachen erledigt. Jetzt die Torschleuse am Terminal hacken."
+msgstr "Raven: Guards down. Now hack the gate lock at the terminal."
+
+#: scripts/chapter_one.gd:490 scripts/chapter_one.gd:492 scripts/chapter_one.gd:554 scripts/chapter_one.gd:650 scripts/cutscene.gd:19
+msgid "CHROME JACKAL"
+msgstr "CHROME JACKAL"
+
+#: scripts/chapter_one.gd:490
+msgid "Was will so ein Püppchen von mir? Hast du dich verlaufen, Kleine?"
+msgstr "What does a little doll like you want with me? Lost your way, sweetheart?"
+
+#: scripts/chapter_one.gd:491
+msgid "Ich bin wegen deines Kopfgelds hier. Mal sehen, wie lange deine Panzerung hält, wenn ich die Steuerung finde."
+msgstr "I'm here for your bounty. Let's see how long that armor lasts once I find the controls."
+
+#: scripts/chapter_one.gd:492
+msgid "Meine Leute senden nicht mehr. Dann steck dich ruhig ein – die letzte Netrunnerin hat denselben Fehler gemacht."
+msgstr "My people aren't transmitting anymore. Go on, plug yourself in – the last netrunner made the same mistake."
+
+#: scripts/chapter_one.gd:499
+msgid "Raven: Handshake läuft. Halt ihn auf Abstand!"
+msgstr "Raven: Handshake running. Keep him away!"
+
+#: scripts/chapter_one.gd:512
+msgid "Raven: Seine Firewall hält. Ich brauche noch Zeit."
+msgstr "Raven: His firewall's holding. I need more time."
+
+#: scripts/chapter_one.gd:548
+msgid "Er hat die Verbindung umgedreht … meine Beine. Ich kann sie nicht bewegen."
+msgstr "He reversed the connection… My legs. I can't move them."
+
+#: scripts/chapter_one.gd:554
+msgid "Dein Deck hat mir die Tür aufgemacht. Jetzt kassiere ich dein Kopfgeld."
+msgstr "Your deck opened the door for me. Now I'm collecting your bounty."
+
+#: scripts/chapter_one.gd:601
+msgid "E / A · Raven: Jackals Torschleuse hacken"
+msgstr "E / A · Raven: Hack Jackal's gate lock"
+
+#: scripts/chapter_one.gd:603
+msgid "E / A · Weiter zu Kapitel 2"
+msgstr "E / A · Continue to Chapter 2"
+
+#: scripts/chapter_one.gd:605
+msgid "E / A · Nach Raven sehen"
+msgstr "E / A · Check on Raven"
+
+#: scripts/chapter_one.gd:618
+msgid "Raven: Schleuse offen. Jackal ist gleich dahinter."
+msgstr "Raven: Gate's open. Jackal's just beyond it."
+
+#: scripts/chapter_one.gd:640
+msgid "Kannst du mich hören? Bleib liegen. Der Rückstoß hat deine Beinimplantate verriegelt."
+msgstr "Can you hear me? Stay down. The feedback locked your leg implants."
+
+#: scripts/chapter_one.gd:641
+msgid "Er ist noch auf meiner Leitung. Solange seine Panzerung volle Leistung hat, komme ich nicht aus der Schleife."
+msgstr "He's still on my link. As long as his armor is running at full power, I can't break out of the loop."
+
+#: scripts/chapter_one.gd:650
+msgid "Noch so ein Held. Wie viele Teile von dir passen in meinen Kofferraum?"
+msgstr "Another hero. How many pieces of you will fit in my trunk?"
+
+#: scripts/chapter_one.gd:653
+msgid "Dann kümmere ich mich um seine Panzerung. Wenn dein Deck wieder hochfährt, brauche ich deine Hilfe."
+msgstr "Then I'll deal with his armor. Once your deck's back up, I'll need your help."
+
+#: scripts/chapter_one.gd:670
+msgid "Raven: Ich bin wieder drin! Seine Panzerung ist offen."
+msgstr "Raven: I'm back in! His armor's open."
+
+#: scripts/chapter_one.gd:674
+msgid "Das erste Jackal-Duell ist ein Story-Timer. Bitte Kapitelabschnitt weiterspielen."
+msgstr "The first Jackal duel is a timed story encounter. Please continue the chapter."
+
+#: scripts/chapter_one.gd:714
+msgid "Hey, sein Kopfgeld gehört aber mir!"
+msgstr "Hey, that bounty's mine!"
+
+#: scripts/chapter_one.gd:715
+msgid "… Trotzdem danke. Du bist ein Cyber-Ninja?"
+msgstr "…Thanks, though. You're a cyber-ninja?"
+
+#: scripts/chapter_one.gd:716
+msgid "Hmm, also doch eine Netrunnerin. Geld interessiert mich nicht. Ich brauche Informationen. Wie gut bist du?"
+msgstr "Hmm, a netrunner after all. I don't care about the money. I need information. How good are you?"
+
+#: scripts/chapter_one.gd:717
+msgid "Wie kommst du darauf, dass ich dir helfe? Du hast meine Frage noch nicht beantwortet."
+msgstr "What makes you think I'll help? You still haven't answered my question."
+
+#: scripts/chapter_one.gd:718
+msgid "Ja, ich bin ein Cyber-Ninja. Man nennt mich Shadepi. Und wie darf ich dich nennen?"
+msgstr "Yes, I'm a cyber-ninja. They call me Shadepi. And what should I call you?"
+
+#: scripts/chapter_one.gd:719
+msgid "Man sieht wenige von euch. Mein Name ist Raven. Vielleicht bin ich beim Running auf nützliche Informationen gestoßen. Aber das kostet …"
+msgstr "Don't see many of you around. I'm Raven. Maybe I've come across something useful on a run. But it'll cost you…"
+
+#: scripts/chapter_one.gd:731
+msgid "1-2-3-4. Das war einfach. Bezahlt dich das?"
+msgstr "1-2-3-4. That was easy. Does that cover it?"
+
+#: scripts/chapter_one.gd:735
+msgid "Was soll ich damit? Das Konto ist voll von seinem Blutgeld."
+msgstr "What am I supposed to do with that? That account's full of his blood money."
+
+#: scripts/chapter_one.gd:736
+msgid "Aber da du mir geholfen hast, helfe ich dir. Ich bin mal nicht so. Triff mich dort – dann sehe ich nach den Infos, die du brauchst."
+msgstr "But since you helped me, I'll help you. I'm feeling generous. Meet me there – I'll look into the information you need."
+
+#: scripts/chapter_one.gd:748
+msgid "SHADEPI / LEISE"
+msgstr "SHADEPI / QUIETLY"
+
+#: scripts/chapter_one.gd:748
+msgid "Ein Hauch von Rosen … Geld ist doch Geld. … Danke, Raven."
+msgstr "A hint of roses… Money's money, though. …Thank you, Raven."
+
+#: scripts/chapter_one.gd:771
+msgid "KAPITEL 1 · ENDE"
+msgstr "CHAPTER 1 · END"
+
+#: scripts/chapter_one.gd:771
+msgid "Auf der Datenkarte blinkt eine Adresse."
+msgstr "An address blinks on the data card."
+
+#: scripts/chapter_one.gd:779 scripts/main.gd:1196
+msgid "SYSTEM GESTÖRT"
+msgstr "SYSTEM DISRUPTED"
+
+#: scripts/chapter_one.gd:780 scripts/main.gd:1197
+msgid "Am Kontrollpunkt fortsetzen"
+msgstr "Continue from checkpoint"
+
+#: scripts/chapter_one.gd:797
+msgid "Kontrollpunkt gespeichert"
+msgstr "Checkpoint saved"
+
+#: scripts/chapter_one.gd:797 scripts/main.gd:1221
+msgid "Speichern fehlgeschlagen"
+msgstr "Save failed"
+
+#: scripts/chapter_one.gd:812
+msgid "Kein Kontrollpunkt für diesen Modus"
+msgstr "No checkpoint for this mode"
+
+#: scripts/chapter_one.gd:819
+msgid "Kontrollpunkt geladen"
+msgstr "Checkpoint loaded"
+
+#: scripts/chapter_two.gd:223
+msgid "Umgebung scannen · %d / 3"
+msgstr "Scan surroundings · %d / 3"
+
+#: scripts/chapter_two.gd:223
+msgid "An der Stahltür klopfen"
+msgstr "Knock on the steel door"
+
+#: scripts/chapter_two.gd:225
+msgid "Raven das Metallfragment zeigen"
+msgstr "Show Raven the metal fragment"
+
+#: scripts/chapter_two.gd:228
+msgid "Netz-Ebene %d · ICE löschen · %d aktiv"
+msgstr "Net layer %d · Delete ICE · %d active"
+
+#: scripts/chapter_two.gd:228
+msgid "Durch das Portal zurück auf die Datenspur"
+msgstr "Through the portal, back to the data trail"
+
+#: scripts/chapter_two.gd:229
+msgid "ICE-Wächter · Salven ausweichen, offenen Kern treffen"
+msgstr "ICE guardian · Dodge volleys, strike the exposed core"
+
+#: scripts/chapter_two.gd:229
+msgid "Datenspur verfolgen · %d / 3"
+msgstr "Follow the data trail · %d / 3"
+
+#: scripts/chapter_two.gd:231
+msgid "Raven mit Kryospray stabilisieren"
+msgstr "Stabilize Raven with cryospray"
+
+#: scripts/chapter_two.gd:231
+msgid "Kryospray am Überwachungstisch holen"
+msgstr "Get cryospray from the monitoring desk"
+
+#: scripts/chapter_two.gd:233
+msgid "Raven an das Kühlsystem anschließen"
+msgstr "Connect Raven to the cooling system"
+
+#: scripts/chapter_two.gd:234
+msgid "Kapitel 2 abgeschlossen"
+msgstr "Chapter 2 complete"
+
+#: scripts/chapter_two.gd:241 scripts/chapter_two.gd:782
+msgid "E / A · Weiter zu Kapitel 3"
+msgstr "E / A · Continue to Chapter 3"
+
+#: scripts/chapter_two.gd:250
+msgid "ICE-Wächter · Abkühlphase abwarten, nah ran: J / X"
+msgstr "ICE guardian · Wait for cooldown, get close: J / X"
+
+#: scripts/chapter_two.gd:250
+msgid "ICE-Abwehr ausschalten · J / X"
+msgstr "Disable ICE defenses · J / X"
+
+#: scripts/chapter_two.gd:252
+msgid "Verbindung halten"
+msgstr "Maintain connection"
+
+#: scripts/chapter_two.gd:253
+msgid "E / A · ICE treffen"
+msgstr "E / A · Strike ICE"
+
+#: scripts/chapter_two.gd:265
+msgid "Fluchtweg frei."
+msgstr "Escape route clear."
+
+#: scripts/chapter_two.gd:265
+msgid "Keine Wärmesignaturen am Gerüst."
+msgstr "No heat signatures on the scaffolding."
+
+#: scripts/chapter_two.gd:265
+msgid "Stahltür lokalisiert."
+msgstr "Steel door located."
+
+#: scripts/chapter_two.gd:280
+msgid "Kryospray aufgenommen. Zurück zu Raven · E / A"
+msgstr "Cryospray collected. Back to Raven · E / A"
+
+#: scripts/chapter_two.gd:361
+msgid "Hinter Datenwänden in Deckung! Cyan = Kern offen. Nah heran: J / X. Ausweichen: Leertaste / B."
+msgstr "Take cover behind data walls! Cyan = core exposed. Get close: J / X. Dodge: Space / B."
+
+#: scripts/chapter_two.gd:412 scripts/chapter_two.gd:464 scripts/chapter_two.gd:479
+msgid "RISS"
+msgstr "BREACH"
+
+#: scripts/chapter_two.gd:423
+msgid "GELÖSCHT"
+msgstr "DELETED"
+
+#: scripts/chapter_two.gd:516
+msgid "Die Spur führt tiefer. Datenarchiv – hier lagern sie, was niemand finden soll."
+msgstr "The trail goes deeper. Data archive – where they store what nobody's supposed to find."
+
+#: scripts/chapter_two.gd:516
+msgid "Roter Kern. Ab hier beißt das ICE richtig zu."
+msgstr "Red core. This is where the ICE really starts to bite."
+
+#: scripts/chapter_two.gd:551
+msgid "Ebene frei · durch das Portal →"
+msgstr "Layer clear · through the portal →"
+
+#: scripts/chapter_two.gd:554
+msgid "Zweite ICE-Welle · sie kommen von beiden Seiten"
+msgstr "Second ICE wave · they're coming from both sides"
+
+#: scripts/chapter_two.gd:601
+msgid "ICE hat den Zugriff blockiert. Versuch es beim nächsten cyanfarbenen Signal."
+msgstr "ICE blocked access. Try again at the next cyan signal."
+
+#: scripts/chapter_two.gd:618
+msgid "Seriennummer bestätigt. Zahlungsweg suchen."
+msgstr "Serial number confirmed. Find the payment trail."
+
+#: scripts/chapter_two.gd:618
+msgid "Wächter: Salven ausweichen · Leertaste / B. Beim cyanfarbenen Kern nah ran und J / X!"
+msgstr "Guardian: dodge volleys · Space / B. When the core turns cyan, get close and press J / X!"
+
+#: scripts/chapter_two.gd:642
+msgid "Offenbarungen im Verborgenen"
+msgstr "Revelations in Hiding"
+
+#: scripts/chapter_two.gd:644
+msgid "INDUSTRIEGEBIET"
+msgstr "INDUSTRIAL DISTRICT"
+
+#: scripts/chapter_two.gd:644
+msgid "Verrostete Gerippe von Fabriken ragen wie die Knochen toter Leviathane in den giftgrünen Nachthimmel."
+msgstr "Rusted factory skeletons rise like the bones of dead leviathans into the toxic-green night sky."
+
+#: scripts/chapter_two.gd:659
+msgid "Jeder Instinkt schreit nach Vorsicht. Erst die Umgebung scannen – Fluchtwege, Schützennester, Schwachstellen. Dann klopfe ich an."
+msgstr "Every instinct tells me to be careful. Scan the area first – escape routes, sniper nests, weak spots. Then I'll knock."
+
+#: scripts/chapter_two.gd:681
+msgid "STAHLTÜR"
+msgstr "STEEL DOOR"
+
+#: scripts/chapter_two.gd:681
+msgid "Ein lautes, protestierendes Knarren."
+msgstr "A loud, protesting creak."
+
+#: scripts/chapter_two.gd:705
+msgid "Ein Nervenzentrum, ein Altar für den digitalen Gott. Kabel schlängeln sich über den Boden, in der Mitte steht eine Wanne mit trübem Eiswasser."
+msgstr "A nerve center, an altar to a digital god. Cables snake across the floor. In the middle sits a tub of murky ice water."
+
+#: scripts/chapter_two.gd:715
+msgid "Ah, da bist du ja. Ihr Ninjas seid nicht gerade pünktlich."
+msgstr "Ah, there you are. You ninjas aren't exactly punctual."
+
+#: scripts/chapter_two.gd:716
+msgid "Du hast keine Zeit gesagt."
+msgstr "You didn't give me a time."
+
+#: scripts/chapter_two.gd:717
+msgid "Also … nach was suchst du? Welche Information?"
+msgstr "So… what are you looking for? What information?"
+
+#: scripts/chapter_two.gd:738
+msgid "MONITORLICHT"
+msgstr "MONITOR GLOW"
+
+#: scripts/chapter_two.gd:738
+msgid "Auf dem Metall spiegelt sich eine eingravierte Seriennummer: Militech Minotaurus XC2534S."
+msgstr "An engraved serial number catches the light on the metal: Militech Minotaurus XC2534S."
+
+#: scripts/chapter_two.gd:739
+msgid "Ich brauche Informationen über den Betreiber dieser Mechs. Seit fünf Jahren suche ich nach Spuren. Jeder, der etwas wusste, hat sich lieber selbst umgebracht, als mit mir zu reden."
+msgstr "I need information about whoever operates these mechs. I've spent five years looking for leads. Anyone who knew anything preferred to kill themselves rather than talk to me."
+
+#: scripts/chapter_two.gd:740
+msgid "Ich bin der letzte Überlebende des Ordens des Weißen Drachen. Ich suche den Schuldigen für das Massaker an meinem Orden."
+msgstr "I'm the last survivor of the Order of the White Dragon. I'm looking for whoever ordered the massacre of my Order."
+
+#: scripts/chapter_two.gd:741
+msgid "Da du mir geholfen hast, werde ich sehen, was ich für dich tun kann."
+msgstr "Since you helped me, I'll see what I can do for you."
+
+#: scripts/chapter_two.gd:748
+msgid "Falls ich einen Kurzschluss erleide … verschwinde von hier."
+msgstr "If I short-circuit… get out of here."
+
+#: scripts/chapter_two.gd:766
+msgid "Besser?"
+msgstr "Better?"
+
+#: scripts/chapter_two.gd:767
+msgid "Ja … Gib mir einen Moment."
+msgstr "Yes… Give me a moment."
+
+#: scripts/chapter_two.gd:768
+msgid "Dein Kreislauf und deine Herzfrequenz sind ungewöhnlich hoch. Was hast du gefunden?"
+msgstr "Your circulation and heart rate are unusually high. What did you find?"
+
+#: scripts/chapter_two.gd:769
+msgid "Ich bin auf jemanden gestoßen, den ich selbst verfolge. Oder besser gesagt: dem ich versuche zu entkommen."
+msgstr "I ran into someone I'm after myself. Or rather, someone I'm trying to escape."
+
+#: scripts/chapter_two.gd:770
+msgid "Hast du deine Spuren verwischt? Von wem sprichst du?"
+msgstr "Did you cover your tracks? Who are you talking about?"
+
+#: scripts/chapter_two.gd:771
+msgid "Ich bin keine Anfängerin! Kenzō Moriyama. Ein hohes Tier bei Arasaka – Finanzen, Spionage, ein sadistischer Mistkerl."
+msgstr "I'm not an amateur! Kenzō Moriyama. An Arasaka big shot – finance, espionage, sadistic bastard."
+
+#: scripts/chapter_two.gd:772
+msgid "Ich weiß nicht, ob er für dein Massaker verantwortlich ist. Aber die Spuren der Minotauren führen direkt zu einem seiner verdeckten Projekte. Ich stehe selbst auf seiner Liste. Bleib lieber weg von ihm."
+msgstr "I don't know if he's responsible for your massacre. But the Minotaurus trail leads straight to one of his covert projects. I'm on his list too. You'd be better off staying away."
+
+#: scripts/chapter_two.gd:773
+msgid "Ich lasse nicht zu, dass dir etwas geschieht. Was auch immer dir passiert ist – ich werde dich rächen, so wie ich meine Brüder und Schwestern rächen werde."
+msgstr "I won't let anything happen to you. Whatever happened to you – I'll avenge you, just as I'll avenge my brothers and sisters."
+
+#: scripts/chapter_two.gd:774
+msgid "Ich, Shadepi, der letzte Krieger des Ordens des Weißen Drachen, verspreche dir, sie dafür bezahlen zu lassen."
+msgstr "I, Shadepi, the last warrior of the Order of the White Dragon, promise you: they'll pay for this."
+
+#: scripts/chapter_two.gd:780
+msgid "KAPITEL 2 · ENDE"
+msgstr "CHAPTER 2 · END"
+
+#: scripts/chapter_two.gd:780
+msgid "Auf den Monitoren bleibt ein Name stehen: Kenzō Moriyama"
+msgstr "One name remains on the monitors: Kenzō Moriyama"
+
+#: scripts/chapter_two.gd:789
+msgid "Komm mit zur Konsole. Ich muss dir etwas über Kenzō erzählen."
+msgstr "Come over to the console. There's something I need to tell you about Kenzō."
+
+#: scripts/chapter_two_hud.gd:7
+msgid "KAPITEL 2 / OFFENBARUNGEN"
+msgstr "CHAPTER 2 / REVELATIONS"
+
+#: scripts/chapter_two_hud.gd:8
+msgid "Industriegebiet · Ravens Versteck"
+msgstr "Industrial district · Raven's hideout"
+
+#: scripts/chapter_two_hud.gd:11
+msgid "Kapitel 2 neu starten"
+msgstr "Restart Chapter 2"
+
+#: scripts/chapter_two_hud.gd:15
+msgid "E / A Zugriff · F11 Vollbild"
+msgstr "E / A Access · F11 Fullscreen"
+
+#: scripts/chapter_two_hud.gd:34
+msgid "WASD / Stick · Bewegen    J / X · Angriff    E / A · Interagieren    Esc / Start · Menü"
+msgstr "WASD / Stick · Move    J / X · Attack    E / A · Interact    Esc / Start · Menu"
+
+#: scripts/chapter_two_hud.gd:36
+msgid "RAVEN / DEEP DIVE · %d %%"
+msgstr "RAVEN / DEEP DIVE · %d %%"
+
+#: scripts/chapter_two_hud.gd:39
+msgid "WASD / Stick · Bewegen    J / X · Impuls    Q / RB · Hack    E / A · Zugriff"
+msgstr "WASD / Stick · Move    J / X · Pulse    Q / RB · Hack    E / A · Access"
+
+#: scripts/chapter_two_hud.gd:44
+msgid "ICE-WÄCHTER · %d / %d\n%s"
+msgstr "ICE GUARDIAN · %d / %d\n%s"
+
+#: scripts/chapter_two_hud.gd:46
+msgid "Cyaner Kern: nah ran + J / X · K / RT: Kraftimpuls\nDanach zurück hinter die Datenwände!"
+msgstr "Cyan core: get close + J / X · K / RT: Charged pulse\nThen retreat behind the data walls!"
+
+#: scripts/chapter_two_hud.gd:47
+msgid "Stick / WASD · Bewegen    Leertaste / B · Ausweichen    J / X · Kern treffen"
+msgstr "Stick / WASD · Move    Space / B · Dodge    J / X · Strike core"
+
+#: scripts/enemy.gd:150 scripts/main.gd:1177
+msgid "BLOCK"
+msgstr "BLOCK"
+
+#: scripts/hud.gd:139
+msgid "ECHOS IN NEON / SPÄTERE SZENE"
+msgstr "ECHOES IN NEON / LATER SCENE"
+
+#: scripts/hud.gd:140 scripts/hud.gd:838
+msgid "Sprich mit Raven"
+msgstr "Talk to Raven"
+
+#: scripts/hud.gd:153 scripts/hud.gd:837
+msgid "WASD  Bewegen     J / Maus  Katana     Leertaste  Ausweichen     Esc  Menü"
+msgstr "WASD  Move     J / Mouse  Katana     Space  Dodge     Esc  Menu"
+
+#: scripts/hud.gd:172
+msgid "SHADEPI  /  IM SCHATTEN DES RABEN"
+msgstr "SHADEPI  /  IN THE RAVEN'S SHADOW"
+
+#: scripts/hud.gd:201
+msgid "E / Enter / A · Weiter"
+msgstr "E / Enter / A · Continue"
+
+#: scripts/hud.gd:217 scripts/hud.gd:381
+msgid "ECHOS IN NEON"
+msgstr "ECHOES IN NEON"
+
+#: scripts/hud.gd:218 scripts/hud.gd:398
+msgid "IM SCHATTEN DES RABEN\nEine Cyberpunk-Saga"
+msgstr "IN THE RAVEN'S SHADOW\nA Cyberpunk Saga"
+
+#: scripts/hud.gd:219
+msgid "Modus · Einzelspieler"
+msgstr "Mode · Single player"
+
+#: scripts/hud.gd:221
+msgid "Gemeinsame Partie über WLAN eröffnen oder per IP und Code beitreten."
+msgstr "Host a shared game over Wi-Fi or join using an IP address and code."
+
+#: scripts/hud.gd:223
+msgid "Testszene starten"
+msgstr "Start test scene"
+
+#: scripts/hud.gd:225
+msgid "Testszene neu starten"
+msgstr "Restart test scene"
+
+#: scripts/hud.gd:227 scripts/main.gd:1317 scripts/network_lobby.gd:62
+msgid "Ton: An"
+msgstr "Sound: On"
+
+#: scripts/hud.gd:227 scripts/main.gd:1317 scripts/network_lobby.gd:62
+msgid "Ton: Aus"
+msgstr "Sound: Off"
+
+#: scripts/hud.gd:229
+msgid "Musik und Spielgeräusche ein- oder ausschalten."
+msgstr "Turn music and game sounds on or off."
+
+#: scripts/hud.gd:234
+msgid "Leise Ortsgeräusche wie Regen, Lüftung, Stadt und See: Aus, Leise oder Normal."
+msgstr "Quiet local ambience such as rain, ventilation, city and lake: Off, Low or Normal."
+
+#: scripts/hud.gd:241
+msgid "Vollbild, Fenstergröße und Skalierung · F11 / Alt+Enter"
+msgstr "Fullscreen, window size and scaling · F11 / Alt+Enter"
+
+#: scripts/hud.gd:243
+msgid "Zurück ins Hauptmenü"
+msgstr "Return to main menu"
+
+#: scripts/hud.gd:244
+msgid "Spielstand bleibt am letzten Kontrollpunkt. Modus und Kapitel wählst du im Hauptmenü."
+msgstr "Progress remains at the last checkpoint. Choose mode and chapter in the main menu."
+
+#: scripts/hud.gd:245
+msgid "Zurück zum Desktop"
+msgstr "Quit to desktop"
+
+#: scripts/hud.gd:246
+msgid "Spiel schließen"
+msgstr "Close game"
+
+#: scripts/hud.gd:248
+msgid "Stick / Kreuz · A wählen · F11 Vollbild"
+msgstr "Stick / D-pad · A select · F11 Fullscreen"
+
+#: scripts/hud.gd:309
+msgid "Touch · Kreis bewegen · Blitz halten"
+msgstr "Touch · Move circle · Hold lightning"
+
+#: scripts/hud.gd:398
+msgid "Pause · Einsatzstatus und Optionen"
+msgstr "Pause · Mission status and options"
+
+#: scripts/hud.gd:430
+msgid "Hauptmenü konnte nicht geöffnet werden (%d)."
+msgstr "Could not open the main menu (%d)."
+
+#: scripts/hud.gd:452
+msgid "WLAN-Koop · Verbunden"
+msgstr "Wi-Fi co-op · Connected"
+
+#: scripts/hud.gd:452
+msgid "WLAN-Koop · Host bereit"
+msgstr "Wi-Fi co-op · Host ready"
+
+#: scripts/hud.gd:454
+msgid "Modus · WLAN-Koop"
+msgstr "Mode · Wi-Fi co-op"
+
+#: scripts/hud.gd:468
+msgid "Zuletzt gespeicherten gültigen Kontrollpunkt für diesen Modus laden – auch aus einem späteren Kapitel."
+msgstr "Load the latest valid checkpoint for this mode – including later chapters."
+
+#: scripts/hud.gd:518
+msgid "DEV // TESTLAB"
+msgstr "DEV // TESTLAB"
+
+#: scripts/hud.gd:519
+msgid "Testwerkzeuge · separate Kontrollpunkte"
+msgstr "Test tools · separate checkpoints"
+
+#: scripts/hud.gd:538
+msgid "Alle Kapitel (1–7) freischalten"
+msgstr "Unlock all chapters (1–7)"
+
+#: scripts/hud.gd:539
+msgid "Unendlich Leben · auch im Fahrzeug"
+msgstr "Infinite health · including vehicles"
+
+#: scripts/hud.gd:540
+msgid "Ein Treffer = K.O. (Story-Schutz bleibt)"
+msgstr "One hit = K.O. (story protection remains)"
+
+#: scripts/hud.gd:541
+msgid "Unendliche Energie"
+msgstr "Infinite energy"
+
+#: scripts/hud.gd:542
+msgid "Keine Wartezeiten bei Fähigkeiten"
+msgstr "No ability cooldowns"
+
+#: scripts/hud.gd:543
+msgid "60-Sekunden-Fluchttimer anhalten"
+msgstr "Freeze the 60-second escape timer"
+
+#: scripts/hud.gd:556
+msgid "KAPITEL / KONTROLLPUNKT · separater Test-Spielstand"
+msgstr "CHAPTER / CHECKPOINT · separate test save"
+
+#: scripts/hud.gd:566
+msgid "Kapitel 1 · Raven / Jackal"
+msgstr "Chapter 1 · Raven / Jackal"
+
+#: scripts/hud.gd:567
+msgid "Kapitel 2 · Deep Dive"
+msgstr "Chapter 2 · Deep Dive"
+
+#: scripts/hud.gd:568
+msgid "Kapitel 3 · Pakt"
+msgstr "Chapter 3 · Pact"
+
+#: scripts/hud.gd:569
+msgid "Kapitel 4 · Hangar"
+msgstr "Chapter 4 · Hangar"
+
+#: scripts/hud.gd:570
+msgid "Kapitel 5 · Heiligtum"
+msgstr "Chapter 5 · Sanctuary"
+
+#: scripts/hud.gd:571
+msgid "Kapitel 6 · Tower / Kenzō"
+msgstr "Chapter 6 · Tower / Kenzō"
+
+#: scripts/hud.gd:572
+msgid "Kapitel 7 · See / Finale"
+msgstr "Chapter 7 · Lake / Finale"
+
+#: scripts/hud.gd:578
+msgid "Test starten"
+msgstr "Start test"
+
+#: scripts/hud.gd:588
+msgid "Kontrollpunkt starten"
+msgstr "Start checkpoint"
+
+#: scripts/hud.gd:589
+msgid "Kapitel und Kontrollpunkt wählen. Zuerst alle Kapitel freischalten."
+msgstr "Choose a chapter and checkpoint. Unlock all chapters first."
+
+#: scripts/hud.gd:598
+msgid "Leben / Energie auffüllen"
+msgstr "Refill health / energy"
+
+#: scripts/hud.gd:602
+msgid "Aktuelle Gegner besiegen"
+msgstr "Defeat current enemies"
+
+#: scripts/hud.gd:606
+msgid "Alle Cheats AUS"
+msgstr "All cheats OFF"
+
+#: scripts/hud.gd:610
+msgid "Test-Kontrollpunkte getrennt von normalen Spielständen.\nEsc schließt das Fenster."
+msgstr "Test checkpoints are separate from normal saves.\nEsc closes this window."
+
+#: scripts/hud.gd:628
+msgid "Test-Einstellung konnte nicht gespeichert werden."
+msgstr "Could not save the test setting."
+
+#: scripts/hud.gd:668
+msgid "Test: %d Gegner besiegt."
+msgstr "Test: %d enemies defeated."
+
+#: scripts/hud.gd:668
+msgid "Keine frei besiegbaren Gegner im Abschnitt."
+msgstr "No freely defeatable enemies in this section."
+
+#: scripts/hud.gd:676
+msgid "Alle Test-Cheats deaktiviert."
+msgstr "All test cheats disabled."
+
+#: scripts/hud.gd:709
+msgid "%d TREFFER"
+msgstr "%d HITS"
+
+#: scripts/hud.gd:798
+msgid "E / Enter / A · "
+msgstr "E / Enter / A · "
+
+#: scripts/hud.gd:798
+msgid "Zurück zum Spiel"
+msgstr "Back to game"
+
+#: scripts/hud.gd:810
+msgid "SHADEPI / %03d   EN %03d"
+msgstr "SHADEPI / %03d   EN %03d"
+
+#: scripts/hud.gd:816
+msgid "K / RT halten · Kraftschuss"
+msgstr "Hold K / RT · Charged shot"
+
+#: scripts/hud.gd:816
+msgid "K / RT halten · Kraftschlag    L / LT · Kick"
+msgstr "Hold K / RT · Charged strike    L / LT · Kick"
+
+#: scripts/hud.gd:818
+msgid "\nRaven: I / RT halten · Kraftschuss"
+msgstr "\nRaven: Hold I / RT · Charged shot"
+
+#: scripts/hud.gd:821
+msgid " · BEREIT – loslassen!"
+msgstr " · READY – release!"
+
+#: scripts/hud.gd:821
+msgid " · Lädt … %d %%"
+msgstr " · Charging… %d %%"
+
+#: scripts/hud.gd:837
+msgid "1 Shadepi · WASD / J / Leertaste / E     2 Raven · Pfeile / U / O / P / Enter"
+msgstr "1 Shadepi · WASD / J / Space / E     2 Raven · Arrows / U / O / P / Enter"
+
+#: scripts/hud.gd:838
+msgid "Öffne die Sperre am Terminal"
+msgstr "Open the terminal lock"
+
+#: scripts/hud.gd:838
+msgid "Besiege Chrome Jackal"
+msgstr "Defeat Chrome Jackal"
+
+#: scripts/hud.gd:838
+msgid "Sichere die Daten am Ausgang"
+msgstr "Secure the data at the exit"
+
+#: scripts/hud.gd:838
+msgid "Test abgeschlossen · frei erkunden"
+msgstr "Test complete · free exploration"
+
+#: scripts/hud.gd:840
+msgid "Trefft euch zur Einsatzbesprechung"
+msgstr "Meet for the mission briefing"
+
+#: scripts/hud.gd:843
+msgid "C / Y"
+msgstr "C / Y"
+
+#: scripts/hud.gd:844
+msgid "%s  Tarnfeld: %s     %s  Raven-Hack: %s     F5  Speichern / F9  Laden     V  Bildstil"
+msgstr "%s  Cloak: %s     %s  Raven hack: %s     F5  Save / F9  Load     V  Visual style"
+
+#: scripts/hud.gd:846
+msgid "Shadepi · WASD / J / C / E     Raven · Stick / X Angriff / Y Hack / B Ausweichen / A"
+msgstr "Shadepi · WASD / J / C / E     Raven · Stick / X Attack / Y Hack / B Dodge / A"
+
+#: scripts/hud.gd:848
+msgid "Stick / Steuerkreuz  Bewegen    X Angriff    B Ausweichen    A Interagieren    Start Menü"
+msgstr "Stick / D-pad  Move    X Attack    B Dodge    A Interact    Start Menu"
+
+#: scripts/hud.gd:855
+msgid "CHROME JACKAL\n"
+msgstr "CHROME JACKAL\n"
+
+#: scripts/main.gd:18
+msgid "Atmosphärisch"
+msgstr "Atmospheric"
+
+#: scripts/main.gd:279
+msgid "O / Y"
+msgstr "O / Y"
+
+#: scripts/main.gd:280
+msgid "Q / RB"
+msgstr "Q / RB"
+
+#: scripts/main.gd:296
+msgid "Zuerst im Admin-Menü alle Kapitel freischalten."
+msgstr "Unlock all chapters in the admin menu first."
+
+#: scripts/main.gd:300
+msgid "Kapitel konnte nicht geladen werden (%d)."
+msgstr "Could not load chapter (%d)."
+
+#: scripts/main.gd:306
+msgid "Im Testmenü zuerst alle Kapitel freischalten."
+msgstr "Unlock all chapters in the test menu first."
+
+#: scripts/main.gd:309
+msgid "Test-Kontrollpunkt konnte nicht geöffnet werden (%d)."
+msgstr "Could not open test checkpoint (%d)."
+
+#: scripts/main.gd:322
+msgid "Test: Gesundheit und Energie aufgefüllt."
+msgstr "Test: Health and energy refilled."
+
+#: scripts/main.gd:580
+msgid "J / X · "
+msgstr "J / X · "
+
+#: scripts/main.gd:761
+msgid "Bildstil geändert · Einstellung konnte nicht gespeichert werden"
+msgstr "Visual style changed · Could not save setting"
+
+#: scripts/main.gd:773
+msgid "Umgebungsgeräusche: "
+msgstr "Ambient sound: "
+
+#: scripts/main.gd:773
+msgid " · nicht gespeichert"
+msgstr " · not saved"
+
+#: scripts/main.gd:942
+msgid "E / Enter / A · Einsatz besprechen"
+msgstr "E / Enter / A · Discuss mission"
+
+#: scripts/main.gd:942
+msgid "E / A · Mit Raven sprechen"
+msgstr "E / A · Talk to Raven"
+
+#: scripts/main.gd:947
+msgid "Sicherheitssperre hacken"
+msgstr "Hack the security lock"
+
+#: scripts/main.gd:950
+msgid "Daten sichern"
+msgstr "Secure data"
+
+#: scripts/main.gd:954
+msgid "E · "
+msgstr "E · "
+
+#: scripts/main.gd:956
+msgid "Enter / A · "
+msgstr "Enter / A · "
+
+#: scripts/main.gd:956
+msgid "Enter · "
+msgstr "Enter · "
+
+#: scripts/main.gd:964
+msgid "Chrome Jackal bewacht den Ausgang. Ich kann seine Implantate stören. Du kümmerst dich um den Rest."
+msgstr "Chrome Jackal is guarding the exit. I can disrupt his implants. You take care of the rest."
+
+#: scripts/main.gd:965
+msgid "Einverstanden. Zuerst brauchen wir einen Weg durch die Sperre."
+msgstr "Agreed. First we need a way past the lock."
+
+#: scripts/main.gd:966
+msgid "Das Terminal rechts. Danach %s für meinen Hack. Wenn er rot ausholt: ausweichen!"
+msgstr "The terminal on the right. Then %s for my hack. When he winds up in red: dodge!"
+
+#: scripts/main.gd:977
+msgid "Raven: Sperre offen. Seine Panzerung schwäche ich mit %s."
+msgstr "Raven: Lock's open. I'll weaken his armor with %s."
+
+#: scripts/main.gd:981
+msgid "Die Daten sind gesichert. Vielleicht führen sie uns zu den Minotauren."
+msgstr "The data's secured. Maybe it'll lead us to the Minotaurus mechs."
+
+#: scripts/main.gd:982
+msgid "Dann verschwinden wir. Und vergiss nicht: Wir sind noch lange keine Freunde."
+msgstr "Then let's get out of here. And remember: we're still a long way from being friends."
+
+#: scripts/main.gd:983
+msgid "Testszene abgeschlossen"
+msgstr "Test scene complete"
+
+#: scripts/main.gd:983
+msgid "Du kannst die Gasse weiter erkunden. Über Esc lässt sich die Szene neu starten."
+msgstr "You can keep exploring the alley. Press Esc to restart the scene."
+
+#: scripts/main.gd:999
+msgid "Raven: Hier ist gerade kein aktives Ziel."
+msgstr "Raven: There's no active target here right now."
+
+#: scripts/main.gd:1002
+msgid "Raven: Mein Deck lädt noch."
+msgstr "Raven: My deck's still recharging."
+
+#: scripts/main.gd:1006
+msgid "Raven: Näher ran. Ich brauche eine freie Verbindung."
+msgstr "Raven: Get closer. I need a clear connection."
+
+#: scripts/main.gd:1013
+msgid "Raven: Implantate gestört. Jetzt!"
+msgstr "Raven: Implants disrupted. Now!"
+
+#: scripts/main.gd:1190
+msgid "Raven: Der Weg ist frei. Sichere die Daten am Ausgang im Nordosten."
+msgstr "Raven: The way's clear. Secure the data at the northeast exit."
+
+#: scripts/main.gd:1217
+msgid "Der Kontrollpunkt konnte nicht gespeichert werden. F5 erneut versuchen."
+msgstr "Could not save the checkpoint. Press F5 to try again."
+
+#: scripts/main.gd:1221
+msgid "Spielstand gespeichert"
+msgstr "Game saved"
+
+#: scripts/main.gd:1229
+msgid "Kein gültiger Spielstand vorhanden"
+msgstr "No valid save found"
+
+#: scripts/main.gd:1258
+msgid "Spielstand geladen"
+msgstr "Game loaded"
+
+#: scripts/main.gd:1305
+msgid "Ton an"
+msgstr "Sound on"
+
+#: scripts/main.gd:1305
+msgid "Ton aus"
+msgstr "Sound off"
+
+#: scripts/main.gd:1306
+msgid "Toneinstellung konnte nicht gespeichert werden."
+msgstr "Could not save the sound setting."
+
+#: scripts/player.gd:247
+msgid "Tarnfeld aktiv · Angreifen beendet die Tarnung"
+msgstr "Cloak active · Attacking ends concealment"
+
+#: scripts/sanctuary_timing.gd:39
+msgid "HEILIGTUM / EINDÄMMUNG 96 %"
+msgstr "SANCTUARY / CONTAINMENT 96 %"
+
+#: scripts/sanctuary_timing.gd:41
+msgid "J / X  Solo starten     Leertaste / B  Duell starten"
+msgstr "J / X  Start solo     Space / B  Start duel"
+
+#: scripts/sanctuary_timing.gd:42
+msgid "Tippe in kurzen Serien. Halte den Zeiger im Cyan-Fenster."
+msgstr "Tap in short bursts. Keep the pointer in the cyan zone."
+
+#: scripts/sanctuary_timing.gd:44
+msgid "Welle %d / 3   ·   %.1f s"
+msgstr "Wave %d / 3   ·   %.1f s"
+
+#: scripts/sanctuary_timing.gd:47
+msgid "%s · %.1f s im Fenster"
+msgstr "%s · %.1f s in the zone"
+
+#: scripts/sanctuary_timing.gd:47
+msgid "Shadepi  J / X"
+msgstr "Shadepi  J / X"
+
+#: scripts/sanctuary_timing.gd:47
+msgid "Raven  U / X"
+msgstr "Raven  U / X"
+
+#: scripts/sanctuary_timing.gd:52
+msgid "Runde abgeschlossen"
+msgstr "Round complete"
+
+#: scripts/sanctuary_timing.gd:54
+msgid "Shadepi gewinnt"
+msgstr "Shadepi wins"
+
+#: scripts/sanctuary_timing.gd:54
+msgid "Raven gewinnt"
+msgstr "Raven wins"
+
+#: scripts/sprite_assets.gd:26
+msgid "Eigene Figur hat falsche Maße (384 × 1024, 384 × 2048 oder 1024 × 5120 erwartet): "
+msgstr "Custom character has incorrect dimensions (expected 384 × 1024, 384 × 2048 or 1024 × 5120): "
+
+#: scripts/start_menu_backdrop.gd:85
+msgid "IM SCHATTEN DES RABEN  ·  V"
+msgstr "IN THE RAVEN'S SHADOW  ·  V"
+
+#: scripts/world_prop.gd:9
+msgid "Straßenlaterne"
+msgstr "Streetlight"
+
+#: scripts/world_prop.gd:10
+msgid "Geparkter Wagen"
+msgstr "Parked car"
+
+#: scripts/world_prop.gd:11
+msgid "Müllcontainer"
+msgstr "Dumpster"
+
+#: scripts/world_prop.gd:13
+msgid "Getränkeautomat"
+msgstr "Vending machine"
+
+#: scripts/ui_skin.gd:9
+msgid "NIGHTWING · RAVENS EIGENES NETZ"
+msgstr "NIGHTWING · RAVEN'S PRIVATE NETWORK"
+
+#: scripts/ui_skin.gd:11
+msgid "GANG-TECH · CHROME JACKALS"
+msgstr "GANG TECH · CHROME JACKAL'S"
+
+#: scripts/ui_skin.gd:13
+msgid "ORDEN DES WEISSEN DRACHEN"
+msgstr "ORDER OF THE WHITE DRAGON"
+
+#: scripts/ui_skin.gd:15
+msgid "ARToS-7 · MILITÄR-AERODYNE"
+msgstr "ARToS-7 · MILITARY AERODYNE"
+
+#: scripts/ui_skin.gd:17
+msgid "MORIYAMA · PRIVATNETZ"
+msgstr "MORIYAMA · PRIVATE NETWORK"
+
+#: scripts/ui_skin.gd:19
+msgid "HEILIGTUM · SEE"
+msgstr "SANCTUARY · LAKE"
+
+#: scripts/chapter_one_intro.gd:124
+msgid "Zwei Wärmesignaturen. Eine glüht vor Gier, die andere flackert wie eine Kerze im Sturm. Sie bewegt sich nicht mehr."
+msgstr "Two heat signatures. One burns with greed; the other flickers like a candle in a storm. She's stopped moving."
+
+#: scripts/chapter_one_intro.gd:126
+msgid "Das reicht. Tarnung – über die Wartungsgasse komme ich durch."
+msgstr "Enough. Cloak on – I can get through the maintenance alley."
+
+#: scripts/chapter_one_intro.gd:128
+msgid "Fünf Jahre seit dem Feuer im Kloster. Fünf Jahre, und noch immer keine Spur."
+msgstr "Five years since the fire at the monastery. Five years, and still no lead."
+
+#: scripts/chapter_one_intro.gd:130
+msgid "Wieder dieselbe Kameraschleife. Kleine Verbrechen führen zu großen Monstern. Was versteckt ihr da unten?"
+msgstr "The same camera loop again. Small crimes lead to big monsters. What are you hiding down there?"
+
+#: scripts/chapter_one_intro.gd:151
+msgid "Echos in Neon und Schatten"
+msgstr "Echoes in Neon and Shadow"
+
+#: scripts/chapter_one_intro.gd:153
+msgid "Na schön. Mal sehen, was heute reinkommt."
+msgstr "All right. Let's see what's come in today."
+
+#: scripts/chapter_one_intro.gd:166
+msgid "KOPFGELDNETZ / EINGANG\n\nCHROME JACKAL\nBingo Street · Wartungshof\nPrämie erhöht / Auftrag offen"
+msgstr "BOUNTY NETWORK / INCOMING\n\nCHROME JACKAL\nBingo Street · Maintenance yard\nReward increased / Contract open"
+
+#: scripts/chapter_one_intro.gd:167
+msgid "Chrome Jackal. Die Prämie ist schon wieder gestiegen."
+msgstr "Chrome Jackal. The bounty's gone up again."
+
+#: scripts/chapter_one_intro.gd:172
+msgid "KOPFGELDNETZ / BESTÄTIGT\n\nCHROME JACKAL\nAuftrag übernommen · Raven Black\nLetzter Ping gesichert"
+msgstr "BOUNTY NETWORK / CONFIRMED\n\nCHROME JACKAL\nContract accepted · Raven Black\nLast ping secured"
+
+#: scripts/chapter_one_intro.gd:175
+msgid "Die Kameras zeigen eine Schleife. Ich nehme den Weg darunter."
+msgstr "The cameras are on a loop. I'll take the route underneath."
+
+#: scripts/chapter_one_intro.gd:206
+msgid "Der Drache ist neu. »Where are you?« … Irgendwer in dieser Stadt sucht jemanden."
+msgstr "That dragon's new. “Where are you?” …Someone in this city is looking for someone."
+
+#: scripts/chapter_one_intro.gd:208
+msgid "Viel Glück damit. Hier findet man höchstens Ärger."
+msgstr "Good luck with that. Trouble's about all you'll find here."
+
+#: scripts/chapter_one_intro.gd:256
+msgid "Lasst sie in Ruhe."
+msgstr "Leave her alone."
+
+#: scripts/chapter_one_intro.gd:258
+msgid "GANGER"
+msgstr "GANGER"
+
+#: scripts/chapter_one_intro.gd:258
+msgid "Wo kommt der denn her? Los, auf ihn!"
+msgstr "Where the hell did he come from? Get him!"
+
+#: scripts/sanctuary_story.gd:10
+msgid "KAPITEL 5 · HEILIGTUM"
+msgstr "CHAPTER 5 · SANCTUARY"
+
+#: scripts/sanctuary_story.gd:10
+msgid "Nach der Reparatur des Aerodyne"
+msgstr "After repairing the Aerodyne"
+
+#: scripts/sanctuary_story.gd:18
+msgid "Shadepi? Der Aerodyne läuft wieder. Wo steckst du?"
+msgstr "Shadepi? The Aerodyne's running again. Where are you?"
+
+#: scripts/sanctuary_story.gd:21 scripts/sanctuary_story.gd:22
+msgid "Hey Raven, ich bin hier. Ruhe dich aus, ich komme gleich."
+msgstr "Hey Raven, I'm in here. Get some rest. I'll be out in a minute."
+
+#: scripts/sanctuary_story.gd:22
+msgid "SHADEPI / HINTER DER TÜR"
+msgstr "SHADEPI / BEHIND THE DOOR"
+
+#: scripts/sanctuary_story.gd:28
+msgid "Sogar eine alte Samurai-Rüstung … Du sammelst wohl alles."
+msgstr "Even an old suit of samurai armor… You really do collect everything."
+
+#: scripts/sanctuary_story.gd:32
+msgid "Na gut. Dann mache ich kurz die Augen zu."
+msgstr "All right. I'll just close my eyes for a bit."
+
+#: scripts/sanctuary_story.gd:57 scripts/outbound_flight.gd:100
+msgid "ZWEI STUNDEN SPÄTER"
+msgstr "TWO HOURS LATER"
+
+#: scripts/sanctuary_story.gd:57
+msgid "Das Summen hinter der Tür hält an"
+msgstr "The hum behind the door continues"
+
+#: scripts/sanctuary_story.gd:74
+msgid "Zwei Stunden? Shadepi … bist du immer noch da drin?"
+msgstr "Two hours? Shadepi… are you still in there?"
+
+#: scripts/sanctuary_story.gd:77
+msgid "E / A an der Tür · Nach Shadepi sehen"
+msgstr "E / A at the door · Check on Shadepi"
+
+#: scripts/sanctuary_story.gd:100
+msgid "Shadepi?"
+msgstr "Shadepi?"
+
+#: scripts/sanctuary_story.gd:104
+msgid "E / A am Kompensator · Vorsichtig nach ihm sehen"
+msgstr "E / A at the compensator · Check on him carefully"
+
+#: scripts/sanctuary_story.gd:115
+msgid "Schläfst du?"
+msgstr "Are you asleep?"
+
+#: scripts/sanctuary_story.gd:119
+msgid "RAVEN / LEISE"
+msgstr "RAVEN / QUIETLY"
+
+#: scripts/sanctuary_story.gd:119
+msgid "Wer ist eigentlich unter der Maske?"
+msgstr "Who's under that mask, anyway?"
+
+#: scripts/sanctuary_story.gd:128
+msgid "Mach das nicht."
+msgstr "Don't do that."
+
+#: scripts/sanctuary_story.gd:130
+msgid "RAVEN / LACHT"
+msgstr "RAVEN / LAUGHS"
+
+#: scripts/sanctuary_story.gd:130
+msgid "Hast du Angst vor einer Frau?"
+msgstr "Scared of a woman?"
+
+#: scripts/sanctuary_story.gd:132
+msgid "Nein, ich glaube nur …"
+msgstr "No, I just think…"
+
+#: scripts/sanctuary_story.gd:151
+msgid "Rauch … Explosionen … Schreie. Das ist nicht mehr das Versteck. Wo bin ich?"
+msgstr "Smoke… Explosions… Screams. This isn't the hideout anymore. Where am I?"
+
+#: scripts/sanctuary_story.gd:153
+msgid "Erinnerungsanker suchen · E / A lässt dich hineinsehen"
+msgstr "Find memory anchors · E / A lets you look inside"
+
+#: scripts/sanctuary_story.gd:183
+msgid "Was war das denn? Waren das deine Erinnerungen?"
+msgstr "What was that? Were those your memories?"
+
+#: scripts/sanctuary_story.gd:185
+msgid "Tut mir leid. Ich wollte dich noch warnen. Während der Eindämmung kann das passieren."
+msgstr "I'm sorry. I was about to warn you. That can happen during containment."
+
+#: scripts/sanctuary_story.gd:187
+msgid "Eindämmung? Du sitzt seit Stunden hier. Was macht dieses Ding mit dir?"
+msgstr "Containment? You've been sitting here for hours. What's this thing doing to you?"
+
+#: scripts/sanctuary_story.gd:189
+msgid "Es ist ein Kompensator. Alle sechs Tage muss ich hierher. Sonst zerstören die Naniten meinen Körper."
+msgstr "It's a compensator. I have to come here every six days. Otherwise the nanites will destroy my body."
+
+#: scripts/sanctuary_story.gd:191
+msgid "Das weiße Licht … das kam von dem Heiligtum?"
+msgstr "That white light… was it the Sanctuary?"
+
+#: scripts/sanctuary_story.gd:193
+msgid "Ja. Ich trage es, seit mein Meister es mir übergeben hat. Was du gesehen hast, war echt."
+msgstr "Yes. I've carried it ever since my master entrusted it to me. What you saw was real."
+
+#: scripts/sanctuary_story.gd:195
+msgid "Und dieser Orden? Was ist mit der Anlage unter dem Tempel?"
+msgstr "And this Order? What about the facility beneath the temple?"
+
+#: scripts/sanctuary_story.gd:197
+msgid "Der Tempel war die Tarnung unserer Basis. Mehr kann ich dir darüber gerade nicht sagen. Das sind Geheimnisse des Ordens."
+msgstr "The temple concealed our base. I can't tell you any more about it right now. Those are the Order's secrets."
+
+#: scripts/sanctuary_story.gd:201
+msgid "Und die Maske? Du hast mein Handgelenk gepackt, als ginge es um dein Leben."
+msgstr "And the mask? You grabbed my wrist like your life depended on it."
+
+#: scripts/sanctuary_story.gd:203
+msgid "Mein Kodex verbietet es, mein Gesicht jemandem außerhalb des Ordens zu zeigen."
+msgstr "My code forbids me from showing my face to anyone outside the Order."
+
+#: scripts/sanctuary_story.gd:205
+msgid "Dann sag mir wenigstens, ob ich mir Sorgen machen muss."
+msgstr "Then at least tell me whether I should be worried."
+
+#: scripts/sanctuary_story.gd:207
+msgid "Atme erst mal durch. Ich erkläre dir, worauf du achten musst. Langsam."
+msgstr "Take a breath. I'll explain what you need to watch out for. One thing at a time."
+
+#: scripts/sanctuary_story.gd:209
+msgid "Und dann schlaf. Morgen Abend ist Kenzō allein – und wir sind bereit."
+msgstr "Then get some sleep. Kenzō will be alone tomorrow evening – and we'll be ready."
+
+#: scripts/terminal_puzzle.gd:5
+msgid "CHROME JACKAL / TORSCHLEUSE"
+msgstr "CHROME JACKAL / GATE LOCK"
+
+#: scripts/terminal_puzzle.gd:6
+msgid "GARAGE / ZUGANGSCODE DES ORDENS"
+msgstr "GARAGE / ORDER ACCESS CODE"
+
+#: scripts/terminal_puzzle.gd:7
+msgid "HANGAR / ENERGIEBUS"
+msgstr "HANGAR / POWER BUS"
+
+#: scripts/terminal_puzzle.gd:8
+msgid "AERODYNE / PRÜF-ICE"
+msgstr "AERODYNE / VERIFICATION ICE"
+
+#: scripts/terminal_puzzle.gd:9
+msgid "DACHTERMINAL / BIOMETRIE-LOG"
+msgstr "ROOF TERMINAL / BIOMETRICS LOG"
+
+#: scripts/terminal_puzzle.gd:10
+msgid "PENTHOUSE / SICHERHEITSTÜR"
+msgstr "PENTHOUSE / SECURITY DOOR"
+
+#: scripts/terminal_puzzle.gd:11
+msgid "AUFZUG / SPERRLADUNG"
+msgstr "ELEVATOR / BLOCKING CHARGE"
+
+#: scripts/terminal_puzzle.gd:12
+msgid "AERODYNE / NOTREPARATUR"
+msgstr "AERODYNE / EMERGENCY REPAIR"
+
+#: scripts/terminal_puzzle.gd:14 scripts/terminal_puzzle.gd:36 scripts/terminal_puzzle.gd:77
+msgid "SIGNAL"
+msgstr "SIGNAL"
+
+#: scripts/terminal_puzzle.gd:14
+msgid "SIEGEL"
+msgstr "SIEGEL"
+
+#: scripts/terminal_puzzle.gd:14
+msgid "SICHER"
+msgstr "SICHER"
+
+#: scripts/terminal_puzzle.gd:14 scripts/terminal_puzzle.gd:77
+msgid "SILBER"
+msgstr "SILBER"
+
+#: scripts/terminal_puzzle.gd:14
+msgid "SENSOR"
+msgstr "SENSOR"
+
+#: scripts/terminal_puzzle.gd:14
+msgid "SENDET"
+msgstr "SENDET"
+
+#: scripts/terminal_puzzle.gd:15 scripts/terminal_puzzle.gd:16 scripts/terminal_puzzle.gd:218
+msgid "DATA"
+msgstr "DATA"
+
+#: scripts/terminal_puzzle.gd:25 scripts/terminal_ui.gd:332
+msgid "Verbindung bereit."
+msgstr "Connection ready."
+
+#: scripts/terminal_puzzle.gd:115
+msgid "Daemons geladen. Zugriff freigegeben."
+msgstr "Daemons uploaded. Access granted."
+
+#: scripts/terminal_puzzle.gd:117
+msgid "Puffer voll. Sequenz unvollständig – erneut versuchen."
+msgstr "Buffer full. Incomplete sequence – try again."
+
+#: scripts/terminal_puzzle.gd:119
+msgid "Nächster Wert: gleiche %s."
+msgstr "Next value: same %s."
+
+#: scripts/terminal_puzzle.gd:136
+msgid "%s → %d / 6 gleich\n"
+msgstr "%s → %d / 6 matching\n"
+
+#: scripts/terminal_puzzle.gd:139
+msgid "Passwort bestätigt. Türsteuerung freigegeben."
+msgstr "Password confirmed. Door controls unlocked."
+
+#: scripts/terminal_puzzle.gd:142
+msgid "Ähnlichkeit %d / 6 · %d Versuche übrig."
+msgstr "Likeness %d / 6 · %d attempts left."
+
+#: scripts/terminal_puzzle.gd:145
+msgid "Sitzung gesperrt. Neue Verbindung möglich."
+msgstr "Session locked. A new connection is available."
+
+#: scripts/terminal_puzzle.gd:153
+msgid "<RESET> gefunden: Versuche wiederhergestellt."
+msgstr "<RESET> found: attempts restored."
+
+#: scripts/terminal_puzzle.gd:159
+msgid "[DUD] gefunden: falscher Eintrag entfernt."
+msgstr "[DUD] found: false entry removed."
+
+#: scripts/terminal_puzzle.gd:226
+msgid "Alle LEDs grün · Alpha 120 Ω · Triebwerk startbereit."
+msgstr "All LEDs green · Alpha 120 Ω · Engine ready to start."
+
+#: scripts/terminal_puzzle.gd:230
+msgid "Funken / Alarm! Pinbelegung und Alpha prüfen. %d Versuche."
+msgstr "Sparks / Alarm! Check pins and Alpha. %d attempts."
+
+#: scripts/terminal_puzzle.gd:232
+msgid "Schutzschaltung ausgelöst. Platine zurücksetzen."
+msgstr "Safety circuit tripped. Reset the board."
+
+#: scripts/terminal_puzzle.gd:253
+msgid "Überlast an Knoten 10 (max. 1×). Verbindung geschmolzen."
+msgstr "Node 10 overloaded (max. 1×). Connection melted."
+
+#: scripts/terminal_puzzle.gd:264
+msgid "Active ICE hat den Datenbus erreicht. Neu verbinden."
+msgstr "Active ICE reached the data bus. Reconnect."
+
+#: scripts/terminal_puzzle.gd:267
+msgid "Datenfluss stabil: %.1f / 3 s · ICE isolieren!"
+msgstr "Data flow stable: %.1f / 3 s · Isolate ICE!"
+
+#: scripts/terminal_puzzle.gd:270
+msgid "Datenbus stabil. Energieversorgung freigegeben."
+msgstr "Data bus stable. Power supply unlocked."
+
+#: scripts/terminal_puzzle.gd:276
+msgid "Störimpuls – Signal beobachten."
+msgstr "Interference pulse – watch the signal."
+
+#: scripts/terminal_puzzle.gd:276
+msgid "Phase Lock: %.1f / 1.2 s"
+msgstr "Phase Lock: %.1f / 1.2 s"
+
+#: scripts/terminal_puzzle.gd:279
+msgid "Phase Lock bestätigt. Kanal gesichert."
+msgstr "Phase Lock confirmed. Channel secured."
+
+#: scripts/arcade_encounter.gd:70
+msgid "ABSCHNITT %d · WELLE %d / %d"
+msgstr "SECTION %d · WAVE %d / %d"
+
+#: scripts/arcade_encounter.gd:124
+msgid "Welle geschafft · Verstärkung in 2 s"
+msgstr "Wave cleared · Reinforcements in 2 s"
+
+#: scripts/arcade_encounter.gd:135
+msgid "ABSCHNITT FREI · WEITER →  +15 LP"
+msgstr "SECTION CLEAR · MOVE ON →  +15 HP"
+
+#: scripts/arcade_encounter.gd:145
+msgid "Abschnitt frei · WEITER →"
+msgstr "Section clear · MOVE ON →"
+
+#: scripts/arcade_encounter.gd:147
+msgid "WEITER → Abschnitt %d / %d"
+msgstr "MOVE ON → Section %d / %d"
+
+#: scripts/arcade_encounter.gd:148
+msgid "Abs. %d/%d · Welle %d/%d · %s"
+msgstr "Sec. %d/%d · Wave %d/%d · %s"
+
+#: scripts/arcade_encounter.gd:148
+msgid "%.0f s"
+msgstr "%.0f s"
+
+#: scripts/arcade_encounter.gd:148
+msgid "%d übrig"
+msgstr "%d left"
+
+#: scripts/aerodyne_flight.gd:235
+msgid "KONTROLLIERTER DRIFT!"
+msgstr "CONTROLLED DRIFT!"
+
+#: scripts/aerodyne_flight.gd:265
+msgid "FASSADE!"
+msgstr "FACADE!"
+
+#: scripts/aerodyne_flight.gd:275
+msgid "RAVEN: Turmabwehr! Laser-Drohnen – die roten Linien zeigen, wo sie feuern."
+msgstr "RAVEN: Tower defenses! Laser drones – the red lines show where they'll fire."
+
+#: scripts/aerodyne_flight.gd:280
+msgid "VERSTÄRKUNG · DRITTE DROHNE"
+msgstr "REINFORCEMENTS · THIRD DRONE"
+
+#: scripts/aerodyne_flight.gd:281
+msgid "RAVEN: Sie schicken eine dritte. Bleib in Bewegung, gleich sind wir am Scanner!"
+msgstr "RAVEN: They're sending a third one. Keep moving, we're almost at the scanner!"
+
+#: scripts/aerodyne_flight.gd:292
+msgid "DRIFTKURVE · LEERTASTE / B"
+msgstr "DRIFT TURN · SPACE / B"
+
+#: scripts/aerodyne_flight.gd:317
+msgid "ENGE LÜCKE · ROLLEN!"
+msgstr "TIGHT GAP · ROLL!"
+
+#: scripts/aerodyne_flight.gd:337
+msgid "KOLLISION!"
+msgstr "COLLISION!"
+
+#: scripts/aerodyne_flight.gd:348
+msgid "STREBE GETROFFEN!"
+msgstr "HIT A STRUT!"
+
+#: scripts/aerodyne_flight.gd:360
+msgid "KNAPP! · STUNT x%d"
+msgstr "CLOSE CALL! · STUNT x%d"
+
+#: scripts/aerodyne_flight.gd:409
+msgid "LASERTREFFER!"
+msgstr "LASER HIT!"
+
+#: scripts/aerodyne_flight.gd:423
+msgid "RAVEN: Scanner! Richtung drücken, sobald der Strahl auf uns liegt."
+msgstr "RAVEN: Scanner! Press the direction as soon as the beam hits us."
+
+#: scripts/aerodyne_flight.gd:462
+msgid "KENNUNG AKZEPTIERT"
+msgstr "ID ACCEPTED"
+
+#: scripts/aerodyne_flight.gd:463
+msgid "TOWER: Gleiter Moriyama-01 erkannt. Landeplattform frei. – RAVEN: Wir sind drin."
+msgstr "TOWER: Moriyama-01 identified. Landing platform clear. – RAVEN: We're in."
+
+#: scripts/aerodyne_flight.gd:472
+msgid "KENNUNG ABGELEHNT · ALARM"
+msgstr "ID REJECTED · ALARM"
+
+#: scripts/aerodyne_flight.gd:473
+msgid "RAVEN: Abgelehnt! Weich den Lasern aus – beim nächsten Scannerdurchlauf versuche ich es neu."
+msgstr "RAVEN: Rejected! Dodge the lasers – I'll try again on the next scan."
+
+#: scripts/aerodyne_flight.gd:505
+msgid "SHADEPI: Landeanflug. Schatten in den Ring – J / X hält die Bremsdüsen."
+msgstr "SHADEPI: Landing approach. Shadow in the ring – hold J / X for braking thrusters."
+
+#: scripts/aerodyne_flight.gd:538
+msgid "DANEBEN · DURCHSTARTEN!"
+msgstr "MISSED · GO AROUND!"
+
+#: scripts/aerodyne_flight.gd:544
+msgid "präzise"
+msgstr "precise"
+
+#: scripts/aerodyne_flight.gd:549
+msgid "sehr hart"
+msgstr "very hard"
+
+#: scripts/aerodyne_flight.gd:554
+msgid "AUFGESETZT · %s"
+msgstr "TOUCHDOWN · %s"
+
+#: scripts/aerodyne_flight.gd:840
+msgid "SEQUENZKALIBRIERUNG · GLEITERKENNUNG"
+msgstr "SEQUENCE CALIBRATION · AIRCRAFT ID"
+
+#: scripts/aerodyne_flight.gd:872
+msgid "HÖHE"
+msgstr "ALTITUDE"
+
+#: scripts/outbound_flight.gd:9
+msgid "Woohoo! Das war geil! Aber verdammt knapp. Wäre beinahe ins Höschen gegangen. Und wo jetzt hin?"
+msgstr "Woohoo! That was awesome! Damn close, though. Almost needed a change of underwear. So, where to now?"
+
+#: scripts/outbound_flight.gd:10
+msgid "Wir sollten für ein paar Stunden untertauchen. Ich möchte dir etwas zeigen."
+msgstr "We should lie low for a few hours. There's something I'd like to show you."
+
+#: scripts/outbound_flight.gd:100
+msgid "Abseits der Stadt"
+msgstr "Away from the city"
+
+#: scripts/network_lobby.gd:19
+msgid "WLAN · GEMEINSAME PARTIE"
+msgstr "WI-FI · SHARED GAME"
+
+#: scripts/network_lobby.gd:20
+msgid "Gleiches WLAN. Ein Gerät eröffnet die Partie.\nSpieler 2 gibt dessen IP-Adresse und Code ein."
+msgstr "Same Wi-Fi network. One device hosts the game.\nPlayer 2 enters its IP address and code."
+
+#: scripts/network_lobby.gd:21
+msgid "Host-IP · z. B. 192.168.1.23"
+msgstr "Host IP · e.g. 192.168.1.23"
+
+#: scripts/network_lobby.gd:22
+msgid "6-stelliger Code"
+msgstr "6-digit code"
+
+#: scripts/network_lobby.gd:23
+msgid "Partie eröffnen"
+msgstr "Host game"
+
+#: scripts/network_lobby.gd:26
+msgid "WLAN beenden"
+msgstr "End Wi-Fi session"
+
+#: scripts/network_lobby.gd:27 scripts/mobile_controls.gd:128
+msgid "Zurück"
+msgstr "Back"
+
+#: scripts/network_lobby.gd:29
+msgid "Bild · 960 × 540 / 15 FPS"
+msgstr "Picture · 960 × 540 / 15 FPS"
+
+#: scripts/network_lobby.gd:29
+msgid "Bild · 640 × 360 / 12 FPS"
+msgstr "Picture · 640 × 360 / 12 FPS"
+
+#: scripts/network_lobby.gd:36
+msgid "Host führt Story und Spielstand · F8 öffnet WLAN"
+msgstr "Host controls story and save · F8 opens Wi-Fi"
+
+#: scripts/network_lobby.gd:40
+msgid "Bildprofil am Host wählen. Die lokale HQ-Anzeige bleibt erhalten."
+msgstr "Choose the stream profile on the host. Local HQ display is unchanged."
+
+#: scripts/display_panel.gd:32
+msgid "ANZEIGE"
+msgstr "DISPLAY"
+
+#: scripts/display_panel.gd:33
+msgid "16:9 · Auflösung und Bildschirmmodus"
+msgstr "16:9 · Resolution and display mode"
+
+#: scripts/display_panel.gd:36
+msgid "HQ · bis 1920 × 1080 nativ"
+msgstr "HQ · native up to 1920 × 1080"
+
+#: scripts/display_panel.gd:37
+msgid "Klassisch · 640 × 360"
+msgstr "Classic · 640 × 360"
+
+#: scripts/display_panel.gd:44
+msgid "Fenstergröße (Vollbild nutzt den Desktop)"
+msgstr "Window size (fullscreen uses desktop)"
+
+#: scripts/display_panel.gd:51
+msgid "Bildschirmfüllend · empfohlen"
+msgstr "Fill screen · recommended"
+
+#: scripts/display_panel.gd:52
+msgid "Pixelgenau · nur ganze Stufen"
+msgstr "Pixel-perfect · whole steps only"
+
+#: scripts/display_panel.gd:59
+msgid "Zurück · Esc / B"
+msgstr "Back · Esc / B"
+
+#: scripts/display_panel.gd:115
+msgid "%d × %d intern → %d × %d Ausgabe"
+msgstr "%d × %d internal → %d × %d output"
+
+#: scripts/display_panel.gd:116
+msgid "HQ zeichnet bis Full HD; größere Ausgaben\nvergrößern dieses Bild. F11 · Vollbild"
+msgstr "HQ renders up to Full HD; larger outputs\nscale this image. F11 · Fullscreen"
+
+#: scripts/display_panel.gd:116
+msgid "Klassisches Pixelbild · F11 / Alt+Enter\nwechselt den Bildschirmmodus."
+msgstr "Classic pixel display · F11 / Alt+Enter\nswitches display mode."
+
+#: scripts/display_panel.gd:118
+msgid "Pixelstufen können breite Ränder erzeugen.\nF11 / Alt+Enter · Vollbild umschalten"
+msgstr "Whole-pixel steps may create wide borders.\nF11 / Alt+Enter · Toggle fullscreen"
+
+#: scripts/display_panel.gd:120
+msgid "Aktiv; Einstellungen konnten nicht gespeichert werden."
+msgstr "Active; could not save settings."
+
+#: scripts/display_panel.gd:122
+msgid "Android · Querformat. HQ bis 1280 × 720.\nKlassisch spart Akku und Grafikleistung."
+msgstr "Android · Landscape. HQ up to 1280 × 720.\nClassic saves battery and graphics power."
+
+#: scripts/companion.gd:164
+msgid "Spieler 2 · Drohne: %s Bewegen · %s Schuss · %s Störimpuls"
+msgstr "Player 2 · Drone: %s Move · %s Shoot · %s Disruption pulse"
+
+#: scripts/companion.gd:165
+msgid "Spieler 2 · Naniten: %s Bewegen · %s Biss · %s Schutzschwarm"
+msgstr "Player 2 · Nanites: %s Move · %s Bite · %s Shield swarm"
+
+#: scripts/companion.gd:184
+msgid "Zweiter Spieler? U oder O drücken (Gamepad 2: X / Y) – übernimmt %s"
+msgstr "Second player? Press U or O (Gamepad 2: X / Y) – take over %s"
+
+#: scripts/companion.gd:184
+msgid "die Drohne"
+msgstr "the drone"
+
+#: scripts/companion.gd:184
+msgid "die Naniten"
+msgstr "the nanites"
+
+#: scripts/checkpoint_resume.gd:33
+msgid "Kein gültiger Kontrollpunkt für diesen Modus vorhanden."
+msgstr "No valid checkpoint found for this mode."
+
+#: scripts/checkpoint_resume.gd:41
+msgid "Kontrollpunkt konnte nicht geöffnet werden (%d)."
+msgstr "Could not open checkpoint (%d)."
+
+#: scripts/checkpoint_resume.gd:50
+msgid "Kontrollpunkt ist nicht mehr verfügbar."
+msgstr "Checkpoint is no longer available."
+
+#: scripts/tower_escape.gd:169
+msgid "T-%d! Zum Aerodyne – jetzt!"
+msgstr "T-%d! To the Aerodyne – now!"
+
+#: scripts/tower_escape.gd:185
+msgid "Luke zu. Halt dich fest – wir starten."
+msgstr "Hatch closed. Hold on – we're taking off."
+
+#: scripts/tower_escape.gd:194 scripts/hangar_departure.gd:149 scripts/hangar_departure.gd:174
+msgid "ARTOS"
+msgstr "ARTOS"
+
+#: scripts/tower_escape.gd:195
+msgid "Schubverlust! Haupttriebwerk ausgefallen!"
+msgstr "Thrust loss! Main engine failure!"
+
+#: scripts/tower_escape.gd:202
+msgid "Shadepi! Wir fallen!"
+msgstr "Shadepi! We're falling!"
+
+#: scripts/tower_escape.gd:210
+msgid "Komm schon … JA! HALT DICH GUT FEST – JETZT WIRD'S HOLPRIG!"
+msgstr "Come on… YES! HOLD ON TIGHT – THIS IS GOING TO GET ROUGH!"
+
+#: scripts/test_checkpoints.gd:7
+msgid "Wohnung · Auftragsannahme"
+msgstr "Apartment · Accepting the contract"
+
+#: scripts/test_checkpoints.gd:8
+msgid "Jagd · Westlicher Abschnitt"
+msgstr "Hunt · Western section"
+
+#: scripts/test_checkpoints.gd:9
+msgid "Jagd · Mittlerer Abschnitt"
+msgstr "Hunt · Central section"
+
+#: scripts/test_checkpoints.gd:10
+msgid "Jagd · Östlicher Abschnitt"
+msgstr "Hunt · Eastern section"
+
+#: scripts/test_checkpoints.gd:11
+msgid "Shadepi · Rettungsweg"
+msgstr "Shadepi · Rescue route"
+
+#: scripts/test_checkpoints.gd:12
+msgid "Chrome Jackal · Teamkampf"
+msgstr "Chrome Jackal · Team battle"
+
+#: scripts/test_checkpoints.gd:13
+msgid "Ausgang zu Kapitel 2"
+msgstr "Exit to Chapter 2"
+
+#: scripts/test_checkpoints.gd:15
+msgid "Versteck · Gespräch"
+msgstr "Hideout · Conversation"
+
+#: scripts/test_checkpoints.gd:16
+msgid "Eisbad · Anschluss"
+msgstr "Ice bath · Connection"
+
+#: scripts/test_checkpoints.gd:17
+msgid "Deep Dive · Relais 1"
+msgstr "Deep Dive · Relay 1"
+
+#: scripts/test_checkpoints.gd:18
+msgid "Deep Dive · Relais 2"
+msgstr "Deep Dive · Relay 2"
+
+#: scripts/test_checkpoints.gd:19
+msgid "Deep Dive · ICE-Bossarena"
+msgstr "Deep Dive · ICE boss arena"
+
+#: scripts/test_checkpoints.gd:20
+msgid "Rückkehr aus dem Netz"
+msgstr "Return from the net"
+
+#: scripts/test_checkpoints.gd:21
+msgid "Versteck · Nach dem Eisbad"
+msgstr "Hideout · After the ice bath"
+
+#: scripts/test_checkpoints.gd:22
+msgid "Der Pakt · Gespräch"
+msgstr "The Pact · Conversation"
+
+#: scripts/test_checkpoints.gd:23
+msgid "Hinterhalt · Erster Abschnitt"
+msgstr "Ambush · First section"
+
+#: scripts/test_checkpoints.gd:24
+msgid "Hinterhalt · Zweiter Abschnitt"
+msgstr "Ambush · Second section"
+
+#: scripts/test_checkpoints.gd:25
+msgid "Motorrad · Verfolgung"
+msgstr "Motorcycle · Pursuit"
+
+#: scripts/test_checkpoints.gd:26
+msgid "Garage · Werkbanksymbol"
+msgstr "Garage · Workbench symbol"
+
+#: scripts/test_checkpoints.gd:27
+msgid "Garage · Verriegelung"
+msgstr "Garage · Lock"
+
+#: scripts/test_checkpoints.gd:28
+msgid "Hangar · Aerodyne vorbereiten"
+msgstr "Hangar · Prepare the Aerodyne"
+
+#: scripts/test_checkpoints.gd:29
+msgid "Hangar · Energiebus"
+msgstr "Hangar · Power bus"
+
+#: scripts/test_checkpoints.gd:30
+msgid "Hangar · Kennung"
+msgstr "Hangar · ID"
+
+#: scripts/test_checkpoints.gd:31
+msgid "Heiligtum · Ravens Ankunft"
+msgstr "Sanctuary · Raven's arrival"
+
+#: scripts/test_checkpoints.gd:32
+msgid "Heiligtum · Nach zwei Stunden"
+msgstr "Sanctuary · After two hours"
+
+#: scripts/test_checkpoints.gd:33
+msgid "Erinnerung 1 · Der Angriff"
+msgstr "Memory 1 · The Attack"
+
+#: scripts/test_checkpoints.gd:34
+msgid "Erinnerung 2 · Shame Lys Opfer"
+msgstr "Memory 2 · Shame Ly's Sacrifice"
+
+#: scripts/test_checkpoints.gd:35
+msgid "Erinnerung 3 · Das Vermächtnis"
+msgstr "Memory 3 · The Legacy"
+
+#: scripts/test_checkpoints.gd:36
+msgid "Aerodyne · Flug zum Tower"
+msgstr "Aerodyne · Flight to the tower"
+
+#: scripts/test_checkpoints.gd:37
+msgid "Tower · Dach-Landeplatz"
+msgstr "Tower · Rooftop landing pad"
+
+#: scripts/test_checkpoints.gd:38
+msgid "Tower · Türzugang"
+msgstr "Tower · Door access"
+
+#: scripts/test_checkpoints.gd:39
+msgid "Penthouse · Kenzō-Kampf"
+msgstr "Penthouse · Kenzō battle"
+
+#: scripts/test_checkpoints.gd:40
+msgid "Penthouse · Raven schützen"
+msgstr "Penthouse · Protect Raven"
+
+#: scripts/test_checkpoints.gd:41
+msgid "Flucht · Bombe scharfstellen"
+msgstr "Escape · Arm the bomb"
+
+#: scripts/test_checkpoints.gd:42
+msgid "Flucht · Ausgang hacken"
+msgstr "Escape · Hack the exit"
+
+#: scripts/test_checkpoints.gd:43
+msgid "Flucht · Zum Aerodyne"
+msgstr "Escape · To the Aerodyne"
+
+#: scripts/test_checkpoints.gd:44
+msgid "Lichtung · Landeanflug und Weg"
+msgstr "Clearing · Landing approach and path"
+
+#: scripts/test_checkpoints.gd:45
+msgid "See · Letzter Gesprächspunkt und Kuss"
+msgstr "Lake · Final conversation and kiss"
+
+#: scripts/test_checkpoints.gd:46
+msgid "Der neue Orden · Abschluss"
+msgstr "The New Order · Conclusion"
+
+#: scripts/lake_epilogue.gd:6
+msgid "EIN SPIEL VON"
+msgstr "A GAME BY"
+
+#: scripts/lake_epilogue.gd:6
+msgid "SHADEPI · ECHOS IN NEON"
+msgstr "SHADEPI · ECHOES IN NEON"
+
+#: scripts/lake_epilogue.gd:7
+msgid "IDEE · STORY · CHARAKTERDESIGN"
+msgstr "CONCEPT · STORY · CHARACTER DESIGN"
+
+#: scripts/lake_epilogue.gd:7
+msgid "SONGTEXTE · ILLUSTRATION · ENTWICKLUNG"
+msgstr "LYRICS · ILLUSTRATION · DEVELOPMENT"
+
+#: scripts/lake_epilogue.gd:8
+msgid "BILDGENERIERUNG"
+msgstr "IMAGE GENERATION"
+
+#: scripts/lake_epilogue.gd:8
+msgid "ChatGPT · Gemini · Claude · Shadepi"
+msgstr "ChatGPT · Gemini · Claude · Shadepi"
+
+#: scripts/lake_epilogue.gd:9
+msgid "SPIELEENTWICKLUNG · UMSETZUNG"
+msgstr "GAME DEVELOPMENT · IMPLEMENTATION"
+
+#: scripts/lake_epilogue.gd:9
+msgid "Codex AI · Claude · Shadepi"
+msgstr "Codex AI · Claude · Shadepi"
+
+#: scripts/lake_epilogue.gd:10
+msgid "MUSIK"
+msgstr "MUSIC"
+
+#: scripts/lake_epilogue.gd:10
+msgid "Shadepi · Suno"
+msgstr "Shadepi · Suno"
+
+#: scripts/lake_epilogue.gd:11
+msgid "ENGINE · WEITERE QUELLEN"
+msgstr "ENGINE · ADDITIONAL SOURCES"
+
+#: scripts/lake_epilogue.gd:11
+msgid "Godot Engine"
+msgstr "Godot Engine"
+
+#: scripts/lake_epilogue.gd:11
+msgid "Lizenz- und Audio-Nachweise: Spieldokumentation"
+msgstr "License and audio credits: Game documentation"
+
+#: scripts/lake_epilogue.gd:12
+msgid "DANKE FÜRS SPIELEN"
+msgstr "THANK YOU FOR PLAYING"
+
+#: scripts/lake_epilogue.gd:12
+msgid "Der Orden lebt."
+msgstr "The Order lives on."
+
+#: scripts/lake_epilogue.gd:12
+msgid "Die gemeinsame Suche beginnt."
+msgstr "Our search begins."
+
+#: scripts/ice_bath_sequence.gd:155
+msgid "Der Kühlkreislauf läuft. Ich gehe rein."
+msgstr "Cooling loop's running. I'm going in."
+
+#: scripts/ice_bath_sequence.gd:155
+msgid "Ich bleibe hier."
+msgstr "I'll stay here."
+
+#: scripts/ice_bath_sequence.gd:196
+msgid "SHADEPI / HUD"
+msgstr "SHADEPI / HUD"
+
+#: scripts/ice_bath_sequence.gd:196
+msgid "[EINDÄMMUNGSSTATUS · 85 %] Dieses Kribbeln in der Wirbelsäule … Es spürt sie. Ruhig. Nicht jetzt."
+msgstr "[CONTAINMENT STATUS · 85 %] That tingling in my spine… It senses her. Easy. Not now."
+
+#: scripts/ice_bath_sequence.gd:204
+msgid "Nicht gut … Zu heiß … Ich kriege keine Luft."
+msgstr "Not good… Too hot… I can't breathe."
+
+#: scripts/ice_bath_sequence.gd:208
+msgid "Deine Synapsen überhitzen. Nicht bewegen – ich hole das Kryospray."
+msgstr "Your synapses are overheating. Don't move – I'll get the cryospray."
+
+#: scripts/ice_bath_sequence.gd:214
+msgid "Kryospray am Überwachungstisch holen · E / A"
+msgstr "Get cryospray from the monitoring desk · E / A"
+
+#: scripts/ice_bath_sequence.gd:237
+msgid "Atme. Langsam."
+msgstr "Breathe. Slowly."
+
+#: scripts/sequence_calibration.gd:22
+msgid "Strahl abwarten …"
+msgstr "Wait for the beam…"
+
+#: scripts/sequence_calibration.gd:68
+msgid "Verpasst – nochmal"
+msgstr "Missed – try again"
+
+#: scripts/sequence_calibration.gd:72
+msgid "Zeit abgelaufen!"
+msgstr "Time's up!"
+
+#: scripts/sequence_calibration.gd:81
+msgid "Zu früh / zu spät!"
+msgstr "Too early / too late!"
+
+#: scripts/sequence_calibration.gd:83
+msgid "Falsch: %s erwartet"
+msgstr "Wrong: expected %s"
+
+#: scripts/sequence_calibration.gd:90
+msgid "Kennung komplett!"
+msgstr "ID complete!"
+
+#: scripts/sequence_calibration.gd:92
+msgid "%s eingerastet"
+msgstr "%s locked in"
+
+#: scripts/sequence_calibration.gd:101
+msgid "ABGELEHNT!"
+msgstr "REJECTED!"
+
+#: scripts/hangar_discovery.gd:101
+msgid "Auf die Plattform. Das Motorrad nehmen wir mit."
+msgstr "Onto the platform. We're taking the bike with us."
+
+#: scripts/hangar_discovery.gd:145
+msgid "Wow. Beeindruckend."
+msgstr "Wow. Impressive."
+
+#: scripts/hangar_discovery.gd:161
+msgid "Sag mal … steckt unter der Rüstung ein Mensch oder nur Metall?"
+msgstr "Tell me… is there a person under that armor, or just metal?"
+
+#: scripts/hangar_discovery.gd:161
+msgid "Tatsächlich ist noch viel Menschliches an mir. Biologisch organisch, neuroelektronisch ergänzt. Mein Kopf und mein Geist sind kein Computer."
+msgstr "There's still a lot of humanity in me. Biologically organic, with neuroelectronic enhancements. My head and my mind aren't a computer."
+
+#: scripts/hangar_discovery.gd:161
+msgid "Ich muss schon mal hoch in mein Versteck. Zum Kompensator. Das ist alle sechs Tage nötig."
+msgstr "I need to head up to my hideout first. To the compensator. I need it every six days."
+
+#: scripts/hangar_discovery.gd:161
+msgid "Machst du den Aerodyne wieder gangbar? Und spiel die Kennung von Kenzōs Gleiter auf. Komm danach nach oben."
+msgstr "Can you get the Aerodyne running again? And upload Kenzō's aircraft ID. Come upstairs when you're done."
+
+#: scripts/hangar_discovery.gd:161
+msgid "Kriege ich hin. Geh ruhig vor. Ich komme, sobald er wieder läuft."
+msgstr "I can handle it. Go ahead. I'll come up as soon as it's running."
+
+#: scripts/hangar_discovery.gd:180
+msgid "Aerodyne vorbereiten · E / A"
+msgstr "Prepare the Aerodyne · E / A"
+
+#: scripts/cutscene.gd:18 scripts/tower_story.gd:30 scripts/tower_story.gd:37 scripts/tower_story.gd:60 scripts/tower_story.gd:97 scripts/tower_story.gd:140
+msgid "KENZŌ MORIYAMA"
+msgstr "KENZŌ MORIYAMA"
+
+#: scripts/cutscene.gd:67
+msgid "E / A · Weiter     Leertaste / B · Überspringen"
+msgstr "E / A · Continue     Space / B · Skip"
+
+#: scripts/tower_story.gd:30
+msgid "Mein Gleiter landet, ohne dass ich ihn gerufen habe … Raven?"
+msgstr "My aircraft lands without being summoned… Raven?"
+
+#: scripts/tower_story.gd:35
+msgid "Lange nicht gesehen."
+msgstr "Long time no see."
+
+#: scripts/tower_story.gd:37
+msgid "Jemand wühlt in meinen Projektdaten, und ich lasse jedes Loch stürmen, in dem du stecken könntest … Und jetzt kommst du freiwillig zu mir zurück. Wie rührend."
+msgstr "Someone pokes around my project files, and I send men into every hole you might be hiding in… Now you come back to me willingly. How touching."
+
+#: scripts/tower_story.gd:43
+msgid "Meine Eltern. Sag mir, warum."
+msgstr "My parents. Tell me why."
+
+#: scripts/tower_story.gd:60
+msgid "Dummes Mädchen. Ich habe ewig nach dir gesucht. Diesmal läufst du mir nicht davon."
+msgstr "Stupid girl. I've been looking for you for so long. You're not getting away this time."
+
+#: scripts/tower_story.gd:62
+msgid "Lass. Mich. Los."
+msgstr "Let. Me. Go."
+
+#: scripts/tower_story.gd:72
+msgid "SHADEPI / TARNUNG · 0"
+msgstr "SHADEPI / CLOAK · 0"
+
+#: scripts/tower_story.gd:72
+msgid "Nimm die Hand von ihr."
+msgstr "Take your hand off her."
+
+#: scripts/tower_story.gd:97
+msgid "Die Maske … Dich hätte dort niemand überleben lassen dürfen."
+msgstr "That mask… No one should have let you survive that place."
+
+#: scripts/tower_story.gd:98
+msgid "Dann versuch es selbst."
+msgstr "Then try finishing it yourself."
+
+#: scripts/tower_story.gd:99
+msgid "Sein Schulterservo flackert. Da komme ich in die Implantate."
+msgstr "His shoulder servo's flickering. That's my way into his implants."
+
+#: scripts/tower_story.gd:102
+msgid "KENZŌ · Shadepi kämpft · Q / RB: Ravens Implantat-Hack"
+msgstr "KENZŌ · Shadepi fights · Q / RB: Raven's implant hack"
+
+#: scripts/tower_story.gd:114
+msgid "Seine Motorik ist blockiert. Er kann sich nicht mehr bewegen."
+msgstr "His motor functions are locked. He can't move anymore."
+
+#: scripts/tower_story.gd:119
+msgid "In seinem Deck steckt die ganze Operation. Ich ziehe die Daten, bevor er sie löscht."
+msgstr "His deck has the whole operation on it. I'll pull the data before he deletes it."
+
+#: scripts/tower_story.gd:120
+msgid "Tu es. Ich halte dir den Rücken frei."
+msgstr "Do it. I'll cover you."
+
+#: scripts/tower_story.gd:121
+msgid "Wachen im Aufzug. Wenn sie mich dreimal erwischen, bricht die Verbindung ab."
+msgstr "Guards in the elevator. If they hit me three times, I'll lose the connection."
+
+#: scripts/tower_story.gd:137
+msgid "Ich habe es. Einsatzbefehle, Zahlungen, die Seriennummern der Minotauren. Kenzō hat den Angriff auf deinen Orden inszeniert."
+msgstr "I've got it. Deployment orders, payments, the Minotaurus serial numbers. Kenzō orchestrated the attack on your Order."
+
+#: scripts/tower_story.gd:138
+msgid "Fünf Jahre. Und er saß die ganze Zeit hier oben, über den Wolken. Warum?"
+msgstr "Five years. And all that time he was up here, above the clouds. Why?"
+
+#: scripts/tower_story.gd:139
+msgid "Die Begründung fehlt. Und der Auftraggeber ist aus den Daten entfernt worden. Kenzō war beteiligt – aber die Spur endet nicht bei ihm."
+msgstr "The reason's missing. And whoever gave the order has been scrubbed from the data. Kenzō was involved – but the trail doesn't end with him."
+
+#: scripts/tower_story.gd:140
+msgid "Ihr habt keine Ahnung, womit ihr euch anlegt."
+msgstr "You have no idea what you're getting into."
+
+#: scripts/tower_story.gd:141
+msgid "Nicht ich töte dich, Kenzō. Das ist ihr Vergnügen."
+msgstr "I'm not the one who's going to kill you, Kenzō. She gets that pleasure."
+
+#: scripts/tower_story.gd:142
+msgid "Du wirst nie wieder jemanden einsperren. Wurde Zeit, dass dir jemand ein Ende setzt."
+msgstr "You'll never lock anyone up again. About time someone put an end to you."
+
+#: scripts/tower_story.gd:165
+msgid "Mama. Papa. … Es ist vorbei. Er jagt niemanden mehr."
+msgstr "Mom. Dad. …It's over. He won't hunt anyone ever again."
+
+#: scripts/tower_story.gd:166
+msgid "Deine Rache ist vorbei. Die Sache mit dem Orden nicht."
+msgstr "Your revenge is over. The matter of the Order isn't."
+
+#: scripts/tower_story.gd:167
+msgid "Dann suchen wir weiter. Zusammen."
+msgstr "Then we keep looking. Together."
+
+#: scripts/tower_story.gd:170
+msgid "Daten haben wir. Jetzt die Spuren verwischen. Plan C – die Ladungen am Tragwerk sind scharf. Sechzig Sekunden."
+msgstr "We've got the data. Time to cover our tracks. Plan C – the structural charges are armed. Sixty seconds."
+
+#: scripts/tower_story.gd:171
+msgid "Du hast sein Penthouse vermint? … Ich fange an, dich zu mögen."
+msgstr "You mined his penthouse? …I'm starting to like you."
+
+#: scripts/tower_story.gd:172
+msgid "SYSTEM"
+msgstr "SYSTEM"
+
+#: scripts/tower_story.gd:172
+msgid "Sprengstoff erkannt. Aufzug fährt hoch. Wachkräfte unterwegs."
+msgstr "Explosives detected. Elevator ascending. Security forces en route."
+
+#: scripts/tower_story.gd:183
+msgid "T-60 · Aufzug sperren · Fernstart · zum Dach"
+msgstr "T-60 · Block elevator · Remote start · To the roof"
+
+#: scripts/tower_extraction.gd:37
+msgid "SCHÜTZE RAVEN · 3 Treffer unterbrechen die Extraktion · Wachen abfangen"
+msgstr "PROTECT RAVEN · 3 hits interrupt extraction · Intercept the guards"
+
+#: scripts/tower_extraction.gd:52
+msgid "RAVEN GETROFFEN · %d / %d · Wachen von ihr fernhalten"
+msgstr "RAVEN HIT · %d / %d · Keep the guards away from her"
+
+#: scripts/tower_extraction.gd:56
+msgid "Extraktion unterbrochen · Raven dreimal getroffen · Abschnitt neu starten"
+msgstr "Extraction interrupted · Raven hit three times · Restart section"
+
+#: scripts/tower_extraction.gd:77
+msgid "Raven schützen · %d %% · %d/%d Treffer"
+msgstr "Protect Raven · %d %% · %d/%d hits"
+
+#: scripts/network_session.gd:15
+msgid "Gleiches WLAN · Host erstellen oder per IP beitreten."
+msgstr "Same Wi-Fi · Host a game or join by IP."
+
+#: scripts/network_session.gd:87
+msgid "Port belegt oder WLAN nicht verfügbar (%s)."
+msgstr "Port in use or Wi-Fi unavailable (%s)."
+
+#: scripts/network_session.gd:91
+msgid "Host bereit · Code %s\nIP %s · UDP %d"
+msgstr "Host ready · Code %s\nIP %s · UDP %d"
+
+#: scripts/network_session.gd:96
+msgid "IPv4-Adresse und sechsstelligen Code vom Host eingeben."
+msgstr "Enter the host's IPv4 address and six-digit code."
+
+#: scripts/network_session.gd:100
+msgid "Verbindung konnte nicht gestartet werden (%s)."
+msgstr "Could not start connection (%s)."
+
+#: scripts/network_session.gd:103
+msgid "Verbinde mit %s …"
+msgstr "Connecting to %s…"
+
+#: scripts/network_session.gd:111
+msgid "WLAN-Adresse in Geräteeinstellungen"
+msgstr "Wi-Fi address in device settings"
+
+#: scripts/network_session.gd:135
+msgid "Host nicht erreichbar. IP, WLAN und Firewall prüfen."
+msgstr "Host unreachable. Check IP, Wi-Fi and firewall."
+
+#: scripts/network_session.gd:141
+msgid "Bildverbindung unterbrochen. Der Host behält den Spielstand."
+msgstr "Picture connection lost. The host retains the save."
+
+#: scripts/network_session.gd:155
+msgid "Code, Spielversion oder freie Spielerposition stimmt nicht."
+msgstr "Incorrect code, game version mismatch, or player slot unavailable."
+
+#: scripts/network_session.gd:160
+msgid "Spieler 2 verbunden · gemeinsame Partie läuft auf diesem Gerät."
+msgstr "Player 2 connected · shared game is running on this device."
+
+#: scripts/network_session.gd:163
+msgid "Beitritt abgelehnt."
+msgstr "Join request rejected."
+
+#: scripts/network_session.gd:170
+msgid "Verbunden · du steuerst Spieler 2. Der Host führt Partie und Spielstand."
+msgstr "Connected · you control Player 2. The host manages the game and save."
+
+#: scripts/network_session.gd:365
+msgid "Spieler 2 getrennt · erneut verbinden oder lokal fortsetzen."
+msgstr "Player 2 disconnected · reconnect or continue locally."
+
+#: scripts/network_session.gd:367
+msgid "Spieler 2 getrennt. Partie pausiert; erneuter Beitritt mit gleichem Code möglich."
+msgstr "Player 2 disconnected. Game paused; rejoin using the same code."
+
+#: scripts/network_session.gd:368
+msgid "Verbindung beendet. Dein lokaler Spielstand bleibt erhalten."
+msgstr "Connection closed. Your local save is preserved."
+
+#: scripts/network_session.gd:403
+msgid "WLAN-Partie beendet."
+msgstr "Wi-Fi game ended."
+
+#: scripts/lake_sequence.gd:197
+msgid "Der neue Orden"
+msgstr "The New Order"
+
+#: scripts/lake_sequence.gd:208
+msgid "Dem Waldweg folgen · Mit Raven sprechen · E / A"
+msgstr "Follow the forest path · Talk to Raven · E / A"
+
+#: scripts/lake_sequence.gd:273
+msgid "Dem Weg folgen · Nächstes Gespräch"
+msgstr "Follow the path · Next conversation"
+
+#: scripts/lake_sequence.gd:273
+msgid "Der letzte gemeinsame Schritt ans Wasser"
+msgstr "The last steps together to the water"
+
+#: scripts/lake_sequence.gd:339
+msgid "Jetzt gehöre ich zum Orden … darf ich?"
+msgstr "Now that I'm part of the Order… may I?"
+
+#: scripts/lake_sequence.gd:339
+msgid "Jetzt darfst du."
+msgstr "Now you may."
+
+#: scripts/lake_sequence.gd:369
+msgid "Kenzōs Auftraggeber … morgen suchen wir weiter."
+msgstr "Whoever gave Kenzō his orders… we'll keep looking tomorrow."
+
+#: scripts/lake_sequence.gd:369
+msgid "Morgen."
+msgstr "Tomorrow."
+
+#: scripts/lake_sequence.gd:369
+msgid "Heute bleibst du hier."
+msgstr "Tonight, stay here."
+
+#: scripts/lake_sequence.gd:369
+msgid "Bei dir."
+msgstr "With you."
+
+#: scripts/lake_sequence.gd:378
+msgid "Der neue Orden · Die gemeinsame Suche beginnt"
+msgstr "The New Order · Our search begins"
+
+#: scripts/startup.gd:7
+msgid "Dieses Spiel enthält blinkende Lichter und schnelle Bildwechsel. Sie können bei empfindlichen Personen epileptische Anfälle auslösen – auch ohne bekannte Vorerkrankung.\n\nBei entsprechender Vorgeschichte vorab ärztlichen Rat einholen. Bei Schwindel, Sehstörungen, Muskelzucken oder Unwohlsein sofort aufhören."
+msgstr "This game contains flashing lights and rapid image changes. These may trigger seizures in susceptible people, even without a known medical history.\n\nIf you have a relevant medical history, seek medical advice before playing. Stop immediately if you experience dizziness, vision problems, muscle twitching or discomfort."
+
+#: scripts/startup.gd:8
+msgid "Spiele in einem gut beleuchteten Raum, halte ausreichend Abstand zum Bildschirm und lege regelmäßig Pausen ein."
+msgstr "Play in a well-lit room, keep a suitable distance from the screen, and take regular breaks."
+
+#: scripts/startup.gd:9
+msgid "Enthält fiktive Gewalt. Marken und Logos gehören ihren Inhabern. Lizenz- und Quellenhinweise findest du in der Spieldokumentation."
+msgstr "Contains fictional violence. Trademarks and logos belong to their respective owners. License and source credits are included in the game documentation."
+
+#: scripts/startup.gd:37
+msgid "HINWEISE VOR DEM SPIEL"
+msgstr "BEFORE YOU PLAY"
+
+#: scripts/startup.gd:41
+msgid "Weiter zum Hauptmenü"
+msgstr "Continue to main menu"
+
+#: scripts/startup.gd:43
+msgid "ENTER / LEERTASTE / E · CONTROLLER A · TIPPEN"
+msgstr "ENTER / SPACE / E · CONTROLLER A · TAP"
+
+#: scripts/startup.gd:77 scripts/startup.gd:89
+msgid "Hauptmenü konnte nicht geladen werden. Bitte erneut versuchen."
+msgstr "Could not load the main menu. Please try again."
+
+#: scripts/startup.gd:78
+msgid "Hauptmenü wird geladen …"
+msgstr "Loading main menu…"
+
+#: scripts/startup.gd:88
+msgid "Erneut versuchen"
+msgstr "Try again"
+
+#: scripts/ice_guardian.gd:104
+msgid "PANZERUNG"
+msgstr "ARMOR"
+
+#: scripts/ice_guardian.gd:107
+msgid "NÄHER RAN"
+msgstr "GET CLOSER"
+
+#: scripts/ice_guardian.gd:146
+msgid "WÄCHTER GELÖSCHT"
+msgstr "GUARDIAN DELETED"
+
+#: scripts/ice_guardian.gd:147
+msgid "KERN OFFEN · NAH RAN!"
+msgstr "CORE EXPOSED · GET CLOSE!"
+
+#: scripts/ice_guardian.gd:148
+msgid "ZURÜCK IN DECKUNG"
+msgstr "BACK INTO COVER"
+
+#: scripts/ice_guardian.gd:149
+msgid "SALVE · AUSWEICHEN!"
+msgstr "VOLLEY · DODGE!"
+
+#: scripts/ice_guardian.gd:149
+msgid "ZIEL ERFASST · DECKUNG!"
+msgstr "TARGET LOCKED · TAKE COVER!"
+
+#: scripts/terminal_ui.gd:40
+msgid "1  Beginne in der obersten Zeile. Wähle ein Byte mit A / Enter.\n2  Danach darfst du nur in derselben Spalte wählen, dann in derselben\n    Zeile. Helle Felder sind gültig; verbrauchte Felder sind gesperrt.\n3  Lade jede rechts angezeigte Folge ohne Lücke in den Puffer.\n    Bei zwei Folgen kann ein gemeinsames End-/Startbyte Platz sparen.\n4  Puffer voll ohne alle Folgen? Wähle Neu versuchen.\n5  Sind alle Folgen markiert, bestätige mit Übernehmen."
+msgstr "1  Start in the top row. Select a byte with A / Enter.\n2  Next, pick from the same column, then the same row.\n    Bright cells are valid; used cells are locked.\n3  Put every sequence shown on the right into the buffer without gaps.\n    Two sequences may share an end/start byte to save space.\n4  Buffer full without all sequences? Choose Retry.\n5  Once all sequences are marked, confirm with Apply."
+
+#: scripts/terminal_ui.gd:47
+msgid "1  Wähle zuerst den Rauschfilter. Links / Rechts verändert seinen Wert.\n    Je höher die Signalqualität, desto näher bist du an der Frequenz.\n2  Sobald das Signal stabil ist, werden die Wörter auswählbar.\n3  Wähle ein Passwort. 3/6 bedeutet: drei Buchstaben stehen an der\n    richtigen Stelle. Vergleiche damit die übrigen Kandidaten.\n4  [DUD] entfernt ein falsches Wort; <RESET> erneuert deine Versuche.\n    Jede Hilfe ist einmal nutzbar. Danach Übernehmen wählen."
+msgstr "1  Select the noise filter first. Left / Right changes its value.\n    Higher signal quality means you are closer to the frequency.\n2  Once the signal is stable, words become selectable.\n3  Choose a password. 3/6 means three letters are in the correct\n    positions. Compare the remaining candidates using that clue.\n4  [DUD] removes a false word; <RESET> restores your attempts.\n    Each helper works once. Then select Apply."
+
+#: scripts/terminal_ui.gd:54
+msgid "1  A / Enter dreht eine Leitung um 90 Grad im Uhrzeigersinn.\n2  Verbinde IN links über Knoten 10 mit OUT rechts.\n3  Das AND-Gatter an Knoten 10 braucht A = 1 UND B = 1.\n4  Nutze Datenrate 1×; 2× überlastet Knoten 10.\n5  Trenne den roten ICE-Knoten vom Weg, bevor du den Bus einschaltest.\n    ICE breitet sich alle 1,4 Sekunden über verbundene Leitungen aus.\n6  Datenfluss einschalten, 3 Sekunden halten, dann Übernehmen."
+msgstr "1  A / Enter rotates a wire 90 degrees clockwise.\n2  Connect IN on the left to OUT on the right through node 10.\n3  The AND gate at node 10 needs A = 1 AND B = 1.\n4  Use data rate 1×; 2× overloads node 10.\n5  Disconnect the red ICE node from the path before enabling the bus.\n    ICE spreads along connected wires every 1.4 seconds.\n6  Enable data flow, hold for 3 seconds, then select Apply."
+
+#: scripts/terminal_ui.gd:61
+msgid "1  Gold zeigt die Zielwelle, Cyan dein Signal.\n2  Frequenz verändert die Anzahl der Wellen, Amplitude ihre Höhe.\n    Phase verschiebt die Welle seitlich. Werte mit Links / Rechts ändern.\n3  Wechsle mit Oben / Unten zwischen den drei Reglern.\n4  Bringe Cyan genau auf Gold und halte die Deckung 1,2 Sekunden.\n5  Bei Rauschen warten. Bei der Sperrladung wandert die Zielphase\n    alle 12 Sekunden weiter. Nach Phase Lock Übernehmen wählen."
+msgstr "1  Gold is the target wave; cyan is your signal.\n2  Frequency changes wave count; amplitude changes height.\n    Phase shifts the wave sideways. Use Left / Right to change values.\n3  Use Up / Down to switch between the three controls.\n4  Match cyan to gold and hold the overlap for 1.2 seconds.\n5  Wait out noise. For the blocking charge, the target phase shifts\n    every 12 seconds. After Phase Lock, select Apply."
+
+#: scripts/terminal_ui.gd:68
+msgid "1  Wähle für jeden Pin rechts einen Zielsteckplatz. Links / Rechts\n    wechselt die Belegung; der Pinname links ist der Ausgang.\n2  Kreuze TX und RX. GND bleibt GND, VCC bleibt VCC, DATA bleibt DATA.\n3  Wähle zwei Widerstände, deren Summe 120 Ohm ergibt.\n4  Verbindungen prüfen zeigt korrekte Pins als grüne LEDs.\n    Auch die Widerstandssumme muss stimmen. Drei Fehlversuche\n    sperren die Platine. Nach erfolgreicher Prüfung Übernehmen wählen."
+msgstr "1  Choose a target socket on the right for each pin. Left / Right\n    changes the assignment; the pin name on the left is the source.\n2  Cross TX and RX. GND stays GND, VCC stays VCC, DATA stays DATA.\n3  Choose two resistors whose values add up to 120 ohms.\n4  Check connections lights correct pins with green LEDs.\n    The resistor total must also match. Three failed attempts lock\n    the board. After a successful check, select Apply."
+
+#: scripts/terminal_ui.gd:133
+msgid "A / Enter · Liste öffnen und bestätigen. B / Esc · Liste schließen."
+msgstr "A / Enter · Open list and confirm. B / Esc · Close list."
+
+#: scripts/terminal_ui.gd:189
+msgid "NIGHTWING / RAVENS DECK"
+msgstr "NIGHTWING / RAVEN'S DECK"
+
+#: scripts/terminal_ui.gd:190
+msgid "SICHERE VERBINDUNG // "
+msgstr "SECURE CONNECTION // "
+
+#: scripts/terminal_ui.gd:191
+msgid "ZIEL · "
+msgstr "TARGET · "
+
+#: scripts/terminal_ui.gd:193
+msgid "STICK/KREUZ WÄHLEN · A AKTION · LB/RB WEITER · Y HILFE · START PAUSE · B ZURÜCK"
+msgstr "STICK/D-PAD SELECT · A ACTION · LB/RB NEXT · Y HELP · START PAUSE · B BACK"
+
+#: scripts/terminal_ui.gd:197
+msgid "ZIEL: Alle Codefolgen rechts in den Puffer laden. Nur helle Felder sind erlaubt.\nStarte oben; danach wechseln Spalte und Zeile. Y / F1 erklärt die Schritte."
+msgstr "GOAL: Load all sequences on the right into the buffer. Only bright cells are valid.\nStart at the top; alternate column and row. Y / F1 explains each step."
+
+#: scripts/terminal_ui.gd:198
+msgid "ZIEL: Das Türpasswort finden. Stelle zuerst den Rauschfilter auf ein stabiles Signal.\nDann Wörter vergleichen: Ähnlichkeit zählt Buchstaben an derselben Stelle."
+msgstr "GOAL: Find the door password. First tune the noise filter for a stable signal.\nThen compare words: likeness counts letters in the same position."
+
+#: scripts/terminal_ui.gd:199
+msgid "ZIEL: IN über Knoten 10 mit OUT verbinden. A dreht die markierte Leitung.\nAND braucht A=1 und B=1. Datenrate 1×; rotes ICE vom Datenweg abtrennen."
+msgstr "GOAL: Connect IN to OUT via node 10. A rotates the selected wire.\nAND needs A=1 and B=1. Data rate 1×; disconnect red ICE from the data path."
+
+#: scripts/terminal_ui.gd:200
+msgid "ZIEL: Dein cyanfarbenes Signal auf die goldene Zielwelle abstimmen.\nRegler wählen, mit Links / Rechts ändern; Deckung 1,2 Sekunden halten."
+msgstr "GOAL: Match your cyan signal to the gold target wave.\nSelect a control, change it with Left / Right; hold the overlap for 1.2 seconds."
+
+#: scripts/terminal_ui.gd:201
+msgid "ZIEL: Antrieb reparieren. Für jeden Pin den passenden Steckplatz wählen.\nWartungslog rechts beachten, Widerstände ergänzen, dann Verbindungen prüfen."
+msgstr "GOAL: Repair the engine. Choose the correct socket for each pin.\nFollow the maintenance log on the right, add resistors, then check connections."
+
+#: scripts/terminal_ui.gd:215
+msgid "Neu versuchen"
+msgstr "Retry"
+
+#: scripts/terminal_ui.gd:219
+msgid "Übernehmen"
+msgstr "Apply"
+
+#: scripts/terminal_ui.gd:221
+msgid "Hilfe Y / F1"
+msgstr "Help Y / F1"
+
+#: scripts/terminal_ui.gd:275
+msgid "Datenfluss AN / AUS"
+msgstr "Data flow ON / OFF"
+
+#: scripts/terminal_ui.gd:295
+msgid "GOLD: ZIEL  /  CYAN: DEIN SIGNAL"
+msgstr "GOLD: TARGET  /  CYAN: YOUR SIGNAL"
+
+#: scripts/terminal_ui.gd:307
+msgid "WARTUNGSLOG / ARTOS"
+msgstr "MAINTENANCE LOG / ARTOS"
+
+#: scripts/terminal_ui.gd:308
+msgid "Pin 3 → GND. Pin 4 → VCC.\nTX / RX kreuzen; nie an VCC.\nDATA bleibt DATA.\nKette Alpha: zusammen 120 Ω."
+msgstr "Pin 3 → GND. Pin 4 → VCC.\nCross TX / RX; never connect to VCC.\nDATA stays DATA.\nAlpha chain: total 120 Ω."
+
+#: scripts/terminal_ui.gd:311
+msgid "Verbindungen prüfen"
+msgstr "Check connections"
+
+#: scripts/terminal_ui.gd:331 scripts/terminal_ui.gd:345
+msgid "PAUSE · Weiter mit Start oder Fortsetzen."
+msgstr "PAUSED · Resume with Start or Continue."
+
+#: scripts/terminal_ui.gd:333
+msgid "VORBEREITUNG · Leitungen drehen, A/B setzen, dann Datenfluss einschalten."
+msgstr "SETUP · Rotate wires, set A/B, then enable data flow."
+
+#: scripts/terminal_ui.gd:333
+msgid "ABGLEICH · Frequenz, Amplitude und Phase einstellen. Gold ist dein Ziel."
+msgstr "TUNING · Adjust frequency, amplitude and phase. Gold is your target."
+
+#: scripts/terminal_ui.gd:333
+msgid "WARTUNG · Pins und Widerstände einstellen, dann Verbindungen prüfen."
+msgstr "MAINTENANCE · Set pins and resistors, then check connections."
+
+#: scripts/terminal_ui.gd:335
+msgid "ZUGRIFF FREI · Wähle Übernehmen, um die Aufgabe abzuschließen."
+msgstr "ACCESS GRANTED · Choose Apply to complete the task."
+
+#: scripts/terminal_ui.gd:337
+msgid "  Wähle Neu versuchen."
+msgstr "  Choose Retry."
+
+#: scripts/terminal_ui.gd:339
+msgid "SCHRITT 1 · Wähle ein helles Byte in der obersten Zeile."
+msgstr "STEP 1 · Choose a bright byte in the top row."
+
+#: scripts/terminal_ui.gd:341
+msgid "SCHRITT 1 · Rauschfilter mit Links / Rechts abstimmen."
+msgstr "STEP 1 · Tune the noise filter with Left / Right."
+
+#: scripts/terminal_ui.gd:343
+msgid "SCHRITT 2 · Signal stabil. Wähle jetzt ein Passwort links."
+msgstr "STEP 2 · Signal stable. Now choose a password on the left."
+
+#: scripts/terminal_ui.gd:369
+msgid "SIGNAL STABIL"
+msgstr "SIGNAL STABLE"
+
+#: scripts/terminal_ui.gd:369
+msgid "SPEICHERDUMP"
+msgstr "MEMORY DUMP"
+
+#: scripts/terminal_ui.gd:371
+msgid "Signalqualität: %d %% · Versuche: %d\n%s"
+msgstr "Signal quality: %d %% · Attempts: %d\n%s"
+
+#: scripts/terminal_ui.gd:379
+msgid "Knoten 10: %s → %d\nBus %s · ICE: %d Knoten"
+msgstr "Node 10: %s → %d\nBus %s · ICE: %d nodes"
+
+#: scripts/terminal_ui.gd:388
+msgid "%s %d · %s →"
+msgstr "%s %d · %s →"
+
+#: scripts/terminal_ui.gd:572
+msgid "RAVENS HANDBUCH / "
+msgstr "RAVEN'S MANUAL / "
+
+#: scripts/terminal_ui.gd:580
+msgid "Verstanden · A / B / Y / F1"
+msgstr "Got it · A / B / Y / F1"
+
+#: scripts/hangar_departure.gd:106
+msgid "KAPITEL 6 · DIE RACHE"
+msgstr "CHAPTER 6 · REVENGE"
+
+#: scripts/hangar_departure.gd:106
+msgid "Am nächsten Abend · Zurück im Hangar"
+msgstr "The next evening · Back in the hangar"
+
+#: scripts/hangar_departure.gd:110
+msgid "Da steht er. Ich habe ihn den ganzen Tag geprüft. Kenzōs Angestellte haben den Tower vor einer Stunde verlassen."
+msgstr "There it is. I've been checking it all day. Kenzō's staff left the tower an hour ago."
+
+#: scripts/hangar_departure.gd:112
+msgid "Ich kann mich nicht mit irgendjemandem verbinden, Raven. Das Heiligtum hat dich hineingelassen. Du wurdest mir prophezeit."
+msgstr "I can't connect with just anyone, Raven. The Sanctuary let you in. You were foretold to me."
+
+#: scripts/hangar_departure.gd:114
+msgid "Prophezeit? … Erklär mir das, wenn wir lebend zurück sind."
+msgstr "Foretold? …Explain that if we make it back alive."
+
+#: scripts/hangar_departure.gd:142
+msgid "Luke zu. Ich starte ihn."
+msgstr "Hatch closed. I'll start it."
+
+#: scripts/hangar_departure.gd:149
+msgid "A-a-artos-System … b-bootet … Antrieb nicht bereit."
+msgstr "A-a-artos system… b-booting… Propulsion not ready."
+
+#: scripts/hangar_departure.gd:153
+msgid "Das hat er beim Test nicht gemacht."
+msgstr "It didn't do that during the test."
+
+#: scripts/hangar_departure.gd:155
+msgid "Dreckmühle."
+msgstr "Piece of junk."
+
+#: scripts/hangar_departure.gd:157
+msgid "Dann habt ihr ja was gemeinsam."
+msgstr "Then you've got something in common."
+
+#: scripts/hangar_departure.gd:174
+msgid "Schub verfügbar. Hangarschleuse freigegeben."
+msgstr "Thrust available. Hangar airlock cleared."
+
+#: scripts/hangar_departure.gd:176
+msgid "Ich mag lieber Motorräder."
+msgstr "I prefer motorcycles."
+
+#: scripts/hangar_departure.gd:194
+msgid "Wir sind draußen. Raven, am Tower-Scanner kalibrierst du die kopierte Kennung."
+msgstr "We're out. Raven, you'll calibrate the copied ID at the tower scanner."
+
+#: scripts/hangar_departure.gd:196
+msgid "Sequenz für Sequenz. Bring uns einfach heil hin."
+msgstr "One sequence at a time. Just get us there in one piece."
+
+#: scripts/arcade/neon_kombat.gd:31
+msgid "SCHATTENSCHNITT"
+msgstr "SHADOW SLASH"
+
+#: scripts/arcade/neon_kombat.gd:33
+msgid "JACKAL"
+msgstr "JACKAL"
+
+#: scripts/arcade/neon_kombat.gd:33
+msgid "CHROMFAUST"
+msgstr "CHROME FIST"
+
+#: scripts/arcade/neon_kombat.gd:34
+msgid "KENZŌ"
+msgstr "KENZŌ"
+
+#: scripts/arcade/neon_kombat.gd:34
+msgid "DRACHENHAGEL"
+msgstr "DRAGON BARRAGE"
+
+#: scripts/arcade/neon_kombat.gd:35
+msgid "PUNK ROT"
+msgstr "RED PUNK"
+
+#: scripts/arcade/neon_kombat.gd:35
+msgid "SCHLAGSERIE"
+msgstr "COMBO STRIKES"
+
+#: scripts/arcade/neon_kombat.gd:36
+msgid "PUNK GRÜN"
+msgstr "GREEN PUNK"
+
+#: scripts/arcade/neon_kombat.gd:36
+msgid "FEUERSTOSS"
+msgstr "FIRE BURST"
+
+#: scripts/arcade/neon_kombat.gd:37
+msgid "PUNK VIOLETT"
+msgstr "PURPLE PUNK"
+
+#: scripts/arcade/neon_kombat.gd:37
+msgid "PLASMASCHUSS"
+msgstr "PLASMA SHOT"
+
+#: scripts/arcade/neon_kombat.gd:38
+msgid "PUNK OCKER"
+msgstr "OCHRE PUNK"
+
+#: scripts/arcade/neon_kombat.gd:38
+msgid "KEULENHIEB"
+msgstr "CLUB STRIKE"
+
+#: scripts/arcade/neon_kombat.gd:39
+msgid "WACHE VIOLETT"
+msgstr "PURPLE GUARD"
+
+#: scripts/arcade/neon_kombat.gd:39 scripts/arcade/neon_kombat.gd:40
+msgid "SALVE"
+msgstr "VOLLEY"
+
+#: scripts/arcade/neon_kombat.gd:40
+msgid "WACHE CYAN"
+msgstr "CYAN GUARD"
+
+#: scripts/arcade/neon_kombat.gd:195
+msgid "NEON KOMBAT · PAUSE · FENSTER INAKTIV"
+msgstr "NEON KOMBAT · PAUSED · WINDOW INACTIVE"
+
+#: scripts/arcade/neon_kombat.gd:203 scripts/arcade/neon_kombat.gd:213
+msgid "NEON KOMBAT · PAUSE"
+msgstr "NEON KOMBAT · PAUSED"
+
+#: scripts/arcade/neon_kombat.gd:206
+msgid "Kampf fortsetzen"
+msgstr "Resume fight"
+
+#: scripts/arcade/neon_kombat.gd:206
+msgid "Zur Titelauswahl"
+msgstr "Back to title selection"
+
+#: scripts/arcade/neon_kombat.gd:206 scripts/arcade/neon_kombat.gd:210
+msgid "Automat verlassen"
+msgstr "Leave arcade machine"
+
+#: scripts/arcade/neon_kombat.gd:358
+msgid "KÄMPFT!"
+msgstr "FIGHT!"
+
+#: scripts/arcade/neon_kombat.gd:415
+msgid "S · EX "
+msgstr "S · EX "
+
+#: scripts/arcade/neon_kombat.gd:416
+msgid "S BRAUCHT 50 ENERGIE"
+msgstr "S NEEDS 50 ENERGY"
+
+#: scripts/arcade/neon_kombat.gd:629
+msgid "K.O."
+msgstr "K.O."
+
+#: scripts/arcade/neon_kombat.gd:629
+msgid "ZEIT!"
+msgstr "TIME!"
+
+#: scripts/arcade/neon_kombat.gd:630
+msgid "UNENTSCHIEDEN"
+msgstr "DRAW"
+
+#: scripts/arcade/neon_kombat.gd:787
+msgid "NEON KOMBAT"
+msgstr "NEON KOMBAT"
+
+#: scripts/arcade/neon_kombat.gd:788
+msgid "ECHOS IN NEON · ARCADE"
+msgstr "ECHOES IN NEON · ARCADE"
+
+#: scripts/arcade/neon_kombat.gd:789
+msgid "1 SPIELER · GEGEN CPU"
+msgstr "1 PLAYER · VS CPU"
+
+#: scripts/arcade/neon_kombat.gd:789
+msgid "2 SPIELER · DUELL"
+msgstr "2 PLAYERS · DUEL"
+
+#: scripts/arcade/neon_kombat.gd:789
+msgid "AUTOMAT VERLASSEN"
+msgstr "LEAVE ARCADE MACHINE"
+
+#: scripts/arcade/neon_kombat.gd:795
+msgid "S1  WASD · J LIGHT · K MEDIUM · L HEAVY · H SPECIAL"
+msgstr "P1  WASD · J LIGHT · K MEDIUM · L HEAVY · H SPECIAL"
+
+#: scripts/arcade/neon_kombat.gd:796
+msgid "S2  PFEILE · U LIGHT · I MEDIUM · O HEAVY · P SPECIAL"
+msgstr "P2  ARROWS · U LIGHT · I MEDIUM · O HEAVY · P SPECIAL"
+
+#: scripts/arcade/neon_kombat.gd:797
+msgid "PAD X/Y/B/A = L/M/H/S · ZURÜCK BLOCK · RUNTER-ZURÜCK TIEFBLOCK"
+msgstr "PAD X/Y/B/A = L/M/H/S · BACK BLOCK · DOWN-BACK LOW BLOCK"
+
+#: scripts/arcade/neon_kombat.gd:798
+msgid "236 + L/M/H · 623 + L/M/H · [4]6 + L/M/H · CPU-SIEGE: %d"
+msgstr "236 + L/M/H · 623 + L/M/H · [4]6 + L/M/H · CPU WINS: %d"
+
+#: scripts/arcade/neon_kombat.gd:800
+msgid "KÄMPFER WÄHLEN"
+msgstr "SELECT FIGHTER"
+
+#: scripts/arcade/neon_kombat.gd:817
+msgid "SPEZIAL · %s    LEBEN %d · TEMPO %d"
+msgstr "SPECIAL · %s    HEALTH %d · SPEED %d"
+
+#: scripts/arcade/neon_kombat.gd:818
+msgid "A / E / ENTER WÄHLEN · ESC PAUSE"
+msgstr "A / E / ENTER SELECT · ESC PAUSE"
+
+#: scripts/arcade/neon_kombat.gd:831
+msgid "HOCH / SCHRÄG-HOCH: SPRUNG · RUNTER: DUCKEN · ZURÜCK / TIEF-ZURÜCK: BLOCK"
+msgstr "UP / DIAGONAL-UP: JUMP · DOWN: CROUCH · BACK / DOWN-BACK: BLOCK"
+
+#: scripts/arcade/neon_kombat.gd:832
+msgid "L/M/H: J/K/L · S: H / PAD A (50) · 236 / 623 / [4]6 + L/M/H"
+msgstr "L/M/H: J/K/L · S: H / PAD A (50) · 236 / 623 / [4]6 + L/M/H"
+
+#: scripts/arcade/neon_kombat.gd:841
+msgid "S · EX"
+msgstr "S · EX"
+
+#: scripts/arcade/neon_kombat.gd:849
+msgid "%d TREFFER!"
+msgstr "%d HITS!"
+
+#: scripts/arcade/neon_kombat.gd:860
+msgid "REVANCHE"
+msgstr "REMATCH"
+
+#: scripts/arcade/neon_kombat.gd:860
+msgid "KÄMPFERWAHL"
+msgstr "FIGHTER SELECT"
+
+#: scripts/arcade/neon_kombat.gd:860
+msgid "TITELBILD"
+msgstr "TITLE SCREEN"
+
+#: scripts/memories/legacy_memory.gd:96
+msgid "ERINNERUNG III"
+msgstr "MEMORY III"
+
+#: scripts/memories/legacy_memory.gd:96
+msgid "DAS VERMÄCHTNIS · IM TEMPEL"
+msgstr "THE LEGACY · INSIDE THE TEMPLE"
+
+#: scripts/memories/legacy_memory.gd:100 scripts/memories/legacy_memory.gd:102
+msgid "MEISTER"
+msgstr "MASTER"
+
+#: scripts/memories/legacy_memory.gd:100
+msgid "Die Schleuse zur Basis ist verriegelt. Sie dürfen nicht nach unten."
+msgstr "The airlock to the base is sealed. They mustn't get downstairs."
+
+#: scripts/memories/legacy_memory.gd:102
+msgid "Shadepi, du musst das Heiligtum beschützen. Das hat oberste Priorität."
+msgstr "Shadepi, you must protect the Sanctuary. That comes before everything else."
+
+#: scripts/memories/legacy_memory.gd:104
+msgid "Ich werde es mit meinem Leben beschützen. Der Orden muss leben. Danke für alles, Meister."
+msgstr "I'll protect it with my life. The Order must live on. Thank you for everything, Master."
+
+#: scripts/memories/legacy_memory.gd:169
+msgid "Ihr bekommt das Heiligtum nicht."
+msgstr "You're not getting the Sanctuary."
+
+#: scripts/memories/memory_battle.gd:106 scripts/memories/sacrifice_memory.gd:79 scripts/memories/sacrifice_memory.gd:123 scripts/memories/sacrifice_memory.gd:189
+msgid "SWIFTY DEX"
+msgstr "SWIFTY DEX"
+
+#: scripts/memories/memory_battle.gd:106
+msgid "Ich decke links. Lasst sie nicht zum Seitengang!"
+msgstr "I'll cover the left. Keep them away from the side passage!"
+
+#: scripts/memories/memory_battle.gd:137 scripts/memories/memory_battle.gd:220 scripts/memories/sacrifice_memory.gd:136
+msgid "SHAME LY"
+msgstr "SHAME LY"
+
+#: scripts/memories/memory_battle.gd:137
+msgid "Shadepi! Rechts!"
+msgstr "Shadepi! On your right!"
+
+#: scripts/memories/memory_battle.gd:144
+msgid "TAHIRO CROW"
+msgstr "TAHIRO CROW"
+
+#: scripts/memories/memory_battle.gd:144
+msgid "Runter, Shadepi!"
+msgstr "Get down, Shadepi!"
+
+#: scripts/memories/memory_battle.gd:183 scripts/memories/memory_battle.gd:210
+msgid "DRAKE GATNOM"
+msgstr "DRAKE GATNOM"
+
+#: scripts/memories/memory_battle.gd:183
+msgid "Zurück! Ich halte sie auf!"
+msgstr "Get back! I'll hold them off!"
+
+#: scripts/memories/memory_battle.gd:210
+msgid "Los! Zum inneren Hof!"
+msgstr "Go! To the inner courtyard!"
+
+#: scripts/memories/memory_battle.gd:220
+msgid "Shadepi … wir müssen weiter."
+msgstr "Shadepi… we have to keep moving."
+
+#: scripts/memories/memory_battle.gd:222
+msgid "Zum inneren Hof. Bleibt zusammen."
+msgstr "To the inner courtyard. Stay together."
+
+#: scripts/memories/legacy_battle.gd:157
+msgid "DAS VERMÄCHTNIS · BESIEGE BEIDE MINOTAUREN"
+msgstr "THE LEGACY · DEFEAT BOTH MINOTAURUS MECHS"
+
+#: scripts/memories/legacy_battle.gd:158
+msgid "Leben %d · Minotaurus I %d / II %d · Servogelenke treffen!"
+msgstr "Health %d · Minotaurus I %d / II %d · Strike the servo joints!"
+
+#: scripts/memories/legacy_battle.gd:162
+msgid "KAMPF VERLOREN · E / A: NOCH EINMAL"
+msgstr "BATTLE LOST · E / A: TRY AGAIN"
+
+#: scripts/memories/legacy_battle.gd:163
+msgid "Der Knoten bleibt offen. Esc / Start: Pause"
+msgstr "The node remains open. Esc / Start: Pause"
+
+#: scripts/memories/legacy_battle.gd:164
+msgid "Beide Minotauren zerstört."
+msgstr "Both Minotaurus mechs destroyed."
+
+#: scripts/memories/minotaur_battle.gd:54
+msgid "WASD / Pfeile / Stick · J / X / Maus: Schlag\nLeertaste / B: Ausweichen · Esc / Start: Pause"
+msgstr "WASD / Arrows / Stick · J / X / Mouse: Strike\nSpace / B: Dodge · Esc / Start: Pause"
+
+#: scripts/memories/minotaur_battle.gd:253
+msgid "MINOTAURUS · DURCHHALTEN  %02d:%02d"
+msgstr "MINOTAURUS · SURVIVE  %02d:%02d"
+
+#: scripts/memories/minotaur_battle.gd:254
+msgid "Leben %d · Panzerung hält · Taumeln %d%% · %s"
+msgstr "Health %d · Armor holding · Stagger %d%% · %s"
+
+#: scripts/memories/minotaur_battle.gd:254
+msgid "ABWEHR"
+msgstr "DEFENSE"
+
+#: scripts/memories/minotaur_battle.gd:254
+msgid "SPERRFEUER"
+msgstr "SUPPRESSIVE FIRE"
+
+#: scripts/memories/minotaur_battle.gd:254
+msgid "ÜBERMACHT"
+msgstr "OVERWHELMED"
+
+#: scripts/memories/minotaur_battle.gd:258
+msgid "SHADEPI GEFALLEN · E / A: NOCH EINMAL"
+msgstr "SHADEPI DOWN · E / A: TRY AGAIN"
+
+#: scripts/memories/minotaur_battle.gd:259
+msgid "Der Erinnerungsknoten bleibt offen. Esc / Start: Pause"
+msgstr "The memory node remains open. Esc / Start: Pause"
+
+#: scripts/memories/minotaur_battle.gd:260
+msgid "MINOTAURUS TAUMELT · Abstand gewinnen!"
+msgstr "MINOTAURUS STAGGERED · Get some distance!"
+
+#: scripts/memories/sacrifice_memory.gd:70
+msgid "ERINNERUNG II"
+msgstr "MEMORY II"
+
+#: scripts/memories/sacrifice_memory.gd:70
+msgid "SHAME LYS OPFER"
+msgstr "SHAME LY'S SACRIFICE"
+
+#: scripts/memories/sacrifice_memory.gd:79
+msgid "Ein Minotaurus. Haltet Abstand!"
+msgstr "A Minotaurus. Keep your distance!"
+
+#: scripts/memories/sacrifice_memory.gd:86
+msgid "Haltet durch! Weicht dem Sperrfeuer aus!"
+msgstr "Hold on! Dodge the suppressive fire!"
+
+#: scripts/memories/sacrifice_memory.gd:116
+msgid "Die Klinge kommt nicht durch!"
+msgstr "The blade won't get through!"
+
+#: scripts/memories/sacrifice_memory.gd:123
+msgid "Der Servoschacht. Unter dem Schild!"
+msgstr "The servo shaft. Under the shield!"
+
+#: scripts/memories/sacrifice_memory.gd:134
+msgid "Nein! Shame Ly, nicht!"
+msgstr "No! Shame Ly, don't!"
+
+#: scripts/memories/sacrifice_memory.gd:136
+msgid "Verzeih mir, Bruder. FÜR DEN ORDEN!"
+msgstr "Forgive me, brother. FOR THE ORDER!"
+
+#: scripts/memories/sacrifice_memory.gd:187
+msgid "Shame Ly …"
+msgstr "Shame Ly…"
+
+#: scripts/memories/sacrifice_memory.gd:189
+msgid "Shadepi. Der Weg ist frei."
+msgstr "Shadepi. The way is clear."
+
+#: scripts/memories/attack_memory.gd:162
+msgid "ERINNERUNG I"
+msgstr "MEMORY I"
+
+#: scripts/memories/attack_memory.gd:162
+msgid "DER ANGRIFF"
+msgstr "THE ATTACK"
+
+#: scripts/memories/attack_memory.gd:169
+msgid "MÖNCH"
+msgstr "MONK"
+
+#: scripts/memories/attack_memory.gd:169
+msgid "Zum Seitengang! Weg vom Tor!"
+msgstr "To the side passage! Away from the gate!"
+
+#: scripts/memories/attack_memory.gd:176
+msgid "Bringt euch in Sicherheit! Wir werden sie abwehren!"
+msgstr "Get to safety! We'll hold them off!"
+
+#: scripts/memories/memory_hud.gd:16
+msgid "E / A Weiter · Leertaste / B Überspringen · Esc / Start Pause"
+msgstr "E / A Continue · Space / B Skip · Esc / Start Pause"
+
+#: scripts/memories/memory_hud.gd:27
+msgid "ERINNERUNG · PAUSE"
+msgstr "MEMORY · PAUSED"
+
+#: scripts/memories/memory_hud.gd:34
+msgid "Erinnerung überspringen"
+msgstr "Skip memory"
+
+#: scripts/memories/memory_hud.gd:34
+msgid "Erinnerung verlassen"
+msgstr "Leave memory"
+
+#: scripts/campaign.gd:767
+msgid "KAPITEL %d / %s"
+msgstr "CHAPTER %d / %s"
+
+#: scripts/campaign.gd:821
+msgid " · Hackfenster"
+msgstr " · Hack window"
+
+#: scripts/chapter_hud.gd:18 scripts/chapter_one_intro.gd:151
+msgid "KAPITEL 1"
+msgstr "CHAPTER 1"
+
+#: scripts/chapter_two.gd:642 scripts/chapter_two_hud.gd:16
+msgid "KAPITEL 2"
+msgstr "CHAPTER 2"
+
+#: scripts/campaign.gd:1317
+msgid "KAPITEL 3"
+msgstr "CHAPTER 3"
+
+#: scripts/campaign.gd:1505
+msgid "KAPITEL 4"
+msgstr "CHAPTER 4"
+
+#: scripts/lake_sequence.gd:197
+msgid "KAPITEL 7"
+msgstr "CHAPTER 7"
+
+#: scripts/campaign_drive.gd:739
+msgid "SEITENWIND %s"
+msgstr "CROSSWIND %s"
+
+#: scripts/campaign_hud.gd:17 scripts/chapter_hud.gd:32 scripts/chapter_two_hud.gd:20 scripts/hud.gd:463 scripts/terminal_ui.gd:349 scripts/memories/memory_hud.gd:34
+msgid "Fortsetzen"
+msgstr "Continue"
+
+#: scripts/campaign_hud.gd:78
+msgid "    Stunts: %d"
+msgstr "    Stunts: %d"
+
+#: scripts/campaign_hud.gd:95
+msgid "Aufgesetzt: %s"
+msgstr "Touchdown: %s"
+
+#: scripts/campaign_hud.gd:95
+msgid "Ausrichten"
+msgstr "Align"
+
+#: scripts/chapter_hud.gd:30 scripts/hud.gd:454 scripts/hud.gd:461
+msgid "Lokal-Koop"
+msgstr "Local co-op"
+
+#: scripts/chapter_hud.gd:30 scripts/hud.gd:454 scripts/hud.gd:461
+msgid "Einzelspieler"
+msgstr "Single player"
+
+#: scripts/chapter_hud.gd:106 scripts/hud.gd:841 scripts/hud.gd:842
+msgid "bereit"
+msgstr "ready"
+
+#: scripts/hud.gd:220 scripts/hud.gd:452
+msgid "WLAN-Koop"
+msgstr "Wi-Fi co-op"
+
+#: scripts/hud.gd:230 scripts/main.gd:772
+msgid "Umgebung: "
+msgstr "Ambience: "
+
+#: scripts/hud.gd:235 scripts/main.gd:752 scripts/main.gd:763
+msgid "Bildstil: "
+msgstr "Style: "
+
+#: scripts/hud.gd:237
+msgid "Anzeige"
+msgstr "Display"
+
+#: scripts/hud.gd:463
+msgid " starten"
+msgstr " start"
+
+#: scripts/hud.gd:798
+msgid "Weiter"
+msgstr "Continue"
+
+#: scripts/main.gd:18
+msgid "Reduziert"
+msgstr "Reduced"
+
+#: scripts/main.gd:18
+msgid "Ausgewogen"
+msgstr "Balanced"
+
+#: scripts/sanctuary_timing.gd:54
+msgid "Gleichstand"
+msgstr "Draw"
+
+#: scripts/world_prop.gd:7
+msgid "Frachtkiste"
+msgstr "Cargo crate"
+
+#: scripts/world_prop.gd:8
+msgid "Brennstofffass"
+msgstr "Fuel barrel"
+
+#: scripts/world_prop.gd:12
+msgid "Schaltkasten"
+msgstr "Electrical cabinet"
+
+#: scripts/world_prop.gd:14
+msgid "Serverschrank"
+msgstr "Server rack"
+
+#: scripts/world_prop.gd:15
+msgid "Datenkristall"
+msgstr "Data crystal"
+
+#: scripts/terminal_puzzle.gd:119
+msgid "Spalte"
+msgstr "column"
+
+#: scripts/terminal_puzzle.gd:119
+msgid "Zeile"
+msgstr "row"
+
+#: scripts/ambient_audio.gd:32
+msgid "Aus"
+msgstr "Off"
+
+#: scripts/ambient_audio.gd:32
+msgid "Leise"
+msgstr "Low"
+
+#: scripts/ambient_audio.gd:32
+msgid "Normal"
+msgstr "Normal"
+
+#: scripts/aerodyne_flight.gd:864
+msgid "JETZT  %s"
+msgstr "NOW  %s"
+
+#: scripts/network_lobby.gd:24
+msgid "Beitreten"
+msgstr "Join"
+
+#: scripts/display_panel.gd:34
+msgid "Darstellung"
+msgstr "Rendering"
+
+#: scripts/display_panel.gd:39
+msgid "Bildschirmmodus"
+msgstr "Display mode"
+
+#: scripts/display_panel.gd:49
+msgid "Skalierung"
+msgstr "Scaling"
+
+#: scripts/companion.gd:164 scripts/companion.gd:165
+msgid "Pfeile"
+msgstr "Arrows"
+
+#: scripts/test_checkpoints.gd:14
+msgid "Industriehof"
+msgstr "Industrial yard"
+
+#: scripts/test_checkpoints.gd:92
+msgid "Test-Kontrollpunkt: "
+msgstr "Test checkpoint: "
+
+#: scripts/mobile_controls.gd:39
+msgid "Halten"
+msgstr "Hold"
+
+#: scripts/mobile_controls.gd:39
+msgid "Spezial"
+msgstr "Special"
+
+#: scripts/mobile_controls.gd:132
+msgid "Hilfe"
+msgstr "Help"
+
+#: scripts/mobile_controls.gd:133
+msgid "Fokus"
+msgstr "Focus"
+
+#: scripts/ice_guardian.gd:115
+msgid "KERN −%d"
+msgstr "CORE −%d"
+
+#: scripts/terminal_ui.gd:214
+msgid "Abbrechen"
+msgstr "Cancel"
+
+#: scripts/terminal_ui.gd:218 scripts/terminal_ui.gd:349
+msgid "Pause"
+msgstr "Pause"
+
+#: scripts/terminal_ui.gd:263
+msgid "Rauschfilter-Frequenz"
+msgstr "Noise filter frequency"
+
+#: scripts/terminal_ui.gd:274
+msgid "1× Datenrate"
+msgstr "1× Data rate"
+
+#: scripts/terminal_ui.gd:274
+msgid "2× Datenrate"
+msgstr "2× Data rate"
+
+#: scripts/terminal_ui.gd:297 scripts/terminal_ui.gd:383
+msgid "Frequenz"
+msgstr "Frequency"
+
+#: scripts/terminal_ui.gd:360
+msgid "PUFFER %d / %d\n%s\n\nDAEMONS"
+msgstr "BUFFER %d / %d\n%s\n\nDAEMONS"
+
+#: scripts/terminal_ui.gd:365
+msgid "Rauschfilter-Frequenz  [%d]"
+msgstr "Noise filter frequency  [%d]"
+
+#: scripts/terminal_ui.gd:379
+msgid "AN"
+msgstr "ON"
+
+#: scripts/terminal_ui.gd:379
+msgid "AUS"
+msgstr "OFF"
+
+#: scripts/display_settings.gd:11
+msgid "Fenster"
+msgstr "Windowed"
+
+#: scripts/display_settings.gd:11
+msgid "Fenstervollbild"
+msgstr "Borderless fullscreen"
+
+#: scripts/display_settings.gd:11
+msgid "Vollbild"
+msgstr "Fullscreen"
+
+#: scripts/arcade/neon_kombat.gd:32
+msgid "HACK-IMPULS"
+msgstr "HACK PULSE"
+
+#: scripts/arcade/neon_kombat.gd:206
+msgid "WLAN-Verbindung"
+msgstr "Wi-Fi connection"
+
+#: scripts/arcade/neon_kombat.gd:273 scripts/arcade/neon_kombat.gd:358
+msgid "RUNDE %d"
+msgstr "ROUND %d"
+
+#: scripts/arcade/neon_kombat.gd:413
+msgid "623 · AUFSTIEG"
+msgstr "623 · RISING STRIKE"
+
+#: scripts/arcade/neon_kombat.gd:413
+msgid "[2]8 · AUFSTIEG"
+msgstr "[2]8 · RISING STRIKE"
+
+#: scripts/arcade/neon_kombat.gd:413
+msgid "[4]6 · ANSTURM"
+msgstr "[4]6 · RUSH"
+
+#: scripts/arcade/neon_kombat.gd:812
+msgid "S%d"
+msgstr "P%d"
+
+#: scripts/arcade/neon_kombat.gd:816
+msgid "  · BEREIT"
+msgstr "  · READY"
+
+#: scripts/arcade/neon_kombat.gd:858
+msgid " GEWINNT"
+msgstr " WINS"
+
+#: scripts/memories/legacy_memory.gd:126
+msgid "Meister …"
+msgstr "Master…"
+
+#: scripts/memories/memory_battle.gd:158
+msgid "Nein …"
+msgstr "No…"
+
+msgid "Optionen"
+msgstr "Options"
+
+msgid "OPTIONEN"
+msgstr "OPTIONS"
+
+msgid "Sprache / Language"
+msgstr "Language / Sprache"
+
+msgid "Deutsch"
+msgstr "Deutsch"
+
+msgid "English"
+msgstr "English"
+
+msgid "Sprache und Anzeige"
+msgstr "Language and display"
+
+msgid "Sprache konnte nicht gespeichert werden."
+msgstr "Could not save language preference."
+
+#: scripts/aerodyne_flight.gd
+msgid "hart"
+msgstr "hard"
+
+#: scripts/start_menu_backdrop.gd
+msgid "IM SCHATTEN DES RABEN  ·  V%s"
+msgstr "IN THE RAVEN'S SHADOW  ·  V%s"
+

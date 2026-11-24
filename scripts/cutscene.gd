@@ -46,12 +46,16 @@ var vignette: ColorRect
 var bars_target := 0.0
 var hud_hidden := false
 var home_zoom := 1.0
+var speech_source := ""
+var speech_pages: Array[String] = []
+var speech_page := 0
 
 func _init() -> void:
 	layer = 9
 	process_priority = 100
 
 func _ready() -> void:
+	get_node("/root/LanguageSettings").changed.connect(_retranslate_speech)
 	# v0.52.0 · ClaudeHelper: weiche Kino-Vignette unter Blenden, Balken und Text.
 	vignette = _rect(Rect2(0, 0, 640, 360), Color.WHITE)
 	vignette.material = ShaderMaterial.new()
@@ -144,6 +148,8 @@ func _refresh_actors() -> void:
 
 func _release() -> void:
 	running = false
+	speech_source = ""
+	speech_pages.clear()
 	_refresh_actors()
 	waiting_input = false
 	camera_moving = false
@@ -335,18 +341,31 @@ func say(speaker: String, text: String) -> void:
 	speaker_label.text = speaker
 	var key := speaker.split(" / ")[0]
 	speaker_label.add_theme_color_override("font_color", SPEAKER_COLORS.get(key, Color("9fb4c8")))
-	for page in _pages(text):
+	speech_source = text
+	speech_pages = _pages(text)
+	speech_page = 0
+	while speech_page < speech_pages.size():
 		if skipping:
 			break
-		line_label.text = page
+		line_label.text = speech_pages[speech_page]
 		waiting_input = true
 		while waiting_input:
 			if not await _frame(gen):
 				return
+		speech_page += 1
+	speech_source = ""
 	speaker_label.text = ""
 	line_label.text = ""
 
+func _retranslate_speech() -> void:
+	if not running or not waiting_input or speech_source.is_empty(): return
+	# Rewind only the current spoken line, never a story action or scene coroutine.
+	speech_pages = _pages(speech_source)
+	speech_page = 0
+	line_label.text = speech_pages[0]
+
 func _pages(text: String) -> Array[String]:
+	text = GameText.t(text)
 	var pages: Array[String] = []
 	var font := line_label.get_theme_font("font")
 	var current := ""

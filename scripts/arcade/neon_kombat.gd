@@ -764,6 +764,7 @@ func _draw_stage() -> void:
 	for index in order: _draw_fighter(c, fighters[index], offset)
 
 func _text(c: CanvasItem, text: String, at: Vector2, size: int, color: Color, align: int = HORIZONTAL_ALIGNMENT_LEFT, width: float = -1.0, kind: String = "title") -> void:
+	text = GameText.t(text)
 	var font := UiSkin.font(kind)
 	c.draw_string_outline(font, at, text, align, width, size, 4, Color(0.03, 0.02, 0.07))
 	c.draw_string(font, at, text, align, width, size, color)
@@ -809,7 +810,7 @@ func _draw_hud() -> void:
 					var color := pink if index == 0 else cyan
 					var blink := locked[index] or int(clock * 6.0) % 2 == 0
 					if blink: c.draw_rect(card.grow(1.0 + index * 2.0), color, false, 2.0)
-					_text(c, ("S%d" % (index + 1)) if versus or index == 0 else "CPU", card.position + Vector2(3 if index == 0 else 64, 11), 8, color)
+					_text(c, (GameText.t("S%d") % (index + 1)) if versus or index == 0 else "CPU", card.position + Vector2(3 if index == 0 else 64, 11), 8, color)
 			for index in 2:
 				var data: Dictionary = ROSTER[cursors[index]]
 				var x := 20.0 if index == 0 else 330.0
